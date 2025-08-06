@@ -1,0 +1,36 @@
+#ifndef GDIFCREADER_H
+#define GDIFCREADER_H
+
+#include <godot_cpp/classes/sprite2d.hpp>
+#include <godot_cpp/classes/node3d.hpp>
+#include <godot_cpp/classes/gltf_document.hpp>
+#include <godot_cpp/classes/object.hpp>
+#include <godot_cpp/classes/mesh.hpp>
+#include <godot_cpp/classes/surface_tool.hpp>
+
+namespace godot
+{
+
+    class IFCBuilding : public Node3D
+    {
+        GDCLASS(IFCBuilding, Node3D);
+
+    public:
+        IFCBuilding();
+        ~IFCBuilding();
+        void load_file(String path);
+
+        void read_ifc(String path);
+
+        void init_mesh();
+
+    private:
+        Ref<ArrayMesh> building_meshes;
+
+    protected:
+        static void _bind_methods();
+    };
+
+}
+
+#endif

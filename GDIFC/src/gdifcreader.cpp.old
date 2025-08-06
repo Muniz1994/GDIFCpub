@@ -1,0 +1,285 @@
+#include "gdifcreader.h"
+
+#include "godot_cpp/classes/base_material3d.hpp"
+#include <godot_cpp/classes/csg_mesh3d.hpp>
+#include <godot_cpp/classes/file_access.hpp>
+#include <godot_cpp/classes/mesh_instance3d.hpp>
+#include <godot_cpp/classes/object.hpp>
+#include <godot_cpp/classes/standard_material3d.hpp>
+#include <godot_cpp/classes/surface_tool.hpp>
+#include <godot_cpp/core/class_db.hpp>
+#include <godot_cpp/variant/utility_functions.hpp>
+#include <ifcpp/geometry/GeometryConverter.h>
+#include <ifcpp/IFC4X3/EntityFactory.h>
+#include <ifcpp/IFC4X3/include/IfcBuildingStorey.h>
+#include <ifcpp/IFC4X3/include/IfcGloballyUniqueId.h>
+#include <ifcpp/IFC4X3/include/IfcLabel.h>
+#include <ifcpp/IFC4X3/include/IfcObjectDefinition.h>
+#include <ifcpp/IFC4X3/include/IfcProject.h>
+#include <ifcpp/IFC4X3/include/IfcRelAggregates.h>
+#include <ifcpp/IFC4X3/include/IfcRelContainedInSpatialStructure.h>
+#include <ifcpp/IFC4X3/include/IfcText.h>
+#include <ifcpp/model/BuildingModel.h>
+#include <ifcpp/reader/ReaderSTEP.h>
+#include <string>
+#include <unordered_set>
+#include <vector>
+
+using namespace godot;
+
+void IFCBuilding::_bind_methods() {
+    // ClassDB::bind_method(D_METHOD("init_surface", "verts"), &IFCBuilding::init_surface);
+    ClassDB::bind_method(D_METHOD("load_file", "path"), &IFCBuilding::load_file);
+    ClassDB::bind_method(D_METHOD("init_mesh"), &IFCBuilding::init_mesh);
+    ClassDB::bind_method(D_METHOD("read_ifc", "path"), &IFCBuilding::read_ifc);
+};
+
+IFCBuilding::IFCBuilding() {};
+
+IFCBuilding::~IFCBuilding() {};
+
+void resolveGeometricItems(shared_ptr<ItemShapeData>& geometricItem, carve::math::Matrix& localTransform, Node3D& mainNode) {
+    auto style_data = geometricItem->m_styles;
+    String name;
+
+    auto product = geometricItem->m_product.lock();
+    if (product) {
+        auto definition = product->m_ifc_object_definition.lock();
+
+        if (definition) {
+
+            shared_ptr<IfcSpace> ifc_space = dynamic_pointer_cast<IfcSpace>(definition);
+
+            auto g_id = definition->m_GlobalId->m_value.c_str();
+            String class_name = std::string(IFC4X3::EntityFactory::getStringForClassID(definition->classID())).c_str();
+            name = class_name + "_" + g_id;
+
+            if (ifc_space) {
+                return;
+            }
+        }
+    }
+
+    Ref<StandardMaterial3D> element_material;
+    element_material.instantiate();
+    element_material->set_albedo(godot::Color(1.0, 1.0, 1.0));
+
+    // Helper function for coordinate system conversion
+    auto carve_to_godot_vec3 = [](const carve::geom::vector<3>& v) {
+        return Vector3(v.x, v.z, v.y);
+        };
+
+    // A helper function to create the mesh and add to the node
+    auto create_and_add_mesh = [&](PackedVector3Array& vertices_array, PackedVector3Array& normals_array, const String& mesh_name) {
+        if (vertices_array.size() == 0) {
+            return; // Nothing to create
+        }
+
+        Ref<ArrayMesh> gd_array_mesh;
+        gd_array_mesh.instantiate();
+
+        godot::Array arrays;
+        arrays.resize(Mesh::ARRAY_MAX);
+        arrays[Mesh::ARRAY_VERTEX] = vertices_array;
+        arrays[Mesh::ARRAY_NORMAL] = normals_array;
+
+        gd_array_mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arrays);
+
+        // Correct memory management
+        MeshInstance3D* gd_mesh = memnew(MeshInstance3D);
+        gd_mesh->set_mesh(gd_array_mesh);
+        gd_mesh->set_surface_override_material(0, element_material);
+        gd_mesh->set_name(mesh_name);
+
+        mainNode.add_child(gd_mesh, true);
+        };
+
+    // closed meshes
+    for (auto meshset : geometricItem->m_meshsets) {
+        PackedVector3Array vertices_array;
+        PackedVector3Array normals_array;
+
+        for (auto mesh : meshset->meshes) {
+            for (auto face : mesh->faces) {
+
+                carve::geom::vector<3> carve_normal = face->plane.N; // Assuming `face` has a plane normal
+
+                std::vector<carve::mesh::MeshSet<3>::vertex_t*> vertices;
+
+                Vector3 p0 = carve_to_godot_vec3(localTransform * vertices[0]->v);
+
+                face->getVertices(vertices);
+
+                if (vertices.size() >= 3) {
+
+                    Vector3 p0 = carve_to_godot_vec3(localTransform * vertices[0]->v);
+
+                    for (size_t i = 1; i < vertices.size() - 1; ++i) {
+                        Vector3 p1 = carve_to_godot_vec3(localTransform * vertices[i]->v);
+                        Vector3 p2 = carve_to_godot_vec3(localTransform * vertices[i + 1]->v);
+
+                        // Calculate normal from the triangle vertices
+                        Vector3 tri_normal = (p1 - p0).cross(p2 - p0).normalized();
+
+                        // Apply the local transform to the carve normal
+                        Vector3 expected_normal = carve_to_godot_vec3(localTransform * carve_normal);
+
+                        // Check if the calculated normal is opposed to the expected one
+                        // A simple dot product check works. If < 0, they're pointing opposite ways.
+                        if (tri_normal.dot(expected_normal) < 0) {
+                            tri_normal = -tri_normal; // Flip the normal
+                        }
+
+                        // Add vertices and the corrected normal
+                        vertices_array.append(p0);
+                        normals_array.append(tri_normal);
+
+                        vertices_array.append(p1);
+                        normals_array.append(tri_normal);
+
+                        vertices_array.append(p2);
+                        normals_array.append(tri_normal);
+                    }
+                }
+            }
+        }
+        create_and_add_mesh(vertices_array, normals_array, name);
+    }
+
+    // open meshes
+    for (auto meshset : geometricItem->m_meshsets_open) {
+        PackedVector3Array vertices_array;
+        PackedVector3Array normals_array;
+
+        for (auto mesh : meshset->meshes) {
+            for (auto face : mesh->faces) {
+
+                carve::geom::vector<3> carve_normal = face->plane.N; // Assuming `face` has a plane normal
+
+                std::vector<carve::mesh::MeshSet<3>::vertex_t*> vertices;
+
+                Vector3 p0 = carve_to_godot_vec3(localTransform * vertices[0]->v);
+
+                face->getVertices(vertices);
+
+                if (vertices.size() >= 3) {
+
+                    Vector3 p0 = carve_to_godot_vec3(localTransform * vertices[0]->v);
+
+                    for (size_t i = 1; i < vertices.size() - 1; ++i) {
+                        Vector3 p1 = carve_to_godot_vec3(localTransform * vertices[i]->v);
+                        Vector3 p2 = carve_to_godot_vec3(localTransform * vertices[i + 1]->v);
+
+                        // Calculate normal from the triangle vertices
+                        Vector3 tri_normal = (p1 - p0).cross(p2 - p0).normalized();
+
+                        // Apply the local transform to the carve normal
+                        Vector3 expected_normal = carve_to_godot_vec3(localTransform * carve_normal);
+
+                        // Check if the calculated normal is opposed to the expected one
+                        // A simple dot product check works. If < 0, they're pointing opposite ways.
+                        if (tri_normal.dot(expected_normal) < 0) {
+                            tri_normal = -tri_normal; // Flip the normal
+                        }
+
+                        // Add vertices and the corrected normal
+                        vertices_array.append(p0);
+                        normals_array.append(tri_normal);
+
+                        vertices_array.append(p1);
+                        normals_array.append(tri_normal);
+
+                        vertices_array.append(p2);
+                        normals_array.append(tri_normal);
+                    }
+                }
+            }
+        }
+        create_and_add_mesh(vertices_array, normals_array, name);
+    }
+
+    // traverse geometry
+    for (auto childItem : geometricItem->m_child_items) {
+        resolveGeometricItems(childItem, localTransform, mainNode);
+    }
+}
+
+void resolveShapeData(shared_ptr<ProductShapeData>& shapeData, Node3D& mainNode) {
+    carve::math::Matrix localTransform = shapeData->getTransform();
+
+    // traverse geometry
+    for (auto geometricItem : shapeData->getGeometricItems()) {
+        // geometric items can have child items too
+        resolveGeometricItems(geometricItem, localTransform, mainNode);
+    }
+
+    for (auto child_object : shapeData->getChildElements()) {
+        // child elements in case of IfcBuildingStorey, IfcElementAssembly etc.
+        resolveShapeData(child_object, mainNode);
+    }
+}
+
+void IFCBuilding::read_ifc(String path) {
+    // Initialize the main 3D node to store all the model
+    Node3D main_node = Node3D();
+
+    // Initialize a new building model
+    shared_ptr<BuildingModel> building_model(new BuildingModel());
+
+    // Initialize the STEP reader
+    shared_ptr<ReaderSTEP> step_reader(new ReaderSTEP());
+
+    // Load step file and populate the building model
+    step_reader->loadModelFromFile(path.utf8().get_data(), building_model);
+
+    // Set the geometry settings and initialize the geometry converter
+    shared_ptr<GeometrySettings> geom_settings(new GeometrySettings());
+
+    shared_ptr<GeometryConverter> geometry_converter(new GeometryConverter(building_model, geom_settings));
+
+    // The number of vertices per circle can be changed here: (default is 14)
+    // int numVerticesPerCircle = geom_settings->getNumVerticesPerCircle();
+
+    int numVerticesPerCircle = 14;
+
+    geom_settings->setNumVerticesPerCircle(numVerticesPerCircle);
+    geom_settings->setMinNumVerticesPerArc(4);
+
+    // Adjust epsilon for boolean operations
+    geometry_converter->setCsgEps(1.5e-9);
+
+    geometry_converter->convertGeometry();
+
+    // 3: get a flat map of all loaded IFC entities with geometry:
+    const std::unordered_map<std::string, shared_ptr<ProductShapeData>>& map_entities = geometry_converter->getShapeInputData();
+    shared_ptr<ProductShapeData> shapeDataIfcProject;
+
+    for (auto it : map_entities) {
+        shared_ptr<ProductShapeData> shapeData = it.second;
+
+        if (shapeData->m_ifc_object_definition.expired()) {
+            continue;
+        }
+
+        shared_ptr<IfcObjectDefinition> ifcObject = shared_ptr<IfcObjectDefinition>(shapeData->m_ifc_object_definition);
+
+        // check for certain type of the entity:
+        shared_ptr<IfcProject> ifc_project = dynamic_pointer_cast<IfcProject>(ifcObject);
+        if (ifc_project) {
+            shapeDataIfcProject = shapeData;
+            break;
+        }
+    }
+
+    if (shapeDataIfcProject) {
+        resolveShapeData(shapeDataIfcProject, main_node);
+    }
+
+    this->add_child(&main_node);
+
+    UtilityFunctions::print("IFC Loaded");
+}
+
+void IFCBuilding::load_file(String path) {};
+
+void IFCBuilding::init_mesh() {};
