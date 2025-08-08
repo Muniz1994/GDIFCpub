@@ -188,13 +188,6 @@ void IFCBuilding::read_ifc(godot::String path) {
 
             auto ifc_type = schemaManager.IfcTypeCodeToType(loader.GetLineType(expressID));
 
-            if (ifc_type == "IfcBuilding") {
-                UtilityFunctions::print("yeeeeeeeeeeeeeeeeeeeeeaaaaaaaaaaaaaaaaaaaaaaaa");
-            }
-
-            if (ifc_type == "IfcBuildingStorey") {
-                UtilityFunctions::print("yeeeeeeeeeeeeeeeeeeeeeaaaaaaaaaaaaaaaaaaaaaaaa");
-            }
 
             // Safety check for empty meshes
             if (flat_mesh.geometries.size() == 0) {
