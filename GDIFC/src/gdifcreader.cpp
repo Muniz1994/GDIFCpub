@@ -33,9 +33,15 @@ void IFCBuilding::create_and_add_mesh(
     webifc::geometry::IfcGeometryProcessor& geometryLoader,
     godot::Node3D* parent_node,
     godot::String& name,
-    godot::Ref<godot::StandardMaterial3D>& material) {
+    std::string& ifc_type) {
+
+    Node3D* element_node = memnew(Node3D);
+    element_node->set_name(ifc_type.c_str());
+
+    parent_node->add_child(element_node, true);
 
     for (auto& geom_data : ifc_mesh.geometries) {
+
         auto ifc_geometry = geometryLoader.GetGeometry(geom_data.geometryExpressID);
 
         // CRITICAL FIX: Check if the geometry object is valid before accessing it.
@@ -91,12 +97,38 @@ void IFCBuilding::create_and_add_mesh(
 
         gd_array_mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arrays);
 
+        // Define a default material
+        Ref<godot::StandardMaterial3D> element_material;
+        element_material.instantiate();
+
+
+        if (ifc_type == "IfcSpace") {
+
+            godot::Color material_color = godot::Color(0.009,0.153,0.195, 0.502);
+            element_material->set_transparency(godot::BaseMaterial3D::TRANSPARENCY_ALPHA);
+            element_material->set_albedo(material_color);
+            element_material->set_shading_mode(godot::BaseMaterial3D::SHADING_MODE_UNSHADED);
+        }
+        else if (ifc_type == "IfcWindow")
+        {
+            godot::Color material_color = godot::Color(geom_data.color[0], geom_data.color[1], geom_data.color[2], geom_data.color[3]);
+            element_material->set_albedo(material_color);
+            element_material->set_transparency(godot::BaseMaterial3D::TRANSPARENCY_ALPHA);
+        }
+        else 
+        {
+            godot::Color material_color = godot::Color(geom_data.color[0], geom_data.color[1], geom_data.color[2]);
+            element_material->set_albedo(material_color);
+        }
+        
+        //UtilityFunctions::print(material_color);
+
         MeshInstance3D* gd_mesh = memnew(MeshInstance3D);
         gd_mesh->set_mesh(gd_array_mesh);
-        gd_mesh->set_surface_override_material(0, material);
-        gd_mesh->set_name(name);
+        gd_mesh->set_surface_override_material(0, element_material);
+        gd_mesh->set_name(ifc_type.c_str() + String("_geom"));
 
-        parent_node->add_child(gd_mesh, true);
+        element_node->add_child(gd_mesh, true);
     }
 }
 
@@ -104,25 +136,11 @@ void IFCBuilding::create_and_add_mesh(
 void IFCBuilding::read_ifc(godot::String path) {
     UtilityFunctions::print("Starting IFC file read...");
 
-
-    // Initialize web-ifc components using a settings struct
-    struct LoaderSettings {
-        bool COORDINATE_TO_ORIGIN = true;
-        uint16_t CIRCLE_SEGMENTS = 12;
-        uint32_t TAPE_SIZE = 67108864; // Memory tape size
-        uint32_t MEMORY_LIMIT = 2147483648;
-        uint16_t LINEWRITER_BUFFER = 10000;
-        double tolerancePlaneIntersection = 1.0E-04;
-        double toleranceBoundaryPoint = 1.0E-04;
-        double toleranceInsideOutsideToPlane = 1.0E-04;
-        double toleranceInsideOutside = 1.0E-10;
-        double toleranceScalarEquality = 1.0E-04;
-        uint16_t addPlaneIterations = 1;
-    };
-    LoaderSettings set;
+    webifc::manager::LoaderSettings set;
 
     webifc::schema::IfcSchemaManager schemaManager;
     webifc::parsing::IfcLoader loader(set.TAPE_SIZE, set.MEMORY_LIMIT, set.LINEWRITER_BUFFER, schemaManager);
+
 
     // Read the file content as raw bytes, which is safer
     Ref<FileAccess> file = FileAccess::open(path, FileAccess::READ);
@@ -155,26 +173,45 @@ void IFCBuilding::read_ifc(godot::String path) {
     main_node->set_name("IFCModel_Root");
     add_child(main_node, true);
 
-    // Define a default material
-    Ref<godot::StandardMaterial3D> element_material;
-    element_material.instantiate();
-    element_material->set_albedo(Color(1.0, 1.0, 1.0));
+
 
     // Iterate through all geometric elements and create meshes
     for (auto type : schemaManager.GetIfcElementList()) {
+
         auto expressIDs = loader.GetExpressIDsWithType(type);
+
+
+
         for (uint32_t expressID : expressIDs) {
+
             auto flat_mesh = geometryLoader.GetFlatMesh(expressID);
+
+            auto ifc_type = schemaManager.IfcTypeCodeToType(loader.GetLineType(expressID));
+
+            if (ifc_type == "IfcBuilding") {
+                UtilityFunctions::print("yeeeeeeeeeeeeeeeeeeeeeaaaaaaaaaaaaaaaaaaaaaaaa");
+            }
+
+            if (ifc_type == "IfcBuildingStorey") {
+                UtilityFunctions::print("yeeeeeeeeeeeeeeeeeeeeeaaaaaaaaaaaaaaaaaaaaaaaa");
+            }
 
             // Safety check for empty meshes
             if (flat_mesh.geometries.size() == 0) {
                 continue;
             }
 
-            String class_name = String("asdsadsadasasd");
+            if (ifc_type == "IfcOpeningElement") {
+                continue;
+            }
+
+            // Define the name of each node
+            String class_name = String(ifc_type.c_str());
+
             String name = class_name + "_" + String::num_int64(expressID);
 
-            create_and_add_mesh(flat_mesh, geometryLoader, main_node, name, element_material);
+            // Create the meshes
+            create_and_add_mesh(flat_mesh, geometryLoader, main_node, name, ifc_type);
         }
     }
 

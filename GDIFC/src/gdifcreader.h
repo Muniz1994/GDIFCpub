@@ -13,6 +13,7 @@
 #include <schema/IfcSchemaManager.h>
 #include <geometry/IfcGeometryProcessor.h>
 #include <schema/ifc-schema.h>
+#include <modelmanager/ModelManager.h>
 
 // Your existing class definition
 class IFCBuilding : public godot::Node3D {
@@ -34,7 +35,7 @@ private:
         webifc::geometry::IfcGeometryProcessor& geometryLoader,
         godot::Node3D* parent_node,
         godot::String& name,
-        godot::Ref<godot::StandardMaterial3D>& material
+        std::string& ifc_type
     );
 };
 
