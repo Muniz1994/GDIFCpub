@@ -1,0 +1,8 @@
+[configuration]
+
+entry_symbol = "gdifc_library_init"
+compatibility_minimum = "4.2"
+
+[libraries]
+
+windows.64 = "res://extensions/GDIFC/gdifc.windows.relwithdebinfo.64.dll"
