@@ -9,12 +9,12 @@
 using namespace godot;
 
 // Binds the new method for use in Godot scripts
-void IFCBuilding::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("read_ifc", "path"), &IFCBuilding::read_ifc);
+void GDIFCManager::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("read_ifc", "path"), &GDIFCManager::read_ifc);
 };
 
-IFCBuilding::IFCBuilding() {};
-IFCBuilding::~IFCBuilding() {};
+GDIFCManager::GDIFCManager() {};
+GDIFCManager::~GDIFCManager() {};
 
 // Helper function to convert web-ifc's glm::dvec3 to Godot's Vector3
 static Vector3 glm_to_godot_vec3(const glm::dvec3& v) {
@@ -28,7 +28,7 @@ static Vector3 glm_to_godot_vec3(const glm::dvec3& v) {
 }
 
 // Helper function to create a mesh from web-ifc data
-void IFCBuilding::create_and_add_mesh(
+void GDIFCManager::create_and_add_mesh(
     webifc::geometry::IfcFlatMesh& ifc_mesh,
     webifc::geometry::IfcGeometryProcessor& geometryLoader,
     godot::Node3D* parent_node,
@@ -100,24 +100,32 @@ void IFCBuilding::create_and_add_mesh(
         // Define a default material
         Ref<godot::StandardMaterial3D> element_material;
         element_material.instantiate();
-
+       
 
         if (ifc_type == "IfcSpace") {
 
-            godot::Color material_color = godot::Color(0.009,0.153,0.195, 0.502);
             element_material->set_transparency(godot::BaseMaterial3D::TRANSPARENCY_ALPHA);
+            godot::Color material_color = godot::Color(0.025, 0.037, 0.034, 0.1);
             element_material->set_albedo(material_color);
             element_material->set_shading_mode(godot::BaseMaterial3D::SHADING_MODE_UNSHADED);
+            element_material->set_grow_enabled(true);
+            element_material->set_grow(-0.001);
+            element_material->set_render_priority(-2);
+            
         }
-        else if (ifc_type == "IfcWindow")
+        else if (ifc_type == "IfcWindow" || ifc_type == "IfcDoor" || ifc_type == "IfcWall")
         {
-            godot::Color material_color = godot::Color(geom_data.color[0], geom_data.color[1], geom_data.color[2], geom_data.color[3]);
+            if (geom_data.color.a < 0.7)
+            {
+                element_material->set_transparency(godot::BaseMaterial3D::TRANSPARENCY_ALPHA);
+            }
+            godot::Color material_color = godot::Color(geom_data.color.r, geom_data.color.g, geom_data.color.b, geom_data.color.a);
             element_material->set_albedo(material_color);
-            element_material->set_transparency(godot::BaseMaterial3D::TRANSPARENCY_ALPHA);
+            element_material->set_render_priority(-1);
         }
         else 
         {
-            godot::Color material_color = godot::Color(geom_data.color[0], geom_data.color[1], geom_data.color[2]);
+            godot::Color material_color = godot::Color(geom_data.color.r, geom_data.color.g, geom_data.color.b, geom_data.color.a);
             element_material->set_albedo(material_color);
         }
         
@@ -133,7 +141,7 @@ void IFCBuilding::create_and_add_mesh(
 }
 
 // Main function to load the IFC file using web-ifc
-void IFCBuilding::read_ifc(godot::String path) {
+void GDIFCManager::read_ifc(godot::String path) {
     UtilityFunctions::print("Starting IFC file read...");
 
     webifc::manager::LoaderSettings set;

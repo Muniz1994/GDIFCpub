@@ -16,15 +16,15 @@
 #include <modelmanager/ModelManager.h>
 
 // Your existing class definition
-class IFCBuilding : public godot::Node3D {
-    GDCLASS(IFCBuilding, Node3D);
+class GDIFCManager : public godot::Node3D {
+    GDCLASS(GDIFCManager, Node3D);
 
 protected:
     static void _bind_methods();
 
 public:
-    IFCBuilding();
-    ~IFCBuilding();
+    GDIFCManager();
+    ~GDIFCManager();
 
     void read_ifc(godot::String path);
 

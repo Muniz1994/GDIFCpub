@@ -15,7 +15,7 @@ void initialize_example_module(ModuleInitializationLevel p_level)
         return;
     }
 
-    ClassDB::register_class<IFCBuilding>();
+    ClassDB::register_class<GDIFCManager>();
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level)
