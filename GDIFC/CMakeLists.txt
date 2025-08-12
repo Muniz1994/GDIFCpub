@@ -16,12 +16,14 @@ set(TARGET ${PROJECT_NAME}.${CMAKE_SYSTEM_NAME}.${CMAKE_BUILD_TYPE}.${BITS})
 string(TOLOWER ${TARGET} TARGET)
 
 set(EXT_SOURCES
-	src/gdifcreader.h
-	src/gdifcreader.cpp
+	"src/gd_ifc_manager.h"
+	"src/gd_ifc_manager.cpp"
 	src/register_types.h
-	src/register_types.cpp)
+	src/register_types.cpp
+	src/utils.h
+	src/utils.cpp)
 
-add_library(${TARGET} SHARED ${EXT_SOURCES})
+add_library(${TARGET} SHARED ${EXT_SOURCES} "src/gd_ifc_node.h" "src/gd_ifc_node.cpp")
 
 target_link_libraries(${TARGET} PUBLIC godot-cpp web-ifc)
 

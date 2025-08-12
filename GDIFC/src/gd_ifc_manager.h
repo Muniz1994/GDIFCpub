@@ -1,6 +1,8 @@
 #ifndef GDIFCREADER_H
 #define GDIFCREADER_H
 
+
+
 #include "godot_cpp/classes/node3d.hpp"
 #include "godot_cpp/classes/standard_material3d.hpp"
 #include "godot_cpp/classes/mesh_instance3d.hpp"
@@ -14,6 +16,8 @@
 #include <geometry/IfcGeometryProcessor.h>
 #include <schema/ifc-schema.h>
 #include <modelmanager/ModelManager.h>
+#include "utils.h"
+
 
 // Your existing class definition
 class GDIFCManager : public godot::Node3D {
@@ -35,7 +39,10 @@ private:
         webifc::geometry::IfcGeometryProcessor& geometryLoader,
         godot::Node3D* parent_node,
         godot::String& name,
-        std::string& ifc_type
+        std::string& ifc_type,
+        webifc::parsing::IfcLoader* loader,
+        webifc::manager::ModelManager manager,
+        uint32_t expressID
     );
 };
 

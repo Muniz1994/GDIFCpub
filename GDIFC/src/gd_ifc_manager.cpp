@@ -1,5 +1,6 @@
 // gdifcreader.cpp
-#include "gdifcreader.h"
+#include "gd_ifc_manager.h"
+#include "gd_ifc_node.h"
 
 #include "godot_cpp/classes/file_access.hpp"
 #include "godot_cpp/core/class_db.hpp"
@@ -12,6 +13,8 @@ using namespace godot;
 void GDIFCManager::_bind_methods() {
     ClassDB::bind_method(D_METHOD("read_ifc", "path"), &GDIFCManager::read_ifc);
 };
+
+
 
 GDIFCManager::GDIFCManager() {};
 GDIFCManager::~GDIFCManager() {};
@@ -33,12 +36,21 @@ void GDIFCManager::create_and_add_mesh(
     webifc::geometry::IfcGeometryProcessor& geometryLoader,
     godot::Node3D* parent_node,
     godot::String& name,
-    std::string& ifc_type) {
+    std::string& ifc_type,
+    webifc::parsing::IfcLoader *loader,
+    webifc::manager::ModelManager manager,
+    uint32_t expressID) {
 
-    Node3D* element_node = memnew(Node3D);
+    IFCNode* element_node = memnew(IFCNode);
     element_node->set_name(ifc_type.c_str());
 
     parent_node->add_child(element_node, true);
+
+    godot::Dictionary attrs = GetLine(loader, manager, expressID);
+
+
+    element_node->set_attributes(attrs);
+
 
     for (auto& geom_data : ifc_mesh.geometries) {
 
@@ -149,6 +161,8 @@ void GDIFCManager::read_ifc(godot::String path) {
     webifc::schema::IfcSchemaManager schemaManager;
     webifc::parsing::IfcLoader loader(set.TAPE_SIZE, set.MEMORY_LIMIT, set.LINEWRITER_BUFFER, schemaManager);
 
+    webifc::manager::ModelManager ifc_manager(true);
+
 
     // Read the file content as raw bytes, which is safer
     Ref<FileAccess> file = FileAccess::open(path, FileAccess::READ);
@@ -212,9 +226,12 @@ void GDIFCManager::read_ifc(godot::String path) {
             String name = class_name + "_" + String::num_int64(expressID);
 
             // Create the meshes
-            create_and_add_mesh(flat_mesh, geometryLoader, main_node, name, ifc_type);
+            create_and_add_mesh(flat_mesh, geometryLoader, main_node, name, ifc_type,&loader, ifc_manager, expressID);
         }
     }
 
     UtilityFunctions::print("IFC file processing complete.");
 }
+
+
+

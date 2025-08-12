@@ -1,6 +1,7 @@
 #include "register_types.h"
 
-#include "gdifcreader.h"
+#include "gd_ifc_manager.h"
+#include "gd_ifc_node.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
@@ -16,6 +17,8 @@ void initialize_example_module(ModuleInitializationLevel p_level)
     }
 
     ClassDB::register_class<GDIFCManager>();
+    ClassDB::register_class<IFCNode>();
+
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level)
