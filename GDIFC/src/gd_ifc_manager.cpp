@@ -7,11 +7,12 @@
 #include "godot_cpp/variant/utility_functions.hpp"
 
 
+
 using namespace godot;
 
 // Binds the new method for use in Godot scripts
 void GDIFCManager::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("read_ifc", "path"), &GDIFCManager::read_ifc);
+    ClassDB::bind_method(D_METHOD("read_ifc", "path", "create_collision"), &GDIFCManager::read_ifc);
 };
 
 
@@ -39,18 +40,22 @@ void GDIFCManager::create_and_add_mesh(
     std::string& ifc_type,
     webifc::parsing::IfcLoader *loader,
     webifc::manager::ModelManager manager,
-    uint32_t expressID) {
+    uint32_t expressID,
+    bool create_collision) {
 
     IFCNode* element_node = memnew(IFCNode);
+
     element_node->set_name(ifc_type.c_str());
 
     parent_node->add_child(element_node, true);
 
-    godot::Dictionary attrs = GetLine(loader, manager, expressID);
+    //godot::Dictionary attrs = GetLine(loader, manager, expressID);
 
+    //godot::Array props = getPropertySets(manager, loader, expressID, true, true);
 
-    element_node->set_attributes(attrs);
+    //element_node->set_properties(props);
 
+    //element_node->set_attributes(attrs);
 
     for (auto& geom_data : ifc_mesh.geometries) {
 
@@ -125,7 +130,7 @@ void GDIFCManager::create_and_add_mesh(
             element_material->set_render_priority(-2);
             
         }
-        else if (ifc_type == "IfcWindow" || ifc_type == "IfcDoor" || ifc_type == "IfcWall")
+        else if (ifc_type == "IfcWindow" || ifc_type == "IfcDoor" || ifc_type == "IfcWall" || ifc_type == "IfcPlate")
         {
             if (geom_data.color.a < 0.7)
             {
@@ -148,12 +153,18 @@ void GDIFCManager::create_and_add_mesh(
         gd_mesh->set_surface_override_material(0, element_material);
         gd_mesh->set_name(ifc_type.c_str() + String("_geom"));
 
+        if (create_collision)
+        {
+            gd_mesh->create_trimesh_collision();
+        }
+
         element_node->add_child(gd_mesh, true);
     }
 }
 
 // Main function to load the IFC file using web-ifc
-void GDIFCManager::read_ifc(godot::String path) {
+void GDIFCManager::read_ifc(godot::String path, bool create_collision) {
+
     UtilityFunctions::print("Starting IFC file read...");
 
     webifc::manager::LoaderSettings set;
@@ -190,18 +201,17 @@ void GDIFCManager::read_ifc(godot::String path) {
         set.toleranceInsideOutsideToPlane, set.toleranceInsideOutside,
         set.toleranceScalarEquality, set.addPlaneIterations);
 
+
     // Create a new Node3D to hold the entire scene
     Node3D* main_node = memnew(Node3D);
-    main_node->set_name("IFCModel_Root");
+    main_node->set_name("IFCModel");
     add_child(main_node, true);
-
 
 
     // Iterate through all geometric elements and create meshes
     for (auto type : schemaManager.GetIfcElementList()) {
 
         auto expressIDs = loader.GetExpressIDsWithType(type);
-
 
 
         for (uint32_t expressID : expressIDs) {
@@ -226,7 +236,7 @@ void GDIFCManager::read_ifc(godot::String path) {
             String name = class_name + "_" + String::num_int64(expressID);
 
             // Create the meshes
-            create_and_add_mesh(flat_mesh, geometryLoader, main_node, name, ifc_type,&loader, ifc_manager, expressID);
+            create_and_add_mesh(flat_mesh, geometryLoader, main_node, name, ifc_type,&loader, ifc_manager, expressID, create_collision);
         }
     }
 

@@ -30,7 +30,7 @@ public:
     GDIFCManager();
     ~GDIFCManager();
 
-    void read_ifc(godot::String path);
+    void read_ifc(godot::String path, bool create_collision = false);
 
 private:
     // Helper function to create Godot mesh from web-ifc data
@@ -42,7 +42,8 @@ private:
         std::string& ifc_type,
         webifc::parsing::IfcLoader* loader,
         webifc::manager::ModelManager manager,
-        uint32_t expressID
+        uint32_t expressID,
+        bool create_collision = false
     );
 };
 

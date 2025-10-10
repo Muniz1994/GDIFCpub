@@ -22,9 +22,13 @@ public:
     godot::Dictionary get_attributes();
     void set_attributes(godot::Dictionary dict);
 
+    godot::Array get_properties();
+    void set_properties(godot::Array props);
+
 private:
 
     godot::Dictionary attributes;
+    godot::Array properties;
     // Helper function to create Godot mesh from web-ifc data
 
 };

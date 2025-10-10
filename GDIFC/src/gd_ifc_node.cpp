@@ -28,4 +28,13 @@ void IFCNode::set_attributes(godot::Dictionary dict)
 {
     attributes = dict;
 }
+godot::Array IFCNode::get_properties()
+{
+    return properties;
+}
+void IFCNode::set_properties(godot::Array props)
+{
+    properties = props;
+
+}
 ;

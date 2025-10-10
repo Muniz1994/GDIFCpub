@@ -1,5 +1,6 @@
 #include "utils.h"
 
+
 godot::Variant ReadValue(webifc::parsing::IfcLoader* loader, webifc::parsing::IfcTokenType t)
 {
 
@@ -126,7 +127,9 @@ godot::Dictionary GetLine(webifc::parsing::IfcLoader* loader, webifc::manager::M
         return emscripten::val::object();*/
     if (!loader->IsValidExpressID(expressID))
         return godot::Dictionary();
+
     uint32_t lineType = loader->GetLineType(expressID);
+
     if (lineType == 0)
         return godot::Dictionary();
 
@@ -139,4 +142,114 @@ godot::Dictionary GetLine(webifc::parsing::IfcLoader* loader, webifc::manager::M
     retVal["type"] = lineType;
     retVal["arguments"] = arguments;
     return retVal;
+}
+
+// might be wrong cause the original one deal with types instead of a single type
+std::vector<uint32_t> GetLineIDsWithType(webifc::parsing::IfcLoader* loader, unsigned int type)
+{
+    std::vector<uint32_t> expressIDs;
+
+    
+    auto ids = loader->GetExpressIDsWithType(type);
+    expressIDs.insert(expressIDs.end(), ids.begin(), ids.end());
+
+
+    return expressIDs;
+}
+
+
+godot::Array getRelatedProperties(webifc::manager::ModelManager manager, webifc::parsing::IfcLoader* loader, uint32_t elementID, PropsDetail propsName, bool recursive) {
+    
+    auto result = godot::Array();
+
+    godot::Array rels;
+
+    if (elementID != 0) {
+
+        godot::Dictionary line = GetLine(loader, manager, elementID);
+
+        if (line.has(propsName.key.c_str())) {
+
+            rels = line[propsName.key.c_str()];
+        }
+    }
+    else {
+
+        auto vec = GetLineIDsWithType(loader, propsName.name);
+        for (uint32_t i = 0; i < vec.size(); ++i) {
+            godot::Dictionary rel;
+            rel["value"] = vec[i];
+            rels.append(rel);
+        }
+    }
+
+    if (rels.is_empty()) {
+        return result;
+    }
+
+    for (int i = 0; i < rels.size(); ++i) {
+        godot::Dictionary rel = rels[i];
+        if (!rel.has("value")) {
+            continue;
+        }
+
+        uint32_t relId = rel["value"];
+        godot::Dictionary line = GetLine(loader, manager, relId);
+        if (!line.has(propsName.relating.c_str())) {
+            continue;
+        }
+
+        godot::Array propSetIds = line[propsName.relating.c_str()];
+        for (int x = 0; x < propSetIds.size(); ++x) {
+            godot::Dictionary propSetId = propSetIds[x];
+            if (!propSetId.has("value")) {
+                continue;
+            }
+            uint32_t propId = propSetId["value"];
+            result.append(GetLine(loader, manager, propId));
+        }
+    }
+    return result;
+}
+
+
+godot::Array getPropertySets(webifc::manager::ModelManager manager, webifc::parsing::IfcLoader* loader, uint32_t elementID, bool recursive, bool includeTypeProperties) {
+   
+    if (includeTypeProperties) {
+
+        godot::Array types = getTypeProperties(manager, loader, elementID, false);
+
+        godot::Array results;
+
+        for (int i = 0; i < types.size(); ++i) {
+            godot::Dictionary type = types[i];
+            if (type.has("ID")) {
+                uint32_t typeID = type["ID"];
+                godot::Array psets = getPropertySets(manager, loader, typeID, recursive);
+                for (int j = 0; j < psets.size(); ++j) {
+                    results.append(psets[j]);
+                }
+            }
+        }
+        return results;
+    }
+    else {
+        return getRelatedProperties(manager, loader, elementID, PropsNames.at("psets"), recursive);
+    }
+}
+
+godot::Array getTypeProperties(webifc::manager::ModelManager manager, webifc::parsing::IfcLoader* loader, uint32_t modelID, uint32_t elementID, bool recursive) {
+    
+    if (loader->GetSchema() == IFC_SCHEMA::IFC2X3) {
+
+        return getRelatedProperties(manager, loader, elementID, PropsNames.at("type"), recursive);
+    }
+    else {
+        
+        PropsDetail typeProps = PropsNames.at("type");
+
+        typeProps.key = "IsTypedBy";
+
+        return getRelatedProperties(manager, loader, elementID, typeProps, recursive);
+    }
 }
