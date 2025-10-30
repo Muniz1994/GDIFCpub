@@ -1,7 +1,7 @@
 #ifndef GDIFCREADER_H
 #define GDIFCREADER_H
 
-
+#include<memory>
 
 #include "godot_cpp/classes/node3d.hpp"
 #include "godot_cpp/classes/standard_material3d.hpp"
@@ -36,11 +36,11 @@ private:
     // Helper function to create Godot mesh from web-ifc data
     void create_and_add_mesh(
         webifc::geometry::IfcFlatMesh& ifc_mesh,
-        webifc::geometry::IfcGeometryProcessor& geometryLoader,
+        std::unique_ptr<webifc::geometry::IfcGeometryProcessor> &geometryLoader,
         godot::Node3D* parent_node,
         godot::String& name,
         std::string& ifc_type,
-        webifc::parsing::IfcLoader* loader,
+        std::unique_ptr<webifc::parsing::IfcLoader> &loader,
         webifc::manager::ModelManager manager,
         uint32_t expressID,
         bool create_collision = false

@@ -34,11 +34,11 @@ static Vector3 glm_to_godot_vec3(const glm::dvec3& v) {
 // Helper function to create a mesh from web-ifc data
 void GDIFCManager::create_and_add_mesh(
     webifc::geometry::IfcFlatMesh& ifc_mesh,
-    webifc::geometry::IfcGeometryProcessor& geometryLoader,
+    std::unique_ptr<webifc::geometry::IfcGeometryProcessor> &geometryLoader,
     godot::Node3D* parent_node,
     godot::String& name,
     std::string& ifc_type,
-    webifc::parsing::IfcLoader *loader,
+    std::unique_ptr<webifc::parsing::IfcLoader> &loader,
     webifc::manager::ModelManager manager,
     uint32_t expressID,
     bool create_collision) {
@@ -49,7 +49,7 @@ void GDIFCManager::create_and_add_mesh(
 
     parent_node->add_child(element_node, true);
 
-    //godot::Dictionary attrs = GetLine(loader, manager, expressID);
+ /*   godot::Dictionary attrs = (loader, manager, expressID);*/
 
     //godot::Array props = getPropertySets(manager, loader, expressID, true, true);
 
@@ -59,7 +59,7 @@ void GDIFCManager::create_and_add_mesh(
 
     for (auto& geom_data : ifc_mesh.geometries) {
 
-        auto ifc_geometry = geometryLoader.GetGeometry(geom_data.geometryExpressID);
+        auto ifc_geometry = geometryLoader->GetGeometry(geom_data.geometryExpressID);
 
         // CRITICAL FIX: Check if the geometry object is valid before accessing it.
         if (ifc_geometry.numPoints == 0 || ifc_geometry.numFaces == 0) {
@@ -72,7 +72,7 @@ void GDIFCManager::create_and_add_mesh(
 
         vertices.resize(ifc_geometry.numPoints);
         normals.resize(ifc_geometry.numPoints);
-        indices.resize(ifc_geometry.numFaces * 3);
+        indices.resize(static_cast<int64_t>(ifc_geometry.numFaces) * 3);
 
         // Get vertices and apply transformation
         for (uint32_t i = 0; i < ifc_geometry.numPoints; i++) {
@@ -84,23 +84,23 @@ void GDIFCManager::create_and_add_mesh(
         // Get indices
         for (uint32_t i = 0; i < ifc_geometry.numFaces; i++) {
             bimGeometry::Face face = ifc_geometry.GetFace(i);
-            indices[i * 3 + 0] = face.i0;
-            indices[i * 3 + 1] = face.i1;
-            indices[i * 3 + 2] = face.i2;
+            indices[static_cast<int64_t>(i) * 3 + 0] = face.i0;
+            indices[static_cast<int64_t>(i) * 3 + 1] = face.i1;
+            indices[static_cast<int64_t>(i) * 3 + 2] = face.i2;
         }
 
-        // Calculate normals (as before)
+        // Calculate normals
         normals.resize(ifc_geometry.numPoints);
         for (uint32_t i = 0; i < ifc_geometry.numFaces; i++) {
             bimGeometry::Face face = ifc_geometry.GetFace(i);
-            Vector3 p0 = vertices[face.i0];
+            Vector3 p0 = vertices[face.i2];
             Vector3 p1 = vertices[face.i1];
-            Vector3 p2 = vertices[face.i2];
+            Vector3 p2 = vertices[face.i0];
             Vector3 normal = (p1 - p0).cross(p2 - p0).normalized();
 
-            normals[face.i0] = -normal;
-            normals[face.i1] = -normal;
-            normals[face.i2] = -normal;
+            normals[face.i0] = normal;
+            normals[face.i1] = normal;
+            normals[face.i2] = normal;
         }
 
         Ref<ArrayMesh> gd_array_mesh;
@@ -167,58 +167,31 @@ void GDIFCManager::read_ifc(godot::String path, bool create_collision) {
 
     UtilityFunctions::print("Starting IFC file read...");
 
-    webifc::manager::LoaderSettings set;
+    IFCManager ifc_manager = IFCManager();
 
-    webifc::schema::IfcSchemaManager schemaManager;
-    webifc::parsing::IfcLoader loader(set.TAPE_SIZE, set.MEMORY_LIMIT, set.LINEWRITER_BUFFER, schemaManager);
-
-    webifc::manager::ModelManager ifc_manager(true);
-
-
-    // Read the file content as raw bytes, which is safer
-    Ref<FileAccess> file = FileAccess::open(path, FileAccess::READ);
-    if (!file.is_valid()) {
-        UtilityFunctions::print("Error: Could not open file at path ", path);
-        return;
-    }
-    PackedByteArray file_data = file->get_buffer(file->get_length());
-
-    // Load the IFC file into the web-ifc loader
-    loader.LoadFile([&](char* dest, size_t sourceOffset, size_t destSize) -> size_t {
-        uint32_t length = MIN((size_t)file_data.size() - sourceOffset, destSize);
-        if (length > 0) {
-            memcpy(dest, &file_data.ptr()[sourceOffset], length);
-        }
-        return length;
-        });
+    ifc_manager.read_ifc_file(path.utf8().get_data());
 
     UtilityFunctions::print("IFC file successfully loaded into web-ifc loader.");
-
-    // Initialize geometry processor
-    webifc::geometry::IfcGeometryProcessor geometryLoader(
-        loader, schemaManager, set.CIRCLE_SEGMENTS, set.COORDINATE_TO_ORIGIN,
-        set.tolerancePlaneIntersection, set.toleranceBoundaryPoint,
-        set.toleranceInsideOutsideToPlane, set.toleranceInsideOutside,
-        set.toleranceScalarEquality, set.addPlaneIterations);
-
 
     // Create a new Node3D to hold the entire scene
     Node3D* main_node = memnew(Node3D);
     main_node->set_name("IFCModel");
     add_child(main_node, true);
 
+    ifc_manager.initialize_geometry_processor();
 
     // Iterate through all geometric elements and create meshes
-    for (auto type : schemaManager.GetIfcElementList()) {
+    for (auto type : ifc_manager.schemaManager.GetIfcElementList()) { 
 
-        auto expressIDs = loader.GetExpressIDsWithType(type);
+        auto expressIDs = ifc_manager.loader->GetExpressIDsWithType(type);
 
 
         for (uint32_t expressID : expressIDs) {
 
-            auto flat_mesh = geometryLoader.GetFlatMesh(expressID);
 
-            auto ifc_type = schemaManager.IfcTypeCodeToType(loader.GetLineType(expressID));
+            auto flat_mesh = ifc_manager.geometry_loader->GetFlatMesh(expressID);
+
+            auto ifc_type = ifc_manager.schemaManager.IfcTypeCodeToType(ifc_manager.loader->GetLineType(expressID));
 
 
             // Safety check for empty meshes
@@ -236,7 +209,7 @@ void GDIFCManager::read_ifc(godot::String path, bool create_collision) {
             String name = class_name + "_" + String::num_int64(expressID);
 
             // Create the meshes
-            create_and_add_mesh(flat_mesh, geometryLoader, main_node, name, ifc_type,&loader, ifc_manager, expressID, create_collision);
+            create_and_add_mesh(flat_mesh, ifc_manager.geometry_loader, main_node, name, ifc_type, ifc_manager.loader, ifc_manager.model_manager, expressID, create_collision);
         }
     }
 

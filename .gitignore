@@ -58,6 +58,5 @@ _deps
 /.vscode
 godot-cpp
 /out
-/web-ifc
+
 .vs
-/ifc-godot-project

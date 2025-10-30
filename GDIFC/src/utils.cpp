@@ -1,18 +1,36 @@
 #include "utils.h"
 
 
-godot::Variant ReadValue(webifc::parsing::IfcLoader* loader, webifc::parsing::IfcTokenType t)
+void IFCManager::read_ifc_file(std::string path) const
+{
+
+    // 1. Open a file for reading
+    std::ifstream file_stream(path);
+    if (file_stream.is_open()) {
+        // 3. Pass the stream object (by reference) to loadfile
+        //    'file_stream' is an object of a class derived from std::istream.
+        this->loader->LoadFile(file_stream);
+
+        file_stream.close();
+    }
+    else {
+        godot::UtilityFunctions::print("Error: Could not read ifc file");
+    }
+}
+
+// old ReadValue
+godot::Variant IFCManager::get_value_from_token(webifc::parsing::IfcTokenType t)
 {
 
     switch (t)
     {
     case webifc::parsing::IfcTokenType::STRING:
     {
-        return loader->GetDecodedStringArgument().c_str();
+        return this->loader->GetDecodedStringArgument().c_str();
     }
     case webifc::parsing::IfcTokenType::ENUM:
     {
-        std::string_view s = loader->GetStringArgument();
+        std::string_view s = this->loader->GetStringArgument();
         if (s == "T")
         {
             return true;
@@ -29,17 +47,17 @@ godot::Variant ReadValue(webifc::parsing::IfcLoader* loader, webifc::parsing::If
     }
     case webifc::parsing::IfcTokenType::REAL:
     {
-        std::string_view s = loader->GetDoubleArgumentAsString();
+        std::string_view s = this->loader->GetDoubleArgumentAsString();
         return std::string(s).c_str();
     }
     case webifc::parsing::IfcTokenType::INTEGER:
     {
-        long d = loader->GetIntArgument();
+        long d = this->loader->GetIntArgument();
         return (int64_t)d;
     }
     case webifc::parsing::IfcTokenType::REF:
     {
-        uint32_t ref = loader->GetRefArgument();
+        uint32_t ref = this->loader->GetRefArgument();
         return ref;
     }
     default:
@@ -48,15 +66,14 @@ godot::Variant ReadValue(webifc::parsing::IfcLoader* loader, webifc::parsing::If
     }
 }
 
-
-
-godot::Array GetArgs(webifc::parsing::IfcLoader *loader, webifc::manager::ModelManager manager, bool inObject, bool inList)
+// old GetArgs
+godot::Array IFCManager::get_args(bool inObject, bool inList)
 {
     auto arguments = godot::Array();
     bool endOfLine = false;
     while (!loader->IsAtEnd() && !endOfLine)
     {
-        webifc::parsing::IfcTokenType t = loader->GetTokenType();
+        webifc::parsing::IfcTokenType t = this->loader->GetTokenType();
 
         switch (t)
         {
@@ -72,7 +89,7 @@ godot::Array GetArgs(webifc::parsing::IfcLoader *loader, webifc::manager::ModelM
         }
         case webifc::parsing::IfcTokenType::SET_BEGIN:
         {
-            arguments.append(GetArgs(loader, manager, false, true));
+            arguments.append(get_args(false, true));
             break;
         }
         case webifc::parsing::IfcTokenType::SET_END:
@@ -87,11 +104,11 @@ godot::Array GetArgs(webifc::parsing::IfcLoader *loader, webifc::manager::ModelM
             obj["type"] = (static_cast<uint32_t>(webifc::parsing::IfcTokenType::LABEL));
             loader->StepBack();
             auto s = loader->GetStringArgument();
-            auto typeCode = manager.GetSchemaManager().IfcTypeToTypeCode(s);
+            auto typeCode = this->model_manager.GetSchemaManager().IfcTypeToTypeCode(s);
             obj["typecode"] = (typeCode);
             // read set open
             loader->GetTokenType();
-            obj["value"] = GetArgs(loader, manager);
+            obj["value"] = get_args();
             arguments.append(obj);
             break;
         }
@@ -104,12 +121,12 @@ godot::Array GetArgs(webifc::parsing::IfcLoader *loader, webifc::manager::ModelM
             loader->StepBack();
             godot::Dictionary obj;
             if (inObject)
-                obj = ReadValue(loader, t);
+                obj = get_value_from_token(t);
             else
             {
                 obj = godot::Dictionary();
                 obj["type"] = (static_cast<uint32_t>(t));
-                obj["value"] = ReadValue(loader, t);
+                obj["value"] = get_value_from_token(t);
             }
             arguments.append( obj);
             break;
@@ -121,21 +138,19 @@ godot::Array GetArgs(webifc::parsing::IfcLoader *loader, webifc::manager::ModelM
     return arguments;
 }
 
-godot::Dictionary GetLine(webifc::parsing::IfcLoader* loader, webifc::manager::ModelManager manager, uint32_t expressID)
+godot::Dictionary IFCManager::get_express_line(uint32_t expressID)
 {
-    /*if (!manager.IsModelOpen(modelID))
-        return emscripten::val::object();*/
-    if (!loader->IsValidExpressID(expressID))
+    if (!this->loader->IsValidExpressID(expressID))
         return godot::Dictionary();
 
-    uint32_t lineType = loader->GetLineType(expressID);
+    uint32_t lineType = this->loader->GetLineType(expressID);
 
     if (lineType == 0)
         return godot::Dictionary();
 
-    loader->MoveToArgumentOffset(expressID, 0);
+    this->loader->MoveToArgumentOffset(expressID, 0);
 
-    auto arguments = GetArgs(loader,manager);
+    auto arguments = get_args();
 
     auto retVal = godot::Dictionary();
     retVal["ID"] = expressID;
@@ -144,13 +159,27 @@ godot::Dictionary GetLine(webifc::parsing::IfcLoader* loader, webifc::manager::M
     return retVal;
 }
 
+std::vector<godot::Dictionary> IFCManager::get_express_lines(const std::vector<uint32_t>& expressIDs)
+{
+    std::vector<godot::Dictionary> result;
+
+
+    for (uint32_t expressID : expressIDs)
+    {
+
+        result.push_back(get_express_line(expressID));
+    }
+
+    return result;
+}
+
 // might be wrong cause the original one deal with types instead of a single type
-std::vector<uint32_t> GetLineIDsWithType(webifc::parsing::IfcLoader* loader, unsigned int type)
+std::vector<uint32_t> IFCManager::get_express_ids_with_type(unsigned int type)
 {
     std::vector<uint32_t> expressIDs;
 
     
-    auto ids = loader->GetExpressIDsWithType(type);
+    auto ids = this->loader->GetExpressIDsWithType(type);
     expressIDs.insert(expressIDs.end(), ids.begin(), ids.end());
 
 
@@ -158,7 +187,7 @@ std::vector<uint32_t> GetLineIDsWithType(webifc::parsing::IfcLoader* loader, uns
 }
 
 
-godot::Array getRelatedProperties(webifc::manager::ModelManager manager, webifc::parsing::IfcLoader* loader, uint32_t elementID, PropsDetail propsName, bool recursive) {
+godot::Array IFCManager::get_related_properties(uint32_t elementID, PropsDetail propsName, bool recursive) {
     
     auto result = godot::Array();
 
@@ -166,7 +195,7 @@ godot::Array getRelatedProperties(webifc::manager::ModelManager manager, webifc:
 
     if (elementID != 0) {
 
-        godot::Dictionary line = GetLine(loader, manager, elementID);
+        godot::Dictionary line = get_express_line(elementID);
 
         if (line.has(propsName.key.c_str())) {
 
@@ -175,7 +204,7 @@ godot::Array getRelatedProperties(webifc::manager::ModelManager manager, webifc:
     }
     else {
 
-        auto vec = GetLineIDsWithType(loader, propsName.name);
+        auto vec = get_express_ids_with_type(propsName.name);
         for (uint32_t i = 0; i < vec.size(); ++i) {
             godot::Dictionary rel;
             rel["value"] = vec[i];
@@ -194,7 +223,7 @@ godot::Array getRelatedProperties(webifc::manager::ModelManager manager, webifc:
         }
 
         uint32_t relId = rel["value"];
-        godot::Dictionary line = GetLine(loader, manager, relId);
+        godot::Dictionary line = get_express_line(relId);
         if (!line.has(propsName.relating.c_str())) {
             continue;
         }
@@ -206,18 +235,18 @@ godot::Array getRelatedProperties(webifc::manager::ModelManager manager, webifc:
                 continue;
             }
             uint32_t propId = propSetId["value"];
-            result.append(GetLine(loader, manager, propId));
+            result.append(get_express_line(propId));
         }
     }
     return result;
 }
 
 
-godot::Array getPropertySets(webifc::manager::ModelManager manager, webifc::parsing::IfcLoader* loader, uint32_t elementID, bool recursive, bool includeTypeProperties) {
+godot::Array IFCManager::get_property_sets(uint32_t elementID, bool recursive, bool includeTypeProperties) {
    
     if (includeTypeProperties) {
 
-        godot::Array types = getTypeProperties(manager, loader, elementID, false);
+        godot::Array types = get_type_properties(elementID, false);
 
         godot::Array results;
 
@@ -225,7 +254,7 @@ godot::Array getPropertySets(webifc::manager::ModelManager manager, webifc::pars
             godot::Dictionary type = types[i];
             if (type.has("ID")) {
                 uint32_t typeID = type["ID"];
-                godot::Array psets = getPropertySets(manager, loader, typeID, recursive);
+                godot::Array psets = get_property_sets(typeID, recursive);
                 for (int j = 0; j < psets.size(); ++j) {
                     results.append(psets[j]);
                 }
@@ -234,15 +263,15 @@ godot::Array getPropertySets(webifc::manager::ModelManager manager, webifc::pars
         return results;
     }
     else {
-        return getRelatedProperties(manager, loader, elementID, PropsNames.at("psets"), recursive);
+        return get_related_properties(elementID, PropsNames.at("psets"), recursive);
     }
 }
 
-godot::Array getTypeProperties(webifc::manager::ModelManager manager, webifc::parsing::IfcLoader* loader, uint32_t modelID, uint32_t elementID, bool recursive) {
+godot::Array IFCManager::get_type_properties( uint32_t modelID, uint32_t elementID, bool recursive) {
     
     if (loader->GetSchema() == IFC_SCHEMA::IFC2X3) {
 
-        return getRelatedProperties(manager, loader, elementID, PropsNames.at("type"), recursive);
+        return get_related_properties(elementID, PropsNames.at("type"), recursive);
     }
     else {
         
@@ -250,6 +279,30 @@ godot::Array getTypeProperties(webifc::manager::ModelManager manager, webifc::pa
 
         typeProps.key = "IsTypedBy";
 
-        return getRelatedProperties(manager, loader, elementID, typeProps, recursive);
+        return get_related_properties( elementID, typeProps, recursive);
     }
 }
+
+void IFCManager::initialize_geometry_processor()
+{
+
+    this->geometry_loader = std::make_unique<webifc::geometry::IfcGeometryProcessor>(
+        *this->loader, this->schemaManager, this->set.CIRCLE_SEGMENTS, this->set.COORDINATE_TO_ORIGIN,
+        this->set.tolerancePlaneIntersection, this->set.toleranceBoundaryPoint,
+        this->set.toleranceInsideOutsideToPlane, this->set.toleranceInsideOutside,
+        this->set.toleranceScalarEquality, this->set.addPlaneIterations);
+}
+
+
+// IFC-engine-API start
+
+//std::vector<std::string> get_lines(float _model_id, std::vector<int> express_ids, bool flatten = false, bool inverse = false, std::optional<std::string> inversePropKey = std::nullopt)
+//{
+//
+//    std::vector<std::string> output_line_data;
+//
+//    auto raw_lines_data = GetLines;
+//
+//
+//
+//};

@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://wnuu4v470j8h"]
+
+[ext_resource type="Script" uid="uid://c67jlc4ke30ol" path="res://gdifc_manager.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://cc5ldhvghp6bk" path="res://addons/Free fly camera/Src/free_fly_startup.gd" id="2_0xm2m"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig7tw"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_0xm2m"]
+sky_material = SubResource("ProceduralSkyMaterial_ig7tw")
+
+[sub_resource type="Environment" id="Environment_h2yge"]
+background_mode = 2
+background_color = Color(0.8615058, 0.93436295, 0.97796375, 1)
+sky = SubResource("Sky_0xm2m")
+tonemap_mode = 2
+ssao_enabled = true
+ssao_intensity = 3.55
+ssao_power = 0.8038304
+ssao_detail = 1.84
+ssao_horizon = 0.16
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+volumetric_fog_density = 0.005
+volumetric_fog_albedo = Color(0.41982925, 0.33817932, 0.26315123, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_h2yge"]
+
+[node name="Main" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.545301, -0.6610862, -0.51537544, -0.6727902, -0.02156551, 0.7395189, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_h2yge")
+
+[node name="GDIFCManager" type="GDIFCManager" parent="."]
+script = ExtResource("1_ig7tw")
+
+[node name="Free fly camera" type="CharacterBody3D" parent="."]
+script = ExtResource("2_0xm2m")
+metadata/_custom_type_script = "uid://cc5ldhvghp6bk"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Free fly camera"]
+shape = SubResource("SphereShape3D_h2yge")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Free fly camera"]
