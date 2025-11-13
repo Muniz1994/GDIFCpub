@@ -200,7 +200,7 @@ void GDIFCManager::read_ifc(godot::String path, bool create_collision) {
 
         for (uint32_t expressID : expressIDs) {
 
-            auto alpha_data = file.instance_by_id(expressID);
+            
 
             auto flat_mesh = ifc_manager.geometry_loader->GetFlatMesh(expressID);
 
@@ -223,6 +223,9 @@ void GDIFCManager::read_ifc(godot::String path, bool create_collision) {
 
             godot::Dictionary props;
 
+            // Get the instance with IfcParse
+            auto alpha_data = file.instance_by_id(expressID);
+
             if (alpha_data->as<Ifc4::IfcRoot>())
             {
                 auto data = alpha_data->as<Ifc4::IfcRoot>();
@@ -241,6 +244,4 @@ void GDIFCManager::read_ifc(godot::String path, bool create_collision) {
 
     UtilityFunctions::print("IFC file processing complete.");
 }
-
-
 
