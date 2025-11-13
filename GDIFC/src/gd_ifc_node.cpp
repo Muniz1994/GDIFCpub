@@ -11,6 +11,7 @@ using namespace godot;
 // Binds the new method for use in Godot scripts
 void IFCNode::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_attributes"), &IFCNode::get_attributes);
+    ClassDB::bind_method(D_METHOD("get_properties"), &IFCNode::get_properties);
 };
 
 
@@ -28,11 +29,11 @@ void IFCNode::set_attributes(godot::Dictionary dict)
 {
     attributes = dict;
 }
-godot::Array IFCNode::get_properties()
+godot::Dictionary IFCNode::get_properties()
 {
     return properties;
 }
-void IFCNode::set_properties(godot::Array props)
+void IFCNode::set_properties(godot::Dictionary props)
 {
     properties = props;
 

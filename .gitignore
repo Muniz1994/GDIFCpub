@@ -60,3 +60,4 @@ godot-cpp
 /out
 
 .vs
+/vcpkg_installed

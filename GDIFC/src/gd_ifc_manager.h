@@ -19,6 +19,15 @@
 #include "utils.h"
 
 
+#include <Ifc4.h>
+
+#include <IfcFile.h>
+#include <IfcLogger.h>
+#include <FileReader.h>
+
+#define IfcSchema Ifc4
+
+
 // Your existing class definition
 class GDIFCManager : public godot::Node3D {
     GDCLASS(GDIFCManager, Node3D);
@@ -43,6 +52,7 @@ private:
         std::unique_ptr<webifc::parsing::IfcLoader> &loader,
         webifc::manager::ModelManager manager,
         uint32_t expressID,
+        godot::Dictionary props,
         bool create_collision = false
     );
 };

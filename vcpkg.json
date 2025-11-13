@@ -1,0 +1,17 @@
+{
+  "dependencies": [
+    "boost-algorithm",
+    "boost-circular-buffer",
+    "boost-dynamic-bitset",
+    "boost-filesystem",
+    "boost-lexical-cast",
+    "boost-locale",
+    "boost-logic",
+    "boost-math",
+    "boost-multi-index",
+    "boost-property-tree",
+    "boost-scope-exit",
+    "boost-system",
+    "boost-uuid"
+  ]
+}

@@ -25,7 +25,7 @@ set(EXT_SOURCES
 
 add_library(${TARGET} SHARED ${EXT_SOURCES} "src/gd_ifc_node.h" "src/gd_ifc_node.cpp")
 
-target_link_libraries(${TARGET} PUBLIC godot-cpp web-ifc)
+target_link_libraries(${TARGET} PUBLIC godot-cpp web-ifc IfcParse)
 
 target_include_directories(${TARGET} PUBLIC ${PROJECT_SOURCE_DIR}/godot-cpp/include)
 

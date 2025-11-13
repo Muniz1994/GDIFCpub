@@ -12,6 +12,11 @@ func test_function_speed():
 
 	# Call the function to be timed
 	read_ifc("C:\\Users\\engbr\\Documents\\GitHub\\IFcFiles\\MainBuilding.ifc",false)
+	
+	for i in get_children():
+		for y in i.get_children():
+			if y.get_properties():
+				print(y.get_properties())
 
 	# Record the end time
 	var end_time = Time.get_ticks_msec()

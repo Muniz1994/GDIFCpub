@@ -34,18 +34,21 @@ static Vector3 glm_to_godot_vec3(const glm::dvec3& v) {
 // Helper function to create a mesh from web-ifc data
 void GDIFCManager::create_and_add_mesh(
     webifc::geometry::IfcFlatMesh& ifc_mesh,
-    std::unique_ptr<webifc::geometry::IfcGeometryProcessor> &geometryLoader,
+    std::unique_ptr<webifc::geometry::IfcGeometryProcessor>& geometryLoader,
     godot::Node3D* parent_node,
     godot::String& name,
     std::string& ifc_type,
-    std::unique_ptr<webifc::parsing::IfcLoader> &loader,
+    std::unique_ptr<webifc::parsing::IfcLoader>& loader,
     webifc::manager::ModelManager manager,
     uint32_t expressID,
+    godot::Dictionary props,
     bool create_collision) {
 
     IFCNode* element_node = memnew(IFCNode);
 
     element_node->set_name(ifc_type.c_str());
+
+    element_node->set_properties(props);
 
     parent_node->add_child(element_node, true);
 
@@ -173,6 +176,15 @@ void GDIFCManager::read_ifc(godot::String path, bool create_collision) {
 
     UtilityFunctions::print("IFC file successfully loaded into web-ifc loader.");
 
+    IfcParse::IfcFile file(path.utf8().get_data());
+
+    if (!file.good()) {
+        UtilityFunctions::print("IFC file not loaded into IfcParser loader.");
+    }
+    else {
+        UtilityFunctions::print("IFC file successfully loaded into IfcParser loader.");
+    }
+
     // Create a new Node3D to hold the entire scene
     Node3D* main_node = memnew(Node3D);
     main_node->set_name("IFCModel");
@@ -188,6 +200,7 @@ void GDIFCManager::read_ifc(godot::String path, bool create_collision) {
 
         for (uint32_t expressID : expressIDs) {
 
+            auto alpha_data = file.instance_by_id(expressID);
 
             auto flat_mesh = ifc_manager.geometry_loader->GetFlatMesh(expressID);
 
@@ -208,8 +221,21 @@ void GDIFCManager::read_ifc(godot::String path, bool create_collision) {
 
             String name = class_name + "_" + String::num_int64(expressID);
 
+            godot::Dictionary props;
+
+            if (alpha_data->as<Ifc4::IfcRoot>())
+            {
+                auto data = alpha_data->as<Ifc4::IfcRoot>();
+                
+                String GlobalID = data->GlobalId().c_str();
+
+                props["GlobalId"] = GlobalID;
+            }
+
+             
+
             // Create the meshes
-            create_and_add_mesh(flat_mesh, ifc_manager.geometry_loader, main_node, name, ifc_type, ifc_manager.loader, ifc_manager.model_manager, expressID, create_collision);
+            create_and_add_mesh(flat_mesh, ifc_manager.geometry_loader, main_node, name, ifc_type, ifc_manager.loader, ifc_manager.model_manager, expressID, props, create_collision);
         }
     }
 

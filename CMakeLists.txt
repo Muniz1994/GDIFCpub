@@ -22,4 +22,5 @@ FetchContent_MakeAvailable(godot-cpp)
 FetchContent_GetProperties(godot-cpp)
 
 add_subdirectory(web-ifc)
+add_subdirectory(ifcparse)
 add_subdirectory(GDIFC)
