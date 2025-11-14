@@ -9,7 +9,8 @@
             "installRoot": "${projectDir}\\out\\install\\${name}",
             "cmakeCommandArgs": "",
             "buildCommandArgs": "",
-            "ctestCommandArgs": ""
+            "ctestCommandArgs": "",
+            "cmakeToolchain": "C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
         },
         {
             "name": "x64-Release",

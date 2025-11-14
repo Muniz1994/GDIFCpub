@@ -221,19 +221,7 @@ void GDIFCManager::read_ifc(godot::String path, bool create_collision) {
 
             String name = class_name + "_" + String::num_int64(expressID);
 
-            godot::Dictionary props;
-
-            // Get the instance with IfcParse
-            auto alpha_data = file.instance_by_id(expressID);
-
-            if (alpha_data->as<Ifc4::IfcRoot>())
-            {
-                auto data = alpha_data->as<Ifc4::IfcRoot>();
-                
-                String GlobalID = data->GlobalId().c_str();
-
-                props["GlobalId"] = GlobalID;
-            }
+            auto props = get_ifc_properties(file, expressID);
 
              
 
@@ -244,4 +232,232 @@ void GDIFCManager::read_ifc(godot::String path, bool create_collision) {
 
     UtilityFunctions::print("IFC file processing complete.");
 }
+
+
+godot::Variant to_godot_variant(const AttributeValue& attr_value) {
+    // We use a lambda as the visitor, leveraging C++17 'if constexpr' for type dispatch.
+    return attr_value.apply_visitor([&](auto&& arg) -> Variant {
+        // Decay the type to handle const/reference correctly
+        using T = std::decay_t<decltype(arg)>;
+
+        // 1. PRIMITIVE TYPES
+        if constexpr (std::is_same_v<T, int>) {
+            return Variant(arg);
+        }
+        else if constexpr (std::is_same_v<T, double>) {
+            return Variant(arg);
+        }
+        else if constexpr (std::is_same_v<T, std::string>) {
+            // Note: Godot's String type is usually a dedicated type, but here we pass the C++ string
+            return Variant(godot::String(arg.c_str()));
+        }
+        else if constexpr (std::is_same_v<T, bool>) {
+            return Variant(arg);
+        }
+
+        // 2. IFC/BOOST SPECIFIC TYPES
+        else if constexpr (std::is_same_v<T, boost::tribool>) {
+            // FIX: Compare to bool 'true' and 'false', not int '1' and '0'
+            if (arg == true) return Variant("TRUE");
+            if (arg == false) return Variant("FALSE");
+            return Variant("UNKNOWN");
+        }
+        else if constexpr (std::is_same_v<T, EnumerationReference>) {
+            // Enumerations are best represented as Godot Strings
+            return Variant(godot::String(arg.value()));
+        }
+        else if constexpr (std::is_convertible_v<T, IfcUtil::IfcBaseClass*>) {
+            // IFC Entity Instance pointer -> Should be wrapped in a Godot Object
+            // A helper function (e.g., entity_to_godot_object) would be called here.
+            // For the mockup, we return a Variant initialized with the pointer.
+            return Variant(static_cast<IfcUtil::IfcBaseClass*>(arg));
+        }
+
+        // 3. AGGREGATE (VECTOR) TYPES
+        else if constexpr (
+            std::is_same_v<T, std::vector<int>> ||
+            std::is_same_v<T, std::vector<double>>
+            ) {
+            godot::Array godot_array; // <-- FIX: Use godot::Array
+            for (const auto& item : arg) {
+                godot_array.push_back(Variant(item)); // This is fine for int/double
+            }
+            return Variant(godot_array); // <-- FIX: Construct Variant from godot::Array
+        }
+        // FIX: Handle string vectors separately
+        else if constexpr (std::is_same_v<T, std::vector<std::string>>) {
+            godot::Array godot_array; // <-- FIX: Use godot::Array
+            for (const auto& item : arg) {
+                // <-- FIX (C2440): Convert inner string to godot::String
+                godot_array.push_back(godot::String(item.c_str()));
+            }
+            return Variant(godot_array); // <-- FIX: Construct Variant from godot::Array
+        }
+
+        // 4. COMPLEX/NULL TYPES
+        else if constexpr (
+            std::is_same_v<T, Derived> ||
+            std::is_same_v<T, Blank> ||
+            std::is_same_v<T, empty_aggregate_t> ||
+            std::is_same_v<T, empty_aggregate_of_aggregate_t>
+            ) {
+            // These represent derived, blank, or empty values -> return NIL
+            return Variant();
+        }
+
+        // 5. FALLBACK / UNHANDLED TYPES
+        else {
+            // Handle types like boost::dynamic_bitset, aggregate_of_aggregate, etc.
+            // For now, we return a NIL Variant.
+            return Variant();
+        }
+        });
+}
+
+// Fills a dictionary with **all** properties of an IFC instance
+godot::Dictionary get_ifc_properties(IfcParse::IfcFile& file, int expressID)
+{
+    godot::Dictionary psets;
+
+    auto instance = file.instance_by_id(expressID);
+    if (!instance) return psets;
+
+    auto object = instance->as<Ifc4::IfcObject>();
+
+    if (object)
+    {
+        auto relsDefinesByProperties = object->IsDefinedBy();
+        if (!relsDefinesByProperties) return psets;
+
+        for (auto rel : *relsDefinesByProperties)
+        {
+            auto p_set_select = rel->RelatingPropertyDefinition();
+            if (!p_set_select) continue;
+
+            auto p_set = p_set_select->as<Ifc4::IfcPropertySet>();
+
+            if (p_set)
+            {
+                // Get pset name
+                auto p_set_name = p_set->Name();
+                if (!p_set_name.has_value()) continue;
+
+                auto props = p_set->HasProperties();
+                if (!props) continue;
+
+                auto props_dict = godot::Dictionary();
+
+                for (auto prop : *props)
+                {
+                    if (!prop) continue;
+                    auto prop_name = prop->Name();
+
+                    if (prop->as<Ifc4::IfcPropertySingleValue>())
+                    {
+                        auto p_single_value = prop->as<Ifc4::IfcPropertySingleValue>();
+                        auto n_value = p_single_value->NominalValue(); // This is IfcValue*
+                        if (n_value) {
+                            // n_value is a SELECT (IfcMeasureValue, IfcSimpleValue, etc.)
+                            // All of them can be cast to IfcBaseClass to get their underlying value.
+                            auto final_value = n_value->as<IfcUtil::IfcBaseClass>();
+                            if (final_value) {
+                                props_dict[prop_name.c_str()] = to_godot_variant(final_value->get_attribute_value(0));
+                            }
+                            else {
+                                props_dict[prop_name.c_str()] = "[Invalid Value]";
+                            }
+                        }
+                        else {
+                            props_dict[prop_name.c_str()] = "[No Value]";
+                        }
+                    }
+                    else if (prop->as<Ifc4::IfcPropertyBoundedValue>())
+                    {
+                        auto p_bounded_value = prop->as<Ifc4::IfcPropertyBoundedValue>();
+                        godot::Variant upper_str;
+                        godot::Variant lower_str;
+
+                        if (p_bounded_value->UpperBoundValue()) {
+                            auto val = p_bounded_value->UpperBoundValue()->as<IfcUtil::IfcBaseClass>();
+                            if (val) upper_str = to_godot_variant( val->get_attribute_value(0));
+                        }
+                        if (p_bounded_value->LowerBoundValue()) {
+                            auto val = p_bounded_value->LowerBoundValue()->as<IfcUtil::IfcBaseClass>();
+                            if (val) lower_str = to_godot_variant(val->get_attribute_value(0));
+                        }
+
+                        // Format for Godot Dictionary
+                        godot::Array final_val = (upper_str, lower_str);
+                        props_dict[prop_name.c_str()] = final_val;
+                    }
+                    else if (prop->as<Ifc4::IfcPropertyEnumeratedValue>())
+                    {
+                        auto p_enumerated_value = prop->as<Ifc4::IfcPropertyEnumeratedValue>();
+                        godot::Array final_str;
+
+                        if (p_enumerated_value->EnumerationValues()) {
+                            auto enum_values = p_enumerated_value->EnumerationValues();
+                            for (auto& enum_val : *enum_values.get()) {
+                                if (!enum_val) continue;
+                                auto val = enum_val->as<IfcUtil::IfcBaseClass>();
+                                if (val) {
+                                    if (!final_str) continue;
+                                    final_str.append(to_godot_variant(val->get_attribute_value(0)));
+                                }
+                            }
+                        }
+                        else if (p_enumerated_value->EnumerationReference()) {
+                            auto enum_ref = p_enumerated_value->EnumerationReference();
+                            if (enum_ref) {
+                                auto val = enum_ref->as<IfcUtil::IfcBaseClass>();
+                                if (val) {
+                                    // IfcEnumeration's value is also at index 0
+                                    final_str = to_godot_variant(val->get_attribute_value(0));
+                                }
+                            }
+                        }
+                        props_dict[prop_name.c_str()] = final_str;
+                    }
+                    else if (prop->as<Ifc4::IfcPropertyListValue>())
+                    {
+                        auto p_list_value = prop->as<Ifc4::IfcPropertyListValue>();
+                        godot::Array final_str;
+                        if (p_list_value->ListValues()) {
+                            for (auto& list_val : *p_list_value->ListValues().get()) {
+                                if (!list_val) continue;
+                                auto val = list_val->as<IfcUtil::IfcBaseClass>();
+                                if (val) {
+                                    if (!final_str) continue;
+                                    final_str.append(to_godot_variant(val->get_attribute_value(0)));
+                                }
+                            }
+                        }
+                        props_dict[prop_name.c_str()] = final_str;
+                    }
+                    else if (prop->as<Ifc4::IfcPropertyTableValue>())
+                    {
+                        // Too complex to reasonably parse into a single string.
+                        // Just indicate what it is.
+                        props_dict[prop_name.c_str()] = "[IfcPropertyTableValue]";
+                    }
+                    else if (prop->as<Ifc4::IfcPropertyReferenceValue>())
+                    {
+                        auto p_reference_value = prop->as<Ifc4::IfcPropertyReferenceValue>();
+                        // This can be complex, pointing to materials, etc.
+                        // Using the 'UsageName' or a placeholder is a good default.
+                        std::string ref_str = p_reference_value->UsageName().value_or("[Reference Property]");
+                        props_dict[prop_name.c_str()] = ref_str.c_str();
+                    }
+                } // end for (prop)
+
+                // **CORRECTION**: Assignment must be *after* the property loop
+                psets[p_set_name.value().c_str()] = props_dict;
+            }
+        } // end for (rel)
+    }
+
+    return psets;
+}
+
+
 

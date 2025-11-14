@@ -2,6 +2,7 @@
 #define GDIFCREADER_H
 
 #include<memory>
+#include <iomanip>
 
 #include "godot_cpp/classes/node3d.hpp"
 #include "godot_cpp/classes/standard_material3d.hpp"
@@ -10,6 +11,9 @@
 #include "godot_cpp/classes/surface_tool.hpp"
 #include "godot_cpp/variant/packed_vector3_array.hpp"
 #include "godot_cpp/variant/packed_int32_array.hpp"
+#include "godot_cpp/variant/array.hpp"
+#include "godot_cpp/variant/variant.hpp"
+#include "godot_cpp/variant/dictionary.hpp"
 
 #include <parsing/IfcLoader.h>
 #include <schema/IfcSchemaManager.h>
@@ -56,5 +60,9 @@ private:
         bool create_collision = false
     );
 };
+
+godot::Variant to_godot_variant(const AttributeValue& attr_value);
+
+godot::Dictionary get_ifc_properties(IfcParse::IfcFile& file, int expressID);
 
 #endif
