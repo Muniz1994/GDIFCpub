@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://wnuu4v470j8h"]
+[gd_scene load_steps=8 format=3 uid="uid://wnuu4v470j8h"]
 
 [ext_resource type="Script" uid="uid://c67jlc4ke30ol" path="res://gdifc_manager.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://cc5ldhvghp6bk" path="res://addons/Free fly camera/Src/free_fly_startup.gd" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://dhs6fkaw8tr33" path="res://ray_cast_3d.gd" id="3_h2yge"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig7tw"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -14,12 +15,12 @@ sky_material = SubResource("ProceduralSkyMaterial_ig7tw")
 background_mode = 2
 background_color = Color(0.8615058, 0.93436295, 0.97796375, 1)
 sky = SubResource("Sky_0xm2m")
-tonemap_mode = 2
 ssao_enabled = true
 ssao_intensity = 3.55
 ssao_power = 0.8038304
 ssao_detail = 1.84
 ssao_horizon = 0.16
+ssil_enabled = true
 sdfgi_enabled = true
 sdfgi_use_occlusion = true
 volumetric_fog_density = 0.005
@@ -39,11 +40,18 @@ environment = SubResource("Environment_h2yge")
 [node name="GDIFCManager" type="GDIFCManager" parent="."]
 script = ExtResource("1_ig7tw")
 
-[node name="Free fly camera" type="CharacterBody3D" parent="."]
+[node name="Free fly camera" type="CharacterBody3D" parent="." node_paths=PackedStringArray("collision")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -113.07425)
 script = ExtResource("2_0xm2m")
+collision_state = false
+collision = NodePath("CollisionShape3D")
 metadata/_custom_type_script = "uid://cc5ldhvghp6bk"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Free fly camera"]
 shape = SubResource("SphereShape3D_h2yge")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Free fly camera"]
+
+[node name="RayCast3D" type="RayCast3D" parent="Free fly camera"]
+target_position = Vector3(0, 0, -2)
+script = ExtResource("3_h2yge")

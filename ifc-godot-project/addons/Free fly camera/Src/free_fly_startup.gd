@@ -52,6 +52,8 @@ func _ready():
 	if collision != null:
 		collision.disabled = !collision_state
 
+	collision_layer = 2
+
 	# If no camera is assigned, create a new one and add it to the node
 	if camera == null:
 		camera = Camera3D.new()

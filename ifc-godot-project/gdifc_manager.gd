@@ -11,12 +11,7 @@ func test_function_speed():
 	var start_time = Time.get_ticks_msec()
 
 	# Call the function to be timed
-	read_ifc("C:\\Users\\engbr\\Documents\\GitHub\\IFcFiles\\MainBuilding.ifc",false)
-	
-	for i in get_children():
-		for y in i.get_children():
-			if y.get_properties():
-				print(y.get_properties())
+	read_ifc("C:\\Users\\engbr\\Documents\\GitHub\\IFcFiles\\Example_Georeferenced.ifc",true)
 
 	# Record the end time
 	var end_time = Time.get_ticks_msec()

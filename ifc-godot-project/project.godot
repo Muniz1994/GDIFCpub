@@ -68,6 +68,7 @@ KEY_ESCAPE={
 
 [rendering]
 
+rendering_device/driver="D3D12"
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=4
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=4
 shading/overrides/force_vertex_shading=true
