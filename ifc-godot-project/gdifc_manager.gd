@@ -11,7 +11,7 @@ func test_function_speed():
 	var start_time = Time.get_ticks_msec()
 
 	# Call the function to be timed
-	read_ifc("C:\\Users\\engbr\\Documents\\GitHub\\IFcFiles\\Example_Georeferenced.ifc",true)
+	read_ifc("C:\\Users\\engbr\\Documents\\CursoBIM\\BIMMunicipios\\Modelos\\rmebasicsampleproject.IFC4.ifc",true)
 
 	# Record the end time
 	var end_time = Time.get_ticks_msec()

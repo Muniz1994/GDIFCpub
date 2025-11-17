@@ -221,7 +221,17 @@ void GDIFCManager::read_ifc(godot::String path, bool create_collision) {
 
             String name = class_name + "_" + String::num_int64(expressID);
 
-            auto props = get_ifc_properties(file, expressID);
+            auto props = godot::Dictionary{};
+
+            if (file.schema() == &Ifc4::get_schema())
+            {
+                auto props = get_ifc_properties<Ifc4>(file, expressID);
+            }
+            else if (file.schema() == &Ifc2x3::get_schema())
+            {
+                auto props = get_ifc_properties<Ifc2x3>(file, expressID);
+            }
+            
 
              
 
@@ -315,26 +325,35 @@ godot::Variant to_godot_variant(const AttributeValue& attr_value) {
 }
 
 // Fills a dictionary with **all** properties of an IFC instance
+
+template <typename schema>
 godot::Dictionary get_ifc_properties(IfcParse::IfcFile& file, int expressID)
 {
     godot::Dictionary psets;
 
+    auto schema = file.schema()
+
     auto instance = file.instance_by_id(expressID);
     if (!instance) return psets;
 
-    auto object = instance->as<Ifc4::IfcObject>();
+    auto object = instance->template as<typename schema::IfcObject>();
 
     if (object)
     {
-        auto relsDefinesByProperties = object->IsDefinedBy();
-        if (!relsDefinesByProperties) return psets;
+        auto relsDefines = object->IsDefinedBy();
+        if (!relsDefines) return psets;
 
-        for (auto rel : *relsDefinesByProperties)
+        auto defines_by_props = relsDefines->template as<typename schema::IfcRelDefinesByProperties>();
+        if (!defines_by_props) {
+            return psets;
+        }
+
+        for (auto rel : *defines_by_props)
         {
             auto p_set_select = rel->RelatingPropertyDefinition();
             if (!p_set_select) continue;
 
-            auto p_set = p_set_select->as<Ifc4::IfcPropertySet>();
+            auto p_set = p_set_select->template as<typename schema::IfcPropertySet>();
 
             if (p_set)
             {
@@ -352,9 +371,9 @@ godot::Dictionary get_ifc_properties(IfcParse::IfcFile& file, int expressID)
                     if (!prop) continue;
                     auto prop_name = prop->Name();
 
-                    if (prop->as<Ifc4::IfcPropertySingleValue>())
+                    if (prop->template as<typename schema::IfcPropertySingleValue>())
                     {
-                        auto p_single_value = prop->as<Ifc4::IfcPropertySingleValue>();
+                        auto p_single_value = prop->template as<typename schema::IfcPropertySingleValue>();
                         auto n_value = p_single_value->NominalValue(); // This is IfcValue*
                         if (n_value) {
                             // n_value is a SELECT (IfcMeasureValue, IfcSimpleValue, etc.)
@@ -370,10 +389,9 @@ godot::Dictionary get_ifc_properties(IfcParse::IfcFile& file, int expressID)
                         else {
                             props_dict[prop_name.c_str()] = "[No Value]";
                         }
-                    }
-                    else if (prop->as<Ifc4::IfcPropertyBoundedValue>())
+                    } else if (prop->template as<typename schema::IfcPropertyBoundedValue>())
                     {
-                        auto p_bounded_value = prop->as<Ifc4::IfcPropertyBoundedValue>();
+                        auto p_bounded_value = prop->template as<typename schema::IfcPropertyBoundedValue>();
                         godot::Variant upper_str;
                         godot::Variant lower_str;
 
@@ -389,10 +407,9 @@ godot::Dictionary get_ifc_properties(IfcParse::IfcFile& file, int expressID)
                         // Format for Godot Dictionary
                         godot::Array final_val = (upper_str, lower_str);
                         props_dict[prop_name.c_str()] = final_val;
-                    }
-                    else if (prop->as<Ifc4::IfcPropertyEnumeratedValue>())
+                    } else if (prop->template as<typename schema::IfcPropertyEnumeratedValue>())
                     {
-                        auto p_enumerated_value = prop->as<Ifc4::IfcPropertyEnumeratedValue>();
+                        auto p_enumerated_value = prop->template as<typename schema::IfcPropertyEnumeratedValue>();
                         godot::Array final_str;
 
                         if (p_enumerated_value->EnumerationValues()) {
@@ -417,10 +434,9 @@ godot::Dictionary get_ifc_properties(IfcParse::IfcFile& file, int expressID)
                             }
                         }
                         props_dict[prop_name.c_str()] = final_str;
-                    }
-                    else if (prop->as<Ifc4::IfcPropertyListValue>())
+                    } else if (prop->template as<typename schema::IfcPropertyListValue>())
                     {
-                        auto p_list_value = prop->as<Ifc4::IfcPropertyListValue>();
+                        auto p_list_value = prop->template as<typename schema::IfcPropertyListValue>();
                         godot::Array final_str;
                         if (p_list_value->ListValues()) {
                             for (auto& list_val : *p_list_value->ListValues().get()) {
@@ -433,16 +449,15 @@ godot::Dictionary get_ifc_properties(IfcParse::IfcFile& file, int expressID)
                             }
                         }
                         props_dict[prop_name.c_str()] = final_str;
-                    }
-                    else if (prop->as<Ifc4::IfcPropertyTableValue>())
+                    } else if (prop->template as<typename schema::IfcPropertyTableValue>())
                     {
                         // Too complex to reasonably parse into a single string.
                         // Just indicate what it is.
                         props_dict[prop_name.c_str()] = "[IfcPropertyTableValue]";
                     }
-                    else if (prop->as<Ifc4::IfcPropertyReferenceValue>())
+                    else if (prop->template as<typename schema::IfcPropertyReferenceValue>())
                     {
-                        auto p_reference_value = prop->as<Ifc4::IfcPropertyReferenceValue>();
+                        auto p_reference_value = prop->template as<typename schema::IfcPropertyReferenceValue>();
                         // This can be complex, pointing to materials, etc.
                         // Using the 'UsageName' or a placeholder is a good default.
                         std::string ref_str = p_reference_value->UsageName().value_or("[Reference Property]");

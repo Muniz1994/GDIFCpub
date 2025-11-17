@@ -24,6 +24,7 @@
 
 
 #include <Ifc4.h>
+#include <Ifc2x3.h>
 
 #include <IfcFile.h>
 #include <IfcLogger.h>
@@ -63,6 +64,7 @@ private:
 
 godot::Variant to_godot_variant(const AttributeValue& attr_value);
 
+template <typename schema>
 godot::Dictionary get_ifc_properties(IfcParse::IfcFile& file, int expressID);
 
 #endif
