@@ -42,6 +42,8 @@ void GDIFCManager::create_and_add_mesh(
     godot::Dictionary props,
     bool create_collision) {
 
+    // rem --------------------------------------
+
     IFCNode* element_node = memnew(IFCNode);
 
     element_node->set_name(ifc_type.c_str());
@@ -50,13 +52,7 @@ void GDIFCManager::create_and_add_mesh(
 
     parent_node->add_child(element_node, true);
 
- /*   godot::Dictionary attrs = (loader, manager, expressID);*/
-
-    //godot::Array props = getPropertySets(manager, loader, expressID, true, true);
-
-    //element_node->set_properties(props);
-
-    //element_node->set_attributes(attrs);
+    // ---------------
 
     for (auto& geom_data : ifc_mesh.geometries) {
 
@@ -77,26 +73,29 @@ void GDIFCManager::create_and_add_mesh(
 
         // Get vertices and apply transformation
         for (uint32_t i = 0; i < ifc_geometry.numPoints; i++) {
+
             glm::dvec3 point = ifc_geometry.GetPoint(i);
             glm::dvec4 transformed_vertex = geom_data.transformation * glm::dvec4(point, 1.0);
-            vertices[i] = glm_to_godot_vec3(glm::dvec3(transformed_vertex));
+            vertices[i] = godot::Vector3(transformed_vertex.x,transformed_vertex.y,transformed_vertex.z);
         }
 
         // Get indices
         for (uint32_t i = 0; i < ifc_geometry.numFaces; i++) {
             bimGeometry::Face face = ifc_geometry.GetFace(i);
-            indices[static_cast<int64_t>(i) * 3 + 0] = face.i0;
+            indices[static_cast<int64_t>(i) * 3 + 0] = face.i2;
             indices[static_cast<int64_t>(i) * 3 + 1] = face.i1;
-            indices[static_cast<int64_t>(i) * 3 + 2] = face.i2;
+            indices[static_cast<int64_t>(i) * 3 + 2] = face.i0;
         }
 
         // Calculate normals
         normals.resize(ifc_geometry.numPoints);
+
         for (uint32_t i = 0; i < ifc_geometry.numFaces; i++) {
+
             bimGeometry::Face face = ifc_geometry.GetFace(i);
-            Vector3 p0 = vertices[face.i2];
+            Vector3 p0 = vertices[face.i0];
             Vector3 p1 = vertices[face.i1];
-            Vector3 p2 = vertices[face.i0];
+            Vector3 p2 = vertices[face.i2];
             Vector3 normal = (p1 - p0).cross(p2 - p0).normalized();
 
             normals[face.i0] = normal;
@@ -105,6 +104,7 @@ void GDIFCManager::create_and_add_mesh(
         }
 
         Ref<ArrayMesh> gd_array_mesh;
+
         gd_array_mesh.instantiate();
 
         godot::Array arrays;
@@ -146,8 +146,7 @@ void GDIFCManager::create_and_add_mesh(
             godot::Color material_color = godot::Color(geom_data.color.r, geom_data.color.g, geom_data.color.b, geom_data.color.a);
             element_material->set_albedo(material_color);
         }
-        
-        //UtilityFunctions::print(material_color);
+
 
         MeshInstance3D* gd_mesh = memnew(MeshInstance3D);
         gd_mesh->set_mesh(gd_array_mesh);
@@ -232,9 +231,6 @@ void GDIFCManager::read_ifc(godot::String path, bool create_collision) {
                 props = get_ifc_property_sets<Ifc2x3>(file, expressID);
             }
             
-
-             
-
             // Create the meshes
             create_and_add_mesh(flat_mesh, ifc_manager.geometry_loader, main_node, name, ifc_type, ifc_manager.loader, ifc_manager.model_manager, expressID, props, create_collision);
         }
