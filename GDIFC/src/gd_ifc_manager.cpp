@@ -59,7 +59,7 @@ void GDIFCManager::create_and_add_mesh(
 
         vertices.resize(ifc_geometry.numPoints);
         normals.resize(ifc_geometry.numPoints);
-        indices.resize(static_cast<int64_t>(ifc_geometry.numFaces) * 3);
+        indices.resize(ifc_geometry.numFaces * 3);
 
         // Get vertices and apply transformation
         for (uint32_t i = 0; i < ifc_geometry.numPoints; i++) {
@@ -72,9 +72,9 @@ void GDIFCManager::create_and_add_mesh(
         // Get indices
         for (uint32_t i = 0; i < ifc_geometry.numFaces; i++) {
             bimGeometry::Face face = ifc_geometry.GetFace(i);
-            indices[static_cast<int64_t>(i) * 3 + 0] = face.i2;
-            indices[static_cast<int64_t>(i) * 3 + 1] = face.i1;
-            indices[static_cast<int64_t>(i) * 3 + 2] = face.i0;
+            indices[i * 3 + 0] = face.i2;
+            indices[i * 3 + 1] = face.i1;
+            indices[i * 3 + 2] = face.i0;
         }
 
         // Calculate normals
