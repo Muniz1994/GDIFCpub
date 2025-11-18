@@ -66,6 +66,7 @@ target_compile_options(IfcParse PRIVATE
 )
 
 target_compile_definitions(IfcParse PRIVATE HAS_SCHEMA_4)
+target_compile_definitions(IfcParse PRIVATE HAS_SCHEMA_2x3)
 
 set_target_properties(IfcParse PROPERTIES COMPILE_FLAGS -DIFC_PARSE_EXPORTS VERSION "${PROJECT_VERSION}" SOVERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}")
 

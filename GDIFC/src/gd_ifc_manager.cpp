@@ -6,8 +6,6 @@
 #include "godot_cpp/core/class_db.hpp"
 #include "godot_cpp/variant/utility_functions.hpp"
 
-
-
 using namespace godot;
 
 // Binds the new method for use in Godot scripts
@@ -223,13 +221,15 @@ void GDIFCManager::read_ifc(godot::String path, bool create_collision) {
 
             auto props = godot::Dictionary{};
 
-            if (file.schema() == &Ifc4::get_schema())
+            
+
+            if (file.schema()->name() == Ifc4::get_schema().name())
             {
-                auto props = get_ifc_properties<Ifc4>(file, expressID);
+                props = get_ifc_property_sets<Ifc4>(file, expressID);
             }
-            else if (file.schema() == &Ifc2x3::get_schema())
+            else if (file.schema()->name() == Ifc2x3::get_schema().name())
             {
-                auto props = get_ifc_properties<Ifc2x3>(file, expressID);
+                props = get_ifc_property_sets<Ifc2x3>(file, expressID);
             }
             
 
@@ -327,11 +327,11 @@ godot::Variant to_godot_variant(const AttributeValue& attr_value) {
 // Fills a dictionary with **all** properties of an IFC instance
 
 template <typename schema>
-godot::Dictionary get_ifc_properties(IfcParse::IfcFile& file, int expressID)
+godot::Dictionary get_ifc_property_sets(IfcParse::IfcFile& file, int expressID)
 {
     godot::Dictionary psets;
 
-    auto schema = file.schema()
+    auto schema = file.schema();
 
     auto instance = file.instance_by_id(expressID);
     if (!instance) return psets;
@@ -340,13 +340,12 @@ godot::Dictionary get_ifc_properties(IfcParse::IfcFile& file, int expressID)
 
     if (object)
     {
+        
         auto relsDefines = object->IsDefinedBy();
         if (!relsDefines) return psets;
 
         auto defines_by_props = relsDefines->template as<typename schema::IfcRelDefinesByProperties>();
-        if (!defines_by_props) {
-            return psets;
-        }
+        if (!defines_by_props) return psets;
 
         for (auto rel : *defines_by_props)
         {
@@ -380,6 +379,7 @@ godot::Dictionary get_ifc_properties(IfcParse::IfcFile& file, int expressID)
                             // All of them can be cast to IfcBaseClass to get their underlying value.
                             auto final_value = n_value->as<IfcUtil::IfcBaseClass>();
                             if (final_value) {
+
                                 props_dict[prop_name.c_str()] = to_godot_variant(final_value->get_attribute_value(0));
                             }
                             else {

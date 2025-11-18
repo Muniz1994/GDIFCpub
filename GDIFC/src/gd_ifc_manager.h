@@ -30,8 +30,6 @@
 #include <IfcLogger.h>
 #include <FileReader.h>
 
-#define IfcSchema Ifc4
-
 
 // Your existing class definition
 class GDIFCManager : public godot::Node3D {
@@ -65,6 +63,7 @@ private:
 godot::Variant to_godot_variant(const AttributeValue& attr_value);
 
 template <typename schema>
-godot::Dictionary get_ifc_properties(IfcParse::IfcFile& file, int expressID);
+godot::Dictionary get_ifc_property_sets(IfcParse::IfcFile& file, int expressID);
+
 
 #endif
