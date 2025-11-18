@@ -12,8 +12,8 @@ func test_function_speed():
 
 	# Call the function to be timed
 	read_ifc("C:\\Users\\engbr\\Documents\\GitHub\\IFcFiles\\Ifc2x3_SampleCastle.bl.ifc",true)
-	# read_ifc("C:\\Users\\engbr\\Documents\\GitHub\\IFcFiles\\Example_Georeferenced.ifc",true)
-	# read_ifc("C:\\Users\\engbr\\Documents\\CursoBIM\\BIMMunicipios\\Modelos\\rmebasicsampleproject.IFC4.ifc",true)
+	#read_ifc("C:\\Users\\engbr\\Documents\\GitHub\\IFcFiles\\Example_Georeferenced.ifc",true)
+	#read_ifc("C:\\Users\\engbr\\Documents\\CursoBIM\\BIMMunicipios\\Modelos\\rmebasicsampleproject.IFC4.ifc",true)
 
 	# Record the end time
 	var end_time = Time.get_ticks_msec()
