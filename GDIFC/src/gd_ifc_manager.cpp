@@ -18,16 +18,6 @@ void GDIFCManager::_bind_methods() {
 GDIFCManager::GDIFCManager() {};
 GDIFCManager::~GDIFCManager() {};
 
-// Helper function to convert web-ifc's glm::dvec3 to Godot's Vector3
-static Vector3 glm_to_godot_vec3(const glm::dvec3& v) {
-    // Correct swizzle for position and orientation.
-    // However, this might invert the winding order.
-    Vector3 position = Vector3(v.x, v.y, v.z);
-
-    // Negate the Z-component to flip the triangle winding order,
-    // which will correct the normals.
-    return Vector3(position.x, position.y, -position.z);
-}
 
 // Helper function to create a mesh from web-ifc data
 void GDIFCManager::create_and_add_mesh(
