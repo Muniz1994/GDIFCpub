@@ -1,10 +1,5 @@
 // gdifcreader.cpp
 #include "gd_ifc_manager.h"
-#include "gd_ifc_node.h"
-
-#include "godot_cpp/classes/file_access.hpp"
-#include "godot_cpp/core/class_db.hpp"
-#include "godot_cpp/variant/utility_functions.hpp"
 
 using namespace godot;
 
@@ -23,26 +18,9 @@ GDIFCManager::~GDIFCManager() {};
 void GDIFCManager::create_and_add_mesh(
     webifc::geometry::IfcFlatMesh& ifc_mesh,
     std::unique_ptr<webifc::geometry::IfcGeometryProcessor>& geometryLoader,
-    godot::Node3D* parent_node,
-    godot::String& name,
+    IFCNode* element_node,
     std::string& ifc_type,
-    std::unique_ptr<webifc::parsing::IfcLoader>& loader,
-    webifc::manager::ModelManager manager,
-    uint32_t expressID,
-    godot::Dictionary props,
     bool create_collision) {
-
-    // rem --------------------------------------
-
-    IFCNode* element_node = memnew(IFCNode);
-
-    element_node->set_name(ifc_type.c_str());
-
-    element_node->set_properties(props);
-
-    parent_node->add_child(element_node, true);
-
-    // ---------------
 
     for (auto& geom_data : ifc_mesh.geometries) {
 
@@ -149,7 +127,9 @@ void GDIFCManager::create_and_add_mesh(
         }
 
         element_node->add_child(gd_mesh, true);
+
     }
+
 }
 
 // Main function to load the IFC file using web-ifc
@@ -187,7 +167,6 @@ void GDIFCManager::read_ifc(godot::String path, bool create_collision) {
 
         for (uint32_t expressID : expressIDs) {
 
-            
 
             auto flat_mesh = ifc_manager.geometry_loader->GetFlatMesh(expressID);
 
@@ -220,9 +199,17 @@ void GDIFCManager::read_ifc(godot::String path, bool create_collision) {
             {
                 props = get_ifc_property_sets<Ifc2x3>(file, expressID);
             }
+
+            IFCNode* element_node = memnew(IFCNode);
+
+            element_node->set_name(ifc_type.c_str());
+
+            element_node->set_properties(props);
+
+            main_node->add_child(element_node, true);
             
             // Create the meshes
-            create_and_add_mesh(flat_mesh, ifc_manager.geometry_loader, main_node, name, ifc_type, ifc_manager.loader, ifc_manager.model_manager, expressID, props, create_collision);
+            create_and_add_mesh(flat_mesh, ifc_manager.geometry_loader, element_node, ifc_type, create_collision);
         }
     }
 

@@ -14,6 +14,9 @@
 #include "godot_cpp/variant/array.hpp"
 #include "godot_cpp/variant/variant.hpp"
 #include "godot_cpp/variant/dictionary.hpp"
+#include "godot_cpp/classes/file_access.hpp"
+#include "godot_cpp/core/class_db.hpp"
+#include "godot_cpp/variant/utility_functions.hpp"
 
 #include <parsing/IfcLoader.h>
 #include <schema/IfcSchemaManager.h>
@@ -31,6 +34,11 @@
 #include <FileReader.h>
 
 
+#include "gd_ifc_node.h"
+
+
+
+
 // Your existing class definition
 class GDIFCManager : public godot::Node3D {
     GDCLASS(GDIFCManager, Node3D);
@@ -46,18 +54,12 @@ public:
 
 private:
     // Helper function to create Godot mesh from web-ifc data
-    void create_and_add_mesh(
-        webifc::geometry::IfcFlatMesh& ifc_mesh,
-        std::unique_ptr<webifc::geometry::IfcGeometryProcessor> &geometryLoader,
-        godot::Node3D* parent_node,
-        godot::String& name,
-        std::string& ifc_type,
-        std::unique_ptr<webifc::parsing::IfcLoader> &loader,
-        webifc::manager::ModelManager manager,
-        uint32_t expressID,
-        godot::Dictionary props,
-        bool create_collision = false
-    );
+  void create_and_add_mesh(
+      webifc::geometry::IfcFlatMesh& ifc_mesh,
+      std::unique_ptr<webifc::geometry::IfcGeometryProcessor>& geometryLoader,
+      IFCNode* element_node,
+      std::string& ifc_type,
+      bool create_collision);
 };
 
 godot::Variant to_godot_variant(const AttributeValue& attr_value);
