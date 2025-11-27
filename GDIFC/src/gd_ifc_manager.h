@@ -1,22 +1,14 @@
-#ifndef GDIFCREADER_H
-#define GDIFCREADER_H
+#ifndef GD_IFC_MANAGER_H
+#define GD_IFC_MANAGER_H
 
-#include<memory>
-#include <iomanip>
-
-#include "godot_cpp/classes/node3d.hpp"
-#include "godot_cpp/classes/standard_material3d.hpp"
-#include "godot_cpp/classes/mesh_instance3d.hpp"
-#include "godot_cpp/classes/array_mesh.hpp"
-#include "godot_cpp/classes/surface_tool.hpp"
-#include "godot_cpp/variant/packed_vector3_array.hpp"
-#include "godot_cpp/variant/packed_int32_array.hpp"
-#include "godot_cpp/variant/array.hpp"
-#include "godot_cpp/variant/variant.hpp"
-#include "godot_cpp/variant/dictionary.hpp"
-#include "godot_cpp/classes/file_access.hpp"
-#include "godot_cpp/core/class_db.hpp"
-#include "godot_cpp/variant/utility_functions.hpp"
+#include <godot_cpp/classes/node3d.hpp>
+#include <godot_cpp/classes/mesh_instance3d.hpp>
+#include <godot_cpp/classes/worker_thread_pool.hpp>
+#include <godot_cpp/classes/array_mesh.hpp>
+#include <godot_cpp/classes/standard_material3d.hpp>
+#include <godot_cpp/templates/vector.hpp>
+#include <godot_cpp/templates/hash_map.hpp>
+#include <godot_cpp/classes/time.hpp>
 
 #include <parsing/IfcLoader.h>
 #include <schema/IfcSchemaManager.h>
@@ -33,39 +25,84 @@
 #include <IfcLogger.h>
 #include <FileReader.h>
 
+#include <godot_cpp/templates/vector.hpp> 
+#include <string> // Standard string for the struct
+
 
 #include "gd_ifc_node.h"
 
+namespace godot {
 
+// Holds fully processed data.
+// The Main Thread just reads this and assigns it. No math.
+struct PrecalculatedIFCItem {
+    String node_name;
+    Dictionary properties; // Parsed in thread
 
+    // Mesh Data
+    PackedVector3Array vertices;
+    PackedVector3Array normals;
+    PackedInt32Array indices;
 
-// Your existing class definition
-class GDIFCManager : public godot::Node3D {
-    GDCLASS(GDIFCManager, Node3D);
+    // Material Data
+    Color color;
+    bool is_transparent;
 
-protected:
+    bool valid = false; // Flag if geometry was found
+};
+
+class GDIFCManager : public Node {
+    GDCLASS(GDIFCManager, Node)
+
+  private:
+    int64_t task_id = -1;
+    bool should_create_collisions = false;
+
+    enum LoadState {
+        IDLE,
+        LOADING_THREAD,
+        GENERATING_NODES,
+        DONE
+    };
+    LoadState current_state = IDLE;
+
+    // Storage
+    std::unique_ptr<IFCManager> web_ifc_manager;
+    std::unique_ptr<IfcParse::IfcFile> ifc_parse_file;
+
+    // The Optimized Queue
+    Vector<PrecalculatedIFCItem> generation_queue;
+    int current_generation_index = 0;
+    Node3D* main_node_root = nullptr;
+
+    // Material Cache to reduce draw calls and allocation time
+    HashMap<String, Ref<StandardMaterial3D>> material_cache;
+
+  protected:
     static void _bind_methods();
 
-public:
+  public:
     GDIFCManager();
     ~GDIFCManager();
 
-    void read_ifc(godot::String path, bool create_collision = false);
+    void read_ifc(String path, bool create_collision);
+    void _process(double delta) override;
 
-private:
-    // Helper function to create Godot mesh from web-ifc data
-  void create_and_add_mesh(
-      webifc::geometry::IfcFlatMesh& ifc_mesh,
-      std::unique_ptr<webifc::geometry::IfcGeometryProcessor>& geometryLoader,
-      IFCNode* element_node,
-      std::string& ifc_type,
-      bool create_collision);
+    // Thread Functions
+    void _thread_task(String path);
+
+    // Main Thread Functions
+    void _process_generation_queue();
+    Ref<StandardMaterial3D> _get_material(Color color, bool transparent);
 };
 
-godot::Variant to_godot_variant(const AttributeValue& attr_value);
+
+
+} // namespace godot
 
 template <typename schema>
 godot::Dictionary get_ifc_property_sets(IfcParse::IfcFile& file, int expressID);
 
+godot::Variant to_godot_variant(const AttributeValue& attr_value);
 
 #endif
