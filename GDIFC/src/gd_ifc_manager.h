@@ -94,6 +94,8 @@ class GDIFCManager : public Node {
     // Main Thread Functions
     void _process_generation_queue();
     Ref<StandardMaterial3D> _get_material(Color color, bool transparent);
+
+    Node3D* invisible_staging_root = nullptr;
 };
 
 

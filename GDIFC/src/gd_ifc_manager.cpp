@@ -164,14 +164,15 @@ void GDIFCManager::_thread_task(String path) {
 // ---------------------------------------------------------
 void GDIFCManager::_process(double delta) {
 
-    if (current_state == LOADING_THREAD) {
+if (current_state == LOADING_THREAD) {
         if (WorkerThreadPool::get_singleton()->is_task_completed(task_id)) {
             WorkerThreadPool::get_singleton()->wait_for_task_completion(task_id);
             task_id = -1;
 
-            main_node_root = memnew(Node3D);
-            main_node_root->set_name("IFCModel");
-            add_child(main_node_root, true);
+            // 1. Create the Staging Root
+            // IMPORTANT: We do NOT add_child() yet. It exists only in memory.
+            invisible_staging_root = memnew(Node3D);
+            invisible_staging_root->set_name("IFC_Staging_Area");
 
             current_state = GENERATING_NODES;
         }
@@ -186,20 +187,21 @@ void GDIFCManager::_process(double delta) {
 void GDIFCManager::_process_generation_queue() {
 
     uint64_t start_time = Time::get_singleton()->get_ticks_usec();
-    // Budget: 8000 usec (8ms). 1 usec is too small, overhead will kill you.
-    uint64_t time_budget = 1;
+    // Budget: 8ms (8000 usec). Keep this!
+    // If you remove the budget, the game will freeze/crash 'Not Responding'.
+    uint64_t time_budget = 4000;
 
     while (current_generation_index < generation_queue.size()) {
 
-        // Access the PRE-CALCULATED item
-        // No parsing, no math, just copying.
         const PrecalculatedIFCItem& item = generation_queue[current_generation_index];
 
         // 1. Create Node
         IFCNode* element_node = memnew(IFCNode);
         element_node->set_name(item.node_name);
-        element_node->set_properties(item.properties); // Instant assignment
-        main_node_root->add_child(element_node, true);
+        element_node->set_properties(item.properties);
+
+        // ADD TO INVISIBLE ROOT (Not SceneTree)
+        invisible_staging_root->add_child(element_node); // fast!
 
         // 2. Create Mesh
         Ref<ArrayMesh> mesh;
@@ -213,32 +215,52 @@ void GDIFCManager::_process_generation_queue() {
 
         mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arrays);
 
-        // 3. Create/Get Material (Cached)
+        // 3. Material
         Ref<StandardMaterial3D> mat = _get_material(item.color, item.is_transparent);
 
-        // 4. Create Mesh Instance
+        // 4. Instance
         MeshInstance3D* mi = memnew(MeshInstance3D);
         mi->set_mesh(mesh);
         mi->set_surface_override_material(0, mat);
-        mi->set_name("Geometry");
 
+        // Collisions are safe here because element_node is not in the tree yet!
         if (this->should_create_collisions) {
             mi->create_trimesh_collision();
         }
 
-        element_node->add_child(mi, true);
+        element_node->add_child(mi);
 
         current_generation_index++;
 
-        if (((Time::get_singleton()->get_ticks_usec() - start_time)*10000000000000000 )> time_budget) {
-            return;
+        // Time Slice Check
+        // We still yield to let the engine render the Loading Spinner / UI
+        uint64_t current_duration = Time::get_singleton()->get_ticks_usec() - start_time;
+        if (current_duration > time_budget) {
+            return; // Come back next frame
         }
     }
 
-    UtilityFunctions::print(Time::get_singleton()->get_ticks_usec());
+    // ---------------------------------------------------
+    // FINALIZATION: THE "POP"
+    // ---------------------------------------------------
+
+    // We are done with the loop.
+    // Now we add the massive invisible root to the actual scene tree.
+    // This will happen in ONE FRAME.
+
+    // Optional: Rename it to final name
+    invisible_staging_root->set_name("IFCModel");
+
+    // The Big Reveal
+    add_child(invisible_staging_root, true);
+
+    // Cleanup
+    invisible_staging_root = nullptr; // Clear our pointer
     current_state = DONE;
     set_process(false);
-    UtilityFunctions::print("IFC Loaded!");
+
+    UtilityFunctions::print("IFC Fully Loaded and Revealed!");
+    UtilityFunctions::print(Time::get_singleton()->get_ticks_usec());
 }
 
 // ---------------------------------------------------------
