@@ -32,12 +32,9 @@
 #include "gd_ifc_node.h"
 
 namespace godot {
-
-// Holds fully processed data.
-// The Main Thread just reads this and assigns it. No math.
-struct PrecalculatedIFCItem {
-    String node_name;
-    Dictionary properties; // Parsed in thread
+// Holds the geometric data to allow the creation of the Godot
+// geometries of the IFC object
+struct PrecalculatedIFCItemGeometry {
 
     // Mesh Data
     PackedVector3Array vertices;
@@ -47,8 +44,20 @@ struct PrecalculatedIFCItem {
     // Material Data
     Color color;
     bool is_transparent;
+};
 
-    bool valid = false; // Flag if geometry was found
+// Holds fully processed data.
+// The Main Thread just reads this and assigns it. No math.
+struct PrecalculatedIFCItem {
+    String node_name;
+    Dictionary properties; // Parsed in thread
+    String ifc_class;
+
+    // Holds the geometric information of all objects
+    std::vector<PrecalculatedIFCItemGeometry> geometry;
+
+     // Flag if geometry was found
+    bool valid = false;
 };
 
 class GDIFCManager : public Node {

@@ -54,9 +54,13 @@ void GDIFCManager::_thread_task(String path) {
 
     // 3. HEAVY LOOP: Process everything HERE, not in Main Thread
     for (auto type : temp_ifc_manager->schemaManager.GetIfcElementList()) {
+
         auto expressIDs = temp_ifc_manager->loader->GetExpressIDsWithType(type);
 
+
+
         for (uint32_t expressID : expressIDs) {
+
             std::string type_str = temp_ifc_manager->schemaManager.IfcTypeCodeToType(temp_ifc_manager->loader->GetLineType(expressID));
 
             if (type_str == "IfcOpeningElement") {
@@ -67,7 +71,7 @@ void GDIFCManager::_thread_task(String path) {
             auto flat_mesh = temp_ifc_manager->geometry_loader->GetFlatMesh(expressID);
 
             // If no geometry, skip early
-            if (flat_mesh.geometries.size() == 0) {
+            if (flat_mesh.geometries.empty()) {
                 continue;
             }
 
@@ -83,11 +87,15 @@ void GDIFCManager::_thread_task(String path) {
                 item.properties = get_ifc_property_sets<Ifc2x3>(*temp_file, expressID);
             }
 
+            item.ifc_class = type_str.c_str();
+
+            item.geometry = {};
             // -- C. MESH DATA PREPARATION --
             // We merge multiple sub-geometries into one ArrayMesh surface here to reduce draw calls
             // Or keep them separate if needed. This example handles the first valid geometry logic you had.
 
             for (auto& geom_data : flat_mesh.geometries) {
+                PrecalculatedIFCItemGeometry item_geometry;
                 auto ifc_geometry = temp_ifc_manager->geometry_loader->GetGeometry(geom_data.geometryExpressID);
 
                 if (ifc_geometry.numPoints == 0 || ifc_geometry.numFaces == 0) {
@@ -95,57 +103,61 @@ void GDIFCManager::_thread_task(String path) {
                 }
 
                 // Resize Arrays
-                int vertex_offset = item.vertices.size();
-                item.vertices.resize(vertex_offset + ifc_geometry.numPoints);
-                item.normals.resize(vertex_offset + ifc_geometry.numPoints);
-                int index_offset = item.indices.size();
-                item.indices.resize(index_offset + (ifc_geometry.numFaces * 3));
+                int vertex_offset = item_geometry.vertices.size();
+                item_geometry.vertices.resize(vertex_offset + ifc_geometry.numPoints);
+                item_geometry.normals.resize(vertex_offset + ifc_geometry.numPoints);
+                int index_offset = item_geometry.indices.size();
+                item_geometry.indices.resize(index_offset + (ifc_geometry.numFaces * 3));
 
                 // 1. Vertices (Math in Thread)
                 for (uint32_t i = 0; i < ifc_geometry.numPoints; i++) {
                     glm::dvec3 point = ifc_geometry.GetPoint(i);
                     glm::dvec4 tv = geom_data.transformation * glm::dvec4(point, 1.0);
-                    item.vertices[vertex_offset + i] = Vector3(tv.x, tv.y, tv.z);
+                    item_geometry.vertices[vertex_offset + i] = Vector3(tv.x, tv.y, tv.z);
                 }
 
                 // 2. Indices
                 for (uint32_t i = 0; i < ifc_geometry.numFaces; i++) {
                     bimGeometry::Face face = ifc_geometry.GetFace(i);
-                    item.indices[index_offset + (i * 3) + 0] = vertex_offset + face.i2;
-                    item.indices[index_offset + (i * 3) + 1] = vertex_offset + face.i1;
-                    item.indices[index_offset + (i * 3) + 2] = vertex_offset + face.i0;
+                    item_geometry.indices[index_offset + (i * 3) + 0] = vertex_offset + face.i2;
+                    item_geometry.indices[index_offset + (i * 3) + 1] = vertex_offset + face.i1;
+                    item_geometry.indices[index_offset + (i * 3) + 2] = vertex_offset + face.i0;
                 }
 
                 // 3. Normals (Math in Thread)
                 for (uint32_t i = 0; i < ifc_geometry.numFaces; i++) {
                     bimGeometry::Face face = ifc_geometry.GetFace(i);
                     // Use the indices we just wrote
-                    Vector3 p0 = item.vertices[vertex_offset + face.i0];
-                    Vector3 p1 = item.vertices[vertex_offset + face.i1];
-                    Vector3 p2 = item.vertices[vertex_offset + face.i2];
+                    Vector3 p0 = item_geometry.vertices[vertex_offset + face.i0];
+                    Vector3 p1 = item_geometry.vertices[vertex_offset + face.i1];
+                    Vector3 p2 = item_geometry.vertices[vertex_offset + face.i2];
 
                     Vector3 normal = (p1 - p0).cross(p2 - p0).normalized(); // Expensive sqrt!
 
-                    item.normals[vertex_offset + face.i0] = normal;
-                    item.normals[vertex_offset + face.i1] = normal;
-                    item.normals[vertex_offset + face.i2] = normal;
+                    item_geometry.normals[vertex_offset + face.i0] = normal;
+                    item_geometry.normals[vertex_offset + face.i1] = normal;
+                    item_geometry.normals[vertex_offset + face.i2] = normal;
                 }
 
                 // 4. Color Info
-                item.color = Color(geom_data.color.r, geom_data.color.g, geom_data.color.b, geom_data.color.a);
+                item_geometry.color = Color(geom_data.color.r, geom_data.color.g, geom_data.color.b, geom_data.color.a);
 
                 // Determine transparency
                 if (type_str == "IfcSpace") {
-                    item.is_transparent = true;
-                    item.color = Color(0.025, 0.037, 0.034, 0.1);
-                } else if (type_str == "IfcWindow" || type_str == "IfcDoor" || type_str == "IfcPlate") {
-                    item.is_transparent = (geom_data.color.a < 0.7);
+                    item_geometry.is_transparent = true;
+                    item_geometry.color = Color(0.025, 0.037, 0.034, 0.1);
+                } else if (type_str == "IfcWindow" || type_str == "IfcDoor" || type_str == "IfcPlate" ) {
+                    item_geometry.is_transparent = (geom_data.color.a < 0.7);
                 } else {
-                    item.is_transparent = false;
+                    item_geometry.is_transparent = (geom_data.color.a < 0.7);
+                }
+
+                if (item_geometry.vertices.size() > 0) {
+                    item.geometry.push_back(item_geometry);
                 }
             }
 
-            if (item.vertices.size() > 0) {
+            if (!item.geometry.empty()) {
                 temp_queue.push_back(item);
             }
         }
@@ -203,32 +215,42 @@ void GDIFCManager::_process_generation_queue() {
         // ADD TO INVISIBLE ROOT (Not SceneTree)
         invisible_staging_root->add_child(element_node); // fast!
 
-        // 2. Create Mesh
-        Ref<ArrayMesh> mesh;
-        mesh.instantiate();
+        for (auto geom : item.geometry) {
 
-        Array arrays;
-        arrays.resize(Mesh::ARRAY_MAX);
-        arrays[Mesh::ARRAY_VERTEX] = item.vertices;
-        arrays[Mesh::ARRAY_NORMAL] = item.normals;
-        arrays[Mesh::ARRAY_INDEX] = item.indices;
 
-        mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arrays);
+            // 2. Create Mesh
+            Ref<ArrayMesh> mesh;
+            mesh.instantiate();
 
-        // 3. Material
-        Ref<StandardMaterial3D> mat = _get_material(item.color, item.is_transparent);
+            Array arrays;
+            arrays.resize(Mesh::ARRAY_MAX);
+            arrays[Mesh::ARRAY_VERTEX] = geom.vertices;
+            arrays[Mesh::ARRAY_NORMAL] = geom.normals;
+            arrays[Mesh::ARRAY_INDEX] = geom.indices;
 
-        // 4. Instance
-        MeshInstance3D* mi = memnew(MeshInstance3D);
-        mi->set_mesh(mesh);
-        mi->set_surface_override_material(0, mat);
+            mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arrays);
 
-        // Collisions are safe here because element_node is not in the tree yet!
-        if (this->should_create_collisions) {
-            mi->create_trimesh_collision();
+            // 3. Material
+            Ref<StandardMaterial3D> mat = _get_material(geom.color, geom.is_transparent);
+
+            if (item.ifc_class == "IfcSpace") {
+                mat->set_grow_enabled(true);
+                mat->set_grow(-0.001);
+            }
+            // 4. Instance
+            MeshInstance3D* mi = memnew(MeshInstance3D);
+            mi->set_mesh(mesh);
+            mi->set_surface_override_material(0, mat);
+
+            // Collisions are safe here because element_node is not in the tree yet!
+            if (this->should_create_collisions) {
+                mi->create_trimesh_collision();
+            }
+
+            element_node->add_child(mi);
+
         }
 
-        element_node->add_child(mi);
 
         current_generation_index++;
 
