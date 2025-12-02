@@ -5,6 +5,8 @@ using namespace godot;
 void GDIFCManager::_bind_methods() {
     ClassDB::bind_method(D_METHOD("read_ifc", "path", "create_collision"), &GDIFCManager::read_ifc);
     ClassDB::bind_method(D_METHOD("_thread_task", "path"), &GDIFCManager::_thread_task);
+
+    ADD_SIGNAL(MethodInfo("ifc_read"));
 }
 
 GDIFCManager::GDIFCManager() {}
@@ -279,6 +281,10 @@ void GDIFCManager::_process_generation_queue() {
     // Cleanup
     invisible_staging_root = nullptr; // Clear our pointer
     current_state = DONE;
+
+    // File read, signal emitted
+    emit_signal("ifc_read");
+
     set_process(false);
 
     UtilityFunctions::print("IFC Fully Loaded and Revealed!");
@@ -308,6 +314,7 @@ Ref<StandardMaterial3D> GDIFCManager::_get_material(Color color, bool transparen
     material_cache[key] = mat;
     return mat;
 }
+
 
 godot::Variant to_godot_variant(const AttributeValue& attr_value) {
     // We use a lambda as the visitor, leveraging C++17 'if constexpr' for type dispatch.
