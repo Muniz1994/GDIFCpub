@@ -3,7 +3,7 @@
 using namespace godot;
 
 void GDIFCManager::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("read_ifc", "path", "create_collision"), &GDIFCManager::read_ifc);
+    ClassDB::bind_method(D_METHOD("read_ifc", "path", "create_collision"), &GDIFCManager::read_ifc, DEFVAL(false));
     ClassDB::bind_method(D_METHOD("_thread_task", "path"), &GDIFCManager::_thread_task);
 
     ADD_SIGNAL(MethodInfo("ifc_read"));
