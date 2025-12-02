@@ -61,3 +61,5 @@ godot-cpp
 
 .vs
 /vcpkg_installed
+/.idea
+/ifc-godot-project
