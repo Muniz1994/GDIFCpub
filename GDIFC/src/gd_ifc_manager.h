@@ -66,6 +66,7 @@ class GDIFCManager : public Node {
   private:
     int64_t task_id = -1;
     bool should_create_collisions = false;
+    Array collision_classes = Array();
 
     enum LoadState {
         IDLE,
@@ -94,7 +95,7 @@ class GDIFCManager : public Node {
     GDIFCManager();
     ~GDIFCManager();
 
-    void read_ifc(String path, bool create_collision);
+    void read_ifc(String path, bool create_collision, Array collision_classes);
     void _process(double delta) override;
 
     // Thread Functions

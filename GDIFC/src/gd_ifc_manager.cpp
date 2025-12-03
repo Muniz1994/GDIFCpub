@@ -3,7 +3,7 @@
 using namespace godot;
 
 void GDIFCManager::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("read_ifc", "path", "create_collision"), &GDIFCManager::read_ifc, DEFVAL(false));
+    ClassDB::bind_method(D_METHOD("read_ifc", "path", "create_collision", "collision_classes"), &GDIFCManager::read_ifc, DEFVAL(false), DEFVAL(Array{}));
     ClassDB::bind_method(D_METHOD("_thread_task", "path"), &GDIFCManager::_thread_task);
 
     ADD_SIGNAL(MethodInfo("ifc_read"));
@@ -12,7 +12,7 @@ void GDIFCManager::_bind_methods() {
 GDIFCManager::GDIFCManager() {}
 GDIFCManager::~GDIFCManager() {}
 
-void GDIFCManager::read_ifc(String path, bool create_collision) {
+void GDIFCManager::read_ifc(String path, bool create_collision, Array collision_classes) {
     if (current_state != IDLE && current_state != DONE) {
         UtilityFunctions::print("Already loading!");
         return;
@@ -20,6 +20,7 @@ void GDIFCManager::read_ifc(String path, bool create_collision) {
 
     // Reset
     this->should_create_collisions = create_collision;
+    this->collision_classes = collision_classes;
     this->generation_queue.clear();
     this->material_cache.clear(); // Clear cache for new file
     this->current_generation_index = 0;
@@ -245,8 +246,12 @@ void GDIFCManager::_process_generation_queue() {
             mi->set_surface_override_material(0, mat);
 
             // Collisions are safe here because element_node is not in the tree yet!
-            if (this->should_create_collisions) {
-                mi->create_trimesh_collision();
+            if (this->should_create_collisions && !this->collision_classes.is_empty()) {
+
+                if (this->collision_classes.has(item.ifc_class)) {
+
+                    mi->create_trimesh_collision();
+                }
             }
 
             element_node->add_child(mi);
