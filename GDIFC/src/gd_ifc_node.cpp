@@ -12,6 +12,7 @@ using namespace godot;
 void IFCNode::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_attributes"), &IFCNode::get_attributes);
     ClassDB::bind_method(D_METHOD("get_properties"), &IFCNode::get_properties);
+    ClassDB::bind_method(D_METHOD("get_class"), &IFCNode::get_class);
 };
 
 
@@ -38,4 +39,10 @@ void IFCNode::set_properties(godot::Dictionary props)
     properties = props;
 
 }
-;
+
+godot::String IFCNode::get_class()
+{return (this->ifc_class);}
+
+voit IFCNode::set_class(godot::String class_name) {
+    this->ifc_class = class_name;
+}

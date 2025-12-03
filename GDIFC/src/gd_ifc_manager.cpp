@@ -92,6 +92,7 @@ void GDIFCManager::_thread_task(String path) {
 
             item.ifc_class = type_str.c_str();
 
+
             item.geometry = {};
             // -- C. MESH DATA PREPARATION --
             // We merge multiple sub-geometries into one ArrayMesh surface here to reduce draw calls
@@ -214,6 +215,7 @@ void GDIFCManager::_process_generation_queue() {
         IFCNode* element_node = memnew(IFCNode);
         element_node->set_name(item.node_name);
         element_node->set_properties(item.properties);
+        element_node->set_class(item.ifc_class);
 
         // ADD TO INVISIBLE ROOT (Not SceneTree)
         invisible_staging_root->add_child(element_node); // fast!

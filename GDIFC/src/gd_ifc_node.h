@@ -25,8 +25,12 @@ public:
     godot::Dictionary get_properties();
     void set_properties(godot::Dictionary props);
 
+    godot::String get_class();
+    voit set_class(godot::String class_name);
+
 private:
 
+    godot::String ifc_class;
     godot::Dictionary attributes;
     godot::Dictionary properties;
     // Helper function to create Godot mesh from web-ifc data
