@@ -24,7 +24,6 @@ godot::Dictionary IFCNode::get_attributes()
 {
     return attributes;
 }
-;
 
 void IFCNode::set_attributes(godot::Dictionary dict)
 {
@@ -43,6 +42,6 @@ void IFCNode::set_properties(godot::Dictionary props)
 godot::String IFCNode::get_class()
 {return (this->ifc_class);}
 
-voit IFCNode::set_class(godot::String class_name) {
+void IFCNode::set_class(godot::String class_name) {
     this->ifc_class = class_name;
 }

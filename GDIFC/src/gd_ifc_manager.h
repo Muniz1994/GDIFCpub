@@ -115,6 +115,8 @@ class GDIFCManager : public Node {
 template <typename schema>
 godot::Dictionary get_ifc_property_sets(IfcParse::IfcFile& file, int expressID);
 
+godot::Dictionary get_ifc_object_attributes(IfcParse::IfcFile& file, int expressID);
+
 godot::Variant to_godot_variant(const AttributeValue& attr_value);
 
 #endif

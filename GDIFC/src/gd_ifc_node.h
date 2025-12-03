@@ -26,7 +26,7 @@ public:
     void set_properties(godot::Dictionary props);
 
     godot::String get_class();
-    voit set_class(godot::String class_name);
+    void set_class(godot::String class_name);
 
 private:
 

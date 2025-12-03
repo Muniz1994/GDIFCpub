@@ -540,3 +540,25 @@ godot::Dictionary get_ifc_property_sets(IfcParse::IfcFile& file, int expressID) 
 
     return psets;
 }
+
+
+godot::Dictionary get_ifc_object_attributes(IfcParse::IfcFile& file, int expressID) {
+
+    godot::Dictionary attributes;
+
+    auto instance = file.instance_by_id(expressID);
+    if (!instance) {
+        return attributes;
+    }
+
+    auto object = instance->as<typename Ifc4::IfcObject>();
+    if (!object) {
+        return attributes;
+    }
+
+    attributes["GlobalId"] = object->GlobalId().c_str();
+    attributes["Name"] = object->Name()->c_str();
+    attributes["Description"] = object->Description()->c_str();
+
+    return attributes;
+}
