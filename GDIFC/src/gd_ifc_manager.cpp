@@ -150,8 +150,6 @@ void GDIFCManager::_thread_task(String path) {
                 if (type_str == "IfcSpace") {
                     item_geometry.is_transparent = true;
                     item_geometry.color = Color(0.025, 0.037, 0.034, 0.1);
-                } else if (type_str == "IfcWindow" || type_str == "IfcDoor" || type_str == "IfcPlate" ) {
-                    item_geometry.is_transparent = (geom_data.color.a < 0.7);
                 } else {
                     item_geometry.is_transparent = (geom_data.color.a < 0.7);
                 }
