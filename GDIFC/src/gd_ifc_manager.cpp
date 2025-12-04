@@ -44,9 +44,9 @@ void GDIFCManager::_thread_task(String path) {
 
     if (!temp_file->good()) {
         UtilityFunctions::printerr("Failed to load IFC file.");
+        this->current_state = FAILED;
         return;
     }
-
     // 2. Init Geometry
     temp_ifc_manager->initialize_geometry_processor();
 
@@ -55,12 +55,12 @@ void GDIFCManager::_thread_task(String path) {
     // Schema check for properties
     bool is_ifc4 = (temp_file->schema()->name() == Ifc4::get_schema().name());
 
+    // TODO: check if schema of the file is within the Ifc4/ifc2x3/future 4x3
+
     // 3. HEAVY LOOP: Process everything HERE, not in Main Thread
     for (auto type : temp_ifc_manager->schemaManager.GetIfcElementList()) {
 
         auto expressIDs = temp_ifc_manager->loader->GetExpressIDsWithType(type);
-
-
 
         for (uint32_t expressID : expressIDs) {
 

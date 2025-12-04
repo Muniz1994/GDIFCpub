@@ -59,6 +59,7 @@ struct PrecalculatedIFCItem {
      // Flag if geometry was found
     bool valid = false;
 };
+    
 
 class GDIFCManager : public Node {
     GDCLASS(GDIFCManager, Node)
@@ -72,7 +73,8 @@ class GDIFCManager : public Node {
         IDLE,
         LOADING_THREAD,
         GENERATING_NODES,
-        DONE
+        DONE,
+        FAILED
     };
     LoadState current_state = IDLE;
 
