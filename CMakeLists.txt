@@ -17,7 +17,7 @@ endif()
 
 # download the external projects and save their paths
 Message("Downloading godot-cpp 4.2")
-FetchContent_Declare(godot-cpp GIT_REPOSITORY "https://github.com/godotengine/godot-cpp.git" GIT_TAG "4bc6e67d51df4c12e150fe4769911e239c627a47")
+FetchContent_Declare(godot-cpp GIT_REPOSITORY "https://github.com/godotengine/godot-cpp.git" GIT_TAG "b0e3b1e4b78a606f48d162898afb5eeda533d2a9")
 FetchContent_MakeAvailable(godot-cpp)
 FetchContent_GetProperties(godot-cpp)
 
