@@ -61,8 +61,8 @@ struct PrecalculatedIFCItem {
 };
     
 
-class GDIFCManager : public Node {
-    GDCLASS(GDIFCManager, Node)
+class GDIFCManager : public Node3D {
+    GDCLASS(GDIFCManager, Node3D)
 
   private:
     int64_t task_id = -1;
