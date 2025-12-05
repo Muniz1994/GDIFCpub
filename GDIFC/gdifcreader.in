@@ -5,4 +5,4 @@ compatibility_minimum = "4.2"
 
 [libraries]
 
-windows.64 = "res://extensions/@PROJECT_NAME@/@TARGET@.dll"
+windows.64 = "res://addons/@PROJECT_NAME@/@TARGET@.dll"
