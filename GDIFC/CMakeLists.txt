@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
 
 project(GDIFC)
 
-set(MY_OUTPUT_DIR "${CMAKE_SOURCE_DIR}/ifc-godot-project/extensions/${PROJECT_NAME}")
+set(MY_OUTPUT_DIR "${CMAKE_SOURCE_DIR}/ifc-godot-project/addons/${PROJECT_NAME}")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${MY_OUTPUT_DIR})
 
@@ -21,7 +21,8 @@ set(EXT_SOURCES
 	src/register_types.h
 	src/register_types.cpp
 	src/utils.h
-	src/utils.cpp)
+	src/utils.cpp
+)
 
 add_library(${TARGET} SHARED ${EXT_SOURCES} "src/gd_ifc_node.h" "src/gd_ifc_node.cpp")
 
@@ -50,6 +51,6 @@ set(GDEXTENSION_OUTPUT_FILE "${MY_OUTPUT_DIR}/${GDEXTENSION_CONFIGURATION_FILE}"
 configure_file(gdifcreader.in ${GDEXTENSION_OUTPUT_FILE})
 
 install(TARGETS ${TARGET}
-		RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/ifc-godot-project/extensions/${PROJECT_NAME})
+		RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/ifc-godot-project/addons/${PROJECT_NAME})
 
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${GDEXTENSION_CONFIGURATION_FILE}" CONFIGURATIONS Release Debug DESTINATION ${CMAKE_SOURCE_DIR}/ifc-godot-project/extensions/${PROJECT_NAME})
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${GDEXTENSION_CONFIGURATION_FILE}" CONFIGURATIONS Release Debug DESTINATION ${CMAKE_SOURCE_DIR}/ifc-godot-project/addons/${PROJECT_NAME})
