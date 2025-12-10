@@ -36,6 +36,10 @@ func _ready() -> void:
 
 ### Using the panel
 
+1. Go to the GDIFC tab (the plugin must be enabled in the porject settings!)
+2. Got to the main tab, click on Load IFC and pick the file
+3. A new node will appear with all loaded elements
+
 ![Panel](images/panel.png)
 
 ## New features
