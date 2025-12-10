@@ -2,7 +2,10 @@
 extends Control
 
 
-@onready var button: Button = $MarginContainer/HBoxContainer/OpenButton/CenterContainer/Button
+@onready var button: Button = %LoadIFCButton
+@onready var create_collision_check: CheckButton = %CreateCollisionCheck
+@onready var elements_list: ItemList = %ElementsList
+@onready var loading_label: Label = %LoadingLabel
 
 var file_dialog: EditorFileDialog
 var ifc_manager: GDIFCManager
@@ -10,6 +13,7 @@ var current_scene_root: Node
 
 func _ready():
 	button.pressed.connect(_on_open_button_pressed)
+	
 
 func _on_open_button_pressed():
 	if not file_dialog:
@@ -23,7 +27,19 @@ func _on_open_button_pressed():
 	file_dialog.popup_centered_ratio()
 
 func _on_file_selected(path: String):
+	
+	loading_label.visible = true
+	# set options
+	var create_collision = create_collision_check.toggle_mode
+	
+	var collision_elements_index = elements_list.get_selected_items()
+	
+	var collision_elements = []
+	for i in collision_elements_index:
+		collision_elements.append(elements_list.get_item_text(i))
+	
 	ifc_manager = GDIFCManager.new()
+	ifc_manager.connect("ifc_read",_on_file_read)
 	current_scene_root = EditorInterface.get_edited_scene_root()
 	
 	if not current_scene_root:
@@ -37,7 +53,7 @@ func _on_file_selected(path: String):
 	ifc_manager.owner = current_scene_root
 	
 	# 3. Generate the geometry (This creates hidden children)
-	ifc_manager.read_ifc(path)
+	ifc_manager.read_ifc(path,create_collision,collision_elements)
 	
 	ifc_manager.ifc_read.connect(_set_owner)
 	ifc_manager.set_display_folded(true)
@@ -53,3 +69,6 @@ func _set_owner_recursive(node: Node, root: Node):
 		child.owner = root
 		# Continue diving deeper (in case the IFC has nested nodes)
 		_set_owner_recursive(child, root)
+
+func _on_file_read():
+	loading_label.visible = false
