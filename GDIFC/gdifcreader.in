@@ -5,6 +5,7 @@ compatibility_minimum = "4.2"
 
 [icons]
 GDIFCManager = "res://addons/GDIFC/assets/icons/building.svg"
+IFCNode = "res://addons/GDIFC/assets/icons/box.svg"
 
 [libraries]
 
