@@ -1,6 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://fja2j7bui5qu"]
+[gd_scene load_steps=5 format=3 uid="uid://fja2j7bui5qu"]
 
 [ext_resource type="Script" uid="uid://r3roinbdlw77" path="res://addons/GDIFC/gdifcdock.gd" id="1_ae86c"]
+[ext_resource type="Texture2D" uid="uid://cugvxdyscp2my" path="res://addons/GDIFC/assets/icons/upload.png" id="2_2lejx"]
+
+[sub_resource type="SVGTexture" id="SVGTexture_3o44k"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#b2b2b2\" fill-opacity=\".45\" d=\"M8 0a2 2 0 0 0 0 4 2 2 0 0 0 0-4zm0 6a2 2 0 0 0 0 4 2 2 0 0 0 0-4zm0 6a2 2 0 0 0 0 4 2 2 0 0 0 0-4z\"/></svg>
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_705tm"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.019607844, 0.14901961, 0.18431373, 1)
 
 [node name="GDIFC" type="Control"]
 layout_mode = 3
@@ -23,76 +35,92 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="TabContainer2" type="TabContainer" parent="MarginContainer"]
 layout_mode = 2
+theme_override_icons/menu = SubResource("SVGTexture_3o44k")
+theme_override_styles/panel = SubResource("StyleBoxFlat_705tm")
+current_tab = 0
 
-[node name="OpenButton" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+[node name="Main" type="HBoxContainer" parent="MarginContainer/TabContainer2"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer2/Main"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer2/Main/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Header" type="MarginContainer" parent="MarginContainer/HBoxContainer/OpenButton"]
+[node name="Header" type="MarginContainer" parent="MarginContainer/TabContainer2/Main/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_bottom = 24
 
-[node name="MainLabel" type="Label" parent="MarginContainer/HBoxContainer/OpenButton/Header"]
+[node name="MainLabel" type="Label" parent="MarginContainer/TabContainer2/Main/MarginContainer/VBoxContainer/Header"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Main:"
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/OpenButton/Header/MainLabel"]
-layout_mode = 0
-offset_top = 27.0
-offset_right = 1132.0
-offset_bottom = 31.0
-
-[node name="LoadIFCButton" type="Button" parent="MarginContainer/HBoxContainer/OpenButton"]
+[node name="LoadIFCButton" type="Button" parent="MarginContainer/TabContainer2/Main/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Load IFC"
+icon = ExtResource("2_2lejx")
 
-[node name="Header2" type="MarginContainer" parent="MarginContainer/HBoxContainer/OpenButton"]
+[node name="Config" type="HBoxContainer" parent="MarginContainer/TabContainer2"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer2/Config"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer2/Config/MarginContainer"]
+layout_mode = 2
+
+[node name="Header2" type="MarginContainer" parent="MarginContainer/TabContainer2/Config/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_bottom = 24
 
-[node name="MainLabel" type="Label" parent="MarginContainer/HBoxContainer/OpenButton/Header2"]
+[node name="ConfigLabel" type="Label" parent="MarginContainer/TabContainer2/Config/MarginContainer/VBoxContainer/Header2"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Config:"
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/OpenButton/Header2/MainLabel"]
-layout_mode = 0
-offset_top = 27.0
-offset_right = 1132.0
-offset_bottom = 31.0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/OpenButton"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer2/Config/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="CreateCollisionLabel" type="Label" parent="MarginContainer/HBoxContainer/OpenButton/HBoxContainer"]
+[node name="CreateCollisionLabel" type="Label" parent="MarginContainer/TabContainer2/Config/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Create collisions"
 
-[node name="CreateCollisionCheck" type="CheckButton" parent="MarginContainer/HBoxContainer/OpenButton/HBoxContainer"]
+[node name="CreateCollisionCheck" type="CheckButton" parent="MarginContainer/TabContainer2/Config/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/OpenButton"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/TabContainer2/Config/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="CollisionElementsLabel" type="Label" parent="MarginContainer/HBoxContainer/OpenButton/HBoxContainer2"]
+[node name="CollisionElementsLabel" type="Label" parent="MarginContainer/TabContainer2/Config/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Collision elements"
 
-[node name="ElementsList" type="ItemList" parent="MarginContainer/HBoxContainer/OpenButton/HBoxContainer2"]
+[node name="ElementsList" type="ItemList" parent="MarginContainer/TabContainer2/Config/MarginContainer/VBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 0
 size_flags_vertical = 0
-select_mode = 1
+select_mode = 2
+allow_rmb_select = true
 auto_width = true
 auto_height = true
 item_count = 7
-max_columns = 3
+max_columns = 2
 same_column_width = true
 item_0/text = "IfcSlab"
 item_1/text = "IfcRoof"
@@ -102,4 +130,4 @@ item_4/text = "IfcRail"
 item_5/text = "IfcDoor"
 item_6/text = "IfcWindow"
 
-[connection signal="pressed" from="MarginContainer/HBoxContainer/OpenButton/LoadIFCButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer2/Main/MarginContainer/VBoxContainer/LoadIFCButton" to="." method="_on_button_pressed"]
