@@ -5,6 +5,7 @@ extends Control
 @onready var button: Button = %LoadIFCButton
 @onready var create_collision_check: CheckButton = %CreateCollisionCheck
 @onready var elements_list: ItemList = %ElementsList
+@onready var loading_label: Label = %LoadingLabel
 
 var file_dialog: EditorFileDialog
 var ifc_manager: GDIFCManager
@@ -12,6 +13,7 @@ var current_scene_root: Node
 
 func _ready():
 	button.pressed.connect(_on_open_button_pressed)
+	
 
 func _on_open_button_pressed():
 	if not file_dialog:
@@ -25,6 +27,8 @@ func _on_open_button_pressed():
 	file_dialog.popup_centered_ratio()
 
 func _on_file_selected(path: String):
+	
+	loading_label.visible = true
 	# set options
 	var create_collision = create_collision_check.toggle_mode
 	
@@ -35,6 +39,7 @@ func _on_file_selected(path: String):
 		collision_elements.append(elements_list.get_item_text(i))
 	
 	ifc_manager = GDIFCManager.new()
+	ifc_manager.connect("ifc_read",_on_file_read)
 	current_scene_root = EditorInterface.get_edited_scene_root()
 	
 	if not current_scene_root:
@@ -64,3 +69,6 @@ func _set_owner_recursive(node: Node, root: Node):
 		child.owner = root
 		# Continue diving deeper (in case the IFC has nested nodes)
 		_set_owner_recursive(child, root)
+
+func _on_file_read():
+	loading_label.visible = false

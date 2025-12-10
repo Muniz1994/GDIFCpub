@@ -63,12 +63,22 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Main:"
 
-[node name="LoadIFCButton" type="Button" parent="MarginContainer/TabContainer2/Main/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer2/Main/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="LoadIFCButton" type="Button" parent="MarginContainer/TabContainer2/Main/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Load IFC"
 icon = ExtResource("2_2lejx")
+
+[node name="LoadingLabel" type="Label" parent="MarginContainer/TabContainer2/Main/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Loading...."
 
 [node name="Config" type="HBoxContainer" parent="MarginContainer/TabContainer2"]
 visible = false
@@ -130,4 +140,4 @@ item_4/text = "IfcRail"
 item_5/text = "IfcDoor"
 item_6/text = "IfcWindow"
 
-[connection signal="pressed" from="MarginContainer/TabContainer2/Main/MarginContainer/VBoxContainer/LoadIFCButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer2/Main/MarginContainer/VBoxContainer/HBoxContainer/LoadIFCButton" to="." method="_on_button_pressed"]
