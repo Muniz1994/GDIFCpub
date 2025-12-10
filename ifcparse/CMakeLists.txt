@@ -33,6 +33,8 @@ endforeach()
 
 set(SCHEMA_VERSIONS
     4
+    4x3
+    4x3_add2
     4x2
     4x1
     2x3)
@@ -67,6 +69,8 @@ target_compile_options(IfcParse PRIVATE
 
 target_compile_definitions(IfcParse PRIVATE HAS_SCHEMA_4)
 target_compile_definitions(IfcParse PRIVATE HAS_SCHEMA_2x3)
+target_compile_definitions(IfcParse PRIVATE HAS_SCHEMA_4x3)
+target_compile_definitions(IfcParse PRIVATE HAS_SCHEMA_4x3_add2)
 
 set_target_properties(IfcParse PROPERTIES COMPILE_FLAGS -DIFC_PARSE_EXPORTS VERSION "${PROJECT_VERSION}" SOVERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}")
 

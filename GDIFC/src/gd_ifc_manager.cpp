@@ -47,15 +47,37 @@ void GDIFCManager::_thread_task(String path) {
         this->current_state = FAILED;
         return;
     }
+
+
+    // Schema check for properties
+    // Cache the schema name to avoid multiple calls
+    std::string current_schema = temp_file->schema()->name();
+
+    bool is_supported_schema = (current_schema == Ifc2x3::get_schema().name()) ||
+                               (current_schema == Ifc4::get_schema().name()) ||
+                               (current_schema == Ifc4x3::get_schema().name()) ||
+                                   (current_schema == Ifc4x3_add2::get_schema().name());
+
+    if (!is_supported_schema) {
+        UtilityFunctions::printerr("Schema not supported!");
+        return;
+    }
+
+
+    std::unordered_map<std::string,int> schema_map{
+        {"IFC4",0},
+        {"IFC4x3",1},
+        {"IFC2x3",2},
+    {"IFC4x3_add2",3}
+
+    };
+
+    int schema_index = schema_map.find(current_schema)->second;
+
     // 2. Init Geometry
     temp_ifc_manager->initialize_geometry_processor();
 
     Vector<PrecalculatedIFCItem> temp_queue;
-
-    // Schema check for properties
-    bool is_ifc4 = (temp_file->schema()->name() == Ifc4::get_schema().name());
-
-    // TODO: check if schema of the file is within the Ifc4/ifc2x3/future 4x3
 
     // 3. HEAVY LOOP: Process everything HERE, not in Main Thread
     for (auto type : temp_ifc_manager->schemaManager.GetIfcElementList()) {
@@ -83,11 +105,20 @@ void GDIFCManager::_thread_task(String path) {
             item.node_name = String(type_str.c_str()) + "_" + String::num_int64(expressID);
 
             // -- B. PROPERTY PARSING (Moved to Thread!) --
-            // This was the main cause of lag. Now it happens in background.
-            if (is_ifc4) {
-                item.properties = get_ifc_property_sets<Ifc4>(*temp_file, expressID);
-            } else {
-                item.properties = get_ifc_property_sets<Ifc2x3>(*temp_file, expressID);
+            //This was the main cause of lag. Now it happens in background.
+            switch (schema_index)
+            {       case 0:
+                        item.properties = get_ifc_property_sets<Ifc4>(*temp_file, expressID);
+                        break;
+                    case 1:
+                        item.properties = get_ifc_property_sets<Ifc4x3>(*temp_file, expressID);
+                        break;
+                case 2:
+                        item.properties = get_ifc_property_sets<Ifc2x3>(*temp_file, expressID);
+                        break;
+                case 3:
+                    item.properties = get_ifc_property_sets<Ifc4x3_add2>(*temp_file, expressID);
+                    break;
             }
 
             item.ifc_class = type_str.c_str();

@@ -20,6 +20,8 @@
 
 #include <Ifc4.h>
 #include <Ifc2x3.h>
+#include <Ifc4x3.h>
+#include <Ifc4x3_add2.h>
 
 #include <IfcFile.h>
 #include <IfcLogger.h>
