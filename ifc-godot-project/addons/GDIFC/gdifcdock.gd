@@ -2,7 +2,7 @@
 extends Control
 
 
-@onready var button: Button = $MarginContainer/HBoxContainer/OpenButton/CenterContainer/Button
+@onready var button: Button = %LoadIFCButton
 
 var file_dialog: EditorFileDialog
 var ifc_manager: GDIFCManager
