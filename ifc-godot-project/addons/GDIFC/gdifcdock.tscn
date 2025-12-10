@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://fja2j7bui5qu"]
 
-[ext_resource type="Script" uid="uid://deqlbmgtbdkia" path="res://addons/GDIFC/gdifcdock.gd" id="1_ae86c"]
+[ext_resource type="Script" uid="uid://r3roinbdlw77" path="res://addons/GDIFC/gdifcdock.gd" id="1_ae86c"]
 
 [node name="GDIFC" type="Control"]
 layout_mode = 3
@@ -69,21 +69,23 @@ offset_bottom = 31.0
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/OpenButton"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/OpenButton/HBoxContainer"]
+[node name="CreateCollisionLabel" type="Label" parent="MarginContainer/HBoxContainer/OpenButton/HBoxContainer"]
 layout_mode = 2
 text = "Create collisions"
 
-[node name="CheckButton" type="CheckButton" parent="MarginContainer/HBoxContainer/OpenButton/HBoxContainer"]
+[node name="CreateCollisionCheck" type="CheckButton" parent="MarginContainer/HBoxContainer/OpenButton/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/OpenButton"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/OpenButton/HBoxContainer2"]
+[node name="CollisionElementsLabel" type="Label" parent="MarginContainer/HBoxContainer/OpenButton/HBoxContainer2"]
 layout_mode = 2
 text = "Collision elements"
 
-[node name="ItemList" type="ItemList" parent="MarginContainer/HBoxContainer/OpenButton/HBoxContainer2"]
+[node name="ElementsList" type="ItemList" parent="MarginContainer/HBoxContainer/OpenButton/HBoxContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 0
 select_mode = 1

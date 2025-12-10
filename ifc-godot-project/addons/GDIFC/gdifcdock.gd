@@ -3,6 +3,8 @@ extends Control
 
 
 @onready var button: Button = %LoadIFCButton
+@onready var create_collision_check: CheckButton = %CreateCollisionCheck
+@onready var elements_list: ItemList = %ElementsList
 
 var file_dialog: EditorFileDialog
 var ifc_manager: GDIFCManager
@@ -23,6 +25,15 @@ func _on_open_button_pressed():
 	file_dialog.popup_centered_ratio()
 
 func _on_file_selected(path: String):
+	# set options
+	var create_collision = create_collision_check.toggle_mode
+	
+	var collision_elements_index = elements_list.get_selected_items()
+	
+	var collision_elements = []
+	for i in collision_elements_index:
+		collision_elements.append(elements_list.get_item_text(i))
+	
 	ifc_manager = GDIFCManager.new()
 	current_scene_root = EditorInterface.get_edited_scene_root()
 	
@@ -37,7 +48,7 @@ func _on_file_selected(path: String):
 	ifc_manager.owner = current_scene_root
 	
 	# 3. Generate the geometry (This creates hidden children)
-	ifc_manager.read_ifc(path)
+	ifc_manager.read_ifc(path,create_collision,collision_elements)
 	
 	ifc_manager.ifc_read.connect(_set_owner)
 	ifc_manager.set_display_folded(true)
