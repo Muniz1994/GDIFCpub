@@ -231,10 +231,12 @@ if (current_state == LOADING_THREAD) {
 // ---------------------------------------------------------
 void GDIFCManager::_process_generation_queue() {
 
+    UtilityFunctions::print("Process generation queue started");
+
     uint64_t start_time = Time::get_singleton()->get_ticks_usec();
     // Budget: 8ms (8000 usec). Keep this!
     // If you remove the budget, the game will freeze/crash 'Not Responding'.
-    uint64_t time_budget = 4000;
+    uint64_t time_budget = 20000;
 
     while (current_generation_index < generation_queue.size()) {
 
@@ -249,7 +251,7 @@ void GDIFCManager::_process_generation_queue() {
         // ADD TO INVISIBLE ROOT (Not SceneTree)
         invisible_staging_root->add_child(element_node); // fast!
 
-        for (auto geom : item.geometry) {
+        for (const auto &geom : item.geometry) {
 
 
             // 2. Create Mesh
@@ -281,8 +283,10 @@ void GDIFCManager::_process_generation_queue() {
 
                 if (this->collision_classes.has(item.ifc_class)) {
 
-                    mi->create_trimesh_collision();
+                    mi->create_convex_collision();
                 }
+            } else if (this->should_create_collisions && this->collision_classes.is_empty()) {
+                mi->create_convex_collision();
             }
 
             element_node->add_child(mi);
@@ -324,7 +328,7 @@ void GDIFCManager::_process_generation_queue() {
     set_process(false);
 
     UtilityFunctions::print("IFC Fully Loaded and Revealed!");
-    UtilityFunctions::print(Time::get_singleton()->get_ticks_usec());
+    UtilityFunctions::print(Time::get_singleton()->get_ticks_usec() - start_time);
 }
 
 // ---------------------------------------------------------

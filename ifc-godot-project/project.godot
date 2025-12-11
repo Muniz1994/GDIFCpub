@@ -21,7 +21,7 @@ project/assembly_name="IFCProject"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Free fly camera/plugin.cfg")
+enabled=PackedStringArray("res://addons/Free fly camera/plugin.cfg", "res://addons/GDIFC/plugin.cfg")
 
 [input]
 
@@ -83,4 +83,3 @@ anti_aliasing/quality/msaa_3d=2
 global_illumination/sdfgi/probe_ray_count=3
 global_illumination/sdfgi/frames_to_update_lights=3
 anti_aliasing/quality/screen_space_aa=2
-anti_aliasing/quality/use_taa=true

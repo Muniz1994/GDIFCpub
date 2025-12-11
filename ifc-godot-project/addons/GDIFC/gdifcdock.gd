@@ -30,7 +30,7 @@ func _on_file_selected(path: String):
 	
 	loading_label.visible = true
 	# set options
-	var create_collision = create_collision_check.toggle_mode
+	var create_collision = create_collision_check.button_pressed
 	
 	var collision_elements_index = elements_list.get_selected_items()
 	
