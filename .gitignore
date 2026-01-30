@@ -65,3 +65,4 @@ godot-cpp
 
 *.uid
 *.ifc
+ifc-godot-project/icon.svg.import
