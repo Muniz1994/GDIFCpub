@@ -5,6 +5,10 @@ using namespace godot;
 void GDIFCManager::_bind_methods() {
     ClassDB::bind_method(D_METHOD("read_ifc", "path", "create_collision", "collision_classes"), &GDIFCManager::read_ifc, DEFVAL(false), DEFVAL(Array{}));
     ClassDB::bind_method(D_METHOD("_thread_task", "path"), &GDIFCManager::_thread_task);
+    // ClassDB::bind_method(D_METHOD("set_georref_data","georref_data"), &GDIFCManager::set_georreference_data);
+    // ClassDB::bind_method(D_METHOD("get_georref_data"), &GDIFCManager::get_georreference_data);
+    //
+    // ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY,"georreference_data"),"set_georref_data","get_georref_data");
 
     ADD_SIGNAL(MethodInfo("ifc_read"));
 }
@@ -39,6 +43,7 @@ void GDIFCManager::_thread_task(String path) {
 
     // 1. Load File
     auto temp_ifc_manager = std::make_unique<IFCManager>();
+
     auto temp_file = std::make_unique<IfcParse::IfcFile>(path.utf8().get_data());
     temp_ifc_manager->read_ifc_file(path.utf8().get_data());
 
@@ -78,6 +83,10 @@ void GDIFCManager::_thread_task(String path) {
     temp_ifc_manager->initialize_geometry_processor();
 
     Vector<PrecalculatedIFCItem> temp_queue;
+
+    // Get georreference
+
+
 
     // 3. HEAVY LOOP: Process everything HERE, not in Main Thread
     for (auto type : temp_ifc_manager->schemaManager.GetIfcElementList()) {
@@ -594,4 +603,52 @@ godot::Dictionary get_ifc_object_attributes(IfcParse::IfcFile& file, int express
     attributes["Description"] = object->Description()->c_str();
 
     return attributes;
+}
+
+template <typename schema>
+godot::GeorreferenceData get_georreference(IfcParse::IfcFile &file) {
+    if (std::is_same_v<schema,Ifc2x3>)
+    {return {};}
+    else {
+        aggregate_of_instance project_list = *file.instances_by_type("IfcMapConversion");
+
+        IfcUtil::IfcBaseClass* obj;
+
+        if (0 < project_list.size()) {
+            obj = project_list[0];
+
+        }
+        else {
+            return {};
+        }
+
+        auto map_conversion = obj->template as<schema::IfcMapConversion>();
+
+        auto projected_crs = map_conversion->TargetCRS();
+
+        return GeorreferenceData(MapConversion{
+            (int32_t)map_conversion->Eastings(),
+            (int32_t)map_conversion->Northings(),
+            (int32_t)map_conversion->OrthogonalHeight(),
+            (int32_t)map_conversion->XAxisAbscissa().value_or(0),
+            (int32_t)map_conversion->XAxisOrdinate().value_or(0),
+            (int16_t)map_conversion->Scale().value_or(0)},
+            ProjectedCRS{
+            projected_crs->Name().c_str(),
+            projected_crs->Description().value_or("").c_str(),
+            projected_crs->GeodeticDatum().value_or("").c_str(),
+            projected_crs->VerticalDatum().value_or("").c_str()}
+        );
+
+
+
+    }
+}
+
+GeorreferenceData GDIFCManager::get_georreference_data() {
+    return georreference;
+}
+
+void GDIFCManager::set_georreference_data(GeorreferenceData data) {
+    georreference = data;
 }

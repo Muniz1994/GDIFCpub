@@ -36,6 +36,38 @@
 namespace godot {
 // Holds the geometric data to allow the creation of the Godot
 // geometries of the IFC object
+
+    struct MapConversion{
+
+        int32_t Eastings;
+        int32_t Northings;
+        int32_t OrthogonalHeight;
+        int32_t XAxisAbscissa;
+        int32_t XAxisOrdinate;
+        int16_t Scale;
+
+    };
+
+    struct ProjectedCRS {
+
+        String Name;
+        String Description;
+        String GeodeticDatum;
+        String VerticalDatum;
+    };
+
+struct GeorreferenceData {
+    MapConversion map_conversion;
+    ProjectedCRS projected_crs;
+
+    GeorreferenceData():map_conversion{0,0,0,0,0,0},projected_crs{"NotDefined","NotDefined","NotDefined","NotDefined"}
+    {}
+
+    GeorreferenceData(MapConversion map_conversion, ProjectedCRS projected_crs): map_conversion{map_conversion},projected_crs{projected_crs}
+    {}
+
+};
+
 struct PrecalculatedIFCItemGeometry {
 
     // Mesh Data
@@ -92,12 +124,14 @@ class GDIFCManager : public Node3D {
     // Material Cache to reduce draw calls and allocation time
     HashMap<String, Ref<StandardMaterial3D>> material_cache;
 
+    GeorreferenceData georreference;
+
   protected:
     static void _bind_methods();
 
   public:
     GDIFCManager();
-    ~GDIFCManager();
+    ~GDIFCManager() override;
 
     void read_ifc(String path, bool create_collision, Array collision_classes);
     void _process(double delta) override;
@@ -110,11 +144,16 @@ class GDIFCManager : public Node3D {
     Ref<StandardMaterial3D> _get_material(Color color, bool transparent);
 
     Node3D* invisible_staging_root = nullptr;
+
+    GeorreferenceData get_georreference_data();
+    void set_georreference_data(godot::GeorreferenceData data);
 };
 
 
 
 } // namespace godot
+
+
 
 template <typename schema>
 godot::Dictionary get_ifc_property_sets(IfcParse::IfcFile& file, int expressID);
@@ -122,5 +161,8 @@ godot::Dictionary get_ifc_property_sets(IfcParse::IfcFile& file, int expressID);
 godot::Dictionary get_ifc_object_attributes(IfcParse::IfcFile& file, int expressID);
 
 godot::Variant to_godot_variant(const AttributeValue& attr_value);
+
+template <typename schema>
+godot::GeorreferenceData get_georreference(IfcParse::IfcFile& file);
 
 #endif
