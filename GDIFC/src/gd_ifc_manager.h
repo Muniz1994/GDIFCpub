@@ -85,6 +85,7 @@ struct PrecalculatedIFCItemGeometry {
 struct PrecalculatedIFCItem {
     String node_name;
     Dictionary properties; // Parsed in thread
+    Dictionary attributes;
     String ifc_class;
 
     // Holds the geometric information of all objects

@@ -113,6 +113,8 @@ void GDIFCManager::_thread_task(String path) {
             item.valid = true;
             item.node_name = String(type_str.c_str()) + "_" + String::num_int64(expressID);
 
+            item.attributes = get_ifc_object_attributes(*temp_file, expressID);
+
             // -- B. PROPERTY PARSING (Moved to Thread!) --
             //This was the main cause of lag. Now it happens in background.
             switch (schema_index)
@@ -255,6 +257,7 @@ void GDIFCManager::_process_generation_queue() {
         IFCNode* element_node = memnew(IFCNode);
         element_node->set_name(item.node_name);
         element_node->set_properties(item.properties);
+        element_node->set_attributes(item.attributes);
         element_node->set_class(item.ifc_class);
 
         // ADD TO INVISIBLE ROOT (Not SceneTree)
@@ -589,6 +592,7 @@ godot::Dictionary get_ifc_object_attributes(IfcParse::IfcFile& file, int express
     godot::Dictionary attributes;
 
     auto instance = file.instance_by_id(expressID);
+
     if (!instance) {
         return attributes;
     }
@@ -599,11 +603,23 @@ godot::Dictionary get_ifc_object_attributes(IfcParse::IfcFile& file, int express
     }
 
     attributes["GlobalId"] = object->GlobalId().c_str();
-    attributes["Name"] = object->Name()->c_str();
-    attributes["Description"] = object->Description()->c_str();
+    
+    auto name = object->get("Name");
+    if (!name.isNull()) {attributes["Name"] = static_cast<std::string>(name).c_str();}
+
+    auto description = object->get("Description");
+    if (!description.isNull()) {attributes["Description"] = static_cast<std::string>(description).c_str();}
+
+    auto predefined_type = object->get("PredefinedType");
+    if (!predefined_type.isNull()) {attributes["PredefinedType"] = static_cast<std::string>(predefined_type).c_str();}
+
+    auto object_type = object->get("ObjectType");
+    if (!object_type.isNull()) {attributes["ObjectType"] = static_cast<std::string>(object_type).c_str();}
+
 
     return attributes;
 }
+
 
 template <typename schema>
 godot::GeorreferenceData get_georreference(IfcParse::IfcFile &file) {
