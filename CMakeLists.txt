@@ -3,6 +3,11 @@ cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
 
 project(GodotExtension)
 
+if (UNIX)
+    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+endif (UNIX)
+
+
 # Define this necessary flag
 add_definitions(-DIFCQUERY_STATIC_LIB)
 
