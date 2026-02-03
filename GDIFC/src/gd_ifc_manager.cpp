@@ -113,23 +113,25 @@ void GDIFCManager::_thread_task(String path) {
             item.valid = true;
             item.node_name = String(type_str.c_str()) + "_" + String::num_int64(expressID);
 
-            item.attributes = get_ifc_object_attributes(*temp_file, expressID);
+
+
+            switch (schema_index)
+            {
+                case 0: item.attributes = get_ifc_object_attributes<Ifc4>(*temp_file, expressID);
+                case 1: item.attributes = get_ifc_object_attributes<Ifc4x3>(*temp_file, expressID);
+                case 2: item.attributes = get_ifc_object_attributes<Ifc2x3>(*temp_file, expressID);
+                case 3: item.attributes = get_ifc_object_attributes<Ifc4x3_add2>(*temp_file, expressID);
+
+            }
 
             // -- B. PROPERTY PARSING (Moved to Thread!) --
             //This was the main cause of lag. Now it happens in background.
             switch (schema_index)
-            {       case 0:
-                        item.properties = get_ifc_property_sets<Ifc4>(*temp_file, expressID);
-                        break;
-                    case 1:
-                        item.properties = get_ifc_property_sets<Ifc4x3>(*temp_file, expressID);
-                        break;
-                case 2:
-                        item.properties = get_ifc_property_sets<Ifc2x3>(*temp_file, expressID);
-                        break;
-                case 3:
-                    item.properties = get_ifc_property_sets<Ifc4x3_add2>(*temp_file, expressID);
-                    break;
+            {
+                case 0: item.properties = get_ifc_property_sets<Ifc4>(*temp_file, expressID); break;
+                case 1: item.properties = get_ifc_property_sets<Ifc4x3>(*temp_file, expressID); break;
+                case 2: item.properties = get_ifc_property_sets<Ifc2x3>(*temp_file, expressID); break;
+                case 3: item.properties = get_ifc_property_sets<Ifc4x3_add2>(*temp_file, expressID); break;
             }
 
             item.ifc_class = type_str.c_str();
@@ -586,7 +588,7 @@ godot::Dictionary get_ifc_property_sets(IfcParse::IfcFile& file, int expressID) 
     return psets;
 }
 
-
+template <typename schema>
 godot::Dictionary get_ifc_object_attributes(IfcParse::IfcFile& file, int expressID) {
 
     godot::Dictionary attributes;
@@ -602,24 +604,41 @@ godot::Dictionary get_ifc_object_attributes(IfcParse::IfcFile& file, int express
         return attributes;
     }
 
-    attributes["GlobalId"] = object->GlobalId().c_str();
-    
+
+
+    auto attrs = object->declaration().as_entity()->all_attributes();
+    auto iter = attrs.begin();
+    size_t idx = 0;
+
+    for (; iter != attrs.end(); ++iter, ++idx) {
+        attributes[(*iter)->name().c_str()] = convert_attribute_value(object->get_attribute_value(idx));
+    }
+
+
+    // attributes["GlobalId"] = object->GlobalId().c_str();
+
+    // get() method returns a AttributeValue
     auto name = object->get("Name");
-    if (!name.isNull()) {attributes["Name"] = static_cast<std::string>(name).c_str();}
+    // if (!name.isNull()) {attributes["Name"] = static_cast<std::string>(name).c_str();}
+    //
+    // auto description = object->get("Description");
+    // if (!description.isNull()) {attributes["Description"] = static_cast<std::string>(description).c_str();}
 
-    auto description = object->get("Description");
-    if (!description.isNull()) {attributes["Description"] = static_cast<std::string>(description).c_str();}
+    // auto predefined_type = object->get("PredefinedType");
 
-    auto predefined_type = object->get("PredefinedType");
-    if (!predefined_type.isNull()) {attributes["PredefinedType"] = static_cast<std::string>(predefined_type).c_str();}
+    // if (!predefined_type.isNull()) {
+    //
+    //     std::string value = predefined_type;
+    //
+    //     attributes["PredefinedType"] = value.c_str();
+    // }
 
-    auto object_type = object->get("ObjectType");
-    if (!object_type.isNull()) {attributes["ObjectType"] = static_cast<std::string>(object_type).c_str();}
+    // auto object_type = object->get("ObjectType");
+    // if (!object_type.isNull()) {attributes["ObjectType"] = static_cast<std::string>(object_type).c_str();}
 
 
     return attributes;
 }
-
 
 template <typename schema>
 godot::GeorreferenceData get_georreference(IfcParse::IfcFile &file) {
