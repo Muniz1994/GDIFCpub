@@ -16,6 +16,7 @@
 #include <schema/ifc-schema.h>
 #include <modelmanager/ModelManager.h>
 #include "utils.h"
+#include "value_conversion.h"
 
 
 #include <Ifc4.h>
@@ -24,12 +25,10 @@
 #include <Ifc4x3_add2.h>
 
 #include <IfcFile.h>
-#include <IfcLogger.h>
 #include <FileReader.h>
 
 #include <godot_cpp/templates/vector.hpp> 
 #include <string> // Standard string for the struct
-
 
 #include "gd_ifc_node.h"
 
@@ -159,6 +158,7 @@ class GDIFCManager : public Node3D {
 template <typename schema>
 godot::Dictionary get_ifc_property_sets(IfcParse::IfcFile& file, int expressID);
 
+template <typename schema>
 godot::Dictionary get_ifc_object_attributes(IfcParse::IfcFile& file, int expressID);
 
 godot::Variant to_godot_variant(const AttributeValue& attr_value);

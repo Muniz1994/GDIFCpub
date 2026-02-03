@@ -22,6 +22,8 @@ set(EXT_SOURCES
 	src/register_types.cpp
 	src/utils.h
 	src/utils.cpp
+		src/value_conversion.cpp
+		src/value_conversion.h
 )
 
 add_library(${TARGET} SHARED ${EXT_SOURCES} "src/gd_ifc_node.h" "src/gd_ifc_node.cpp")
