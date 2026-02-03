@@ -286,11 +286,7 @@ godot::Array IFCManager::get_type_properties( uint32_t modelID, uint32_t element
 void IFCManager::initialize_geometry_processor()
 {
 
-    this->geometry_loader = std::make_unique<webifc::geometry::IfcGeometryProcessor>(
-        *this->loader, this->schemaManager, this->set.CIRCLE_SEGMENTS, this->set.COORDINATE_TO_ORIGIN,
-        this->set.tolerancePlaneIntersection, this->set.toleranceBoundaryPoint,
-        this->set.toleranceInsideOutsideToPlane, this->set.toleranceInsideOutside,
-        this->set.toleranceScalarEquality, this->set.addPlaneIterations);
+    this->geometry_loader = std::make_unique<webifc::geometry::IfcGeometryProcessor>(*loader, schemaManager, set.CIRCLE_SEGMENTS, set.COORDINATE_TO_ORIGIN, set.TOLERANCE_PLANE_INTERSECTION, set.TOLERANCE_PLANE_DEVIATION, set.TOLERANCE_BACK_DEVIATION_DISTANCE, set.TOLERANCE_INSIDE_OUTSIDE_PERIMETER, set.TOLERANCE_SCALAR_EQUALITY, set.PLANE_REFIT_ITERATIONS, set.BOOLEAN_UNION_THRESHOLD);
 }
 
 

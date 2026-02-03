@@ -42,8 +42,15 @@ namespace webifc::geometry {
 
 		void Geometry::GetCenterExtents(glm::dvec3& center, glm::dvec3& extents) const
 		{
+			if (numPoints == 0)
+			{
+				// avoid inf values
+				extents = glm::dvec3(0,0,0);
+				center = glm::dvec3(0, 0, 0);
+				return;
+			}
 			glm::dvec3 min(DBL_MAX, DBL_MAX, DBL_MAX);
-			glm::dvec3 max(DBL_MIN, DBL_MIN, DBL_MIN);
+			glm::dvec3 max(-DBL_MAX, -DBL_MAX, -DBL_MAX);
 
 			for (size_t i = 0; i < numPoints; i++)
 			{
@@ -163,7 +170,7 @@ namespace webifc::geometry {
 		glm::dvec3 center = normalizationCenter;
 		if (!normalized)
 		{	
-			glm::dvec3 extents;
+			glm::dvec3 extents(0,0,0);
 			GetCenterExtents(center,extents);
 			for (size_t i = 0; i < vertexData.size(); i += 6)
 			{
@@ -210,7 +217,7 @@ namespace webifc::geometry {
 		return  resultMat;
 	}
 
-	uint32_t IfcGeometry::GetVertexData()
+	uintptr_t IfcGeometry::GetVertexData()
 	{
 		// unfortunately webgl can't do doubles
 		if (fvertexData.size() != vertexData.size())
@@ -228,7 +235,7 @@ namespace webifc::geometry {
 		{
 			return 0;
 		}
-		return (uint32_t)(size_t)&fvertexData[0];
+		return (uintptr_t)(size_t)&fvertexData[0];
 	}
 
     uint32_t IfcGeometry::GetVertexDataSize()
@@ -236,9 +243,9 @@ namespace webifc::geometry {
 		return (uint32_t)fvertexData.size();
 	}
 
-	uint32_t IfcGeometry::GetIndexData()
+	uintptr_t IfcGeometry::GetIndexData()
 	{
-		return (uint32_t)(size_t)&indexData[0];
+		return (uintptr_t)(size_t)&indexData[0];
 	}
 
 	uint32_t IfcGeometry::GetIndexDataSize()

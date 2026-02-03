@@ -33,15 +33,16 @@ struct GDIFCLoaderSettings
 {
     bool COORDINATE_TO_ORIGIN = false;
     uint16_t CIRCLE_SEGMENTS = 12;
-    uint32_t TAPE_SIZE = 67108864 ; // probably no need for anyone other than web-ifc devs to change this
+    uint32_t TAPE_SIZE = 67108864; // probably no need for anyone other than web-ifc devs to change this
     uint32_t MEMORY_LIMIT = 2147483648;
     uint16_t LINEWRITER_BUFFER = 10000;
-    double tolerancePlaneIntersection = 1.0E-04;
-    double toleranceBoundaryPoint = 1.0E-04;
-    double toleranceInsideOutsideToPlane = 1.0E-04;
-    double toleranceInsideOutside = 1.0E-10;
-    double toleranceScalarEquality = 1.0E-04;
-    uint16_t addPlaneIterations = 10;
+    double TOLERANCE_PLANE_INTERSECTION = 1.0E-01;
+    double TOLERANCE_PLANE_DEVIATION = 3.0E-04;
+    double TOLERANCE_BACK_DEVIATION_DISTANCE = 3.0E-04;
+    double TOLERANCE_INSIDE_OUTSIDE_PERIMETER = 1.0E-10;
+    double TOLERANCE_SCALAR_EQUALITY = 1.0E-04;
+    uint16_t PLANE_REFIT_ITERATIONS = 10;
+    uint16_t BOOLEAN_UNION_THRESHOLD = 150;
 };
 
 

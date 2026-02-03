@@ -141,6 +141,7 @@ void GDIFCManager::_thread_task(String path) {
             // Or keep them separate if needed. This example handles the first valid geometry logic you had.
 
             for (auto& geom_data : flat_mesh.geometries) {
+
                 PrecalculatedIFCItemGeometry item_geometry;
                 auto ifc_geometry = temp_ifc_manager->geometry_loader->GetGeometry(geom_data.geometryExpressID);
 

@@ -13,6 +13,7 @@
 
 webifc::manager::ModelManager::ModelManager(bool _mt_enabled)
 {
+    _logger = spdlog::default_logger();
     mt_enabled = _mt_enabled;
 }
 
@@ -34,10 +35,16 @@ void webifc::manager::ModelManager::CloseAllModels()
     _geometryProcessors.clear();
 }
 
+void webifc::manager::ModelManager::SetLogger(std::shared_ptr<spdlog::logger> logger) {
+    _logger = logger;
+}
+
 void webifc::manager::ModelManager::SetLogLevel(uint8_t levelArg)
 {
-    spdlog::set_level((spdlog::level::level_enum)levelArg);
-    spdlog::set_pattern("[WEB-IFC][%l]%v");
+    if (_logger) {
+        _logger->set_level((spdlog::level::level_enum)levelArg);
+        _logger->set_pattern("[WEB-IFC][%l]%v");
+    }
 }
 
 webifc::geometry::IfcGeometryProcessor *webifc::manager::ModelManager::GetGeometryProcessor(uint32_t modelID)
@@ -46,7 +53,7 @@ webifc::geometry::IfcGeometryProcessor *webifc::manager::ModelManager::GetGeomet
         return {};
     if (!_geometryProcessors.contains(modelID))
     {
-        webifc::geometry::IfcGeometryProcessor *processor = new webifc::geometry::IfcGeometryProcessor(*GetIfcLoader(modelID), _schemaManager, GetSettings(modelID).CIRCLE_SEGMENTS, GetSettings(modelID).COORDINATE_TO_ORIGIN, GetSettings(modelID).tolerancePlaneIntersection, GetSettings(modelID).toleranceBoundaryPoint, GetSettings(modelID).toleranceInsideOutsideToPlane, GetSettings(modelID).toleranceInsideOutside, GetSettings(modelID).toleranceScalarEquality, GetSettings(modelID).addPlaneIterations);
+        webifc::geometry::IfcGeometryProcessor *processor = new webifc::geometry::IfcGeometryProcessor(*GetIfcLoader(modelID), _schemaManager, GetSettings(modelID).CIRCLE_SEGMENTS, GetSettings(modelID).COORDINATE_TO_ORIGIN, GetSettings(modelID).TOLERANCE_PLANE_INTERSECTION, GetSettings(modelID).TOLERANCE_PLANE_DEVIATION, GetSettings(modelID).TOLERANCE_BACK_DEVIATION_DISTANCE, GetSettings(modelID).TOLERANCE_INSIDE_OUTSIDE_PERIMETER, GetSettings(modelID).TOLERANCE_SCALAR_EQUALITY, GetSettings(modelID).PLANE_REFIT_ITERATIONS, GetSettings(modelID).BOOLEAN_UNION_THRESHOLD);
         _geometryProcessors[modelID] = processor;
     }
     return _geometryProcessors.at(modelID);
