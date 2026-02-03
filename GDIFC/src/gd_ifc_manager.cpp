@@ -5,11 +5,6 @@ using namespace godot;
 void GDIFCManager::_bind_methods() {
     ClassDB::bind_method(D_METHOD("read_ifc", "path", "create_collision", "collision_classes"), &GDIFCManager::read_ifc, DEFVAL(false), DEFVAL(Array{}));
     ClassDB::bind_method(D_METHOD("_thread_task", "path"), &GDIFCManager::_thread_task);
-    // ClassDB::bind_method(D_METHOD("set_georref_data","georref_data"), &GDIFCManager::set_georreference_data);
-    // ClassDB::bind_method(D_METHOD("get_georref_data"), &GDIFCManager::get_georreference_data);
-    //
-    // ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY,"georreference_data"),"set_georref_data","get_georref_data");
-
     ADD_SIGNAL(MethodInfo("ifc_read"));
 }
 
@@ -26,7 +21,7 @@ void GDIFCManager::read_ifc(String path, bool create_collision, Array collision_
     this->should_create_collisions = create_collision;
     this->collision_classes = collision_classes;
     this->generation_queue.clear();
-    this->material_cache.clear(); // Clear cache for new file
+    this->material_cache.clear();
     this->current_generation_index = 0;
     this->current_state = LOADING_THREAD;
 
@@ -37,7 +32,7 @@ void GDIFCManager::read_ifc(String path, bool create_collision, Array collision_
 }
 
 // ---------------------------------------------------------
-// BACKGROUND THREAD (Does 99% of the work now)
+// BACKGROUND THREAD
 // ---------------------------------------------------------
 void GDIFCManager::_thread_task(String path) {
 
@@ -53,28 +48,24 @@ void GDIFCManager::_thread_task(String path) {
         return;
     }
 
-
-    // Schema check for properties
-    // Cache the schema name to avoid multiple calls
+    // Schema check
     std::string current_schema = temp_file->schema()->name();
 
     bool is_supported_schema = (current_schema == Ifc2x3::get_schema().name()) ||
                                (current_schema == Ifc4::get_schema().name()) ||
                                (current_schema == Ifc4x3::get_schema().name()) ||
-                                   (current_schema == Ifc4x3_add2::get_schema().name());
+                               (current_schema == Ifc4x3_add2::get_schema().name());
 
     if (!is_supported_schema) {
         UtilityFunctions::printerr("Schema not supported!");
         return;
     }
 
-
     std::unordered_map<std::string,int> schema_map{
         {Ifc4::get_schema().name(),0},
         {Ifc4x3::get_schema().name(),1},
         {Ifc2x3::get_schema().name(),2},
-    {Ifc4x3_add2::get_schema().name(),3}
-
+        {Ifc4x3_add2::get_schema().name(),3}
     };
 
     int schema_index = schema_map[current_schema];
@@ -84,14 +75,81 @@ void GDIFCManager::_thread_task(String path) {
 
     Vector<PrecalculatedIFCItem> temp_queue;
 
-    // Get georreference
+    // --- BUILD HIERARCHY MAP ---
+    std::unordered_map<int, int> parent_map;
 
-    // 3. HEAVY LOOP: Process everything HERE, not in Main Thread
+    switch (schema_index)
+    {
+        case 0: parent_map = build_spatial_hierarchy<Ifc4>(*temp_file); break;
+        case 1: parent_map = build_spatial_hierarchy<Ifc4x3>(*temp_file); break;
+        case 2: parent_map = build_spatial_hierarchy<Ifc2x3>(*temp_file); break;
+        case 3: parent_map = build_spatial_hierarchy<Ifc4x3_add2>(*temp_file); break;
+    }
+
+    // [FIX] Identify all nodes that act as parents (Containers)
+    // This includes Spaces, Stairs, Curtain Walls, etc., not just BuildingStoreys.
+    std::unordered_set<int> active_parents;
+    for (const auto& pair : parent_map) {
+        active_parents.insert(pair.second);
+    }
+
+    std::unordered_set<int> processed_ids; // To avoid duplicates
+
+    // --- PRE-PROCESS SPATIAL STRUCTURE ---
+    // We strictly force Project, Site, Building, and Storey to be at the start of the queue
+    // to ensure the root logic works, but we acknowledge they might not cover all parents.
+    std::vector<std::string> spatial_types = {"IfcProject", "IfcSite", "IfcBuilding", "IfcBuildingStorey"};
+
+    for (const auto& s_type : spatial_types) {
+        auto instances = temp_file->instances_by_type(s_type);
+        if (!instances) continue;
+
+        for(int i=0; i<instances->size(); i++) {
+            auto ent = instances->operator[](i);
+            int id = ent->id();
+
+            PrecalculatedIFCItem item;
+            item.valid = true;
+            item.express_id = id;
+            item.node_name = String(s_type.c_str()) + "_" + String::num_int64(id);
+            item.ifc_class = s_type.c_str();
+
+            switch (schema_index)
+            {
+                case 0: item.attributes = get_ifc_object_attributes<Ifc4>(*temp_file, id); break;
+                case 1: item.attributes = get_ifc_object_attributes<Ifc4x3>(*temp_file, id); break;
+                case 2: item.attributes = get_ifc_object_attributes<Ifc2x3>(*temp_file, id); break;
+                case 3: item.attributes = get_ifc_object_attributes<Ifc4x3_add2>(*temp_file, id); break;
+            }
+
+            switch (schema_index)
+            {
+                case 0: item.properties = get_ifc_property_sets<Ifc4>(*temp_file, id); break;
+                case 1: item.properties = get_ifc_property_sets<Ifc4x3>(*temp_file, id); break;
+                case 2: item.properties = get_ifc_property_sets<Ifc2x3>(*temp_file, id); break;
+                case 3: item.properties = get_ifc_property_sets<Ifc4x3_add2>(*temp_file, id); break;
+            }
+
+            if (parent_map.find(id) != parent_map.end()) {
+                item.parent_id = parent_map[id];
+            }
+
+            temp_queue.push_back(item);
+            processed_ids.insert(id);
+        }
+    }
+
+    // 3. HEAVY LOOP: Process everything else
     for (auto type : temp_ifc_manager->schemaManager.GetIfcElementList()) {
 
         auto expressIDs = temp_ifc_manager->loader->GetExpressIDsWithType(type);
 
         for (uint32_t expressID : expressIDs) {
+
+            // Skip if already processed in the spatial loop
+            if (processed_ids.find(expressID) != processed_ids.end()) {
+                continue;
+            }
 
             std::string type_str = temp_ifc_manager->schemaManager.IfcTypeCodeToType(temp_ifc_manager->loader->GetLineType(expressID));
 
@@ -102,16 +160,20 @@ void GDIFCManager::_thread_task(String path) {
             // -- A. GEOMETRY PROCESSING --
             auto flat_mesh = temp_ifc_manager->geometry_loader->GetFlatMesh(expressID);
 
-            // If no geometry, skip early
-            if (flat_mesh.geometries.empty()) {
+            // [FIX] Determine if this node is relevant
+            bool has_geometry = !flat_mesh.geometries.empty();
+            bool is_container_node = (active_parents.find(expressID) != active_parents.end());
+
+            // If it has no geometry AND it's not a parent to anything else, we can skip it.
+            // But if it IS a parent (e.g., an empty Stair container), we MUST process it.
+            if (!has_geometry && !is_container_node) {
                 continue;
             }
 
             PrecalculatedIFCItem item;
             item.valid = true;
+            item.express_id = expressID; // Ensure ID is set for lookup
             item.node_name = String(type_str.c_str()) + "_" + String::num_int64(expressID);
-
-
 
             switch (schema_index)
             {
@@ -119,11 +181,8 @@ void GDIFCManager::_thread_task(String path) {
                 case 1: item.attributes = get_ifc_object_attributes<Ifc4x3>(*temp_file, expressID); break;
                 case 2: item.attributes = get_ifc_object_attributes<Ifc2x3>(*temp_file, expressID); break;
                 case 3: item.attributes = get_ifc_object_attributes<Ifc4x3_add2>(*temp_file, expressID); break;
-
             }
 
-            // -- B. PROPERTY PARSING (Moved to Thread!) --
-            //This was the main cause of lag. Now it happens in background.
             switch (schema_index)
             {
                 case 0: item.properties = get_ifc_property_sets<Ifc4>(*temp_file, expressID); break;
@@ -134,12 +193,16 @@ void GDIFCManager::_thread_task(String path) {
 
             item.ifc_class = type_str.c_str();
 
+            // --- ASSIGN PARENT ---
+            if (parent_map.find(expressID) != parent_map.end()) {
+                item.parent_id = parent_map[expressID];
+            }
 
             item.geometry = {};
-            // -- C. MESH DATA PREPARATION --
-            // We merge multiple sub-geometries into one ArrayMesh surface here to reduce draw calls
-            // Or keep them separate if needed. This example handles the first valid geometry logic you had.
 
+            // -- C. MESH DATA PREPARATION --
+            // This loop will simply not run if flat_mesh.geometries is empty,
+            // resulting in a Node3D with no MeshInstance3D child (which is valid for container nodes).
             for (auto& geom_data : flat_mesh.geometries) {
 
                 PrecalculatedIFCItemGeometry item_geometry;
@@ -156,7 +219,7 @@ void GDIFCManager::_thread_task(String path) {
                 int index_offset = item_geometry.indices.size();
                 item_geometry.indices.resize(index_offset + (ifc_geometry.numFaces * 3));
 
-                // 1. Vertices (Math in Thread)
+                // 1. Vertices
                 for (uint32_t i = 0; i < ifc_geometry.numPoints; i++) {
                     glm::dvec3 point = ifc_geometry.GetPoint(i);
                     glm::dvec4 tv = geom_data.transformation * glm::dvec4(point, 1.0);
@@ -171,15 +234,14 @@ void GDIFCManager::_thread_task(String path) {
                     item_geometry.indices[index_offset + (i * 3) + 2] = vertex_offset + face.i0;
                 }
 
-                // 3. Normals (Math in Thread)
+                // 3. Normals
                 for (uint32_t i = 0; i < ifc_geometry.numFaces; i++) {
                     bimGeometry::Face face = ifc_geometry.GetFace(i);
-                    // Use the indices we just wrote
                     Vector3 p0 = item_geometry.vertices[vertex_offset + face.i0];
                     Vector3 p1 = item_geometry.vertices[vertex_offset + face.i1];
                     Vector3 p2 = item_geometry.vertices[vertex_offset + face.i2];
 
-                    Vector3 normal = (p1 - p0).cross(p2 - p0).normalized(); // Expensive sqrt!
+                    Vector3 normal = (p1 - p0).cross(p2 - p0).normalized();
 
                     item_geometry.normals[vertex_offset + face.i0] = normal;
                     item_geometry.normals[vertex_offset + face.i1] = normal;
@@ -202,7 +264,8 @@ void GDIFCManager::_thread_task(String path) {
                 }
             }
 
-            if (!item.geometry.empty()) {
+            // [FIX] Accept the node if it has geometry OR if it acts as a structural container
+            if (!item.geometry.empty() || is_container_node) {
                 temp_queue.push_back(item);
             }
         }
@@ -217,7 +280,7 @@ void GDIFCManager::_thread_task(String path) {
 }
 
 // ---------------------------------------------------------
-// MAIN THREAD PROCESS
+// MAIN THREAD PROCESS (Unchanged, for context)
 // ---------------------------------------------------------
 void GDIFCManager::_process(double delta) {
 
@@ -225,12 +288,8 @@ if (current_state == LOADING_THREAD) {
         if (WorkerThreadPool::get_singleton()->is_task_completed(task_id)) {
             WorkerThreadPool::get_singleton()->wait_for_task_completion(task_id);
             task_id = -1;
-
-            // 1. Create the Staging Root
-            // IMPORTANT: We do NOT add_child() yet. It exists only in memory.
             invisible_staging_root = memnew(Node3D);
             invisible_staging_root->set_name("IFC_Staging_Area");
-
             current_state = GENERATING_NODES;
         }
     } else if (current_state == GENERATING_NODES) {
@@ -246,8 +305,6 @@ void GDIFCManager::_process_generation_queue() {
     UtilityFunctions::print("Process generation queue started");
 
     uint64_t start_time = Time::get_singleton()->get_ticks_usec();
-    // Budget: 8ms (8000 usec). Keep this!
-    // If you remove the budget, the game will freeze/crash 'Not Responding'.
     uint64_t time_budget = 20000;
 
     while (current_generation_index < generation_queue.size()) {
@@ -261,11 +318,23 @@ void GDIFCManager::_process_generation_queue() {
         element_node->set_attributes(item.attributes);
         element_node->set_class(item.ifc_class);
 
-        // ADD TO INVISIBLE ROOT (Not SceneTree)
-        invisible_staging_root->add_child(element_node); // fast!
+        // 2. REGISTER NODE
+        if (item.express_id > 0) {
+            node_registry[item.express_id] = element_node;
+        }
 
+        // 3. PARENTING LOGIC
+        if (item.parent_id > 0 && node_registry.has(item.parent_id)) {
+            Node* parent_node = node_registry[item.parent_id];
+            parent_node->add_child(element_node);
+        }
+        else {
+            invisible_staging_root->add_child(element_node);
+        }
+
+        // [NOTE] This loop handles cases where geometry is empty (Containers) by doing nothing
+        // but leaving the element_node in the tree as a parent for future children.
         for (const auto &geom : item.geometry) {
-
 
             // 2. Create Mesh
             Ref<ArrayMesh> mesh;
@@ -291,11 +360,8 @@ void GDIFCManager::_process_generation_queue() {
             mi->set_mesh(mesh);
             mi->set_surface_override_material(0, mat);
 
-            // Collisions are safe here because element_node is not in the tree yet!
             if (this->should_create_collisions && !this->collision_classes.is_empty()) {
-
                 if (this->collision_classes.has(item.ifc_class)) {
-
                     mi->create_convex_collision();
                 }
             } else if (this->should_create_collisions && this->collision_classes.is_empty()) {
@@ -303,45 +369,27 @@ void GDIFCManager::_process_generation_queue() {
             }
 
             element_node->add_child(mi);
-
         }
-
 
         current_generation_index++;
 
-        // Time Slice Check
-        // We still yield to let the engine render the Loading Spinner / UI
         uint64_t current_duration = Time::get_singleton()->get_ticks_usec() - start_time;
         if (current_duration > time_budget) {
-            return; // Come back next frame
+            return;
         }
     }
 
-    // ---------------------------------------------------
-    // FINALIZATION: THE "POP"
-    // ---------------------------------------------------
-
-    // We are done with the loop.
-    // Now we add the massive invisible root to the actual scene tree.
-    // This will happen in ONE FRAME.
-
-    // Optional: Rename it to final name
-    invisible_staging_root->set_name("IFCModel");
-
-    // The Big Reveal
-    add_child(invisible_staging_root, true);
-
-    // Cleanup
-    invisible_staging_root = nullptr; // Clear our pointer
-    current_state = DONE;
-
-    // File read, signal emitted
-    emit_signal("ifc_read");
-
-    set_process(false);
-
-    UtilityFunctions::print("IFC Fully Loaded and Revealed!");
-    UtilityFunctions::print(Time::get_singleton()->get_ticks_usec() - start_time);
+    if (current_generation_index >= generation_queue.size()) {
+        node_registry.clear();
+        invisible_staging_root->set_name("IFCModel");
+        add_child(invisible_staging_root, true);
+        invisible_staging_root = nullptr;
+        current_state = DONE;
+        emit_signal("ifc_read");
+        set_process(false);
+        UtilityFunctions::print("IFC Fully Loaded and Revealed!");
+        UtilityFunctions::print(Time::get_singleton()->get_ticks_usec() - start_time);
+    }
 }
 
 // ---------------------------------------------------------
@@ -661,4 +709,51 @@ GeorreferenceData GDIFCManager::get_georreference_data() {
 
 void GDIFCManager::set_georreference_data(GeorreferenceData data) {
     georreference = data;
+}
+
+template <typename schema>
+std::unordered_map<int, int> build_spatial_hierarchy(IfcParse::IfcFile &file) {
+    std::unordered_map<int, int> child_to_parent;
+
+    // 1. Handle Aggregation (Site -> Building -> Storey)
+    // Uses IfcRelAggregates
+    auto rel_aggregates = file.instances_by_type("IfcRelAggregates");
+    if (rel_aggregates) {
+        for (int i = 0; i < rel_aggregates->size(); i++) {
+            auto rel = rel_aggregates->operator[](i)->as<typename schema::IfcRelAggregates>(); // cast works for 2x3 too usually due to inheritance or use generic base
+            if (!rel) continue;
+
+            auto parent = rel->RelatingObject();
+            auto children = rel->RelatedObjects();
+
+            if (parent && children) {
+                int parent_id = parent->id();
+                for (auto child : *children) {
+                    child_to_parent[child->id()] = parent_id;
+                }
+            }
+        }
+    }
+
+    // 2. Handle Spatial Containment (Storey -> Wall/Window/etc)
+    // Uses IfcRelContainedInSpatialStructure
+    auto rel_contained = file.instances_by_type("IfcRelContainedInSpatialStructure");
+    if (rel_contained) {
+        for (int i = 0; i < rel_contained->size(); i++) {
+            auto rel = rel_contained->operator[](i)->as<typename schema::IfcRelContainedInSpatialStructure>();
+            if (!rel) continue;
+
+            auto parent = rel->RelatingStructure(); // The Spatial Structure (e.g. Storey)
+            auto children = rel->RelatedElements(); // The Physical Elements (e.g. Wall)
+
+            if (parent && children) {
+                int parent_id = parent->id();
+                for (auto child : *children) {
+                    child_to_parent[child->id()] = parent_id;
+                }
+            }
+        }
+    }
+
+    return child_to_parent;
 }

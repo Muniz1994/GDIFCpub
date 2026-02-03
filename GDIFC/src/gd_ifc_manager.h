@@ -81,18 +81,16 @@ struct PrecalculatedIFCItemGeometry {
 
 // Holds fully processed data.
 // The Main Thread just reads this and assigns it. No math.
-struct PrecalculatedIFCItem {
-    String node_name;
-    Dictionary properties; // Parsed in thread
-    Dictionary attributes;
-    String ifc_class;
-
-    // Holds the geometric information of all objects
-    std::vector<PrecalculatedIFCItemGeometry> geometry;
-
-     // Flag if geometry was found
-    bool valid = false;
-};
+    struct PrecalculatedIFCItem {
+        bool valid = false;
+        String node_name;
+        String ifc_class;
+        int express_id = -1; // NEW: Track the ID
+        int parent_id = -1;  // NEW: Track the parent ID
+        Dictionary properties;
+        Dictionary attributes;
+        std::vector<PrecalculatedIFCItemGeometry> geometry;
+    };
     
 
 class GDIFCManager : public Node3D {
@@ -102,6 +100,7 @@ class GDIFCManager : public Node3D {
     int64_t task_id = -1;
     bool should_create_collisions = false;
     Array collision_classes = Array();
+    HashMap<int, Node*> node_registry;
 
     enum LoadState {
         IDLE,
@@ -165,5 +164,8 @@ godot::Variant to_godot_variant(const AttributeValue& attr_value);
 
 template <typename schema>
 godot::GeorreferenceData get_georreference(IfcParse::IfcFile& file);
+
+template <typename schema>
+std::unordered_map<int, int> build_spatial_hierarchy(IfcParse::IfcFile &file);
 
 #endif
