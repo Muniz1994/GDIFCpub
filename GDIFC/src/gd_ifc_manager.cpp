@@ -70,14 +70,14 @@ void GDIFCManager::_thread_task(String path) {
 
 
     std::unordered_map<std::string,int> schema_map{
-        {"IFC4",0},
-        {"IFC4x3",1},
-        {"IFC2x3",2},
-    {"IFC4x3_add2",3}
+        {Ifc4::get_schema().name(),0},
+        {Ifc4x3::get_schema().name(),1},
+        {Ifc2x3::get_schema().name(),2},
+    {Ifc4x3_add2::get_schema().name(),3}
 
     };
 
-    int schema_index = schema_map.find(current_schema)->second;
+    int schema_index = schema_map[current_schema];
 
     // 2. Init Geometry
     temp_ifc_manager->initialize_geometry_processor();
@@ -85,8 +85,6 @@ void GDIFCManager::_thread_task(String path) {
     Vector<PrecalculatedIFCItem> temp_queue;
 
     // Get georreference
-
-
 
     // 3. HEAVY LOOP: Process everything HERE, not in Main Thread
     for (auto type : temp_ifc_manager->schemaManager.GetIfcElementList()) {
@@ -117,10 +115,10 @@ void GDIFCManager::_thread_task(String path) {
 
             switch (schema_index)
             {
-                case 0: item.attributes = get_ifc_object_attributes<Ifc4>(*temp_file, expressID);
-                case 1: item.attributes = get_ifc_object_attributes<Ifc4x3>(*temp_file, expressID);
-                case 2: item.attributes = get_ifc_object_attributes<Ifc2x3>(*temp_file, expressID);
-                case 3: item.attributes = get_ifc_object_attributes<Ifc4x3_add2>(*temp_file, expressID);
+                case 0: item.attributes = get_ifc_object_attributes<Ifc4>(*temp_file, expressID); break;
+                case 1: item.attributes = get_ifc_object_attributes<Ifc4x3>(*temp_file, expressID); break;
+                case 2: item.attributes = get_ifc_object_attributes<Ifc2x3>(*temp_file, expressID); break;
+                case 3: item.attributes = get_ifc_object_attributes<Ifc4x3_add2>(*temp_file, expressID); break;
 
             }
 
@@ -599,12 +597,10 @@ godot::Dictionary get_ifc_object_attributes(IfcParse::IfcFile& file, int express
         return attributes;
     }
 
-    auto object = instance->as<typename Ifc4::IfcObject>();
+    auto object = instance->as<typename schema::IfcObject>();
     if (!object) {
         return attributes;
     }
-
-
 
     auto attrs = object->declaration().as_entity()->all_attributes();
     auto iter = attrs.begin();
@@ -613,28 +609,6 @@ godot::Dictionary get_ifc_object_attributes(IfcParse::IfcFile& file, int express
     for (; iter != attrs.end(); ++iter, ++idx) {
         attributes[(*iter)->name().c_str()] = convert_attribute_value(object->get_attribute_value(idx));
     }
-
-
-    // attributes["GlobalId"] = object->GlobalId().c_str();
-
-    // get() method returns a AttributeValue
-    auto name = object->get("Name");
-    // if (!name.isNull()) {attributes["Name"] = static_cast<std::string>(name).c_str();}
-    //
-    // auto description = object->get("Description");
-    // if (!description.isNull()) {attributes["Description"] = static_cast<std::string>(description).c_str();}
-
-    // auto predefined_type = object->get("PredefinedType");
-
-    // if (!predefined_type.isNull()) {
-    //
-    //     std::string value = predefined_type;
-    //
-    //     attributes["PredefinedType"] = value.c_str();
-    // }
-
-    // auto object_type = object->get("ObjectType");
-    // if (!object_type.isNull()) {attributes["ObjectType"] = static_cast<std::string>(object_type).c_str();}
 
 
     return attributes;

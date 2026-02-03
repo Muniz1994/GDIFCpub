@@ -21,8 +21,8 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # download the external projects and save their paths
-Message("Downloading godot-cpp 4.2")
-FetchContent_Declare(godot-cpp GIT_REPOSITORY "https://github.com/godotengine/godot-cpp.git" GIT_TAG "b0e3b1e4b78a606f48d162898afb5eeda533d2a9")
+Message("Downloading godot-cpp 4.5")
+FetchContent_Declare(godot-cpp GIT_REPOSITORY "https://github.com/godotengine/godot-cpp.git" GIT_TAG "e83fd0904c13356ed1d4c3d09f8bb9132bdc6b77")
 FetchContent_MakeAvailable(godot-cpp)
 FetchContent_GetProperties(godot-cpp)
 
