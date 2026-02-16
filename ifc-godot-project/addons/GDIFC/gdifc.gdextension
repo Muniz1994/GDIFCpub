@@ -9,5 +9,5 @@ IFCNode = "res://addons/GDIFC/assets/icons/box.svg"
 
 [libraries]
 
-windows.64 = "res://addons/GDIFC/gdifc.linux.release.64.dll"
-linux.64 = "res://addons/GDIFC/libgdifc.linux.release.64.so"
+windows.64 = "res://addons/GDIFC/gdifc.windows.release.64.dll"
+linux.64 = "res://addons/GDIFC/gdifc.windows.release.64.dll"

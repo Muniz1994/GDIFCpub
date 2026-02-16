@@ -15,9 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="IFCProject"
-run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
-config/icon="res://icon.svg"
 
 [dotnet]
 
@@ -25,7 +23,11 @@ project/assembly_name="IFCProject"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Free fly camera/plugin.cfg", "res://addons/GDIFC/plugin.cfg")
+enabled=PackedStringArray("res://addons/GDIFC/plugin.cfg", "res://addons/sk_fly_camera/plugin.cfg")
+
+[filesystem]
+
+import/blender/enabled=false
 
 [input]
 
@@ -75,15 +77,16 @@ mouse_click={
 ]
 }
 
+[physics]
+
+3d/run_on_separate_thread=true
+3d/physics_engine="Jolt Physics"
+
 [rendering]
 
 rendering_device/driver="D3D12"
-lights_and_shadows/directional_shadow/soft_shadow_filter_quality=4
-lights_and_shadows/positional_shadow/soft_shadow_filter_quality=4
-shading/overrides/force_vertex_shading=true
-camera/depth_of_field/depth_of_field_bokeh_quality=2
-environment/ssao/quality=3
 anti_aliasing/quality/msaa_3d=2
-global_illumination/sdfgi/probe_ray_count=3
-global_illumination/sdfgi/frames_to_update_lights=3
+global_illumination/sdfgi/probe_ray_count=5
+global_illumination/sdfgi/frames_to_update_lights=0
 anti_aliasing/quality/screen_space_aa=2
+anti_aliasing/quality/use_taa=true
