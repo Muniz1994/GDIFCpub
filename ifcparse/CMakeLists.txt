@@ -63,8 +63,13 @@ target_include_directories(IfcParse
 	 ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
+# Replace 'your_game_library' with the actual name of your project's library target
 target_compile_options(IfcParse PRIVATE
-    $<$<CXX_COMPILER_ID:MSVC>:/bigobj>
+        # For Visual Studio (MSVC)
+        $<$<CXX_COMPILER_ID:MSVC>:/bigobj>
+
+        # For MinGW / GCC (in case you switch compilers later)
+        $<$<CXX_COMPILER_ID:GNU>:-Wa,-mbig-obj>
 )
 
 target_compile_definitions(IfcParse PRIVATE HAS_SCHEMA_4)
