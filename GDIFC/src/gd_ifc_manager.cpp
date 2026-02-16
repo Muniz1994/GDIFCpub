@@ -316,7 +316,7 @@ void GDIFCManager::_process_generation_queue() {
         element_node->set_name(item.node_name);
         element_node->set_properties(item.properties);
         element_node->set_attributes(item.attributes);
-        element_node->set_class(item.ifc_class);
+        element_node->set_ifc_class(item.ifc_class);
 
         // 2. REGISTER NODE
         if (item.express_id > 0) {

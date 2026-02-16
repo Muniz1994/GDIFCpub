@@ -28,6 +28,9 @@ public:
     godot::String get_class();
     void set_class(godot::String class_name);
 
+    godot::String get_ifc_class() {return ifc_class;}
+    void set_ifc_class(godot::String ifcclass) {ifc_class = ifcclass;};
+
 private:
 
     godot::String ifc_class;
