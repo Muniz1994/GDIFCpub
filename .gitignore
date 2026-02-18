@@ -66,3 +66,7 @@ godot-cpp
 *.uid
 *.ifc
 ifc-godot-project/icon.svg.import
+ifc-godot-project/addons/GDIFC/gdifc.windows.debug.64.ilk
+ifc-godot-project/addons/GDIFC/gdifc.windows.debug.64.pdb
+ifc-godot-project/addons/GDIFC/gdifc.gdextension
+ifc-godot-project/addons/GDIFC/~gdifc.windows.debug.64_0.pdb

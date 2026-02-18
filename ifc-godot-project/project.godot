@@ -89,4 +89,3 @@ anti_aliasing/quality/msaa_3d=2
 global_illumination/sdfgi/probe_ray_count=5
 global_illumination/sdfgi/frames_to_update_lights=0
 anti_aliasing/quality/screen_space_aa=2
-anti_aliasing/quality/use_taa=true

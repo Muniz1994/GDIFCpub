@@ -1,19 +1,28 @@
 @tool
 extends Control
 
+@export var settings: GDIFCLoaderSettings = load("res://addons/GDIFC/settings/default_gdifc_geometric_settings.tres")
 
 @onready var button: Button = %LoadIFCButton
 @onready var create_collision_check: CheckButton = %CreateCollisionCheck
 @onready var elements_list: ItemList = %ElementsList
 @onready var loading_label: Label = %LoadingLabel
+@onready var geom_settings: HBoxContainer = %GeomSettings
 
 var file_dialog: EditorFileDialog
 var ifc_manager: GDIFCManager
 var current_scene_root: Node
+var geom_settings_picker = EditorResourcePicker.new()
 
 func _ready():
 	button.pressed.connect(_on_open_button_pressed)
 	
+	_start_interface()
+	
+func _start_interface():
+	geom_settings_picker.base_type = "GDIFCLoaderSettings"
+	geom_settings_picker.edited_resource = settings
+	geom_settings.add_child(geom_settings_picker)
 
 func _on_open_button_pressed():
 	if not file_dialog:
@@ -39,6 +48,10 @@ func _on_file_selected(path: String):
 		collision_elements.append(elements_list.get_item_text(i))
 	
 	ifc_manager = GDIFCManager.new()
+	ifc_manager.set_gdifc_settings(geom_settings_picker.edited_resource)
+	
+	print(ifc_manager.get_gdifc_settings().coordinate_to_origin)
+	
 	ifc_manager.connect("ifc_read",_on_file_read)
 	current_scene_root = EditorInterface.get_edited_scene_root()
 	
@@ -57,7 +70,6 @@ func _on_file_selected(path: String):
 	
 	ifc_manager.ifc_read.connect(_set_owner)
 	ifc_manager.set_display_folded(true)
-	print("IFC Loaded and scene tree updated.")
 
 func _set_owner():
 	_set_owner_recursive(ifc_manager, current_scene_root)

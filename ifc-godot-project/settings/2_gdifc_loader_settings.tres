@@ -1,0 +1,6 @@
+[gd_resource type="GDIFCLoaderSettings" format=3 uid="uid://bkdo7b7axpjh0"]
+
+[resource]
+circle_segments = 4
+tolerance_plane_intersection = 9.999999999999999e-05
+plane_refit_iterations = 20
