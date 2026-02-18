@@ -1,7 +1,7 @@
-#include "utils.h"
+#include "web_ifc_manager.h"
 
 
-void IFCManager::read_ifc_file(std::string path) const
+void WEBIFCManager::read_ifc_file(std::string path) const
 {
 
     // 1. Open a file for reading
@@ -19,7 +19,7 @@ void IFCManager::read_ifc_file(std::string path) const
 }
 
 // old ReadValue
-godot::Variant IFCManager::get_value_from_token(webifc::parsing::IfcTokenType t)
+godot::Variant WEBIFCManager::get_value_from_token(webifc::parsing::IfcTokenType t)
 {
 
     switch (t)
@@ -67,7 +67,7 @@ godot::Variant IFCManager::get_value_from_token(webifc::parsing::IfcTokenType t)
 }
 
 // old GetArgs
-godot::Array IFCManager::get_args(bool inObject, bool inList)
+godot::Array WEBIFCManager::get_args(bool inObject, bool inList)
 {
     auto arguments = godot::Array();
     bool endOfLine = false;
@@ -138,7 +138,7 @@ godot::Array IFCManager::get_args(bool inObject, bool inList)
     return arguments;
 }
 
-godot::Dictionary IFCManager::get_express_line(uint32_t expressID)
+godot::Dictionary WEBIFCManager::get_express_line(uint32_t expressID)
 {
     if (!this->loader->IsValidExpressID(expressID))
         return godot::Dictionary();
@@ -159,7 +159,7 @@ godot::Dictionary IFCManager::get_express_line(uint32_t expressID)
     return retVal;
 }
 
-std::vector<godot::Dictionary> IFCManager::get_express_lines(const std::vector<uint32_t>& expressIDs)
+std::vector<godot::Dictionary> WEBIFCManager::get_express_lines(const std::vector<uint32_t>& expressIDs)
 {
     std::vector<godot::Dictionary> result;
 
@@ -174,7 +174,7 @@ std::vector<godot::Dictionary> IFCManager::get_express_lines(const std::vector<u
 }
 
 // might be wrong cause the original one deal with types instead of a single type
-std::vector<uint32_t> IFCManager::get_express_ids_with_type(unsigned int type)
+std::vector<uint32_t> WEBIFCManager::get_express_ids_with_type(unsigned int type)
 {
     std::vector<uint32_t> expressIDs;
 
@@ -187,7 +187,7 @@ std::vector<uint32_t> IFCManager::get_express_ids_with_type(unsigned int type)
 }
 
 
-godot::Array IFCManager::get_related_properties(uint32_t elementID, PropsDetail propsName, bool recursive) {
+godot::Array WEBIFCManager::get_related_properties(uint32_t elementID, PropsDetail propsName, bool recursive) {
     
     auto result = godot::Array();
 
@@ -242,7 +242,7 @@ godot::Array IFCManager::get_related_properties(uint32_t elementID, PropsDetail 
 }
 
 
-godot::Array IFCManager::get_property_sets(uint32_t elementID, bool recursive, bool includeTypeProperties) {
+godot::Array WEBIFCManager::get_property_sets(uint32_t elementID, bool recursive, bool includeTypeProperties) {
    
     if (includeTypeProperties) {
 
@@ -267,7 +267,7 @@ godot::Array IFCManager::get_property_sets(uint32_t elementID, bool recursive, b
     }
 }
 
-godot::Array IFCManager::get_type_properties( uint32_t modelID, uint32_t elementID, bool recursive) {
+godot::Array WEBIFCManager::get_type_properties( uint32_t modelID, uint32_t elementID, bool recursive) {
     
     if (loader->GetSchema() == IFC_SCHEMA::IFC2X3) {
 
@@ -283,10 +283,10 @@ godot::Array IFCManager::get_type_properties( uint32_t modelID, uint32_t element
     }
 }
 
-void IFCManager::initialize_geometry_processor()
+void WEBIFCManager::initialize_geometry_processor()
 {
 
-    this->geometry_loader = std::make_unique<webifc::geometry::IfcGeometryProcessor>(*loader, schemaManager, set.CIRCLE_SEGMENTS, set.COORDINATE_TO_ORIGIN, set.TOLERANCE_PLANE_INTERSECTION, set.TOLERANCE_PLANE_DEVIATION, set.TOLERANCE_BACK_DEVIATION_DISTANCE, set.TOLERANCE_INSIDE_OUTSIDE_PERIMETER, set.TOLERANCE_SCALAR_EQUALITY, set.PLANE_REFIT_ITERATIONS, set.BOOLEAN_UNION_THRESHOLD);
+    this->geometry_loader = std::make_unique<webifc::geometry::IfcGeometryProcessor>(*loader, schemaManager, set->getCircleSegments(), set->getCoordinateToOrigin(), set->getTolerancePlaneIntersection(), set->getTolerancePlaneDeviation(), set->getToleranceBackDeviationDistance(), set->getToleranceInsideOutsidePerimeter(), set->getToleranceScalarEquality(), set->getPlaneRefitIterations(), set->getBooleanUnionThreshold());
 }
 
 

@@ -10,6 +10,7 @@
 #include <optional>
 #include <fstream>
 
+#include "gd_ifc_settings.h"
 #include <godot_cpp/variant/dictionary.hpp>
 #include <godot_cpp/variant/array.hpp>
 #include <godot_cpp/variant/variant.hpp>
@@ -21,6 +22,8 @@
 #include <geometry/IfcGeometryProcessor.h>
 #include <schema/ifc-schema.h>
 
+
+
 // Define the inner struct to hold the properties
 struct PropsDetail {
     unsigned int name;
@@ -29,27 +32,11 @@ struct PropsDetail {
     std::string key;
 };
 
-struct GDIFCLoaderSettings
-{
-    bool COORDINATE_TO_ORIGIN = false;
-    uint16_t CIRCLE_SEGMENTS = 12;
-    uint32_t TAPE_SIZE = 67108864; // probably no need for anyone other than web-ifc devs to change this
-    uint32_t MEMORY_LIMIT = 2147483648;
-    uint16_t LINEWRITER_BUFFER = 10000;
-    double TOLERANCE_PLANE_INTERSECTION = 1.0E-01;
-    double TOLERANCE_PLANE_DEVIATION = 3.0E-04;
-    double TOLERANCE_BACK_DEVIATION_DISTANCE = 3.0E-04;
-    double TOLERANCE_INSIDE_OUTSIDE_PERIMETER = 1.0E-10;
-    double TOLERANCE_SCALAR_EQUALITY = 1.0E-04;
-    uint16_t PLANE_REFIT_ITERATIONS = 10;
-    uint16_t BOOLEAN_UNION_THRESHOLD = 150;
-};
 
-
-class IFCManager
+class WEBIFCManager
 {
 public:
-    GDIFCLoaderSettings set;
+    godot::Ref<godot::GDIFCLoaderSettings> set;
 
     webifc::schema::IfcSchemaManager schemaManager;
 
@@ -60,18 +47,29 @@ public:
     // Initialize geometry processor
     std::unique_ptr<webifc::geometry::IfcGeometryProcessor> geometry_loader;
 
-    IFCManager()
+    WEBIFCManager(godot::GDIFCLoaderSettings *settings)
         :
-        set{},
+        set{settings},
         schemaManager{},
-        model_manager(true),
-        loader(std::make_unique<webifc::parsing::IfcLoader>(this->set.TAPE_SIZE, this->set.MEMORY_LIMIT, this->set.LINEWRITER_BUFFER, this->schemaManager))
+        model_manager(true)
+
 
 
     {
-         // Pass the dereferenced pointer (the actual object)
+        set.instantiate();
+        loader = std::make_unique<webifc::parsing::IfcLoader>(this->set->getTapeSize(), this->set->getMemoryLimit(), this->set->getLineWriterBuffer(), this->schemaManager);
+    }
 
-        
+    WEBIFCManager()
+        :
+        set{},
+        schemaManager{},
+        model_manager(true)
+
+
+    {
+        set.instantiate();
+        loader = std::make_unique<webifc::parsing::IfcLoader>(this->set->getTapeSize(), this->set->getMemoryLimit(), this->set->getLineWriterBuffer(), this->schemaManager);
     }
 
     void initialize_geometry_processor();

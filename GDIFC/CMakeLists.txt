@@ -20,10 +20,12 @@ set(EXT_SOURCES
 	"src/gd_ifc_manager.cpp"
 	src/register_types.h
 	src/register_types.cpp
-	src/utils.h
-	src/utils.cpp
+		src/web_ifc_manager.h
+        src/web_ifc_manager.cpp
 		src/value_conversion.cpp
 		src/value_conversion.h
+		src/gd_ifc_settings.h
+		src/gd_ifc_settings.cpp
 )
 
 add_library(${TARGET} SHARED ${EXT_SOURCES} "src/gd_ifc_node.h" "src/gd_ifc_node.cpp")

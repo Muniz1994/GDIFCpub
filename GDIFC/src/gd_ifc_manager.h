@@ -15,7 +15,7 @@
 #include <geometry/IfcGeometryProcessor.h>
 #include <schema/ifc-schema.h>
 #include <modelmanager/ModelManager.h>
-#include "utils.h"
+#include "web_ifc_manager.h"
 #include "value_conversion.h"
 
 
@@ -31,6 +31,7 @@
 #include <string> // Standard string for the struct
 
 #include "gd_ifc_node.h"
+#include "gd_ifc_settings.h"
 
 namespace godot {
 // Holds the geometric data to allow the creation of the Godot
@@ -112,7 +113,7 @@ class GDIFCManager : public Node3D {
     LoadState current_state = IDLE;
 
     // Storage
-    std::unique_ptr<IFCManager> web_ifc_manager;
+    std::unique_ptr<WEBIFCManager> web_ifc_manager;
     std::unique_ptr<IfcParse::IfcFile> ifc_parse_file;
 
     // The Optimized Queue
@@ -124,6 +125,10 @@ class GDIFCManager : public Node3D {
     HashMap<String, Ref<StandardMaterial3D>> material_cache;
 
     GeorreferenceData georreference;
+
+    Ref<GDIFCLoaderSettings> geometric_settings;
+
+    uint64_t start_loading_time;
 
   protected:
     static void _bind_methods();
@@ -146,6 +151,9 @@ class GDIFCManager : public Node3D {
 
     GeorreferenceData get_georreference_data();
     void set_georreference_data(godot::GeorreferenceData data);
+
+    Ref<GDIFCLoaderSettings> get_gdifc_settings();
+    void set_gdifc_settings(Ref<GDIFCLoaderSettings> gdifc_settings);
 };
 
 

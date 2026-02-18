@@ -12,6 +12,8 @@ else()
 	set(RELEASE true)
 endif()
 
+
+
 project(web-ifc LANGUAGES CXX)
 enable_testing()
 
@@ -100,6 +102,15 @@ endfunction()
 
 # build web-ifc as a static library
 add_library(web-ifc STATIC ${web-ifc-source})
+
+# Replace 'your_game_library' with the actual name of your project's library target
+target_compile_options(web-ifc PRIVATE
+		# For Visual Studio (MSVC)
+		$<$<CXX_COMPILER_ID:MSVC>:/bigobj>
+
+		# For MinGW / GCC (in case you switch compilers later)
+		$<$<CXX_COMPILER_ID:GNU>:-Wa,-mbig-obj>
+)
 
 target_include_directories(web-ifc 
 	PUBLIC

@@ -13,7 +13,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED YES)
 file(GLOB IFCPARSE_H_FILES_ALL *.h)
 file(GLOB IFCPARSE_CPP_FILES_ALL *.cpp)
 
-find_package(Boost REQUIRED COMPONENTS system filesystem)
+find_package(Boost CONFIG REQUIRED COMPONENTS system filesystem)
 
 foreach(file ${IFCPARSE_H_FILES_ALL})
     get_filename_component(filename "${file}" NAME)
