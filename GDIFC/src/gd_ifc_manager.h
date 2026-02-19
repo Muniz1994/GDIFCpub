@@ -9,6 +9,7 @@
 #include <godot_cpp/templates/vector.hpp>
 #include <godot_cpp/templates/hash_map.hpp>
 #include <godot_cpp/classes/time.hpp>
+#include <godot_cpp/core/error_macros.hpp>
 
 #include <parsing/IfcLoader.h>
 #include <schema/IfcSchemaManager.h>
@@ -128,7 +129,7 @@ class GDIFCManager : public Node3D {
 
     Ref<GDIFCLoaderSettings> geometric_settings;
 
-    uint64_t start_loading_time;
+    uint64_t start_loading_time{};
 
   protected:
     static void _bind_methods();
@@ -137,11 +138,11 @@ class GDIFCManager : public Node3D {
     GDIFCManager();
     ~GDIFCManager() override;
 
-    void read_ifc(String path, bool create_collision, Array collision_classes);
+    Error read_ifc(const String &_path, bool _create_collision, const Array &_collision_classes);
     void _process(double delta) override;
 
     // Thread Functions
-    void _thread_task(String path);
+    void _thread_task(const String& _path);
 
     // Main Thread Functions
     void _process_generation_queue();
