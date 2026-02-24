@@ -68,8 +68,6 @@ target_compile_options(IfcParse PRIVATE
         # For Visual Studio (MSVC)
         $<$<CXX_COMPILER_ID:MSVC>:/bigobj>
 
-        # For MinGW / GCC (in case you switch compilers later)
-        $<$<CXX_COMPILER_ID:GNU>:-Wa,-mbig-obj>
 )
 
 target_compile_definitions(IfcParse PRIVATE HAS_SCHEMA_4)
