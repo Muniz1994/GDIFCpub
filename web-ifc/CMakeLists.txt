@@ -108,8 +108,6 @@ target_compile_options(web-ifc PRIVATE
 		# For Visual Studio (MSVC)
 		$<$<CXX_COMPILER_ID:MSVC>:/bigobj>
 
-		# For MinGW / GCC (in case you switch compilers later)
-		$<$<CXX_COMPILER_ID:GNU>:-Wa,-mbig-obj>
 )
 
 target_include_directories(web-ifc 
