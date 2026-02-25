@@ -35,13 +35,13 @@ Error GDIFCManager::read_ifc(const String &_path, bool _create_collision, const 
 
     // Start Thread
     Callable callable = Callable(this, "_thread_task").bind(_path);
-    task_id = WorkerThreadPool::get_singleton()->add_task(callable, true); // High Priority
+    task_id = WorkerThreadPool::get_singleton()->add_task(callable, true);
     set_process(true);
     return Error::OK;
 }
 
 // ---------------------------------------------------------
-// MAIN THREAD PROCESS (Unchanged, for context)
+// MAIN THREAD PROCESS
 // ---------------------------------------------------------
 void GDIFCManager::_process(double delta) {
 
@@ -62,13 +62,12 @@ void GDIFCManager::_process(double delta) {
 // ---------------------------------------------------------
 void GDIFCManager::_thread_task(const String& _path) {
 
-    // 1. Load File
+    // Load file [web-ifc]
     auto temp_ifc_manager = std::make_unique<WEBIFCManager>(*geometric_settings);
 
     temp_ifc_manager->read_ifc_file(_path.utf8().get_data());
 
-    auto schema = temp_ifc_manager->get_args();
-
+    // Load file [IFCParse]
     auto temp_file = std::make_unique<IfcParse::IfcFile>(_path.utf8().get_data());
 
     if (!temp_file->good()) {
@@ -76,7 +75,7 @@ void GDIFCManager::_thread_task(const String& _path) {
         ERR_FAIL_MSG("Failed to load IFC file.");
     }
 
-    // Schema check
+    // Schema check [IFCParse]
     std::string current_schema = temp_file->schema()->name();
 
     bool is_supported_schema = (current_schema == Ifc2x3::get_schema().name()) ||
@@ -89,7 +88,6 @@ void GDIFCManager::_thread_task(const String& _path) {
         ERR_FAIL_MSG("Schema not supported.");
     }
 
-    // [Assuming standard schema map logic here]
     std::unordered_map<std::string,int> schema_map{
         {Ifc4::get_schema().name(),0},
         {Ifc4x3::get_schema().name(),1},
@@ -99,12 +97,12 @@ void GDIFCManager::_thread_task(const String& _path) {
 
     int schema_index = schema_map[current_schema];
 
-    // 2. Init Geometry
+    // Init Geometry [web-ifc]
     temp_ifc_manager->initialize_geometry_processor();
 
     Vector<PrecalculatedIFCItem> temp_queue;
 
-    // --- BUILD HIERARCHY MAP ---
+    // Build hierarchy parent map (EXPRESSID, EXPRESSID), of elements based on its parent if they exist
     std::unordered_map<int, int> parent_map;
 
     switch (schema_index) {
@@ -114,6 +112,7 @@ void GDIFCManager::_thread_task(const String& _path) {
         case 3: parent_map = build_spatial_hierarchy<Ifc4x3_add2>(*temp_file); break;
         default: ;
     }
+
 
     std::unordered_set<int> active_parents;
     for (const auto& pair : parent_map) active_parents.insert(pair.second);
@@ -126,11 +125,13 @@ void GDIFCManager::_thread_task(const String& _path) {
     std::vector<std::string> spatial_types = {"IfcProject", "IfcSite", "IfcBuilding", "IfcBuildingStorey"};
 
     for (const auto& s_type : spatial_types) {
+
         auto instances = temp_file->instances_by_type(s_type);
         if (!instances) continue;
 
         for(int i=0; i<instances->size(); i++) {
             auto ent = instances->operator[](i);
+
             int id = ent->id();
 
             if (processed_ids.find(id) != processed_ids.end()) continue;
@@ -138,10 +139,10 @@ void GDIFCManager::_thread_task(const String& _path) {
             PrecalculatedIFCItem item;
             item.valid = true;
             item.express_id = id;
-            item.node_name = String(s_type.c_str()) + "_" + String::num_int64(id);
+            item.node_name = String(s_type.c_str()) + "_" + String::num_int64(id); // Godot demands an unique name per node at the same tree level
             item.ifc_class = s_type.c_str();
 
-            // ... (Attribute/Property loading omitted for brevity - same as before) ...
+            //  Get attributes
             switch (schema_index)
             {
                 case 0: item.attributes = get_ifc_object_attributes<Ifc4>(*temp_file, id); break;
@@ -151,6 +152,7 @@ void GDIFCManager::_thread_task(const String& _path) {
                 default: ;
             }
 
+            //  Get psets
             switch (schema_index)
             {
                 case 0: item.properties = get_ifc_property_sets<Ifc4>(*temp_file, id); break;
@@ -160,11 +162,16 @@ void GDIFCManager::_thread_task(const String& _path) {
                 default: ;
             }
 
+            //  TODO: Get quantities
+
+
+            // Defines the parent of item
             if (parent_map.find(id) != parent_map.end()) {
                 item.parent_id = parent_map[id];
             }
 
-            // [FIX START] Extract Geometry for Spatial Elements (IfcSite Terrain)
+            // ------------------------------------------------------------------
+            // Extract Geometry for Spatial Elements (IfcSite Terrain)
             // ------------------------------------------------------------------
             item.geometry = {};
             auto flat_mesh = temp_ifc_manager->geometry_loader->GetFlatMesh(id);
@@ -211,7 +218,6 @@ void GDIFCManager::_thread_task(const String& _path) {
                     if (item_geometry.vertices.size() > 0) item.geometry.push_back(item_geometry);
                 }
             }
-            // [FIX END] ---------------------------------------------------------
 
             temp_queue.push_back(item);
             processed_ids.insert(id);
@@ -219,7 +225,6 @@ void GDIFCManager::_thread_task(const String& _path) {
     }
 
     // PHASE B: SECONDARY PARENTS (Assemblies, etc.)
-    // ... (This section remains identical to your previous code) ...
     std::vector<int> other_parents;
     for (int p_id : active_parents) {
         if (processed_ids.find(p_id) == processed_ids.end()) other_parents.push_back(p_id);
@@ -232,8 +237,6 @@ void GDIFCManager::_thread_task(const String& _path) {
 
         std::string s_type = ent->declaration().name();
 
-        // Note: You can technically add the geometry extraction block here too if you expect Assemblies to have direct geometry.
-        // For brevity, assuming B-Phase parents are mostly empty containers.
         PrecalculatedIFCItem item;
         item.valid = true;
         item.express_id = id;
@@ -357,10 +360,10 @@ void GDIFCManager::_thread_task(const String& _path) {
     }
 
     // =========================================================
-    // [PREVIOUS FIX] TOPOLOGICAL SORT & ORPHAN RESCUE
+    // TOPOLOGICAL SORT & ORPHAN RESCUE
     // =========================================================
 
-    // 1. Orphan Rescue
+    // 1. Orphan IfcSite Rescue
     int project_id = -1;
     for (const auto& item : temp_queue) { if (item.ifc_class == "IfcProject") { project_id = item.express_id; break; } }
 
@@ -375,6 +378,7 @@ void GDIFCManager::_thread_task(const String& _path) {
 
     // 2. Depth Sort
     std::unordered_map<int, int> depth_cache;
+
     std::function<int(int)> get_depth = [&](int id) -> int {
         if (id <= 0) return 0;
         if (depth_cache.count(id)) return depth_cache[id];
@@ -438,10 +442,6 @@ void GDIFCManager::_process_generation_queue() {
         Ref<ArrayMesh> mesh;
         mesh.instantiate();
 
-
-
-        // [NOTE] This loop handles cases where geometry is empty (Containers) by doing nothing
-        // but leaving the element_node in the tree as a parent for future children.
         for (int i = 0; i < item.geometry.size(); i++) {
 
             Array arrays;
@@ -467,7 +467,6 @@ void GDIFCManager::_process_generation_queue() {
 
         }
 
-
         if (mesh->get_surface_count() > 0) {
             MeshInstance3D* mi = memnew(MeshInstance3D);
             mi->set_mesh(mesh);
@@ -483,8 +482,6 @@ void GDIFCManager::_process_generation_queue() {
 
             element_node->add_child(mi);
         }
-
-
 
         element_node->add_to_group(item.ifc_class,true);
 
@@ -839,14 +836,15 @@ godot::GeorreferenceData get_georreference(IfcParse::IfcFile &file) {
 
 template <typename schema>
 std::unordered_map<int, int> build_spatial_hierarchy(IfcParse::IfcFile &file) {
+
     std::unordered_map<int, int> child_to_parent;
 
-    // 1. Handle Aggregation (Site -> Building -> Storey)
-    // Uses IfcRelAggregates
+    // Handle Aggregation
     auto rel_aggregates = file.instances_by_type("IfcRelAggregates");
+
     if (rel_aggregates) {
         for (int i = 0; i < rel_aggregates->size(); i++) {
-            auto rel = rel_aggregates->operator[](i)->as<typename schema::IfcRelAggregates>(); // cast works for 2x3 too usually due to inheritance or use generic base
+            auto rel = rel_aggregates->operator[](i)->as<typename schema::IfcRelAggregates>();
             if (!rel) continue;
 
             auto parent = rel->RelatingObject();
@@ -861,8 +859,7 @@ std::unordered_map<int, int> build_spatial_hierarchy(IfcParse::IfcFile &file) {
         }
     }
 
-    // 2. Handle Spatial Containment (Storey -> Wall/Window/etc)
-    // Uses IfcRelContainedInSpatialStructure
+    // Handle Spatial Containment
     auto rel_contained = file.instances_by_type("IfcRelContainedInSpatialStructure");
     if (rel_contained) {
         for (int i = 0; i < rel_contained->size(); i++) {
@@ -881,14 +878,15 @@ std::unordered_map<int, int> build_spatial_hierarchy(IfcParse::IfcFile &file) {
         }
     }
 
+    // Handle nesting
     auto rel_nests = file.instances_by_type("IfcRelNests");
     if (rel_nests) {
         for (int i = 0; i < rel_nests->size(); i++) {
             auto rel = rel_nests->operator[](i)->as<typename schema::IfcRelNests>();
             if (!rel) continue;
 
-            auto parent = rel->RelatingObject(); // The Spatial Structure (e.g. Storey)
-            auto children = rel->RelatedObjects(); // The Physical Elements (e.g. Wall)
+            auto parent = rel->RelatingObject();
+            auto children = rel->RelatedObjects();
 
             if (parent && children) {
                 int parent_id = parent->id();
@@ -907,8 +905,8 @@ std::unordered_map<int, int> build_spatial_hierarchy(IfcParse::IfcFile &file) {
                 auto rel = rel_adheres->operator[](i)->as<typename Ifc4x3_add2::IfcRelAdheresToElement>();
                 if (!rel) continue;
 
-                auto parent = rel->RelatingElement(); // The Spatial Structure (e.g. Storey)
-                auto children = rel->RelatedSurfaceFeatures(); // The Physical Elements (e.g. Wall)
+                auto parent = rel->RelatingElement();
+                auto children = rel->RelatedSurfaceFeatures();
 
                 if (parent && children) {
                     int parent_id = parent->id();
