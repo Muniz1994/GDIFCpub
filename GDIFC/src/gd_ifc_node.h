@@ -25,6 +25,9 @@ public:
     godot::Dictionary get_properties();
     void set_properties(godot::Dictionary props);
 
+    godot::Dictionary get_quantities();
+    void set_quantities(godot::Dictionary quants);
+
     godot::String get_class();
     void set_class(godot::String class_name);
 
@@ -36,6 +39,7 @@ private:
     godot::String ifc_class;
     godot::Dictionary attributes;
     godot::Dictionary properties;
+    godot::Dictionary quantities;
     // Helper function to create Godot mesh from web-ifc data
 
 };

@@ -162,6 +162,15 @@ void GDIFCManager::_thread_task(const String& _path) {
                 default: ;
             }
 
+            switch (schema_index)
+            {
+                case 0: item.quantities = get_ifc_quantity_sets<Ifc4>(*temp_file, id); break;
+                case 1: item.quantities = get_ifc_quantity_sets<Ifc4x3>(*temp_file, id); break;
+                case 2: item.quantities = get_ifc_quantity_sets<Ifc2x3>(*temp_file, id); break;
+                case 3: item.quantities = get_ifc_quantity_sets<Ifc4x3_add2>(*temp_file, id); break;
+                default: ;
+            }
+
             //  TODO: Get quantities
 
 
@@ -261,6 +270,15 @@ void GDIFCManager::_thread_task(const String& _path) {
             default: ;
         }
 
+        switch (schema_index)
+        {
+            case 0: item.quantities = get_ifc_quantity_sets<Ifc4>(*temp_file, id); break;
+            case 1: item.quantities = get_ifc_quantity_sets<Ifc4x3>(*temp_file, id); break;
+            case 2: item.quantities = get_ifc_quantity_sets<Ifc2x3>(*temp_file, id); break;
+            case 3: item.quantities = get_ifc_quantity_sets<Ifc4x3_add2>(*temp_file, id); break;
+            default: ;
+        }
+
         if (parent_map.find(id) != parent_map.end()) {
             item.parent_id = parent_map[id];
         }
@@ -306,6 +324,15 @@ void GDIFCManager::_thread_task(const String& _path) {
                 case 1: item.properties = get_ifc_property_sets<Ifc4x3>(*temp_file, expressID); break;
                 case 2: item.properties = get_ifc_property_sets<Ifc2x3>(*temp_file, expressID); break;
                 case 3: item.properties = get_ifc_property_sets<Ifc4x3_add2>(*temp_file, expressID); break;
+                default: ;
+            }
+
+            switch (schema_index)
+            {
+                case 0: item.quantities = get_ifc_quantity_sets<Ifc4>(*temp_file, expressID); break;
+                case 1: item.quantities = get_ifc_quantity_sets<Ifc4x3>(*temp_file, expressID); break;
+                case 2: item.quantities = get_ifc_quantity_sets<Ifc2x3>(*temp_file, expressID); break;
+                case 3: item.quantities = get_ifc_quantity_sets<Ifc4x3_add2>(*temp_file, expressID); break;
                 default: ;
             }
 
@@ -421,6 +448,7 @@ void GDIFCManager::_process_generation_queue() {
         IFCNode* element_node = memnew(IFCNode);
         element_node->set_name(item.node_name);
         element_node->set_properties(item.properties);
+        element_node->set_quantities(item.quantities);
         element_node->set_attributes(item.attributes);
         element_node->set_ifc_class(item.ifc_class);
 
@@ -687,6 +715,117 @@ godot::Dictionary get_ifc_property_sets(IfcParse::IfcFile& file, int expressID) 
     }
 
     return psets;
+}
+
+template <typename schema>
+godot::Dictionary get_ifc_quantity_sets(IfcParse::IfcFile& file, int expressID) {
+    godot::Dictionary qsets;
+
+    // 1. Early exit validation
+    auto instance = file.instance_by_id(expressID);
+    if (!instance) {
+        return qsets;
+    }
+
+    auto object = instance->template as<typename schema::IfcObject>();
+    if (!object) {
+        return qsets;
+    }
+
+    // 2. Get the list of all relationships (Generic list)
+    // IfcOpenShell: IsDefinedBy returns a aggregate/list, not a single object
+    auto rels_defines = object->IsDefinedBy();
+    if (!rels_defines) {
+        return qsets;
+    }
+
+    // 3. Iterate generic relationships
+    for (auto rel_generic : *rels_defines) {
+        // OPTIMIZATION: Single dynamic_cast capture
+        // Check if this specific relationship is "DefinesByProperties"
+        if (auto rel = rel_generic->template as<typename schema::IfcRelDefinesByProperties>()) {
+            auto p_set_select = rel->RelatingPropertyDefinition();
+            if (!p_set_select) {
+                continue;
+            }
+
+            // Check if it is actually an IfcPropertySet (could be ElementQuantity, etc.)
+            if (auto p_set = p_set_select->template as<typename schema::IfcElementQuantity>()) {
+                auto p_set_name_opt = p_set->Name();
+                if (!p_set_name_opt.has_value()) {
+                    continue;
+                }
+
+                std::string quants_key = p_set_name_opt.value();
+
+                auto quants = p_set->Quantities();
+                if (!quants) {
+                    continue;
+                }
+
+                godot::Dictionary quantities_dict;
+
+                for (auto quant : *quants) {
+                    if (!quant) {
+                        continue;
+                    }
+
+                    // Cache the property name to avoid repeated lookups
+                    // Godot Dictionaries use Variants as keys. Passing a const char* // creates a String automatically.
+                    std::string quant_name_str = quant->Name();
+                    const char* quant_key = quant_name_str.c_str();
+
+                    if (auto q_length = quant->template as<typename schema::IfcQuantityLength>()) {
+                        // Handle Single Value
+                        if (auto n_value = q_length->LengthValue()) {
+                            quantities_dict[quant_key] = n_value;
+                        } else {
+                            quantities_dict[quant_key] = godot::Variant(); // Null/Nil
+                        }
+                    } else if (auto q_area = quant->template as<typename schema::IfcQuantityArea>()) {
+                        if (auto n_value = q_area->AreaValue()) {
+
+                            quantities_dict[quant_key] = n_value;
+
+                        } else {
+                            quantities_dict[quant_key] = godot::Variant(); // Null/Nil
+                        }
+                    } else if (auto q_volume = quant->template as<typename schema::IfcQuantityVolume>()) {
+                        if (auto n_value = q_volume->VolumeValue()) {
+                            quantities_dict[quant_key] = n_value;
+                        } else {
+                            quantities_dict[quant_key] = godot::Variant(); // Null/Nil
+                        }
+                    } else if (auto q_weight = quant->template as<typename schema::IfcQuantityWeight>()) {
+                        if (auto n_value = q_weight->WeightValue()) {
+                            quantities_dict[quant_key] = n_value;
+                        } else {
+                            quantities_dict[quant_key] = godot::Variant(); // Null/Nil
+                        }
+
+                    } else if (auto q_count = quant->template as<typename schema::IfcQuantityCount>()) {
+                        if (auto n_value = q_count->CountValue()) {
+                            quantities_dict[quant_key] = n_value;
+                        } else {
+                            quantities_dict[quant_key] = godot::Variant(); // Null/Nil
+                        }
+
+                    } else if (auto q_time = quant->template as<typename schema::IfcQuantityTime>()) {
+                        if (auto n_value = q_time->TimeValue()) {
+                            quantities_dict[quant_key] = n_value;
+                        } else {
+                            quantities_dict[quant_key] = godot::Variant(); // Null/Nil
+                        }
+                    }
+                }
+
+                // Insert the constructed dictionary into the main psets dictionary
+                qsets[quants_key.c_str()] = quantities_dict;
+            }
+        }
+    }
+
+    return qsets;
 }
 
 template <typename schema>

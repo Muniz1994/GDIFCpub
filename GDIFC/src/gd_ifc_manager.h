@@ -90,6 +90,7 @@ struct PrecalculatedIFCItemGeometry {
         int express_id = -1; // NEW: Track the ID
         int parent_id = -1;  // NEW: Track the parent ID
         Dictionary properties;
+        Dictionary quantities;
         Dictionary attributes;
         std::vector<PrecalculatedIFCItemGeometry> geometry;
     };
@@ -165,6 +166,9 @@ class GDIFCManager : public Node3D {
 
 template <typename schema>
 godot::Dictionary get_ifc_property_sets(IfcParse::IfcFile& file, int expressID);
+
+template <typename schema>
+godot::Dictionary get_ifc_quantity_sets(IfcParse::IfcFile& file, int expressID);
 
 template <typename schema>
 godot::Dictionary get_ifc_object_attributes(IfcParse::IfcFile& file, int expressID);
