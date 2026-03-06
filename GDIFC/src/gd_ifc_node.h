@@ -3,12 +3,13 @@
 
 
 #include "godot_cpp/classes/node3d.hpp"
+#include "godot_cpp/classes/mesh_instance3d.hpp"
 
 
 
 // Your existing class definition
-class IFCNode : public godot::Node3D {
-    GDCLASS(IFCNode, Node3D);
+class IFCNode : public godot::MeshInstance3D {
+    GDCLASS(IFCNode, MeshInstance3D);
 
 protected:
     static void _bind_methods();

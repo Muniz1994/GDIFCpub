@@ -2,6 +2,8 @@
 #include <algorithm> // Required for std::sort
 #include <functional> // Required for lambdas
 
+#include "godot_cpp/classes/scene_tree.hpp"
+
 using namespace godot;
 
 void GDIFCManager::_bind_methods() {
@@ -496,19 +498,17 @@ void GDIFCManager::_process_generation_queue() {
         }
 
         if (mesh->get_surface_count() > 0) {
-            MeshInstance3D* mi = memnew(MeshInstance3D);
-            mi->set_mesh(mesh);
-            mi->set_name("object_geometry");
+
+            element_node->set_mesh(mesh);
 
             if (this->should_create_collisions && !this->collision_classes.is_empty()) {
                 if (this->collision_classes.has(item.ifc_class)) {
-                    mi->create_trimesh_collision();
+                    element_node->create_trimesh_collision();
                 }
             } else if (this->should_create_collisions && this->collision_classes.is_empty()) {
-                mi->create_trimesh_collision();
+                element_node->create_trimesh_collision();
             }
 
-            element_node->add_child(mi);
         }
 
         element_node->add_to_group(item.ifc_class,true);
