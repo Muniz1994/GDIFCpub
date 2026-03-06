@@ -2,6 +2,8 @@
 #include <algorithm> // Required for std::sort
 #include <functional> // Required for lambdas
 
+#include "godot_cpp/classes/scene_tree.hpp"
+
 using namespace godot;
 
 void GDIFCManager::_bind_methods() {
@@ -35,13 +37,13 @@ Error GDIFCManager::read_ifc(const String &_path, bool _create_collision, const 
 
     // Start Thread
     Callable callable = Callable(this, "_thread_task").bind(_path);
-    task_id = WorkerThreadPool::get_singleton()->add_task(callable, true); // High Priority
+    task_id = WorkerThreadPool::get_singleton()->add_task(callable, true);
     set_process(true);
     return Error::OK;
 }
 
 // ---------------------------------------------------------
-// MAIN THREAD PROCESS (Unchanged, for context)
+// MAIN THREAD PROCESS
 // ---------------------------------------------------------
 void GDIFCManager::_process(double delta) {
 
@@ -62,13 +64,12 @@ void GDIFCManager::_process(double delta) {
 // ---------------------------------------------------------
 void GDIFCManager::_thread_task(const String& _path) {
 
-    // 1. Load File
+    // Load file [web-ifc]
     auto temp_ifc_manager = std::make_unique<WEBIFCManager>(*geometric_settings);
 
     temp_ifc_manager->read_ifc_file(_path.utf8().get_data());
 
-    auto schema = temp_ifc_manager->get_args();
-
+    // Load file [IFCParse]
     auto temp_file = std::make_unique<IfcParse::IfcFile>(_path.utf8().get_data());
 
     if (!temp_file->good()) {
@@ -76,7 +77,7 @@ void GDIFCManager::_thread_task(const String& _path) {
         ERR_FAIL_MSG("Failed to load IFC file.");
     }
 
-    // Schema check
+    // Schema check [IFCParse]
     std::string current_schema = temp_file->schema()->name();
 
     bool is_supported_schema = (current_schema == Ifc2x3::get_schema().name()) ||
@@ -89,7 +90,6 @@ void GDIFCManager::_thread_task(const String& _path) {
         ERR_FAIL_MSG("Schema not supported.");
     }
 
-    // [Assuming standard schema map logic here]
     std::unordered_map<std::string,int> schema_map{
         {Ifc4::get_schema().name(),0},
         {Ifc4x3::get_schema().name(),1},
@@ -99,12 +99,12 @@ void GDIFCManager::_thread_task(const String& _path) {
 
     int schema_index = schema_map[current_schema];
 
-    // 2. Init Geometry
+    // Init Geometry [web-ifc]
     temp_ifc_manager->initialize_geometry_processor();
 
     Vector<PrecalculatedIFCItem> temp_queue;
 
-    // --- BUILD HIERARCHY MAP ---
+    // Build hierarchy parent map (EXPRESSID, EXPRESSID), of elements based on its parent if they exist
     std::unordered_map<int, int> parent_map;
 
     switch (schema_index) {
@@ -114,6 +114,7 @@ void GDIFCManager::_thread_task(const String& _path) {
         case 3: parent_map = build_spatial_hierarchy<Ifc4x3_add2>(*temp_file); break;
         default: ;
     }
+
 
     std::unordered_set<int> active_parents;
     for (const auto& pair : parent_map) active_parents.insert(pair.second);
@@ -126,11 +127,13 @@ void GDIFCManager::_thread_task(const String& _path) {
     std::vector<std::string> spatial_types = {"IfcProject", "IfcSite", "IfcBuilding", "IfcBuildingStorey"};
 
     for (const auto& s_type : spatial_types) {
+
         auto instances = temp_file->instances_by_type(s_type);
         if (!instances) continue;
 
         for(int i=0; i<instances->size(); i++) {
             auto ent = instances->operator[](i);
+
             int id = ent->id();
 
             if (processed_ids.find(id) != processed_ids.end()) continue;
@@ -138,10 +141,10 @@ void GDIFCManager::_thread_task(const String& _path) {
             PrecalculatedIFCItem item;
             item.valid = true;
             item.express_id = id;
-            item.node_name = String(s_type.c_str()) + "_" + String::num_int64(id);
+            item.node_name = String(s_type.c_str()) + "_" + String::num_int64(id); // Godot demands an unique name per node at the same tree level
             item.ifc_class = s_type.c_str();
 
-            // ... (Attribute/Property loading omitted for brevity - same as before) ...
+            //  Get attributes
             switch (schema_index)
             {
                 case 0: item.attributes = get_ifc_object_attributes<Ifc4>(*temp_file, id); break;
@@ -151,6 +154,7 @@ void GDIFCManager::_thread_task(const String& _path) {
                 default: ;
             }
 
+            //  Get psets
             switch (schema_index)
             {
                 case 0: item.properties = get_ifc_property_sets<Ifc4>(*temp_file, id); break;
@@ -160,11 +164,25 @@ void GDIFCManager::_thread_task(const String& _path) {
                 default: ;
             }
 
+            switch (schema_index)
+            {
+                case 0: item.quantities = get_ifc_quantity_sets<Ifc4>(*temp_file, id); break;
+                case 1: item.quantities = get_ifc_quantity_sets<Ifc4x3>(*temp_file, id); break;
+                case 2: item.quantities = get_ifc_quantity_sets<Ifc2x3>(*temp_file, id); break;
+                case 3: item.quantities = get_ifc_quantity_sets<Ifc4x3_add2>(*temp_file, id); break;
+                default: ;
+            }
+
+            //  TODO: Get quantities
+
+
+            // Defines the parent of item
             if (parent_map.find(id) != parent_map.end()) {
                 item.parent_id = parent_map[id];
             }
 
-            // [FIX START] Extract Geometry for Spatial Elements (IfcSite Terrain)
+            // ------------------------------------------------------------------
+            // Extract Geometry for Spatial Elements (IfcSite Terrain)
             // ------------------------------------------------------------------
             item.geometry = {};
             auto flat_mesh = temp_ifc_manager->geometry_loader->GetFlatMesh(id);
@@ -211,7 +229,6 @@ void GDIFCManager::_thread_task(const String& _path) {
                     if (item_geometry.vertices.size() > 0) item.geometry.push_back(item_geometry);
                 }
             }
-            // [FIX END] ---------------------------------------------------------
 
             temp_queue.push_back(item);
             processed_ids.insert(id);
@@ -219,7 +236,6 @@ void GDIFCManager::_thread_task(const String& _path) {
     }
 
     // PHASE B: SECONDARY PARENTS (Assemblies, etc.)
-    // ... (This section remains identical to your previous code) ...
     std::vector<int> other_parents;
     for (int p_id : active_parents) {
         if (processed_ids.find(p_id) == processed_ids.end()) other_parents.push_back(p_id);
@@ -232,8 +248,6 @@ void GDIFCManager::_thread_task(const String& _path) {
 
         std::string s_type = ent->declaration().name();
 
-        // Note: You can technically add the geometry extraction block here too if you expect Assemblies to have direct geometry.
-        // For brevity, assuming B-Phase parents are mostly empty containers.
         PrecalculatedIFCItem item;
         item.valid = true;
         item.express_id = id;
@@ -255,6 +269,15 @@ void GDIFCManager::_thread_task(const String& _path) {
             case 1: item.properties = get_ifc_property_sets<Ifc4x3>(*temp_file, id); break;
             case 2: item.properties = get_ifc_property_sets<Ifc2x3>(*temp_file, id); break;
             case 3: item.properties = get_ifc_property_sets<Ifc4x3_add2>(*temp_file, id); break;
+            default: ;
+        }
+
+        switch (schema_index)
+        {
+            case 0: item.quantities = get_ifc_quantity_sets<Ifc4>(*temp_file, id); break;
+            case 1: item.quantities = get_ifc_quantity_sets<Ifc4x3>(*temp_file, id); break;
+            case 2: item.quantities = get_ifc_quantity_sets<Ifc2x3>(*temp_file, id); break;
+            case 3: item.quantities = get_ifc_quantity_sets<Ifc4x3_add2>(*temp_file, id); break;
             default: ;
         }
 
@@ -303,6 +326,15 @@ void GDIFCManager::_thread_task(const String& _path) {
                 case 1: item.properties = get_ifc_property_sets<Ifc4x3>(*temp_file, expressID); break;
                 case 2: item.properties = get_ifc_property_sets<Ifc2x3>(*temp_file, expressID); break;
                 case 3: item.properties = get_ifc_property_sets<Ifc4x3_add2>(*temp_file, expressID); break;
+                default: ;
+            }
+
+            switch (schema_index)
+            {
+                case 0: item.quantities = get_ifc_quantity_sets<Ifc4>(*temp_file, expressID); break;
+                case 1: item.quantities = get_ifc_quantity_sets<Ifc4x3>(*temp_file, expressID); break;
+                case 2: item.quantities = get_ifc_quantity_sets<Ifc2x3>(*temp_file, expressID); break;
+                case 3: item.quantities = get_ifc_quantity_sets<Ifc4x3_add2>(*temp_file, expressID); break;
                 default: ;
             }
 
@@ -357,10 +389,10 @@ void GDIFCManager::_thread_task(const String& _path) {
     }
 
     // =========================================================
-    // [PREVIOUS FIX] TOPOLOGICAL SORT & ORPHAN RESCUE
+    // TOPOLOGICAL SORT & ORPHAN RESCUE
     // =========================================================
 
-    // 1. Orphan Rescue
+    // 1. Orphan IfcSite Rescue
     int project_id = -1;
     for (const auto& item : temp_queue) { if (item.ifc_class == "IfcProject") { project_id = item.express_id; break; } }
 
@@ -375,6 +407,7 @@ void GDIFCManager::_thread_task(const String& _path) {
 
     // 2. Depth Sort
     std::unordered_map<int, int> depth_cache;
+
     std::function<int(int)> get_depth = [&](int id) -> int {
         if (id <= 0) return 0;
         if (depth_cache.count(id)) return depth_cache[id];
@@ -417,6 +450,7 @@ void GDIFCManager::_process_generation_queue() {
         IFCNode* element_node = memnew(IFCNode);
         element_node->set_name(item.node_name);
         element_node->set_properties(item.properties);
+        element_node->set_quantities(item.quantities);
         element_node->set_attributes(item.attributes);
         element_node->set_ifc_class(item.ifc_class);
 
@@ -438,10 +472,6 @@ void GDIFCManager::_process_generation_queue() {
         Ref<ArrayMesh> mesh;
         mesh.instantiate();
 
-
-
-        // [NOTE] This loop handles cases where geometry is empty (Containers) by doing nothing
-        // but leaving the element_node in the tree as a parent for future children.
         for (int i = 0; i < item.geometry.size(); i++) {
 
             Array arrays;
@@ -467,24 +497,19 @@ void GDIFCManager::_process_generation_queue() {
 
         }
 
-
         if (mesh->get_surface_count() > 0) {
-            MeshInstance3D* mi = memnew(MeshInstance3D);
-            mi->set_mesh(mesh);
-            mi->set_name("object_geometry");
+
+            element_node->set_mesh(mesh);
 
             if (this->should_create_collisions && !this->collision_classes.is_empty()) {
                 if (this->collision_classes.has(item.ifc_class)) {
-                    mi->create_trimesh_collision();
+                    element_node->create_trimesh_collision();
                 }
             } else if (this->should_create_collisions && this->collision_classes.is_empty()) {
-                mi->create_trimesh_collision();
+                element_node->create_trimesh_collision();
             }
 
-            element_node->add_child(mi);
         }
-
-
 
         element_node->add_to_group(item.ifc_class,true);
 
@@ -693,6 +718,117 @@ godot::Dictionary get_ifc_property_sets(IfcParse::IfcFile& file, int expressID) 
 }
 
 template <typename schema>
+godot::Dictionary get_ifc_quantity_sets(IfcParse::IfcFile& file, int expressID) {
+    godot::Dictionary qsets;
+
+    // 1. Early exit validation
+    auto instance = file.instance_by_id(expressID);
+    if (!instance) {
+        return qsets;
+    }
+
+    auto object = instance->template as<typename schema::IfcObject>();
+    if (!object) {
+        return qsets;
+    }
+
+    // 2. Get the list of all relationships (Generic list)
+    // IfcOpenShell: IsDefinedBy returns a aggregate/list, not a single object
+    auto rels_defines = object->IsDefinedBy();
+    if (!rels_defines) {
+        return qsets;
+    }
+
+    // 3. Iterate generic relationships
+    for (auto rel_generic : *rels_defines) {
+        // OPTIMIZATION: Single dynamic_cast capture
+        // Check if this specific relationship is "DefinesByProperties"
+        if (auto rel = rel_generic->template as<typename schema::IfcRelDefinesByProperties>()) {
+            auto p_set_select = rel->RelatingPropertyDefinition();
+            if (!p_set_select) {
+                continue;
+            }
+
+            // Check if it is actually an IfcPropertySet (could be ElementQuantity, etc.)
+            if (auto p_set = p_set_select->template as<typename schema::IfcElementQuantity>()) {
+                auto p_set_name_opt = p_set->Name();
+                if (!p_set_name_opt.has_value()) {
+                    continue;
+                }
+
+                std::string quants_key = p_set_name_opt.value();
+
+                auto quants = p_set->Quantities();
+                if (!quants) {
+                    continue;
+                }
+
+                godot::Dictionary quantities_dict;
+
+                for (auto quant : *quants) {
+                    if (!quant) {
+                        continue;
+                    }
+
+                    // Cache the property name to avoid repeated lookups
+                    // Godot Dictionaries use Variants as keys. Passing a const char* // creates a String automatically.
+                    std::string quant_name_str = quant->Name();
+                    const char* quant_key = quant_name_str.c_str();
+
+                    if (auto q_length = quant->template as<typename schema::IfcQuantityLength>()) {
+                        // Handle Single Value
+                        if (auto n_value = q_length->LengthValue()) {
+                            quantities_dict[quant_key] = n_value;
+                        } else {
+                            quantities_dict[quant_key] = godot::Variant(); // Null/Nil
+                        }
+                    } else if (auto q_area = quant->template as<typename schema::IfcQuantityArea>()) {
+                        if (auto n_value = q_area->AreaValue()) {
+
+                            quantities_dict[quant_key] = n_value;
+
+                        } else {
+                            quantities_dict[quant_key] = godot::Variant(); // Null/Nil
+                        }
+                    } else if (auto q_volume = quant->template as<typename schema::IfcQuantityVolume>()) {
+                        if (auto n_value = q_volume->VolumeValue()) {
+                            quantities_dict[quant_key] = n_value;
+                        } else {
+                            quantities_dict[quant_key] = godot::Variant(); // Null/Nil
+                        }
+                    } else if (auto q_weight = quant->template as<typename schema::IfcQuantityWeight>()) {
+                        if (auto n_value = q_weight->WeightValue()) {
+                            quantities_dict[quant_key] = n_value;
+                        } else {
+                            quantities_dict[quant_key] = godot::Variant(); // Null/Nil
+                        }
+
+                    } else if (auto q_count = quant->template as<typename schema::IfcQuantityCount>()) {
+                        if (auto n_value = q_count->CountValue()) {
+                            quantities_dict[quant_key] = n_value;
+                        } else {
+                            quantities_dict[quant_key] = godot::Variant(); // Null/Nil
+                        }
+
+                    } else if (auto q_time = quant->template as<typename schema::IfcQuantityTime>()) {
+                        if (auto n_value = q_time->TimeValue()) {
+                            quantities_dict[quant_key] = n_value;
+                        } else {
+                            quantities_dict[quant_key] = godot::Variant(); // Null/Nil
+                        }
+                    }
+                }
+
+                // Insert the constructed dictionary into the main psets dictionary
+                qsets[quants_key.c_str()] = quantities_dict;
+            }
+        }
+    }
+
+    return qsets;
+}
+
+template <typename schema>
 godot::Dictionary get_ifc_object_attributes(IfcParse::IfcFile& file, int expressID) {
 
     godot::Dictionary attributes;
@@ -839,14 +975,15 @@ godot::GeorreferenceData get_georreference(IfcParse::IfcFile &file) {
 
 template <typename schema>
 std::unordered_map<int, int> build_spatial_hierarchy(IfcParse::IfcFile &file) {
+
     std::unordered_map<int, int> child_to_parent;
 
-    // 1. Handle Aggregation (Site -> Building -> Storey)
-    // Uses IfcRelAggregates
+    // Handle Aggregation
     auto rel_aggregates = file.instances_by_type("IfcRelAggregates");
+
     if (rel_aggregates) {
         for (int i = 0; i < rel_aggregates->size(); i++) {
-            auto rel = rel_aggregates->operator[](i)->as<typename schema::IfcRelAggregates>(); // cast works for 2x3 too usually due to inheritance or use generic base
+            auto rel = rel_aggregates->operator[](i)->as<typename schema::IfcRelAggregates>();
             if (!rel) continue;
 
             auto parent = rel->RelatingObject();
@@ -861,8 +998,7 @@ std::unordered_map<int, int> build_spatial_hierarchy(IfcParse::IfcFile &file) {
         }
     }
 
-    // 2. Handle Spatial Containment (Storey -> Wall/Window/etc)
-    // Uses IfcRelContainedInSpatialStructure
+    // Handle Spatial Containment
     auto rel_contained = file.instances_by_type("IfcRelContainedInSpatialStructure");
     if (rel_contained) {
         for (int i = 0; i < rel_contained->size(); i++) {
@@ -881,14 +1017,15 @@ std::unordered_map<int, int> build_spatial_hierarchy(IfcParse::IfcFile &file) {
         }
     }
 
+    // Handle nesting
     auto rel_nests = file.instances_by_type("IfcRelNests");
     if (rel_nests) {
         for (int i = 0; i < rel_nests->size(); i++) {
             auto rel = rel_nests->operator[](i)->as<typename schema::IfcRelNests>();
             if (!rel) continue;
 
-            auto parent = rel->RelatingObject(); // The Spatial Structure (e.g. Storey)
-            auto children = rel->RelatedObjects(); // The Physical Elements (e.g. Wall)
+            auto parent = rel->RelatingObject();
+            auto children = rel->RelatedObjects();
 
             if (parent && children) {
                 int parent_id = parent->id();
@@ -907,8 +1044,8 @@ std::unordered_map<int, int> build_spatial_hierarchy(IfcParse::IfcFile &file) {
                 auto rel = rel_adheres->operator[](i)->as<typename Ifc4x3_add2::IfcRelAdheresToElement>();
                 if (!rel) continue;
 
-                auto parent = rel->RelatingElement(); // The Spatial Structure (e.g. Storey)
-                auto children = rel->RelatedSurfaceFeatures(); // The Physical Elements (e.g. Wall)
+                auto parent = rel->RelatingElement();
+                auto children = rel->RelatedSurfaceFeatures();
 
                 if (parent && children) {
                     int parent_id = parent->id();
