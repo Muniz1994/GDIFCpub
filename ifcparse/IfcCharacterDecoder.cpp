@@ -37,7 +37,7 @@
 #include <sstream>
 #include <string>
 #include <algorithm>
-#include <boost/locale.hpp>
+#include <locale>
 
 #define FIRST_SOLIDUS (1 << 1)
 #define PAGE (1 << 2)
@@ -381,7 +381,27 @@ std::u32string::value_type IfcUtil::convert_codepage(int codepage, int character
 }
 
 std::string IfcUtil::convert_utf8(const std::u32string& string) {
-    return boost::locale::conv::utf_to_utf<char>(string);
+    // Manual UTF-32 to UTF-8 conversion (replaces boost::locale::conv::utf_to_utf)
+    std::string result;
+    result.reserve(string.size() * 2);
+    for (char32_t cp : string) {
+        if (cp < 0x80) {
+            result.push_back(static_cast<char>(cp));
+        } else if (cp < 0x800) {
+            result.push_back(static_cast<char>(0xC0 | (cp >> 6)));
+            result.push_back(static_cast<char>(0x80 | (cp & 0x3F)));
+        } else if (cp < 0x10000) {
+            result.push_back(static_cast<char>(0xE0 | (cp >> 12)));
+            result.push_back(static_cast<char>(0x80 | ((cp >> 6) & 0x3F)));
+            result.push_back(static_cast<char>(0x80 | (cp & 0x3F)));
+        } else if (cp <= 0x10FFFF) {
+            result.push_back(static_cast<char>(0xF0 | (cp >> 18)));
+            result.push_back(static_cast<char>(0x80 | ((cp >> 12) & 0x3F)));
+            result.push_back(static_cast<char>(0x80 | ((cp >> 6) & 0x3F)));
+            result.push_back(static_cast<char>(0x80 | (cp & 0x3F)));
+        }
+    }
+    return result;
 }
 
 std::u32string IfcUtil::convert_utf8(const std::string& s) {
@@ -395,5 +415,30 @@ std::u32string IfcUtil::convert_utf8(const std::string& s) {
     if (is_ascii) {
         return std::u32string(s.begin(), s.end());
     }
-    return boost::locale::conv::utf_to_utf<char32_t>(s);
+    // Manual UTF-8 to UTF-32 conversion (replaces boost::locale::conv::utf_to_utf)
+    std::u32string result;
+    result.reserve(s.size());
+    size_t i = 0;
+    while (i < s.size()) {
+        unsigned char c = static_cast<unsigned char>(s[i]);
+        char32_t cp;
+        size_t extra;
+        if (c < 0x80) {
+            cp = c; extra = 0;
+        } else if ((c & 0xE0) == 0xC0) {
+            cp = c & 0x1F; extra = 1;
+        } else if ((c & 0xF0) == 0xE0) {
+            cp = c & 0x0F; extra = 2;
+        } else if ((c & 0xF8) == 0xF0) {
+            cp = c & 0x07; extra = 3;
+        } else {
+            ++i; continue; // skip invalid byte
+        }
+        ++i;
+        for (size_t j = 0; j < extra && i < s.size(); ++j, ++i) {
+            cp = (cp << 6) | (static_cast<unsigned char>(s[i]) & 0x3F);
+        }
+        result.push_back(cp);
+    }
+    return result;
 }

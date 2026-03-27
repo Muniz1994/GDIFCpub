@@ -1,4 +1,39 @@
 [submodule "godot-cpp"]
 	path = godot-cpp
 	url = https://github.com/godotengine/godot-cpp
-	branch = 4.2
+	shallow = true
+
+[submodule "thirdparty/fastfloat"]
+	path = thirdparty/fastfloat
+	url = https://github.com/fastfloat/fast_float
+	shallow = true
+
+[submodule "thirdparty/tinynurbs"]
+	path = thirdparty/tinynurbs
+	url = https://github.com/QuimMoya/tinynurbs
+	shallow = true
+
+[submodule "thirdparty/glm"]
+	path = thirdparty/glm
+	url = https://github.com/g-truc/glm
+	shallow = true
+
+[submodule "thirdparty/earcut"]
+	path = thirdparty/earcut
+	url = https://github.com/mapbox/earcut.hpp
+	shallow = true
+
+[submodule "thirdparty/cdt"]
+	path = thirdparty/cdt
+	url = https://github.com/artem-ogre/CDT
+	shallow = true
+
+[submodule "thirdparty/spdlog"]
+	path = thirdparty/spdlog
+	url = https://github.com/gabime/spdlog
+	shallow = true
+
+[submodule "thirdparty/stduuid"]
+	path = thirdparty/stduuid
+	url = https://github.com/mariusbancila/stduuid
+	shallow = true

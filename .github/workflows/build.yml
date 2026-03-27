@@ -1,0 +1,184 @@
+name: Build GDExtension
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+env:
+  SCONS_CACHE: ${{ github.workspace }}/.scons-cache
+  BOOST_VERSION: "1.86.0"
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # ── Linux x86_64 ──────────────────────────────────────────────
+          - name: Linux Debug
+            runner: ubuntu-22.04
+            platform: linux
+            target: template_debug
+            arch: x86_64
+
+          - name: Linux Release
+            runner: ubuntu-22.04
+            platform: linux
+            target: template_release
+            arch: x86_64
+
+          # ── Windows x86_64 ────────────────────────────────────────────
+          - name: Windows Debug
+            runner: windows-2022
+            platform: windows
+            target: template_debug
+            arch: x86_64
+
+          - name: Windows Release
+            runner: windows-2022
+            platform: windows
+            target: template_release
+            arch: x86_64
+
+          # ── Android arm64 ─────────────────────────────────────────────
+          - name: Android Debug
+            runner: ubuntu-22.04
+            platform: android
+            target: template_debug
+            arch: arm64
+
+          - name: Android Release
+            runner: ubuntu-22.04
+            platform: android
+            target: template_release
+            arch: arm64
+
+          # ── Web wasm32 ────────────────────────────────────────────────
+          - name: Web Debug
+            runner: ubuntu-22.04
+            platform: web
+            target: template_debug
+            arch: wasm32
+
+          - name: Web Release
+            runner: ubuntu-22.04
+            platform: web
+            target: template_release
+            arch: wasm32
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install SCons
+        run: pip install scons
+
+      # ── Platform-specific setup ─────────────────────────────────────
+
+      - name: (Linux) Install build dependencies
+        if: matrix.platform == 'linux'
+        run: sudo apt-get update && sudo apt-get install -y build-essential gcc-12 g++-12
+        
+      - name: (Android) Set up NDK
+        if: matrix.platform == 'android'
+        uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with:
+          ndk-version: r28b
+
+      - name: (Android) Set ANDROID_HOME
+        if: matrix.platform == 'android'
+        run: echo "ANDROID_HOME=${{ steps.setup-ndk.outputs.ndk-path }}/.." >> $GITHUB_ENV
+
+      - name: (Web) Set up Emscripten
+        if: matrix.platform == 'web'
+        uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: "3.1.64"
+
+      # ── Boost headers ──────────────────────────────────────────────
+
+      - name: Cache Boost headers
+        id: cache-boost
+        uses: actions/cache@v4
+        with:
+          path: thirdparty/boost
+          key: boost-${{ env.BOOST_VERSION }}
+
+      - name: Download Boost headers
+        if: steps.cache-boost.outputs.cache-hit != 'true'
+        run: python tools/setup_boost.py
+
+      # ── SCons cache ────────────────────────────────────────────────
+
+      - name: Cache SCons
+        uses: actions/cache@v4
+        with:
+          path: .scons-cache
+          key: scons-${{ matrix.platform }}-${{ matrix.target }}-${{ matrix.arch }}-${{ github.sha }}
+          restore-keys: |
+            scons-${{ matrix.platform }}-${{ matrix.target }}-${{ matrix.arch }}-
+
+      # ── Build ──────────────────────────────────────────────────────
+
+      - name: Build GDIFC
+        run: scons platform=${{ matrix.platform }} target=${{ matrix.target }} arch=${{ matrix.arch }} -j4
+
+      # ── Upload artifact ────────────────────────────────────────────
+
+      - name: Upload addon
+        uses: actions/upload-artifact@v4
+        with:
+          name: gdifc-${{ matrix.platform }}-${{ matrix.target }}-${{ matrix.arch }}
+          path: ifc-godot-project/addons/GDIFC/libgdifc*
+          if-no-files-found: error
+
+  # ── Merge all platform artifacts into one ─────────────────────────────
+  package:
+    name: Package All Platforms
+    runs-on: ubuntu-22.04
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          pattern: gdifc-*
+
+      - name: Collect binaries
+        run: |
+          mkdir -p package/addons/GDIFC
+          # Copy the .gdextension and addon files
+          cp ifc-godot-project/addons/GDIFC/gdifc.gdextension package/addons/GDIFC/
+          cp ifc-godot-project/addons/GDIFC/plugin.cfg package/addons/GDIFC/ || true
+          cp -r ifc-godot-project/addons/GDIFC/assets package/addons/GDIFC/ || true
+          cp -r ifc-godot-project/addons/GDIFC/settings package/addons/GDIFC/ || true
+          cp ifc-godot-project/addons/GDIFC/*.gd package/addons/GDIFC/ || true
+          cp ifc-godot-project/addons/GDIFC/*.tscn package/addons/GDIFC/ || true
+          # Copy all platform binaries
+          for dir in artifacts/gdifc-*/; do
+            cp "$dir"/libgdifc* package/addons/GDIFC/ || true
+          done
+          ls -la package/addons/GDIFC/
+
+      - name: Upload complete addon
+        uses: actions/upload-artifact@v4
+        with:
+          name: GDIFC-addon-all-platforms
+          path: package/
+          if-no-files-found: error

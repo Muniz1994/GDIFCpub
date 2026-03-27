@@ -1,0 +1,272 @@
+#!/usr/bin/env python
+"""
+SConstruct for GDIFC — GDExtension for IFC file loading in Godot.
+
+Builds for: Linux (x86_64), Windows (x86_64), Android (arm64), Web (wasm32)
+
+Usage:
+    scons                                    # Build for host platform, template_debug
+    scons platform=linux target=template_release
+    scons platform=windows target=template_release
+    scons platform=android target=template_release arch=arm64
+    scons platform=web target=template_release
+
+Prerequisites:
+    - godot-cpp submodule initialized (git submodule update --init --recursive)
+    - Boost headers in thirdparty/boost/ (run: python tools/setup_boost.py)
+    - For Android: ANDROID_HOME set, NDK installed
+    - For Web: Emscripten SDK installed and activated (emcc in PATH)
+    - For Windows cross-compile from Linux: MinGW-w64 installed
+"""
+
+import os
+import sys
+
+# ── Build godot-cpp and get the configured environment ──────────────────────
+env = SConscript("godot-cpp/SConstruct")
+
+# ── Helper: platform-aware compile flags ────────────────────────────────────
+is_msvc = env.get("is_msvc", False)
+platform = env["platform"]
+
+# ── Thirdparty include paths ────────────────────────────────────────────────
+thirdparty_dir = Dir("thirdparty").srcnode().abspath
+
+# Boost (header-only subset)
+boost_dir = os.path.join(thirdparty_dir, "boost")
+if os.path.isdir(os.path.join(boost_dir, "boost")):
+    boost_include = boost_dir
+elif os.path.isdir(boost_dir):
+    # boost headers might be directly in thirdparty/boost/boost/
+    boost_include = boost_dir
+else:
+    print("WARNING: Boost headers not found in thirdparty/boost/.")
+    print("         Run: python tools/setup_boost.py")
+    boost_include = boost_dir
+
+# web-ifc dependencies
+fastfloat_include = os.path.join(thirdparty_dir, "fastfloat", "include")
+tinynurbs_include = os.path.join(thirdparty_dir, "tinynurbs", "include")
+glm_include = thirdparty_dir + "/glm"
+glm_glm_include = thirdparty_dir + "/glm/glm"
+earcut_include = os.path.join(thirdparty_dir, "earcut", "include")
+cdt_include = os.path.join(thirdparty_dir, "cdt", "CDT", "include")
+spdlog_include = os.path.join(thirdparty_dir, "spdlog", "include")
+stduuid_include = os.path.join(thirdparty_dir, "stduuid", "include")
+
+# Source directories
+ifcparse_dir = Dir("ifcparse").srcnode().abspath
+webifc_dir = Dir("web-ifc").srcnode().abspath
+webifc_src_dir = os.path.join(webifc_dir, "web-ifc")
+gdifc_dir = Dir("GDIFC").srcnode().abspath
+
+# ── Common include paths ────────────────────────────────────────────────────
+common_includes = [
+    boost_include,
+    fastfloat_include,
+    tinynurbs_include,
+    glm_include,
+    glm_glm_include,
+    earcut_include,
+    cdt_include,
+    spdlog_include,
+    stduuid_include,
+]
+
+# ── Helper: enable exceptions (godot-cpp disables them by default) ──────────
+def enable_exceptions(target_env):
+    """Re-enable C++ exceptions which godot-cpp disables."""
+    if is_msvc:
+        # Replace /EHs-c- with /EHsc
+        flag_pairs = [("/EHs-c-", "/EHsc"), ("/EHs-", "/EHsc")]
+        for old, new in flag_pairs:
+            if old in target_env["CXXFLAGS"]:
+                target_env["CXXFLAGS"].remove(old)
+        if "/EHsc" not in target_env["CXXFLAGS"]:
+            target_env.Append(CXXFLAGS=["/EHsc"])
+    else:
+        # Remove -fno-exceptions, add -fexceptions
+        for flag_list_name in ["CXXFLAGS", "CCFLAGS"]:
+            flags = target_env.get(flag_list_name, [])
+            if isinstance(flags, list):
+                while "-fno-exceptions" in flags:
+                    flags.remove("-fno-exceptions")
+        target_env.Append(CXXFLAGS=["-fexceptions"])
+
+# ── Build IfcParse static library ───────────────────────────────────────────
+ifcparse_env = env.Clone()
+enable_exceptions(ifcparse_env)
+
+# C++17 for IfcParse
+if is_msvc:
+    ifcparse_env.Append(CXXFLAGS=["/std:c++17", "/bigobj"])
+else:
+    ifcparse_env.Append(CXXFLAGS=["-std=c++17"])
+
+ifcparse_env.Append(CPPPATH=[ifcparse_dir] + common_includes)
+ifcparse_env.Append(CPPDEFINES=[
+    "_CRT_SECURE_NO_WARNINGS",
+    "_UNICODE",
+    "IFC_PARSE_EXPORTS",
+    "HAS_SCHEMA_4",
+    "HAS_SCHEMA_2x3",
+    "HAS_SCHEMA_4x3",
+    "HAS_SCHEMA_4x3_add2",
+    "IFCQUERY_STATIC_LIB",
+])
+
+# IfcParse source files (matching CMake logic: exclude files with digits, re-add selected schemas)
+ifcparse_sources_no_digits = [
+    "ifcparse/buildinfo.cpp",
+    "ifcparse/FileReader.cpp",
+    "ifcparse/Header_section_schema-schema.cpp",
+    "ifcparse/Header_section_schema.cpp",
+    "ifcparse/IfcAlignmentHelper.cpp",
+    "ifcparse/IfcCharacterDecoder.cpp",
+    "ifcparse/IfcEntityInstanceData.cpp",
+    "ifcparse/IfcException.cpp",
+    "ifcparse/IfcFile.cpp",
+    "ifcparse/IfcGlobalId.cpp",
+    "ifcparse/IfcHierarchyHelper.cpp",
+    "ifcparse/IfcLogger.cpp",
+    "ifcparse/IfcParse.cpp",
+    "ifcparse/IfcSchema.cpp",
+    "ifcparse/IfcSIPrefix.cpp",
+    "ifcparse/IfcSpfHeader.cpp",
+    "ifcparse/IfcUtil.cpp",
+    "ifcparse/IfcWrite.cpp",
+    "ifcparse/parse_ifcxml.cpp",
+]
+
+# Schema sources (selected versions only)
+ifcparse_schema_sources = []
+for schema in ["4", "4x3", "4x3_add2", "4x2", "4x1", "2x3"]:
+    ifcparse_schema_sources.append(f"ifcparse/Ifc{schema}.cpp")
+    ifcparse_schema_sources.append(f"ifcparse/Ifc{schema}-schema.cpp")
+
+ifcparse_all_sources = ifcparse_sources_no_digits + ifcparse_schema_sources
+ifcparse_lib = ifcparse_env.StaticLibrary(
+    target="ifcparse/IfcParse",
+    source=ifcparse_all_sources,
+)
+
+# ── Build web-ifc static library ───────────────────────────────────────────
+webifc_env = env.Clone()
+enable_exceptions(webifc_env)
+
+# C++20 for web-ifc
+if is_msvc:
+    webifc_env.Append(CXXFLAGS=["/std:c++latest", "/utf-8", "/bigobj"])
+else:
+    webifc_env.Append(CXXFLAGS=["-std=c++20"])
+    if platform == "web":
+        webifc_env.Append(CXXFLAGS=["-fexperimental-library"])
+
+webifc_env.Append(CPPPATH=[webifc_src_dir] + common_includes)
+webifc_env.Append(CPPDEFINES=["IFCQUERY_STATIC_LIB"])
+
+webifc_sources = Glob("web-ifc/web-ifc/**/*.cpp") + Glob("web-ifc/web-ifc/**/**/*.cpp") + Glob("web-ifc/web-ifc/**/**/**/*.cpp")
+
+# SCons Glob with ** doesn't recurse properly. List explicitly.
+webifc_sources = [
+    "web-ifc/web-ifc/schema/schema-functions.cpp",
+    "web-ifc/web-ifc/schema/IfcSchemaManager.cpp",
+    "web-ifc/web-ifc/parsing/IfcLoader.cpp",
+    "web-ifc/web-ifc/parsing/IfcFileStream.cpp",
+    "web-ifc/web-ifc/parsing/IfcTokenStream.cpp",
+    "web-ifc/web-ifc/parsing/IfcTokenChunk.cpp",
+    "web-ifc/web-ifc/parsing/uuid_utils.cpp",
+    "web-ifc/web-ifc/parsing/string_parsing.cpp",
+    "web-ifc/web-ifc/modelmanager/ModelManager.cpp",
+    "web-ifc/web-ifc/geometry/IfcGeometryProcessor.cpp",
+    "web-ifc/web-ifc/geometry/IfcGeometryLoader.cpp",
+    "web-ifc/web-ifc/geometry/nurbs.cpp",
+    "web-ifc/web-ifc/geometry/representation/IfcGeometry.cpp",
+    "web-ifc/web-ifc/geometry/representation/IfcCurve.cpp",
+    "web-ifc/web-ifc/geometry/operations/bim-geometry/aabb.cpp",
+    "web-ifc/web-ifc/geometry/operations/bim-geometry/arc.cpp",
+    "web-ifc/web-ifc/geometry/operations/bim-geometry/alignment.cpp",
+    "web-ifc/web-ifc/geometry/operations/bim-geometry/face.cpp",
+    "web-ifc/web-ifc/geometry/operations/bim-geometry/extrusion.cpp",
+    "web-ifc/web-ifc/geometry/operations/bim-geometry/plane.cpp",
+    "web-ifc/web-ifc/geometry/operations/bim-geometry/circularSweep.cpp",
+    "web-ifc/web-ifc/geometry/operations/bim-geometry/buffers.cpp",
+    "web-ifc/web-ifc/geometry/operations/bim-geometry/clothoid.cpp",
+    "web-ifc/web-ifc/geometry/operations/bim-geometry/boolean.cpp",
+    "web-ifc/web-ifc/geometry/operations/bim-geometry/parabola.cpp",
+    "web-ifc/web-ifc/geometry/operations/bim-geometry/profile.cpp",
+    "web-ifc/web-ifc/geometry/operations/bim-geometry/geometry.cpp",
+    "web-ifc/web-ifc/geometry/operations/bim-geometry/curve.cpp",
+    "web-ifc/web-ifc/geometry/operations/bim-geometry/sweep.cpp",
+    "web-ifc/web-ifc/geometry/operations/bim-geometry/revolution.cpp",
+    "web-ifc/web-ifc/geometry/operations/bim-geometry/cylindricalRevolution.cpp",
+]
+
+webifc_lib = webifc_env.StaticLibrary(
+    target="web-ifc/web-ifc",
+    source=webifc_sources,
+)
+
+# ── Build GDIFC shared library (GDExtension) ───────────────────────────────
+gdifc_env = env.Clone()
+enable_exceptions(gdifc_env)
+
+# C++17 for GDIFC
+if is_msvc:
+    gdifc_env.Append(CXXFLAGS=["/std:c++17", "/bigobj"])
+else:
+    gdifc_env.Append(CXXFLAGS=["-std=c++17"])
+
+gdifc_env.Append(CPPPATH=[
+    os.path.join(gdifc_dir, "src"),
+    ifcparse_dir,
+    webifc_src_dir,
+] + common_includes)
+
+gdifc_env.Append(CPPDEFINES=[
+    "IFCQUERY_STATIC_LIB",
+    "HAS_SCHEMA_4",
+    "HAS_SCHEMA_2x3",
+    "HAS_SCHEMA_4x3",
+    "HAS_SCHEMA_4x3_add2",
+])
+
+gdifc_sources = [
+    "GDIFC/src/gd_ifc_manager.cpp",
+    "GDIFC/src/register_types.cpp",
+    "GDIFC/src/web_ifc_manager.cpp",
+    "GDIFC/src/value_conversion.cpp",
+    "GDIFC/src/gd_ifc_settings.cpp",
+    "GDIFC/src/gd_ifc_node.cpp",
+]
+
+# Link against static libraries
+gdifc_env.Append(LIBS=[ifcparse_lib, webifc_lib])
+
+# Output naming follows godot-cpp convention:
+#   libgdifc.{platform}.{target}.{arch}.{ext}
+# env["suffix"] = ".{platform}.{target}.{arch}"
+# env["SHLIBSUFFIX"] = platform-appropriate extension (.so, .dll, .wasm, .dylib)
+addon_output_dir = "ifc-godot-project/addons/GDIFC"
+
+if platform == "macos":
+    library = gdifc_env.SharedLibrary(
+        "{}/libgdifc.{}.{}.framework/libgdifc.{}.{}".format(
+            addon_output_dir,
+            platform, env["target"],
+            platform, env["target"],
+        ),
+        source=gdifc_sources,
+    )
+else:
+    library = gdifc_env.SharedLibrary(
+        "{}/libgdifc{}{}".format(
+            addon_output_dir,
+            env["suffix"],
+            env["SHLIBSUFFIX"],
+        ),
+        source=gdifc_sources,
+    )
+
+env.NoCache(library)
+Default(library)

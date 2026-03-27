@@ -2,6 +2,7 @@
 
 entry_symbol = "gdifc_library_init"
 compatibility_minimum = "4.2"
+reloadable = true
 
 [icons]
 GDIFCManager = "res://addons/GDIFC/assets/icons/building.svg"
@@ -9,5 +10,14 @@ IFCNode = "res://addons/GDIFC/assets/icons/box.svg"
 
 [libraries]
 
-windows.64 = "res://addons/GDIFC/gdifc.windows.release.64.dll"
-linux.64 = "res://addons/GDIFC/gdifc.windows.release.64.dll"
+linux.debug.x86_64 = "res://addons/GDIFC/libgdifc.linux.template_debug.x86_64.so"
+linux.release.x86_64 = "res://addons/GDIFC/libgdifc.linux.template_release.x86_64.so"
+
+windows.debug.x86_64 = "res://addons/GDIFC/libgdifc.windows.template_debug.x86_64.dll"
+windows.release.x86_64 = "res://addons/GDIFC/libgdifc.windows.template_release.x86_64.dll"
+
+android.debug.arm64 = "res://addons/GDIFC/libgdifc.android.template_debug.arm64.so"
+android.release.arm64 = "res://addons/GDIFC/libgdifc.android.template_release.arm64.so"
+
+web.debug.wasm32 = "res://addons/GDIFC/libgdifc.web.template_debug.wasm32.wasm"
+web.release.wasm32 = "res://addons/GDIFC/libgdifc.web.template_release.wasm32.wasm"

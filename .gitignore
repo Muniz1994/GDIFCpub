@@ -53,20 +53,38 @@ _deps
 *-prefix/
 
 # End of https://www.toptal.com/developers/gitignore/api/c++,cmake
-/godot-cpp
-/build
-/.vscode
-godot-cpp
-/out
 
-.vs
-/vcpkg_installed
+# Build directories
+/build
+/out
+/cmake-build-*/
+
+# IDE
+/.vscode
+/.vs
 /.idea
 
+# vcpkg (legacy CMake build)
+/vcpkg_installed
+
+# SCons
+.sconsign.dblite
+.scons-cache/
+*.pyc
+
+# Thirdparty (downloaded, not committed)
+/thirdparty/boost/
+
+# Godot
 *.uid
 *.ifc
 ifc-godot-project/icon.svg.import
-ifc-godot-project/addons/GDIFC/gdifc.windows.debug.64.ilk
-ifc-godot-project/addons/GDIFC/gdifc.windows.debug.64.pdb
-ifc-godot-project/addons/GDIFC/gdifc.gdextension
-ifc-godot-project/addons/GDIFC/~gdifc.windows.debug.64_0.pdb
+ifc-godot-project/addons/GDIFC/*.pdb
+ifc-godot-project/addons/GDIFC/*.ilk
+
+# Platform binaries in addon dir (built artifacts)
+ifc-godot-project/addons/GDIFC/libgdifc*
+ifc-godot-project/addons/GDIFC/gdifc*.dll
+ifc-godot-project/addons/GDIFC/gdifc*.so
+ifc-godot-project/addons/GDIFC/gdifc*.wasm
+ifc-godot-project/addons/GDIFC/gdifc*.dylib
