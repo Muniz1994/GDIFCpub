@@ -2,6 +2,7 @@
 #include <algorithm> // Required for std::sort
 #include <functional> // Required for lambdas
 
+#include "godot_cpp/classes/file_access.hpp"
 #include "godot_cpp/classes/scene_tree.hpp"
 
 using namespace godot;
@@ -64,17 +65,36 @@ void GDIFCManager::_process(double delta) {
 // ---------------------------------------------------------
 void GDIFCManager::_thread_task(const String& _path) {
 
-    // Load file [web-ifc]
+    // ------------------------------------------------------------------
+    // Read the IFC file once using Godot FileAccess.
+    // FileAccess works transparently on every platform Godot supports
+    // (Linux, Windows with Unicode paths, Android content providers,
+    //  and the Web/WASM virtual filesystem).
+    // The resulting buffer is then shared with both parsing back-ends,
+    // avoiding duplicate I/O and platform-specific fopen/ifstream calls.
+    // ------------------------------------------------------------------
+    Ref<FileAccess> fa = FileAccess::open(_path, FileAccess::READ);
+    if (!fa.is_valid()) {
+        this->current_state = FAILED;
+        ERR_FAIL_MSG(String("Failed to open IFC file: ") + _path
+                     + String(" (error: ") + String::num_int64((int64_t)FileAccess::get_open_error()) + String(")"));
+    }
+    PackedByteArray file_buffer = fa->get_buffer(fa->get_length());
+    fa.unref(); // close the file handle immediately
+
+    const char* buf_ptr  = reinterpret_cast<const char*>(file_buffer.ptr());
+    int         buf_size = static_cast<int>(file_buffer.size());
+
+    // Load file [web-ifc] — from memory buffer
     auto temp_ifc_manager = std::make_unique<WEBIFCManager>(*geometric_settings);
+    temp_ifc_manager->read_ifc_file(buf_ptr, buf_size);
 
-    temp_ifc_manager->read_ifc_file(_path.utf8().get_data());
-
-    // Load file [IFCParse]
-    auto temp_file = std::make_unique<IfcParse::IfcFile>(_path.utf8().get_data());
+    // Load file [IFCParse] — from memory buffer (void*, int constructor)
+    auto temp_file = std::make_unique<IfcParse::IfcFile>((void*)buf_ptr, buf_size);
 
     if (!temp_file->good()) {
         this->current_state = FAILED;
-        ERR_FAIL_MSG("Failed to load IFC file.");
+        ERR_FAIL_MSG("Failed to parse IFC file.");
     }
 
     // Schema check [IFCParse]

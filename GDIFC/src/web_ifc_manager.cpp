@@ -1,21 +1,15 @@
 #include "web_ifc_manager.h"
 
 
-void WEBIFCManager::read_ifc_file(std::string path) const
+void WEBIFCManager::read_ifc_file(const char* data, size_t length) const
 {
-
-    // 1. Open a file for reading
-    std::ifstream file_stream(path);
-    if (file_stream.is_open()) {
-        // 3. Pass the stream object (by reference) to loadfile
-        //    'file_stream' is an object of a class derived from std::istream.
-        this->loader->LoadFile(file_stream);
-
-        file_stream.close();
-    }
-    else {
-        godot::UtilityFunctions::print("Error: Could not read ifc file");
-    }
+    // Wrap the in-memory buffer in a std::istringstream so it can be
+    // consumed by IfcLoader::LoadFile(std::istream&).  This avoids
+    // platform-specific file I/O (std::ifstream) and works on Linux,
+    // Windows, Android, and Web/WASM because the actual file reading
+    // is done earlier via Godot's FileAccess.
+    std::istringstream stream(std::string(data, length));
+    this->loader->LoadFile(stream);
 }
 
 // old ReadValue

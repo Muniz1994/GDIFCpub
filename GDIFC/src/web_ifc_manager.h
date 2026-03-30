@@ -8,7 +8,7 @@
 #include <map>
 #include <variant>
 #include <optional>
-#include <fstream>
+#include <sstream>
 
 #include "gd_ifc_settings.h"
 #include <godot_cpp/variant/dictionary.hpp>
@@ -74,7 +74,7 @@ public:
 
     void initialize_geometry_processor();
 
-    void read_ifc_file(std::string path) const;
+    void read_ifc_file(const char* data, size_t length) const;
 
     godot::Variant get_value_from_token(webifc::parsing::IfcTokenType t);
 

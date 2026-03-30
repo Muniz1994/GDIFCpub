@@ -78,19 +78,29 @@ def enable_exceptions(target_env):
     """Re-enable C++ exceptions which godot-cpp disables."""
     if is_msvc:
         # Replace /EHs-c- with /EHsc
-        flag_pairs = [("/EHs-c-", "/EHsc"), ("/EHs-", "/EHsc")]
-        for old, new in flag_pairs:
-            if old in target_env["CXXFLAGS"]:
-                target_env["CXXFLAGS"].remove(old)
-        if "/EHsc" not in target_env["CXXFLAGS"]:
-            target_env.Append(CXXFLAGS=["/EHsc"])
+        for flag_var in ["CXXFLAGS"]:
+            flags = target_env.get(flag_var, [])
+            new_flags = [f for f in flags if f not in ("/EHs-c-", "/EHs-")]
+            if "/EHsc" not in new_flags:
+                new_flags.append("/EHsc")
+            target_env[flag_var] = type(flags)(new_flags) if hasattr(flags, 'data') else new_flags
+    elif platform == "web":
+        # Emscripten side modules cannot use -s linker settings for exceptions
+        # (they have no JS runtime). Use -fignore-exceptions so throw/try/catch
+        # syntax compiles but throws become abort() and catches are skipped.
+        # This avoids both the invoke_* (JS EH) and __cpp_exception (Wasm EH)
+        # linking issues with Godot's main module.
+        for var in ["CXXFLAGS", "CCFLAGS"]:
+            flags = target_env.get(var, [])
+            new_flags = [f for f in flags if f != "-fno-exceptions"]
+            target_env[var] = type(flags)(new_flags) if hasattr(flags, 'data') else new_flags
+        target_env.Append(CXXFLAGS=["-fignore-exceptions"])
     else:
-        # Remove -fno-exceptions, add -fexceptions
-        for flag_list_name in ["CXXFLAGS", "CCFLAGS"]:
-            flags = target_env.get(flag_list_name, [])
-            if isinstance(flags, list):
-                while "-fno-exceptions" in flags:
-                    flags.remove("-fno-exceptions")
+        # GCC/Clang: Remove -fno-exceptions, add -fexceptions
+        for var in ["CXXFLAGS", "CCFLAGS"]:
+            flags = target_env.get(var, [])
+            new_flags = [f for f in flags if f != "-fno-exceptions"]
+            target_env[var] = type(flags)(new_flags) if hasattr(flags, 'data') else new_flags
         target_env.Append(CXXFLAGS=["-fexceptions"])
 
 # ── Build IfcParse static library ───────────────────────────────────────────
@@ -102,6 +112,9 @@ if is_msvc:
     ifcparse_env.Append(CXXFLAGS=["/std:c++17", "/bigobj"])
 else:
     ifcparse_env.Append(CXXFLAGS=["-std=c++17"])
+    if platform == "windows":
+        # MinGW needs big-obj support for large IFC schema files (PE/COFF section limit)
+        ifcparse_env.Append(CCFLAGS=["-Wa,-mbig-obj"])
 
 ifcparse_env.Append(CPPPATH=[ifcparse_dir] + common_includes)
 ifcparse_env.Append(CPPDEFINES=[
@@ -161,6 +174,10 @@ else:
     webifc_env.Append(CXXFLAGS=["-std=c++20"])
     if platform == "web":
         webifc_env.Append(CXXFLAGS=["-fexperimental-library"])
+    if platform == "android":
+        webifc_env.Append(CXXFLAGS=["-Wno-narrowing"])
+    if platform == "windows":
+        webifc_env.Append(CCFLAGS=["-Wa,-mbig-obj"])
 
 webifc_env.Append(CPPPATH=[webifc_src_dir] + common_includes)
 webifc_env.Append(CPPDEFINES=["IFCQUERY_STATIC_LIB"])
