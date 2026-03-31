@@ -4,7 +4,7 @@
 
 #include "godot_cpp/classes/node3d.hpp"
 #include "godot_cpp/classes/mesh_instance3d.hpp"
-
+#include "gd_ifc_entity_base.h"
 
 
 // Your existing class definition
@@ -35,13 +35,19 @@ public:
     godot::String get_ifc_class() {return ifc_class;}
     void set_ifc_class(godot::String ifcclass) {ifc_class = ifcclass;};
 
+    /// Access the typed IFC object wrapping the underlying data.
+    godot::Ref<godot::GDIFCEntityBase> get_ifc_object() const { return ifc_object_; }
+    void set_ifc_object(godot::Ref<godot::GDIFCEntityBase> obj) { ifc_object_ = obj; }
+
 private:
 
     godot::String ifc_class;
     godot::Dictionary attributes;
     godot::Dictionary properties;
     godot::Dictionary quantities;
-    // Helper function to create Godot mesh from web-ifc data
+
+    /// Typed GD wrapper for the IFC entity (set after loading).
+    godot::Ref<godot::GDIFCEntityBase> ifc_object_;
 
 };
 

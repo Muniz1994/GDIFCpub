@@ -26,9 +26,15 @@ set(EXT_SOURCES
 		src/value_conversion.h
 		src/gd_ifc_settings.h
 		src/gd_ifc_settings.cpp
+		src/gd_ifc_entity_base.h
+		src/gd_ifc_entity_base.cpp
+		src/gd_ifc_model.h
+		src/gd_ifc_model.cpp
 )
 
-add_library(${TARGET} SHARED ${EXT_SOURCES} "src/gd_ifc_node.h" "src/gd_ifc_node.cpp")
+file(GLOB GENERATED_SOURCES "src/generated/*.cpp")
+
+add_library(${TARGET} SHARED ${EXT_SOURCES} "src/gd_ifc_node.h" "src/gd_ifc_node.cpp" ${GENERATED_SOURCES})
 
 target_link_libraries(${TARGET} PUBLIC godot-cpp web-ifc IfcParse)
 

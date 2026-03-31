@@ -255,7 +255,12 @@ gdifc_sources = [
     "GDIFC/src/value_conversion.cpp",
     "GDIFC/src/gd_ifc_settings.cpp",
     "GDIFC/src/gd_ifc_node.cpp",
+    "GDIFC/src/gd_ifc_entity_base.cpp",
+    "GDIFC/src/gd_ifc_model.cpp",
 ]
+
+import glob as _glob
+gdifc_sources += _glob.glob("GDIFC/src/generated/*.cpp")
 
 # Link against static libraries
 gdifc_env.Append(LIBS=[ifcparse_lib, webifc_lib])

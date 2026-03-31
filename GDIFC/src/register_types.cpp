@@ -3,6 +3,8 @@
 #include "gd_ifc_manager.h"
 #include "gd_ifc_node.h"
 #include "gd_ifc_settings.h"
+#include "gd_ifc_entity_base.h"
+#include "gd_ifc_model.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
@@ -16,6 +18,13 @@ void initialize_example_module(ModuleInitializationLevel p_level)
     {
         return;
     }
+
+    // Base class must be registered before any generated subclasses
+    ClassDB::register_class<GDIFCEntityBase>();
+    ClassDB::register_class<IFCModel>();
+
+    // Register all ~876 generated per-entity classes + populate factory map
+    register_all_gd_ifc_entities();
 
     ClassDB::register_class<GDIFCManager>();
     ClassDB::register_class<IFCNode>();
