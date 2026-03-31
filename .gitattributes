@@ -1,0 +1,38 @@
+# Normalize line endings
+* text=auto eol=lf
+
+# -----------------------------------------------------------------------
+# Godot Asset Library export-ignore
+#
+# When a user installs GDIFC from the Asset Library (or downloads a zip),
+# git archive is used to produce the archive.  Everything tagged
+# export-ignore is excluded, leaving only the addon folder itself.
+#
+# Asset Library submission: set "Root directory" to "ifc-godot-project/"
+# so the addon is installed at  res://addons/GDIFC/
+# -----------------------------------------------------------------------
+
+# C++ source & build system (not needed at runtime)
+/GDIFC/                         export-ignore
+/godot-cpp/                     export-ignore
+/ifcparse/                      export-ignore
+/web-ifc/                       export-ignore
+/thirdparty/                    export-ignore
+/tools/                         export-ignore
+
+# CMake / build config
+/CMakeLists.txt                 export-ignore
+/CMakeSettings.json             export-ignore
+/SConstruct                     export-ignore
+/vcpkg.json                     export-ignore
+/vcpkg-configuration.json       export-ignore
+
+# Demo / test project files (not part of the addon)
+/ifc-godot-project/.editorconfig    export-ignore
+/ifc-godot-project/.gdignore        export-ignore
+/ifc-godot-project/.gitattributes   export-ignore
+/ifc-godot-project/.gitignore       export-ignore
+/ifc-godot-project/main.tscn        export-ignore
+/ifc-godot-project/project.godot    export-ignore
+/ifc-godot-project/materials/       export-ignore
+/ifc-godot-project/settings/        export-ignore
