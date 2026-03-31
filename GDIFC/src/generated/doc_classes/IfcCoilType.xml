@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCoilType" inherits="IfcEnergyConversionDeviceType"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The energy conversion device type IfcCoilType defines commonly shared information for occurrences of coils. The set of shared information may include: common properties with shared property sets common representations of shape common materials common composition of elements common ports applicable assignment of process types It is used to define a coil specification (i.e. the specific product info
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Defines typical types of coils (e.g., Cooling, Heating, etc.)
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

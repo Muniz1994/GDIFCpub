@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPhysicalQuantity" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The physical quantity, IfcPhysicalQuantity , is an abstract entity that holds a complex or simple quantity measure together with a semantic definition of the usage for the single or several measure value. The Name attribute defines the actual usage or kind of measure. The interpretation of the name label has to be established within the actual exchange context. In addition an informative text may 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			Name of the element quantity or measure. The name attribute has to be made recognizable by further agreements.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			Further explanation that might be given to the quantity.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

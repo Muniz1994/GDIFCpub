@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcEllipse" inherits="IfcConic"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : An ellipse ( IfcEllipse ) is a conic section defined by the lengths of the semi-major and semi-minor diameters and the position (center or mid point of the line joining the foci) and orientation of the curve. Interpretation of the data shall be as follows: C = SELF\IfcConic.Position.Location x = SELF\IfcConic.Position.P[1] y = SELF\IfcConic.Position.P[2] z = 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="SemiAxis1" type="float" setter="set_SemiAxis1" getter="get_SemiAxis1">
+			The first radius of the ellipse which shall be positive. Placement.Axes[1] gives the direction of the SemiAxis1.
+		</member>
+		<member name="SemiAxis2" type="float" setter="set_SemiAxis2" getter="get_SemiAxis2">
+			The second radius of the ellipse which shall be positive.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

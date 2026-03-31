@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcWallStandardCase" inherits="IfcWall"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The IfcWallStandardCase defines a wall with certain constraints for the provision of parameters and with certain constraints for the geometric representation. The IfcWallStandardCase handles all cases of walls, that are extruded vertically: along the positive z axis of the wall object coordinate system, and along the positve z axis of the global (world) coordinate system and have a single thicknes
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

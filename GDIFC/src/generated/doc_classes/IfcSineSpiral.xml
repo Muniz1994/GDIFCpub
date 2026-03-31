@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSineSpiral" inherits="IfcSpiral"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="SineTerm" type="float" setter="set_SineTerm" getter="get_SineTerm">
+		</member>
+		<member name="LinearTerm" type="float" setter="set_LinearTerm" getter="get_LinearTerm">
+		</member>
+		<member name="ConstantTerm" type="float" setter="set_ConstantTerm" getter="get_ConstantTerm">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

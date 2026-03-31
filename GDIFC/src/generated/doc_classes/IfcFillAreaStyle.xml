@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFillAreaStyle" inherits="IfcPresentationStyle"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-46:1992 : The style for filling visible curve segments, annotation fill areas or surfaces with tiles or hatches. An IfcFillAreaStyle provides the style table for presentation information assigned to annotation fill areas or surfaces for hatching and tiling. The IfcFillAreaStyle defines hatches as model hatches, that is, the distance between hatch lines, or the curve pa
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="FillStyles" type="Array" setter="set_FillStyles" getter="get_FillStyles">
+			The set of fill area styles to use in presenting visible curve segments, annotation fill areas or surfaces.
+		</member>
+		<member name="ModelOrDraughting" type="bool" setter="set_ModelOrDraughting" getter="get_ModelOrDraughting">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

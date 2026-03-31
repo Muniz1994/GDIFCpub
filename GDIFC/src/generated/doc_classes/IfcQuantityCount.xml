@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcQuantityCount" inherits="IfcPhysicalSimpleQuantity"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcQuantityCount is a physical quantity that defines a derived count measure to provide an element's physical property. It is normally derived from the physical properties of the element under the specific measure rules given by a method of measurement. EXAMPLE An radiator may be measured according to its number of coils. The actual counting method depends on the method of measurement used. HISTOR
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="CountValue" type="int" setter="set_CountValue" getter="get_CountValue">
+			Count measure value of this quantity.
+		</member>
+		<member name="Formula" type="String" setter="set_Formula" getter="get_Formula">
+			A formula by which the quantity has been calculated. It can be assigned in addition to the actual value of the quantity. Formulas could be mathematic calculations (like width x height), database links, or a combination. The formula is for informational purposes only. IFC2x4 CHANGE Attribute added to the end of the attribute list.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

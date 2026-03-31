@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelContainedInSpatialStructure" inherits="IfcRelConnects"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		This objectified relationship, IfcRelContainedInSpatialStructure , is used to assign elements to a certain level of the spatial project structure. Any element can only be assigned once to a certain level of the spatial structure. The question, which level is relevant for which type of element, can only be answered within the context of a particular project and might vary within the various regions
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatedElements" type="Array" setter="set_RelatedElements" getter="get_RelatedElements">
+			Set of elements products, which are contained within this level of the spatial structure hierarchy. IFC2x PLATFORM CHANGE The data type has been changed from IfcElement to IfcProduct with upward compatibility
+		</member>
+		<member name="RelatingStructure" type="GDIFCEntityBase" setter="set_RelatingStructure" getter="get_RelatingStructure">
+			Spatial structure element, within which the element is contained. Any element can only be contained within one element of the project spatial structure.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRoot" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcRoot is the most abstract and root class for all IFC entity definitions that roots in the kernel or in subsequent layers of the IFC object model. It is therefore the common supertype of all IFC entities, beside those defined in an IFC resource schema. All entities that are subtypes of IfcRoot can be used independently, whereas resource schema entities, that are not subtypes of IfcRoot , are not
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="GlobalId" type="String" setter="set_GlobalId" getter="get_GlobalId">
+			Assignment of a globally unique identifier within the entire software world.
+		</member>
+		<member name="OwnerHistory" type="GDIFCEntityBase" setter="set_OwnerHistory" getter="get_OwnerHistory">
+			Assignment of the information about the current ownership of that object, including owning actor, application, local identification and information captured about the recent changes of the object, NOTE only the last modification in stored - either as addition, deletion or modification. IFC2x4 CHANGE The attribute has been changed to be OPTIONAL.
+		</member>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			Optional name for use by the participating software systems or users. For some subtypes of IfcRoot the insertion of the Name attribute may be required. This would be enforced by a where rule.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			Optional description, provided for exchanging informative comments.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

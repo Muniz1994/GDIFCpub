@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCurveStyle" inherits="IfcPresentationStyle"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-46:1992 : A curve style specifies the visual appearance of curves. An IfcCurveStyle provides the style table for presentation information assigned to geometric curves. The style is defined by a color, a font and a width. The IfcCurveStyle defines curve patterns as model patterns, that is, the distance between visible and invisible segments of curve patterns are given i
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="CurveFont" type="GDIFCEntityBase" setter="set_CurveFont" getter="get_CurveFont">
+			A curve style font which is used to present a curve. It can either be a predefined curve font, or an explicitly defined curve font. Both may be scaled. If not given, then the curve font should be taken from the layer assignment with style, if that is not given either, then the default curve font applies.
+		</member>
+		<member name="CurveWidth" type="GDIFCEntityBase" setter="set_CurveWidth" getter="get_CurveWidth">
+			A positive length measure in units of the presentation area for the width of a presented curve. If not given, then the style should be taken from the layer assignment with style, if that is not given either, then the default style applies.
+		</member>
+		<member name="CurveColour" type="GDIFCEntityBase" setter="set_CurveColour" getter="get_CurveColour">
+			The colour of the visible part of the curve. If not given, then the colour should be taken from the layer assignment with style, if that is not given either, then the default colour applies.
+		</member>
+		<member name="ModelOrDraughting" type="bool" setter="set_ModelOrDraughting" getter="get_ModelOrDraughting">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

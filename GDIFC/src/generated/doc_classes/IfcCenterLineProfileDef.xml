@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCenterLineProfileDef" inherits="IfcArbitraryOpenProfileDef"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The profile IfcCenterLineProfileDef defines an arbitrary two-dimensional open, not self intersecting profile for the use within the swept solid geometry. It is given by an area defined by applying a constant thickness to a centerline, generating an area from which the solid can be constructed. Among else, IfcCenterLineProfileDef is used to model cold-formed steel or aluminium sections (Sigma, Zeta
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Thickness" type="float" setter="set_Thickness" getter="get_Thickness">
+			Constant thickness applied along the center line.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

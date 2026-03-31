@@ -9,10152 +9,10152 @@ using namespace godot;
 
 // Forward declarations
 
-class GDIfcRoot;
-class GDIfcObjectDefinition;
-class GDIfcObject;
-class GDIfcControl;
-class GDIfcActionRequest;
-class GDIfcActor;
-class GDIfcActorRole;
-class GDIfcProduct;
-class GDIfcElement;
-class GDIfcDistributionElement;
-class GDIfcDistributionControlElement;
-class GDIfcActuator;
-class GDIfcTypeObject;
-class GDIfcTypeProduct;
-class GDIfcElementType;
-class GDIfcDistributionElementType;
-class GDIfcDistributionControlElementType;
-class GDIfcActuatorType;
-class GDIfcAddress;
-class GDIfcRepresentationItem;
-class GDIfcGeometricRepresentationItem;
-class GDIfcSolidModel;
-class GDIfcManifoldSolidBrep;
-class GDIfcAdvancedBrep;
-class GDIfcAdvancedBrepWithVoids;
-class GDIfcTopologicalRepresentationItem;
-class GDIfcFace;
-class GDIfcFaceSurface;
-class GDIfcAdvancedFace;
-class GDIfcDistributionFlowElement;
-class GDIfcFlowTerminal;
-class GDIfcAirTerminal;
-class GDIfcFlowController;
-class GDIfcAirTerminalBox;
-class GDIfcDistributionFlowElementType;
-class GDIfcFlowControllerType;
-class GDIfcAirTerminalBoxType;
-class GDIfcFlowTerminalType;
-class GDIfcAirTerminalType;
-class GDIfcEnergyConversionDevice;
-class GDIfcAirToAirHeatRecovery;
-class GDIfcEnergyConversionDeviceType;
-class GDIfcAirToAirHeatRecoveryType;
-class GDIfcAlarm;
-class GDIfcAlarmType;
-class GDIfcPositioningElement;
-class GDIfcLinearPositioningElement;
-class GDIfcAlignment;
-class GDIfcLinearElement;
-class GDIfcAlignmentCant;
-class GDIfcAlignmentParameterSegment;
-class GDIfcAlignmentCantSegment;
-class GDIfcAlignmentHorizontal;
-class GDIfcAlignmentHorizontalSegment;
-class GDIfcAlignmentSegment;
-class GDIfcAlignmentVertical;
-class GDIfcAlignmentVerticalSegment;
-class GDIfcAnnotation;
-class GDIfcAnnotationFillArea;
-class GDIfcApplication;
-class GDIfcAppliedValue;
-class GDIfcApproval;
-class GDIfcResourceLevelRelationship;
-class GDIfcApprovalRelationship;
-class GDIfcProfileDef;
-class GDIfcArbitraryClosedProfileDef;
-class GDIfcArbitraryOpenProfileDef;
-class GDIfcArbitraryProfileDefWithVoids;
-class GDIfcGroup;
-class GDIfcAsset;
-class GDIfcParameterizedProfileDef;
-class GDIfcAsymmetricIShapeProfileDef;
-class GDIfcAudioVisualAppliance;
-class GDIfcAudioVisualApplianceType;
-class GDIfcPlacement;
-class GDIfcAxis1Placement;
-class GDIfcAxis2Placement2D;
-class GDIfcAxis2Placement3D;
-class GDIfcAxis2PlacementLinear;
-class GDIfcCurve;
-class GDIfcBoundedCurve;
-class GDIfcBSplineCurve;
-class GDIfcBSplineCurveWithKnots;
-class GDIfcSurface;
-class GDIfcBoundedSurface;
-class GDIfcBSplineSurface;
-class GDIfcBSplineSurfaceWithKnots;
-class GDIfcBuiltElement;
-class GDIfcBeam;
-class GDIfcBuiltElementType;
-class GDIfcBeamType;
-class GDIfcBearing;
-class GDIfcBearingType;
-class GDIfcPresentationItem;
-class GDIfcSurfaceTexture;
-class GDIfcBlobTexture;
-class GDIfcCsgPrimitive3D;
-class GDIfcBlock;
-class GDIfcBoiler;
-class GDIfcBoilerType;
-class GDIfcBooleanResult;
-class GDIfcBooleanClippingResult;
-class GDIfcGeotechnicalElement;
-class GDIfcGeotechnicalAssembly;
-class GDIfcBorehole;
-class GDIfcBoundaryCondition;
-class GDIfcCompositeCurve;
-class GDIfcCompositeCurveOnSurface;
-class GDIfcBoundaryCurve;
-class GDIfcBoundaryEdgeCondition;
-class GDIfcBoundaryFaceCondition;
-class GDIfcBoundaryNodeCondition;
-class GDIfcBoundaryNodeConditionWarping;
-class GDIfcBoundingBox;
-class GDIfcHalfSpaceSolid;
-class GDIfcBoxedHalfSpace;
-class GDIfcSpatialElement;
-class GDIfcSpatialStructureElement;
-class GDIfcFacility;
-class GDIfcBridge;
-class GDIfcFacilityPart;
-class GDIfcBridgePart;
-class GDIfcBuilding;
-class GDIfcElementComponent;
-class GDIfcBuildingElementPart;
-class GDIfcElementComponentType;
-class GDIfcBuildingElementPartType;
-class GDIfcBuildingElementProxy;
-class GDIfcBuildingElementProxyType;
-class GDIfcBuildingStorey;
-class GDIfcSystem;
-class GDIfcBuildingSystem;
-class GDIfcBuiltSystem;
-class GDIfcBurner;
-class GDIfcBurnerType;
-class GDIfcCShapeProfileDef;
-class GDIfcFlowFitting;
-class GDIfcCableCarrierFitting;
-class GDIfcFlowFittingType;
-class GDIfcCableCarrierFittingType;
-class GDIfcFlowSegment;
-class GDIfcCableCarrierSegment;
-class GDIfcFlowSegmentType;
-class GDIfcCableCarrierSegmentType;
-class GDIfcCableFitting;
-class GDIfcCableFittingType;
-class GDIfcCableSegment;
-class GDIfcCableSegmentType;
-class GDIfcDeepFoundation;
-class GDIfcCaissonFoundation;
-class GDIfcDeepFoundationType;
-class GDIfcCaissonFoundationType;
-class GDIfcPoint;
-class GDIfcCartesianPoint;
-class GDIfcCartesianPointList;
-class GDIfcCartesianPointList2D;
-class GDIfcCartesianPointList3D;
-class GDIfcCartesianTransformationOperator;
-class GDIfcCartesianTransformationOperator2D;
-class GDIfcCartesianTransformationOperator2DnonUniform;
-class GDIfcCartesianTransformationOperator3D;
-class GDIfcCartesianTransformationOperator3DnonUniform;
-class GDIfcCenterLineProfileDef;
-class GDIfcChiller;
-class GDIfcChillerType;
-class GDIfcChimney;
-class GDIfcChimneyType;
-class GDIfcConic;
-class GDIfcCircle;
-class GDIfcCircleProfileDef;
-class GDIfcCircleHollowProfileDef;
-class GDIfcCivilElement;
-class GDIfcCivilElementType;
-class GDIfcExternalInformation;
-class GDIfcClassification;
-class GDIfcExternalReference;
-class GDIfcClassificationReference;
-class GDIfcConnectedFaceSet;
-class GDIfcClosedShell;
-class GDIfcSpiral;
-class GDIfcClothoid;
-class GDIfcCoil;
-class GDIfcCoilType;
-class GDIfcColourSpecification;
-class GDIfcColourRgb;
-class GDIfcColourRgbList;
-class GDIfcColumn;
-class GDIfcColumnType;
-class GDIfcCommunicationsAppliance;
-class GDIfcCommunicationsApplianceType;
-class GDIfcPropertyAbstraction;
-class GDIfcProperty;
-class GDIfcComplexProperty;
-class GDIfcPropertyDefinition;
-class GDIfcPropertyTemplateDefinition;
-class GDIfcPropertyTemplate;
-class GDIfcComplexPropertyTemplate;
-class GDIfcSegment;
-class GDIfcCompositeCurveSegment;
-class GDIfcCompositeProfileDef;
-class GDIfcFlowMovingDevice;
-class GDIfcCompressor;
-class GDIfcFlowMovingDeviceType;
-class GDIfcCompressorType;
-class GDIfcCondenser;
-class GDIfcCondenserType;
-class GDIfcConnectionGeometry;
-class GDIfcConnectionCurveGeometry;
-class GDIfcConnectionPointGeometry;
-class GDIfcConnectionPointEccentricity;
-class GDIfcConnectionSurfaceGeometry;
-class GDIfcConnectionVolumeGeometry;
-class GDIfcConstraint;
-class GDIfcResource;
-class GDIfcConstructionResource;
-class GDIfcConstructionEquipmentResource;
-class GDIfcTypeResource;
-class GDIfcConstructionResourceType;
-class GDIfcConstructionEquipmentResourceType;
-class GDIfcConstructionMaterialResource;
-class GDIfcConstructionMaterialResourceType;
-class GDIfcConstructionProductResource;
-class GDIfcConstructionProductResourceType;
-class GDIfcContext;
-class GDIfcNamedUnit;
-class GDIfcContextDependentUnit;
-class GDIfcController;
-class GDIfcControllerType;
-class GDIfcConversionBasedUnit;
-class GDIfcConversionBasedUnitWithOffset;
-class GDIfcConveyorSegment;
-class GDIfcConveyorSegmentType;
-class GDIfcCooledBeam;
-class GDIfcCooledBeamType;
-class GDIfcCoolingTower;
-class GDIfcCoolingTowerType;
-class GDIfcCoordinateOperation;
-class GDIfcCoordinateReferenceSystem;
-class GDIfcCosineSpiral;
-class GDIfcCostItem;
-class GDIfcCostSchedule;
-class GDIfcCostValue;
-class GDIfcCourse;
-class GDIfcCourseType;
-class GDIfcCovering;
-class GDIfcCoveringType;
-class GDIfcCrewResource;
-class GDIfcCrewResourceType;
-class GDIfcCsgSolid;
-class GDIfcCurrencyRelationship;
-class GDIfcCurtainWall;
-class GDIfcCurtainWallType;
-class GDIfcCurveBoundedPlane;
-class GDIfcCurveBoundedSurface;
-class GDIfcCurveSegment;
-class GDIfcPresentationStyle;
-class GDIfcCurveStyle;
-class GDIfcCurveStyleFont;
-class GDIfcCurveStyleFontAndScaling;
-class GDIfcCurveStyleFontPattern;
-class GDIfcElementarySurface;
-class GDIfcCylindricalSurface;
-class GDIfcDamper;
-class GDIfcDamperType;
-class GDIfcDerivedProfileDef;
-class GDIfcDerivedUnit;
-class GDIfcDerivedUnitElement;
-class GDIfcDimensionalExponents;
-class GDIfcDirection;
-class GDIfcSweptAreaSolid;
-class GDIfcDirectrixCurveSweptAreaSolid;
-class GDIfcFixedReferenceSweptAreaSolid;
-class GDIfcDirectrixDerivedReferenceSweptAreaSolid;
-class GDIfcDiscreteAccessory;
-class GDIfcDiscreteAccessoryType;
-class GDIfcDistributionBoard;
-class GDIfcDistributionBoardType;
-class GDIfcDistributionChamberElement;
-class GDIfcDistributionChamberElementType;
-class GDIfcDistributionSystem;
-class GDIfcDistributionCircuit;
-class GDIfcPort;
-class GDIfcDistributionPort;
-class GDIfcDocumentInformation;
-class GDIfcDocumentInformationRelationship;
-class GDIfcDocumentReference;
-class GDIfcDoor;
-class GDIfcPropertySetDefinition;
-class GDIfcPreDefinedPropertySet;
-class GDIfcDoorLiningProperties;
-class GDIfcDoorPanelProperties;
-class GDIfcDoorType;
-class GDIfcPreDefinedItem;
-class GDIfcPreDefinedColour;
-class GDIfcDraughtingPreDefinedColour;
-class GDIfcPreDefinedCurveFont;
-class GDIfcDraughtingPreDefinedCurveFont;
-class GDIfcDuctFitting;
-class GDIfcDuctFittingType;
-class GDIfcDuctSegment;
-class GDIfcDuctSegmentType;
-class GDIfcFlowTreatmentDevice;
-class GDIfcDuctSilencer;
-class GDIfcFlowTreatmentDeviceType;
-class GDIfcDuctSilencerType;
-class GDIfcFeatureElement;
-class GDIfcFeatureElementSubtraction;
-class GDIfcEarthworksCut;
-class GDIfcEarthworksElement;
-class GDIfcEarthworksFill;
-class GDIfcEdge;
-class GDIfcEdgeCurve;
-class GDIfcLoop;
-class GDIfcEdgeLoop;
-class GDIfcElectricAppliance;
-class GDIfcElectricApplianceType;
-class GDIfcElectricDistributionBoard;
-class GDIfcElectricDistributionBoardType;
-class GDIfcFlowStorageDevice;
-class GDIfcElectricFlowStorageDevice;
-class GDIfcFlowStorageDeviceType;
-class GDIfcElectricFlowStorageDeviceType;
-class GDIfcElectricFlowTreatmentDevice;
-class GDIfcElectricFlowTreatmentDeviceType;
-class GDIfcElectricGenerator;
-class GDIfcElectricGeneratorType;
-class GDIfcElectricMotor;
-class GDIfcElectricMotorType;
-class GDIfcElectricTimeControl;
-class GDIfcElectricTimeControlType;
-class GDIfcElementAssembly;
-class GDIfcElementAssemblyType;
-class GDIfcQuantitySet;
-class GDIfcElementQuantity;
-class GDIfcEllipse;
-class GDIfcEllipseProfileDef;
-class GDIfcEngine;
-class GDIfcEngineType;
-class GDIfcEvaporativeCooler;
-class GDIfcEvaporativeCoolerType;
-class GDIfcEvaporator;
-class GDIfcEvaporatorType;
-class GDIfcProcess;
-class GDIfcEvent;
-class GDIfcSchedulingTime;
-class GDIfcEventTime;
-class GDIfcTypeProcess;
-class GDIfcEventType;
-class GDIfcExtendedProperties;
-class GDIfcExternalReferenceRelationship;
-class GDIfcExternalSpatialStructureElement;
-class GDIfcExternalSpatialElement;
-class GDIfcExternallyDefinedHatchStyle;
-class GDIfcExternallyDefinedSurfaceStyle;
-class GDIfcExternallyDefinedTextFont;
-class GDIfcExtrudedAreaSolid;
-class GDIfcExtrudedAreaSolidTapered;
-class GDIfcFaceBasedSurfaceModel;
-class GDIfcFaceBound;
-class GDIfcFaceOuterBound;
-class GDIfcFacetedBrep;
-class GDIfcFacetedBrepWithVoids;
-class GDIfcFacilityPartCommon;
-class GDIfcStructuralConnectionCondition;
-class GDIfcFailureConnectionCondition;
-class GDIfcFan;
-class GDIfcFanType;
-class GDIfcFastener;
-class GDIfcFastenerType;
-class GDIfcFeatureElementAddition;
-class GDIfcFillAreaStyle;
-class GDIfcFillAreaStyleHatching;
-class GDIfcFillAreaStyleTiles;
-class GDIfcFilter;
-class GDIfcFilterType;
-class GDIfcFireSuppressionTerminal;
-class GDIfcFireSuppressionTerminalType;
-class GDIfcFlowInstrument;
-class GDIfcFlowInstrumentType;
-class GDIfcFlowMeter;
-class GDIfcFlowMeterType;
-class GDIfcFooting;
-class GDIfcFootingType;
-class GDIfcFurnishingElement;
-class GDIfcFurnishingElementType;
-class GDIfcFurniture;
-class GDIfcFurnitureType;
-class GDIfcGeographicCRS;
-class GDIfcGeographicElement;
-class GDIfcGeographicElementType;
-class GDIfcGeometricSet;
-class GDIfcGeometricCurveSet;
-class GDIfcRepresentationContext;
-class GDIfcGeometricRepresentationContext;
-class GDIfcGeometricRepresentationSubContext;
-class GDIfcGeomodel;
-class GDIfcGeoslice;
-class GDIfcGeotechnicalStratum;
-class GDIfcGradientCurve;
-class GDIfcGrid;
-class GDIfcGridAxis;
-class GDIfcObjectPlacement;
-class GDIfcGridPlacement;
-class GDIfcHeatExchanger;
-class GDIfcHeatExchangerType;
-class GDIfcHumidifier;
-class GDIfcHumidifierType;
-class GDIfcIShapeProfileDef;
-class GDIfcImageTexture;
-class GDIfcImpactProtectionDevice;
-class GDIfcImpactProtectionDeviceType;
-class GDIfcIndexedColourMap;
-class GDIfcIndexedPolyCurve;
-class GDIfcTessellatedItem;
-class GDIfcIndexedPolygonalFace;
-class GDIfcIndexedPolygonalFaceWithVoids;
-class GDIfcTextureCoordinate;
-class GDIfcIndexedTextureMap;
-class GDIfcIndexedPolygonalTextureMap;
-class GDIfcIndexedTriangleTextureMap;
-class GDIfcInterceptor;
-class GDIfcInterceptorType;
-class GDIfcSurfaceCurve;
-class GDIfcIntersectionCurve;
-class GDIfcInventory;
-class GDIfcTimeSeries;
-class GDIfcIrregularTimeSeries;
-class GDIfcIrregularTimeSeriesValue;
-class GDIfcJunctionBox;
-class GDIfcJunctionBoxType;
-class GDIfcKerb;
-class GDIfcKerbType;
-class GDIfcLShapeProfileDef;
-class GDIfcLaborResource;
-class GDIfcLaborResourceType;
-class GDIfcLagTime;
-class GDIfcLamp;
-class GDIfcLampType;
-class GDIfcLibraryInformation;
-class GDIfcLibraryReference;
-class GDIfcLightDistributionData;
-class GDIfcLightFixture;
-class GDIfcLightFixtureType;
-class GDIfcLightIntensityDistribution;
-class GDIfcLightSource;
-class GDIfcLightSourceAmbient;
-class GDIfcLightSourceDirectional;
-class GDIfcLightSourceGoniometric;
-class GDIfcLightSourcePositional;
-class GDIfcLightSourceSpot;
-class GDIfcLine;
-class GDIfcLinearPlacement;
-class GDIfcLiquidTerminal;
-class GDIfcLiquidTerminalType;
-class GDIfcLocalPlacement;
-class GDIfcMapConversion;
-class GDIfcMapConversionScaled;
-class GDIfcMappedItem;
-class GDIfcMarineFacility;
-class GDIfcMarinePart;
-class GDIfcMaterialDefinition;
-class GDIfcMaterial;
-class GDIfcMaterialClassificationRelationship;
-class GDIfcMaterialConstituent;
-class GDIfcMaterialConstituentSet;
-class GDIfcProductRepresentation;
-class GDIfcMaterialDefinitionRepresentation;
-class GDIfcMaterialLayer;
-class GDIfcMaterialLayerSet;
-class GDIfcMaterialUsageDefinition;
-class GDIfcMaterialLayerSetUsage;
-class GDIfcMaterialLayerWithOffsets;
-class GDIfcMaterialList;
-class GDIfcMaterialProfile;
-class GDIfcMaterialProfileSet;
-class GDIfcMaterialProfileSetUsage;
-class GDIfcMaterialProfileSetUsageTapering;
-class GDIfcMaterialProfileWithOffsets;
-class GDIfcMaterialProperties;
-class GDIfcMaterialRelationship;
-class GDIfcMeasureWithUnit;
-class GDIfcMechanicalFastener;
-class GDIfcMechanicalFastenerType;
-class GDIfcMedicalDevice;
-class GDIfcMedicalDeviceType;
-class GDIfcMember;
-class GDIfcMemberType;
-class GDIfcMetric;
-class GDIfcMirroredProfileDef;
-class GDIfcMobileTelecommunicationsAppliance;
-class GDIfcMobileTelecommunicationsApplianceType;
-class GDIfcMonetaryUnit;
-class GDIfcMooringDevice;
-class GDIfcMooringDeviceType;
-class GDIfcMotorConnection;
-class GDIfcMotorConnectionType;
-class GDIfcNavigationElement;
-class GDIfcNavigationElementType;
-class GDIfcObjective;
-class GDIfcOccupant;
-class GDIfcOffsetCurve;
-class GDIfcOffsetCurve2D;
-class GDIfcOffsetCurve3D;
-class GDIfcOffsetCurveByDistances;
-class GDIfcOpenCrossProfileDef;
-class GDIfcOpenShell;
-class GDIfcOpeningElement;
-class GDIfcOrganization;
-class GDIfcOrganizationRelationship;
-class GDIfcOrientedEdge;
-class GDIfcOuterBoundaryCurve;
-class GDIfcOutlet;
-class GDIfcOutletType;
-class GDIfcOwnerHistory;
-class GDIfcPath;
-class GDIfcPavement;
-class GDIfcPavementType;
-class GDIfcPcurve;
-class GDIfcPerformanceHistory;
-class GDIfcPermeableCoveringProperties;
-class GDIfcPermit;
-class GDIfcPerson;
-class GDIfcPersonAndOrganization;
-class GDIfcPhysicalQuantity;
-class GDIfcPhysicalComplexQuantity;
-class GDIfcPhysicalSimpleQuantity;
-class GDIfcPile;
-class GDIfcPileType;
-class GDIfcPipeFitting;
-class GDIfcPipeFittingType;
-class GDIfcPipeSegment;
-class GDIfcPipeSegmentType;
-class GDIfcPixelTexture;
-class GDIfcPlanarExtent;
-class GDIfcPlanarBox;
-class GDIfcPlane;
-class GDIfcPlate;
-class GDIfcPlateType;
-class GDIfcPointByDistanceExpression;
-class GDIfcPointOnCurve;
-class GDIfcPointOnSurface;
-class GDIfcPolyLoop;
-class GDIfcPolygonalBoundedHalfSpace;
-class GDIfcTessellatedFaceSet;
-class GDIfcPolygonalFaceSet;
-class GDIfcPolyline;
-class GDIfcPolynomialCurve;
-class GDIfcPostalAddress;
-class GDIfcPreDefinedProperties;
-class GDIfcPreDefinedTextFont;
-class GDIfcPresentationLayerAssignment;
-class GDIfcPresentationLayerWithStyle;
-class GDIfcProcedure;
-class GDIfcProcedureType;
-class GDIfcProductDefinitionShape;
-class GDIfcProfileProperties;
-class GDIfcProject;
-class GDIfcProjectLibrary;
-class GDIfcProjectOrder;
-class GDIfcProjectedCRS;
-class GDIfcProjectionElement;
-class GDIfcSimpleProperty;
-class GDIfcPropertyBoundedValue;
-class GDIfcPropertyDependencyRelationship;
-class GDIfcPropertyEnumeratedValue;
-class GDIfcPropertyEnumeration;
-class GDIfcPropertyListValue;
-class GDIfcPropertyReferenceValue;
-class GDIfcPropertySet;
-class GDIfcPropertySetTemplate;
-class GDIfcPropertySingleValue;
-class GDIfcPropertyTableValue;
-class GDIfcProtectiveDevice;
-class GDIfcProtectiveDeviceTrippingUnit;
-class GDIfcProtectiveDeviceTrippingUnitType;
-class GDIfcProtectiveDeviceType;
-class GDIfcPump;
-class GDIfcPumpType;
-class GDIfcQuantityArea;
-class GDIfcQuantityCount;
-class GDIfcQuantityLength;
-class GDIfcQuantityNumber;
-class GDIfcQuantityTime;
-class GDIfcQuantityVolume;
-class GDIfcQuantityWeight;
-class GDIfcRail;
-class GDIfcRailType;
-class GDIfcRailing;
-class GDIfcRailingType;
-class GDIfcRailway;
-class GDIfcRailwayPart;
-class GDIfcRamp;
-class GDIfcRampFlight;
-class GDIfcRampFlightType;
-class GDIfcRampType;
-class GDIfcRationalBSplineCurveWithKnots;
-class GDIfcRationalBSplineSurfaceWithKnots;
-class GDIfcRectangleProfileDef;
-class GDIfcRectangleHollowProfileDef;
-class GDIfcRectangularPyramid;
-class GDIfcRectangularTrimmedSurface;
-class GDIfcRecurrencePattern;
-class GDIfcReference;
-class GDIfcReferent;
-class GDIfcRegularTimeSeries;
-class GDIfcReinforcedSoil;
-class GDIfcReinforcementBarProperties;
-class GDIfcReinforcementDefinitionProperties;
-class GDIfcReinforcingElement;
-class GDIfcReinforcingBar;
-class GDIfcReinforcingElementType;
-class GDIfcReinforcingBarType;
-class GDIfcReinforcingMesh;
-class GDIfcReinforcingMeshType;
-class GDIfcRelationship;
-class GDIfcRelDecomposes;
-class GDIfcRelAdheresToElement;
-class GDIfcRelAggregates;
-class GDIfcRelAssigns;
-class GDIfcRelAssignsToActor;
-class GDIfcRelAssignsToControl;
-class GDIfcRelAssignsToGroup;
-class GDIfcRelAssignsToGroupByFactor;
-class GDIfcRelAssignsToProcess;
-class GDIfcRelAssignsToProduct;
-class GDIfcRelAssignsToResource;
-class GDIfcRelAssociates;
-class GDIfcRelAssociatesApproval;
-class GDIfcRelAssociatesClassification;
-class GDIfcRelAssociatesConstraint;
-class GDIfcRelAssociatesDocument;
-class GDIfcRelAssociatesLibrary;
-class GDIfcRelAssociatesMaterial;
-class GDIfcRelAssociatesProfileDef;
-class GDIfcRelConnects;
-class GDIfcRelConnectsElements;
-class GDIfcRelConnectsPathElements;
-class GDIfcRelConnectsPortToElement;
-class GDIfcRelConnectsPorts;
-class GDIfcRelConnectsStructuralActivity;
-class GDIfcRelConnectsStructuralMember;
-class GDIfcRelConnectsWithEccentricity;
-class GDIfcRelConnectsWithRealizingElements;
-class GDIfcRelContainedInSpatialStructure;
-class GDIfcRelCoversBldgElements;
-class GDIfcRelCoversSpaces;
-class GDIfcRelDeclares;
-class GDIfcRelDefines;
-class GDIfcRelDefinesByObject;
-class GDIfcRelDefinesByProperties;
-class GDIfcRelDefinesByTemplate;
-class GDIfcRelDefinesByType;
-class GDIfcRelFillsElement;
-class GDIfcRelFlowControlElements;
-class GDIfcRelInterferesElements;
-class GDIfcRelNests;
-class GDIfcRelPositions;
-class GDIfcRelProjectsElement;
-class GDIfcRelReferencedInSpatialStructure;
-class GDIfcRelSequence;
-class GDIfcRelServicesBuildings;
-class GDIfcRelSpaceBoundary;
-class GDIfcRelSpaceBoundary1stLevel;
-class GDIfcRelSpaceBoundary2ndLevel;
-class GDIfcRelVoidsElement;
-class GDIfcReparametrisedCompositeCurveSegment;
-class GDIfcRepresentation;
-class GDIfcRepresentationMap;
-class GDIfcResourceApprovalRelationship;
-class GDIfcResourceConstraintRelationship;
-class GDIfcResourceTime;
-class GDIfcRevolvedAreaSolid;
-class GDIfcRevolvedAreaSolidTapered;
-class GDIfcRightCircularCone;
-class GDIfcRightCircularCylinder;
-class GDIfcRigidOperation;
-class GDIfcRoad;
-class GDIfcRoadPart;
-class GDIfcRoof;
-class GDIfcRoofType;
-class GDIfcRoundedRectangleProfileDef;
-class GDIfcSIUnit;
-class GDIfcSanitaryTerminal;
-class GDIfcSanitaryTerminalType;
-class GDIfcSeamCurve;
-class GDIfcSecondOrderPolynomialSpiral;
-class GDIfcSectionProperties;
-class GDIfcSectionReinforcementProperties;
-class GDIfcSectionedSolid;
-class GDIfcSectionedSolidHorizontal;
-class GDIfcSectionedSpine;
-class GDIfcSectionedSurface;
-class GDIfcSegmentedReferenceCurve;
-class GDIfcSensor;
-class GDIfcSensorType;
-class GDIfcSeventhOrderPolynomialSpiral;
-class GDIfcShadingDevice;
-class GDIfcShadingDeviceType;
-class GDIfcShapeAspect;
-class GDIfcShapeModel;
-class GDIfcShapeRepresentation;
-class GDIfcShellBasedSurfaceModel;
-class GDIfcSign;
-class GDIfcSignType;
-class GDIfcSignal;
-class GDIfcSignalType;
-class GDIfcSimplePropertyTemplate;
-class GDIfcSineSpiral;
-class GDIfcSite;
-class GDIfcSlab;
-class GDIfcSlabType;
-class GDIfcSlippageConnectionCondition;
-class GDIfcSolarDevice;
-class GDIfcSolarDeviceType;
-class GDIfcSpace;
-class GDIfcSpaceHeater;
-class GDIfcSpaceHeaterType;
-class GDIfcSpatialElementType;
-class GDIfcSpatialStructureElementType;
-class GDIfcSpaceType;
-class GDIfcSpatialZone;
-class GDIfcSpatialZoneType;
-class GDIfcSphere;
-class GDIfcSphericalSurface;
-class GDIfcStackTerminal;
-class GDIfcStackTerminalType;
-class GDIfcStair;
-class GDIfcStairFlight;
-class GDIfcStairFlightType;
-class GDIfcStairType;
-class GDIfcStructuralActivity;
-class GDIfcStructuralAction;
-class GDIfcStructuralAnalysisModel;
-class GDIfcStructuralItem;
-class GDIfcStructuralConnection;
-class GDIfcStructuralCurveAction;
-class GDIfcStructuralCurveConnection;
-class GDIfcStructuralMember;
-class GDIfcStructuralCurveMember;
-class GDIfcStructuralCurveMemberVarying;
-class GDIfcStructuralReaction;
-class GDIfcStructuralCurveReaction;
-class GDIfcStructuralLinearAction;
-class GDIfcStructuralLoad;
-class GDIfcStructuralLoadGroup;
-class GDIfcStructuralLoadCase;
-class GDIfcStructuralLoadConfiguration;
-class GDIfcStructuralLoadOrResult;
-class GDIfcStructuralLoadStatic;
-class GDIfcStructuralLoadLinearForce;
-class GDIfcStructuralLoadPlanarForce;
-class GDIfcStructuralLoadSingleDisplacement;
-class GDIfcStructuralLoadSingleDisplacementDistortion;
-class GDIfcStructuralLoadSingleForce;
-class GDIfcStructuralLoadSingleForceWarping;
-class GDIfcStructuralLoadTemperature;
-class GDIfcStructuralSurfaceAction;
-class GDIfcStructuralPlanarAction;
-class GDIfcStructuralPointAction;
-class GDIfcStructuralPointConnection;
-class GDIfcStructuralPointReaction;
-class GDIfcStructuralResultGroup;
-class GDIfcStructuralSurfaceConnection;
-class GDIfcStructuralSurfaceMember;
-class GDIfcStructuralSurfaceMemberVarying;
-class GDIfcStructuralSurfaceReaction;
-class GDIfcStyleModel;
-class GDIfcStyledItem;
-class GDIfcStyledRepresentation;
-class GDIfcSubContractResource;
-class GDIfcSubContractResourceType;
-class GDIfcSubedge;
-class GDIfcSurfaceCurveSweptAreaSolid;
-class GDIfcSurfaceFeature;
-class GDIfcSweptSurface;
-class GDIfcSurfaceOfLinearExtrusion;
-class GDIfcSurfaceOfRevolution;
-class GDIfcSurfaceReinforcementArea;
-class GDIfcSurfaceStyle;
-class GDIfcSurfaceStyleLighting;
-class GDIfcSurfaceStyleRefraction;
-class GDIfcSurfaceStyleShading;
-class GDIfcSurfaceStyleRendering;
-class GDIfcSurfaceStyleWithTextures;
-class GDIfcSweptDiskSolid;
-class GDIfcSweptDiskSolidPolygonal;
-class GDIfcSwitchingDevice;
-class GDIfcSwitchingDeviceType;
-class GDIfcSystemFurnitureElement;
-class GDIfcSystemFurnitureElementType;
-class GDIfcTShapeProfileDef;
-class GDIfcTable;
-class GDIfcTableColumn;
-class GDIfcTableRow;
-class GDIfcTank;
-class GDIfcTankType;
-class GDIfcTask;
-class GDIfcTaskTime;
-class GDIfcTaskTimeRecurring;
-class GDIfcTaskType;
-class GDIfcTelecomAddress;
-class GDIfcTendon;
-class GDIfcTendonAnchor;
-class GDIfcTendonAnchorType;
-class GDIfcTendonConduit;
-class GDIfcTendonConduitType;
-class GDIfcTendonType;
-class GDIfcTextLiteral;
-class GDIfcTextLiteralWithExtent;
-class GDIfcTextStyle;
-class GDIfcTextStyleFontModel;
-class GDIfcTextStyleForDefinedFont;
-class GDIfcTextStyleTextModel;
-class GDIfcTextureCoordinateGenerator;
-class GDIfcTextureCoordinateIndices;
-class GDIfcTextureCoordinateIndicesWithVoids;
-class GDIfcTextureMap;
-class GDIfcTextureVertex;
-class GDIfcTextureVertexList;
-class GDIfcThirdOrderPolynomialSpiral;
-class GDIfcTimePeriod;
-class GDIfcTimeSeriesValue;
-class GDIfcTopologyRepresentation;
-class GDIfcToroidalSurface;
-class GDIfcTrackElement;
-class GDIfcTrackElementType;
-class GDIfcTransformer;
-class GDIfcTransformerType;
-class GDIfcTransportationDevice;
-class GDIfcTransportElement;
-class GDIfcTransportationDeviceType;
-class GDIfcTransportElementType;
-class GDIfcTrapeziumProfileDef;
-class GDIfcTriangulatedFaceSet;
-class GDIfcTriangulatedIrregularNetwork;
-class GDIfcTrimmedCurve;
-class GDIfcTubeBundle;
-class GDIfcTubeBundleType;
-class GDIfcUShapeProfileDef;
-class GDIfcUnitAssignment;
-class GDIfcUnitaryControlElement;
-class GDIfcUnitaryControlElementType;
-class GDIfcUnitaryEquipment;
-class GDIfcUnitaryEquipmentType;
-class GDIfcValve;
-class GDIfcValveType;
-class GDIfcVector;
-class GDIfcVehicle;
-class GDIfcVehicleType;
-class GDIfcVertex;
-class GDIfcVertexLoop;
-class GDIfcVertexPoint;
-class GDIfcVibrationDamper;
-class GDIfcVibrationDamperType;
-class GDIfcVibrationIsolator;
-class GDIfcVibrationIsolatorType;
-class GDIfcVirtualElement;
-class GDIfcVirtualGridIntersection;
-class GDIfcVoidingFeature;
-class GDIfcWall;
-class GDIfcWallStandardCase;
-class GDIfcWallType;
-class GDIfcWasteTerminal;
-class GDIfcWasteTerminalType;
-class GDIfcWellKnownText;
-class GDIfcWindow;
-class GDIfcWindowLiningProperties;
-class GDIfcWindowPanelProperties;
-class GDIfcWindowType;
-class GDIfcWorkCalendar;
-class GDIfcWorkControl;
-class GDIfcWorkPlan;
-class GDIfcWorkSchedule;
-class GDIfcWorkTime;
-class GDIfcZShapeProfileDef;
-class GDIfcZone;
-
-
-class GDIfcRoot : public GDIFCEntityBase {
-    GDCLASS(GDIfcRoot, GDIFCEntityBase)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_global_id();
-    void set_global_id(godot::String v);
-    Ref<GDIFCEntityBase> get_owner_history();
-    void set_owner_history(Ref<GDIFCEntityBase> v);
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-};
-
-class GDIfcObjectDefinition : public GDIfcRoot {
-    GDCLASS(GDIfcObjectDefinition, GDIfcRoot)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcObject : public GDIfcObjectDefinition {
-    GDCLASS(GDIfcObject, GDIfcObjectDefinition)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_object_type();
-    void set_object_type(godot::String v);
-};
-
-class GDIfcControl : public GDIfcObject {
-    GDCLASS(GDIfcControl, GDIfcObject)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_identification();
-    void set_identification(godot::String v);
-};
-
-class GDIfcActionRequest : public GDIfcControl {
-    GDCLASS(GDIfcActionRequest, GDIfcControl)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    godot::String get_status();
-    void set_status(godot::String v);
-    godot::String get_long_description();
-    void set_long_description(godot::String v);
-};
-
-class GDIfcActor : public GDIfcObject {
-    GDCLASS(GDIfcActor, GDIfcObject)
-protected:
-    static void _bind_methods();
-public:
-    Ref<GDIFCEntityBase> get_the_actor();
-    void set_the_actor(Ref<GDIFCEntityBase> v);
-};
-
-class GDIfcActorRole : public GDIFCEntityBase {
-    GDCLASS(GDIfcActorRole, GDIFCEntityBase)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_role();
-    void set_role(godot::String v);
-    godot::String get_user_defined_role();
-    void set_user_defined_role(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-};
-
-class GDIfcProduct : public GDIfcObject {
-    GDCLASS(GDIfcProduct, GDIfcObject)
-protected:
-    static void _bind_methods();
-public:
-    Ref<GDIFCEntityBase> get_object_placement();
-    void set_object_placement(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_representation();
-    void set_representation(Ref<GDIFCEntityBase> v);
-};
-
-class GDIfcElement : public GDIfcProduct {
-    GDCLASS(GDIfcElement, GDIfcProduct)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_tag();
-    void set_tag(godot::String v);
-};
-
-class GDIfcDistributionElement : public GDIfcElement {
-    GDCLASS(GDIfcDistributionElement, GDIfcElement)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcDistributionControlElement : public GDIfcDistributionElement {
-    GDCLASS(GDIfcDistributionControlElement, GDIfcDistributionElement)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcActuator : public GDIfcDistributionControlElement {
-    GDCLASS(GDIfcActuator, GDIfcDistributionControlElement)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-};
-
-class GDIfcTypeObject : public GDIfcObjectDefinition {
-    GDCLASS(GDIfcTypeObject, GDIfcObjectDefinition)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_applicable_occurrence();
-    void set_applicable_occurrence(godot::String v);
-    godot::Array get_has_property_sets();
-    void set_has_property_sets(godot::Array v);
-};
-
-class GDIfcTypeProduct : public GDIfcTypeObject {
-    GDCLASS(GDIfcTypeProduct, GDIfcTypeObject)
-protected:
-    static void _bind_methods();
-public:
-    godot::Array get_representation_maps();
-    void set_representation_maps(godot::Array v);
-    godot::String get_tag();
-    void set_tag(godot::String v);
-};
-
-class GDIfcElementType : public GDIfcTypeProduct {
-    GDCLASS(GDIfcElementType, GDIfcTypeProduct)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_element_type();
-    void set_element_type(godot::String v);
-};
-
-class GDIfcDistributionElementType : public GDIfcElementType {
-    GDCLASS(GDIfcDistributionElementType, GDIfcElementType)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcDistributionControlElementType : public GDIfcDistributionElementType {
-    GDCLASS(GDIfcDistributionControlElementType, GDIfcDistributionElementType)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcActuatorType : public GDIfcDistributionControlElementType {
-    GDCLASS(GDIfcActuatorType, GDIfcDistributionControlElementType)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-};
-
-class GDIfcAddress : public GDIFCEntityBase {
-    GDCLASS(GDIfcAddress, GDIFCEntityBase)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_purpose();
-    void set_purpose(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    godot::String get_user_defined_purpose();
-    void set_user_defined_purpose(godot::String v);
-};
-
-class GDIfcRepresentationItem : public GDIFCEntityBase {
-    GDCLASS(GDIfcRepresentationItem, GDIFCEntityBase)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcGeometricRepresentationItem : public GDIfcRepresentationItem {
-    GDCLASS(GDIfcGeometricRepresentationItem, GDIfcRepresentationItem)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcSolidModel : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcSolidModel, GDIfcGeometricRepresentationItem)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcManifoldSolidBrep : public GDIfcSolidModel {
-    GDCLASS(GDIfcManifoldSolidBrep, GDIfcSolidModel)
-protected:
-    static void _bind_methods();
-public:
-    Ref<GDIFCEntityBase> get_outer();
-    void set_outer(Ref<GDIFCEntityBase> v);
-};
-
-class GDIfcAdvancedBrep : public GDIfcManifoldSolidBrep {
-    GDCLASS(GDIfcAdvancedBrep, GDIfcManifoldSolidBrep)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcAdvancedBrepWithVoids : public GDIfcAdvancedBrep {
-    GDCLASS(GDIfcAdvancedBrepWithVoids, GDIfcAdvancedBrep)
-protected:
-    static void _bind_methods();
-public:
-    godot::Array get_voids();
-    void set_voids(godot::Array v);
-};
-
-class GDIfcTopologicalRepresentationItem : public GDIfcRepresentationItem {
-    GDCLASS(GDIfcTopologicalRepresentationItem, GDIfcRepresentationItem)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcFace : public GDIfcTopologicalRepresentationItem {
-    GDCLASS(GDIfcFace, GDIfcTopologicalRepresentationItem)
-protected:
-    static void _bind_methods();
-public:
-    godot::Array get_bounds();
-    void set_bounds(godot::Array v);
-};
-
-class GDIfcFaceSurface : public GDIfcFace {
-    GDCLASS(GDIfcFaceSurface, GDIfcFace)
-protected:
-    static void _bind_methods();
-public:
-    Ref<GDIFCEntityBase> get_face_surface();
-    void set_face_surface(Ref<GDIFCEntityBase> v);
-    bool get_same_sense();
-    void set_same_sense(bool v);
-};
-
-class GDIfcAdvancedFace : public GDIfcFaceSurface {
-    GDCLASS(GDIfcAdvancedFace, GDIfcFaceSurface)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcDistributionFlowElement : public GDIfcDistributionElement {
-    GDCLASS(GDIfcDistributionFlowElement, GDIfcDistributionElement)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcFlowTerminal : public GDIfcDistributionFlowElement {
-    GDCLASS(GDIfcFlowTerminal, GDIfcDistributionFlowElement)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcAirTerminal : public GDIfcFlowTerminal {
-    GDCLASS(GDIfcAirTerminal, GDIfcFlowTerminal)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-};
-
-class GDIfcFlowController : public GDIfcDistributionFlowElement {
-    GDCLASS(GDIfcFlowController, GDIfcDistributionFlowElement)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcAirTerminalBox : public GDIfcFlowController {
-    GDCLASS(GDIfcAirTerminalBox, GDIfcFlowController)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-};
-
-class GDIfcDistributionFlowElementType : public GDIfcDistributionElementType {
-    GDCLASS(GDIfcDistributionFlowElementType, GDIfcDistributionElementType)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcFlowControllerType : public GDIfcDistributionFlowElementType {
-    GDCLASS(GDIfcFlowControllerType, GDIfcDistributionFlowElementType)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcAirTerminalBoxType : public GDIfcFlowControllerType {
-    GDCLASS(GDIfcAirTerminalBoxType, GDIfcFlowControllerType)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-};
-
-class GDIfcFlowTerminalType : public GDIfcDistributionFlowElementType {
-    GDCLASS(GDIfcFlowTerminalType, GDIfcDistributionFlowElementType)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcAirTerminalType : public GDIfcFlowTerminalType {
-    GDCLASS(GDIfcAirTerminalType, GDIfcFlowTerminalType)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-};
-
-class GDIfcEnergyConversionDevice : public GDIfcDistributionFlowElement {
-    GDCLASS(GDIfcEnergyConversionDevice, GDIfcDistributionFlowElement)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcAirToAirHeatRecovery : public GDIfcEnergyConversionDevice {
-    GDCLASS(GDIfcAirToAirHeatRecovery, GDIfcEnergyConversionDevice)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-};
-
-class GDIfcEnergyConversionDeviceType : public GDIfcDistributionFlowElementType {
-    GDCLASS(GDIfcEnergyConversionDeviceType, GDIfcDistributionFlowElementType)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcAirToAirHeatRecoveryType : public GDIfcEnergyConversionDeviceType {
-    GDCLASS(GDIfcAirToAirHeatRecoveryType, GDIfcEnergyConversionDeviceType)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-};
-
-class GDIfcAlarm : public GDIfcDistributionControlElement {
-    GDCLASS(GDIfcAlarm, GDIfcDistributionControlElement)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-};
-
-class GDIfcAlarmType : public GDIfcDistributionControlElementType {
-    GDCLASS(GDIfcAlarmType, GDIfcDistributionControlElementType)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-};
-
-class GDIfcPositioningElement : public GDIfcProduct {
-    GDCLASS(GDIfcPositioningElement, GDIfcProduct)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcLinearPositioningElement : public GDIfcPositioningElement {
-    GDCLASS(GDIfcLinearPositioningElement, GDIfcPositioningElement)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcAlignment : public GDIfcLinearPositioningElement {
-    GDCLASS(GDIfcAlignment, GDIfcLinearPositioningElement)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-};
-
-class GDIfcLinearElement : public GDIfcProduct {
-    GDCLASS(GDIfcLinearElement, GDIfcProduct)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcAlignmentCant : public GDIfcLinearElement {
-    GDCLASS(GDIfcAlignmentCant, GDIfcLinearElement)
-protected:
-    static void _bind_methods();
-public:
-    double get_rail_head_distance();
-    void set_rail_head_distance(double v);
-};
-
-class GDIfcAlignmentParameterSegment : public GDIFCEntityBase {
-    GDCLASS(GDIfcAlignmentParameterSegment, GDIFCEntityBase)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_start_tag();
-    void set_start_tag(godot::String v);
-    godot::String get_end_tag();
-    void set_end_tag(godot::String v);
-};
-
-class GDIfcAlignmentCantSegment : public GDIfcAlignmentParameterSegment {
-    GDCLASS(GDIfcAlignmentCantSegment, GDIfcAlignmentParameterSegment)
-protected:
-    static void _bind_methods();
-public:
-    double get_start_dist_along();
-    void set_start_dist_along(double v);
-    double get_horizontal_length();
-    void set_horizontal_length(double v);
-    double get_start_cant_left();
-    void set_start_cant_left(double v);
-    double get_end_cant_left();
-    void set_end_cant_left(double v);
-    double get_start_cant_right();
-    void set_start_cant_right(double v);
-    double get_end_cant_right();
-    void set_end_cant_right(double v);
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-};
-
-class GDIfcAlignmentHorizontal : public GDIfcLinearElement {
-    GDCLASS(GDIfcAlignmentHorizontal, GDIfcLinearElement)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcAlignmentHorizontalSegment : public GDIfcAlignmentParameterSegment {
-    GDCLASS(GDIfcAlignmentHorizontalSegment, GDIfcAlignmentParameterSegment)
-protected:
-    static void _bind_methods();
-public:
-    Ref<GDIFCEntityBase> get_start_point();
-    void set_start_point(Ref<GDIFCEntityBase> v);
-    double get_start_direction();
-    void set_start_direction(double v);
-    double get_start_radius_of_curvature();
-    void set_start_radius_of_curvature(double v);
-    double get_end_radius_of_curvature();
-    void set_end_radius_of_curvature(double v);
-    double get_segment_length();
-    void set_segment_length(double v);
-    double get_gravity_center_line_height();
-    void set_gravity_center_line_height(double v);
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-};
-
-class GDIfcAlignmentSegment : public GDIfcLinearElement {
-    GDCLASS(GDIfcAlignmentSegment, GDIfcLinearElement)
-protected:
-    static void _bind_methods();
-public:
-    Ref<GDIFCEntityBase> get_design_parameters();
-    void set_design_parameters(Ref<GDIFCEntityBase> v);
-};
-
-class GDIfcAlignmentVertical : public GDIfcLinearElement {
-    GDCLASS(GDIfcAlignmentVertical, GDIfcLinearElement)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcAlignmentVerticalSegment : public GDIfcAlignmentParameterSegment {
-    GDCLASS(GDIfcAlignmentVerticalSegment, GDIfcAlignmentParameterSegment)
-protected:
-    static void _bind_methods();
-public:
-    double get_start_dist_along();
-    void set_start_dist_along(double v);
-    double get_horizontal_length();
-    void set_horizontal_length(double v);
-    double get_start_height();
-    void set_start_height(double v);
-    double get_start_gradient();
-    void set_start_gradient(double v);
-    double get_end_gradient();
-    void set_end_gradient(double v);
-    double get_radius_of_curvature();
-    void set_radius_of_curvature(double v);
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-};
-
-class GDIfcAnnotation : public GDIfcProduct {
-    GDCLASS(GDIfcAnnotation, GDIfcProduct)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-};
-
-class GDIfcAnnotationFillArea : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcAnnotationFillArea, GDIfcGeometricRepresentationItem)
-protected:
-    static void _bind_methods();
-public:
-    Ref<GDIFCEntityBase> get_outer_boundary();
-    void set_outer_boundary(Ref<GDIFCEntityBase> v);
-    godot::Array get_inner_boundaries();
-    void set_inner_boundaries(godot::Array v);
-};
-
-class GDIfcApplication : public GDIFCEntityBase {
-    GDCLASS(GDIfcApplication, GDIFCEntityBase)
-protected:
-    static void _bind_methods();
-public:
-    Ref<GDIFCEntityBase> get_application_developer();
-    void set_application_developer(Ref<GDIFCEntityBase> v);
-    godot::String get_version();
-    void set_version(godot::String v);
-    godot::String get_application_full_name();
-    void set_application_full_name(godot::String v);
-    godot::String get_application_identifier();
-    void set_application_identifier(godot::String v);
-};
-
-class GDIfcAppliedValue : public GDIFCEntityBase {
-    GDCLASS(GDIfcAppliedValue, GDIFCEntityBase)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    Ref<GDIFCEntityBase> get_applied_value();
-    void set_applied_value(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_unit_basis();
-    void set_unit_basis(Ref<GDIFCEntityBase> v);
-    godot::String get_applicable_date();
-    void set_applicable_date(godot::String v);
-    godot::String get_fixed_until_date();
-    void set_fixed_until_date(godot::String v);
-    godot::String get_category();
-    void set_category(godot::String v);
-    godot::String get_condition();
-    void set_condition(godot::String v);
-    godot::String get_arithmetic_operator();
-    void set_arithmetic_operator(godot::String v);
-    godot::Array get_components();
-    void set_components(godot::Array v);
-};
-
-class GDIfcApproval : public GDIFCEntityBase {
-    GDCLASS(GDIfcApproval, GDIFCEntityBase)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_identifier();
-    void set_identifier(godot::String v);
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    godot::String get_time_of_approval();
-    void set_time_of_approval(godot::String v);
-    godot::String get_status();
-    void set_status(godot::String v);
-    godot::String get_level();
-    void set_level(godot::String v);
-    godot::String get_qualifier();
-    void set_qualifier(godot::String v);
-    Ref<GDIFCEntityBase> get_requesting_approval();
-    void set_requesting_approval(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_giving_approval();
-    void set_giving_approval(Ref<GDIFCEntityBase> v);
-};
-
-class GDIfcResourceLevelRelationship : public GDIFCEntityBase {
-    GDCLASS(GDIfcResourceLevelRelationship, GDIFCEntityBase)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-};
-
-class GDIfcApprovalRelationship : public GDIfcResourceLevelRelationship {
-    GDCLASS(GDIfcApprovalRelationship, GDIfcResourceLevelRelationship)
-protected:
-    static void _bind_methods();
-public:
-    Ref<GDIFCEntityBase> get_relating_approval();
-    void set_relating_approval(Ref<GDIFCEntityBase> v);
-    godot::Array get_related_approvals();
-    void set_related_approvals(godot::Array v);
-};
-
-class GDIfcProfileDef : public GDIFCEntityBase {
-    GDCLASS(GDIfcProfileDef, GDIFCEntityBase)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_profile_type();
-    void set_profile_type(godot::String v);
-    godot::String get_profile_name();
-    void set_profile_name(godot::String v);
-};
-
-class GDIfcArbitraryClosedProfileDef : public GDIfcProfileDef {
-    GDCLASS(GDIfcArbitraryClosedProfileDef, GDIfcProfileDef)
-protected:
-    static void _bind_methods();
-public:
-    Ref<GDIFCEntityBase> get_outer_curve();
-    void set_outer_curve(Ref<GDIFCEntityBase> v);
-};
-
-class GDIfcArbitraryOpenProfileDef : public GDIfcProfileDef {
-    GDCLASS(GDIfcArbitraryOpenProfileDef, GDIfcProfileDef)
-protected:
-    static void _bind_methods();
-public:
-    Ref<GDIFCEntityBase> get_curve();
-    void set_curve(Ref<GDIFCEntityBase> v);
-};
-
-class GDIfcArbitraryProfileDefWithVoids : public GDIfcArbitraryClosedProfileDef {
-    GDCLASS(GDIfcArbitraryProfileDefWithVoids, GDIfcArbitraryClosedProfileDef)
-protected:
-    static void _bind_methods();
-public:
-    godot::Array get_inner_curves();
-    void set_inner_curves(godot::Array v);
-};
-
-class GDIfcGroup : public GDIfcObject {
-    GDCLASS(GDIfcGroup, GDIfcObject)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcAsset : public GDIfcGroup {
-    GDCLASS(GDIfcAsset, GDIfcGroup)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_identification();
-    void set_identification(godot::String v);
-    Ref<GDIFCEntityBase> get_original_value();
-    void set_original_value(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_current_value();
-    void set_current_value(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_total_replacement_cost();
-    void set_total_replacement_cost(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_owner();
-    void set_owner(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_user();
-    void set_user(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_responsible_person();
-    void set_responsible_person(Ref<GDIFCEntityBase> v);
-    godot::String get_incorporation_date();
-    void set_incorporation_date(godot::String v);
-    Ref<GDIFCEntityBase> get_depreciated_value();
-    void set_depreciated_value(Ref<GDIFCEntityBase> v);
-};
-
-class GDIfcParameterizedProfileDef : public GDIfcProfileDef {
-    GDCLASS(GDIfcParameterizedProfileDef, GDIfcProfileDef)
-protected:
-    static void _bind_methods();
-public:
-    Ref<GDIFCEntityBase> get_position();
-    void set_position(Ref<GDIFCEntityBase> v);
-};
-
-class GDIfcAsymmetricIShapeProfileDef : public GDIfcParameterizedProfileDef {
-    GDCLASS(GDIfcAsymmetricIShapeProfileDef, GDIfcParameterizedProfileDef)
-protected:
-    static void _bind_methods();
-public:
-    double get_bottom_flange_width();
-    void set_bottom_flange_width(double v);
-    double get_overall_depth();
-    void set_overall_depth(double v);
-    double get_web_thickness();
-    void set_web_thickness(double v);
-    double get_bottom_flange_thickness();
-    void set_bottom_flange_thickness(double v);
-    double get_bottom_flange_fillet_radius();
-    void set_bottom_flange_fillet_radius(double v);
-    double get_top_flange_width();
-    void set_top_flange_width(double v);
-    double get_top_flange_thickness();
-    void set_top_flange_thickness(double v);
-    double get_top_flange_fillet_radius();
-    void set_top_flange_fillet_radius(double v);
-    double get_bottom_flange_edge_radius();
-    void set_bottom_flange_edge_radius(double v);
-    double get_bottom_flange_slope();
-    void set_bottom_flange_slope(double v);
-    double get_top_flange_edge_radius();
-    void set_top_flange_edge_radius(double v);
-    double get_top_flange_slope();
-    void set_top_flange_slope(double v);
-};
-
-class GDIfcAudioVisualAppliance : public GDIfcFlowTerminal {
-    GDCLASS(GDIfcAudioVisualAppliance, GDIfcFlowTerminal)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-};
-
-class GDIfcAudioVisualApplianceType : public GDIfcFlowTerminalType {
-    GDCLASS(GDIfcAudioVisualApplianceType, GDIfcFlowTerminalType)
-protected:
-    static void _bind_methods();
-public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-};
-
-class GDIfcPlacement : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcPlacement, GDIfcGeometricRepresentationItem)
-protected:
-    static void _bind_methods();
-public:
-    Ref<GDIFCEntityBase> get_location();
-    void set_location(Ref<GDIFCEntityBase> v);
-};
-
-class GDIfcAxis1Placement : public GDIfcPlacement {
-    GDCLASS(GDIfcAxis1Placement, GDIfcPlacement)
-protected:
-    static void _bind_methods();
-public:
-    Ref<GDIFCEntityBase> get_axis();
-    void set_axis(Ref<GDIFCEntityBase> v);
-};
-
-class GDIfcAxis2Placement2D : public GDIfcPlacement {
-    GDCLASS(GDIfcAxis2Placement2D, GDIfcPlacement)
-protected:
-    static void _bind_methods();
-public:
-    Ref<GDIFCEntityBase> get_ref_direction();
-    void set_ref_direction(Ref<GDIFCEntityBase> v);
-};
-
-class GDIfcAxis2Placement3D : public GDIfcPlacement {
-    GDCLASS(GDIfcAxis2Placement3D, GDIfcPlacement)
-protected:
-    static void _bind_methods();
-public:
-    Ref<GDIFCEntityBase> get_axis();
-    void set_axis(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_ref_direction();
-    void set_ref_direction(Ref<GDIFCEntityBase> v);
-};
-
-class GDIfcAxis2PlacementLinear : public GDIfcPlacement {
-    GDCLASS(GDIfcAxis2PlacementLinear, GDIfcPlacement)
-protected:
-    static void _bind_methods();
-public:
-    Ref<GDIFCEntityBase> get_axis();
-    void set_axis(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_ref_direction();
-    void set_ref_direction(Ref<GDIFCEntityBase> v);
-};
-
-class GDIfcCurve : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcCurve, GDIfcGeometricRepresentationItem)
-protected:
-    static void _bind_methods();
-};
-
-class GDIfcBoundedCurve : public GDIfcCurve {
-    GDCLASS(GDIfcBoundedCurve, GDIfcCurve)
-protected:
-    static void _bind_methods();
-};
+class IfcRoot;
+class IfcObjectDefinition;
+class IfcObject;
+class IfcControl;
+class IfcActionRequest;
+class IfcActor;
+class IfcActorRole;
+class IfcProduct;
+class IfcElement;
+class IfcDistributionElement;
+class IfcDistributionControlElement;
+class IfcActuator;
+class IfcTypeObject;
+class IfcTypeProduct;
+class IfcElementType;
+class IfcDistributionElementType;
+class IfcDistributionControlElementType;
+class IfcActuatorType;
+class IfcAddress;
+class IfcRepresentationItem;
+class IfcGeometricRepresentationItem;
+class IfcSolidModel;
+class IfcManifoldSolidBrep;
+class IfcAdvancedBrep;
+class IfcAdvancedBrepWithVoids;
+class IfcTopologicalRepresentationItem;
+class IfcFace;
+class IfcFaceSurface;
+class IfcAdvancedFace;
+class IfcDistributionFlowElement;
+class IfcFlowTerminal;
+class IfcAirTerminal;
+class IfcFlowController;
+class IfcAirTerminalBox;
+class IfcDistributionFlowElementType;
+class IfcFlowControllerType;
+class IfcAirTerminalBoxType;
+class IfcFlowTerminalType;
+class IfcAirTerminalType;
+class IfcEnergyConversionDevice;
+class IfcAirToAirHeatRecovery;
+class IfcEnergyConversionDeviceType;
+class IfcAirToAirHeatRecoveryType;
+class IfcAlarm;
+class IfcAlarmType;
+class IfcPositioningElement;
+class IfcLinearPositioningElement;
+class IfcAlignment;
+class IfcLinearElement;
+class IfcAlignmentCant;
+class IfcAlignmentParameterSegment;
+class IfcAlignmentCantSegment;
+class IfcAlignmentHorizontal;
+class IfcAlignmentHorizontalSegment;
+class IfcAlignmentSegment;
+class IfcAlignmentVertical;
+class IfcAlignmentVerticalSegment;
+class IfcAnnotation;
+class IfcAnnotationFillArea;
+class IfcApplication;
+class IfcAppliedValue;
+class IfcApproval;
+class IfcResourceLevelRelationship;
+class IfcApprovalRelationship;
+class IfcProfileDef;
+class IfcArbitraryClosedProfileDef;
+class IfcArbitraryOpenProfileDef;
+class IfcArbitraryProfileDefWithVoids;
+class IfcGroup;
+class IfcAsset;
+class IfcParameterizedProfileDef;
+class IfcAsymmetricIShapeProfileDef;
+class IfcAudioVisualAppliance;
+class IfcAudioVisualApplianceType;
+class IfcPlacement;
+class IfcAxis1Placement;
+class IfcAxis2Placement2D;
+class IfcAxis2Placement3D;
+class IfcAxis2PlacementLinear;
+class IfcCurve;
+class IfcBoundedCurve;
+class IfcBSplineCurve;
+class IfcBSplineCurveWithKnots;
+class IfcSurface;
+class IfcBoundedSurface;
+class IfcBSplineSurface;
+class IfcBSplineSurfaceWithKnots;
+class IfcBuiltElement;
+class IfcBeam;
+class IfcBuiltElementType;
+class IfcBeamType;
+class IfcBearing;
+class IfcBearingType;
+class IfcPresentationItem;
+class IfcSurfaceTexture;
+class IfcBlobTexture;
+class IfcCsgPrimitive3D;
+class IfcBlock;
+class IfcBoiler;
+class IfcBoilerType;
+class IfcBooleanResult;
+class IfcBooleanClippingResult;
+class IfcGeotechnicalElement;
+class IfcGeotechnicalAssembly;
+class IfcBorehole;
+class IfcBoundaryCondition;
+class IfcCompositeCurve;
+class IfcCompositeCurveOnSurface;
+class IfcBoundaryCurve;
+class IfcBoundaryEdgeCondition;
+class IfcBoundaryFaceCondition;
+class IfcBoundaryNodeCondition;
+class IfcBoundaryNodeConditionWarping;
+class IfcBoundingBox;
+class IfcHalfSpaceSolid;
+class IfcBoxedHalfSpace;
+class IfcSpatialElement;
+class IfcSpatialStructureElement;
+class IfcFacility;
+class IfcBridge;
+class IfcFacilityPart;
+class IfcBridgePart;
+class IfcBuilding;
+class IfcElementComponent;
+class IfcBuildingElementPart;
+class IfcElementComponentType;
+class IfcBuildingElementPartType;
+class IfcBuildingElementProxy;
+class IfcBuildingElementProxyType;
+class IfcBuildingStorey;
+class IfcSystem;
+class IfcBuildingSystem;
+class IfcBuiltSystem;
+class IfcBurner;
+class IfcBurnerType;
+class IfcCShapeProfileDef;
+class IfcFlowFitting;
+class IfcCableCarrierFitting;
+class IfcFlowFittingType;
+class IfcCableCarrierFittingType;
+class IfcFlowSegment;
+class IfcCableCarrierSegment;
+class IfcFlowSegmentType;
+class IfcCableCarrierSegmentType;
+class IfcCableFitting;
+class IfcCableFittingType;
+class IfcCableSegment;
+class IfcCableSegmentType;
+class IfcDeepFoundation;
+class IfcCaissonFoundation;
+class IfcDeepFoundationType;
+class IfcCaissonFoundationType;
+class IfcPoint;
+class IfcCartesianPoint;
+class IfcCartesianPointList;
+class IfcCartesianPointList2D;
+class IfcCartesianPointList3D;
+class IfcCartesianTransformationOperator;
+class IfcCartesianTransformationOperator2D;
+class IfcCartesianTransformationOperator2DnonUniform;
+class IfcCartesianTransformationOperator3D;
+class IfcCartesianTransformationOperator3DnonUniform;
+class IfcCenterLineProfileDef;
+class IfcChiller;
+class IfcChillerType;
+class IfcChimney;
+class IfcChimneyType;
+class IfcConic;
+class IfcCircle;
+class IfcCircleProfileDef;
+class IfcCircleHollowProfileDef;
+class IfcCivilElement;
+class IfcCivilElementType;
+class IfcExternalInformation;
+class IfcClassification;
+class IfcExternalReference;
+class IfcClassificationReference;
+class IfcConnectedFaceSet;
+class IfcClosedShell;
+class IfcSpiral;
+class IfcClothoid;
+class IfcCoil;
+class IfcCoilType;
+class IfcColourSpecification;
+class IfcColourRgb;
+class IfcColourRgbList;
+class IfcColumn;
+class IfcColumnType;
+class IfcCommunicationsAppliance;
+class IfcCommunicationsApplianceType;
+class IfcPropertyAbstraction;
+class IfcProperty;
+class IfcComplexProperty;
+class IfcPropertyDefinition;
+class IfcPropertyTemplateDefinition;
+class IfcPropertyTemplate;
+class IfcComplexPropertyTemplate;
+class IfcSegment;
+class IfcCompositeCurveSegment;
+class IfcCompositeProfileDef;
+class IfcFlowMovingDevice;
+class IfcCompressor;
+class IfcFlowMovingDeviceType;
+class IfcCompressorType;
+class IfcCondenser;
+class IfcCondenserType;
+class IfcConnectionGeometry;
+class IfcConnectionCurveGeometry;
+class IfcConnectionPointGeometry;
+class IfcConnectionPointEccentricity;
+class IfcConnectionSurfaceGeometry;
+class IfcConnectionVolumeGeometry;
+class IfcConstraint;
+class IfcResource;
+class IfcConstructionResource;
+class IfcConstructionEquipmentResource;
+class IfcTypeResource;
+class IfcConstructionResourceType;
+class IfcConstructionEquipmentResourceType;
+class IfcConstructionMaterialResource;
+class IfcConstructionMaterialResourceType;
+class IfcConstructionProductResource;
+class IfcConstructionProductResourceType;
+class IfcContext;
+class IfcNamedUnit;
+class IfcContextDependentUnit;
+class IfcController;
+class IfcControllerType;
+class IfcConversionBasedUnit;
+class IfcConversionBasedUnitWithOffset;
+class IfcConveyorSegment;
+class IfcConveyorSegmentType;
+class IfcCooledBeam;
+class IfcCooledBeamType;
+class IfcCoolingTower;
+class IfcCoolingTowerType;
+class IfcCoordinateOperation;
+class IfcCoordinateReferenceSystem;
+class IfcCosineSpiral;
+class IfcCostItem;
+class IfcCostSchedule;
+class IfcCostValue;
+class IfcCourse;
+class IfcCourseType;
+class IfcCovering;
+class IfcCoveringType;
+class IfcCrewResource;
+class IfcCrewResourceType;
+class IfcCsgSolid;
+class IfcCurrencyRelationship;
+class IfcCurtainWall;
+class IfcCurtainWallType;
+class IfcCurveBoundedPlane;
+class IfcCurveBoundedSurface;
+class IfcCurveSegment;
+class IfcPresentationStyle;
+class IfcCurveStyle;
+class IfcCurveStyleFont;
+class IfcCurveStyleFontAndScaling;
+class IfcCurveStyleFontPattern;
+class IfcElementarySurface;
+class IfcCylindricalSurface;
+class IfcDamper;
+class IfcDamperType;
+class IfcDerivedProfileDef;
+class IfcDerivedUnit;
+class IfcDerivedUnitElement;
+class IfcDimensionalExponents;
+class IfcDirection;
+class IfcSweptAreaSolid;
+class IfcDirectrixCurveSweptAreaSolid;
+class IfcFixedReferenceSweptAreaSolid;
+class IfcDirectrixDerivedReferenceSweptAreaSolid;
+class IfcDiscreteAccessory;
+class IfcDiscreteAccessoryType;
+class IfcDistributionBoard;
+class IfcDistributionBoardType;
+class IfcDistributionChamberElement;
+class IfcDistributionChamberElementType;
+class IfcDistributionSystem;
+class IfcDistributionCircuit;
+class IfcPort;
+class IfcDistributionPort;
+class IfcDocumentInformation;
+class IfcDocumentInformationRelationship;
+class IfcDocumentReference;
+class IfcDoor;
+class IfcPropertySetDefinition;
+class IfcPreDefinedPropertySet;
+class IfcDoorLiningProperties;
+class IfcDoorPanelProperties;
+class IfcDoorType;
+class IfcPreDefinedItem;
+class IfcPreDefinedColour;
+class IfcDraughtingPreDefinedColour;
+class IfcPreDefinedCurveFont;
+class IfcDraughtingPreDefinedCurveFont;
+class IfcDuctFitting;
+class IfcDuctFittingType;
+class IfcDuctSegment;
+class IfcDuctSegmentType;
+class IfcFlowTreatmentDevice;
+class IfcDuctSilencer;
+class IfcFlowTreatmentDeviceType;
+class IfcDuctSilencerType;
+class IfcFeatureElement;
+class IfcFeatureElementSubtraction;
+class IfcEarthworksCut;
+class IfcEarthworksElement;
+class IfcEarthworksFill;
+class IfcEdge;
+class IfcEdgeCurve;
+class IfcLoop;
+class IfcEdgeLoop;
+class IfcElectricAppliance;
+class IfcElectricApplianceType;
+class IfcElectricDistributionBoard;
+class IfcElectricDistributionBoardType;
+class IfcFlowStorageDevice;
+class IfcElectricFlowStorageDevice;
+class IfcFlowStorageDeviceType;
+class IfcElectricFlowStorageDeviceType;
+class IfcElectricFlowTreatmentDevice;
+class IfcElectricFlowTreatmentDeviceType;
+class IfcElectricGenerator;
+class IfcElectricGeneratorType;
+class IfcElectricMotor;
+class IfcElectricMotorType;
+class IfcElectricTimeControl;
+class IfcElectricTimeControlType;
+class IfcElementAssembly;
+class IfcElementAssemblyType;
+class IfcQuantitySet;
+class IfcElementQuantity;
+class IfcEllipse;
+class IfcEllipseProfileDef;
+class IfcEngine;
+class IfcEngineType;
+class IfcEvaporativeCooler;
+class IfcEvaporativeCoolerType;
+class IfcEvaporator;
+class IfcEvaporatorType;
+class IfcProcess;
+class IfcEvent;
+class IfcSchedulingTime;
+class IfcEventTime;
+class IfcTypeProcess;
+class IfcEventType;
+class IfcExtendedProperties;
+class IfcExternalReferenceRelationship;
+class IfcExternalSpatialStructureElement;
+class IfcExternalSpatialElement;
+class IfcExternallyDefinedHatchStyle;
+class IfcExternallyDefinedSurfaceStyle;
+class IfcExternallyDefinedTextFont;
+class IfcExtrudedAreaSolid;
+class IfcExtrudedAreaSolidTapered;
+class IfcFaceBasedSurfaceModel;
+class IfcFaceBound;
+class IfcFaceOuterBound;
+class IfcFacetedBrep;
+class IfcFacetedBrepWithVoids;
+class IfcFacilityPartCommon;
+class IfcStructuralConnectionCondition;
+class IfcFailureConnectionCondition;
+class IfcFan;
+class IfcFanType;
+class IfcFastener;
+class IfcFastenerType;
+class IfcFeatureElementAddition;
+class IfcFillAreaStyle;
+class IfcFillAreaStyleHatching;
+class IfcFillAreaStyleTiles;
+class IfcFilter;
+class IfcFilterType;
+class IfcFireSuppressionTerminal;
+class IfcFireSuppressionTerminalType;
+class IfcFlowInstrument;
+class IfcFlowInstrumentType;
+class IfcFlowMeter;
+class IfcFlowMeterType;
+class IfcFooting;
+class IfcFootingType;
+class IfcFurnishingElement;
+class IfcFurnishingElementType;
+class IfcFurniture;
+class IfcFurnitureType;
+class IfcGeographicCRS;
+class IfcGeographicElement;
+class IfcGeographicElementType;
+class IfcGeometricSet;
+class IfcGeometricCurveSet;
+class IfcRepresentationContext;
+class IfcGeometricRepresentationContext;
+class IfcGeometricRepresentationSubContext;
+class IfcGeomodel;
+class IfcGeoslice;
+class IfcGeotechnicalStratum;
+class IfcGradientCurve;
+class IfcGrid;
+class IfcGridAxis;
+class IfcObjectPlacement;
+class IfcGridPlacement;
+class IfcHeatExchanger;
+class IfcHeatExchangerType;
+class IfcHumidifier;
+class IfcHumidifierType;
+class IfcIShapeProfileDef;
+class IfcImageTexture;
+class IfcImpactProtectionDevice;
+class IfcImpactProtectionDeviceType;
+class IfcIndexedColourMap;
+class IfcIndexedPolyCurve;
+class IfcTessellatedItem;
+class IfcIndexedPolygonalFace;
+class IfcIndexedPolygonalFaceWithVoids;
+class IfcTextureCoordinate;
+class IfcIndexedTextureMap;
+class IfcIndexedPolygonalTextureMap;
+class IfcIndexedTriangleTextureMap;
+class IfcInterceptor;
+class IfcInterceptorType;
+class IfcSurfaceCurve;
+class IfcIntersectionCurve;
+class IfcInventory;
+class IfcTimeSeries;
+class IfcIrregularTimeSeries;
+class IfcIrregularTimeSeriesValue;
+class IfcJunctionBox;
+class IfcJunctionBoxType;
+class IfcKerb;
+class IfcKerbType;
+class IfcLShapeProfileDef;
+class IfcLaborResource;
+class IfcLaborResourceType;
+class IfcLagTime;
+class IfcLamp;
+class IfcLampType;
+class IfcLibraryInformation;
+class IfcLibraryReference;
+class IfcLightDistributionData;
+class IfcLightFixture;
+class IfcLightFixtureType;
+class IfcLightIntensityDistribution;
+class IfcLightSource;
+class IfcLightSourceAmbient;
+class IfcLightSourceDirectional;
+class IfcLightSourceGoniometric;
+class IfcLightSourcePositional;
+class IfcLightSourceSpot;
+class IfcLine;
+class IfcLinearPlacement;
+class IfcLiquidTerminal;
+class IfcLiquidTerminalType;
+class IfcLocalPlacement;
+class IfcMapConversion;
+class IfcMapConversionScaled;
+class IfcMappedItem;
+class IfcMarineFacility;
+class IfcMarinePart;
+class IfcMaterialDefinition;
+class IfcMaterial;
+class IfcMaterialClassificationRelationship;
+class IfcMaterialConstituent;
+class IfcMaterialConstituentSet;
+class IfcProductRepresentation;
+class IfcMaterialDefinitionRepresentation;
+class IfcMaterialLayer;
+class IfcMaterialLayerSet;
+class IfcMaterialUsageDefinition;
+class IfcMaterialLayerSetUsage;
+class IfcMaterialLayerWithOffsets;
+class IfcMaterialList;
+class IfcMaterialProfile;
+class IfcMaterialProfileSet;
+class IfcMaterialProfileSetUsage;
+class IfcMaterialProfileSetUsageTapering;
+class IfcMaterialProfileWithOffsets;
+class IfcMaterialProperties;
+class IfcMaterialRelationship;
+class IfcMeasureWithUnit;
+class IfcMechanicalFastener;
+class IfcMechanicalFastenerType;
+class IfcMedicalDevice;
+class IfcMedicalDeviceType;
+class IfcMember;
+class IfcMemberType;
+class IfcMetric;
+class IfcMirroredProfileDef;
+class IfcMobileTelecommunicationsAppliance;
+class IfcMobileTelecommunicationsApplianceType;
+class IfcMonetaryUnit;
+class IfcMooringDevice;
+class IfcMooringDeviceType;
+class IfcMotorConnection;
+class IfcMotorConnectionType;
+class IfcNavigationElement;
+class IfcNavigationElementType;
+class IfcObjective;
+class IfcOccupant;
+class IfcOffsetCurve;
+class IfcOffsetCurve2D;
+class IfcOffsetCurve3D;
+class IfcOffsetCurveByDistances;
+class IfcOpenCrossProfileDef;
+class IfcOpenShell;
+class IfcOpeningElement;
+class IfcOrganization;
+class IfcOrganizationRelationship;
+class IfcOrientedEdge;
+class IfcOuterBoundaryCurve;
+class IfcOutlet;
+class IfcOutletType;
+class IfcOwnerHistory;
+class IfcPath;
+class IfcPavement;
+class IfcPavementType;
+class IfcPcurve;
+class IfcPerformanceHistory;
+class IfcPermeableCoveringProperties;
+class IfcPermit;
+class IfcPerson;
+class IfcPersonAndOrganization;
+class IfcPhysicalQuantity;
+class IfcPhysicalComplexQuantity;
+class IfcPhysicalSimpleQuantity;
+class IfcPile;
+class IfcPileType;
+class IfcPipeFitting;
+class IfcPipeFittingType;
+class IfcPipeSegment;
+class IfcPipeSegmentType;
+class IfcPixelTexture;
+class IfcPlanarExtent;
+class IfcPlanarBox;
+class IfcPlane;
+class IfcPlate;
+class IfcPlateType;
+class IfcPointByDistanceExpression;
+class IfcPointOnCurve;
+class IfcPointOnSurface;
+class IfcPolyLoop;
+class IfcPolygonalBoundedHalfSpace;
+class IfcTessellatedFaceSet;
+class IfcPolygonalFaceSet;
+class IfcPolyline;
+class IfcPolynomialCurve;
+class IfcPostalAddress;
+class IfcPreDefinedProperties;
+class IfcPreDefinedTextFont;
+class IfcPresentationLayerAssignment;
+class IfcPresentationLayerWithStyle;
+class IfcProcedure;
+class IfcProcedureType;
+class IfcProductDefinitionShape;
+class IfcProfileProperties;
+class IfcProject;
+class IfcProjectLibrary;
+class IfcProjectOrder;
+class IfcProjectedCRS;
+class IfcProjectionElement;
+class IfcSimpleProperty;
+class IfcPropertyBoundedValue;
+class IfcPropertyDependencyRelationship;
+class IfcPropertyEnumeratedValue;
+class IfcPropertyEnumeration;
+class IfcPropertyListValue;
+class IfcPropertyReferenceValue;
+class IfcPropertySet;
+class IfcPropertySetTemplate;
+class IfcPropertySingleValue;
+class IfcPropertyTableValue;
+class IfcProtectiveDevice;
+class IfcProtectiveDeviceTrippingUnit;
+class IfcProtectiveDeviceTrippingUnitType;
+class IfcProtectiveDeviceType;
+class IfcPump;
+class IfcPumpType;
+class IfcQuantityArea;
+class IfcQuantityCount;
+class IfcQuantityLength;
+class IfcQuantityNumber;
+class IfcQuantityTime;
+class IfcQuantityVolume;
+class IfcQuantityWeight;
+class IfcRail;
+class IfcRailType;
+class IfcRailing;
+class IfcRailingType;
+class IfcRailway;
+class IfcRailwayPart;
+class IfcRamp;
+class IfcRampFlight;
+class IfcRampFlightType;
+class IfcRampType;
+class IfcRationalBSplineCurveWithKnots;
+class IfcRationalBSplineSurfaceWithKnots;
+class IfcRectangleProfileDef;
+class IfcRectangleHollowProfileDef;
+class IfcRectangularPyramid;
+class IfcRectangularTrimmedSurface;
+class IfcRecurrencePattern;
+class IfcReference;
+class IfcReferent;
+class IfcRegularTimeSeries;
+class IfcReinforcedSoil;
+class IfcReinforcementBarProperties;
+class IfcReinforcementDefinitionProperties;
+class IfcReinforcingElement;
+class IfcReinforcingBar;
+class IfcReinforcingElementType;
+class IfcReinforcingBarType;
+class IfcReinforcingMesh;
+class IfcReinforcingMeshType;
+class IfcRelationship;
+class IfcRelDecomposes;
+class IfcRelAdheresToElement;
+class IfcRelAggregates;
+class IfcRelAssigns;
+class IfcRelAssignsToActor;
+class IfcRelAssignsToControl;
+class IfcRelAssignsToGroup;
+class IfcRelAssignsToGroupByFactor;
+class IfcRelAssignsToProcess;
+class IfcRelAssignsToProduct;
+class IfcRelAssignsToResource;
+class IfcRelAssociates;
+class IfcRelAssociatesApproval;
+class IfcRelAssociatesClassification;
+class IfcRelAssociatesConstraint;
+class IfcRelAssociatesDocument;
+class IfcRelAssociatesLibrary;
+class IfcRelAssociatesMaterial;
+class IfcRelAssociatesProfileDef;
+class IfcRelConnects;
+class IfcRelConnectsElements;
+class IfcRelConnectsPathElements;
+class IfcRelConnectsPortToElement;
+class IfcRelConnectsPorts;
+class IfcRelConnectsStructuralActivity;
+class IfcRelConnectsStructuralMember;
+class IfcRelConnectsWithEccentricity;
+class IfcRelConnectsWithRealizingElements;
+class IfcRelContainedInSpatialStructure;
+class IfcRelCoversBldgElements;
+class IfcRelCoversSpaces;
+class IfcRelDeclares;
+class IfcRelDefines;
+class IfcRelDefinesByObject;
+class IfcRelDefinesByProperties;
+class IfcRelDefinesByTemplate;
+class IfcRelDefinesByType;
+class IfcRelFillsElement;
+class IfcRelFlowControlElements;
+class IfcRelInterferesElements;
+class IfcRelNests;
+class IfcRelPositions;
+class IfcRelProjectsElement;
+class IfcRelReferencedInSpatialStructure;
+class IfcRelSequence;
+class IfcRelServicesBuildings;
+class IfcRelSpaceBoundary;
+class IfcRelSpaceBoundary1stLevel;
+class IfcRelSpaceBoundary2ndLevel;
+class IfcRelVoidsElement;
+class IfcReparametrisedCompositeCurveSegment;
+class IfcRepresentation;
+class IfcRepresentationMap;
+class IfcResourceApprovalRelationship;
+class IfcResourceConstraintRelationship;
+class IfcResourceTime;
+class IfcRevolvedAreaSolid;
+class IfcRevolvedAreaSolidTapered;
+class IfcRightCircularCone;
+class IfcRightCircularCylinder;
+class IfcRigidOperation;
+class IfcRoad;
+class IfcRoadPart;
+class IfcRoof;
+class IfcRoofType;
+class IfcRoundedRectangleProfileDef;
+class IfcSIUnit;
+class IfcSanitaryTerminal;
+class IfcSanitaryTerminalType;
+class IfcSeamCurve;
+class IfcSecondOrderPolynomialSpiral;
+class IfcSectionProperties;
+class IfcSectionReinforcementProperties;
+class IfcSectionedSolid;
+class IfcSectionedSolidHorizontal;
+class IfcSectionedSpine;
+class IfcSectionedSurface;
+class IfcSegmentedReferenceCurve;
+class IfcSensor;
+class IfcSensorType;
+class IfcSeventhOrderPolynomialSpiral;
+class IfcShadingDevice;
+class IfcShadingDeviceType;
+class IfcShapeAspect;
+class IfcShapeModel;
+class IfcShapeRepresentation;
+class IfcShellBasedSurfaceModel;
+class IfcSign;
+class IfcSignType;
+class IfcSignal;
+class IfcSignalType;
+class IfcSimplePropertyTemplate;
+class IfcSineSpiral;
+class IfcSite;
+class IfcSlab;
+class IfcSlabType;
+class IfcSlippageConnectionCondition;
+class IfcSolarDevice;
+class IfcSolarDeviceType;
+class IfcSpace;
+class IfcSpaceHeater;
+class IfcSpaceHeaterType;
+class IfcSpatialElementType;
+class IfcSpatialStructureElementType;
+class IfcSpaceType;
+class IfcSpatialZone;
+class IfcSpatialZoneType;
+class IfcSphere;
+class IfcSphericalSurface;
+class IfcStackTerminal;
+class IfcStackTerminalType;
+class IfcStair;
+class IfcStairFlight;
+class IfcStairFlightType;
+class IfcStairType;
+class IfcStructuralActivity;
+class IfcStructuralAction;
+class IfcStructuralAnalysisModel;
+class IfcStructuralItem;
+class IfcStructuralConnection;
+class IfcStructuralCurveAction;
+class IfcStructuralCurveConnection;
+class IfcStructuralMember;
+class IfcStructuralCurveMember;
+class IfcStructuralCurveMemberVarying;
+class IfcStructuralReaction;
+class IfcStructuralCurveReaction;
+class IfcStructuralLinearAction;
+class IfcStructuralLoad;
+class IfcStructuralLoadGroup;
+class IfcStructuralLoadCase;
+class IfcStructuralLoadConfiguration;
+class IfcStructuralLoadOrResult;
+class IfcStructuralLoadStatic;
+class IfcStructuralLoadLinearForce;
+class IfcStructuralLoadPlanarForce;
+class IfcStructuralLoadSingleDisplacement;
+class IfcStructuralLoadSingleDisplacementDistortion;
+class IfcStructuralLoadSingleForce;
+class IfcStructuralLoadSingleForceWarping;
+class IfcStructuralLoadTemperature;
+class IfcStructuralSurfaceAction;
+class IfcStructuralPlanarAction;
+class IfcStructuralPointAction;
+class IfcStructuralPointConnection;
+class IfcStructuralPointReaction;
+class IfcStructuralResultGroup;
+class IfcStructuralSurfaceConnection;
+class IfcStructuralSurfaceMember;
+class IfcStructuralSurfaceMemberVarying;
+class IfcStructuralSurfaceReaction;
+class IfcStyleModel;
+class IfcStyledItem;
+class IfcStyledRepresentation;
+class IfcSubContractResource;
+class IfcSubContractResourceType;
+class IfcSubedge;
+class IfcSurfaceCurveSweptAreaSolid;
+class IfcSurfaceFeature;
+class IfcSweptSurface;
+class IfcSurfaceOfLinearExtrusion;
+class IfcSurfaceOfRevolution;
+class IfcSurfaceReinforcementArea;
+class IfcSurfaceStyle;
+class IfcSurfaceStyleLighting;
+class IfcSurfaceStyleRefraction;
+class IfcSurfaceStyleShading;
+class IfcSurfaceStyleRendering;
+class IfcSurfaceStyleWithTextures;
+class IfcSweptDiskSolid;
+class IfcSweptDiskSolidPolygonal;
+class IfcSwitchingDevice;
+class IfcSwitchingDeviceType;
+class IfcSystemFurnitureElement;
+class IfcSystemFurnitureElementType;
+class IfcTShapeProfileDef;
+class IfcTable;
+class IfcTableColumn;
+class IfcTableRow;
+class IfcTank;
+class IfcTankType;
+class IfcTask;
+class IfcTaskTime;
+class IfcTaskTimeRecurring;
+class IfcTaskType;
+class IfcTelecomAddress;
+class IfcTendon;
+class IfcTendonAnchor;
+class IfcTendonAnchorType;
+class IfcTendonConduit;
+class IfcTendonConduitType;
+class IfcTendonType;
+class IfcTextLiteral;
+class IfcTextLiteralWithExtent;
+class IfcTextStyle;
+class IfcTextStyleFontModel;
+class IfcTextStyleForDefinedFont;
+class IfcTextStyleTextModel;
+class IfcTextureCoordinateGenerator;
+class IfcTextureCoordinateIndices;
+class IfcTextureCoordinateIndicesWithVoids;
+class IfcTextureMap;
+class IfcTextureVertex;
+class IfcTextureVertexList;
+class IfcThirdOrderPolynomialSpiral;
+class IfcTimePeriod;
+class IfcTimeSeriesValue;
+class IfcTopologyRepresentation;
+class IfcToroidalSurface;
+class IfcTrackElement;
+class IfcTrackElementType;
+class IfcTransformer;
+class IfcTransformerType;
+class IfcTransportationDevice;
+class IfcTransportElement;
+class IfcTransportationDeviceType;
+class IfcTransportElementType;
+class IfcTrapeziumProfileDef;
+class IfcTriangulatedFaceSet;
+class IfcTriangulatedIrregularNetwork;
+class IfcTrimmedCurve;
+class IfcTubeBundle;
+class IfcTubeBundleType;
+class IfcUShapeProfileDef;
+class IfcUnitAssignment;
+class IfcUnitaryControlElement;
+class IfcUnitaryControlElementType;
+class IfcUnitaryEquipment;
+class IfcUnitaryEquipmentType;
+class IfcValve;
+class IfcValveType;
+class IfcVector;
+class IfcVehicle;
+class IfcVehicleType;
+class IfcVertex;
+class IfcVertexLoop;
+class IfcVertexPoint;
+class IfcVibrationDamper;
+class IfcVibrationDamperType;
+class IfcVibrationIsolator;
+class IfcVibrationIsolatorType;
+class IfcVirtualElement;
+class IfcVirtualGridIntersection;
+class IfcVoidingFeature;
+class IfcWall;
+class IfcWallStandardCase;
+class IfcWallType;
+class IfcWasteTerminal;
+class IfcWasteTerminalType;
+class IfcWellKnownText;
+class IfcWindow;
+class IfcWindowLiningProperties;
+class IfcWindowPanelProperties;
+class IfcWindowType;
+class IfcWorkCalendar;
+class IfcWorkControl;
+class IfcWorkPlan;
+class IfcWorkSchedule;
+class IfcWorkTime;
+class IfcZShapeProfileDef;
+class IfcZone;
+
+
+class IfcRoot : public GDIFCEntityBase {
+    GDCLASS(IfcRoot, GDIFCEntityBase)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_GlobalId();
+    void set_GlobalId(godot::String v);
+    Ref<GDIFCEntityBase> get_OwnerHistory();
+    void set_OwnerHistory(Ref<GDIFCEntityBase> v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+};
+
+class IfcObjectDefinition : public IfcRoot {
+    GDCLASS(IfcObjectDefinition, IfcRoot)
+protected:
+    static void _bind_methods();
+};
+
+class IfcObject : public IfcObjectDefinition {
+    GDCLASS(IfcObject, IfcObjectDefinition)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_ObjectType();
+    void set_ObjectType(godot::String v);
+};
+
+class IfcControl : public IfcObject {
+    GDCLASS(IfcControl, IfcObject)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_Identification();
+    void set_Identification(godot::String v);
+};
+
+class IfcActionRequest : public IfcControl {
+    GDCLASS(IfcActionRequest, IfcControl)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    godot::String get_Status();
+    void set_Status(godot::String v);
+    godot::String get_LongDescription();
+    void set_LongDescription(godot::String v);
+};
+
+class IfcActor : public IfcObject {
+    GDCLASS(IfcActor, IfcObject)
+protected:
+    static void _bind_methods();
+public:
+    Ref<GDIFCEntityBase> get_TheActor();
+    void set_TheActor(Ref<GDIFCEntityBase> v);
+};
+
+class IfcActorRole : public GDIFCEntityBase {
+    GDCLASS(IfcActorRole, GDIFCEntityBase)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_Role();
+    void set_Role(godot::String v);
+    godot::String get_UserDefinedRole();
+    void set_UserDefinedRole(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+};
+
+class IfcProduct : public IfcObject {
+    GDCLASS(IfcProduct, IfcObject)
+protected:
+    static void _bind_methods();
+public:
+    Ref<GDIFCEntityBase> get_ObjectPlacement();
+    void set_ObjectPlacement(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Representation();
+    void set_Representation(Ref<GDIFCEntityBase> v);
+};
+
+class IfcElement : public IfcProduct {
+    GDCLASS(IfcElement, IfcProduct)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_Tag();
+    void set_Tag(godot::String v);
+};
+
+class IfcDistributionElement : public IfcElement {
+    GDCLASS(IfcDistributionElement, IfcElement)
+protected:
+    static void _bind_methods();
+};
+
+class IfcDistributionControlElement : public IfcDistributionElement {
+    GDCLASS(IfcDistributionControlElement, IfcDistributionElement)
+protected:
+    static void _bind_methods();
+};
+
+class IfcActuator : public IfcDistributionControlElement {
+    GDCLASS(IfcActuator, IfcDistributionControlElement)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+};
+
+class IfcTypeObject : public IfcObjectDefinition {
+    GDCLASS(IfcTypeObject, IfcObjectDefinition)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_ApplicableOccurrence();
+    void set_ApplicableOccurrence(godot::String v);
+    godot::Array get_HasPropertySets();
+    void set_HasPropertySets(godot::Array v);
+};
+
+class IfcTypeProduct : public IfcTypeObject {
+    GDCLASS(IfcTypeProduct, IfcTypeObject)
+protected:
+    static void _bind_methods();
+public:
+    godot::Array get_RepresentationMaps();
+    void set_RepresentationMaps(godot::Array v);
+    godot::String get_Tag();
+    void set_Tag(godot::String v);
+};
+
+class IfcElementType : public IfcTypeProduct {
+    GDCLASS(IfcElementType, IfcTypeProduct)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_ElementType();
+    void set_ElementType(godot::String v);
+};
+
+class IfcDistributionElementType : public IfcElementType {
+    GDCLASS(IfcDistributionElementType, IfcElementType)
+protected:
+    static void _bind_methods();
+};
+
+class IfcDistributionControlElementType : public IfcDistributionElementType {
+    GDCLASS(IfcDistributionControlElementType, IfcDistributionElementType)
+protected:
+    static void _bind_methods();
+};
+
+class IfcActuatorType : public IfcDistributionControlElementType {
+    GDCLASS(IfcActuatorType, IfcDistributionControlElementType)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+};
+
+class IfcAddress : public GDIFCEntityBase {
+    GDCLASS(IfcAddress, GDIFCEntityBase)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_Purpose();
+    void set_Purpose(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    godot::String get_UserDefinedPurpose();
+    void set_UserDefinedPurpose(godot::String v);
+};
+
+class IfcRepresentationItem : public GDIFCEntityBase {
+    GDCLASS(IfcRepresentationItem, GDIFCEntityBase)
+protected:
+    static void _bind_methods();
+};
+
+class IfcGeometricRepresentationItem : public IfcRepresentationItem {
+    GDCLASS(IfcGeometricRepresentationItem, IfcRepresentationItem)
+protected:
+    static void _bind_methods();
+};
+
+class IfcSolidModel : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcSolidModel, IfcGeometricRepresentationItem)
+protected:
+    static void _bind_methods();
+};
+
+class IfcManifoldSolidBrep : public IfcSolidModel {
+    GDCLASS(IfcManifoldSolidBrep, IfcSolidModel)
+protected:
+    static void _bind_methods();
+public:
+    Ref<GDIFCEntityBase> get_Outer();
+    void set_Outer(Ref<GDIFCEntityBase> v);
+};
+
+class IfcAdvancedBrep : public IfcManifoldSolidBrep {
+    GDCLASS(IfcAdvancedBrep, IfcManifoldSolidBrep)
+protected:
+    static void _bind_methods();
+};
+
+class IfcAdvancedBrepWithVoids : public IfcAdvancedBrep {
+    GDCLASS(IfcAdvancedBrepWithVoids, IfcAdvancedBrep)
+protected:
+    static void _bind_methods();
+public:
+    godot::Array get_Voids();
+    void set_Voids(godot::Array v);
+};
+
+class IfcTopologicalRepresentationItem : public IfcRepresentationItem {
+    GDCLASS(IfcTopologicalRepresentationItem, IfcRepresentationItem)
+protected:
+    static void _bind_methods();
+};
+
+class IfcFace : public IfcTopologicalRepresentationItem {
+    GDCLASS(IfcFace, IfcTopologicalRepresentationItem)
+protected:
+    static void _bind_methods();
+public:
+    godot::Array get_Bounds();
+    void set_Bounds(godot::Array v);
+};
+
+class IfcFaceSurface : public IfcFace {
+    GDCLASS(IfcFaceSurface, IfcFace)
+protected:
+    static void _bind_methods();
+public:
+    Ref<GDIFCEntityBase> get_FaceSurface();
+    void set_FaceSurface(Ref<GDIFCEntityBase> v);
+    bool get_SameSense();
+    void set_SameSense(bool v);
+};
+
+class IfcAdvancedFace : public IfcFaceSurface {
+    GDCLASS(IfcAdvancedFace, IfcFaceSurface)
+protected:
+    static void _bind_methods();
+};
+
+class IfcDistributionFlowElement : public IfcDistributionElement {
+    GDCLASS(IfcDistributionFlowElement, IfcDistributionElement)
+protected:
+    static void _bind_methods();
+};
+
+class IfcFlowTerminal : public IfcDistributionFlowElement {
+    GDCLASS(IfcFlowTerminal, IfcDistributionFlowElement)
+protected:
+    static void _bind_methods();
+};
+
+class IfcAirTerminal : public IfcFlowTerminal {
+    GDCLASS(IfcAirTerminal, IfcFlowTerminal)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+};
+
+class IfcFlowController : public IfcDistributionFlowElement {
+    GDCLASS(IfcFlowController, IfcDistributionFlowElement)
+protected:
+    static void _bind_methods();
+};
+
+class IfcAirTerminalBox : public IfcFlowController {
+    GDCLASS(IfcAirTerminalBox, IfcFlowController)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+};
+
+class IfcDistributionFlowElementType : public IfcDistributionElementType {
+    GDCLASS(IfcDistributionFlowElementType, IfcDistributionElementType)
+protected:
+    static void _bind_methods();
+};
+
+class IfcFlowControllerType : public IfcDistributionFlowElementType {
+    GDCLASS(IfcFlowControllerType, IfcDistributionFlowElementType)
+protected:
+    static void _bind_methods();
+};
+
+class IfcAirTerminalBoxType : public IfcFlowControllerType {
+    GDCLASS(IfcAirTerminalBoxType, IfcFlowControllerType)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+};
+
+class IfcFlowTerminalType : public IfcDistributionFlowElementType {
+    GDCLASS(IfcFlowTerminalType, IfcDistributionFlowElementType)
+protected:
+    static void _bind_methods();
+};
+
+class IfcAirTerminalType : public IfcFlowTerminalType {
+    GDCLASS(IfcAirTerminalType, IfcFlowTerminalType)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+};
+
+class IfcEnergyConversionDevice : public IfcDistributionFlowElement {
+    GDCLASS(IfcEnergyConversionDevice, IfcDistributionFlowElement)
+protected:
+    static void _bind_methods();
+};
+
+class IfcAirToAirHeatRecovery : public IfcEnergyConversionDevice {
+    GDCLASS(IfcAirToAirHeatRecovery, IfcEnergyConversionDevice)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+};
+
+class IfcEnergyConversionDeviceType : public IfcDistributionFlowElementType {
+    GDCLASS(IfcEnergyConversionDeviceType, IfcDistributionFlowElementType)
+protected:
+    static void _bind_methods();
+};
+
+class IfcAirToAirHeatRecoveryType : public IfcEnergyConversionDeviceType {
+    GDCLASS(IfcAirToAirHeatRecoveryType, IfcEnergyConversionDeviceType)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+};
+
+class IfcAlarm : public IfcDistributionControlElement {
+    GDCLASS(IfcAlarm, IfcDistributionControlElement)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+};
+
+class IfcAlarmType : public IfcDistributionControlElementType {
+    GDCLASS(IfcAlarmType, IfcDistributionControlElementType)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+};
+
+class IfcPositioningElement : public IfcProduct {
+    GDCLASS(IfcPositioningElement, IfcProduct)
+protected:
+    static void _bind_methods();
+};
+
+class IfcLinearPositioningElement : public IfcPositioningElement {
+    GDCLASS(IfcLinearPositioningElement, IfcPositioningElement)
+protected:
+    static void _bind_methods();
+};
+
+class IfcAlignment : public IfcLinearPositioningElement {
+    GDCLASS(IfcAlignment, IfcLinearPositioningElement)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+};
+
+class IfcLinearElement : public IfcProduct {
+    GDCLASS(IfcLinearElement, IfcProduct)
+protected:
+    static void _bind_methods();
+};
+
+class IfcAlignmentCant : public IfcLinearElement {
+    GDCLASS(IfcAlignmentCant, IfcLinearElement)
+protected:
+    static void _bind_methods();
+public:
+    double get_RailHeadDistance();
+    void set_RailHeadDistance(double v);
+};
+
+class IfcAlignmentParameterSegment : public GDIFCEntityBase {
+    GDCLASS(IfcAlignmentParameterSegment, GDIFCEntityBase)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_StartTag();
+    void set_StartTag(godot::String v);
+    godot::String get_EndTag();
+    void set_EndTag(godot::String v);
+};
+
+class IfcAlignmentCantSegment : public IfcAlignmentParameterSegment {
+    GDCLASS(IfcAlignmentCantSegment, IfcAlignmentParameterSegment)
+protected:
+    static void _bind_methods();
+public:
+    double get_StartDistAlong();
+    void set_StartDistAlong(double v);
+    double get_HorizontalLength();
+    void set_HorizontalLength(double v);
+    double get_StartCantLeft();
+    void set_StartCantLeft(double v);
+    double get_EndCantLeft();
+    void set_EndCantLeft(double v);
+    double get_StartCantRight();
+    void set_StartCantRight(double v);
+    double get_EndCantRight();
+    void set_EndCantRight(double v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+};
+
+class IfcAlignmentHorizontal : public IfcLinearElement {
+    GDCLASS(IfcAlignmentHorizontal, IfcLinearElement)
+protected:
+    static void _bind_methods();
+};
+
+class IfcAlignmentHorizontalSegment : public IfcAlignmentParameterSegment {
+    GDCLASS(IfcAlignmentHorizontalSegment, IfcAlignmentParameterSegment)
+protected:
+    static void _bind_methods();
+public:
+    Ref<GDIFCEntityBase> get_StartPoint();
+    void set_StartPoint(Ref<GDIFCEntityBase> v);
+    double get_StartDirection();
+    void set_StartDirection(double v);
+    double get_StartRadiusOfCurvature();
+    void set_StartRadiusOfCurvature(double v);
+    double get_EndRadiusOfCurvature();
+    void set_EndRadiusOfCurvature(double v);
+    double get_SegmentLength();
+    void set_SegmentLength(double v);
+    double get_GravityCenterLineHeight();
+    void set_GravityCenterLineHeight(double v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+};
+
+class IfcAlignmentSegment : public IfcLinearElement {
+    GDCLASS(IfcAlignmentSegment, IfcLinearElement)
+protected:
+    static void _bind_methods();
+public:
+    Ref<GDIFCEntityBase> get_DesignParameters();
+    void set_DesignParameters(Ref<GDIFCEntityBase> v);
+};
+
+class IfcAlignmentVertical : public IfcLinearElement {
+    GDCLASS(IfcAlignmentVertical, IfcLinearElement)
+protected:
+    static void _bind_methods();
+};
+
+class IfcAlignmentVerticalSegment : public IfcAlignmentParameterSegment {
+    GDCLASS(IfcAlignmentVerticalSegment, IfcAlignmentParameterSegment)
+protected:
+    static void _bind_methods();
+public:
+    double get_StartDistAlong();
+    void set_StartDistAlong(double v);
+    double get_HorizontalLength();
+    void set_HorizontalLength(double v);
+    double get_StartHeight();
+    void set_StartHeight(double v);
+    double get_StartGradient();
+    void set_StartGradient(double v);
+    double get_EndGradient();
+    void set_EndGradient(double v);
+    double get_RadiusOfCurvature();
+    void set_RadiusOfCurvature(double v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+};
+
+class IfcAnnotation : public IfcProduct {
+    GDCLASS(IfcAnnotation, IfcProduct)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+};
+
+class IfcAnnotationFillArea : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcAnnotationFillArea, IfcGeometricRepresentationItem)
+protected:
+    static void _bind_methods();
+public:
+    Ref<GDIFCEntityBase> get_OuterBoundary();
+    void set_OuterBoundary(Ref<GDIFCEntityBase> v);
+    godot::Array get_InnerBoundaries();
+    void set_InnerBoundaries(godot::Array v);
+};
+
+class IfcApplication : public GDIFCEntityBase {
+    GDCLASS(IfcApplication, GDIFCEntityBase)
+protected:
+    static void _bind_methods();
+public:
+    Ref<GDIFCEntityBase> get_ApplicationDeveloper();
+    void set_ApplicationDeveloper(Ref<GDIFCEntityBase> v);
+    godot::String get_Version();
+    void set_Version(godot::String v);
+    godot::String get_ApplicationFullName();
+    void set_ApplicationFullName(godot::String v);
+    godot::String get_ApplicationIdentifier();
+    void set_ApplicationIdentifier(godot::String v);
+};
+
+class IfcAppliedValue : public GDIFCEntityBase {
+    GDCLASS(IfcAppliedValue, GDIFCEntityBase)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    Ref<GDIFCEntityBase> get_AppliedValue();
+    void set_AppliedValue(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_UnitBasis();
+    void set_UnitBasis(Ref<GDIFCEntityBase> v);
+    godot::String get_ApplicableDate();
+    void set_ApplicableDate(godot::String v);
+    godot::String get_FixedUntilDate();
+    void set_FixedUntilDate(godot::String v);
+    godot::String get_Category();
+    void set_Category(godot::String v);
+    godot::String get_Condition();
+    void set_Condition(godot::String v);
+    godot::String get_ArithmeticOperator();
+    void set_ArithmeticOperator(godot::String v);
+    godot::Array get_Components();
+    void set_Components(godot::Array v);
+};
+
+class IfcApproval : public GDIFCEntityBase {
+    GDCLASS(IfcApproval, GDIFCEntityBase)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_Identifier();
+    void set_Identifier(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    godot::String get_TimeOfApproval();
+    void set_TimeOfApproval(godot::String v);
+    godot::String get_Status();
+    void set_Status(godot::String v);
+    godot::String get_Level();
+    void set_Level(godot::String v);
+    godot::String get_Qualifier();
+    void set_Qualifier(godot::String v);
+    Ref<GDIFCEntityBase> get_RequestingApproval();
+    void set_RequestingApproval(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_GivingApproval();
+    void set_GivingApproval(Ref<GDIFCEntityBase> v);
+};
+
+class IfcResourceLevelRelationship : public GDIFCEntityBase {
+    GDCLASS(IfcResourceLevelRelationship, GDIFCEntityBase)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+};
+
+class IfcApprovalRelationship : public IfcResourceLevelRelationship {
+    GDCLASS(IfcApprovalRelationship, IfcResourceLevelRelationship)
+protected:
+    static void _bind_methods();
+public:
+    Ref<GDIFCEntityBase> get_RelatingApproval();
+    void set_RelatingApproval(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedApprovals();
+    void set_RelatedApprovals(godot::Array v);
+};
+
+class IfcProfileDef : public GDIFCEntityBase {
+    GDCLASS(IfcProfileDef, GDIFCEntityBase)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_ProfileType();
+    void set_ProfileType(godot::String v);
+    godot::String get_ProfileName();
+    void set_ProfileName(godot::String v);
+};
+
+class IfcArbitraryClosedProfileDef : public IfcProfileDef {
+    GDCLASS(IfcArbitraryClosedProfileDef, IfcProfileDef)
+protected:
+    static void _bind_methods();
+public:
+    Ref<GDIFCEntityBase> get_OuterCurve();
+    void set_OuterCurve(Ref<GDIFCEntityBase> v);
+};
+
+class IfcArbitraryOpenProfileDef : public IfcProfileDef {
+    GDCLASS(IfcArbitraryOpenProfileDef, IfcProfileDef)
+protected:
+    static void _bind_methods();
+public:
+    Ref<GDIFCEntityBase> get_Curve();
+    void set_Curve(Ref<GDIFCEntityBase> v);
+};
+
+class IfcArbitraryProfileDefWithVoids : public IfcArbitraryClosedProfileDef {
+    GDCLASS(IfcArbitraryProfileDefWithVoids, IfcArbitraryClosedProfileDef)
+protected:
+    static void _bind_methods();
+public:
+    godot::Array get_InnerCurves();
+    void set_InnerCurves(godot::Array v);
+};
+
+class IfcGroup : public IfcObject {
+    GDCLASS(IfcGroup, IfcObject)
+protected:
+    static void _bind_methods();
+};
+
+class IfcAsset : public IfcGroup {
+    GDCLASS(IfcAsset, IfcGroup)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_Identification();
+    void set_Identification(godot::String v);
+    Ref<GDIFCEntityBase> get_OriginalValue();
+    void set_OriginalValue(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_CurrentValue();
+    void set_CurrentValue(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TotalReplacementCost();
+    void set_TotalReplacementCost(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Owner();
+    void set_Owner(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_User();
+    void set_User(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_ResponsiblePerson();
+    void set_ResponsiblePerson(Ref<GDIFCEntityBase> v);
+    godot::String get_IncorporationDate();
+    void set_IncorporationDate(godot::String v);
+    Ref<GDIFCEntityBase> get_DepreciatedValue();
+    void set_DepreciatedValue(Ref<GDIFCEntityBase> v);
+};
+
+class IfcParameterizedProfileDef : public IfcProfileDef {
+    GDCLASS(IfcParameterizedProfileDef, IfcProfileDef)
+protected:
+    static void _bind_methods();
+public:
+    Ref<GDIFCEntityBase> get_Position();
+    void set_Position(Ref<GDIFCEntityBase> v);
+};
+
+class IfcAsymmetricIShapeProfileDef : public IfcParameterizedProfileDef {
+    GDCLASS(IfcAsymmetricIShapeProfileDef, IfcParameterizedProfileDef)
+protected:
+    static void _bind_methods();
+public:
+    double get_BottomFlangeWidth();
+    void set_BottomFlangeWidth(double v);
+    double get_OverallDepth();
+    void set_OverallDepth(double v);
+    double get_WebThickness();
+    void set_WebThickness(double v);
+    double get_BottomFlangeThickness();
+    void set_BottomFlangeThickness(double v);
+    double get_BottomFlangeFilletRadius();
+    void set_BottomFlangeFilletRadius(double v);
+    double get_TopFlangeWidth();
+    void set_TopFlangeWidth(double v);
+    double get_TopFlangeThickness();
+    void set_TopFlangeThickness(double v);
+    double get_TopFlangeFilletRadius();
+    void set_TopFlangeFilletRadius(double v);
+    double get_BottomFlangeEdgeRadius();
+    void set_BottomFlangeEdgeRadius(double v);
+    double get_BottomFlangeSlope();
+    void set_BottomFlangeSlope(double v);
+    double get_TopFlangeEdgeRadius();
+    void set_TopFlangeEdgeRadius(double v);
+    double get_TopFlangeSlope();
+    void set_TopFlangeSlope(double v);
+};
+
+class IfcAudioVisualAppliance : public IfcFlowTerminal {
+    GDCLASS(IfcAudioVisualAppliance, IfcFlowTerminal)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+};
+
+class IfcAudioVisualApplianceType : public IfcFlowTerminalType {
+    GDCLASS(IfcAudioVisualApplianceType, IfcFlowTerminalType)
+protected:
+    static void _bind_methods();
+public:
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+};
+
+class IfcPlacement : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcPlacement, IfcGeometricRepresentationItem)
+protected:
+    static void _bind_methods();
+public:
+    Ref<GDIFCEntityBase> get_Location();
+    void set_Location(Ref<GDIFCEntityBase> v);
+};
+
+class IfcAxis1Placement : public IfcPlacement {
+    GDCLASS(IfcAxis1Placement, IfcPlacement)
+protected:
+    static void _bind_methods();
+public:
+    Ref<GDIFCEntityBase> get_Axis();
+    void set_Axis(Ref<GDIFCEntityBase> v);
+};
+
+class IfcAxis2Placement2D : public IfcPlacement {
+    GDCLASS(IfcAxis2Placement2D, IfcPlacement)
+protected:
+    static void _bind_methods();
+public:
+    Ref<GDIFCEntityBase> get_RefDirection();
+    void set_RefDirection(Ref<GDIFCEntityBase> v);
+};
+
+class IfcAxis2Placement3D : public IfcPlacement {
+    GDCLASS(IfcAxis2Placement3D, IfcPlacement)
+protected:
+    static void _bind_methods();
+public:
+    Ref<GDIFCEntityBase> get_Axis();
+    void set_Axis(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RefDirection();
+    void set_RefDirection(Ref<GDIFCEntityBase> v);
+};
+
+class IfcAxis2PlacementLinear : public IfcPlacement {
+    GDCLASS(IfcAxis2PlacementLinear, IfcPlacement)
+protected:
+    static void _bind_methods();
+public:
+    Ref<GDIFCEntityBase> get_Axis();
+    void set_Axis(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RefDirection();
+    void set_RefDirection(Ref<GDIFCEntityBase> v);
+};
+
+class IfcCurve : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcCurve, IfcGeometricRepresentationItem)
+protected:
+    static void _bind_methods();
+};
+
+class IfcBoundedCurve : public IfcCurve {
+    GDCLASS(IfcBoundedCurve, IfcCurve)
+protected:
+    static void _bind_methods();
+};
 
-class GDIfcBSplineCurve : public GDIfcBoundedCurve {
-    GDCLASS(GDIfcBSplineCurve, GDIfcBoundedCurve)
+class IfcBSplineCurve : public IfcBoundedCurve {
+    GDCLASS(IfcBSplineCurve, IfcBoundedCurve)
 protected:
     static void _bind_methods();
 public:
-    int64_t get_degree();
-    void set_degree(int64_t v);
-    godot::Array get_control_points_list();
-    void set_control_points_list(godot::Array v);
-    godot::String get_curve_form();
-    void set_curve_form(godot::String v);
-    godot::String get_closed_curve();
-    void set_closed_curve(godot::String v);
-    godot::String get_self_intersect();
-    void set_self_intersect(godot::String v);
+    int64_t get_Degree();
+    void set_Degree(int64_t v);
+    godot::Array get_ControlPointsList();
+    void set_ControlPointsList(godot::Array v);
+    godot::String get_CurveForm();
+    void set_CurveForm(godot::String v);
+    godot::String get_ClosedCurve();
+    void set_ClosedCurve(godot::String v);
+    godot::String get_SelfIntersect();
+    void set_SelfIntersect(godot::String v);
 };
 
-class GDIfcBSplineCurveWithKnots : public GDIfcBSplineCurve {
-    GDCLASS(GDIfcBSplineCurveWithKnots, GDIfcBSplineCurve)
+class IfcBSplineCurveWithKnots : public IfcBSplineCurve {
+    GDCLASS(IfcBSplineCurveWithKnots, IfcBSplineCurve)
 protected:
     static void _bind_methods();
 public:
-    godot::PackedInt64Array get_knot_multiplicities();
-    void set_knot_multiplicities(godot::PackedInt64Array v);
-    godot::PackedFloat64Array get_knots();
-    void set_knots(godot::PackedFloat64Array v);
-    godot::String get_knot_spec();
-    void set_knot_spec(godot::String v);
+    godot::PackedInt64Array get_KnotMultiplicities();
+    void set_KnotMultiplicities(godot::PackedInt64Array v);
+    godot::PackedFloat64Array get_Knots();
+    void set_Knots(godot::PackedFloat64Array v);
+    godot::String get_KnotSpec();
+    void set_KnotSpec(godot::String v);
 };
 
-class GDIfcSurface : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcSurface, GDIfcGeometricRepresentationItem)
+class IfcSurface : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcSurface, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcBoundedSurface : public GDIfcSurface {
-    GDCLASS(GDIfcBoundedSurface, GDIfcSurface)
+class IfcBoundedSurface : public IfcSurface {
+    GDCLASS(IfcBoundedSurface, IfcSurface)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcBSplineSurface : public GDIfcBoundedSurface {
-    GDCLASS(GDIfcBSplineSurface, GDIfcBoundedSurface)
+class IfcBSplineSurface : public IfcBoundedSurface {
+    GDCLASS(IfcBSplineSurface, IfcBoundedSurface)
 protected:
     static void _bind_methods();
 public:
-    int64_t get_u_degree();
-    void set_u_degree(int64_t v);
-    int64_t get_v_degree();
-    void set_v_degree(int64_t v);
-    godot::Array get_control_points_list();
-    godot::String get_surface_form();
-    void set_surface_form(godot::String v);
-    godot::String get_u_closed();
-    void set_u_closed(godot::String v);
-    godot::String get_v_closed();
-    void set_v_closed(godot::String v);
-    godot::String get_self_intersect();
-    void set_self_intersect(godot::String v);
+    int64_t get_UDegree();
+    void set_UDegree(int64_t v);
+    int64_t get_VDegree();
+    void set_VDegree(int64_t v);
+    godot::Array get_ControlPointsList();
+    godot::String get_SurfaceForm();
+    void set_SurfaceForm(godot::String v);
+    godot::String get_UClosed();
+    void set_UClosed(godot::String v);
+    godot::String get_VClosed();
+    void set_VClosed(godot::String v);
+    godot::String get_SelfIntersect();
+    void set_SelfIntersect(godot::String v);
 };
 
-class GDIfcBSplineSurfaceWithKnots : public GDIfcBSplineSurface {
-    GDCLASS(GDIfcBSplineSurfaceWithKnots, GDIfcBSplineSurface)
+class IfcBSplineSurfaceWithKnots : public IfcBSplineSurface {
+    GDCLASS(IfcBSplineSurfaceWithKnots, IfcBSplineSurface)
 protected:
     static void _bind_methods();
 public:
-    godot::PackedInt64Array get_u_multiplicities();
-    void set_u_multiplicities(godot::PackedInt64Array v);
-    godot::PackedInt64Array get_v_multiplicities();
-    void set_v_multiplicities(godot::PackedInt64Array v);
-    godot::PackedFloat64Array get_u_knots();
-    void set_u_knots(godot::PackedFloat64Array v);
-    godot::PackedFloat64Array get_v_knots();
-    void set_v_knots(godot::PackedFloat64Array v);
-    godot::String get_knot_spec();
-    void set_knot_spec(godot::String v);
+    godot::PackedInt64Array get_UMultiplicities();
+    void set_UMultiplicities(godot::PackedInt64Array v);
+    godot::PackedInt64Array get_VMultiplicities();
+    void set_VMultiplicities(godot::PackedInt64Array v);
+    godot::PackedFloat64Array get_UKnots();
+    void set_UKnots(godot::PackedFloat64Array v);
+    godot::PackedFloat64Array get_VKnots();
+    void set_VKnots(godot::PackedFloat64Array v);
+    godot::String get_KnotSpec();
+    void set_KnotSpec(godot::String v);
 };
 
-class GDIfcBuiltElement : public GDIfcElement {
-    GDCLASS(GDIfcBuiltElement, GDIfcElement)
+class IfcBuiltElement : public IfcElement {
+    GDCLASS(IfcBuiltElement, IfcElement)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcBeam : public GDIfcBuiltElement {
-    GDCLASS(GDIfcBeam, GDIfcBuiltElement)
+class IfcBeam : public IfcBuiltElement {
+    GDCLASS(IfcBeam, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcBuiltElementType : public GDIfcElementType {
-    GDCLASS(GDIfcBuiltElementType, GDIfcElementType)
+class IfcBuiltElementType : public IfcElementType {
+    GDCLASS(IfcBuiltElementType, IfcElementType)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcBeamType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcBeamType, GDIfcBuiltElementType)
+class IfcBeamType : public IfcBuiltElementType {
+    GDCLASS(IfcBeamType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcBearing : public GDIfcBuiltElement {
-    GDCLASS(GDIfcBearing, GDIfcBuiltElement)
+class IfcBearing : public IfcBuiltElement {
+    GDCLASS(IfcBearing, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcBearingType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcBearingType, GDIfcBuiltElementType)
+class IfcBearingType : public IfcBuiltElementType {
+    GDCLASS(IfcBearingType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcPresentationItem : public GDIFCEntityBase {
-    GDCLASS(GDIfcPresentationItem, GDIFCEntityBase)
+class IfcPresentationItem : public GDIFCEntityBase {
+    GDCLASS(IfcPresentationItem, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcSurfaceTexture : public GDIfcPresentationItem {
-    GDCLASS(GDIfcSurfaceTexture, GDIfcPresentationItem)
+class IfcSurfaceTexture : public IfcPresentationItem {
+    GDCLASS(IfcSurfaceTexture, IfcPresentationItem)
 protected:
     static void _bind_methods();
 public:
-    bool get_repeat_s();
-    void set_repeat_s(bool v);
-    bool get_repeat_t();
-    void set_repeat_t(bool v);
-    godot::String get_mode();
-    void set_mode(godot::String v);
-    Ref<GDIFCEntityBase> get_texture_transform();
-    void set_texture_transform(Ref<GDIFCEntityBase> v);
-    godot::PackedStringArray get_parameter();
-    void set_parameter(godot::PackedStringArray v);
+    bool get_RepeatS();
+    void set_RepeatS(bool v);
+    bool get_RepeatT();
+    void set_RepeatT(bool v);
+    godot::String get_Mode();
+    void set_Mode(godot::String v);
+    Ref<GDIFCEntityBase> get_TextureTransform();
+    void set_TextureTransform(Ref<GDIFCEntityBase> v);
+    godot::PackedStringArray get_Parameter();
+    void set_Parameter(godot::PackedStringArray v);
 };
 
-class GDIfcBlobTexture : public GDIfcSurfaceTexture {
-    GDCLASS(GDIfcBlobTexture, GDIfcSurfaceTexture)
+class IfcBlobTexture : public IfcSurfaceTexture {
+    GDCLASS(IfcBlobTexture, IfcSurfaceTexture)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_raster_format();
-    void set_raster_format(godot::String v);
-    godot::String get_raster_code();
-    void set_raster_code(godot::String v);
+    godot::String get_RasterFormat();
+    void set_RasterFormat(godot::String v);
+    godot::String get_RasterCode();
+    void set_RasterCode(godot::String v);
 };
 
-class GDIfcCsgPrimitive3D : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcCsgPrimitive3D, GDIfcGeometricRepresentationItem)
+class IfcCsgPrimitive3D : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcCsgPrimitive3D, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_position();
-    void set_position(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Position();
+    void set_Position(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcBlock : public GDIfcCsgPrimitive3D {
-    GDCLASS(GDIfcBlock, GDIfcCsgPrimitive3D)
+class IfcBlock : public IfcCsgPrimitive3D {
+    GDCLASS(IfcBlock, IfcCsgPrimitive3D)
 protected:
     static void _bind_methods();
 public:
-    double get_x_length();
-    void set_x_length(double v);
-    double get_y_length();
-    void set_y_length(double v);
-    double get_z_length();
-    void set_z_length(double v);
+    double get_XLength();
+    void set_XLength(double v);
+    double get_YLength();
+    void set_YLength(double v);
+    double get_ZLength();
+    void set_ZLength(double v);
 };
 
-class GDIfcBoiler : public GDIfcEnergyConversionDevice {
-    GDCLASS(GDIfcBoiler, GDIfcEnergyConversionDevice)
+class IfcBoiler : public IfcEnergyConversionDevice {
+    GDCLASS(IfcBoiler, IfcEnergyConversionDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcBoilerType : public GDIfcEnergyConversionDeviceType {
-    GDCLASS(GDIfcBoilerType, GDIfcEnergyConversionDeviceType)
+class IfcBoilerType : public IfcEnergyConversionDeviceType {
+    GDCLASS(IfcBoilerType, IfcEnergyConversionDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcBooleanResult : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcBooleanResult, GDIfcGeometricRepresentationItem)
+class IfcBooleanResult : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcBooleanResult, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_operator();
-    void set_operator(godot::String v);
-    Ref<GDIFCEntityBase> get_first_operand();
-    void set_first_operand(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_second_operand();
-    void set_second_operand(Ref<GDIFCEntityBase> v);
+    godot::String get_Operator();
+    void set_Operator(godot::String v);
+    Ref<GDIFCEntityBase> get_FirstOperand();
+    void set_FirstOperand(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_SecondOperand();
+    void set_SecondOperand(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcBooleanClippingResult : public GDIfcBooleanResult {
-    GDCLASS(GDIfcBooleanClippingResult, GDIfcBooleanResult)
+class IfcBooleanClippingResult : public IfcBooleanResult {
+    GDCLASS(IfcBooleanClippingResult, IfcBooleanResult)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcGeotechnicalElement : public GDIfcElement {
-    GDCLASS(GDIfcGeotechnicalElement, GDIfcElement)
+class IfcGeotechnicalElement : public IfcElement {
+    GDCLASS(IfcGeotechnicalElement, IfcElement)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcGeotechnicalAssembly : public GDIfcGeotechnicalElement {
-    GDCLASS(GDIfcGeotechnicalAssembly, GDIfcGeotechnicalElement)
+class IfcGeotechnicalAssembly : public IfcGeotechnicalElement {
+    GDCLASS(IfcGeotechnicalAssembly, IfcGeotechnicalElement)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcBorehole : public GDIfcGeotechnicalAssembly {
-    GDCLASS(GDIfcBorehole, GDIfcGeotechnicalAssembly)
+class IfcBorehole : public IfcGeotechnicalAssembly {
+    GDCLASS(IfcBorehole, IfcGeotechnicalAssembly)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcBoundaryCondition : public GDIFCEntityBase {
-    GDCLASS(GDIfcBoundaryCondition, GDIFCEntityBase)
+class IfcBoundaryCondition : public GDIFCEntityBase {
+    GDCLASS(IfcBoundaryCondition, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
 };
 
-class GDIfcCompositeCurve : public GDIfcBoundedCurve {
-    GDCLASS(GDIfcCompositeCurve, GDIfcBoundedCurve)
+class IfcCompositeCurve : public IfcBoundedCurve {
+    GDCLASS(IfcCompositeCurve, IfcBoundedCurve)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_segments();
-    void set_segments(godot::Array v);
-    godot::String get_self_intersect();
-    void set_self_intersect(godot::String v);
+    godot::Array get_Segments();
+    void set_Segments(godot::Array v);
+    godot::String get_SelfIntersect();
+    void set_SelfIntersect(godot::String v);
 };
 
-class GDIfcCompositeCurveOnSurface : public GDIfcCompositeCurve {
-    GDCLASS(GDIfcCompositeCurveOnSurface, GDIfcCompositeCurve)
+class IfcCompositeCurveOnSurface : public IfcCompositeCurve {
+    GDCLASS(IfcCompositeCurveOnSurface, IfcCompositeCurve)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcBoundaryCurve : public GDIfcCompositeCurveOnSurface {
-    GDCLASS(GDIfcBoundaryCurve, GDIfcCompositeCurveOnSurface)
+class IfcBoundaryCurve : public IfcCompositeCurveOnSurface {
+    GDCLASS(IfcBoundaryCurve, IfcCompositeCurveOnSurface)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcBoundaryEdgeCondition : public GDIfcBoundaryCondition {
-    GDCLASS(GDIfcBoundaryEdgeCondition, GDIfcBoundaryCondition)
+class IfcBoundaryEdgeCondition : public IfcBoundaryCondition {
+    GDCLASS(IfcBoundaryEdgeCondition, IfcBoundaryCondition)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_translational_stiffness_by_length_x();
-    void set_translational_stiffness_by_length_x(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_translational_stiffness_by_length_y();
-    void set_translational_stiffness_by_length_y(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_translational_stiffness_by_length_z();
-    void set_translational_stiffness_by_length_z(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_rotational_stiffness_by_length_x();
-    void set_rotational_stiffness_by_length_x(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_rotational_stiffness_by_length_y();
-    void set_rotational_stiffness_by_length_y(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_rotational_stiffness_by_length_z();
-    void set_rotational_stiffness_by_length_z(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TranslationalStiffnessByLengthX();
+    void set_TranslationalStiffnessByLengthX(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TranslationalStiffnessByLengthY();
+    void set_TranslationalStiffnessByLengthY(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TranslationalStiffnessByLengthZ();
+    void set_TranslationalStiffnessByLengthZ(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RotationalStiffnessByLengthX();
+    void set_RotationalStiffnessByLengthX(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RotationalStiffnessByLengthY();
+    void set_RotationalStiffnessByLengthY(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RotationalStiffnessByLengthZ();
+    void set_RotationalStiffnessByLengthZ(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcBoundaryFaceCondition : public GDIfcBoundaryCondition {
-    GDCLASS(GDIfcBoundaryFaceCondition, GDIfcBoundaryCondition)
+class IfcBoundaryFaceCondition : public IfcBoundaryCondition {
+    GDCLASS(IfcBoundaryFaceCondition, IfcBoundaryCondition)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_translational_stiffness_by_area_x();
-    void set_translational_stiffness_by_area_x(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_translational_stiffness_by_area_y();
-    void set_translational_stiffness_by_area_y(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_translational_stiffness_by_area_z();
-    void set_translational_stiffness_by_area_z(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TranslationalStiffnessByAreaX();
+    void set_TranslationalStiffnessByAreaX(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TranslationalStiffnessByAreaY();
+    void set_TranslationalStiffnessByAreaY(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TranslationalStiffnessByAreaZ();
+    void set_TranslationalStiffnessByAreaZ(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcBoundaryNodeCondition : public GDIfcBoundaryCondition {
-    GDCLASS(GDIfcBoundaryNodeCondition, GDIfcBoundaryCondition)
+class IfcBoundaryNodeCondition : public IfcBoundaryCondition {
+    GDCLASS(IfcBoundaryNodeCondition, IfcBoundaryCondition)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_translational_stiffness_x();
-    void set_translational_stiffness_x(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_translational_stiffness_y();
-    void set_translational_stiffness_y(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_translational_stiffness_z();
-    void set_translational_stiffness_z(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_rotational_stiffness_x();
-    void set_rotational_stiffness_x(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_rotational_stiffness_y();
-    void set_rotational_stiffness_y(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_rotational_stiffness_z();
-    void set_rotational_stiffness_z(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TranslationalStiffnessX();
+    void set_TranslationalStiffnessX(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TranslationalStiffnessY();
+    void set_TranslationalStiffnessY(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TranslationalStiffnessZ();
+    void set_TranslationalStiffnessZ(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RotationalStiffnessX();
+    void set_RotationalStiffnessX(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RotationalStiffnessY();
+    void set_RotationalStiffnessY(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RotationalStiffnessZ();
+    void set_RotationalStiffnessZ(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcBoundaryNodeConditionWarping : public GDIfcBoundaryNodeCondition {
-    GDCLASS(GDIfcBoundaryNodeConditionWarping, GDIfcBoundaryNodeCondition)
+class IfcBoundaryNodeConditionWarping : public IfcBoundaryNodeCondition {
+    GDCLASS(IfcBoundaryNodeConditionWarping, IfcBoundaryNodeCondition)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_warping_stiffness();
-    void set_warping_stiffness(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_WarpingStiffness();
+    void set_WarpingStiffness(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcBoundingBox : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcBoundingBox, GDIfcGeometricRepresentationItem)
+class IfcBoundingBox : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcBoundingBox, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_corner();
-    void set_corner(Ref<GDIFCEntityBase> v);
-    double get_x_dim();
-    void set_x_dim(double v);
-    double get_y_dim();
-    void set_y_dim(double v);
-    double get_z_dim();
-    void set_z_dim(double v);
+    Ref<GDIFCEntityBase> get_Corner();
+    void set_Corner(Ref<GDIFCEntityBase> v);
+    double get_XDim();
+    void set_XDim(double v);
+    double get_YDim();
+    void set_YDim(double v);
+    double get_ZDim();
+    void set_ZDim(double v);
 };
 
-class GDIfcHalfSpaceSolid : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcHalfSpaceSolid, GDIfcGeometricRepresentationItem)
+class IfcHalfSpaceSolid : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcHalfSpaceSolid, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_base_surface();
-    void set_base_surface(Ref<GDIFCEntityBase> v);
-    bool get_agreement_flag();
-    void set_agreement_flag(bool v);
+    Ref<GDIFCEntityBase> get_BaseSurface();
+    void set_BaseSurface(Ref<GDIFCEntityBase> v);
+    bool get_AgreementFlag();
+    void set_AgreementFlag(bool v);
 };
 
-class GDIfcBoxedHalfSpace : public GDIfcHalfSpaceSolid {
-    GDCLASS(GDIfcBoxedHalfSpace, GDIfcHalfSpaceSolid)
+class IfcBoxedHalfSpace : public IfcHalfSpaceSolid {
+    GDCLASS(IfcBoxedHalfSpace, IfcHalfSpaceSolid)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_enclosure();
-    void set_enclosure(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Enclosure();
+    void set_Enclosure(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcSpatialElement : public GDIfcProduct {
-    GDCLASS(GDIfcSpatialElement, GDIfcProduct)
+class IfcSpatialElement : public IfcProduct {
+    GDCLASS(IfcSpatialElement, IfcProduct)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_long_name();
-    void set_long_name(godot::String v);
+    godot::String get_LongName();
+    void set_LongName(godot::String v);
 };
 
-class GDIfcSpatialStructureElement : public GDIfcSpatialElement {
-    GDCLASS(GDIfcSpatialStructureElement, GDIfcSpatialElement)
+class IfcSpatialStructureElement : public IfcSpatialElement {
+    GDCLASS(IfcSpatialStructureElement, IfcSpatialElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_composition_type();
-    void set_composition_type(godot::String v);
+    godot::String get_CompositionType();
+    void set_CompositionType(godot::String v);
 };
 
-class GDIfcFacility : public GDIfcSpatialStructureElement {
-    GDCLASS(GDIfcFacility, GDIfcSpatialStructureElement)
+class IfcFacility : public IfcSpatialStructureElement {
+    GDCLASS(IfcFacility, IfcSpatialStructureElement)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcBridge : public GDIfcFacility {
-    GDCLASS(GDIfcBridge, GDIfcFacility)
+class IfcBridge : public IfcFacility {
+    GDCLASS(IfcBridge, IfcFacility)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFacilityPart : public GDIfcSpatialStructureElement {
-    GDCLASS(GDIfcFacilityPart, GDIfcSpatialStructureElement)
+class IfcFacilityPart : public IfcSpatialStructureElement {
+    GDCLASS(IfcFacilityPart, IfcSpatialStructureElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_usage_type();
-    void set_usage_type(godot::String v);
+    godot::String get_UsageType();
+    void set_UsageType(godot::String v);
 };
 
-class GDIfcBridgePart : public GDIfcFacilityPart {
-    GDCLASS(GDIfcBridgePart, GDIfcFacilityPart)
+class IfcBridgePart : public IfcFacilityPart {
+    GDCLASS(IfcBridgePart, IfcFacilityPart)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcBuilding : public GDIfcFacility {
-    GDCLASS(GDIfcBuilding, GDIfcFacility)
+class IfcBuilding : public IfcFacility {
+    GDCLASS(IfcBuilding, IfcFacility)
 protected:
     static void _bind_methods();
 public:
-    double get_elevation_of_ref_height();
-    void set_elevation_of_ref_height(double v);
-    double get_elevation_of_terrain();
-    void set_elevation_of_terrain(double v);
-    Ref<GDIFCEntityBase> get_building_address();
-    void set_building_address(Ref<GDIFCEntityBase> v);
+    double get_ElevationOfRefHeight();
+    void set_ElevationOfRefHeight(double v);
+    double get_ElevationOfTerrain();
+    void set_ElevationOfTerrain(double v);
+    Ref<GDIFCEntityBase> get_BuildingAddress();
+    void set_BuildingAddress(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcElementComponent : public GDIfcElement {
-    GDCLASS(GDIfcElementComponent, GDIfcElement)
+class IfcElementComponent : public IfcElement {
+    GDCLASS(IfcElementComponent, IfcElement)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcBuildingElementPart : public GDIfcElementComponent {
-    GDCLASS(GDIfcBuildingElementPart, GDIfcElementComponent)
+class IfcBuildingElementPart : public IfcElementComponent {
+    GDCLASS(IfcBuildingElementPart, IfcElementComponent)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcElementComponentType : public GDIfcElementType {
-    GDCLASS(GDIfcElementComponentType, GDIfcElementType)
+class IfcElementComponentType : public IfcElementType {
+    GDCLASS(IfcElementComponentType, IfcElementType)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcBuildingElementPartType : public GDIfcElementComponentType {
-    GDCLASS(GDIfcBuildingElementPartType, GDIfcElementComponentType)
+class IfcBuildingElementPartType : public IfcElementComponentType {
+    GDCLASS(IfcBuildingElementPartType, IfcElementComponentType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcBuildingElementProxy : public GDIfcBuiltElement {
-    GDCLASS(GDIfcBuildingElementProxy, GDIfcBuiltElement)
+class IfcBuildingElementProxy : public IfcBuiltElement {
+    GDCLASS(IfcBuildingElementProxy, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcBuildingElementProxyType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcBuildingElementProxyType, GDIfcBuiltElementType)
+class IfcBuildingElementProxyType : public IfcBuiltElementType {
+    GDCLASS(IfcBuildingElementProxyType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcBuildingStorey : public GDIfcSpatialStructureElement {
-    GDCLASS(GDIfcBuildingStorey, GDIfcSpatialStructureElement)
+class IfcBuildingStorey : public IfcSpatialStructureElement {
+    GDCLASS(IfcBuildingStorey, IfcSpatialStructureElement)
 protected:
     static void _bind_methods();
 public:
-    double get_elevation();
-    void set_elevation(double v);
+    double get_Elevation();
+    void set_Elevation(double v);
 };
 
-class GDIfcSystem : public GDIfcGroup {
-    GDCLASS(GDIfcSystem, GDIfcGroup)
+class IfcSystem : public IfcGroup {
+    GDCLASS(IfcSystem, IfcGroup)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcBuildingSystem : public GDIfcSystem {
-    GDCLASS(GDIfcBuildingSystem, GDIfcSystem)
+class IfcBuildingSystem : public IfcSystem {
+    GDCLASS(IfcBuildingSystem, IfcSystem)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    godot::String get_long_name();
-    void set_long_name(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    godot::String get_LongName();
+    void set_LongName(godot::String v);
 };
 
-class GDIfcBuiltSystem : public GDIfcSystem {
-    GDCLASS(GDIfcBuiltSystem, GDIfcSystem)
+class IfcBuiltSystem : public IfcSystem {
+    GDCLASS(IfcBuiltSystem, IfcSystem)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    godot::String get_long_name();
-    void set_long_name(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    godot::String get_LongName();
+    void set_LongName(godot::String v);
 };
 
-class GDIfcBurner : public GDIfcEnergyConversionDevice {
-    GDCLASS(GDIfcBurner, GDIfcEnergyConversionDevice)
+class IfcBurner : public IfcEnergyConversionDevice {
+    GDCLASS(IfcBurner, IfcEnergyConversionDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcBurnerType : public GDIfcEnergyConversionDeviceType {
-    GDCLASS(GDIfcBurnerType, GDIfcEnergyConversionDeviceType)
+class IfcBurnerType : public IfcEnergyConversionDeviceType {
+    GDCLASS(IfcBurnerType, IfcEnergyConversionDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCShapeProfileDef : public GDIfcParameterizedProfileDef {
-    GDCLASS(GDIfcCShapeProfileDef, GDIfcParameterizedProfileDef)
+class IfcCShapeProfileDef : public IfcParameterizedProfileDef {
+    GDCLASS(IfcCShapeProfileDef, IfcParameterizedProfileDef)
 protected:
     static void _bind_methods();
 public:
-    double get_depth();
-    void set_depth(double v);
-    double get_width();
-    void set_width(double v);
-    double get_wall_thickness();
-    void set_wall_thickness(double v);
-    double get_girth();
-    void set_girth(double v);
-    double get_internal_fillet_radius();
-    void set_internal_fillet_radius(double v);
+    double get_Depth();
+    void set_Depth(double v);
+    double get_Width();
+    void set_Width(double v);
+    double get_WallThickness();
+    void set_WallThickness(double v);
+    double get_Girth();
+    void set_Girth(double v);
+    double get_InternalFilletRadius();
+    void set_InternalFilletRadius(double v);
 };
 
-class GDIfcFlowFitting : public GDIfcDistributionFlowElement {
-    GDCLASS(GDIfcFlowFitting, GDIfcDistributionFlowElement)
+class IfcFlowFitting : public IfcDistributionFlowElement {
+    GDCLASS(IfcFlowFitting, IfcDistributionFlowElement)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcCableCarrierFitting : public GDIfcFlowFitting {
-    GDCLASS(GDIfcCableCarrierFitting, GDIfcFlowFitting)
+class IfcCableCarrierFitting : public IfcFlowFitting {
+    GDCLASS(IfcCableCarrierFitting, IfcFlowFitting)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFlowFittingType : public GDIfcDistributionFlowElementType {
-    GDCLASS(GDIfcFlowFittingType, GDIfcDistributionFlowElementType)
+class IfcFlowFittingType : public IfcDistributionFlowElementType {
+    GDCLASS(IfcFlowFittingType, IfcDistributionFlowElementType)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcCableCarrierFittingType : public GDIfcFlowFittingType {
-    GDCLASS(GDIfcCableCarrierFittingType, GDIfcFlowFittingType)
+class IfcCableCarrierFittingType : public IfcFlowFittingType {
+    GDCLASS(IfcCableCarrierFittingType, IfcFlowFittingType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFlowSegment : public GDIfcDistributionFlowElement {
-    GDCLASS(GDIfcFlowSegment, GDIfcDistributionFlowElement)
+class IfcFlowSegment : public IfcDistributionFlowElement {
+    GDCLASS(IfcFlowSegment, IfcDistributionFlowElement)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcCableCarrierSegment : public GDIfcFlowSegment {
-    GDCLASS(GDIfcCableCarrierSegment, GDIfcFlowSegment)
+class IfcCableCarrierSegment : public IfcFlowSegment {
+    GDCLASS(IfcCableCarrierSegment, IfcFlowSegment)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFlowSegmentType : public GDIfcDistributionFlowElementType {
-    GDCLASS(GDIfcFlowSegmentType, GDIfcDistributionFlowElementType)
+class IfcFlowSegmentType : public IfcDistributionFlowElementType {
+    GDCLASS(IfcFlowSegmentType, IfcDistributionFlowElementType)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcCableCarrierSegmentType : public GDIfcFlowSegmentType {
-    GDCLASS(GDIfcCableCarrierSegmentType, GDIfcFlowSegmentType)
+class IfcCableCarrierSegmentType : public IfcFlowSegmentType {
+    GDCLASS(IfcCableCarrierSegmentType, IfcFlowSegmentType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCableFitting : public GDIfcFlowFitting {
-    GDCLASS(GDIfcCableFitting, GDIfcFlowFitting)
+class IfcCableFitting : public IfcFlowFitting {
+    GDCLASS(IfcCableFitting, IfcFlowFitting)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCableFittingType : public GDIfcFlowFittingType {
-    GDCLASS(GDIfcCableFittingType, GDIfcFlowFittingType)
+class IfcCableFittingType : public IfcFlowFittingType {
+    GDCLASS(IfcCableFittingType, IfcFlowFittingType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCableSegment : public GDIfcFlowSegment {
-    GDCLASS(GDIfcCableSegment, GDIfcFlowSegment)
+class IfcCableSegment : public IfcFlowSegment {
+    GDCLASS(IfcCableSegment, IfcFlowSegment)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCableSegmentType : public GDIfcFlowSegmentType {
-    GDCLASS(GDIfcCableSegmentType, GDIfcFlowSegmentType)
+class IfcCableSegmentType : public IfcFlowSegmentType {
+    GDCLASS(IfcCableSegmentType, IfcFlowSegmentType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcDeepFoundation : public GDIfcBuiltElement {
-    GDCLASS(GDIfcDeepFoundation, GDIfcBuiltElement)
+class IfcDeepFoundation : public IfcBuiltElement {
+    GDCLASS(IfcDeepFoundation, IfcBuiltElement)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcCaissonFoundation : public GDIfcDeepFoundation {
-    GDCLASS(GDIfcCaissonFoundation, GDIfcDeepFoundation)
+class IfcCaissonFoundation : public IfcDeepFoundation {
+    GDCLASS(IfcCaissonFoundation, IfcDeepFoundation)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcDeepFoundationType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcDeepFoundationType, GDIfcBuiltElementType)
+class IfcDeepFoundationType : public IfcBuiltElementType {
+    GDCLASS(IfcDeepFoundationType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcCaissonFoundationType : public GDIfcDeepFoundationType {
-    GDCLASS(GDIfcCaissonFoundationType, GDIfcDeepFoundationType)
+class IfcCaissonFoundationType : public IfcDeepFoundationType {
+    GDCLASS(IfcCaissonFoundationType, IfcDeepFoundationType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcPoint : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcPoint, GDIfcGeometricRepresentationItem)
+class IfcPoint : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcPoint, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcCartesianPoint : public GDIfcPoint {
-    GDCLASS(GDIfcCartesianPoint, GDIfcPoint)
+class IfcCartesianPoint : public IfcPoint {
+    GDCLASS(IfcCartesianPoint, IfcPoint)
 protected:
     static void _bind_methods();
 public:
-    godot::PackedFloat64Array get_coordinates();
-    void set_coordinates(godot::PackedFloat64Array v);
+    godot::PackedFloat64Array get_Coordinates();
+    void set_Coordinates(godot::PackedFloat64Array v);
 };
 
-class GDIfcCartesianPointList : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcCartesianPointList, GDIfcGeometricRepresentationItem)
+class IfcCartesianPointList : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcCartesianPointList, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcCartesianPointList2D : public GDIfcCartesianPointList {
-    GDCLASS(GDIfcCartesianPointList2D, GDIfcCartesianPointList)
+class IfcCartesianPointList2D : public IfcCartesianPointList {
+    GDCLASS(IfcCartesianPointList2D, IfcCartesianPointList)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_coord_list();
-    godot::PackedStringArray get_tag_list();
-    void set_tag_list(godot::PackedStringArray v);
+    godot::Array get_CoordList();
+    godot::PackedStringArray get_TagList();
+    void set_TagList(godot::PackedStringArray v);
 };
 
-class GDIfcCartesianPointList3D : public GDIfcCartesianPointList {
-    GDCLASS(GDIfcCartesianPointList3D, GDIfcCartesianPointList)
+class IfcCartesianPointList3D : public IfcCartesianPointList {
+    GDCLASS(IfcCartesianPointList3D, IfcCartesianPointList)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_coord_list();
-    godot::PackedStringArray get_tag_list();
-    void set_tag_list(godot::PackedStringArray v);
+    godot::Array get_CoordList();
+    godot::PackedStringArray get_TagList();
+    void set_TagList(godot::PackedStringArray v);
 };
 
-class GDIfcCartesianTransformationOperator : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcCartesianTransformationOperator, GDIfcGeometricRepresentationItem)
+class IfcCartesianTransformationOperator : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcCartesianTransformationOperator, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_axis1();
-    void set_axis1(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_axis2();
-    void set_axis2(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_local_origin();
-    void set_local_origin(Ref<GDIFCEntityBase> v);
-    double get_scale();
-    void set_scale(double v);
+    Ref<GDIFCEntityBase> get_Axis1();
+    void set_Axis1(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Axis2();
+    void set_Axis2(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_LocalOrigin();
+    void set_LocalOrigin(Ref<GDIFCEntityBase> v);
+    double get_Scale();
+    void set_Scale(double v);
 };
 
-class GDIfcCartesianTransformationOperator2D : public GDIfcCartesianTransformationOperator {
-    GDCLASS(GDIfcCartesianTransformationOperator2D, GDIfcCartesianTransformationOperator)
+class IfcCartesianTransformationOperator2D : public IfcCartesianTransformationOperator {
+    GDCLASS(IfcCartesianTransformationOperator2D, IfcCartesianTransformationOperator)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcCartesianTransformationOperator2DnonUniform : public GDIfcCartesianTransformationOperator2D {
-    GDCLASS(GDIfcCartesianTransformationOperator2DnonUniform, GDIfcCartesianTransformationOperator2D)
+class IfcCartesianTransformationOperator2DnonUniform : public IfcCartesianTransformationOperator2D {
+    GDCLASS(IfcCartesianTransformationOperator2DnonUniform, IfcCartesianTransformationOperator2D)
 protected:
     static void _bind_methods();
 public:
-    double get_scale2();
-    void set_scale2(double v);
+    double get_Scale2();
+    void set_Scale2(double v);
 };
 
-class GDIfcCartesianTransformationOperator3D : public GDIfcCartesianTransformationOperator {
-    GDCLASS(GDIfcCartesianTransformationOperator3D, GDIfcCartesianTransformationOperator)
+class IfcCartesianTransformationOperator3D : public IfcCartesianTransformationOperator {
+    GDCLASS(IfcCartesianTransformationOperator3D, IfcCartesianTransformationOperator)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_axis3();
-    void set_axis3(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Axis3();
+    void set_Axis3(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcCartesianTransformationOperator3DnonUniform : public GDIfcCartesianTransformationOperator3D {
-    GDCLASS(GDIfcCartesianTransformationOperator3DnonUniform, GDIfcCartesianTransformationOperator3D)
+class IfcCartesianTransformationOperator3DnonUniform : public IfcCartesianTransformationOperator3D {
+    GDCLASS(IfcCartesianTransformationOperator3DnonUniform, IfcCartesianTransformationOperator3D)
 protected:
     static void _bind_methods();
 public:
-    double get_scale2();
-    void set_scale2(double v);
-    double get_scale3();
-    void set_scale3(double v);
+    double get_Scale2();
+    void set_Scale2(double v);
+    double get_Scale3();
+    void set_Scale3(double v);
 };
 
-class GDIfcCenterLineProfileDef : public GDIfcArbitraryOpenProfileDef {
-    GDCLASS(GDIfcCenterLineProfileDef, GDIfcArbitraryOpenProfileDef)
+class IfcCenterLineProfileDef : public IfcArbitraryOpenProfileDef {
+    GDCLASS(IfcCenterLineProfileDef, IfcArbitraryOpenProfileDef)
 protected:
     static void _bind_methods();
 public:
-    double get_thickness();
-    void set_thickness(double v);
+    double get_Thickness();
+    void set_Thickness(double v);
 };
 
-class GDIfcChiller : public GDIfcEnergyConversionDevice {
-    GDCLASS(GDIfcChiller, GDIfcEnergyConversionDevice)
+class IfcChiller : public IfcEnergyConversionDevice {
+    GDCLASS(IfcChiller, IfcEnergyConversionDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcChillerType : public GDIfcEnergyConversionDeviceType {
-    GDCLASS(GDIfcChillerType, GDIfcEnergyConversionDeviceType)
+class IfcChillerType : public IfcEnergyConversionDeviceType {
+    GDCLASS(IfcChillerType, IfcEnergyConversionDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcChimney : public GDIfcBuiltElement {
-    GDCLASS(GDIfcChimney, GDIfcBuiltElement)
+class IfcChimney : public IfcBuiltElement {
+    GDCLASS(IfcChimney, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcChimneyType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcChimneyType, GDIfcBuiltElementType)
+class IfcChimneyType : public IfcBuiltElementType {
+    GDCLASS(IfcChimneyType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcConic : public GDIfcCurve {
-    GDCLASS(GDIfcConic, GDIfcCurve)
+class IfcConic : public IfcCurve {
+    GDCLASS(IfcConic, IfcCurve)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_position();
-    void set_position(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Position();
+    void set_Position(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcCircle : public GDIfcConic {
-    GDCLASS(GDIfcCircle, GDIfcConic)
+class IfcCircle : public IfcConic {
+    GDCLASS(IfcCircle, IfcConic)
 protected:
     static void _bind_methods();
 public:
-    double get_radius();
-    void set_radius(double v);
+    double get_Radius();
+    void set_Radius(double v);
 };
 
-class GDIfcCircleProfileDef : public GDIfcParameterizedProfileDef {
-    GDCLASS(GDIfcCircleProfileDef, GDIfcParameterizedProfileDef)
+class IfcCircleProfileDef : public IfcParameterizedProfileDef {
+    GDCLASS(IfcCircleProfileDef, IfcParameterizedProfileDef)
 protected:
     static void _bind_methods();
 public:
-    double get_radius();
-    void set_radius(double v);
+    double get_Radius();
+    void set_Radius(double v);
 };
 
-class GDIfcCircleHollowProfileDef : public GDIfcCircleProfileDef {
-    GDCLASS(GDIfcCircleHollowProfileDef, GDIfcCircleProfileDef)
+class IfcCircleHollowProfileDef : public IfcCircleProfileDef {
+    GDCLASS(IfcCircleHollowProfileDef, IfcCircleProfileDef)
 protected:
     static void _bind_methods();
 public:
-    double get_wall_thickness();
-    void set_wall_thickness(double v);
+    double get_WallThickness();
+    void set_WallThickness(double v);
 };
 
-class GDIfcCivilElement : public GDIfcElement {
-    GDCLASS(GDIfcCivilElement, GDIfcElement)
+class IfcCivilElement : public IfcElement {
+    GDCLASS(IfcCivilElement, IfcElement)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcCivilElementType : public GDIfcElementType {
-    GDCLASS(GDIfcCivilElementType, GDIfcElementType)
+class IfcCivilElementType : public IfcElementType {
+    GDCLASS(IfcCivilElementType, IfcElementType)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcExternalInformation : public GDIFCEntityBase {
-    GDCLASS(GDIfcExternalInformation, GDIFCEntityBase)
+class IfcExternalInformation : public GDIFCEntityBase {
+    GDCLASS(IfcExternalInformation, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcClassification : public GDIfcExternalInformation {
-    GDCLASS(GDIfcClassification, GDIfcExternalInformation)
+class IfcClassification : public IfcExternalInformation {
+    GDCLASS(IfcClassification, IfcExternalInformation)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_source();
-    void set_source(godot::String v);
-    godot::String get_edition();
-    void set_edition(godot::String v);
-    godot::String get_edition_date();
-    void set_edition_date(godot::String v);
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    godot::String get_specification();
-    void set_specification(godot::String v);
-    godot::PackedStringArray get_reference_tokens();
-    void set_reference_tokens(godot::PackedStringArray v);
+    godot::String get_Source();
+    void set_Source(godot::String v);
+    godot::String get_Edition();
+    void set_Edition(godot::String v);
+    godot::String get_EditionDate();
+    void set_EditionDate(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    godot::String get_Specification();
+    void set_Specification(godot::String v);
+    godot::PackedStringArray get_ReferenceTokens();
+    void set_ReferenceTokens(godot::PackedStringArray v);
 };
 
-class GDIfcExternalReference : public GDIFCEntityBase {
-    GDCLASS(GDIfcExternalReference, GDIFCEntityBase)
+class IfcExternalReference : public GDIFCEntityBase {
+    GDCLASS(IfcExternalReference, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_location();
-    void set_location(godot::String v);
-    godot::String get_identification();
-    void set_identification(godot::String v);
-    godot::String get_name();
-    void set_name(godot::String v);
+    godot::String get_Location();
+    void set_Location(godot::String v);
+    godot::String get_Identification();
+    void set_Identification(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
 };
 
-class GDIfcClassificationReference : public GDIfcExternalReference {
-    GDCLASS(GDIfcClassificationReference, GDIfcExternalReference)
+class IfcClassificationReference : public IfcExternalReference {
+    GDCLASS(IfcClassificationReference, IfcExternalReference)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_referenced_source();
-    void set_referenced_source(Ref<GDIFCEntityBase> v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    godot::String get_sort();
-    void set_sort(godot::String v);
+    Ref<GDIFCEntityBase> get_ReferencedSource();
+    void set_ReferencedSource(Ref<GDIFCEntityBase> v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    godot::String get_Sort();
+    void set_Sort(godot::String v);
 };
 
-class GDIfcConnectedFaceSet : public GDIfcTopologicalRepresentationItem {
-    GDCLASS(GDIfcConnectedFaceSet, GDIfcTopologicalRepresentationItem)
+class IfcConnectedFaceSet : public IfcTopologicalRepresentationItem {
+    GDCLASS(IfcConnectedFaceSet, IfcTopologicalRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_cfs_faces();
-    void set_cfs_faces(godot::Array v);
+    godot::Array get_CfsFaces();
+    void set_CfsFaces(godot::Array v);
 };
 
-class GDIfcClosedShell : public GDIfcConnectedFaceSet {
-    GDCLASS(GDIfcClosedShell, GDIfcConnectedFaceSet)
+class IfcClosedShell : public IfcConnectedFaceSet {
+    GDCLASS(IfcClosedShell, IfcConnectedFaceSet)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcSpiral : public GDIfcCurve {
-    GDCLASS(GDIfcSpiral, GDIfcCurve)
+class IfcSpiral : public IfcCurve {
+    GDCLASS(IfcSpiral, IfcCurve)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_position();
-    void set_position(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Position();
+    void set_Position(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcClothoid : public GDIfcSpiral {
-    GDCLASS(GDIfcClothoid, GDIfcSpiral)
+class IfcClothoid : public IfcSpiral {
+    GDCLASS(IfcClothoid, IfcSpiral)
 protected:
     static void _bind_methods();
 public:
-    double get_clothoid_constant();
-    void set_clothoid_constant(double v);
+    double get_ClothoidConstant();
+    void set_ClothoidConstant(double v);
 };
 
-class GDIfcCoil : public GDIfcEnergyConversionDevice {
-    GDCLASS(GDIfcCoil, GDIfcEnergyConversionDevice)
+class IfcCoil : public IfcEnergyConversionDevice {
+    GDCLASS(IfcCoil, IfcEnergyConversionDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCoilType : public GDIfcEnergyConversionDeviceType {
-    GDCLASS(GDIfcCoilType, GDIfcEnergyConversionDeviceType)
+class IfcCoilType : public IfcEnergyConversionDeviceType {
+    GDCLASS(IfcCoilType, IfcEnergyConversionDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcColourSpecification : public GDIfcPresentationItem {
-    GDCLASS(GDIfcColourSpecification, GDIfcPresentationItem)
+class IfcColourSpecification : public IfcPresentationItem {
+    GDCLASS(IfcColourSpecification, IfcPresentationItem)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
 };
 
-class GDIfcColourRgb : public GDIfcColourSpecification {
-    GDCLASS(GDIfcColourRgb, GDIfcColourSpecification)
+class IfcColourRgb : public IfcColourSpecification {
+    GDCLASS(IfcColourRgb, IfcColourSpecification)
 protected:
     static void _bind_methods();
 public:
-    double get_red();
-    void set_red(double v);
-    double get_green();
-    void set_green(double v);
-    double get_blue();
-    void set_blue(double v);
+    double get_Red();
+    void set_Red(double v);
+    double get_Green();
+    void set_Green(double v);
+    double get_Blue();
+    void set_Blue(double v);
 };
 
-class GDIfcColourRgbList : public GDIfcPresentationItem {
-    GDCLASS(GDIfcColourRgbList, GDIfcPresentationItem)
+class IfcColourRgbList : public IfcPresentationItem {
+    GDCLASS(IfcColourRgbList, IfcPresentationItem)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_colour_list();
+    godot::Array get_ColourList();
 };
 
-class GDIfcColumn : public GDIfcBuiltElement {
-    GDCLASS(GDIfcColumn, GDIfcBuiltElement)
+class IfcColumn : public IfcBuiltElement {
+    GDCLASS(IfcColumn, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcColumnType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcColumnType, GDIfcBuiltElementType)
+class IfcColumnType : public IfcBuiltElementType {
+    GDCLASS(IfcColumnType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCommunicationsAppliance : public GDIfcFlowTerminal {
-    GDCLASS(GDIfcCommunicationsAppliance, GDIfcFlowTerminal)
+class IfcCommunicationsAppliance : public IfcFlowTerminal {
+    GDCLASS(IfcCommunicationsAppliance, IfcFlowTerminal)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCommunicationsApplianceType : public GDIfcFlowTerminalType {
-    GDCLASS(GDIfcCommunicationsApplianceType, GDIfcFlowTerminalType)
+class IfcCommunicationsApplianceType : public IfcFlowTerminalType {
+    GDCLASS(IfcCommunicationsApplianceType, IfcFlowTerminalType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcPropertyAbstraction : public GDIFCEntityBase {
-    GDCLASS(GDIfcPropertyAbstraction, GDIFCEntityBase)
+class IfcPropertyAbstraction : public GDIFCEntityBase {
+    GDCLASS(IfcPropertyAbstraction, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcProperty : public GDIfcPropertyAbstraction {
-    GDCLASS(GDIfcProperty, GDIfcPropertyAbstraction)
+class IfcProperty : public IfcPropertyAbstraction {
+    GDCLASS(IfcProperty, IfcPropertyAbstraction)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_specification();
-    void set_specification(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Specification();
+    void set_Specification(godot::String v);
 };
 
-class GDIfcComplexProperty : public GDIfcProperty {
-    GDCLASS(GDIfcComplexProperty, GDIfcProperty)
+class IfcComplexProperty : public IfcProperty {
+    GDCLASS(IfcComplexProperty, IfcProperty)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_usage_name();
-    void set_usage_name(godot::String v);
-    godot::Array get_has_properties();
-    void set_has_properties(godot::Array v);
+    godot::String get_UsageName();
+    void set_UsageName(godot::String v);
+    godot::Array get_HasProperties();
+    void set_HasProperties(godot::Array v);
 };
 
-class GDIfcPropertyDefinition : public GDIfcRoot {
-    GDCLASS(GDIfcPropertyDefinition, GDIfcRoot)
+class IfcPropertyDefinition : public IfcRoot {
+    GDCLASS(IfcPropertyDefinition, IfcRoot)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcPropertyTemplateDefinition : public GDIfcPropertyDefinition {
-    GDCLASS(GDIfcPropertyTemplateDefinition, GDIfcPropertyDefinition)
+class IfcPropertyTemplateDefinition : public IfcPropertyDefinition {
+    GDCLASS(IfcPropertyTemplateDefinition, IfcPropertyDefinition)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcPropertyTemplate : public GDIfcPropertyTemplateDefinition {
-    GDCLASS(GDIfcPropertyTemplate, GDIfcPropertyTemplateDefinition)
+class IfcPropertyTemplate : public IfcPropertyTemplateDefinition {
+    GDCLASS(IfcPropertyTemplate, IfcPropertyTemplateDefinition)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcComplexPropertyTemplate : public GDIfcPropertyTemplate {
-    GDCLASS(GDIfcComplexPropertyTemplate, GDIfcPropertyTemplate)
+class IfcComplexPropertyTemplate : public IfcPropertyTemplate {
+    GDCLASS(IfcComplexPropertyTemplate, IfcPropertyTemplate)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_usage_name();
-    void set_usage_name(godot::String v);
-    godot::String get_template_type();
-    void set_template_type(godot::String v);
-    godot::Array get_has_property_templates();
-    void set_has_property_templates(godot::Array v);
+    godot::String get_UsageName();
+    void set_UsageName(godot::String v);
+    godot::String get_TemplateType();
+    void set_TemplateType(godot::String v);
+    godot::Array get_HasPropertyTemplates();
+    void set_HasPropertyTemplates(godot::Array v);
 };
 
-class GDIfcSegment : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcSegment, GDIfcGeometricRepresentationItem)
+class IfcSegment : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcSegment, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_transition();
-    void set_transition(godot::String v);
+    godot::String get_Transition();
+    void set_Transition(godot::String v);
 };
 
-class GDIfcCompositeCurveSegment : public GDIfcSegment {
-    GDCLASS(GDIfcCompositeCurveSegment, GDIfcSegment)
+class IfcCompositeCurveSegment : public IfcSegment {
+    GDCLASS(IfcCompositeCurveSegment, IfcSegment)
 protected:
     static void _bind_methods();
 public:
-    bool get_same_sense();
-    void set_same_sense(bool v);
-    Ref<GDIFCEntityBase> get_parent_curve();
-    void set_parent_curve(Ref<GDIFCEntityBase> v);
+    bool get_SameSense();
+    void set_SameSense(bool v);
+    Ref<GDIFCEntityBase> get_ParentCurve();
+    void set_ParentCurve(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcCompositeProfileDef : public GDIfcProfileDef {
-    GDCLASS(GDIfcCompositeProfileDef, GDIfcProfileDef)
+class IfcCompositeProfileDef : public IfcProfileDef {
+    GDCLASS(IfcCompositeProfileDef, IfcProfileDef)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_profiles();
-    void set_profiles(godot::Array v);
-    godot::String get_label();
-    void set_label(godot::String v);
+    godot::Array get_Profiles();
+    void set_Profiles(godot::Array v);
+    godot::String get_Label();
+    void set_Label(godot::String v);
 };
 
-class GDIfcFlowMovingDevice : public GDIfcDistributionFlowElement {
-    GDCLASS(GDIfcFlowMovingDevice, GDIfcDistributionFlowElement)
+class IfcFlowMovingDevice : public IfcDistributionFlowElement {
+    GDCLASS(IfcFlowMovingDevice, IfcDistributionFlowElement)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcCompressor : public GDIfcFlowMovingDevice {
-    GDCLASS(GDIfcCompressor, GDIfcFlowMovingDevice)
+class IfcCompressor : public IfcFlowMovingDevice {
+    GDCLASS(IfcCompressor, IfcFlowMovingDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFlowMovingDeviceType : public GDIfcDistributionFlowElementType {
-    GDCLASS(GDIfcFlowMovingDeviceType, GDIfcDistributionFlowElementType)
+class IfcFlowMovingDeviceType : public IfcDistributionFlowElementType {
+    GDCLASS(IfcFlowMovingDeviceType, IfcDistributionFlowElementType)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcCompressorType : public GDIfcFlowMovingDeviceType {
-    GDCLASS(GDIfcCompressorType, GDIfcFlowMovingDeviceType)
+class IfcCompressorType : public IfcFlowMovingDeviceType {
+    GDCLASS(IfcCompressorType, IfcFlowMovingDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCondenser : public GDIfcEnergyConversionDevice {
-    GDCLASS(GDIfcCondenser, GDIfcEnergyConversionDevice)
+class IfcCondenser : public IfcEnergyConversionDevice {
+    GDCLASS(IfcCondenser, IfcEnergyConversionDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCondenserType : public GDIfcEnergyConversionDeviceType {
-    GDCLASS(GDIfcCondenserType, GDIfcEnergyConversionDeviceType)
+class IfcCondenserType : public IfcEnergyConversionDeviceType {
+    GDCLASS(IfcCondenserType, IfcEnergyConversionDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcConnectionGeometry : public GDIFCEntityBase {
-    GDCLASS(GDIfcConnectionGeometry, GDIFCEntityBase)
+class IfcConnectionGeometry : public GDIFCEntityBase {
+    GDCLASS(IfcConnectionGeometry, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcConnectionCurveGeometry : public GDIfcConnectionGeometry {
-    GDCLASS(GDIfcConnectionCurveGeometry, GDIfcConnectionGeometry)
+class IfcConnectionCurveGeometry : public IfcConnectionGeometry {
+    GDCLASS(IfcConnectionCurveGeometry, IfcConnectionGeometry)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_curve_on_relating_element();
-    void set_curve_on_relating_element(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_curve_on_related_element();
-    void set_curve_on_related_element(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_CurveOnRelatingElement();
+    void set_CurveOnRelatingElement(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_CurveOnRelatedElement();
+    void set_CurveOnRelatedElement(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcConnectionPointGeometry : public GDIfcConnectionGeometry {
-    GDCLASS(GDIfcConnectionPointGeometry, GDIfcConnectionGeometry)
+class IfcConnectionPointGeometry : public IfcConnectionGeometry {
+    GDCLASS(IfcConnectionPointGeometry, IfcConnectionGeometry)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_point_on_relating_element();
-    void set_point_on_relating_element(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_point_on_related_element();
-    void set_point_on_related_element(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_PointOnRelatingElement();
+    void set_PointOnRelatingElement(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_PointOnRelatedElement();
+    void set_PointOnRelatedElement(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcConnectionPointEccentricity : public GDIfcConnectionPointGeometry {
-    GDCLASS(GDIfcConnectionPointEccentricity, GDIfcConnectionPointGeometry)
+class IfcConnectionPointEccentricity : public IfcConnectionPointGeometry {
+    GDCLASS(IfcConnectionPointEccentricity, IfcConnectionPointGeometry)
 protected:
     static void _bind_methods();
 public:
-    double get_eccentricity_in_x();
-    void set_eccentricity_in_x(double v);
-    double get_eccentricity_in_y();
-    void set_eccentricity_in_y(double v);
-    double get_eccentricity_in_z();
-    void set_eccentricity_in_z(double v);
+    double get_EccentricityInX();
+    void set_EccentricityInX(double v);
+    double get_EccentricityInY();
+    void set_EccentricityInY(double v);
+    double get_EccentricityInZ();
+    void set_EccentricityInZ(double v);
 };
 
-class GDIfcConnectionSurfaceGeometry : public GDIfcConnectionGeometry {
-    GDCLASS(GDIfcConnectionSurfaceGeometry, GDIfcConnectionGeometry)
+class IfcConnectionSurfaceGeometry : public IfcConnectionGeometry {
+    GDCLASS(IfcConnectionSurfaceGeometry, IfcConnectionGeometry)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_surface_on_relating_element();
-    void set_surface_on_relating_element(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_surface_on_related_element();
-    void set_surface_on_related_element(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_SurfaceOnRelatingElement();
+    void set_SurfaceOnRelatingElement(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_SurfaceOnRelatedElement();
+    void set_SurfaceOnRelatedElement(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcConnectionVolumeGeometry : public GDIfcConnectionGeometry {
-    GDCLASS(GDIfcConnectionVolumeGeometry, GDIfcConnectionGeometry)
+class IfcConnectionVolumeGeometry : public IfcConnectionGeometry {
+    GDCLASS(IfcConnectionVolumeGeometry, IfcConnectionGeometry)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_volume_on_relating_element();
-    void set_volume_on_relating_element(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_volume_on_related_element();
-    void set_volume_on_related_element(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_VolumeOnRelatingElement();
+    void set_VolumeOnRelatingElement(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_VolumeOnRelatedElement();
+    void set_VolumeOnRelatedElement(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcConstraint : public GDIFCEntityBase {
-    GDCLASS(GDIfcConstraint, GDIFCEntityBase)
+class IfcConstraint : public GDIFCEntityBase {
+    GDCLASS(IfcConstraint, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    godot::String get_constraint_grade();
-    void set_constraint_grade(godot::String v);
-    godot::String get_constraint_source();
-    void set_constraint_source(godot::String v);
-    Ref<GDIFCEntityBase> get_creating_actor();
-    void set_creating_actor(Ref<GDIFCEntityBase> v);
-    godot::String get_creation_time();
-    void set_creation_time(godot::String v);
-    godot::String get_user_defined_grade();
-    void set_user_defined_grade(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    godot::String get_ConstraintGrade();
+    void set_ConstraintGrade(godot::String v);
+    godot::String get_ConstraintSource();
+    void set_ConstraintSource(godot::String v);
+    Ref<GDIFCEntityBase> get_CreatingActor();
+    void set_CreatingActor(Ref<GDIFCEntityBase> v);
+    godot::String get_CreationTime();
+    void set_CreationTime(godot::String v);
+    godot::String get_UserDefinedGrade();
+    void set_UserDefinedGrade(godot::String v);
 };
 
-class GDIfcResource : public GDIfcObject {
-    GDCLASS(GDIfcResource, GDIfcObject)
+class IfcResource : public IfcObject {
+    GDCLASS(IfcResource, IfcObject)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_identification();
-    void set_identification(godot::String v);
-    godot::String get_long_description();
-    void set_long_description(godot::String v);
+    godot::String get_Identification();
+    void set_Identification(godot::String v);
+    godot::String get_LongDescription();
+    void set_LongDescription(godot::String v);
 };
 
-class GDIfcConstructionResource : public GDIfcResource {
-    GDCLASS(GDIfcConstructionResource, GDIfcResource)
+class IfcConstructionResource : public IfcResource {
+    GDCLASS(IfcConstructionResource, IfcResource)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_usage();
-    void set_usage(Ref<GDIFCEntityBase> v);
-    godot::Array get_base_costs();
-    void set_base_costs(godot::Array v);
-    Ref<GDIFCEntityBase> get_base_quantity();
-    void set_base_quantity(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Usage();
+    void set_Usage(Ref<GDIFCEntityBase> v);
+    godot::Array get_BaseCosts();
+    void set_BaseCosts(godot::Array v);
+    Ref<GDIFCEntityBase> get_BaseQuantity();
+    void set_BaseQuantity(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcConstructionEquipmentResource : public GDIfcConstructionResource {
-    GDCLASS(GDIfcConstructionEquipmentResource, GDIfcConstructionResource)
+class IfcConstructionEquipmentResource : public IfcConstructionResource {
+    GDCLASS(IfcConstructionEquipmentResource, IfcConstructionResource)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcTypeResource : public GDIfcTypeObject {
-    GDCLASS(GDIfcTypeResource, GDIfcTypeObject)
+class IfcTypeResource : public IfcTypeObject {
+    GDCLASS(IfcTypeResource, IfcTypeObject)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_identification();
-    void set_identification(godot::String v);
-    godot::String get_long_description();
-    void set_long_description(godot::String v);
-    godot::String get_resource_type();
-    void set_resource_type(godot::String v);
+    godot::String get_Identification();
+    void set_Identification(godot::String v);
+    godot::String get_LongDescription();
+    void set_LongDescription(godot::String v);
+    godot::String get_ResourceType();
+    void set_ResourceType(godot::String v);
 };
 
-class GDIfcConstructionResourceType : public GDIfcTypeResource {
-    GDCLASS(GDIfcConstructionResourceType, GDIfcTypeResource)
+class IfcConstructionResourceType : public IfcTypeResource {
+    GDCLASS(IfcConstructionResourceType, IfcTypeResource)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_base_costs();
-    void set_base_costs(godot::Array v);
-    Ref<GDIFCEntityBase> get_base_quantity();
-    void set_base_quantity(Ref<GDIFCEntityBase> v);
+    godot::Array get_BaseCosts();
+    void set_BaseCosts(godot::Array v);
+    Ref<GDIFCEntityBase> get_BaseQuantity();
+    void set_BaseQuantity(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcConstructionEquipmentResourceType : public GDIfcConstructionResourceType {
-    GDCLASS(GDIfcConstructionEquipmentResourceType, GDIfcConstructionResourceType)
+class IfcConstructionEquipmentResourceType : public IfcConstructionResourceType {
+    GDCLASS(IfcConstructionEquipmentResourceType, IfcConstructionResourceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcConstructionMaterialResource : public GDIfcConstructionResource {
-    GDCLASS(GDIfcConstructionMaterialResource, GDIfcConstructionResource)
+class IfcConstructionMaterialResource : public IfcConstructionResource {
+    GDCLASS(IfcConstructionMaterialResource, IfcConstructionResource)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcConstructionMaterialResourceType : public GDIfcConstructionResourceType {
-    GDCLASS(GDIfcConstructionMaterialResourceType, GDIfcConstructionResourceType)
+class IfcConstructionMaterialResourceType : public IfcConstructionResourceType {
+    GDCLASS(IfcConstructionMaterialResourceType, IfcConstructionResourceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcConstructionProductResource : public GDIfcConstructionResource {
-    GDCLASS(GDIfcConstructionProductResource, GDIfcConstructionResource)
+class IfcConstructionProductResource : public IfcConstructionResource {
+    GDCLASS(IfcConstructionProductResource, IfcConstructionResource)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcConstructionProductResourceType : public GDIfcConstructionResourceType {
-    GDCLASS(GDIfcConstructionProductResourceType, GDIfcConstructionResourceType)
+class IfcConstructionProductResourceType : public IfcConstructionResourceType {
+    GDCLASS(IfcConstructionProductResourceType, IfcConstructionResourceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcContext : public GDIfcObjectDefinition {
-    GDCLASS(GDIfcContext, GDIfcObjectDefinition)
+class IfcContext : public IfcObjectDefinition {
+    GDCLASS(IfcContext, IfcObjectDefinition)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_object_type();
-    void set_object_type(godot::String v);
-    godot::String get_long_name();
-    void set_long_name(godot::String v);
-    godot::String get_phase();
-    void set_phase(godot::String v);
-    godot::Array get_representation_contexts();
-    void set_representation_contexts(godot::Array v);
-    Ref<GDIFCEntityBase> get_units_in_context();
-    void set_units_in_context(Ref<GDIFCEntityBase> v);
+    godot::String get_ObjectType();
+    void set_ObjectType(godot::String v);
+    godot::String get_LongName();
+    void set_LongName(godot::String v);
+    godot::String get_Phase();
+    void set_Phase(godot::String v);
+    godot::Array get_RepresentationContexts();
+    void set_RepresentationContexts(godot::Array v);
+    Ref<GDIFCEntityBase> get_UnitsInContext();
+    void set_UnitsInContext(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcNamedUnit : public GDIFCEntityBase {
-    GDCLASS(GDIfcNamedUnit, GDIFCEntityBase)
+class IfcNamedUnit : public GDIFCEntityBase {
+    GDCLASS(IfcNamedUnit, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_dimensions();
-    void set_dimensions(Ref<GDIFCEntityBase> v);
-    godot::String get_unit_type();
-    void set_unit_type(godot::String v);
+    Ref<GDIFCEntityBase> get_Dimensions();
+    void set_Dimensions(Ref<GDIFCEntityBase> v);
+    godot::String get_UnitType();
+    void set_UnitType(godot::String v);
 };
 
-class GDIfcContextDependentUnit : public GDIfcNamedUnit {
-    GDCLASS(GDIfcContextDependentUnit, GDIfcNamedUnit)
+class IfcContextDependentUnit : public IfcNamedUnit {
+    GDCLASS(IfcContextDependentUnit, IfcNamedUnit)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
 };
 
-class GDIfcController : public GDIfcDistributionControlElement {
-    GDCLASS(GDIfcController, GDIfcDistributionControlElement)
+class IfcController : public IfcDistributionControlElement {
+    GDCLASS(IfcController, IfcDistributionControlElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcControllerType : public GDIfcDistributionControlElementType {
-    GDCLASS(GDIfcControllerType, GDIfcDistributionControlElementType)
+class IfcControllerType : public IfcDistributionControlElementType {
+    GDCLASS(IfcControllerType, IfcDistributionControlElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcConversionBasedUnit : public GDIfcNamedUnit {
-    GDCLASS(GDIfcConversionBasedUnit, GDIfcNamedUnit)
+class IfcConversionBasedUnit : public IfcNamedUnit {
+    GDCLASS(IfcConversionBasedUnit, IfcNamedUnit)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    Ref<GDIFCEntityBase> get_conversion_factor();
-    void set_conversion_factor(Ref<GDIFCEntityBase> v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    Ref<GDIFCEntityBase> get_ConversionFactor();
+    void set_ConversionFactor(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcConversionBasedUnitWithOffset : public GDIfcConversionBasedUnit {
-    GDCLASS(GDIfcConversionBasedUnitWithOffset, GDIfcConversionBasedUnit)
+class IfcConversionBasedUnitWithOffset : public IfcConversionBasedUnit {
+    GDCLASS(IfcConversionBasedUnitWithOffset, IfcConversionBasedUnit)
 protected:
     static void _bind_methods();
 public:
-    double get_conversion_offset();
-    void set_conversion_offset(double v);
+    double get_ConversionOffset();
+    void set_ConversionOffset(double v);
 };
 
-class GDIfcConveyorSegment : public GDIfcFlowSegment {
-    GDCLASS(GDIfcConveyorSegment, GDIfcFlowSegment)
+class IfcConveyorSegment : public IfcFlowSegment {
+    GDCLASS(IfcConveyorSegment, IfcFlowSegment)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcConveyorSegmentType : public GDIfcFlowSegmentType {
-    GDCLASS(GDIfcConveyorSegmentType, GDIfcFlowSegmentType)
+class IfcConveyorSegmentType : public IfcFlowSegmentType {
+    GDCLASS(IfcConveyorSegmentType, IfcFlowSegmentType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCooledBeam : public GDIfcEnergyConversionDevice {
-    GDCLASS(GDIfcCooledBeam, GDIfcEnergyConversionDevice)
+class IfcCooledBeam : public IfcEnergyConversionDevice {
+    GDCLASS(IfcCooledBeam, IfcEnergyConversionDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCooledBeamType : public GDIfcEnergyConversionDeviceType {
-    GDCLASS(GDIfcCooledBeamType, GDIfcEnergyConversionDeviceType)
+class IfcCooledBeamType : public IfcEnergyConversionDeviceType {
+    GDCLASS(IfcCooledBeamType, IfcEnergyConversionDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCoolingTower : public GDIfcEnergyConversionDevice {
-    GDCLASS(GDIfcCoolingTower, GDIfcEnergyConversionDevice)
+class IfcCoolingTower : public IfcEnergyConversionDevice {
+    GDCLASS(IfcCoolingTower, IfcEnergyConversionDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCoolingTowerType : public GDIfcEnergyConversionDeviceType {
-    GDCLASS(GDIfcCoolingTowerType, GDIfcEnergyConversionDeviceType)
+class IfcCoolingTowerType : public IfcEnergyConversionDeviceType {
+    GDCLASS(IfcCoolingTowerType, IfcEnergyConversionDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCoordinateOperation : public GDIFCEntityBase {
-    GDCLASS(GDIfcCoordinateOperation, GDIFCEntityBase)
+class IfcCoordinateOperation : public GDIFCEntityBase {
+    GDCLASS(IfcCoordinateOperation, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_source_crs();
-    void set_source_crs(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_target_crs();
-    void set_target_crs(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_SourceCRS();
+    void set_SourceCRS(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TargetCRS();
+    void set_TargetCRS(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcCoordinateReferenceSystem : public GDIFCEntityBase {
-    GDCLASS(GDIfcCoordinateReferenceSystem, GDIFCEntityBase)
+class IfcCoordinateReferenceSystem : public GDIFCEntityBase {
+    GDCLASS(IfcCoordinateReferenceSystem, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    godot::String get_geodetic_datum();
-    void set_geodetic_datum(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    godot::String get_GeodeticDatum();
+    void set_GeodeticDatum(godot::String v);
 };
 
-class GDIfcCosineSpiral : public GDIfcSpiral {
-    GDCLASS(GDIfcCosineSpiral, GDIfcSpiral)
+class IfcCosineSpiral : public IfcSpiral {
+    GDCLASS(IfcCosineSpiral, IfcSpiral)
 protected:
     static void _bind_methods();
 public:
-    double get_cosine_term();
-    void set_cosine_term(double v);
-    double get_constant_term();
-    void set_constant_term(double v);
+    double get_CosineTerm();
+    void set_CosineTerm(double v);
+    double get_ConstantTerm();
+    void set_ConstantTerm(double v);
 };
 
-class GDIfcCostItem : public GDIfcControl {
-    GDCLASS(GDIfcCostItem, GDIfcControl)
+class IfcCostItem : public IfcControl {
+    GDCLASS(IfcCostItem, IfcControl)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    godot::Array get_cost_values();
-    void set_cost_values(godot::Array v);
-    godot::Array get_cost_quantities();
-    void set_cost_quantities(godot::Array v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    godot::Array get_CostValues();
+    void set_CostValues(godot::Array v);
+    godot::Array get_CostQuantities();
+    void set_CostQuantities(godot::Array v);
 };
 
-class GDIfcCostSchedule : public GDIfcControl {
-    GDCLASS(GDIfcCostSchedule, GDIfcControl)
+class IfcCostSchedule : public IfcControl {
+    GDCLASS(IfcCostSchedule, IfcControl)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    godot::String get_status();
-    void set_status(godot::String v);
-    godot::String get_submitted_on();
-    void set_submitted_on(godot::String v);
-    godot::String get_update_date();
-    void set_update_date(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    godot::String get_Status();
+    void set_Status(godot::String v);
+    godot::String get_SubmittedOn();
+    void set_SubmittedOn(godot::String v);
+    godot::String get_UpdateDate();
+    void set_UpdateDate(godot::String v);
 };
 
-class GDIfcCostValue : public GDIfcAppliedValue {
-    GDCLASS(GDIfcCostValue, GDIfcAppliedValue)
+class IfcCostValue : public IfcAppliedValue {
+    GDCLASS(IfcCostValue, IfcAppliedValue)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcCourse : public GDIfcBuiltElement {
-    GDCLASS(GDIfcCourse, GDIfcBuiltElement)
+class IfcCourse : public IfcBuiltElement {
+    GDCLASS(IfcCourse, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCourseType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcCourseType, GDIfcBuiltElementType)
+class IfcCourseType : public IfcBuiltElementType {
+    GDCLASS(IfcCourseType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCovering : public GDIfcBuiltElement {
-    GDCLASS(GDIfcCovering, GDIfcBuiltElement)
+class IfcCovering : public IfcBuiltElement {
+    GDCLASS(IfcCovering, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCoveringType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcCoveringType, GDIfcBuiltElementType)
+class IfcCoveringType : public IfcBuiltElementType {
+    GDCLASS(IfcCoveringType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCrewResource : public GDIfcConstructionResource {
-    GDCLASS(GDIfcCrewResource, GDIfcConstructionResource)
+class IfcCrewResource : public IfcConstructionResource {
+    GDCLASS(IfcCrewResource, IfcConstructionResource)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCrewResourceType : public GDIfcConstructionResourceType {
-    GDCLASS(GDIfcCrewResourceType, GDIfcConstructionResourceType)
+class IfcCrewResourceType : public IfcConstructionResourceType {
+    GDCLASS(IfcCrewResourceType, IfcConstructionResourceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCsgSolid : public GDIfcSolidModel {
-    GDCLASS(GDIfcCsgSolid, GDIfcSolidModel)
+class IfcCsgSolid : public IfcSolidModel {
+    GDCLASS(IfcCsgSolid, IfcSolidModel)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_tree_root_expression();
-    void set_tree_root_expression(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TreeRootExpression();
+    void set_TreeRootExpression(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcCurrencyRelationship : public GDIfcResourceLevelRelationship {
-    GDCLASS(GDIfcCurrencyRelationship, GDIfcResourceLevelRelationship)
+class IfcCurrencyRelationship : public IfcResourceLevelRelationship {
+    GDCLASS(IfcCurrencyRelationship, IfcResourceLevelRelationship)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_monetary_unit();
-    void set_relating_monetary_unit(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_related_monetary_unit();
-    void set_related_monetary_unit(Ref<GDIFCEntityBase> v);
-    double get_exchange_rate();
-    void set_exchange_rate(double v);
-    godot::String get_rate_date_time();
-    void set_rate_date_time(godot::String v);
-    Ref<GDIFCEntityBase> get_rate_source();
-    void set_rate_source(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingMonetaryUnit();
+    void set_RelatingMonetaryUnit(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatedMonetaryUnit();
+    void set_RelatedMonetaryUnit(Ref<GDIFCEntityBase> v);
+    double get_ExchangeRate();
+    void set_ExchangeRate(double v);
+    godot::String get_RateDateTime();
+    void set_RateDateTime(godot::String v);
+    Ref<GDIFCEntityBase> get_RateSource();
+    void set_RateSource(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcCurtainWall : public GDIfcBuiltElement {
-    GDCLASS(GDIfcCurtainWall, GDIfcBuiltElement)
+class IfcCurtainWall : public IfcBuiltElement {
+    GDCLASS(IfcCurtainWall, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCurtainWallType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcCurtainWallType, GDIfcBuiltElementType)
+class IfcCurtainWallType : public IfcBuiltElementType {
+    GDCLASS(IfcCurtainWallType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcCurveBoundedPlane : public GDIfcBoundedSurface {
-    GDCLASS(GDIfcCurveBoundedPlane, GDIfcBoundedSurface)
+class IfcCurveBoundedPlane : public IfcBoundedSurface {
+    GDCLASS(IfcCurveBoundedPlane, IfcBoundedSurface)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_basis_surface();
-    void set_basis_surface(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_outer_boundary();
-    void set_outer_boundary(Ref<GDIFCEntityBase> v);
-    godot::Array get_inner_boundaries();
-    void set_inner_boundaries(godot::Array v);
+    Ref<GDIFCEntityBase> get_BasisSurface();
+    void set_BasisSurface(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_OuterBoundary();
+    void set_OuterBoundary(Ref<GDIFCEntityBase> v);
+    godot::Array get_InnerBoundaries();
+    void set_InnerBoundaries(godot::Array v);
 };
 
-class GDIfcCurveBoundedSurface : public GDIfcBoundedSurface {
-    GDCLASS(GDIfcCurveBoundedSurface, GDIfcBoundedSurface)
+class IfcCurveBoundedSurface : public IfcBoundedSurface {
+    GDCLASS(IfcCurveBoundedSurface, IfcBoundedSurface)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_basis_surface();
-    void set_basis_surface(Ref<GDIFCEntityBase> v);
-    godot::Array get_boundaries();
-    void set_boundaries(godot::Array v);
-    bool get_implicit_outer();
-    void set_implicit_outer(bool v);
+    Ref<GDIFCEntityBase> get_BasisSurface();
+    void set_BasisSurface(Ref<GDIFCEntityBase> v);
+    godot::Array get_Boundaries();
+    void set_Boundaries(godot::Array v);
+    bool get_ImplicitOuter();
+    void set_ImplicitOuter(bool v);
 };
 
-class GDIfcCurveSegment : public GDIfcSegment {
-    GDCLASS(GDIfcCurveSegment, GDIfcSegment)
+class IfcCurveSegment : public IfcSegment {
+    GDCLASS(IfcCurveSegment, IfcSegment)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_placement();
-    void set_placement(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_segment_start();
-    void set_segment_start(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_segment_length();
-    void set_segment_length(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_parent_curve();
-    void set_parent_curve(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Placement();
+    void set_Placement(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_SegmentStart();
+    void set_SegmentStart(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_SegmentLength();
+    void set_SegmentLength(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_ParentCurve();
+    void set_ParentCurve(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcPresentationStyle : public GDIFCEntityBase {
-    GDCLASS(GDIfcPresentationStyle, GDIFCEntityBase)
+class IfcPresentationStyle : public GDIFCEntityBase {
+    GDCLASS(IfcPresentationStyle, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
 };
 
-class GDIfcCurveStyle : public GDIfcPresentationStyle {
-    GDCLASS(GDIfcCurveStyle, GDIfcPresentationStyle)
+class IfcCurveStyle : public IfcPresentationStyle {
+    GDCLASS(IfcCurveStyle, IfcPresentationStyle)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_curve_font();
-    void set_curve_font(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_curve_width();
-    void set_curve_width(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_curve_colour();
-    void set_curve_colour(Ref<GDIFCEntityBase> v);
-    bool get_model_or_draughting();
-    void set_model_or_draughting(bool v);
+    Ref<GDIFCEntityBase> get_CurveFont();
+    void set_CurveFont(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_CurveWidth();
+    void set_CurveWidth(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_CurveColour();
+    void set_CurveColour(Ref<GDIFCEntityBase> v);
+    bool get_ModelOrDraughting();
+    void set_ModelOrDraughting(bool v);
 };
 
-class GDIfcCurveStyleFont : public GDIfcPresentationItem {
-    GDCLASS(GDIfcCurveStyleFont, GDIfcPresentationItem)
+class IfcCurveStyleFont : public IfcPresentationItem {
+    GDCLASS(IfcCurveStyleFont, IfcPresentationItem)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::Array get_pattern_list();
-    void set_pattern_list(godot::Array v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::Array get_PatternList();
+    void set_PatternList(godot::Array v);
 };
 
-class GDIfcCurveStyleFontAndScaling : public GDIfcPresentationItem {
-    GDCLASS(GDIfcCurveStyleFontAndScaling, GDIfcPresentationItem)
+class IfcCurveStyleFontAndScaling : public IfcPresentationItem {
+    GDCLASS(IfcCurveStyleFontAndScaling, IfcPresentationItem)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    Ref<GDIFCEntityBase> get_curve_style_font();
-    void set_curve_style_font(Ref<GDIFCEntityBase> v);
-    double get_curve_font_scaling();
-    void set_curve_font_scaling(double v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    Ref<GDIFCEntityBase> get_CurveStyleFont();
+    void set_CurveStyleFont(Ref<GDIFCEntityBase> v);
+    double get_CurveFontScaling();
+    void set_CurveFontScaling(double v);
 };
 
-class GDIfcCurveStyleFontPattern : public GDIfcPresentationItem {
-    GDCLASS(GDIfcCurveStyleFontPattern, GDIfcPresentationItem)
+class IfcCurveStyleFontPattern : public IfcPresentationItem {
+    GDCLASS(IfcCurveStyleFontPattern, IfcPresentationItem)
 protected:
     static void _bind_methods();
 public:
-    double get_visible_segment_length();
-    void set_visible_segment_length(double v);
-    double get_invisible_segment_length();
-    void set_invisible_segment_length(double v);
+    double get_VisibleSegmentLength();
+    void set_VisibleSegmentLength(double v);
+    double get_InvisibleSegmentLength();
+    void set_InvisibleSegmentLength(double v);
 };
 
-class GDIfcElementarySurface : public GDIfcSurface {
-    GDCLASS(GDIfcElementarySurface, GDIfcSurface)
+class IfcElementarySurface : public IfcSurface {
+    GDCLASS(IfcElementarySurface, IfcSurface)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_position();
-    void set_position(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Position();
+    void set_Position(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcCylindricalSurface : public GDIfcElementarySurface {
-    GDCLASS(GDIfcCylindricalSurface, GDIfcElementarySurface)
+class IfcCylindricalSurface : public IfcElementarySurface {
+    GDCLASS(IfcCylindricalSurface, IfcElementarySurface)
 protected:
     static void _bind_methods();
 public:
-    double get_radius();
-    void set_radius(double v);
+    double get_Radius();
+    void set_Radius(double v);
 };
 
-class GDIfcDamper : public GDIfcFlowController {
-    GDCLASS(GDIfcDamper, GDIfcFlowController)
+class IfcDamper : public IfcFlowController {
+    GDCLASS(IfcDamper, IfcFlowController)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcDamperType : public GDIfcFlowControllerType {
-    GDCLASS(GDIfcDamperType, GDIfcFlowControllerType)
+class IfcDamperType : public IfcFlowControllerType {
+    GDCLASS(IfcDamperType, IfcFlowControllerType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcDerivedProfileDef : public GDIfcProfileDef {
-    GDCLASS(GDIfcDerivedProfileDef, GDIfcProfileDef)
+class IfcDerivedProfileDef : public IfcProfileDef {
+    GDCLASS(IfcDerivedProfileDef, IfcProfileDef)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_parent_profile();
-    void set_parent_profile(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_operator();
-    void set_operator(Ref<GDIFCEntityBase> v);
-    godot::String get_label();
-    void set_label(godot::String v);
+    Ref<GDIFCEntityBase> get_ParentProfile();
+    void set_ParentProfile(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Operator();
+    void set_Operator(Ref<GDIFCEntityBase> v);
+    godot::String get_Label();
+    void set_Label(godot::String v);
 };
 
-class GDIfcDerivedUnit : public GDIFCEntityBase {
-    GDCLASS(GDIfcDerivedUnit, GDIFCEntityBase)
+class IfcDerivedUnit : public GDIFCEntityBase {
+    GDCLASS(IfcDerivedUnit, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_elements();
-    void set_elements(godot::Array v);
-    godot::String get_unit_type();
-    void set_unit_type(godot::String v);
-    godot::String get_user_defined_type();
-    void set_user_defined_type(godot::String v);
-    godot::String get_name();
-    void set_name(godot::String v);
+    godot::Array get_Elements();
+    void set_Elements(godot::Array v);
+    godot::String get_UnitType();
+    void set_UnitType(godot::String v);
+    godot::String get_UserDefinedType();
+    void set_UserDefinedType(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
 };
 
-class GDIfcDerivedUnitElement : public GDIFCEntityBase {
-    GDCLASS(GDIfcDerivedUnitElement, GDIFCEntityBase)
+class IfcDerivedUnitElement : public GDIFCEntityBase {
+    GDCLASS(IfcDerivedUnitElement, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_unit();
-    void set_unit(Ref<GDIFCEntityBase> v);
-    int64_t get_exponent();
-    void set_exponent(int64_t v);
+    Ref<GDIFCEntityBase> get_Unit();
+    void set_Unit(Ref<GDIFCEntityBase> v);
+    int64_t get_Exponent();
+    void set_Exponent(int64_t v);
 };
 
-class GDIfcDimensionalExponents : public GDIFCEntityBase {
-    GDCLASS(GDIfcDimensionalExponents, GDIFCEntityBase)
+class IfcDimensionalExponents : public GDIFCEntityBase {
+    GDCLASS(IfcDimensionalExponents, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    int64_t get_length_exponent();
-    void set_length_exponent(int64_t v);
-    int64_t get_mass_exponent();
-    void set_mass_exponent(int64_t v);
-    int64_t get_time_exponent();
-    void set_time_exponent(int64_t v);
-    int64_t get_electric_current_exponent();
-    void set_electric_current_exponent(int64_t v);
-    int64_t get_thermodynamic_temperature_exponent();
-    void set_thermodynamic_temperature_exponent(int64_t v);
-    int64_t get_amount_of_substance_exponent();
-    void set_amount_of_substance_exponent(int64_t v);
-    int64_t get_luminous_intensity_exponent();
-    void set_luminous_intensity_exponent(int64_t v);
+    int64_t get_LengthExponent();
+    void set_LengthExponent(int64_t v);
+    int64_t get_MassExponent();
+    void set_MassExponent(int64_t v);
+    int64_t get_TimeExponent();
+    void set_TimeExponent(int64_t v);
+    int64_t get_ElectricCurrentExponent();
+    void set_ElectricCurrentExponent(int64_t v);
+    int64_t get_ThermodynamicTemperatureExponent();
+    void set_ThermodynamicTemperatureExponent(int64_t v);
+    int64_t get_AmountOfSubstanceExponent();
+    void set_AmountOfSubstanceExponent(int64_t v);
+    int64_t get_LuminousIntensityExponent();
+    void set_LuminousIntensityExponent(int64_t v);
 };
 
-class GDIfcDirection : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcDirection, GDIfcGeometricRepresentationItem)
+class IfcDirection : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcDirection, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    godot::PackedFloat64Array get_direction_ratios();
-    void set_direction_ratios(godot::PackedFloat64Array v);
+    godot::PackedFloat64Array get_DirectionRatios();
+    void set_DirectionRatios(godot::PackedFloat64Array v);
 };
 
-class GDIfcSweptAreaSolid : public GDIfcSolidModel {
-    GDCLASS(GDIfcSweptAreaSolid, GDIfcSolidModel)
+class IfcSweptAreaSolid : public IfcSolidModel {
+    GDCLASS(IfcSweptAreaSolid, IfcSolidModel)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_swept_area();
-    void set_swept_area(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_position();
-    void set_position(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_SweptArea();
+    void set_SweptArea(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Position();
+    void set_Position(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcDirectrixCurveSweptAreaSolid : public GDIfcSweptAreaSolid {
-    GDCLASS(GDIfcDirectrixCurveSweptAreaSolid, GDIfcSweptAreaSolid)
+class IfcDirectrixCurveSweptAreaSolid : public IfcSweptAreaSolid {
+    GDCLASS(IfcDirectrixCurveSweptAreaSolid, IfcSweptAreaSolid)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_directrix();
-    void set_directrix(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_start_param();
-    void set_start_param(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_end_param();
-    void set_end_param(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Directrix();
+    void set_Directrix(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_StartParam();
+    void set_StartParam(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_EndParam();
+    void set_EndParam(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcFixedReferenceSweptAreaSolid : public GDIfcDirectrixCurveSweptAreaSolid {
-    GDCLASS(GDIfcFixedReferenceSweptAreaSolid, GDIfcDirectrixCurveSweptAreaSolid)
+class IfcFixedReferenceSweptAreaSolid : public IfcDirectrixCurveSweptAreaSolid {
+    GDCLASS(IfcFixedReferenceSweptAreaSolid, IfcDirectrixCurveSweptAreaSolid)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_fixed_reference();
-    void set_fixed_reference(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_FixedReference();
+    void set_FixedReference(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcDirectrixDerivedReferenceSweptAreaSolid : public GDIfcFixedReferenceSweptAreaSolid {
-    GDCLASS(GDIfcDirectrixDerivedReferenceSweptAreaSolid, GDIfcFixedReferenceSweptAreaSolid)
+class IfcDirectrixDerivedReferenceSweptAreaSolid : public IfcFixedReferenceSweptAreaSolid {
+    GDCLASS(IfcDirectrixDerivedReferenceSweptAreaSolid, IfcFixedReferenceSweptAreaSolid)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcDiscreteAccessory : public GDIfcElementComponent {
-    GDCLASS(GDIfcDiscreteAccessory, GDIfcElementComponent)
+class IfcDiscreteAccessory : public IfcElementComponent {
+    GDCLASS(IfcDiscreteAccessory, IfcElementComponent)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcDiscreteAccessoryType : public GDIfcElementComponentType {
-    GDCLASS(GDIfcDiscreteAccessoryType, GDIfcElementComponentType)
+class IfcDiscreteAccessoryType : public IfcElementComponentType {
+    GDCLASS(IfcDiscreteAccessoryType, IfcElementComponentType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcDistributionBoard : public GDIfcFlowController {
-    GDCLASS(GDIfcDistributionBoard, GDIfcFlowController)
+class IfcDistributionBoard : public IfcFlowController {
+    GDCLASS(IfcDistributionBoard, IfcFlowController)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcDistributionBoardType : public GDIfcFlowControllerType {
-    GDCLASS(GDIfcDistributionBoardType, GDIfcFlowControllerType)
+class IfcDistributionBoardType : public IfcFlowControllerType {
+    GDCLASS(IfcDistributionBoardType, IfcFlowControllerType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcDistributionChamberElement : public GDIfcDistributionFlowElement {
-    GDCLASS(GDIfcDistributionChamberElement, GDIfcDistributionFlowElement)
+class IfcDistributionChamberElement : public IfcDistributionFlowElement {
+    GDCLASS(IfcDistributionChamberElement, IfcDistributionFlowElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcDistributionChamberElementType : public GDIfcDistributionFlowElementType {
-    GDCLASS(GDIfcDistributionChamberElementType, GDIfcDistributionFlowElementType)
+class IfcDistributionChamberElementType : public IfcDistributionFlowElementType {
+    GDCLASS(IfcDistributionChamberElementType, IfcDistributionFlowElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcDistributionSystem : public GDIfcSystem {
-    GDCLASS(GDIfcDistributionSystem, GDIfcSystem)
+class IfcDistributionSystem : public IfcSystem {
+    GDCLASS(IfcDistributionSystem, IfcSystem)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_long_name();
-    void set_long_name(godot::String v);
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_LongName();
+    void set_LongName(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcDistributionCircuit : public GDIfcDistributionSystem {
-    GDCLASS(GDIfcDistributionCircuit, GDIfcDistributionSystem)
+class IfcDistributionCircuit : public IfcDistributionSystem {
+    GDCLASS(IfcDistributionCircuit, IfcDistributionSystem)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcPort : public GDIfcProduct {
-    GDCLASS(GDIfcPort, GDIfcProduct)
+class IfcPort : public IfcProduct {
+    GDCLASS(IfcPort, IfcProduct)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcDistributionPort : public GDIfcPort {
-    GDCLASS(GDIfcDistributionPort, GDIfcPort)
+class IfcDistributionPort : public IfcPort {
+    GDCLASS(IfcDistributionPort, IfcPort)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_flow_direction();
-    void set_flow_direction(godot::String v);
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    godot::String get_system_type();
-    void set_system_type(godot::String v);
+    godot::String get_FlowDirection();
+    void set_FlowDirection(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    godot::String get_SystemType();
+    void set_SystemType(godot::String v);
 };
 
-class GDIfcDocumentInformation : public GDIfcExternalInformation {
-    GDCLASS(GDIfcDocumentInformation, GDIfcExternalInformation)
+class IfcDocumentInformation : public IfcExternalInformation {
+    GDCLASS(IfcDocumentInformation, IfcExternalInformation)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_identification();
-    void set_identification(godot::String v);
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    godot::String get_location();
-    void set_location(godot::String v);
-    godot::String get_purpose();
-    void set_purpose(godot::String v);
-    godot::String get_intended_use();
-    void set_intended_use(godot::String v);
-    godot::String get_scope();
-    void set_scope(godot::String v);
-    godot::String get_revision();
-    void set_revision(godot::String v);
-    Ref<GDIFCEntityBase> get_document_owner();
-    void set_document_owner(Ref<GDIFCEntityBase> v);
-    godot::Array get_editors();
-    void set_editors(godot::Array v);
-    godot::String get_creation_time();
-    void set_creation_time(godot::String v);
-    godot::String get_last_revision_time();
-    void set_last_revision_time(godot::String v);
-    godot::String get_electronic_format();
-    void set_electronic_format(godot::String v);
-    godot::String get_valid_from();
-    void set_valid_from(godot::String v);
-    godot::String get_valid_until();
-    void set_valid_until(godot::String v);
-    godot::String get_confidentiality();
-    void set_confidentiality(godot::String v);
-    godot::String get_status();
-    void set_status(godot::String v);
+    godot::String get_Identification();
+    void set_Identification(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    godot::String get_Location();
+    void set_Location(godot::String v);
+    godot::String get_Purpose();
+    void set_Purpose(godot::String v);
+    godot::String get_IntendedUse();
+    void set_IntendedUse(godot::String v);
+    godot::String get_Scope();
+    void set_Scope(godot::String v);
+    godot::String get_Revision();
+    void set_Revision(godot::String v);
+    Ref<GDIFCEntityBase> get_DocumentOwner();
+    void set_DocumentOwner(Ref<GDIFCEntityBase> v);
+    godot::Array get_Editors();
+    void set_Editors(godot::Array v);
+    godot::String get_CreationTime();
+    void set_CreationTime(godot::String v);
+    godot::String get_LastRevisionTime();
+    void set_LastRevisionTime(godot::String v);
+    godot::String get_ElectronicFormat();
+    void set_ElectronicFormat(godot::String v);
+    godot::String get_ValidFrom();
+    void set_ValidFrom(godot::String v);
+    godot::String get_ValidUntil();
+    void set_ValidUntil(godot::String v);
+    godot::String get_Confidentiality();
+    void set_Confidentiality(godot::String v);
+    godot::String get_Status();
+    void set_Status(godot::String v);
 };
 
-class GDIfcDocumentInformationRelationship : public GDIfcResourceLevelRelationship {
-    GDCLASS(GDIfcDocumentInformationRelationship, GDIfcResourceLevelRelationship)
+class IfcDocumentInformationRelationship : public IfcResourceLevelRelationship {
+    GDCLASS(IfcDocumentInformationRelationship, IfcResourceLevelRelationship)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_document();
-    void set_relating_document(Ref<GDIFCEntityBase> v);
-    godot::Array get_related_documents();
-    void set_related_documents(godot::Array v);
-    godot::String get_relationship_type();
-    void set_relationship_type(godot::String v);
+    Ref<GDIFCEntityBase> get_RelatingDocument();
+    void set_RelatingDocument(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedDocuments();
+    void set_RelatedDocuments(godot::Array v);
+    godot::String get_RelationshipType();
+    void set_RelationshipType(godot::String v);
 };
 
-class GDIfcDocumentReference : public GDIfcExternalReference {
-    GDCLASS(GDIfcDocumentReference, GDIfcExternalReference)
+class IfcDocumentReference : public IfcExternalReference {
+    GDCLASS(IfcDocumentReference, IfcExternalReference)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_description();
-    void set_description(godot::String v);
-    Ref<GDIFCEntityBase> get_referenced_document();
-    void set_referenced_document(Ref<GDIFCEntityBase> v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    Ref<GDIFCEntityBase> get_ReferencedDocument();
+    void set_ReferencedDocument(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcDoor : public GDIfcBuiltElement {
-    GDCLASS(GDIfcDoor, GDIfcBuiltElement)
+class IfcDoor : public IfcBuiltElement {
+    GDCLASS(IfcDoor, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    double get_overall_height();
-    void set_overall_height(double v);
-    double get_overall_width();
-    void set_overall_width(double v);
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    godot::String get_operation_type();
-    void set_operation_type(godot::String v);
-    godot::String get_user_defined_operation_type();
-    void set_user_defined_operation_type(godot::String v);
+    double get_OverallHeight();
+    void set_OverallHeight(double v);
+    double get_OverallWidth();
+    void set_OverallWidth(double v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    godot::String get_OperationType();
+    void set_OperationType(godot::String v);
+    godot::String get_UserDefinedOperationType();
+    void set_UserDefinedOperationType(godot::String v);
 };
 
-class GDIfcPropertySetDefinition : public GDIfcPropertyDefinition {
-    GDCLASS(GDIfcPropertySetDefinition, GDIfcPropertyDefinition)
+class IfcPropertySetDefinition : public IfcPropertyDefinition {
+    GDCLASS(IfcPropertySetDefinition, IfcPropertyDefinition)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcPreDefinedPropertySet : public GDIfcPropertySetDefinition {
-    GDCLASS(GDIfcPreDefinedPropertySet, GDIfcPropertySetDefinition)
+class IfcPreDefinedPropertySet : public IfcPropertySetDefinition {
+    GDCLASS(IfcPreDefinedPropertySet, IfcPropertySetDefinition)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcDoorLiningProperties : public GDIfcPreDefinedPropertySet {
-    GDCLASS(GDIfcDoorLiningProperties, GDIfcPreDefinedPropertySet)
+class IfcDoorLiningProperties : public IfcPreDefinedPropertySet {
+    GDCLASS(IfcDoorLiningProperties, IfcPreDefinedPropertySet)
 protected:
     static void _bind_methods();
 public:
-    double get_lining_depth();
-    void set_lining_depth(double v);
-    double get_lining_thickness();
-    void set_lining_thickness(double v);
-    double get_threshold_depth();
-    void set_threshold_depth(double v);
-    double get_threshold_thickness();
-    void set_threshold_thickness(double v);
-    double get_transom_thickness();
-    void set_transom_thickness(double v);
-    double get_transom_offset();
-    void set_transom_offset(double v);
-    double get_lining_offset();
-    void set_lining_offset(double v);
-    double get_threshold_offset();
-    void set_threshold_offset(double v);
-    double get_casing_thickness();
-    void set_casing_thickness(double v);
-    double get_casing_depth();
-    void set_casing_depth(double v);
-    Ref<GDIFCEntityBase> get_shape_aspect_style();
-    void set_shape_aspect_style(Ref<GDIFCEntityBase> v);
-    double get_lining_to_panel_offset_x();
-    void set_lining_to_panel_offset_x(double v);
-    double get_lining_to_panel_offset_y();
-    void set_lining_to_panel_offset_y(double v);
+    double get_LiningDepth();
+    void set_LiningDepth(double v);
+    double get_LiningThickness();
+    void set_LiningThickness(double v);
+    double get_ThresholdDepth();
+    void set_ThresholdDepth(double v);
+    double get_ThresholdThickness();
+    void set_ThresholdThickness(double v);
+    double get_TransomThickness();
+    void set_TransomThickness(double v);
+    double get_TransomOffset();
+    void set_TransomOffset(double v);
+    double get_LiningOffset();
+    void set_LiningOffset(double v);
+    double get_ThresholdOffset();
+    void set_ThresholdOffset(double v);
+    double get_CasingThickness();
+    void set_CasingThickness(double v);
+    double get_CasingDepth();
+    void set_CasingDepth(double v);
+    Ref<GDIFCEntityBase> get_ShapeAspectStyle();
+    void set_ShapeAspectStyle(Ref<GDIFCEntityBase> v);
+    double get_LiningToPanelOffsetX();
+    void set_LiningToPanelOffsetX(double v);
+    double get_LiningToPanelOffsetY();
+    void set_LiningToPanelOffsetY(double v);
 };
 
-class GDIfcDoorPanelProperties : public GDIfcPreDefinedPropertySet {
-    GDCLASS(GDIfcDoorPanelProperties, GDIfcPreDefinedPropertySet)
+class IfcDoorPanelProperties : public IfcPreDefinedPropertySet {
+    GDCLASS(IfcDoorPanelProperties, IfcPreDefinedPropertySet)
 protected:
     static void _bind_methods();
 public:
-    double get_panel_depth();
-    void set_panel_depth(double v);
-    godot::String get_panel_operation();
-    void set_panel_operation(godot::String v);
-    double get_panel_width();
-    void set_panel_width(double v);
-    godot::String get_panel_position();
-    void set_panel_position(godot::String v);
-    Ref<GDIFCEntityBase> get_shape_aspect_style();
-    void set_shape_aspect_style(Ref<GDIFCEntityBase> v);
+    double get_PanelDepth();
+    void set_PanelDepth(double v);
+    godot::String get_PanelOperation();
+    void set_PanelOperation(godot::String v);
+    double get_PanelWidth();
+    void set_PanelWidth(double v);
+    godot::String get_PanelPosition();
+    void set_PanelPosition(godot::String v);
+    Ref<GDIFCEntityBase> get_ShapeAspectStyle();
+    void set_ShapeAspectStyle(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcDoorType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcDoorType, GDIfcBuiltElementType)
+class IfcDoorType : public IfcBuiltElementType {
+    GDCLASS(IfcDoorType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    godot::String get_operation_type();
-    void set_operation_type(godot::String v);
-    bool get_parameter_takes_precedence();
-    void set_parameter_takes_precedence(bool v);
-    godot::String get_user_defined_operation_type();
-    void set_user_defined_operation_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    godot::String get_OperationType();
+    void set_OperationType(godot::String v);
+    bool get_ParameterTakesPrecedence();
+    void set_ParameterTakesPrecedence(bool v);
+    godot::String get_UserDefinedOperationType();
+    void set_UserDefinedOperationType(godot::String v);
 };
 
-class GDIfcPreDefinedItem : public GDIfcPresentationItem {
-    GDCLASS(GDIfcPreDefinedItem, GDIfcPresentationItem)
+class IfcPreDefinedItem : public IfcPresentationItem {
+    GDCLASS(IfcPreDefinedItem, IfcPresentationItem)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
 };
 
-class GDIfcPreDefinedColour : public GDIfcPreDefinedItem {
-    GDCLASS(GDIfcPreDefinedColour, GDIfcPreDefinedItem)
+class IfcPreDefinedColour : public IfcPreDefinedItem {
+    GDCLASS(IfcPreDefinedColour, IfcPreDefinedItem)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcDraughtingPreDefinedColour : public GDIfcPreDefinedColour {
-    GDCLASS(GDIfcDraughtingPreDefinedColour, GDIfcPreDefinedColour)
+class IfcDraughtingPreDefinedColour : public IfcPreDefinedColour {
+    GDCLASS(IfcDraughtingPreDefinedColour, IfcPreDefinedColour)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcPreDefinedCurveFont : public GDIfcPreDefinedItem {
-    GDCLASS(GDIfcPreDefinedCurveFont, GDIfcPreDefinedItem)
+class IfcPreDefinedCurveFont : public IfcPreDefinedItem {
+    GDCLASS(IfcPreDefinedCurveFont, IfcPreDefinedItem)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcDraughtingPreDefinedCurveFont : public GDIfcPreDefinedCurveFont {
-    GDCLASS(GDIfcDraughtingPreDefinedCurveFont, GDIfcPreDefinedCurveFont)
+class IfcDraughtingPreDefinedCurveFont : public IfcPreDefinedCurveFont {
+    GDCLASS(IfcDraughtingPreDefinedCurveFont, IfcPreDefinedCurveFont)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcDuctFitting : public GDIfcFlowFitting {
-    GDCLASS(GDIfcDuctFitting, GDIfcFlowFitting)
+class IfcDuctFitting : public IfcFlowFitting {
+    GDCLASS(IfcDuctFitting, IfcFlowFitting)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcDuctFittingType : public GDIfcFlowFittingType {
-    GDCLASS(GDIfcDuctFittingType, GDIfcFlowFittingType)
+class IfcDuctFittingType : public IfcFlowFittingType {
+    GDCLASS(IfcDuctFittingType, IfcFlowFittingType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcDuctSegment : public GDIfcFlowSegment {
-    GDCLASS(GDIfcDuctSegment, GDIfcFlowSegment)
+class IfcDuctSegment : public IfcFlowSegment {
+    GDCLASS(IfcDuctSegment, IfcFlowSegment)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcDuctSegmentType : public GDIfcFlowSegmentType {
-    GDCLASS(GDIfcDuctSegmentType, GDIfcFlowSegmentType)
+class IfcDuctSegmentType : public IfcFlowSegmentType {
+    GDCLASS(IfcDuctSegmentType, IfcFlowSegmentType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFlowTreatmentDevice : public GDIfcDistributionFlowElement {
-    GDCLASS(GDIfcFlowTreatmentDevice, GDIfcDistributionFlowElement)
+class IfcFlowTreatmentDevice : public IfcDistributionFlowElement {
+    GDCLASS(IfcFlowTreatmentDevice, IfcDistributionFlowElement)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcDuctSilencer : public GDIfcFlowTreatmentDevice {
-    GDCLASS(GDIfcDuctSilencer, GDIfcFlowTreatmentDevice)
+class IfcDuctSilencer : public IfcFlowTreatmentDevice {
+    GDCLASS(IfcDuctSilencer, IfcFlowTreatmentDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFlowTreatmentDeviceType : public GDIfcDistributionFlowElementType {
-    GDCLASS(GDIfcFlowTreatmentDeviceType, GDIfcDistributionFlowElementType)
+class IfcFlowTreatmentDeviceType : public IfcDistributionFlowElementType {
+    GDCLASS(IfcFlowTreatmentDeviceType, IfcDistributionFlowElementType)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcDuctSilencerType : public GDIfcFlowTreatmentDeviceType {
-    GDCLASS(GDIfcDuctSilencerType, GDIfcFlowTreatmentDeviceType)
+class IfcDuctSilencerType : public IfcFlowTreatmentDeviceType {
+    GDCLASS(IfcDuctSilencerType, IfcFlowTreatmentDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFeatureElement : public GDIfcElement {
-    GDCLASS(GDIfcFeatureElement, GDIfcElement)
+class IfcFeatureElement : public IfcElement {
+    GDCLASS(IfcFeatureElement, IfcElement)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcFeatureElementSubtraction : public GDIfcFeatureElement {
-    GDCLASS(GDIfcFeatureElementSubtraction, GDIfcFeatureElement)
+class IfcFeatureElementSubtraction : public IfcFeatureElement {
+    GDCLASS(IfcFeatureElementSubtraction, IfcFeatureElement)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcEarthworksCut : public GDIfcFeatureElementSubtraction {
-    GDCLASS(GDIfcEarthworksCut, GDIfcFeatureElementSubtraction)
+class IfcEarthworksCut : public IfcFeatureElementSubtraction {
+    GDCLASS(IfcEarthworksCut, IfcFeatureElementSubtraction)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcEarthworksElement : public GDIfcBuiltElement {
-    GDCLASS(GDIfcEarthworksElement, GDIfcBuiltElement)
+class IfcEarthworksElement : public IfcBuiltElement {
+    GDCLASS(IfcEarthworksElement, IfcBuiltElement)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcEarthworksFill : public GDIfcEarthworksElement {
-    GDCLASS(GDIfcEarthworksFill, GDIfcEarthworksElement)
+class IfcEarthworksFill : public IfcEarthworksElement {
+    GDCLASS(IfcEarthworksFill, IfcEarthworksElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcEdge : public GDIfcTopologicalRepresentationItem {
-    GDCLASS(GDIfcEdge, GDIfcTopologicalRepresentationItem)
+class IfcEdge : public IfcTopologicalRepresentationItem {
+    GDCLASS(IfcEdge, IfcTopologicalRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_edge_start();
-    void set_edge_start(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_edge_end();
-    void set_edge_end(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_EdgeStart();
+    void set_EdgeStart(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_EdgeEnd();
+    void set_EdgeEnd(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcEdgeCurve : public GDIfcEdge {
-    GDCLASS(GDIfcEdgeCurve, GDIfcEdge)
+class IfcEdgeCurve : public IfcEdge {
+    GDCLASS(IfcEdgeCurve, IfcEdge)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_edge_geometry();
-    void set_edge_geometry(Ref<GDIFCEntityBase> v);
-    bool get_same_sense();
-    void set_same_sense(bool v);
+    Ref<GDIFCEntityBase> get_EdgeGeometry();
+    void set_EdgeGeometry(Ref<GDIFCEntityBase> v);
+    bool get_SameSense();
+    void set_SameSense(bool v);
 };
 
-class GDIfcLoop : public GDIfcTopologicalRepresentationItem {
-    GDCLASS(GDIfcLoop, GDIfcTopologicalRepresentationItem)
+class IfcLoop : public IfcTopologicalRepresentationItem {
+    GDCLASS(IfcLoop, IfcTopologicalRepresentationItem)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcEdgeLoop : public GDIfcLoop {
-    GDCLASS(GDIfcEdgeLoop, GDIfcLoop)
+class IfcEdgeLoop : public IfcLoop {
+    GDCLASS(IfcEdgeLoop, IfcLoop)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_edge_list();
-    void set_edge_list(godot::Array v);
+    godot::Array get_EdgeList();
+    void set_EdgeList(godot::Array v);
 };
 
-class GDIfcElectricAppliance : public GDIfcFlowTerminal {
-    GDCLASS(GDIfcElectricAppliance, GDIfcFlowTerminal)
+class IfcElectricAppliance : public IfcFlowTerminal {
+    GDCLASS(IfcElectricAppliance, IfcFlowTerminal)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcElectricApplianceType : public GDIfcFlowTerminalType {
-    GDCLASS(GDIfcElectricApplianceType, GDIfcFlowTerminalType)
+class IfcElectricApplianceType : public IfcFlowTerminalType {
+    GDCLASS(IfcElectricApplianceType, IfcFlowTerminalType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcElectricDistributionBoard : public GDIfcFlowController {
-    GDCLASS(GDIfcElectricDistributionBoard, GDIfcFlowController)
+class IfcElectricDistributionBoard : public IfcFlowController {
+    GDCLASS(IfcElectricDistributionBoard, IfcFlowController)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcElectricDistributionBoardType : public GDIfcFlowControllerType {
-    GDCLASS(GDIfcElectricDistributionBoardType, GDIfcFlowControllerType)
+class IfcElectricDistributionBoardType : public IfcFlowControllerType {
+    GDCLASS(IfcElectricDistributionBoardType, IfcFlowControllerType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFlowStorageDevice : public GDIfcDistributionFlowElement {
-    GDCLASS(GDIfcFlowStorageDevice, GDIfcDistributionFlowElement)
+class IfcFlowStorageDevice : public IfcDistributionFlowElement {
+    GDCLASS(IfcFlowStorageDevice, IfcDistributionFlowElement)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcElectricFlowStorageDevice : public GDIfcFlowStorageDevice {
-    GDCLASS(GDIfcElectricFlowStorageDevice, GDIfcFlowStorageDevice)
+class IfcElectricFlowStorageDevice : public IfcFlowStorageDevice {
+    GDCLASS(IfcElectricFlowStorageDevice, IfcFlowStorageDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFlowStorageDeviceType : public GDIfcDistributionFlowElementType {
-    GDCLASS(GDIfcFlowStorageDeviceType, GDIfcDistributionFlowElementType)
+class IfcFlowStorageDeviceType : public IfcDistributionFlowElementType {
+    GDCLASS(IfcFlowStorageDeviceType, IfcDistributionFlowElementType)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcElectricFlowStorageDeviceType : public GDIfcFlowStorageDeviceType {
-    GDCLASS(GDIfcElectricFlowStorageDeviceType, GDIfcFlowStorageDeviceType)
+class IfcElectricFlowStorageDeviceType : public IfcFlowStorageDeviceType {
+    GDCLASS(IfcElectricFlowStorageDeviceType, IfcFlowStorageDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcElectricFlowTreatmentDevice : public GDIfcFlowTreatmentDevice {
-    GDCLASS(GDIfcElectricFlowTreatmentDevice, GDIfcFlowTreatmentDevice)
+class IfcElectricFlowTreatmentDevice : public IfcFlowTreatmentDevice {
+    GDCLASS(IfcElectricFlowTreatmentDevice, IfcFlowTreatmentDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcElectricFlowTreatmentDeviceType : public GDIfcFlowTreatmentDeviceType {
-    GDCLASS(GDIfcElectricFlowTreatmentDeviceType, GDIfcFlowTreatmentDeviceType)
+class IfcElectricFlowTreatmentDeviceType : public IfcFlowTreatmentDeviceType {
+    GDCLASS(IfcElectricFlowTreatmentDeviceType, IfcFlowTreatmentDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcElectricGenerator : public GDIfcEnergyConversionDevice {
-    GDCLASS(GDIfcElectricGenerator, GDIfcEnergyConversionDevice)
+class IfcElectricGenerator : public IfcEnergyConversionDevice {
+    GDCLASS(IfcElectricGenerator, IfcEnergyConversionDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcElectricGeneratorType : public GDIfcEnergyConversionDeviceType {
-    GDCLASS(GDIfcElectricGeneratorType, GDIfcEnergyConversionDeviceType)
+class IfcElectricGeneratorType : public IfcEnergyConversionDeviceType {
+    GDCLASS(IfcElectricGeneratorType, IfcEnergyConversionDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcElectricMotor : public GDIfcEnergyConversionDevice {
-    GDCLASS(GDIfcElectricMotor, GDIfcEnergyConversionDevice)
+class IfcElectricMotor : public IfcEnergyConversionDevice {
+    GDCLASS(IfcElectricMotor, IfcEnergyConversionDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcElectricMotorType : public GDIfcEnergyConversionDeviceType {
-    GDCLASS(GDIfcElectricMotorType, GDIfcEnergyConversionDeviceType)
+class IfcElectricMotorType : public IfcEnergyConversionDeviceType {
+    GDCLASS(IfcElectricMotorType, IfcEnergyConversionDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcElectricTimeControl : public GDIfcFlowController {
-    GDCLASS(GDIfcElectricTimeControl, GDIfcFlowController)
+class IfcElectricTimeControl : public IfcFlowController {
+    GDCLASS(IfcElectricTimeControl, IfcFlowController)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcElectricTimeControlType : public GDIfcFlowControllerType {
-    GDCLASS(GDIfcElectricTimeControlType, GDIfcFlowControllerType)
+class IfcElectricTimeControlType : public IfcFlowControllerType {
+    GDCLASS(IfcElectricTimeControlType, IfcFlowControllerType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcElementAssembly : public GDIfcElement {
-    GDCLASS(GDIfcElementAssembly, GDIfcElement)
+class IfcElementAssembly : public IfcElement {
+    GDCLASS(IfcElementAssembly, IfcElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_assembly_place();
-    void set_assembly_place(godot::String v);
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_AssemblyPlace();
+    void set_AssemblyPlace(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcElementAssemblyType : public GDIfcElementType {
-    GDCLASS(GDIfcElementAssemblyType, GDIfcElementType)
+class IfcElementAssemblyType : public IfcElementType {
+    GDCLASS(IfcElementAssemblyType, IfcElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcQuantitySet : public GDIfcPropertySetDefinition {
-    GDCLASS(GDIfcQuantitySet, GDIfcPropertySetDefinition)
+class IfcQuantitySet : public IfcPropertySetDefinition {
+    GDCLASS(IfcQuantitySet, IfcPropertySetDefinition)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcElementQuantity : public GDIfcQuantitySet {
-    GDCLASS(GDIfcElementQuantity, GDIfcQuantitySet)
+class IfcElementQuantity : public IfcQuantitySet {
+    GDCLASS(IfcElementQuantity, IfcQuantitySet)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_method_of_measurement();
-    void set_method_of_measurement(godot::String v);
-    godot::Array get_quantities();
-    void set_quantities(godot::Array v);
+    godot::String get_MethodOfMeasurement();
+    void set_MethodOfMeasurement(godot::String v);
+    godot::Array get_Quantities();
+    void set_Quantities(godot::Array v);
 };
 
-class GDIfcEllipse : public GDIfcConic {
-    GDCLASS(GDIfcEllipse, GDIfcConic)
+class IfcEllipse : public IfcConic {
+    GDCLASS(IfcEllipse, IfcConic)
 protected:
     static void _bind_methods();
 public:
-    double get_semi_axis1();
-    void set_semi_axis1(double v);
-    double get_semi_axis2();
-    void set_semi_axis2(double v);
+    double get_SemiAxis1();
+    void set_SemiAxis1(double v);
+    double get_SemiAxis2();
+    void set_SemiAxis2(double v);
 };
 
-class GDIfcEllipseProfileDef : public GDIfcParameterizedProfileDef {
-    GDCLASS(GDIfcEllipseProfileDef, GDIfcParameterizedProfileDef)
+class IfcEllipseProfileDef : public IfcParameterizedProfileDef {
+    GDCLASS(IfcEllipseProfileDef, IfcParameterizedProfileDef)
 protected:
     static void _bind_methods();
 public:
-    double get_semi_axis1();
-    void set_semi_axis1(double v);
-    double get_semi_axis2();
-    void set_semi_axis2(double v);
+    double get_SemiAxis1();
+    void set_SemiAxis1(double v);
+    double get_SemiAxis2();
+    void set_SemiAxis2(double v);
 };
 
-class GDIfcEngine : public GDIfcEnergyConversionDevice {
-    GDCLASS(GDIfcEngine, GDIfcEnergyConversionDevice)
+class IfcEngine : public IfcEnergyConversionDevice {
+    GDCLASS(IfcEngine, IfcEnergyConversionDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcEngineType : public GDIfcEnergyConversionDeviceType {
-    GDCLASS(GDIfcEngineType, GDIfcEnergyConversionDeviceType)
+class IfcEngineType : public IfcEnergyConversionDeviceType {
+    GDCLASS(IfcEngineType, IfcEnergyConversionDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcEvaporativeCooler : public GDIfcEnergyConversionDevice {
-    GDCLASS(GDIfcEvaporativeCooler, GDIfcEnergyConversionDevice)
+class IfcEvaporativeCooler : public IfcEnergyConversionDevice {
+    GDCLASS(IfcEvaporativeCooler, IfcEnergyConversionDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcEvaporativeCoolerType : public GDIfcEnergyConversionDeviceType {
-    GDCLASS(GDIfcEvaporativeCoolerType, GDIfcEnergyConversionDeviceType)
+class IfcEvaporativeCoolerType : public IfcEnergyConversionDeviceType {
+    GDCLASS(IfcEvaporativeCoolerType, IfcEnergyConversionDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcEvaporator : public GDIfcEnergyConversionDevice {
-    GDCLASS(GDIfcEvaporator, GDIfcEnergyConversionDevice)
+class IfcEvaporator : public IfcEnergyConversionDevice {
+    GDCLASS(IfcEvaporator, IfcEnergyConversionDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcEvaporatorType : public GDIfcEnergyConversionDeviceType {
-    GDCLASS(GDIfcEvaporatorType, GDIfcEnergyConversionDeviceType)
+class IfcEvaporatorType : public IfcEnergyConversionDeviceType {
+    GDCLASS(IfcEvaporatorType, IfcEnergyConversionDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcProcess : public GDIfcObject {
-    GDCLASS(GDIfcProcess, GDIfcObject)
+class IfcProcess : public IfcObject {
+    GDCLASS(IfcProcess, IfcObject)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_identification();
-    void set_identification(godot::String v);
-    godot::String get_long_description();
-    void set_long_description(godot::String v);
+    godot::String get_Identification();
+    void set_Identification(godot::String v);
+    godot::String get_LongDescription();
+    void set_LongDescription(godot::String v);
 };
 
-class GDIfcEvent : public GDIfcProcess {
-    GDCLASS(GDIfcEvent, GDIfcProcess)
+class IfcEvent : public IfcProcess {
+    GDCLASS(IfcEvent, IfcProcess)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    godot::String get_event_trigger_type();
-    void set_event_trigger_type(godot::String v);
-    godot::String get_user_defined_event_trigger_type();
-    void set_user_defined_event_trigger_type(godot::String v);
-    Ref<GDIFCEntityBase> get_event_occurence_time();
-    void set_event_occurence_time(Ref<GDIFCEntityBase> v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    godot::String get_EventTriggerType();
+    void set_EventTriggerType(godot::String v);
+    godot::String get_UserDefinedEventTriggerType();
+    void set_UserDefinedEventTriggerType(godot::String v);
+    Ref<GDIFCEntityBase> get_EventOccurenceTime();
+    void set_EventOccurenceTime(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcSchedulingTime : public GDIFCEntityBase {
-    GDCLASS(GDIfcSchedulingTime, GDIFCEntityBase)
+class IfcSchedulingTime : public GDIFCEntityBase {
+    GDCLASS(IfcSchedulingTime, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_data_origin();
-    void set_data_origin(godot::String v);
-    godot::String get_user_defined_data_origin();
-    void set_user_defined_data_origin(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_DataOrigin();
+    void set_DataOrigin(godot::String v);
+    godot::String get_UserDefinedDataOrigin();
+    void set_UserDefinedDataOrigin(godot::String v);
 };
 
-class GDIfcEventTime : public GDIfcSchedulingTime {
-    GDCLASS(GDIfcEventTime, GDIfcSchedulingTime)
+class IfcEventTime : public IfcSchedulingTime {
+    GDCLASS(IfcEventTime, IfcSchedulingTime)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_actual_date();
-    void set_actual_date(godot::String v);
-    godot::String get_early_date();
-    void set_early_date(godot::String v);
-    godot::String get_late_date();
-    void set_late_date(godot::String v);
-    godot::String get_schedule_date();
-    void set_schedule_date(godot::String v);
+    godot::String get_ActualDate();
+    void set_ActualDate(godot::String v);
+    godot::String get_EarlyDate();
+    void set_EarlyDate(godot::String v);
+    godot::String get_LateDate();
+    void set_LateDate(godot::String v);
+    godot::String get_ScheduleDate();
+    void set_ScheduleDate(godot::String v);
 };
 
-class GDIfcTypeProcess : public GDIfcTypeObject {
-    GDCLASS(GDIfcTypeProcess, GDIfcTypeObject)
+class IfcTypeProcess : public IfcTypeObject {
+    GDCLASS(IfcTypeProcess, IfcTypeObject)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_identification();
-    void set_identification(godot::String v);
-    godot::String get_long_description();
-    void set_long_description(godot::String v);
-    godot::String get_process_type();
-    void set_process_type(godot::String v);
+    godot::String get_Identification();
+    void set_Identification(godot::String v);
+    godot::String get_LongDescription();
+    void set_LongDescription(godot::String v);
+    godot::String get_ProcessType();
+    void set_ProcessType(godot::String v);
 };
 
-class GDIfcEventType : public GDIfcTypeProcess {
-    GDCLASS(GDIfcEventType, GDIfcTypeProcess)
+class IfcEventType : public IfcTypeProcess {
+    GDCLASS(IfcEventType, IfcTypeProcess)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    godot::String get_event_trigger_type();
-    void set_event_trigger_type(godot::String v);
-    godot::String get_user_defined_event_trigger_type();
-    void set_user_defined_event_trigger_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    godot::String get_EventTriggerType();
+    void set_EventTriggerType(godot::String v);
+    godot::String get_UserDefinedEventTriggerType();
+    void set_UserDefinedEventTriggerType(godot::String v);
 };
 
-class GDIfcExtendedProperties : public GDIfcPropertyAbstraction {
-    GDCLASS(GDIfcExtendedProperties, GDIfcPropertyAbstraction)
+class IfcExtendedProperties : public IfcPropertyAbstraction {
+    GDCLASS(IfcExtendedProperties, IfcPropertyAbstraction)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    godot::Array get_properties();
-    void set_properties(godot::Array v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    godot::Array get_Properties();
+    void set_Properties(godot::Array v);
 };
 
-class GDIfcExternalReferenceRelationship : public GDIfcResourceLevelRelationship {
-    GDCLASS(GDIfcExternalReferenceRelationship, GDIfcResourceLevelRelationship)
+class IfcExternalReferenceRelationship : public IfcResourceLevelRelationship {
+    GDCLASS(IfcExternalReferenceRelationship, IfcResourceLevelRelationship)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_reference();
-    void set_relating_reference(Ref<GDIFCEntityBase> v);
-    godot::Array get_related_resource_objects();
-    void set_related_resource_objects(godot::Array v);
+    Ref<GDIFCEntityBase> get_RelatingReference();
+    void set_RelatingReference(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedResourceObjects();
+    void set_RelatedResourceObjects(godot::Array v);
 };
 
-class GDIfcExternalSpatialStructureElement : public GDIfcSpatialElement {
-    GDCLASS(GDIfcExternalSpatialStructureElement, GDIfcSpatialElement)
+class IfcExternalSpatialStructureElement : public IfcSpatialElement {
+    GDCLASS(IfcExternalSpatialStructureElement, IfcSpatialElement)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcExternalSpatialElement : public GDIfcExternalSpatialStructureElement {
-    GDCLASS(GDIfcExternalSpatialElement, GDIfcExternalSpatialStructureElement)
+class IfcExternalSpatialElement : public IfcExternalSpatialStructureElement {
+    GDCLASS(IfcExternalSpatialElement, IfcExternalSpatialStructureElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcExternallyDefinedHatchStyle : public GDIfcExternalReference {
-    GDCLASS(GDIfcExternallyDefinedHatchStyle, GDIfcExternalReference)
+class IfcExternallyDefinedHatchStyle : public IfcExternalReference {
+    GDCLASS(IfcExternallyDefinedHatchStyle, IfcExternalReference)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcExternallyDefinedSurfaceStyle : public GDIfcExternalReference {
-    GDCLASS(GDIfcExternallyDefinedSurfaceStyle, GDIfcExternalReference)
+class IfcExternallyDefinedSurfaceStyle : public IfcExternalReference {
+    GDCLASS(IfcExternallyDefinedSurfaceStyle, IfcExternalReference)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcExternallyDefinedTextFont : public GDIfcExternalReference {
-    GDCLASS(GDIfcExternallyDefinedTextFont, GDIfcExternalReference)
+class IfcExternallyDefinedTextFont : public IfcExternalReference {
+    GDCLASS(IfcExternallyDefinedTextFont, IfcExternalReference)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcExtrudedAreaSolid : public GDIfcSweptAreaSolid {
-    GDCLASS(GDIfcExtrudedAreaSolid, GDIfcSweptAreaSolid)
+class IfcExtrudedAreaSolid : public IfcSweptAreaSolid {
+    GDCLASS(IfcExtrudedAreaSolid, IfcSweptAreaSolid)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_extruded_direction();
-    void set_extruded_direction(Ref<GDIFCEntityBase> v);
-    double get_depth();
-    void set_depth(double v);
+    Ref<GDIFCEntityBase> get_ExtrudedDirection();
+    void set_ExtrudedDirection(Ref<GDIFCEntityBase> v);
+    double get_Depth();
+    void set_Depth(double v);
 };
 
-class GDIfcExtrudedAreaSolidTapered : public GDIfcExtrudedAreaSolid {
-    GDCLASS(GDIfcExtrudedAreaSolidTapered, GDIfcExtrudedAreaSolid)
+class IfcExtrudedAreaSolidTapered : public IfcExtrudedAreaSolid {
+    GDCLASS(IfcExtrudedAreaSolidTapered, IfcExtrudedAreaSolid)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_end_swept_area();
-    void set_end_swept_area(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_EndSweptArea();
+    void set_EndSweptArea(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcFaceBasedSurfaceModel : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcFaceBasedSurfaceModel, GDIfcGeometricRepresentationItem)
+class IfcFaceBasedSurfaceModel : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcFaceBasedSurfaceModel, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_fbsm_faces();
-    void set_fbsm_faces(godot::Array v);
+    godot::Array get_FbsmFaces();
+    void set_FbsmFaces(godot::Array v);
 };
 
-class GDIfcFaceBound : public GDIfcTopologicalRepresentationItem {
-    GDCLASS(GDIfcFaceBound, GDIfcTopologicalRepresentationItem)
+class IfcFaceBound : public IfcTopologicalRepresentationItem {
+    GDCLASS(IfcFaceBound, IfcTopologicalRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_bound();
-    void set_bound(Ref<GDIFCEntityBase> v);
-    bool get_orientation();
-    void set_orientation(bool v);
+    Ref<GDIFCEntityBase> get_Bound();
+    void set_Bound(Ref<GDIFCEntityBase> v);
+    bool get_Orientation();
+    void set_Orientation(bool v);
 };
 
-class GDIfcFaceOuterBound : public GDIfcFaceBound {
-    GDCLASS(GDIfcFaceOuterBound, GDIfcFaceBound)
+class IfcFaceOuterBound : public IfcFaceBound {
+    GDCLASS(IfcFaceOuterBound, IfcFaceBound)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcFacetedBrep : public GDIfcManifoldSolidBrep {
-    GDCLASS(GDIfcFacetedBrep, GDIfcManifoldSolidBrep)
+class IfcFacetedBrep : public IfcManifoldSolidBrep {
+    GDCLASS(IfcFacetedBrep, IfcManifoldSolidBrep)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcFacetedBrepWithVoids : public GDIfcFacetedBrep {
-    GDCLASS(GDIfcFacetedBrepWithVoids, GDIfcFacetedBrep)
+class IfcFacetedBrepWithVoids : public IfcFacetedBrep {
+    GDCLASS(IfcFacetedBrepWithVoids, IfcFacetedBrep)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_voids();
-    void set_voids(godot::Array v);
+    godot::Array get_Voids();
+    void set_Voids(godot::Array v);
 };
 
-class GDIfcFacilityPartCommon : public GDIfcFacilityPart {
-    GDCLASS(GDIfcFacilityPartCommon, GDIfcFacilityPart)
+class IfcFacilityPartCommon : public IfcFacilityPart {
+    GDCLASS(IfcFacilityPartCommon, IfcFacilityPart)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcStructuralConnectionCondition : public GDIFCEntityBase {
-    GDCLASS(GDIfcStructuralConnectionCondition, GDIFCEntityBase)
+class IfcStructuralConnectionCondition : public GDIFCEntityBase {
+    GDCLASS(IfcStructuralConnectionCondition, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
 };
 
-class GDIfcFailureConnectionCondition : public GDIfcStructuralConnectionCondition {
-    GDCLASS(GDIfcFailureConnectionCondition, GDIfcStructuralConnectionCondition)
+class IfcFailureConnectionCondition : public IfcStructuralConnectionCondition {
+    GDCLASS(IfcFailureConnectionCondition, IfcStructuralConnectionCondition)
 protected:
     static void _bind_methods();
 public:
-    double get_tension_failure_x();
-    void set_tension_failure_x(double v);
-    double get_tension_failure_y();
-    void set_tension_failure_y(double v);
-    double get_tension_failure_z();
-    void set_tension_failure_z(double v);
-    double get_compression_failure_x();
-    void set_compression_failure_x(double v);
-    double get_compression_failure_y();
-    void set_compression_failure_y(double v);
-    double get_compression_failure_z();
-    void set_compression_failure_z(double v);
+    double get_TensionFailureX();
+    void set_TensionFailureX(double v);
+    double get_TensionFailureY();
+    void set_TensionFailureY(double v);
+    double get_TensionFailureZ();
+    void set_TensionFailureZ(double v);
+    double get_CompressionFailureX();
+    void set_CompressionFailureX(double v);
+    double get_CompressionFailureY();
+    void set_CompressionFailureY(double v);
+    double get_CompressionFailureZ();
+    void set_CompressionFailureZ(double v);
 };
 
-class GDIfcFan : public GDIfcFlowMovingDevice {
-    GDCLASS(GDIfcFan, GDIfcFlowMovingDevice)
+class IfcFan : public IfcFlowMovingDevice {
+    GDCLASS(IfcFan, IfcFlowMovingDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFanType : public GDIfcFlowMovingDeviceType {
-    GDCLASS(GDIfcFanType, GDIfcFlowMovingDeviceType)
+class IfcFanType : public IfcFlowMovingDeviceType {
+    GDCLASS(IfcFanType, IfcFlowMovingDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFastener : public GDIfcElementComponent {
-    GDCLASS(GDIfcFastener, GDIfcElementComponent)
+class IfcFastener : public IfcElementComponent {
+    GDCLASS(IfcFastener, IfcElementComponent)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFastenerType : public GDIfcElementComponentType {
-    GDCLASS(GDIfcFastenerType, GDIfcElementComponentType)
+class IfcFastenerType : public IfcElementComponentType {
+    GDCLASS(IfcFastenerType, IfcElementComponentType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFeatureElementAddition : public GDIfcFeatureElement {
-    GDCLASS(GDIfcFeatureElementAddition, GDIfcFeatureElement)
+class IfcFeatureElementAddition : public IfcFeatureElement {
+    GDCLASS(IfcFeatureElementAddition, IfcFeatureElement)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcFillAreaStyle : public GDIfcPresentationStyle {
-    GDCLASS(GDIfcFillAreaStyle, GDIfcPresentationStyle)
+class IfcFillAreaStyle : public IfcPresentationStyle {
+    GDCLASS(IfcFillAreaStyle, IfcPresentationStyle)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_fill_styles();
-    void set_fill_styles(godot::Array v);
-    bool get_model_or_draughting();
-    void set_model_or_draughting(bool v);
+    godot::Array get_FillStyles();
+    void set_FillStyles(godot::Array v);
+    bool get_ModelOrDraughting();
+    void set_ModelOrDraughting(bool v);
 };
 
-class GDIfcFillAreaStyleHatching : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcFillAreaStyleHatching, GDIfcGeometricRepresentationItem)
+class IfcFillAreaStyleHatching : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcFillAreaStyleHatching, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_hatch_line_appearance();
-    void set_hatch_line_appearance(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_start_of_next_hatch_line();
-    void set_start_of_next_hatch_line(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_point_of_reference_hatch_line();
-    void set_point_of_reference_hatch_line(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_pattern_start();
-    void set_pattern_start(Ref<GDIFCEntityBase> v);
-    double get_hatch_line_angle();
-    void set_hatch_line_angle(double v);
+    Ref<GDIFCEntityBase> get_HatchLineAppearance();
+    void set_HatchLineAppearance(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_StartOfNextHatchLine();
+    void set_StartOfNextHatchLine(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_PointOfReferenceHatchLine();
+    void set_PointOfReferenceHatchLine(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_PatternStart();
+    void set_PatternStart(Ref<GDIFCEntityBase> v);
+    double get_HatchLineAngle();
+    void set_HatchLineAngle(double v);
 };
 
-class GDIfcFillAreaStyleTiles : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcFillAreaStyleTiles, GDIfcGeometricRepresentationItem)
+class IfcFillAreaStyleTiles : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcFillAreaStyleTiles, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_tiling_pattern();
-    void set_tiling_pattern(godot::Array v);
-    godot::Array get_tiles();
-    void set_tiles(godot::Array v);
-    double get_tiling_scale();
-    void set_tiling_scale(double v);
+    godot::Array get_TilingPattern();
+    void set_TilingPattern(godot::Array v);
+    godot::Array get_Tiles();
+    void set_Tiles(godot::Array v);
+    double get_TilingScale();
+    void set_TilingScale(double v);
 };
 
-class GDIfcFilter : public GDIfcFlowTreatmentDevice {
-    GDCLASS(GDIfcFilter, GDIfcFlowTreatmentDevice)
+class IfcFilter : public IfcFlowTreatmentDevice {
+    GDCLASS(IfcFilter, IfcFlowTreatmentDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFilterType : public GDIfcFlowTreatmentDeviceType {
-    GDCLASS(GDIfcFilterType, GDIfcFlowTreatmentDeviceType)
+class IfcFilterType : public IfcFlowTreatmentDeviceType {
+    GDCLASS(IfcFilterType, IfcFlowTreatmentDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFireSuppressionTerminal : public GDIfcFlowTerminal {
-    GDCLASS(GDIfcFireSuppressionTerminal, GDIfcFlowTerminal)
+class IfcFireSuppressionTerminal : public IfcFlowTerminal {
+    GDCLASS(IfcFireSuppressionTerminal, IfcFlowTerminal)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFireSuppressionTerminalType : public GDIfcFlowTerminalType {
-    GDCLASS(GDIfcFireSuppressionTerminalType, GDIfcFlowTerminalType)
+class IfcFireSuppressionTerminalType : public IfcFlowTerminalType {
+    GDCLASS(IfcFireSuppressionTerminalType, IfcFlowTerminalType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFlowInstrument : public GDIfcDistributionControlElement {
-    GDCLASS(GDIfcFlowInstrument, GDIfcDistributionControlElement)
+class IfcFlowInstrument : public IfcDistributionControlElement {
+    GDCLASS(IfcFlowInstrument, IfcDistributionControlElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFlowInstrumentType : public GDIfcDistributionControlElementType {
-    GDCLASS(GDIfcFlowInstrumentType, GDIfcDistributionControlElementType)
+class IfcFlowInstrumentType : public IfcDistributionControlElementType {
+    GDCLASS(IfcFlowInstrumentType, IfcDistributionControlElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFlowMeter : public GDIfcFlowController {
-    GDCLASS(GDIfcFlowMeter, GDIfcFlowController)
+class IfcFlowMeter : public IfcFlowController {
+    GDCLASS(IfcFlowMeter, IfcFlowController)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFlowMeterType : public GDIfcFlowControllerType {
-    GDCLASS(GDIfcFlowMeterType, GDIfcFlowControllerType)
+class IfcFlowMeterType : public IfcFlowControllerType {
+    GDCLASS(IfcFlowMeterType, IfcFlowControllerType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFooting : public GDIfcBuiltElement {
-    GDCLASS(GDIfcFooting, GDIfcBuiltElement)
+class IfcFooting : public IfcBuiltElement {
+    GDCLASS(IfcFooting, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFootingType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcFootingType, GDIfcBuiltElementType)
+class IfcFootingType : public IfcBuiltElementType {
+    GDCLASS(IfcFootingType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFurnishingElement : public GDIfcElement {
-    GDCLASS(GDIfcFurnishingElement, GDIfcElement)
+class IfcFurnishingElement : public IfcElement {
+    GDCLASS(IfcFurnishingElement, IfcElement)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcFurnishingElementType : public GDIfcElementType {
-    GDCLASS(GDIfcFurnishingElementType, GDIfcElementType)
+class IfcFurnishingElementType : public IfcElementType {
+    GDCLASS(IfcFurnishingElementType, IfcElementType)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcFurniture : public GDIfcFurnishingElement {
-    GDCLASS(GDIfcFurniture, GDIfcFurnishingElement)
+class IfcFurniture : public IfcFurnishingElement {
+    GDCLASS(IfcFurniture, IfcFurnishingElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcFurnitureType : public GDIfcFurnishingElementType {
-    GDCLASS(GDIfcFurnitureType, GDIfcFurnishingElementType)
+class IfcFurnitureType : public IfcFurnishingElementType {
+    GDCLASS(IfcFurnitureType, IfcFurnishingElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_assembly_place();
-    void set_assembly_place(godot::String v);
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_AssemblyPlace();
+    void set_AssemblyPlace(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcGeographicCRS : public GDIfcCoordinateReferenceSystem {
-    GDCLASS(GDIfcGeographicCRS, GDIfcCoordinateReferenceSystem)
+class IfcGeographicCRS : public IfcCoordinateReferenceSystem {
+    GDCLASS(IfcGeographicCRS, IfcCoordinateReferenceSystem)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_prime_meridian();
-    void set_prime_meridian(godot::String v);
-    Ref<GDIFCEntityBase> get_angle_unit();
-    void set_angle_unit(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_height_unit();
-    void set_height_unit(Ref<GDIFCEntityBase> v);
+    godot::String get_PrimeMeridian();
+    void set_PrimeMeridian(godot::String v);
+    Ref<GDIFCEntityBase> get_AngleUnit();
+    void set_AngleUnit(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_HeightUnit();
+    void set_HeightUnit(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcGeographicElement : public GDIfcElement {
-    GDCLASS(GDIfcGeographicElement, GDIfcElement)
+class IfcGeographicElement : public IfcElement {
+    GDCLASS(IfcGeographicElement, IfcElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcGeographicElementType : public GDIfcElementType {
-    GDCLASS(GDIfcGeographicElementType, GDIfcElementType)
+class IfcGeographicElementType : public IfcElementType {
+    GDCLASS(IfcGeographicElementType, IfcElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcGeometricSet : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcGeometricSet, GDIfcGeometricRepresentationItem)
+class IfcGeometricSet : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcGeometricSet, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_elements();
-    void set_elements(godot::Array v);
+    godot::Array get_Elements();
+    void set_Elements(godot::Array v);
 };
 
-class GDIfcGeometricCurveSet : public GDIfcGeometricSet {
-    GDCLASS(GDIfcGeometricCurveSet, GDIfcGeometricSet)
+class IfcGeometricCurveSet : public IfcGeometricSet {
+    GDCLASS(IfcGeometricCurveSet, IfcGeometricSet)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcRepresentationContext : public GDIFCEntityBase {
-    GDCLASS(GDIfcRepresentationContext, GDIFCEntityBase)
+class IfcRepresentationContext : public GDIFCEntityBase {
+    GDCLASS(IfcRepresentationContext, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_context_identifier();
-    void set_context_identifier(godot::String v);
-    godot::String get_context_type();
-    void set_context_type(godot::String v);
+    godot::String get_ContextIdentifier();
+    void set_ContextIdentifier(godot::String v);
+    godot::String get_ContextType();
+    void set_ContextType(godot::String v);
 };
 
-class GDIfcGeometricRepresentationContext : public GDIfcRepresentationContext {
-    GDCLASS(GDIfcGeometricRepresentationContext, GDIfcRepresentationContext)
+class IfcGeometricRepresentationContext : public IfcRepresentationContext {
+    GDCLASS(IfcGeometricRepresentationContext, IfcRepresentationContext)
 protected:
     static void _bind_methods();
 public:
-    int64_t get_coordinate_space_dimension();
-    void set_coordinate_space_dimension(int64_t v);
-    double get_precision();
-    void set_precision(double v);
-    Ref<GDIFCEntityBase> get_world_coordinate_system();
-    void set_world_coordinate_system(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_true_north();
-    void set_true_north(Ref<GDIFCEntityBase> v);
+    int64_t get_CoordinateSpaceDimension();
+    void set_CoordinateSpaceDimension(int64_t v);
+    double get_Precision();
+    void set_Precision(double v);
+    Ref<GDIFCEntityBase> get_WorldCoordinateSystem();
+    void set_WorldCoordinateSystem(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TrueNorth();
+    void set_TrueNorth(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcGeometricRepresentationSubContext : public GDIfcGeometricRepresentationContext {
-    GDCLASS(GDIfcGeometricRepresentationSubContext, GDIfcGeometricRepresentationContext)
+class IfcGeometricRepresentationSubContext : public IfcGeometricRepresentationContext {
+    GDCLASS(IfcGeometricRepresentationSubContext, IfcGeometricRepresentationContext)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_parent_context();
-    void set_parent_context(Ref<GDIFCEntityBase> v);
-    double get_target_scale();
-    void set_target_scale(double v);
-    godot::String get_target_view();
-    void set_target_view(godot::String v);
-    godot::String get_user_defined_target_view();
-    void set_user_defined_target_view(godot::String v);
+    Ref<GDIFCEntityBase> get_ParentContext();
+    void set_ParentContext(Ref<GDIFCEntityBase> v);
+    double get_TargetScale();
+    void set_TargetScale(double v);
+    godot::String get_TargetView();
+    void set_TargetView(godot::String v);
+    godot::String get_UserDefinedTargetView();
+    void set_UserDefinedTargetView(godot::String v);
 };
 
-class GDIfcGeomodel : public GDIfcGeotechnicalAssembly {
-    GDCLASS(GDIfcGeomodel, GDIfcGeotechnicalAssembly)
+class IfcGeomodel : public IfcGeotechnicalAssembly {
+    GDCLASS(IfcGeomodel, IfcGeotechnicalAssembly)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcGeoslice : public GDIfcGeotechnicalAssembly {
-    GDCLASS(GDIfcGeoslice, GDIfcGeotechnicalAssembly)
+class IfcGeoslice : public IfcGeotechnicalAssembly {
+    GDCLASS(IfcGeoslice, IfcGeotechnicalAssembly)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcGeotechnicalStratum : public GDIfcGeotechnicalElement {
-    GDCLASS(GDIfcGeotechnicalStratum, GDIfcGeotechnicalElement)
+class IfcGeotechnicalStratum : public IfcGeotechnicalElement {
+    GDCLASS(IfcGeotechnicalStratum, IfcGeotechnicalElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcGradientCurve : public GDIfcCompositeCurve {
-    GDCLASS(GDIfcGradientCurve, GDIfcCompositeCurve)
+class IfcGradientCurve : public IfcCompositeCurve {
+    GDCLASS(IfcGradientCurve, IfcCompositeCurve)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_base_curve();
-    void set_base_curve(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_end_point();
-    void set_end_point(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_BaseCurve();
+    void set_BaseCurve(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_EndPoint();
+    void set_EndPoint(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcGrid : public GDIfcPositioningElement {
-    GDCLASS(GDIfcGrid, GDIfcPositioningElement)
+class IfcGrid : public IfcPositioningElement {
+    GDCLASS(IfcGrid, IfcPositioningElement)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_u_axes();
-    void set_u_axes(godot::Array v);
-    godot::Array get_v_axes();
-    void set_v_axes(godot::Array v);
-    godot::Array get_w_axes();
-    void set_w_axes(godot::Array v);
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::Array get_UAxes();
+    void set_UAxes(godot::Array v);
+    godot::Array get_VAxes();
+    void set_VAxes(godot::Array v);
+    godot::Array get_WAxes();
+    void set_WAxes(godot::Array v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcGridAxis : public GDIFCEntityBase {
-    GDCLASS(GDIfcGridAxis, GDIFCEntityBase)
+class IfcGridAxis : public GDIFCEntityBase {
+    GDCLASS(IfcGridAxis, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_axis_tag();
-    void set_axis_tag(godot::String v);
-    Ref<GDIFCEntityBase> get_axis_curve();
-    void set_axis_curve(Ref<GDIFCEntityBase> v);
-    bool get_same_sense();
-    void set_same_sense(bool v);
+    godot::String get_AxisTag();
+    void set_AxisTag(godot::String v);
+    Ref<GDIFCEntityBase> get_AxisCurve();
+    void set_AxisCurve(Ref<GDIFCEntityBase> v);
+    bool get_SameSense();
+    void set_SameSense(bool v);
 };
 
-class GDIfcObjectPlacement : public GDIFCEntityBase {
-    GDCLASS(GDIfcObjectPlacement, GDIFCEntityBase)
+class IfcObjectPlacement : public GDIFCEntityBase {
+    GDCLASS(IfcObjectPlacement, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_placement_rel_to();
-    void set_placement_rel_to(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_PlacementRelTo();
+    void set_PlacementRelTo(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcGridPlacement : public GDIfcObjectPlacement {
-    GDCLASS(GDIfcGridPlacement, GDIfcObjectPlacement)
+class IfcGridPlacement : public IfcObjectPlacement {
+    GDCLASS(IfcGridPlacement, IfcObjectPlacement)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_placement_location();
-    void set_placement_location(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_placement_ref_direction();
-    void set_placement_ref_direction(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_PlacementLocation();
+    void set_PlacementLocation(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_PlacementRefDirection();
+    void set_PlacementRefDirection(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcHeatExchanger : public GDIfcEnergyConversionDevice {
-    GDCLASS(GDIfcHeatExchanger, GDIfcEnergyConversionDevice)
+class IfcHeatExchanger : public IfcEnergyConversionDevice {
+    GDCLASS(IfcHeatExchanger, IfcEnergyConversionDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcHeatExchangerType : public GDIfcEnergyConversionDeviceType {
-    GDCLASS(GDIfcHeatExchangerType, GDIfcEnergyConversionDeviceType)
+class IfcHeatExchangerType : public IfcEnergyConversionDeviceType {
+    GDCLASS(IfcHeatExchangerType, IfcEnergyConversionDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcHumidifier : public GDIfcEnergyConversionDevice {
-    GDCLASS(GDIfcHumidifier, GDIfcEnergyConversionDevice)
+class IfcHumidifier : public IfcEnergyConversionDevice {
+    GDCLASS(IfcHumidifier, IfcEnergyConversionDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcHumidifierType : public GDIfcEnergyConversionDeviceType {
-    GDCLASS(GDIfcHumidifierType, GDIfcEnergyConversionDeviceType)
+class IfcHumidifierType : public IfcEnergyConversionDeviceType {
+    GDCLASS(IfcHumidifierType, IfcEnergyConversionDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcIShapeProfileDef : public GDIfcParameterizedProfileDef {
-    GDCLASS(GDIfcIShapeProfileDef, GDIfcParameterizedProfileDef)
+class IfcIShapeProfileDef : public IfcParameterizedProfileDef {
+    GDCLASS(IfcIShapeProfileDef, IfcParameterizedProfileDef)
 protected:
     static void _bind_methods();
 public:
-    double get_overall_width();
-    void set_overall_width(double v);
-    double get_overall_depth();
-    void set_overall_depth(double v);
-    double get_web_thickness();
-    void set_web_thickness(double v);
-    double get_flange_thickness();
-    void set_flange_thickness(double v);
-    double get_fillet_radius();
-    void set_fillet_radius(double v);
-    double get_flange_edge_radius();
-    void set_flange_edge_radius(double v);
-    double get_flange_slope();
-    void set_flange_slope(double v);
+    double get_OverallWidth();
+    void set_OverallWidth(double v);
+    double get_OverallDepth();
+    void set_OverallDepth(double v);
+    double get_WebThickness();
+    void set_WebThickness(double v);
+    double get_FlangeThickness();
+    void set_FlangeThickness(double v);
+    double get_FilletRadius();
+    void set_FilletRadius(double v);
+    double get_FlangeEdgeRadius();
+    void set_FlangeEdgeRadius(double v);
+    double get_FlangeSlope();
+    void set_FlangeSlope(double v);
 };
 
-class GDIfcImageTexture : public GDIfcSurfaceTexture {
-    GDCLASS(GDIfcImageTexture, GDIfcSurfaceTexture)
+class IfcImageTexture : public IfcSurfaceTexture {
+    GDCLASS(IfcImageTexture, IfcSurfaceTexture)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_url_reference();
-    void set_url_reference(godot::String v);
+    godot::String get_URLReference();
+    void set_URLReference(godot::String v);
 };
 
-class GDIfcImpactProtectionDevice : public GDIfcElementComponent {
-    GDCLASS(GDIfcImpactProtectionDevice, GDIfcElementComponent)
+class IfcImpactProtectionDevice : public IfcElementComponent {
+    GDCLASS(IfcImpactProtectionDevice, IfcElementComponent)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcImpactProtectionDeviceType : public GDIfcElementComponentType {
-    GDCLASS(GDIfcImpactProtectionDeviceType, GDIfcElementComponentType)
+class IfcImpactProtectionDeviceType : public IfcElementComponentType {
+    GDCLASS(IfcImpactProtectionDeviceType, IfcElementComponentType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcIndexedColourMap : public GDIfcPresentationItem {
-    GDCLASS(GDIfcIndexedColourMap, GDIfcPresentationItem)
+class IfcIndexedColourMap : public IfcPresentationItem {
+    GDCLASS(IfcIndexedColourMap, IfcPresentationItem)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_mapped_to();
-    void set_mapped_to(Ref<GDIFCEntityBase> v);
-    double get_opacity();
-    void set_opacity(double v);
-    Ref<GDIFCEntityBase> get_colours();
-    void set_colours(Ref<GDIFCEntityBase> v);
-    godot::PackedInt64Array get_colour_index();
-    void set_colour_index(godot::PackedInt64Array v);
+    Ref<GDIFCEntityBase> get_MappedTo();
+    void set_MappedTo(Ref<GDIFCEntityBase> v);
+    double get_Opacity();
+    void set_Opacity(double v);
+    Ref<GDIFCEntityBase> get_Colours();
+    void set_Colours(Ref<GDIFCEntityBase> v);
+    godot::PackedInt64Array get_ColourIndex();
+    void set_ColourIndex(godot::PackedInt64Array v);
 };
 
-class GDIfcIndexedPolyCurve : public GDIfcBoundedCurve {
-    GDCLASS(GDIfcIndexedPolyCurve, GDIfcBoundedCurve)
+class IfcIndexedPolyCurve : public IfcBoundedCurve {
+    GDCLASS(IfcIndexedPolyCurve, IfcBoundedCurve)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_points();
-    void set_points(Ref<GDIFCEntityBase> v);
-    godot::Array get_segments();
-    void set_segments(godot::Array v);
-    bool get_self_intersect();
-    void set_self_intersect(bool v);
+    Ref<GDIFCEntityBase> get_Points();
+    void set_Points(Ref<GDIFCEntityBase> v);
+    godot::Array get_Segments();
+    void set_Segments(godot::Array v);
+    bool get_SelfIntersect();
+    void set_SelfIntersect(bool v);
 };
 
-class GDIfcTessellatedItem : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcTessellatedItem, GDIfcGeometricRepresentationItem)
+class IfcTessellatedItem : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcTessellatedItem, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcIndexedPolygonalFace : public GDIfcTessellatedItem {
-    GDCLASS(GDIfcIndexedPolygonalFace, GDIfcTessellatedItem)
+class IfcIndexedPolygonalFace : public IfcTessellatedItem {
+    GDCLASS(IfcIndexedPolygonalFace, IfcTessellatedItem)
 protected:
     static void _bind_methods();
 public:
-    godot::PackedInt64Array get_coord_index();
-    void set_coord_index(godot::PackedInt64Array v);
+    godot::PackedInt64Array get_CoordIndex();
+    void set_CoordIndex(godot::PackedInt64Array v);
 };
 
-class GDIfcIndexedPolygonalFaceWithVoids : public GDIfcIndexedPolygonalFace {
-    GDCLASS(GDIfcIndexedPolygonalFaceWithVoids, GDIfcIndexedPolygonalFace)
+class IfcIndexedPolygonalFaceWithVoids : public IfcIndexedPolygonalFace {
+    GDCLASS(IfcIndexedPolygonalFaceWithVoids, IfcIndexedPolygonalFace)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_inner_coord_indices();
+    godot::Array get_InnerCoordIndices();
 };
 
-class GDIfcTextureCoordinate : public GDIfcPresentationItem {
-    GDCLASS(GDIfcTextureCoordinate, GDIfcPresentationItem)
+class IfcTextureCoordinate : public IfcPresentationItem {
+    GDCLASS(IfcTextureCoordinate, IfcPresentationItem)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_maps();
-    void set_maps(godot::Array v);
+    godot::Array get_Maps();
+    void set_Maps(godot::Array v);
 };
 
-class GDIfcIndexedTextureMap : public GDIfcTextureCoordinate {
-    GDCLASS(GDIfcIndexedTextureMap, GDIfcTextureCoordinate)
+class IfcIndexedTextureMap : public IfcTextureCoordinate {
+    GDCLASS(IfcIndexedTextureMap, IfcTextureCoordinate)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_mapped_to();
-    void set_mapped_to(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_tex_coords();
-    void set_tex_coords(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_MappedTo();
+    void set_MappedTo(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TexCoords();
+    void set_TexCoords(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcIndexedPolygonalTextureMap : public GDIfcIndexedTextureMap {
-    GDCLASS(GDIfcIndexedPolygonalTextureMap, GDIfcIndexedTextureMap)
+class IfcIndexedPolygonalTextureMap : public IfcIndexedTextureMap {
+    GDCLASS(IfcIndexedPolygonalTextureMap, IfcIndexedTextureMap)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_tex_coord_indices();
-    void set_tex_coord_indices(godot::Array v);
+    godot::Array get_TexCoordIndices();
+    void set_TexCoordIndices(godot::Array v);
 };
 
-class GDIfcIndexedTriangleTextureMap : public GDIfcIndexedTextureMap {
-    GDCLASS(GDIfcIndexedTriangleTextureMap, GDIfcIndexedTextureMap)
+class IfcIndexedTriangleTextureMap : public IfcIndexedTextureMap {
+    GDCLASS(IfcIndexedTriangleTextureMap, IfcIndexedTextureMap)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_tex_coord_index();
+    godot::Array get_TexCoordIndex();
 };
 
-class GDIfcInterceptor : public GDIfcFlowTreatmentDevice {
-    GDCLASS(GDIfcInterceptor, GDIfcFlowTreatmentDevice)
+class IfcInterceptor : public IfcFlowTreatmentDevice {
+    GDCLASS(IfcInterceptor, IfcFlowTreatmentDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcInterceptorType : public GDIfcFlowTreatmentDeviceType {
-    GDCLASS(GDIfcInterceptorType, GDIfcFlowTreatmentDeviceType)
+class IfcInterceptorType : public IfcFlowTreatmentDeviceType {
+    GDCLASS(IfcInterceptorType, IfcFlowTreatmentDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSurfaceCurve : public GDIfcCurve {
-    GDCLASS(GDIfcSurfaceCurve, GDIfcCurve)
+class IfcSurfaceCurve : public IfcCurve {
+    GDCLASS(IfcSurfaceCurve, IfcCurve)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_curve3_d();
-    void set_curve3_d(Ref<GDIFCEntityBase> v);
-    godot::Array get_associated_geometry();
-    void set_associated_geometry(godot::Array v);
-    godot::String get_master_representation();
-    void set_master_representation(godot::String v);
+    Ref<GDIFCEntityBase> get_Curve3D();
+    void set_Curve3D(Ref<GDIFCEntityBase> v);
+    godot::Array get_AssociatedGeometry();
+    void set_AssociatedGeometry(godot::Array v);
+    godot::String get_MasterRepresentation();
+    void set_MasterRepresentation(godot::String v);
 };
 
-class GDIfcIntersectionCurve : public GDIfcSurfaceCurve {
-    GDCLASS(GDIfcIntersectionCurve, GDIfcSurfaceCurve)
+class IfcIntersectionCurve : public IfcSurfaceCurve {
+    GDCLASS(IfcIntersectionCurve, IfcSurfaceCurve)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcInventory : public GDIfcGroup {
-    GDCLASS(GDIfcInventory, GDIfcGroup)
+class IfcInventory : public IfcGroup {
+    GDCLASS(IfcInventory, IfcGroup)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    Ref<GDIFCEntityBase> get_jurisdiction();
-    void set_jurisdiction(Ref<GDIFCEntityBase> v);
-    godot::Array get_responsible_persons();
-    void set_responsible_persons(godot::Array v);
-    godot::String get_last_update_date();
-    void set_last_update_date(godot::String v);
-    Ref<GDIFCEntityBase> get_current_value();
-    void set_current_value(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_original_value();
-    void set_original_value(Ref<GDIFCEntityBase> v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    Ref<GDIFCEntityBase> get_Jurisdiction();
+    void set_Jurisdiction(Ref<GDIFCEntityBase> v);
+    godot::Array get_ResponsiblePersons();
+    void set_ResponsiblePersons(godot::Array v);
+    godot::String get_LastUpdateDate();
+    void set_LastUpdateDate(godot::String v);
+    Ref<GDIFCEntityBase> get_CurrentValue();
+    void set_CurrentValue(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_OriginalValue();
+    void set_OriginalValue(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcTimeSeries : public GDIFCEntityBase {
-    GDCLASS(GDIfcTimeSeries, GDIFCEntityBase)
+class IfcTimeSeries : public GDIFCEntityBase {
+    GDCLASS(IfcTimeSeries, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    godot::String get_start_time();
-    void set_start_time(godot::String v);
-    godot::String get_end_time();
-    void set_end_time(godot::String v);
-    godot::String get_time_series_data_type();
-    void set_time_series_data_type(godot::String v);
-    godot::String get_data_origin();
-    void set_data_origin(godot::String v);
-    godot::String get_user_defined_data_origin();
-    void set_user_defined_data_origin(godot::String v);
-    Ref<GDIFCEntityBase> get_unit();
-    void set_unit(Ref<GDIFCEntityBase> v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    godot::String get_StartTime();
+    void set_StartTime(godot::String v);
+    godot::String get_EndTime();
+    void set_EndTime(godot::String v);
+    godot::String get_TimeSeriesDataType();
+    void set_TimeSeriesDataType(godot::String v);
+    godot::String get_DataOrigin();
+    void set_DataOrigin(godot::String v);
+    godot::String get_UserDefinedDataOrigin();
+    void set_UserDefinedDataOrigin(godot::String v);
+    Ref<GDIFCEntityBase> get_Unit();
+    void set_Unit(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcIrregularTimeSeries : public GDIfcTimeSeries {
-    GDCLASS(GDIfcIrregularTimeSeries, GDIfcTimeSeries)
+class IfcIrregularTimeSeries : public IfcTimeSeries {
+    GDCLASS(IfcIrregularTimeSeries, IfcTimeSeries)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_values();
-    void set_values(godot::Array v);
+    godot::Array get_Values();
+    void set_Values(godot::Array v);
 };
 
-class GDIfcIrregularTimeSeriesValue : public GDIFCEntityBase {
-    GDCLASS(GDIfcIrregularTimeSeriesValue, GDIFCEntityBase)
+class IfcIrregularTimeSeriesValue : public GDIFCEntityBase {
+    GDCLASS(IfcIrregularTimeSeriesValue, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_time_stamp();
-    void set_time_stamp(godot::String v);
-    godot::Array get_list_values();
-    void set_list_values(godot::Array v);
+    godot::String get_TimeStamp();
+    void set_TimeStamp(godot::String v);
+    godot::Array get_ListValues();
+    void set_ListValues(godot::Array v);
 };
 
-class GDIfcJunctionBox : public GDIfcFlowFitting {
-    GDCLASS(GDIfcJunctionBox, GDIfcFlowFitting)
+class IfcJunctionBox : public IfcFlowFitting {
+    GDCLASS(IfcJunctionBox, IfcFlowFitting)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcJunctionBoxType : public GDIfcFlowFittingType {
-    GDCLASS(GDIfcJunctionBoxType, GDIfcFlowFittingType)
+class IfcJunctionBoxType : public IfcFlowFittingType {
+    GDCLASS(IfcJunctionBoxType, IfcFlowFittingType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcKerb : public GDIfcBuiltElement {
-    GDCLASS(GDIfcKerb, GDIfcBuiltElement)
+class IfcKerb : public IfcBuiltElement {
+    GDCLASS(IfcKerb, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcKerbType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcKerbType, GDIfcBuiltElementType)
+class IfcKerbType : public IfcBuiltElementType {
+    GDCLASS(IfcKerbType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcLShapeProfileDef : public GDIfcParameterizedProfileDef {
-    GDCLASS(GDIfcLShapeProfileDef, GDIfcParameterizedProfileDef)
+class IfcLShapeProfileDef : public IfcParameterizedProfileDef {
+    GDCLASS(IfcLShapeProfileDef, IfcParameterizedProfileDef)
 protected:
     static void _bind_methods();
 public:
-    double get_depth();
-    void set_depth(double v);
-    double get_width();
-    void set_width(double v);
-    double get_thickness();
-    void set_thickness(double v);
-    double get_fillet_radius();
-    void set_fillet_radius(double v);
-    double get_edge_radius();
-    void set_edge_radius(double v);
-    double get_leg_slope();
-    void set_leg_slope(double v);
+    double get_Depth();
+    void set_Depth(double v);
+    double get_Width();
+    void set_Width(double v);
+    double get_Thickness();
+    void set_Thickness(double v);
+    double get_FilletRadius();
+    void set_FilletRadius(double v);
+    double get_EdgeRadius();
+    void set_EdgeRadius(double v);
+    double get_LegSlope();
+    void set_LegSlope(double v);
 };
 
-class GDIfcLaborResource : public GDIfcConstructionResource {
-    GDCLASS(GDIfcLaborResource, GDIfcConstructionResource)
+class IfcLaborResource : public IfcConstructionResource {
+    GDCLASS(IfcLaborResource, IfcConstructionResource)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcLaborResourceType : public GDIfcConstructionResourceType {
-    GDCLASS(GDIfcLaborResourceType, GDIfcConstructionResourceType)
+class IfcLaborResourceType : public IfcConstructionResourceType {
+    GDCLASS(IfcLaborResourceType, IfcConstructionResourceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcLagTime : public GDIfcSchedulingTime {
-    GDCLASS(GDIfcLagTime, GDIfcSchedulingTime)
+class IfcLagTime : public IfcSchedulingTime {
+    GDCLASS(IfcLagTime, IfcSchedulingTime)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_lag_value();
-    void set_lag_value(Ref<GDIFCEntityBase> v);
-    godot::String get_duration_type();
-    void set_duration_type(godot::String v);
+    Ref<GDIFCEntityBase> get_LagValue();
+    void set_LagValue(Ref<GDIFCEntityBase> v);
+    godot::String get_DurationType();
+    void set_DurationType(godot::String v);
 };
 
-class GDIfcLamp : public GDIfcFlowTerminal {
-    GDCLASS(GDIfcLamp, GDIfcFlowTerminal)
+class IfcLamp : public IfcFlowTerminal {
+    GDCLASS(IfcLamp, IfcFlowTerminal)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcLampType : public GDIfcFlowTerminalType {
-    GDCLASS(GDIfcLampType, GDIfcFlowTerminalType)
+class IfcLampType : public IfcFlowTerminalType {
+    GDCLASS(IfcLampType, IfcFlowTerminalType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcLibraryInformation : public GDIfcExternalInformation {
-    GDCLASS(GDIfcLibraryInformation, GDIfcExternalInformation)
+class IfcLibraryInformation : public IfcExternalInformation {
+    GDCLASS(IfcLibraryInformation, IfcExternalInformation)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_version();
-    void set_version(godot::String v);
-    Ref<GDIFCEntityBase> get_publisher();
-    void set_publisher(Ref<GDIFCEntityBase> v);
-    godot::String get_version_date();
-    void set_version_date(godot::String v);
-    godot::String get_location();
-    void set_location(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Version();
+    void set_Version(godot::String v);
+    Ref<GDIFCEntityBase> get_Publisher();
+    void set_Publisher(Ref<GDIFCEntityBase> v);
+    godot::String get_VersionDate();
+    void set_VersionDate(godot::String v);
+    godot::String get_Location();
+    void set_Location(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
 };
 
-class GDIfcLibraryReference : public GDIfcExternalReference {
-    GDCLASS(GDIfcLibraryReference, GDIfcExternalReference)
+class IfcLibraryReference : public IfcExternalReference {
+    GDCLASS(IfcLibraryReference, IfcExternalReference)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_description();
-    void set_description(godot::String v);
-    godot::String get_language();
-    void set_language(godot::String v);
-    Ref<GDIFCEntityBase> get_referenced_library();
-    void set_referenced_library(Ref<GDIFCEntityBase> v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    godot::String get_Language();
+    void set_Language(godot::String v);
+    Ref<GDIFCEntityBase> get_ReferencedLibrary();
+    void set_ReferencedLibrary(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcLightDistributionData : public GDIFCEntityBase {
-    GDCLASS(GDIfcLightDistributionData, GDIFCEntityBase)
+class IfcLightDistributionData : public GDIFCEntityBase {
+    GDCLASS(IfcLightDistributionData, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    double get_main_plane_angle();
-    void set_main_plane_angle(double v);
-    godot::PackedFloat64Array get_secondary_plane_angle();
-    void set_secondary_plane_angle(godot::PackedFloat64Array v);
-    godot::PackedFloat64Array get_luminous_intensity();
-    void set_luminous_intensity(godot::PackedFloat64Array v);
+    double get_MainPlaneAngle();
+    void set_MainPlaneAngle(double v);
+    godot::PackedFloat64Array get_SecondaryPlaneAngle();
+    void set_SecondaryPlaneAngle(godot::PackedFloat64Array v);
+    godot::PackedFloat64Array get_LuminousIntensity();
+    void set_LuminousIntensity(godot::PackedFloat64Array v);
 };
 
-class GDIfcLightFixture : public GDIfcFlowTerminal {
-    GDCLASS(GDIfcLightFixture, GDIfcFlowTerminal)
+class IfcLightFixture : public IfcFlowTerminal {
+    GDCLASS(IfcLightFixture, IfcFlowTerminal)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcLightFixtureType : public GDIfcFlowTerminalType {
-    GDCLASS(GDIfcLightFixtureType, GDIfcFlowTerminalType)
+class IfcLightFixtureType : public IfcFlowTerminalType {
+    GDCLASS(IfcLightFixtureType, IfcFlowTerminalType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcLightIntensityDistribution : public GDIFCEntityBase {
-    GDCLASS(GDIfcLightIntensityDistribution, GDIFCEntityBase)
+class IfcLightIntensityDistribution : public GDIFCEntityBase {
+    GDCLASS(IfcLightIntensityDistribution, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_light_distribution_curve();
-    void set_light_distribution_curve(godot::String v);
-    godot::Array get_distribution_data();
-    void set_distribution_data(godot::Array v);
+    godot::String get_LightDistributionCurve();
+    void set_LightDistributionCurve(godot::String v);
+    godot::Array get_DistributionData();
+    void set_DistributionData(godot::Array v);
 };
 
-class GDIfcLightSource : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcLightSource, GDIfcGeometricRepresentationItem)
+class IfcLightSource : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcLightSource, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    Ref<GDIFCEntityBase> get_light_colour();
-    void set_light_colour(Ref<GDIFCEntityBase> v);
-    double get_ambient_intensity();
-    void set_ambient_intensity(double v);
-    double get_intensity();
-    void set_intensity(double v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    Ref<GDIFCEntityBase> get_LightColour();
+    void set_LightColour(Ref<GDIFCEntityBase> v);
+    double get_AmbientIntensity();
+    void set_AmbientIntensity(double v);
+    double get_Intensity();
+    void set_Intensity(double v);
 };
 
-class GDIfcLightSourceAmbient : public GDIfcLightSource {
-    GDCLASS(GDIfcLightSourceAmbient, GDIfcLightSource)
+class IfcLightSourceAmbient : public IfcLightSource {
+    GDCLASS(IfcLightSourceAmbient, IfcLightSource)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcLightSourceDirectional : public GDIfcLightSource {
-    GDCLASS(GDIfcLightSourceDirectional, GDIfcLightSource)
+class IfcLightSourceDirectional : public IfcLightSource {
+    GDCLASS(IfcLightSourceDirectional, IfcLightSource)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_orientation();
-    void set_orientation(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Orientation();
+    void set_Orientation(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcLightSourceGoniometric : public GDIfcLightSource {
-    GDCLASS(GDIfcLightSourceGoniometric, GDIfcLightSource)
+class IfcLightSourceGoniometric : public IfcLightSource {
+    GDCLASS(IfcLightSourceGoniometric, IfcLightSource)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_position();
-    void set_position(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_colour_appearance();
-    void set_colour_appearance(Ref<GDIFCEntityBase> v);
-    double get_colour_temperature();
-    void set_colour_temperature(double v);
-    double get_luminous_flux();
-    void set_luminous_flux(double v);
-    godot::String get_light_emission_source();
-    void set_light_emission_source(godot::String v);
-    Ref<GDIFCEntityBase> get_light_distribution_data_source();
-    void set_light_distribution_data_source(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Position();
+    void set_Position(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_ColourAppearance();
+    void set_ColourAppearance(Ref<GDIFCEntityBase> v);
+    double get_ColourTemperature();
+    void set_ColourTemperature(double v);
+    double get_LuminousFlux();
+    void set_LuminousFlux(double v);
+    godot::String get_LightEmissionSource();
+    void set_LightEmissionSource(godot::String v);
+    Ref<GDIFCEntityBase> get_LightDistributionDataSource();
+    void set_LightDistributionDataSource(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcLightSourcePositional : public GDIfcLightSource {
-    GDCLASS(GDIfcLightSourcePositional, GDIfcLightSource)
+class IfcLightSourcePositional : public IfcLightSource {
+    GDCLASS(IfcLightSourcePositional, IfcLightSource)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_position();
-    void set_position(Ref<GDIFCEntityBase> v);
-    double get_radius();
-    void set_radius(double v);
-    double get_constant_attenuation();
-    void set_constant_attenuation(double v);
-    double get_distance_attenuation();
-    void set_distance_attenuation(double v);
-    double get_quadric_attenuation();
-    void set_quadric_attenuation(double v);
+    Ref<GDIFCEntityBase> get_Position();
+    void set_Position(Ref<GDIFCEntityBase> v);
+    double get_Radius();
+    void set_Radius(double v);
+    double get_ConstantAttenuation();
+    void set_ConstantAttenuation(double v);
+    double get_DistanceAttenuation();
+    void set_DistanceAttenuation(double v);
+    double get_QuadricAttenuation();
+    void set_QuadricAttenuation(double v);
 };
 
-class GDIfcLightSourceSpot : public GDIfcLightSourcePositional {
-    GDCLASS(GDIfcLightSourceSpot, GDIfcLightSourcePositional)
+class IfcLightSourceSpot : public IfcLightSourcePositional {
+    GDCLASS(IfcLightSourceSpot, IfcLightSourcePositional)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_orientation();
-    void set_orientation(Ref<GDIFCEntityBase> v);
-    double get_concentration_exponent();
-    void set_concentration_exponent(double v);
-    double get_spread_angle();
-    void set_spread_angle(double v);
-    double get_beam_width_angle();
-    void set_beam_width_angle(double v);
+    Ref<GDIFCEntityBase> get_Orientation();
+    void set_Orientation(Ref<GDIFCEntityBase> v);
+    double get_ConcentrationExponent();
+    void set_ConcentrationExponent(double v);
+    double get_SpreadAngle();
+    void set_SpreadAngle(double v);
+    double get_BeamWidthAngle();
+    void set_BeamWidthAngle(double v);
 };
 
-class GDIfcLine : public GDIfcCurve {
-    GDCLASS(GDIfcLine, GDIfcCurve)
+class IfcLine : public IfcCurve {
+    GDCLASS(IfcLine, IfcCurve)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_pnt();
-    void set_pnt(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_dir();
-    void set_dir(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Pnt();
+    void set_Pnt(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Dir();
+    void set_Dir(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcLinearPlacement : public GDIfcObjectPlacement {
-    GDCLASS(GDIfcLinearPlacement, GDIfcObjectPlacement)
+class IfcLinearPlacement : public IfcObjectPlacement {
+    GDCLASS(IfcLinearPlacement, IfcObjectPlacement)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relative_placement();
-    void set_relative_placement(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_cartesian_position();
-    void set_cartesian_position(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelativePlacement();
+    void set_RelativePlacement(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_CartesianPosition();
+    void set_CartesianPosition(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcLiquidTerminal : public GDIfcFlowTerminal {
-    GDCLASS(GDIfcLiquidTerminal, GDIfcFlowTerminal)
+class IfcLiquidTerminal : public IfcFlowTerminal {
+    GDCLASS(IfcLiquidTerminal, IfcFlowTerminal)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcLiquidTerminalType : public GDIfcFlowTerminalType {
-    GDCLASS(GDIfcLiquidTerminalType, GDIfcFlowTerminalType)
+class IfcLiquidTerminalType : public IfcFlowTerminalType {
+    GDCLASS(IfcLiquidTerminalType, IfcFlowTerminalType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcLocalPlacement : public GDIfcObjectPlacement {
-    GDCLASS(GDIfcLocalPlacement, GDIfcObjectPlacement)
+class IfcLocalPlacement : public IfcObjectPlacement {
+    GDCLASS(IfcLocalPlacement, IfcObjectPlacement)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relative_placement();
-    void set_relative_placement(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelativePlacement();
+    void set_RelativePlacement(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcMapConversion : public GDIfcCoordinateOperation {
-    GDCLASS(GDIfcMapConversion, GDIfcCoordinateOperation)
+class IfcMapConversion : public IfcCoordinateOperation {
+    GDCLASS(IfcMapConversion, IfcCoordinateOperation)
 protected:
     static void _bind_methods();
 public:
-    double get_eastings();
-    void set_eastings(double v);
-    double get_northings();
-    void set_northings(double v);
-    double get_orthogonal_height();
-    void set_orthogonal_height(double v);
-    double get_x_axis_abscissa();
-    void set_x_axis_abscissa(double v);
-    double get_x_axis_ordinate();
-    void set_x_axis_ordinate(double v);
-    double get_scale();
-    void set_scale(double v);
+    double get_Eastings();
+    void set_Eastings(double v);
+    double get_Northings();
+    void set_Northings(double v);
+    double get_OrthogonalHeight();
+    void set_OrthogonalHeight(double v);
+    double get_XAxisAbscissa();
+    void set_XAxisAbscissa(double v);
+    double get_XAxisOrdinate();
+    void set_XAxisOrdinate(double v);
+    double get_Scale();
+    void set_Scale(double v);
 };
 
-class GDIfcMapConversionScaled : public GDIfcMapConversion {
-    GDCLASS(GDIfcMapConversionScaled, GDIfcMapConversion)
+class IfcMapConversionScaled : public IfcMapConversion {
+    GDCLASS(IfcMapConversionScaled, IfcMapConversion)
 protected:
     static void _bind_methods();
 public:
-    double get_factor_x();
-    void set_factor_x(double v);
-    double get_factor_y();
-    void set_factor_y(double v);
-    double get_factor_z();
-    void set_factor_z(double v);
+    double get_FactorX();
+    void set_FactorX(double v);
+    double get_FactorY();
+    void set_FactorY(double v);
+    double get_FactorZ();
+    void set_FactorZ(double v);
 };
 
-class GDIfcMappedItem : public GDIfcRepresentationItem {
-    GDCLASS(GDIfcMappedItem, GDIfcRepresentationItem)
+class IfcMappedItem : public IfcRepresentationItem {
+    GDCLASS(IfcMappedItem, IfcRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_mapping_source();
-    void set_mapping_source(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_mapping_target();
-    void set_mapping_target(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_MappingSource();
+    void set_MappingSource(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_MappingTarget();
+    void set_MappingTarget(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcMarineFacility : public GDIfcFacility {
-    GDCLASS(GDIfcMarineFacility, GDIfcFacility)
+class IfcMarineFacility : public IfcFacility {
+    GDCLASS(IfcMarineFacility, IfcFacility)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcMarinePart : public GDIfcFacilityPart {
-    GDCLASS(GDIfcMarinePart, GDIfcFacilityPart)
+class IfcMarinePart : public IfcFacilityPart {
+    GDCLASS(IfcMarinePart, IfcFacilityPart)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcMaterialDefinition : public GDIFCEntityBase {
-    GDCLASS(GDIfcMaterialDefinition, GDIFCEntityBase)
+class IfcMaterialDefinition : public GDIFCEntityBase {
+    GDCLASS(IfcMaterialDefinition, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcMaterial : public GDIfcMaterialDefinition {
-    GDCLASS(GDIfcMaterial, GDIfcMaterialDefinition)
+class IfcMaterial : public IfcMaterialDefinition {
+    GDCLASS(IfcMaterial, IfcMaterialDefinition)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    godot::String get_category();
-    void set_category(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    godot::String get_Category();
+    void set_Category(godot::String v);
 };
 
-class GDIfcMaterialClassificationRelationship : public GDIFCEntityBase {
-    GDCLASS(GDIfcMaterialClassificationRelationship, GDIFCEntityBase)
+class IfcMaterialClassificationRelationship : public GDIFCEntityBase {
+    GDCLASS(IfcMaterialClassificationRelationship, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_material_classifications();
-    void set_material_classifications(godot::Array v);
-    Ref<GDIFCEntityBase> get_classified_material();
-    void set_classified_material(Ref<GDIFCEntityBase> v);
+    godot::Array get_MaterialClassifications();
+    void set_MaterialClassifications(godot::Array v);
+    Ref<GDIFCEntityBase> get_ClassifiedMaterial();
+    void set_ClassifiedMaterial(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcMaterialConstituent : public GDIfcMaterialDefinition {
-    GDCLASS(GDIfcMaterialConstituent, GDIfcMaterialDefinition)
+class IfcMaterialConstituent : public IfcMaterialDefinition {
+    GDCLASS(IfcMaterialConstituent, IfcMaterialDefinition)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    Ref<GDIFCEntityBase> get_material();
-    void set_material(Ref<GDIFCEntityBase> v);
-    double get_fraction();
-    void set_fraction(double v);
-    godot::String get_category();
-    void set_category(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    Ref<GDIFCEntityBase> get_Material();
+    void set_Material(Ref<GDIFCEntityBase> v);
+    double get_Fraction();
+    void set_Fraction(double v);
+    godot::String get_Category();
+    void set_Category(godot::String v);
 };
 
-class GDIfcMaterialConstituentSet : public GDIfcMaterialDefinition {
-    GDCLASS(GDIfcMaterialConstituentSet, GDIfcMaterialDefinition)
+class IfcMaterialConstituentSet : public IfcMaterialDefinition {
+    GDCLASS(IfcMaterialConstituentSet, IfcMaterialDefinition)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    godot::Array get_material_constituents();
-    void set_material_constituents(godot::Array v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    godot::Array get_MaterialConstituents();
+    void set_MaterialConstituents(godot::Array v);
 };
 
-class GDIfcProductRepresentation : public GDIFCEntityBase {
-    GDCLASS(GDIfcProductRepresentation, GDIFCEntityBase)
+class IfcProductRepresentation : public GDIFCEntityBase {
+    GDCLASS(IfcProductRepresentation, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    godot::Array get_representations();
-    void set_representations(godot::Array v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    godot::Array get_Representations();
+    void set_Representations(godot::Array v);
 };
 
-class GDIfcMaterialDefinitionRepresentation : public GDIfcProductRepresentation {
-    GDCLASS(GDIfcMaterialDefinitionRepresentation, GDIfcProductRepresentation)
+class IfcMaterialDefinitionRepresentation : public IfcProductRepresentation {
+    GDCLASS(IfcMaterialDefinitionRepresentation, IfcProductRepresentation)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_represented_material();
-    void set_represented_material(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RepresentedMaterial();
+    void set_RepresentedMaterial(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcMaterialLayer : public GDIfcMaterialDefinition {
-    GDCLASS(GDIfcMaterialLayer, GDIfcMaterialDefinition)
+class IfcMaterialLayer : public IfcMaterialDefinition {
+    GDCLASS(IfcMaterialLayer, IfcMaterialDefinition)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_material();
-    void set_material(Ref<GDIFCEntityBase> v);
-    double get_layer_thickness();
-    void set_layer_thickness(double v);
-    godot::String get_is_ventilated();
-    void set_is_ventilated(godot::String v);
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    godot::String get_category();
-    void set_category(godot::String v);
-    int64_t get_priority();
-    void set_priority(int64_t v);
+    Ref<GDIFCEntityBase> get_Material();
+    void set_Material(Ref<GDIFCEntityBase> v);
+    double get_LayerThickness();
+    void set_LayerThickness(double v);
+    godot::String get_IsVentilated();
+    void set_IsVentilated(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    godot::String get_Category();
+    void set_Category(godot::String v);
+    int64_t get_Priority();
+    void set_Priority(int64_t v);
 };
 
-class GDIfcMaterialLayerSet : public GDIfcMaterialDefinition {
-    GDCLASS(GDIfcMaterialLayerSet, GDIfcMaterialDefinition)
+class IfcMaterialLayerSet : public IfcMaterialDefinition {
+    GDCLASS(IfcMaterialLayerSet, IfcMaterialDefinition)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_material_layers();
-    void set_material_layers(godot::Array v);
-    godot::String get_layer_set_name();
-    void set_layer_set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
+    godot::Array get_MaterialLayers();
+    void set_MaterialLayers(godot::Array v);
+    godot::String get_LayerSetName();
+    void set_LayerSetName(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
 };
 
-class GDIfcMaterialUsageDefinition : public GDIFCEntityBase {
-    GDCLASS(GDIfcMaterialUsageDefinition, GDIFCEntityBase)
+class IfcMaterialUsageDefinition : public GDIFCEntityBase {
+    GDCLASS(IfcMaterialUsageDefinition, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcMaterialLayerSetUsage : public GDIfcMaterialUsageDefinition {
-    GDCLASS(GDIfcMaterialLayerSetUsage, GDIfcMaterialUsageDefinition)
+class IfcMaterialLayerSetUsage : public IfcMaterialUsageDefinition {
+    GDCLASS(IfcMaterialLayerSetUsage, IfcMaterialUsageDefinition)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_for_layer_set();
-    void set_for_layer_set(Ref<GDIFCEntityBase> v);
-    godot::String get_layer_set_direction();
-    void set_layer_set_direction(godot::String v);
-    godot::String get_direction_sense();
-    void set_direction_sense(godot::String v);
-    double get_offset_from_reference_line();
-    void set_offset_from_reference_line(double v);
-    double get_reference_extent();
-    void set_reference_extent(double v);
+    Ref<GDIFCEntityBase> get_ForLayerSet();
+    void set_ForLayerSet(Ref<GDIFCEntityBase> v);
+    godot::String get_LayerSetDirection();
+    void set_LayerSetDirection(godot::String v);
+    godot::String get_DirectionSense();
+    void set_DirectionSense(godot::String v);
+    double get_OffsetFromReferenceLine();
+    void set_OffsetFromReferenceLine(double v);
+    double get_ReferenceExtent();
+    void set_ReferenceExtent(double v);
 };
 
-class GDIfcMaterialLayerWithOffsets : public GDIfcMaterialLayer {
-    GDCLASS(GDIfcMaterialLayerWithOffsets, GDIfcMaterialLayer)
+class IfcMaterialLayerWithOffsets : public IfcMaterialLayer {
+    GDCLASS(IfcMaterialLayerWithOffsets, IfcMaterialLayer)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_offset_direction();
-    void set_offset_direction(godot::String v);
-    godot::PackedFloat64Array get_offset_values();
-    void set_offset_values(godot::PackedFloat64Array v);
+    godot::String get_OffsetDirection();
+    void set_OffsetDirection(godot::String v);
+    godot::PackedFloat64Array get_OffsetValues();
+    void set_OffsetValues(godot::PackedFloat64Array v);
 };
 
-class GDIfcMaterialList : public GDIFCEntityBase {
-    GDCLASS(GDIfcMaterialList, GDIFCEntityBase)
+class IfcMaterialList : public GDIFCEntityBase {
+    GDCLASS(IfcMaterialList, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_materials();
-    void set_materials(godot::Array v);
+    godot::Array get_Materials();
+    void set_Materials(godot::Array v);
 };
 
-class GDIfcMaterialProfile : public GDIfcMaterialDefinition {
-    GDCLASS(GDIfcMaterialProfile, GDIfcMaterialDefinition)
+class IfcMaterialProfile : public IfcMaterialDefinition {
+    GDCLASS(IfcMaterialProfile, IfcMaterialDefinition)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    Ref<GDIFCEntityBase> get_material();
-    void set_material(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_profile();
-    void set_profile(Ref<GDIFCEntityBase> v);
-    int64_t get_priority();
-    void set_priority(int64_t v);
-    godot::String get_category();
-    void set_category(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    Ref<GDIFCEntityBase> get_Material();
+    void set_Material(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Profile();
+    void set_Profile(Ref<GDIFCEntityBase> v);
+    int64_t get_Priority();
+    void set_Priority(int64_t v);
+    godot::String get_Category();
+    void set_Category(godot::String v);
 };
 
-class GDIfcMaterialProfileSet : public GDIfcMaterialDefinition {
-    GDCLASS(GDIfcMaterialProfileSet, GDIfcMaterialDefinition)
+class IfcMaterialProfileSet : public IfcMaterialDefinition {
+    GDCLASS(IfcMaterialProfileSet, IfcMaterialDefinition)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    godot::Array get_material_profiles();
-    void set_material_profiles(godot::Array v);
-    Ref<GDIFCEntityBase> get_composite_profile();
-    void set_composite_profile(Ref<GDIFCEntityBase> v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    godot::Array get_MaterialProfiles();
+    void set_MaterialProfiles(godot::Array v);
+    Ref<GDIFCEntityBase> get_CompositeProfile();
+    void set_CompositeProfile(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcMaterialProfileSetUsage : public GDIfcMaterialUsageDefinition {
-    GDCLASS(GDIfcMaterialProfileSetUsage, GDIfcMaterialUsageDefinition)
+class IfcMaterialProfileSetUsage : public IfcMaterialUsageDefinition {
+    GDCLASS(IfcMaterialProfileSetUsage, IfcMaterialUsageDefinition)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_for_profile_set();
-    void set_for_profile_set(Ref<GDIFCEntityBase> v);
-    int64_t get_cardinal_point();
-    void set_cardinal_point(int64_t v);
-    double get_reference_extent();
-    void set_reference_extent(double v);
+    Ref<GDIFCEntityBase> get_ForProfileSet();
+    void set_ForProfileSet(Ref<GDIFCEntityBase> v);
+    int64_t get_CardinalPoint();
+    void set_CardinalPoint(int64_t v);
+    double get_ReferenceExtent();
+    void set_ReferenceExtent(double v);
 };
 
-class GDIfcMaterialProfileSetUsageTapering : public GDIfcMaterialProfileSetUsage {
-    GDCLASS(GDIfcMaterialProfileSetUsageTapering, GDIfcMaterialProfileSetUsage)
+class IfcMaterialProfileSetUsageTapering : public IfcMaterialProfileSetUsage {
+    GDCLASS(IfcMaterialProfileSetUsageTapering, IfcMaterialProfileSetUsage)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_for_profile_end_set();
-    void set_for_profile_end_set(Ref<GDIFCEntityBase> v);
-    int64_t get_cardinal_end_point();
-    void set_cardinal_end_point(int64_t v);
+    Ref<GDIFCEntityBase> get_ForProfileEndSet();
+    void set_ForProfileEndSet(Ref<GDIFCEntityBase> v);
+    int64_t get_CardinalEndPoint();
+    void set_CardinalEndPoint(int64_t v);
 };
 
-class GDIfcMaterialProfileWithOffsets : public GDIfcMaterialProfile {
-    GDCLASS(GDIfcMaterialProfileWithOffsets, GDIfcMaterialProfile)
+class IfcMaterialProfileWithOffsets : public IfcMaterialProfile {
+    GDCLASS(IfcMaterialProfileWithOffsets, IfcMaterialProfile)
 protected:
     static void _bind_methods();
 public:
-    godot::PackedFloat64Array get_offset_values();
-    void set_offset_values(godot::PackedFloat64Array v);
+    godot::PackedFloat64Array get_OffsetValues();
+    void set_OffsetValues(godot::PackedFloat64Array v);
 };
 
-class GDIfcMaterialProperties : public GDIfcExtendedProperties {
-    GDCLASS(GDIfcMaterialProperties, GDIfcExtendedProperties)
+class IfcMaterialProperties : public IfcExtendedProperties {
+    GDCLASS(IfcMaterialProperties, IfcExtendedProperties)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_material();
-    void set_material(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Material();
+    void set_Material(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcMaterialRelationship : public GDIfcResourceLevelRelationship {
-    GDCLASS(GDIfcMaterialRelationship, GDIfcResourceLevelRelationship)
+class IfcMaterialRelationship : public IfcResourceLevelRelationship {
+    GDCLASS(IfcMaterialRelationship, IfcResourceLevelRelationship)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_material();
-    void set_relating_material(Ref<GDIFCEntityBase> v);
-    godot::Array get_related_materials();
-    void set_related_materials(godot::Array v);
-    godot::String get_material_expression();
-    void set_material_expression(godot::String v);
+    Ref<GDIFCEntityBase> get_RelatingMaterial();
+    void set_RelatingMaterial(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedMaterials();
+    void set_RelatedMaterials(godot::Array v);
+    godot::String get_MaterialExpression();
+    void set_MaterialExpression(godot::String v);
 };
 
-class GDIfcMeasureWithUnit : public GDIFCEntityBase {
-    GDCLASS(GDIfcMeasureWithUnit, GDIFCEntityBase)
+class IfcMeasureWithUnit : public GDIFCEntityBase {
+    GDCLASS(IfcMeasureWithUnit, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_value_component();
-    void set_value_component(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_unit_component();
-    void set_unit_component(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_ValueComponent();
+    void set_ValueComponent(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_UnitComponent();
+    void set_UnitComponent(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcMechanicalFastener : public GDIfcElementComponent {
-    GDCLASS(GDIfcMechanicalFastener, GDIfcElementComponent)
+class IfcMechanicalFastener : public IfcElementComponent {
+    GDCLASS(IfcMechanicalFastener, IfcElementComponent)
 protected:
     static void _bind_methods();
 public:
-    double get_nominal_diameter();
-    void set_nominal_diameter(double v);
-    double get_nominal_length();
-    void set_nominal_length(double v);
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    double get_NominalDiameter();
+    void set_NominalDiameter(double v);
+    double get_NominalLength();
+    void set_NominalLength(double v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcMechanicalFastenerType : public GDIfcElementComponentType {
-    GDCLASS(GDIfcMechanicalFastenerType, GDIfcElementComponentType)
+class IfcMechanicalFastenerType : public IfcElementComponentType {
+    GDCLASS(IfcMechanicalFastenerType, IfcElementComponentType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    double get_nominal_diameter();
-    void set_nominal_diameter(double v);
-    double get_nominal_length();
-    void set_nominal_length(double v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    double get_NominalDiameter();
+    void set_NominalDiameter(double v);
+    double get_NominalLength();
+    void set_NominalLength(double v);
 };
 
-class GDIfcMedicalDevice : public GDIfcFlowTerminal {
-    GDCLASS(GDIfcMedicalDevice, GDIfcFlowTerminal)
+class IfcMedicalDevice : public IfcFlowTerminal {
+    GDCLASS(IfcMedicalDevice, IfcFlowTerminal)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcMedicalDeviceType : public GDIfcFlowTerminalType {
-    GDCLASS(GDIfcMedicalDeviceType, GDIfcFlowTerminalType)
+class IfcMedicalDeviceType : public IfcFlowTerminalType {
+    GDCLASS(IfcMedicalDeviceType, IfcFlowTerminalType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcMember : public GDIfcBuiltElement {
-    GDCLASS(GDIfcMember, GDIfcBuiltElement)
+class IfcMember : public IfcBuiltElement {
+    GDCLASS(IfcMember, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcMemberType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcMemberType, GDIfcBuiltElementType)
+class IfcMemberType : public IfcBuiltElementType {
+    GDCLASS(IfcMemberType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcMetric : public GDIfcConstraint {
-    GDCLASS(GDIfcMetric, GDIfcConstraint)
+class IfcMetric : public IfcConstraint {
+    GDCLASS(IfcMetric, IfcConstraint)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_benchmark();
-    void set_benchmark(godot::String v);
-    godot::String get_value_source();
-    void set_value_source(godot::String v);
-    Ref<GDIFCEntityBase> get_data_value();
-    void set_data_value(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_reference_path();
-    void set_reference_path(Ref<GDIFCEntityBase> v);
+    godot::String get_Benchmark();
+    void set_Benchmark(godot::String v);
+    godot::String get_ValueSource();
+    void set_ValueSource(godot::String v);
+    Ref<GDIFCEntityBase> get_DataValue();
+    void set_DataValue(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_ReferencePath();
+    void set_ReferencePath(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcMirroredProfileDef : public GDIfcDerivedProfileDef {
-    GDCLASS(GDIfcMirroredProfileDef, GDIfcDerivedProfileDef)
+class IfcMirroredProfileDef : public IfcDerivedProfileDef {
+    GDCLASS(IfcMirroredProfileDef, IfcDerivedProfileDef)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcMobileTelecommunicationsAppliance : public GDIfcFlowTerminal {
-    GDCLASS(GDIfcMobileTelecommunicationsAppliance, GDIfcFlowTerminal)
+class IfcMobileTelecommunicationsAppliance : public IfcFlowTerminal {
+    GDCLASS(IfcMobileTelecommunicationsAppliance, IfcFlowTerminal)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcMobileTelecommunicationsApplianceType : public GDIfcFlowTerminalType {
-    GDCLASS(GDIfcMobileTelecommunicationsApplianceType, GDIfcFlowTerminalType)
+class IfcMobileTelecommunicationsApplianceType : public IfcFlowTerminalType {
+    GDCLASS(IfcMobileTelecommunicationsApplianceType, IfcFlowTerminalType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcMonetaryUnit : public GDIFCEntityBase {
-    GDCLASS(GDIfcMonetaryUnit, GDIFCEntityBase)
+class IfcMonetaryUnit : public GDIFCEntityBase {
+    GDCLASS(IfcMonetaryUnit, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_currency();
-    void set_currency(godot::String v);
+    godot::String get_Currency();
+    void set_Currency(godot::String v);
 };
 
-class GDIfcMooringDevice : public GDIfcBuiltElement {
-    GDCLASS(GDIfcMooringDevice, GDIfcBuiltElement)
+class IfcMooringDevice : public IfcBuiltElement {
+    GDCLASS(IfcMooringDevice, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcMooringDeviceType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcMooringDeviceType, GDIfcBuiltElementType)
+class IfcMooringDeviceType : public IfcBuiltElementType {
+    GDCLASS(IfcMooringDeviceType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcMotorConnection : public GDIfcEnergyConversionDevice {
-    GDCLASS(GDIfcMotorConnection, GDIfcEnergyConversionDevice)
+class IfcMotorConnection : public IfcEnergyConversionDevice {
+    GDCLASS(IfcMotorConnection, IfcEnergyConversionDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcMotorConnectionType : public GDIfcEnergyConversionDeviceType {
-    GDCLASS(GDIfcMotorConnectionType, GDIfcEnergyConversionDeviceType)
+class IfcMotorConnectionType : public IfcEnergyConversionDeviceType {
+    GDCLASS(IfcMotorConnectionType, IfcEnergyConversionDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcNavigationElement : public GDIfcBuiltElement {
-    GDCLASS(GDIfcNavigationElement, GDIfcBuiltElement)
+class IfcNavigationElement : public IfcBuiltElement {
+    GDCLASS(IfcNavigationElement, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcNavigationElementType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcNavigationElementType, GDIfcBuiltElementType)
+class IfcNavigationElementType : public IfcBuiltElementType {
+    GDCLASS(IfcNavigationElementType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcObjective : public GDIfcConstraint {
-    GDCLASS(GDIfcObjective, GDIfcConstraint)
+class IfcObjective : public IfcConstraint {
+    GDCLASS(IfcObjective, IfcConstraint)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_benchmark_values();
-    void set_benchmark_values(godot::Array v);
-    godot::String get_logical_aggregator();
-    void set_logical_aggregator(godot::String v);
-    godot::String get_objective_qualifier();
-    void set_objective_qualifier(godot::String v);
-    godot::String get_user_defined_qualifier();
-    void set_user_defined_qualifier(godot::String v);
+    godot::Array get_BenchmarkValues();
+    void set_BenchmarkValues(godot::Array v);
+    godot::String get_LogicalAggregator();
+    void set_LogicalAggregator(godot::String v);
+    godot::String get_ObjectiveQualifier();
+    void set_ObjectiveQualifier(godot::String v);
+    godot::String get_UserDefinedQualifier();
+    void set_UserDefinedQualifier(godot::String v);
 };
 
-class GDIfcOccupant : public GDIfcActor {
-    GDCLASS(GDIfcOccupant, GDIfcActor)
+class IfcOccupant : public IfcActor {
+    GDCLASS(IfcOccupant, IfcActor)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcOffsetCurve : public GDIfcCurve {
-    GDCLASS(GDIfcOffsetCurve, GDIfcCurve)
+class IfcOffsetCurve : public IfcCurve {
+    GDCLASS(IfcOffsetCurve, IfcCurve)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_basis_curve();
-    void set_basis_curve(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_BasisCurve();
+    void set_BasisCurve(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcOffsetCurve2D : public GDIfcOffsetCurve {
-    GDCLASS(GDIfcOffsetCurve2D, GDIfcOffsetCurve)
+class IfcOffsetCurve2D : public IfcOffsetCurve {
+    GDCLASS(IfcOffsetCurve2D, IfcOffsetCurve)
 protected:
     static void _bind_methods();
 public:
-    double get_distance();
-    void set_distance(double v);
-    godot::String get_self_intersect();
-    void set_self_intersect(godot::String v);
+    double get_Distance();
+    void set_Distance(double v);
+    godot::String get_SelfIntersect();
+    void set_SelfIntersect(godot::String v);
 };
 
-class GDIfcOffsetCurve3D : public GDIfcOffsetCurve {
-    GDCLASS(GDIfcOffsetCurve3D, GDIfcOffsetCurve)
+class IfcOffsetCurve3D : public IfcOffsetCurve {
+    GDCLASS(IfcOffsetCurve3D, IfcOffsetCurve)
 protected:
     static void _bind_methods();
 public:
-    double get_distance();
-    void set_distance(double v);
-    godot::String get_self_intersect();
-    void set_self_intersect(godot::String v);
-    Ref<GDIFCEntityBase> get_ref_direction();
-    void set_ref_direction(Ref<GDIFCEntityBase> v);
+    double get_Distance();
+    void set_Distance(double v);
+    godot::String get_SelfIntersect();
+    void set_SelfIntersect(godot::String v);
+    Ref<GDIFCEntityBase> get_RefDirection();
+    void set_RefDirection(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcOffsetCurveByDistances : public GDIfcOffsetCurve {
-    GDCLASS(GDIfcOffsetCurveByDistances, GDIfcOffsetCurve)
+class IfcOffsetCurveByDistances : public IfcOffsetCurve {
+    GDCLASS(IfcOffsetCurveByDistances, IfcOffsetCurve)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_offset_values();
-    void set_offset_values(godot::Array v);
-    godot::String get_tag();
-    void set_tag(godot::String v);
+    godot::Array get_OffsetValues();
+    void set_OffsetValues(godot::Array v);
+    godot::String get_Tag();
+    void set_Tag(godot::String v);
 };
 
-class GDIfcOpenCrossProfileDef : public GDIfcProfileDef {
-    GDCLASS(GDIfcOpenCrossProfileDef, GDIfcProfileDef)
+class IfcOpenCrossProfileDef : public IfcProfileDef {
+    GDCLASS(IfcOpenCrossProfileDef, IfcProfileDef)
 protected:
     static void _bind_methods();
 public:
-    bool get_horizontal_widths();
-    void set_horizontal_widths(bool v);
-    godot::PackedFloat64Array get_widths();
-    void set_widths(godot::PackedFloat64Array v);
-    godot::PackedFloat64Array get_slopes();
-    void set_slopes(godot::PackedFloat64Array v);
-    godot::PackedStringArray get_tags();
-    void set_tags(godot::PackedStringArray v);
-    Ref<GDIFCEntityBase> get_offset_point();
-    void set_offset_point(Ref<GDIFCEntityBase> v);
+    bool get_HorizontalWidths();
+    void set_HorizontalWidths(bool v);
+    godot::PackedFloat64Array get_Widths();
+    void set_Widths(godot::PackedFloat64Array v);
+    godot::PackedFloat64Array get_Slopes();
+    void set_Slopes(godot::PackedFloat64Array v);
+    godot::PackedStringArray get_Tags();
+    void set_Tags(godot::PackedStringArray v);
+    Ref<GDIFCEntityBase> get_OffsetPoint();
+    void set_OffsetPoint(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcOpenShell : public GDIfcConnectedFaceSet {
-    GDCLASS(GDIfcOpenShell, GDIfcConnectedFaceSet)
+class IfcOpenShell : public IfcConnectedFaceSet {
+    GDCLASS(IfcOpenShell, IfcConnectedFaceSet)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcOpeningElement : public GDIfcFeatureElementSubtraction {
-    GDCLASS(GDIfcOpeningElement, GDIfcFeatureElementSubtraction)
+class IfcOpeningElement : public IfcFeatureElementSubtraction {
+    GDCLASS(IfcOpeningElement, IfcFeatureElementSubtraction)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcOrganization : public GDIFCEntityBase {
-    GDCLASS(GDIfcOrganization, GDIFCEntityBase)
+class IfcOrganization : public GDIFCEntityBase {
+    GDCLASS(IfcOrganization, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_identification();
-    void set_identification(godot::String v);
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    godot::Array get_roles();
-    void set_roles(godot::Array v);
-    godot::Array get_addresses();
-    void set_addresses(godot::Array v);
+    godot::String get_Identification();
+    void set_Identification(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    godot::Array get_Roles();
+    void set_Roles(godot::Array v);
+    godot::Array get_Addresses();
+    void set_Addresses(godot::Array v);
 };
 
-class GDIfcOrganizationRelationship : public GDIfcResourceLevelRelationship {
-    GDCLASS(GDIfcOrganizationRelationship, GDIfcResourceLevelRelationship)
+class IfcOrganizationRelationship : public IfcResourceLevelRelationship {
+    GDCLASS(IfcOrganizationRelationship, IfcResourceLevelRelationship)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_organization();
-    void set_relating_organization(Ref<GDIFCEntityBase> v);
-    godot::Array get_related_organizations();
-    void set_related_organizations(godot::Array v);
+    Ref<GDIFCEntityBase> get_RelatingOrganization();
+    void set_RelatingOrganization(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedOrganizations();
+    void set_RelatedOrganizations(godot::Array v);
 };
 
-class GDIfcOrientedEdge : public GDIfcEdge {
-    GDCLASS(GDIfcOrientedEdge, GDIfcEdge)
+class IfcOrientedEdge : public IfcEdge {
+    GDCLASS(IfcOrientedEdge, IfcEdge)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_edge_element();
-    void set_edge_element(Ref<GDIFCEntityBase> v);
-    bool get_orientation();
-    void set_orientation(bool v);
+    Ref<GDIFCEntityBase> get_EdgeElement();
+    void set_EdgeElement(Ref<GDIFCEntityBase> v);
+    bool get_Orientation();
+    void set_Orientation(bool v);
 };
 
-class GDIfcOuterBoundaryCurve : public GDIfcBoundaryCurve {
-    GDCLASS(GDIfcOuterBoundaryCurve, GDIfcBoundaryCurve)
+class IfcOuterBoundaryCurve : public IfcBoundaryCurve {
+    GDCLASS(IfcOuterBoundaryCurve, IfcBoundaryCurve)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcOutlet : public GDIfcFlowTerminal {
-    GDCLASS(GDIfcOutlet, GDIfcFlowTerminal)
+class IfcOutlet : public IfcFlowTerminal {
+    GDCLASS(IfcOutlet, IfcFlowTerminal)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcOutletType : public GDIfcFlowTerminalType {
-    GDCLASS(GDIfcOutletType, GDIfcFlowTerminalType)
+class IfcOutletType : public IfcFlowTerminalType {
+    GDCLASS(IfcOutletType, IfcFlowTerminalType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcOwnerHistory : public GDIFCEntityBase {
-    GDCLASS(GDIfcOwnerHistory, GDIFCEntityBase)
+class IfcOwnerHistory : public GDIFCEntityBase {
+    GDCLASS(IfcOwnerHistory, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_owning_user();
-    void set_owning_user(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_owning_application();
-    void set_owning_application(Ref<GDIFCEntityBase> v);
-    godot::String get_state();
-    void set_state(godot::String v);
-    godot::String get_change_action();
-    void set_change_action(godot::String v);
-    int64_t get_last_modified_date();
-    void set_last_modified_date(int64_t v);
-    Ref<GDIFCEntityBase> get_last_modifying_user();
-    void set_last_modifying_user(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_last_modifying_application();
-    void set_last_modifying_application(Ref<GDIFCEntityBase> v);
-    int64_t get_creation_date();
-    void set_creation_date(int64_t v);
+    Ref<GDIFCEntityBase> get_OwningUser();
+    void set_OwningUser(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_OwningApplication();
+    void set_OwningApplication(Ref<GDIFCEntityBase> v);
+    godot::String get_State();
+    void set_State(godot::String v);
+    godot::String get_ChangeAction();
+    void set_ChangeAction(godot::String v);
+    int64_t get_LastModifiedDate();
+    void set_LastModifiedDate(int64_t v);
+    Ref<GDIFCEntityBase> get_LastModifyingUser();
+    void set_LastModifyingUser(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_LastModifyingApplication();
+    void set_LastModifyingApplication(Ref<GDIFCEntityBase> v);
+    int64_t get_CreationDate();
+    void set_CreationDate(int64_t v);
 };
 
-class GDIfcPath : public GDIfcTopologicalRepresentationItem {
-    GDCLASS(GDIfcPath, GDIfcTopologicalRepresentationItem)
+class IfcPath : public IfcTopologicalRepresentationItem {
+    GDCLASS(IfcPath, IfcTopologicalRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_edge_list();
-    void set_edge_list(godot::Array v);
+    godot::Array get_EdgeList();
+    void set_EdgeList(godot::Array v);
 };
 
-class GDIfcPavement : public GDIfcBuiltElement {
-    GDCLASS(GDIfcPavement, GDIfcBuiltElement)
+class IfcPavement : public IfcBuiltElement {
+    GDCLASS(IfcPavement, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcPavementType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcPavementType, GDIfcBuiltElementType)
+class IfcPavementType : public IfcBuiltElementType {
+    GDCLASS(IfcPavementType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcPcurve : public GDIfcCurve {
-    GDCLASS(GDIfcPcurve, GDIfcCurve)
+class IfcPcurve : public IfcCurve {
+    GDCLASS(IfcPcurve, IfcCurve)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_basis_surface();
-    void set_basis_surface(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_reference_curve();
-    void set_reference_curve(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_BasisSurface();
+    void set_BasisSurface(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_ReferenceCurve();
+    void set_ReferenceCurve(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcPerformanceHistory : public GDIfcControl {
-    GDCLASS(GDIfcPerformanceHistory, GDIfcControl)
+class IfcPerformanceHistory : public IfcControl {
+    GDCLASS(IfcPerformanceHistory, IfcControl)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_life_cycle_phase();
-    void set_life_cycle_phase(godot::String v);
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_LifeCyclePhase();
+    void set_LifeCyclePhase(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcPermeableCoveringProperties : public GDIfcPreDefinedPropertySet {
-    GDCLASS(GDIfcPermeableCoveringProperties, GDIfcPreDefinedPropertySet)
+class IfcPermeableCoveringProperties : public IfcPreDefinedPropertySet {
+    GDCLASS(IfcPermeableCoveringProperties, IfcPreDefinedPropertySet)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_operation_type();
-    void set_operation_type(godot::String v);
-    godot::String get_panel_position();
-    void set_panel_position(godot::String v);
-    double get_frame_depth();
-    void set_frame_depth(double v);
-    double get_frame_thickness();
-    void set_frame_thickness(double v);
-    Ref<GDIFCEntityBase> get_shape_aspect_style();
-    void set_shape_aspect_style(Ref<GDIFCEntityBase> v);
+    godot::String get_OperationType();
+    void set_OperationType(godot::String v);
+    godot::String get_PanelPosition();
+    void set_PanelPosition(godot::String v);
+    double get_FrameDepth();
+    void set_FrameDepth(double v);
+    double get_FrameThickness();
+    void set_FrameThickness(double v);
+    Ref<GDIFCEntityBase> get_ShapeAspectStyle();
+    void set_ShapeAspectStyle(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcPermit : public GDIfcControl {
-    GDCLASS(GDIfcPermit, GDIfcControl)
+class IfcPermit : public IfcControl {
+    GDCLASS(IfcPermit, IfcControl)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    godot::String get_status();
-    void set_status(godot::String v);
-    godot::String get_long_description();
-    void set_long_description(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    godot::String get_Status();
+    void set_Status(godot::String v);
+    godot::String get_LongDescription();
+    void set_LongDescription(godot::String v);
 };
 
-class GDIfcPerson : public GDIFCEntityBase {
-    GDCLASS(GDIfcPerson, GDIFCEntityBase)
+class IfcPerson : public GDIFCEntityBase {
+    GDCLASS(IfcPerson, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_identification();
-    void set_identification(godot::String v);
-    godot::String get_family_name();
-    void set_family_name(godot::String v);
-    godot::String get_given_name();
-    void set_given_name(godot::String v);
-    godot::PackedStringArray get_middle_names();
-    void set_middle_names(godot::PackedStringArray v);
-    godot::PackedStringArray get_prefix_titles();
-    void set_prefix_titles(godot::PackedStringArray v);
-    godot::PackedStringArray get_suffix_titles();
-    void set_suffix_titles(godot::PackedStringArray v);
-    godot::Array get_roles();
-    void set_roles(godot::Array v);
-    godot::Array get_addresses();
-    void set_addresses(godot::Array v);
+    godot::String get_Identification();
+    void set_Identification(godot::String v);
+    godot::String get_FamilyName();
+    void set_FamilyName(godot::String v);
+    godot::String get_GivenName();
+    void set_GivenName(godot::String v);
+    godot::PackedStringArray get_MiddleNames();
+    void set_MiddleNames(godot::PackedStringArray v);
+    godot::PackedStringArray get_PrefixTitles();
+    void set_PrefixTitles(godot::PackedStringArray v);
+    godot::PackedStringArray get_SuffixTitles();
+    void set_SuffixTitles(godot::PackedStringArray v);
+    godot::Array get_Roles();
+    void set_Roles(godot::Array v);
+    godot::Array get_Addresses();
+    void set_Addresses(godot::Array v);
 };
 
-class GDIfcPersonAndOrganization : public GDIFCEntityBase {
-    GDCLASS(GDIfcPersonAndOrganization, GDIFCEntityBase)
+class IfcPersonAndOrganization : public GDIFCEntityBase {
+    GDCLASS(IfcPersonAndOrganization, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_the_person();
-    void set_the_person(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_the_organization();
-    void set_the_organization(Ref<GDIFCEntityBase> v);
-    godot::Array get_roles();
-    void set_roles(godot::Array v);
+    Ref<GDIFCEntityBase> get_ThePerson();
+    void set_ThePerson(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TheOrganization();
+    void set_TheOrganization(Ref<GDIFCEntityBase> v);
+    godot::Array get_Roles();
+    void set_Roles(godot::Array v);
 };
 
-class GDIfcPhysicalQuantity : public GDIFCEntityBase {
-    GDCLASS(GDIfcPhysicalQuantity, GDIFCEntityBase)
+class IfcPhysicalQuantity : public GDIFCEntityBase {
+    GDCLASS(IfcPhysicalQuantity, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
 };
 
-class GDIfcPhysicalComplexQuantity : public GDIfcPhysicalQuantity {
-    GDCLASS(GDIfcPhysicalComplexQuantity, GDIfcPhysicalQuantity)
+class IfcPhysicalComplexQuantity : public IfcPhysicalQuantity {
+    GDCLASS(IfcPhysicalComplexQuantity, IfcPhysicalQuantity)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_has_quantities();
-    void set_has_quantities(godot::Array v);
-    godot::String get_discrimination();
-    void set_discrimination(godot::String v);
-    godot::String get_quality();
-    void set_quality(godot::String v);
-    godot::String get_usage();
-    void set_usage(godot::String v);
+    godot::Array get_HasQuantities();
+    void set_HasQuantities(godot::Array v);
+    godot::String get_Discrimination();
+    void set_Discrimination(godot::String v);
+    godot::String get_Quality();
+    void set_Quality(godot::String v);
+    godot::String get_Usage();
+    void set_Usage(godot::String v);
 };
 
-class GDIfcPhysicalSimpleQuantity : public GDIfcPhysicalQuantity {
-    GDCLASS(GDIfcPhysicalSimpleQuantity, GDIfcPhysicalQuantity)
+class IfcPhysicalSimpleQuantity : public IfcPhysicalQuantity {
+    GDCLASS(IfcPhysicalSimpleQuantity, IfcPhysicalQuantity)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_unit();
-    void set_unit(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Unit();
+    void set_Unit(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcPile : public GDIfcDeepFoundation {
-    GDCLASS(GDIfcPile, GDIfcDeepFoundation)
+class IfcPile : public IfcDeepFoundation {
+    GDCLASS(IfcPile, IfcDeepFoundation)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    godot::String get_construction_type();
-    void set_construction_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    godot::String get_ConstructionType();
+    void set_ConstructionType(godot::String v);
 };
 
-class GDIfcPileType : public GDIfcDeepFoundationType {
-    GDCLASS(GDIfcPileType, GDIfcDeepFoundationType)
+class IfcPileType : public IfcDeepFoundationType {
+    GDCLASS(IfcPileType, IfcDeepFoundationType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcPipeFitting : public GDIfcFlowFitting {
-    GDCLASS(GDIfcPipeFitting, GDIfcFlowFitting)
+class IfcPipeFitting : public IfcFlowFitting {
+    GDCLASS(IfcPipeFitting, IfcFlowFitting)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcPipeFittingType : public GDIfcFlowFittingType {
-    GDCLASS(GDIfcPipeFittingType, GDIfcFlowFittingType)
+class IfcPipeFittingType : public IfcFlowFittingType {
+    GDCLASS(IfcPipeFittingType, IfcFlowFittingType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcPipeSegment : public GDIfcFlowSegment {
-    GDCLASS(GDIfcPipeSegment, GDIfcFlowSegment)
+class IfcPipeSegment : public IfcFlowSegment {
+    GDCLASS(IfcPipeSegment, IfcFlowSegment)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcPipeSegmentType : public GDIfcFlowSegmentType {
-    GDCLASS(GDIfcPipeSegmentType, GDIfcFlowSegmentType)
+class IfcPipeSegmentType : public IfcFlowSegmentType {
+    GDCLASS(IfcPipeSegmentType, IfcFlowSegmentType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcPixelTexture : public GDIfcSurfaceTexture {
-    GDCLASS(GDIfcPixelTexture, GDIfcSurfaceTexture)
+class IfcPixelTexture : public IfcSurfaceTexture {
+    GDCLASS(IfcPixelTexture, IfcSurfaceTexture)
 protected:
     static void _bind_methods();
 public:
-    int64_t get_width();
-    void set_width(int64_t v);
-    int64_t get_height();
-    void set_height(int64_t v);
-    int64_t get_colour_components();
-    void set_colour_components(int64_t v);
-    godot::PackedStringArray get_pixel();
-    void set_pixel(godot::PackedStringArray v);
+    int64_t get_Width();
+    void set_Width(int64_t v);
+    int64_t get_Height();
+    void set_Height(int64_t v);
+    int64_t get_ColourComponents();
+    void set_ColourComponents(int64_t v);
+    godot::PackedStringArray get_Pixel();
+    void set_Pixel(godot::PackedStringArray v);
 };
 
-class GDIfcPlanarExtent : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcPlanarExtent, GDIfcGeometricRepresentationItem)
+class IfcPlanarExtent : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcPlanarExtent, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    double get_size_in_x();
-    void set_size_in_x(double v);
-    double get_size_in_y();
-    void set_size_in_y(double v);
+    double get_SizeInX();
+    void set_SizeInX(double v);
+    double get_SizeInY();
+    void set_SizeInY(double v);
 };
 
-class GDIfcPlanarBox : public GDIfcPlanarExtent {
-    GDCLASS(GDIfcPlanarBox, GDIfcPlanarExtent)
+class IfcPlanarBox : public IfcPlanarExtent {
+    GDCLASS(IfcPlanarBox, IfcPlanarExtent)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_placement();
-    void set_placement(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Placement();
+    void set_Placement(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcPlane : public GDIfcElementarySurface {
-    GDCLASS(GDIfcPlane, GDIfcElementarySurface)
+class IfcPlane : public IfcElementarySurface {
+    GDCLASS(IfcPlane, IfcElementarySurface)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcPlate : public GDIfcBuiltElement {
-    GDCLASS(GDIfcPlate, GDIfcBuiltElement)
+class IfcPlate : public IfcBuiltElement {
+    GDCLASS(IfcPlate, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcPlateType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcPlateType, GDIfcBuiltElementType)
+class IfcPlateType : public IfcBuiltElementType {
+    GDCLASS(IfcPlateType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcPointByDistanceExpression : public GDIfcPoint {
-    GDCLASS(GDIfcPointByDistanceExpression, GDIfcPoint)
+class IfcPointByDistanceExpression : public IfcPoint {
+    GDCLASS(IfcPointByDistanceExpression, IfcPoint)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_distance_along();
-    void set_distance_along(Ref<GDIFCEntityBase> v);
-    double get_offset_lateral();
-    void set_offset_lateral(double v);
-    double get_offset_vertical();
-    void set_offset_vertical(double v);
-    double get_offset_longitudinal();
-    void set_offset_longitudinal(double v);
-    Ref<GDIFCEntityBase> get_basis_curve();
-    void set_basis_curve(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_DistanceAlong();
+    void set_DistanceAlong(Ref<GDIFCEntityBase> v);
+    double get_OffsetLateral();
+    void set_OffsetLateral(double v);
+    double get_OffsetVertical();
+    void set_OffsetVertical(double v);
+    double get_OffsetLongitudinal();
+    void set_OffsetLongitudinal(double v);
+    Ref<GDIFCEntityBase> get_BasisCurve();
+    void set_BasisCurve(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcPointOnCurve : public GDIfcPoint {
-    GDCLASS(GDIfcPointOnCurve, GDIfcPoint)
+class IfcPointOnCurve : public IfcPoint {
+    GDCLASS(IfcPointOnCurve, IfcPoint)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_basis_curve();
-    void set_basis_curve(Ref<GDIFCEntityBase> v);
-    double get_point_parameter();
-    void set_point_parameter(double v);
+    Ref<GDIFCEntityBase> get_BasisCurve();
+    void set_BasisCurve(Ref<GDIFCEntityBase> v);
+    double get_PointParameter();
+    void set_PointParameter(double v);
 };
 
-class GDIfcPointOnSurface : public GDIfcPoint {
-    GDCLASS(GDIfcPointOnSurface, GDIfcPoint)
+class IfcPointOnSurface : public IfcPoint {
+    GDCLASS(IfcPointOnSurface, IfcPoint)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_basis_surface();
-    void set_basis_surface(Ref<GDIFCEntityBase> v);
-    double get_point_parameter_u();
-    void set_point_parameter_u(double v);
-    double get_point_parameter_v();
-    void set_point_parameter_v(double v);
+    Ref<GDIFCEntityBase> get_BasisSurface();
+    void set_BasisSurface(Ref<GDIFCEntityBase> v);
+    double get_PointParameterU();
+    void set_PointParameterU(double v);
+    double get_PointParameterV();
+    void set_PointParameterV(double v);
 };
 
-class GDIfcPolyLoop : public GDIfcLoop {
-    GDCLASS(GDIfcPolyLoop, GDIfcLoop)
+class IfcPolyLoop : public IfcLoop {
+    GDCLASS(IfcPolyLoop, IfcLoop)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_polygon();
-    void set_polygon(godot::Array v);
+    godot::Array get_Polygon();
+    void set_Polygon(godot::Array v);
 };
 
-class GDIfcPolygonalBoundedHalfSpace : public GDIfcHalfSpaceSolid {
-    GDCLASS(GDIfcPolygonalBoundedHalfSpace, GDIfcHalfSpaceSolid)
+class IfcPolygonalBoundedHalfSpace : public IfcHalfSpaceSolid {
+    GDCLASS(IfcPolygonalBoundedHalfSpace, IfcHalfSpaceSolid)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_position();
-    void set_position(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_polygonal_boundary();
-    void set_polygonal_boundary(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Position();
+    void set_Position(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_PolygonalBoundary();
+    void set_PolygonalBoundary(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcTessellatedFaceSet : public GDIfcTessellatedItem {
-    GDCLASS(GDIfcTessellatedFaceSet, GDIfcTessellatedItem)
+class IfcTessellatedFaceSet : public IfcTessellatedItem {
+    GDCLASS(IfcTessellatedFaceSet, IfcTessellatedItem)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_coordinates();
-    void set_coordinates(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Coordinates();
+    void set_Coordinates(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcPolygonalFaceSet : public GDIfcTessellatedFaceSet {
-    GDCLASS(GDIfcPolygonalFaceSet, GDIfcTessellatedFaceSet)
+class IfcPolygonalFaceSet : public IfcTessellatedFaceSet {
+    GDCLASS(IfcPolygonalFaceSet, IfcTessellatedFaceSet)
 protected:
     static void _bind_methods();
 public:
-    bool get_closed();
-    void set_closed(bool v);
-    godot::Array get_faces();
-    void set_faces(godot::Array v);
-    godot::PackedInt64Array get_pn_index();
-    void set_pn_index(godot::PackedInt64Array v);
+    bool get_Closed();
+    void set_Closed(bool v);
+    godot::Array get_Faces();
+    void set_Faces(godot::Array v);
+    godot::PackedInt64Array get_PnIndex();
+    void set_PnIndex(godot::PackedInt64Array v);
 };
 
-class GDIfcPolyline : public GDIfcBoundedCurve {
-    GDCLASS(GDIfcPolyline, GDIfcBoundedCurve)
+class IfcPolyline : public IfcBoundedCurve {
+    GDCLASS(IfcPolyline, IfcBoundedCurve)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_points();
-    void set_points(godot::Array v);
+    godot::Array get_Points();
+    void set_Points(godot::Array v);
 };
 
-class GDIfcPolynomialCurve : public GDIfcCurve {
-    GDCLASS(GDIfcPolynomialCurve, GDIfcCurve)
+class IfcPolynomialCurve : public IfcCurve {
+    GDCLASS(IfcPolynomialCurve, IfcCurve)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_position();
-    void set_position(Ref<GDIFCEntityBase> v);
-    godot::PackedFloat64Array get_coefficients_x();
-    void set_coefficients_x(godot::PackedFloat64Array v);
-    godot::PackedFloat64Array get_coefficients_y();
-    void set_coefficients_y(godot::PackedFloat64Array v);
-    godot::PackedFloat64Array get_coefficients_z();
-    void set_coefficients_z(godot::PackedFloat64Array v);
+    Ref<GDIFCEntityBase> get_Position();
+    void set_Position(Ref<GDIFCEntityBase> v);
+    godot::PackedFloat64Array get_CoefficientsX();
+    void set_CoefficientsX(godot::PackedFloat64Array v);
+    godot::PackedFloat64Array get_CoefficientsY();
+    void set_CoefficientsY(godot::PackedFloat64Array v);
+    godot::PackedFloat64Array get_CoefficientsZ();
+    void set_CoefficientsZ(godot::PackedFloat64Array v);
 };
 
-class GDIfcPostalAddress : public GDIfcAddress {
-    GDCLASS(GDIfcPostalAddress, GDIfcAddress)
+class IfcPostalAddress : public IfcAddress {
+    GDCLASS(IfcPostalAddress, IfcAddress)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_internal_location();
-    void set_internal_location(godot::String v);
-    godot::PackedStringArray get_address_lines();
-    void set_address_lines(godot::PackedStringArray v);
-    godot::String get_postal_box();
-    void set_postal_box(godot::String v);
-    godot::String get_town();
-    void set_town(godot::String v);
-    godot::String get_region();
-    void set_region(godot::String v);
-    godot::String get_postal_code();
-    void set_postal_code(godot::String v);
-    godot::String get_country();
-    void set_country(godot::String v);
+    godot::String get_InternalLocation();
+    void set_InternalLocation(godot::String v);
+    godot::PackedStringArray get_AddressLines();
+    void set_AddressLines(godot::PackedStringArray v);
+    godot::String get_PostalBox();
+    void set_PostalBox(godot::String v);
+    godot::String get_Town();
+    void set_Town(godot::String v);
+    godot::String get_Region();
+    void set_Region(godot::String v);
+    godot::String get_PostalCode();
+    void set_PostalCode(godot::String v);
+    godot::String get_Country();
+    void set_Country(godot::String v);
 };
 
-class GDIfcPreDefinedProperties : public GDIfcPropertyAbstraction {
-    GDCLASS(GDIfcPreDefinedProperties, GDIfcPropertyAbstraction)
+class IfcPreDefinedProperties : public IfcPropertyAbstraction {
+    GDCLASS(IfcPreDefinedProperties, IfcPropertyAbstraction)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcPreDefinedTextFont : public GDIfcPreDefinedItem {
-    GDCLASS(GDIfcPreDefinedTextFont, GDIfcPreDefinedItem)
+class IfcPreDefinedTextFont : public IfcPreDefinedItem {
+    GDCLASS(IfcPreDefinedTextFont, IfcPreDefinedItem)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcPresentationLayerAssignment : public GDIFCEntityBase {
-    GDCLASS(GDIfcPresentationLayerAssignment, GDIFCEntityBase)
+class IfcPresentationLayerAssignment : public GDIFCEntityBase {
+    GDCLASS(IfcPresentationLayerAssignment, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    godot::Array get_assigned_items();
-    void set_assigned_items(godot::Array v);
-    godot::String get_identifier();
-    void set_identifier(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    godot::Array get_AssignedItems();
+    void set_AssignedItems(godot::Array v);
+    godot::String get_Identifier();
+    void set_Identifier(godot::String v);
 };
 
-class GDIfcPresentationLayerWithStyle : public GDIfcPresentationLayerAssignment {
-    GDCLASS(GDIfcPresentationLayerWithStyle, GDIfcPresentationLayerAssignment)
+class IfcPresentationLayerWithStyle : public IfcPresentationLayerAssignment {
+    GDCLASS(IfcPresentationLayerWithStyle, IfcPresentationLayerAssignment)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_layer_on();
-    void set_layer_on(godot::String v);
-    godot::String get_layer_frozen();
-    void set_layer_frozen(godot::String v);
-    godot::String get_layer_blocked();
-    void set_layer_blocked(godot::String v);
-    godot::Array get_layer_styles();
-    void set_layer_styles(godot::Array v);
+    godot::String get_LayerOn();
+    void set_LayerOn(godot::String v);
+    godot::String get_LayerFrozen();
+    void set_LayerFrozen(godot::String v);
+    godot::String get_LayerBlocked();
+    void set_LayerBlocked(godot::String v);
+    godot::Array get_LayerStyles();
+    void set_LayerStyles(godot::Array v);
 };
 
-class GDIfcProcedure : public GDIfcProcess {
-    GDCLASS(GDIfcProcedure, GDIfcProcess)
+class IfcProcedure : public IfcProcess {
+    GDCLASS(IfcProcedure, IfcProcess)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcProcedureType : public GDIfcTypeProcess {
-    GDCLASS(GDIfcProcedureType, GDIfcTypeProcess)
+class IfcProcedureType : public IfcTypeProcess {
+    GDCLASS(IfcProcedureType, IfcTypeProcess)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcProductDefinitionShape : public GDIfcProductRepresentation {
-    GDCLASS(GDIfcProductDefinitionShape, GDIfcProductRepresentation)
+class IfcProductDefinitionShape : public IfcProductRepresentation {
+    GDCLASS(IfcProductDefinitionShape, IfcProductRepresentation)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcProfileProperties : public GDIfcExtendedProperties {
-    GDCLASS(GDIfcProfileProperties, GDIfcExtendedProperties)
+class IfcProfileProperties : public IfcExtendedProperties {
+    GDCLASS(IfcProfileProperties, IfcExtendedProperties)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_profile_definition();
-    void set_profile_definition(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_ProfileDefinition();
+    void set_ProfileDefinition(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcProject : public GDIfcContext {
-    GDCLASS(GDIfcProject, GDIfcContext)
+class IfcProject : public IfcContext {
+    GDCLASS(IfcProject, IfcContext)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcProjectLibrary : public GDIfcContext {
-    GDCLASS(GDIfcProjectLibrary, GDIfcContext)
+class IfcProjectLibrary : public IfcContext {
+    GDCLASS(IfcProjectLibrary, IfcContext)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcProjectOrder : public GDIfcControl {
-    GDCLASS(GDIfcProjectOrder, GDIfcControl)
+class IfcProjectOrder : public IfcControl {
+    GDCLASS(IfcProjectOrder, IfcControl)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    godot::String get_status();
-    void set_status(godot::String v);
-    godot::String get_long_description();
-    void set_long_description(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    godot::String get_Status();
+    void set_Status(godot::String v);
+    godot::String get_LongDescription();
+    void set_LongDescription(godot::String v);
 };
 
-class GDIfcProjectedCRS : public GDIfcCoordinateReferenceSystem {
-    GDCLASS(GDIfcProjectedCRS, GDIfcCoordinateReferenceSystem)
+class IfcProjectedCRS : public IfcCoordinateReferenceSystem {
+    GDCLASS(IfcProjectedCRS, IfcCoordinateReferenceSystem)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_vertical_datum();
-    void set_vertical_datum(godot::String v);
-    godot::String get_map_projection();
-    void set_map_projection(godot::String v);
-    godot::String get_map_zone();
-    void set_map_zone(godot::String v);
-    Ref<GDIFCEntityBase> get_map_unit();
-    void set_map_unit(Ref<GDIFCEntityBase> v);
+    godot::String get_VerticalDatum();
+    void set_VerticalDatum(godot::String v);
+    godot::String get_MapProjection();
+    void set_MapProjection(godot::String v);
+    godot::String get_MapZone();
+    void set_MapZone(godot::String v);
+    Ref<GDIFCEntityBase> get_MapUnit();
+    void set_MapUnit(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcProjectionElement : public GDIfcFeatureElementAddition {
-    GDCLASS(GDIfcProjectionElement, GDIfcFeatureElementAddition)
+class IfcProjectionElement : public IfcFeatureElementAddition {
+    GDCLASS(IfcProjectionElement, IfcFeatureElementAddition)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSimpleProperty : public GDIfcProperty {
-    GDCLASS(GDIfcSimpleProperty, GDIfcProperty)
+class IfcSimpleProperty : public IfcProperty {
+    GDCLASS(IfcSimpleProperty, IfcProperty)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcPropertyBoundedValue : public GDIfcSimpleProperty {
-    GDCLASS(GDIfcPropertyBoundedValue, GDIfcSimpleProperty)
+class IfcPropertyBoundedValue : public IfcSimpleProperty {
+    GDCLASS(IfcPropertyBoundedValue, IfcSimpleProperty)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_upper_bound_value();
-    void set_upper_bound_value(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_lower_bound_value();
-    void set_lower_bound_value(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_unit();
-    void set_unit(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_set_point_value();
-    void set_set_point_value(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_UpperBoundValue();
+    void set_UpperBoundValue(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_LowerBoundValue();
+    void set_LowerBoundValue(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Unit();
+    void set_Unit(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_SetPointValue();
+    void set_SetPointValue(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcPropertyDependencyRelationship : public GDIfcResourceLevelRelationship {
-    GDCLASS(GDIfcPropertyDependencyRelationship, GDIfcResourceLevelRelationship)
+class IfcPropertyDependencyRelationship : public IfcResourceLevelRelationship {
+    GDCLASS(IfcPropertyDependencyRelationship, IfcResourceLevelRelationship)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_depending_property();
-    void set_depending_property(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_dependant_property();
-    void set_dependant_property(Ref<GDIFCEntityBase> v);
-    godot::String get_expression();
-    void set_expression(godot::String v);
+    Ref<GDIFCEntityBase> get_DependingProperty();
+    void set_DependingProperty(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_DependantProperty();
+    void set_DependantProperty(Ref<GDIFCEntityBase> v);
+    godot::String get_Expression();
+    void set_Expression(godot::String v);
 };
 
-class GDIfcPropertyEnumeratedValue : public GDIfcSimpleProperty {
-    GDCLASS(GDIfcPropertyEnumeratedValue, GDIfcSimpleProperty)
+class IfcPropertyEnumeratedValue : public IfcSimpleProperty {
+    GDCLASS(IfcPropertyEnumeratedValue, IfcSimpleProperty)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_enumeration_values();
-    void set_enumeration_values(godot::Array v);
-    Ref<GDIFCEntityBase> get_enumeration_reference();
-    void set_enumeration_reference(Ref<GDIFCEntityBase> v);
+    godot::Array get_EnumerationValues();
+    void set_EnumerationValues(godot::Array v);
+    Ref<GDIFCEntityBase> get_EnumerationReference();
+    void set_EnumerationReference(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcPropertyEnumeration : public GDIfcPropertyAbstraction {
-    GDCLASS(GDIfcPropertyEnumeration, GDIfcPropertyAbstraction)
+class IfcPropertyEnumeration : public IfcPropertyAbstraction {
+    GDCLASS(IfcPropertyEnumeration, IfcPropertyAbstraction)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::Array get_enumeration_values();
-    void set_enumeration_values(godot::Array v);
-    Ref<GDIFCEntityBase> get_unit();
-    void set_unit(Ref<GDIFCEntityBase> v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::Array get_EnumerationValues();
+    void set_EnumerationValues(godot::Array v);
+    Ref<GDIFCEntityBase> get_Unit();
+    void set_Unit(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcPropertyListValue : public GDIfcSimpleProperty {
-    GDCLASS(GDIfcPropertyListValue, GDIfcSimpleProperty)
+class IfcPropertyListValue : public IfcSimpleProperty {
+    GDCLASS(IfcPropertyListValue, IfcSimpleProperty)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_list_values();
-    void set_list_values(godot::Array v);
-    Ref<GDIFCEntityBase> get_unit();
-    void set_unit(Ref<GDIFCEntityBase> v);
+    godot::Array get_ListValues();
+    void set_ListValues(godot::Array v);
+    Ref<GDIFCEntityBase> get_Unit();
+    void set_Unit(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcPropertyReferenceValue : public GDIfcSimpleProperty {
-    GDCLASS(GDIfcPropertyReferenceValue, GDIfcSimpleProperty)
+class IfcPropertyReferenceValue : public IfcSimpleProperty {
+    GDCLASS(IfcPropertyReferenceValue, IfcSimpleProperty)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_usage_name();
-    void set_usage_name(godot::String v);
-    Ref<GDIFCEntityBase> get_property_reference();
-    void set_property_reference(Ref<GDIFCEntityBase> v);
+    godot::String get_UsageName();
+    void set_UsageName(godot::String v);
+    Ref<GDIFCEntityBase> get_PropertyReference();
+    void set_PropertyReference(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcPropertySet : public GDIfcPropertySetDefinition {
-    GDCLASS(GDIfcPropertySet, GDIfcPropertySetDefinition)
+class IfcPropertySet : public IfcPropertySetDefinition {
+    GDCLASS(IfcPropertySet, IfcPropertySetDefinition)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_has_properties();
-    void set_has_properties(godot::Array v);
+    godot::Array get_HasProperties();
+    void set_HasProperties(godot::Array v);
 };
 
-class GDIfcPropertySetTemplate : public GDIfcPropertyTemplateDefinition {
-    GDCLASS(GDIfcPropertySetTemplate, GDIfcPropertyTemplateDefinition)
+class IfcPropertySetTemplate : public IfcPropertyTemplateDefinition {
+    GDCLASS(IfcPropertySetTemplate, IfcPropertyTemplateDefinition)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_template_type();
-    void set_template_type(godot::String v);
-    godot::String get_applicable_entity();
-    void set_applicable_entity(godot::String v);
-    godot::Array get_has_property_templates();
-    void set_has_property_templates(godot::Array v);
+    godot::String get_TemplateType();
+    void set_TemplateType(godot::String v);
+    godot::String get_ApplicableEntity();
+    void set_ApplicableEntity(godot::String v);
+    godot::Array get_HasPropertyTemplates();
+    void set_HasPropertyTemplates(godot::Array v);
 };
 
-class GDIfcPropertySingleValue : public GDIfcSimpleProperty {
-    GDCLASS(GDIfcPropertySingleValue, GDIfcSimpleProperty)
+class IfcPropertySingleValue : public IfcSimpleProperty {
+    GDCLASS(IfcPropertySingleValue, IfcSimpleProperty)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_nominal_value();
-    void set_nominal_value(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_unit();
-    void set_unit(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_NominalValue();
+    void set_NominalValue(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Unit();
+    void set_Unit(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcPropertyTableValue : public GDIfcSimpleProperty {
-    GDCLASS(GDIfcPropertyTableValue, GDIfcSimpleProperty)
+class IfcPropertyTableValue : public IfcSimpleProperty {
+    GDCLASS(IfcPropertyTableValue, IfcSimpleProperty)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_defining_values();
-    void set_defining_values(godot::Array v);
-    godot::Array get_defined_values();
-    void set_defined_values(godot::Array v);
-    godot::String get_expression();
-    void set_expression(godot::String v);
-    Ref<GDIFCEntityBase> get_defining_unit();
-    void set_defining_unit(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_defined_unit();
-    void set_defined_unit(Ref<GDIFCEntityBase> v);
-    godot::String get_curve_interpolation();
-    void set_curve_interpolation(godot::String v);
+    godot::Array get_DefiningValues();
+    void set_DefiningValues(godot::Array v);
+    godot::Array get_DefinedValues();
+    void set_DefinedValues(godot::Array v);
+    godot::String get_Expression();
+    void set_Expression(godot::String v);
+    Ref<GDIFCEntityBase> get_DefiningUnit();
+    void set_DefiningUnit(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_DefinedUnit();
+    void set_DefinedUnit(Ref<GDIFCEntityBase> v);
+    godot::String get_CurveInterpolation();
+    void set_CurveInterpolation(godot::String v);
 };
 
-class GDIfcProtectiveDevice : public GDIfcFlowController {
-    GDCLASS(GDIfcProtectiveDevice, GDIfcFlowController)
+class IfcProtectiveDevice : public IfcFlowController {
+    GDCLASS(IfcProtectiveDevice, IfcFlowController)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcProtectiveDeviceTrippingUnit : public GDIfcDistributionControlElement {
-    GDCLASS(GDIfcProtectiveDeviceTrippingUnit, GDIfcDistributionControlElement)
+class IfcProtectiveDeviceTrippingUnit : public IfcDistributionControlElement {
+    GDCLASS(IfcProtectiveDeviceTrippingUnit, IfcDistributionControlElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcProtectiveDeviceTrippingUnitType : public GDIfcDistributionControlElementType {
-    GDCLASS(GDIfcProtectiveDeviceTrippingUnitType, GDIfcDistributionControlElementType)
+class IfcProtectiveDeviceTrippingUnitType : public IfcDistributionControlElementType {
+    GDCLASS(IfcProtectiveDeviceTrippingUnitType, IfcDistributionControlElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcProtectiveDeviceType : public GDIfcFlowControllerType {
-    GDCLASS(GDIfcProtectiveDeviceType, GDIfcFlowControllerType)
+class IfcProtectiveDeviceType : public IfcFlowControllerType {
+    GDCLASS(IfcProtectiveDeviceType, IfcFlowControllerType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcPump : public GDIfcFlowMovingDevice {
-    GDCLASS(GDIfcPump, GDIfcFlowMovingDevice)
+class IfcPump : public IfcFlowMovingDevice {
+    GDCLASS(IfcPump, IfcFlowMovingDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcPumpType : public GDIfcFlowMovingDeviceType {
-    GDCLASS(GDIfcPumpType, GDIfcFlowMovingDeviceType)
+class IfcPumpType : public IfcFlowMovingDeviceType {
+    GDCLASS(IfcPumpType, IfcFlowMovingDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcQuantityArea : public GDIfcPhysicalSimpleQuantity {
-    GDCLASS(GDIfcQuantityArea, GDIfcPhysicalSimpleQuantity)
+class IfcQuantityArea : public IfcPhysicalSimpleQuantity {
+    GDCLASS(IfcQuantityArea, IfcPhysicalSimpleQuantity)
 protected:
     static void _bind_methods();
 public:
-    double get_area_value();
-    void set_area_value(double v);
-    godot::String get_formula();
-    void set_formula(godot::String v);
+    double get_AreaValue();
+    void set_AreaValue(double v);
+    godot::String get_Formula();
+    void set_Formula(godot::String v);
 };
 
-class GDIfcQuantityCount : public GDIfcPhysicalSimpleQuantity {
-    GDCLASS(GDIfcQuantityCount, GDIfcPhysicalSimpleQuantity)
+class IfcQuantityCount : public IfcPhysicalSimpleQuantity {
+    GDCLASS(IfcQuantityCount, IfcPhysicalSimpleQuantity)
 protected:
     static void _bind_methods();
 public:
-    int64_t get_count_value();
-    void set_count_value(int64_t v);
-    godot::String get_formula();
-    void set_formula(godot::String v);
+    int64_t get_CountValue();
+    void set_CountValue(int64_t v);
+    godot::String get_Formula();
+    void set_Formula(godot::String v);
 };
 
-class GDIfcQuantityLength : public GDIfcPhysicalSimpleQuantity {
-    GDCLASS(GDIfcQuantityLength, GDIfcPhysicalSimpleQuantity)
+class IfcQuantityLength : public IfcPhysicalSimpleQuantity {
+    GDCLASS(IfcQuantityLength, IfcPhysicalSimpleQuantity)
 protected:
     static void _bind_methods();
 public:
-    double get_length_value();
-    void set_length_value(double v);
-    godot::String get_formula();
-    void set_formula(godot::String v);
+    double get_LengthValue();
+    void set_LengthValue(double v);
+    godot::String get_Formula();
+    void set_Formula(godot::String v);
 };
 
-class GDIfcQuantityNumber : public GDIfcPhysicalSimpleQuantity {
-    GDCLASS(GDIfcQuantityNumber, GDIfcPhysicalSimpleQuantity)
+class IfcQuantityNumber : public IfcPhysicalSimpleQuantity {
+    GDCLASS(IfcQuantityNumber, IfcPhysicalSimpleQuantity)
 protected:
     static void _bind_methods();
 public:
-    double get_number_value();
-    void set_number_value(double v);
-    godot::String get_formula();
-    void set_formula(godot::String v);
+    double get_NumberValue();
+    void set_NumberValue(double v);
+    godot::String get_Formula();
+    void set_Formula(godot::String v);
 };
 
-class GDIfcQuantityTime : public GDIfcPhysicalSimpleQuantity {
-    GDCLASS(GDIfcQuantityTime, GDIfcPhysicalSimpleQuantity)
+class IfcQuantityTime : public IfcPhysicalSimpleQuantity {
+    GDCLASS(IfcQuantityTime, IfcPhysicalSimpleQuantity)
 protected:
     static void _bind_methods();
 public:
-    double get_time_value();
-    void set_time_value(double v);
-    godot::String get_formula();
-    void set_formula(godot::String v);
+    double get_TimeValue();
+    void set_TimeValue(double v);
+    godot::String get_Formula();
+    void set_Formula(godot::String v);
 };
 
-class GDIfcQuantityVolume : public GDIfcPhysicalSimpleQuantity {
-    GDCLASS(GDIfcQuantityVolume, GDIfcPhysicalSimpleQuantity)
+class IfcQuantityVolume : public IfcPhysicalSimpleQuantity {
+    GDCLASS(IfcQuantityVolume, IfcPhysicalSimpleQuantity)
 protected:
     static void _bind_methods();
 public:
-    double get_volume_value();
-    void set_volume_value(double v);
-    godot::String get_formula();
-    void set_formula(godot::String v);
+    double get_VolumeValue();
+    void set_VolumeValue(double v);
+    godot::String get_Formula();
+    void set_Formula(godot::String v);
 };
 
-class GDIfcQuantityWeight : public GDIfcPhysicalSimpleQuantity {
-    GDCLASS(GDIfcQuantityWeight, GDIfcPhysicalSimpleQuantity)
+class IfcQuantityWeight : public IfcPhysicalSimpleQuantity {
+    GDCLASS(IfcQuantityWeight, IfcPhysicalSimpleQuantity)
 protected:
     static void _bind_methods();
 public:
-    double get_weight_value();
-    void set_weight_value(double v);
-    godot::String get_formula();
-    void set_formula(godot::String v);
+    double get_WeightValue();
+    void set_WeightValue(double v);
+    godot::String get_Formula();
+    void set_Formula(godot::String v);
 };
 
-class GDIfcRail : public GDIfcBuiltElement {
-    GDCLASS(GDIfcRail, GDIfcBuiltElement)
+class IfcRail : public IfcBuiltElement {
+    GDCLASS(IfcRail, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcRailType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcRailType, GDIfcBuiltElementType)
+class IfcRailType : public IfcBuiltElementType {
+    GDCLASS(IfcRailType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcRailing : public GDIfcBuiltElement {
-    GDCLASS(GDIfcRailing, GDIfcBuiltElement)
+class IfcRailing : public IfcBuiltElement {
+    GDCLASS(IfcRailing, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcRailingType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcRailingType, GDIfcBuiltElementType)
+class IfcRailingType : public IfcBuiltElementType {
+    GDCLASS(IfcRailingType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcRailway : public GDIfcFacility {
-    GDCLASS(GDIfcRailway, GDIfcFacility)
+class IfcRailway : public IfcFacility {
+    GDCLASS(IfcRailway, IfcFacility)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcRailwayPart : public GDIfcFacilityPart {
-    GDCLASS(GDIfcRailwayPart, GDIfcFacilityPart)
+class IfcRailwayPart : public IfcFacilityPart {
+    GDCLASS(IfcRailwayPart, IfcFacilityPart)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcRamp : public GDIfcBuiltElement {
-    GDCLASS(GDIfcRamp, GDIfcBuiltElement)
+class IfcRamp : public IfcBuiltElement {
+    GDCLASS(IfcRamp, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcRampFlight : public GDIfcBuiltElement {
-    GDCLASS(GDIfcRampFlight, GDIfcBuiltElement)
+class IfcRampFlight : public IfcBuiltElement {
+    GDCLASS(IfcRampFlight, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcRampFlightType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcRampFlightType, GDIfcBuiltElementType)
+class IfcRampFlightType : public IfcBuiltElementType {
+    GDCLASS(IfcRampFlightType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcRampType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcRampType, GDIfcBuiltElementType)
+class IfcRampType : public IfcBuiltElementType {
+    GDCLASS(IfcRampType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcRationalBSplineCurveWithKnots : public GDIfcBSplineCurveWithKnots {
-    GDCLASS(GDIfcRationalBSplineCurveWithKnots, GDIfcBSplineCurveWithKnots)
+class IfcRationalBSplineCurveWithKnots : public IfcBSplineCurveWithKnots {
+    GDCLASS(IfcRationalBSplineCurveWithKnots, IfcBSplineCurveWithKnots)
 protected:
     static void _bind_methods();
 public:
-    godot::PackedFloat64Array get_weights_data();
-    void set_weights_data(godot::PackedFloat64Array v);
+    godot::PackedFloat64Array get_WeightsData();
+    void set_WeightsData(godot::PackedFloat64Array v);
 };
 
-class GDIfcRationalBSplineSurfaceWithKnots : public GDIfcBSplineSurfaceWithKnots {
-    GDCLASS(GDIfcRationalBSplineSurfaceWithKnots, GDIfcBSplineSurfaceWithKnots)
+class IfcRationalBSplineSurfaceWithKnots : public IfcBSplineSurfaceWithKnots {
+    GDCLASS(IfcRationalBSplineSurfaceWithKnots, IfcBSplineSurfaceWithKnots)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_weights_data();
+    godot::Array get_WeightsData();
 };
 
-class GDIfcRectangleProfileDef : public GDIfcParameterizedProfileDef {
-    GDCLASS(GDIfcRectangleProfileDef, GDIfcParameterizedProfileDef)
+class IfcRectangleProfileDef : public IfcParameterizedProfileDef {
+    GDCLASS(IfcRectangleProfileDef, IfcParameterizedProfileDef)
 protected:
     static void _bind_methods();
 public:
-    double get_x_dim();
-    void set_x_dim(double v);
-    double get_y_dim();
-    void set_y_dim(double v);
+    double get_XDim();
+    void set_XDim(double v);
+    double get_YDim();
+    void set_YDim(double v);
 };
 
-class GDIfcRectangleHollowProfileDef : public GDIfcRectangleProfileDef {
-    GDCLASS(GDIfcRectangleHollowProfileDef, GDIfcRectangleProfileDef)
+class IfcRectangleHollowProfileDef : public IfcRectangleProfileDef {
+    GDCLASS(IfcRectangleHollowProfileDef, IfcRectangleProfileDef)
 protected:
     static void _bind_methods();
 public:
-    double get_wall_thickness();
-    void set_wall_thickness(double v);
-    double get_inner_fillet_radius();
-    void set_inner_fillet_radius(double v);
-    double get_outer_fillet_radius();
-    void set_outer_fillet_radius(double v);
+    double get_WallThickness();
+    void set_WallThickness(double v);
+    double get_InnerFilletRadius();
+    void set_InnerFilletRadius(double v);
+    double get_OuterFilletRadius();
+    void set_OuterFilletRadius(double v);
 };
 
-class GDIfcRectangularPyramid : public GDIfcCsgPrimitive3D {
-    GDCLASS(GDIfcRectangularPyramid, GDIfcCsgPrimitive3D)
+class IfcRectangularPyramid : public IfcCsgPrimitive3D {
+    GDCLASS(IfcRectangularPyramid, IfcCsgPrimitive3D)
 protected:
     static void _bind_methods();
 public:
-    double get_x_length();
-    void set_x_length(double v);
-    double get_y_length();
-    void set_y_length(double v);
-    double get_height();
-    void set_height(double v);
+    double get_XLength();
+    void set_XLength(double v);
+    double get_YLength();
+    void set_YLength(double v);
+    double get_Height();
+    void set_Height(double v);
 };
 
-class GDIfcRectangularTrimmedSurface : public GDIfcBoundedSurface {
-    GDCLASS(GDIfcRectangularTrimmedSurface, GDIfcBoundedSurface)
+class IfcRectangularTrimmedSurface : public IfcBoundedSurface {
+    GDCLASS(IfcRectangularTrimmedSurface, IfcBoundedSurface)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_basis_surface();
-    void set_basis_surface(Ref<GDIFCEntityBase> v);
-    double get_u1();
-    void set_u1(double v);
-    double get_v1();
-    void set_v1(double v);
-    double get_u2();
-    void set_u2(double v);
-    double get_v2();
-    void set_v2(double v);
-    bool get_usense();
-    void set_usense(bool v);
-    bool get_vsense();
-    void set_vsense(bool v);
+    Ref<GDIFCEntityBase> get_BasisSurface();
+    void set_BasisSurface(Ref<GDIFCEntityBase> v);
+    double get_U1();
+    void set_U1(double v);
+    double get_V1();
+    void set_V1(double v);
+    double get_U2();
+    void set_U2(double v);
+    double get_V2();
+    void set_V2(double v);
+    bool get_Usense();
+    void set_Usense(bool v);
+    bool get_Vsense();
+    void set_Vsense(bool v);
 };
 
-class GDIfcRecurrencePattern : public GDIFCEntityBase {
-    GDCLASS(GDIfcRecurrencePattern, GDIFCEntityBase)
+class IfcRecurrencePattern : public GDIFCEntityBase {
+    GDCLASS(IfcRecurrencePattern, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_recurrence_type();
-    void set_recurrence_type(godot::String v);
-    godot::PackedInt64Array get_day_component();
-    void set_day_component(godot::PackedInt64Array v);
-    godot::PackedInt64Array get_weekday_component();
-    void set_weekday_component(godot::PackedInt64Array v);
-    godot::PackedInt64Array get_month_component();
-    void set_month_component(godot::PackedInt64Array v);
-    int64_t get_position();
-    void set_position(int64_t v);
-    int64_t get_interval();
-    void set_interval(int64_t v);
-    int64_t get_occurrences();
-    void set_occurrences(int64_t v);
-    godot::Array get_time_periods();
-    void set_time_periods(godot::Array v);
+    godot::String get_RecurrenceType();
+    void set_RecurrenceType(godot::String v);
+    godot::PackedInt64Array get_DayComponent();
+    void set_DayComponent(godot::PackedInt64Array v);
+    godot::PackedInt64Array get_WeekdayComponent();
+    void set_WeekdayComponent(godot::PackedInt64Array v);
+    godot::PackedInt64Array get_MonthComponent();
+    void set_MonthComponent(godot::PackedInt64Array v);
+    int64_t get_Position();
+    void set_Position(int64_t v);
+    int64_t get_Interval();
+    void set_Interval(int64_t v);
+    int64_t get_Occurrences();
+    void set_Occurrences(int64_t v);
+    godot::Array get_TimePeriods();
+    void set_TimePeriods(godot::Array v);
 };
 
-class GDIfcReference : public GDIFCEntityBase {
-    GDCLASS(GDIfcReference, GDIFCEntityBase)
+class IfcReference : public GDIFCEntityBase {
+    GDCLASS(IfcReference, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_type_identifier();
-    void set_type_identifier(godot::String v);
-    godot::String get_attribute_identifier();
-    void set_attribute_identifier(godot::String v);
-    godot::String get_instance_name();
-    void set_instance_name(godot::String v);
-    godot::PackedInt64Array get_list_positions();
-    void set_list_positions(godot::PackedInt64Array v);
-    Ref<GDIFCEntityBase> get_inner_reference();
-    void set_inner_reference(Ref<GDIFCEntityBase> v);
+    godot::String get_TypeIdentifier();
+    void set_TypeIdentifier(godot::String v);
+    godot::String get_AttributeIdentifier();
+    void set_AttributeIdentifier(godot::String v);
+    godot::String get_InstanceName();
+    void set_InstanceName(godot::String v);
+    godot::PackedInt64Array get_ListPositions();
+    void set_ListPositions(godot::PackedInt64Array v);
+    Ref<GDIFCEntityBase> get_InnerReference();
+    void set_InnerReference(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcReferent : public GDIfcPositioningElement {
-    GDCLASS(GDIfcReferent, GDIfcPositioningElement)
+class IfcReferent : public IfcPositioningElement {
+    GDCLASS(IfcReferent, IfcPositioningElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcRegularTimeSeries : public GDIfcTimeSeries {
-    GDCLASS(GDIfcRegularTimeSeries, GDIfcTimeSeries)
+class IfcRegularTimeSeries : public IfcTimeSeries {
+    GDCLASS(IfcRegularTimeSeries, IfcTimeSeries)
 protected:
     static void _bind_methods();
 public:
-    double get_time_step();
-    void set_time_step(double v);
-    godot::Array get_values();
-    void set_values(godot::Array v);
+    double get_TimeStep();
+    void set_TimeStep(double v);
+    godot::Array get_Values();
+    void set_Values(godot::Array v);
 };
 
-class GDIfcReinforcedSoil : public GDIfcEarthworksElement {
-    GDCLASS(GDIfcReinforcedSoil, GDIfcEarthworksElement)
+class IfcReinforcedSoil : public IfcEarthworksElement {
+    GDCLASS(IfcReinforcedSoil, IfcEarthworksElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcReinforcementBarProperties : public GDIfcPreDefinedProperties {
-    GDCLASS(GDIfcReinforcementBarProperties, GDIfcPreDefinedProperties)
+class IfcReinforcementBarProperties : public IfcPreDefinedProperties {
+    GDCLASS(IfcReinforcementBarProperties, IfcPreDefinedProperties)
 protected:
     static void _bind_methods();
 public:
-    double get_total_cross_section_area();
-    void set_total_cross_section_area(double v);
-    godot::String get_steel_grade();
-    void set_steel_grade(godot::String v);
-    godot::String get_bar_surface();
-    void set_bar_surface(godot::String v);
-    double get_effective_depth();
-    void set_effective_depth(double v);
-    double get_nominal_bar_diameter();
-    void set_nominal_bar_diameter(double v);
-    int64_t get_bar_count();
-    void set_bar_count(int64_t v);
+    double get_TotalCrossSectionArea();
+    void set_TotalCrossSectionArea(double v);
+    godot::String get_SteelGrade();
+    void set_SteelGrade(godot::String v);
+    godot::String get_BarSurface();
+    void set_BarSurface(godot::String v);
+    double get_EffectiveDepth();
+    void set_EffectiveDepth(double v);
+    double get_NominalBarDiameter();
+    void set_NominalBarDiameter(double v);
+    int64_t get_BarCount();
+    void set_BarCount(int64_t v);
 };
 
-class GDIfcReinforcementDefinitionProperties : public GDIfcPreDefinedPropertySet {
-    GDCLASS(GDIfcReinforcementDefinitionProperties, GDIfcPreDefinedPropertySet)
+class IfcReinforcementDefinitionProperties : public IfcPreDefinedPropertySet {
+    GDCLASS(IfcReinforcementDefinitionProperties, IfcPreDefinedPropertySet)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_definition_type();
-    void set_definition_type(godot::String v);
-    godot::Array get_reinforcement_section_definitions();
-    void set_reinforcement_section_definitions(godot::Array v);
+    godot::String get_DefinitionType();
+    void set_DefinitionType(godot::String v);
+    godot::Array get_ReinforcementSectionDefinitions();
+    void set_ReinforcementSectionDefinitions(godot::Array v);
 };
 
-class GDIfcReinforcingElement : public GDIfcElementComponent {
-    GDCLASS(GDIfcReinforcingElement, GDIfcElementComponent)
+class IfcReinforcingElement : public IfcElementComponent {
+    GDCLASS(IfcReinforcingElement, IfcElementComponent)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_steel_grade();
-    void set_steel_grade(godot::String v);
+    godot::String get_SteelGrade();
+    void set_SteelGrade(godot::String v);
 };
 
-class GDIfcReinforcingBar : public GDIfcReinforcingElement {
-    GDCLASS(GDIfcReinforcingBar, GDIfcReinforcingElement)
+class IfcReinforcingBar : public IfcReinforcingElement {
+    GDCLASS(IfcReinforcingBar, IfcReinforcingElement)
 protected:
     static void _bind_methods();
 public:
-    double get_nominal_diameter();
-    void set_nominal_diameter(double v);
-    double get_cross_section_area();
-    void set_cross_section_area(double v);
-    double get_bar_length();
-    void set_bar_length(double v);
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    godot::String get_bar_surface();
-    void set_bar_surface(godot::String v);
+    double get_NominalDiameter();
+    void set_NominalDiameter(double v);
+    double get_CrossSectionArea();
+    void set_CrossSectionArea(double v);
+    double get_BarLength();
+    void set_BarLength(double v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    godot::String get_BarSurface();
+    void set_BarSurface(godot::String v);
 };
 
-class GDIfcReinforcingElementType : public GDIfcElementComponentType {
-    GDCLASS(GDIfcReinforcingElementType, GDIfcElementComponentType)
+class IfcReinforcingElementType : public IfcElementComponentType {
+    GDCLASS(IfcReinforcingElementType, IfcElementComponentType)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcReinforcingBarType : public GDIfcReinforcingElementType {
-    GDCLASS(GDIfcReinforcingBarType, GDIfcReinforcingElementType)
+class IfcReinforcingBarType : public IfcReinforcingElementType {
+    GDCLASS(IfcReinforcingBarType, IfcReinforcingElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    double get_nominal_diameter();
-    void set_nominal_diameter(double v);
-    double get_cross_section_area();
-    void set_cross_section_area(double v);
-    double get_bar_length();
-    void set_bar_length(double v);
-    godot::String get_bar_surface();
-    void set_bar_surface(godot::String v);
-    godot::String get_bending_shape_code();
-    void set_bending_shape_code(godot::String v);
-    godot::Array get_bending_parameters();
-    void set_bending_parameters(godot::Array v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    double get_NominalDiameter();
+    void set_NominalDiameter(double v);
+    double get_CrossSectionArea();
+    void set_CrossSectionArea(double v);
+    double get_BarLength();
+    void set_BarLength(double v);
+    godot::String get_BarSurface();
+    void set_BarSurface(godot::String v);
+    godot::String get_BendingShapeCode();
+    void set_BendingShapeCode(godot::String v);
+    godot::Array get_BendingParameters();
+    void set_BendingParameters(godot::Array v);
 };
 
-class GDIfcReinforcingMesh : public GDIfcReinforcingElement {
-    GDCLASS(GDIfcReinforcingMesh, GDIfcReinforcingElement)
+class IfcReinforcingMesh : public IfcReinforcingElement {
+    GDCLASS(IfcReinforcingMesh, IfcReinforcingElement)
 protected:
     static void _bind_methods();
 public:
-    double get_mesh_length();
-    void set_mesh_length(double v);
-    double get_mesh_width();
-    void set_mesh_width(double v);
-    double get_longitudinal_bar_nominal_diameter();
-    void set_longitudinal_bar_nominal_diameter(double v);
-    double get_transverse_bar_nominal_diameter();
-    void set_transverse_bar_nominal_diameter(double v);
-    double get_longitudinal_bar_cross_section_area();
-    void set_longitudinal_bar_cross_section_area(double v);
-    double get_transverse_bar_cross_section_area();
-    void set_transverse_bar_cross_section_area(double v);
-    double get_longitudinal_bar_spacing();
-    void set_longitudinal_bar_spacing(double v);
-    double get_transverse_bar_spacing();
-    void set_transverse_bar_spacing(double v);
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    double get_MeshLength();
+    void set_MeshLength(double v);
+    double get_MeshWidth();
+    void set_MeshWidth(double v);
+    double get_LongitudinalBarNominalDiameter();
+    void set_LongitudinalBarNominalDiameter(double v);
+    double get_TransverseBarNominalDiameter();
+    void set_TransverseBarNominalDiameter(double v);
+    double get_LongitudinalBarCrossSectionArea();
+    void set_LongitudinalBarCrossSectionArea(double v);
+    double get_TransverseBarCrossSectionArea();
+    void set_TransverseBarCrossSectionArea(double v);
+    double get_LongitudinalBarSpacing();
+    void set_LongitudinalBarSpacing(double v);
+    double get_TransverseBarSpacing();
+    void set_TransverseBarSpacing(double v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcReinforcingMeshType : public GDIfcReinforcingElementType {
-    GDCLASS(GDIfcReinforcingMeshType, GDIfcReinforcingElementType)
+class IfcReinforcingMeshType : public IfcReinforcingElementType {
+    GDCLASS(IfcReinforcingMeshType, IfcReinforcingElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    double get_mesh_length();
-    void set_mesh_length(double v);
-    double get_mesh_width();
-    void set_mesh_width(double v);
-    double get_longitudinal_bar_nominal_diameter();
-    void set_longitudinal_bar_nominal_diameter(double v);
-    double get_transverse_bar_nominal_diameter();
-    void set_transverse_bar_nominal_diameter(double v);
-    double get_longitudinal_bar_cross_section_area();
-    void set_longitudinal_bar_cross_section_area(double v);
-    double get_transverse_bar_cross_section_area();
-    void set_transverse_bar_cross_section_area(double v);
-    double get_longitudinal_bar_spacing();
-    void set_longitudinal_bar_spacing(double v);
-    double get_transverse_bar_spacing();
-    void set_transverse_bar_spacing(double v);
-    godot::String get_bending_shape_code();
-    void set_bending_shape_code(godot::String v);
-    godot::Array get_bending_parameters();
-    void set_bending_parameters(godot::Array v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    double get_MeshLength();
+    void set_MeshLength(double v);
+    double get_MeshWidth();
+    void set_MeshWidth(double v);
+    double get_LongitudinalBarNominalDiameter();
+    void set_LongitudinalBarNominalDiameter(double v);
+    double get_TransverseBarNominalDiameter();
+    void set_TransverseBarNominalDiameter(double v);
+    double get_LongitudinalBarCrossSectionArea();
+    void set_LongitudinalBarCrossSectionArea(double v);
+    double get_TransverseBarCrossSectionArea();
+    void set_TransverseBarCrossSectionArea(double v);
+    double get_LongitudinalBarSpacing();
+    void set_LongitudinalBarSpacing(double v);
+    double get_TransverseBarSpacing();
+    void set_TransverseBarSpacing(double v);
+    godot::String get_BendingShapeCode();
+    void set_BendingShapeCode(godot::String v);
+    godot::Array get_BendingParameters();
+    void set_BendingParameters(godot::Array v);
 };
 
-class GDIfcRelationship : public GDIfcRoot {
-    GDCLASS(GDIfcRelationship, GDIfcRoot)
+class IfcRelationship : public IfcRoot {
+    GDCLASS(IfcRelationship, IfcRoot)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcRelDecomposes : public GDIfcRelationship {
-    GDCLASS(GDIfcRelDecomposes, GDIfcRelationship)
+class IfcRelDecomposes : public IfcRelationship {
+    GDCLASS(IfcRelDecomposes, IfcRelationship)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcRelAdheresToElement : public GDIfcRelDecomposes {
-    GDCLASS(GDIfcRelAdheresToElement, GDIfcRelDecomposes)
+class IfcRelAdheresToElement : public IfcRelDecomposes {
+    GDCLASS(IfcRelAdheresToElement, IfcRelDecomposes)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_element();
-    void set_relating_element(Ref<GDIFCEntityBase> v);
-    godot::Array get_related_surface_features();
-    void set_related_surface_features(godot::Array v);
+    Ref<GDIFCEntityBase> get_RelatingElement();
+    void set_RelatingElement(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedSurfaceFeatures();
+    void set_RelatedSurfaceFeatures(godot::Array v);
 };
 
-class GDIfcRelAggregates : public GDIfcRelDecomposes {
-    GDCLASS(GDIfcRelAggregates, GDIfcRelDecomposes)
+class IfcRelAggregates : public IfcRelDecomposes {
+    GDCLASS(IfcRelAggregates, IfcRelDecomposes)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_object();
-    void set_relating_object(Ref<GDIFCEntityBase> v);
-    godot::Array get_related_objects();
-    void set_related_objects(godot::Array v);
+    Ref<GDIFCEntityBase> get_RelatingObject();
+    void set_RelatingObject(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedObjects();
+    void set_RelatedObjects(godot::Array v);
 };
 
-class GDIfcRelAssigns : public GDIfcRelationship {
-    GDCLASS(GDIfcRelAssigns, GDIfcRelationship)
+class IfcRelAssigns : public IfcRelationship {
+    GDCLASS(IfcRelAssigns, IfcRelationship)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_related_objects();
-    void set_related_objects(godot::Array v);
-    bool get_related_objects_type();
-    void set_related_objects_type(bool v);
+    godot::Array get_RelatedObjects();
+    void set_RelatedObjects(godot::Array v);
+    bool get_RelatedObjectsType();
+    void set_RelatedObjectsType(bool v);
 };
 
-class GDIfcRelAssignsToActor : public GDIfcRelAssigns {
-    GDCLASS(GDIfcRelAssignsToActor, GDIfcRelAssigns)
+class IfcRelAssignsToActor : public IfcRelAssigns {
+    GDCLASS(IfcRelAssignsToActor, IfcRelAssigns)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_actor();
-    void set_relating_actor(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_acting_role();
-    void set_acting_role(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingActor();
+    void set_RelatingActor(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_ActingRole();
+    void set_ActingRole(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelAssignsToControl : public GDIfcRelAssigns {
-    GDCLASS(GDIfcRelAssignsToControl, GDIfcRelAssigns)
+class IfcRelAssignsToControl : public IfcRelAssigns {
+    GDCLASS(IfcRelAssignsToControl, IfcRelAssigns)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_control();
-    void set_relating_control(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingControl();
+    void set_RelatingControl(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelAssignsToGroup : public GDIfcRelAssigns {
-    GDCLASS(GDIfcRelAssignsToGroup, GDIfcRelAssigns)
+class IfcRelAssignsToGroup : public IfcRelAssigns {
+    GDCLASS(IfcRelAssignsToGroup, IfcRelAssigns)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_group();
-    void set_relating_group(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingGroup();
+    void set_RelatingGroup(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelAssignsToGroupByFactor : public GDIfcRelAssignsToGroup {
-    GDCLASS(GDIfcRelAssignsToGroupByFactor, GDIfcRelAssignsToGroup)
+class IfcRelAssignsToGroupByFactor : public IfcRelAssignsToGroup {
+    GDCLASS(IfcRelAssignsToGroupByFactor, IfcRelAssignsToGroup)
 protected:
     static void _bind_methods();
 public:
-    double get_factor();
-    void set_factor(double v);
+    double get_Factor();
+    void set_Factor(double v);
 };
 
-class GDIfcRelAssignsToProcess : public GDIfcRelAssigns {
-    GDCLASS(GDIfcRelAssignsToProcess, GDIfcRelAssigns)
+class IfcRelAssignsToProcess : public IfcRelAssigns {
+    GDCLASS(IfcRelAssignsToProcess, IfcRelAssigns)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_process();
-    void set_relating_process(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_quantity_in_process();
-    void set_quantity_in_process(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingProcess();
+    void set_RelatingProcess(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_QuantityInProcess();
+    void set_QuantityInProcess(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelAssignsToProduct : public GDIfcRelAssigns {
-    GDCLASS(GDIfcRelAssignsToProduct, GDIfcRelAssigns)
+class IfcRelAssignsToProduct : public IfcRelAssigns {
+    GDCLASS(IfcRelAssignsToProduct, IfcRelAssigns)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_product();
-    void set_relating_product(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingProduct();
+    void set_RelatingProduct(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelAssignsToResource : public GDIfcRelAssigns {
-    GDCLASS(GDIfcRelAssignsToResource, GDIfcRelAssigns)
+class IfcRelAssignsToResource : public IfcRelAssigns {
+    GDCLASS(IfcRelAssignsToResource, IfcRelAssigns)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_resource();
-    void set_relating_resource(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingResource();
+    void set_RelatingResource(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelAssociates : public GDIfcRelationship {
-    GDCLASS(GDIfcRelAssociates, GDIfcRelationship)
+class IfcRelAssociates : public IfcRelationship {
+    GDCLASS(IfcRelAssociates, IfcRelationship)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_related_objects();
-    void set_related_objects(godot::Array v);
+    godot::Array get_RelatedObjects();
+    void set_RelatedObjects(godot::Array v);
 };
 
-class GDIfcRelAssociatesApproval : public GDIfcRelAssociates {
-    GDCLASS(GDIfcRelAssociatesApproval, GDIfcRelAssociates)
+class IfcRelAssociatesApproval : public IfcRelAssociates {
+    GDCLASS(IfcRelAssociatesApproval, IfcRelAssociates)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_approval();
-    void set_relating_approval(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingApproval();
+    void set_RelatingApproval(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelAssociatesClassification : public GDIfcRelAssociates {
-    GDCLASS(GDIfcRelAssociatesClassification, GDIfcRelAssociates)
+class IfcRelAssociatesClassification : public IfcRelAssociates {
+    GDCLASS(IfcRelAssociatesClassification, IfcRelAssociates)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_classification();
-    void set_relating_classification(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingClassification();
+    void set_RelatingClassification(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelAssociatesConstraint : public GDIfcRelAssociates {
-    GDCLASS(GDIfcRelAssociatesConstraint, GDIfcRelAssociates)
+class IfcRelAssociatesConstraint : public IfcRelAssociates {
+    GDCLASS(IfcRelAssociatesConstraint, IfcRelAssociates)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_intent();
-    void set_intent(godot::String v);
-    Ref<GDIFCEntityBase> get_relating_constraint();
-    void set_relating_constraint(Ref<GDIFCEntityBase> v);
+    godot::String get_Intent();
+    void set_Intent(godot::String v);
+    Ref<GDIFCEntityBase> get_RelatingConstraint();
+    void set_RelatingConstraint(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelAssociatesDocument : public GDIfcRelAssociates {
-    GDCLASS(GDIfcRelAssociatesDocument, GDIfcRelAssociates)
+class IfcRelAssociatesDocument : public IfcRelAssociates {
+    GDCLASS(IfcRelAssociatesDocument, IfcRelAssociates)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_document();
-    void set_relating_document(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingDocument();
+    void set_RelatingDocument(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelAssociatesLibrary : public GDIfcRelAssociates {
-    GDCLASS(GDIfcRelAssociatesLibrary, GDIfcRelAssociates)
+class IfcRelAssociatesLibrary : public IfcRelAssociates {
+    GDCLASS(IfcRelAssociatesLibrary, IfcRelAssociates)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_library();
-    void set_relating_library(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingLibrary();
+    void set_RelatingLibrary(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelAssociatesMaterial : public GDIfcRelAssociates {
-    GDCLASS(GDIfcRelAssociatesMaterial, GDIfcRelAssociates)
+class IfcRelAssociatesMaterial : public IfcRelAssociates {
+    GDCLASS(IfcRelAssociatesMaterial, IfcRelAssociates)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_material();
-    void set_relating_material(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingMaterial();
+    void set_RelatingMaterial(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelAssociatesProfileDef : public GDIfcRelAssociates {
-    GDCLASS(GDIfcRelAssociatesProfileDef, GDIfcRelAssociates)
+class IfcRelAssociatesProfileDef : public IfcRelAssociates {
+    GDCLASS(IfcRelAssociatesProfileDef, IfcRelAssociates)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_profile_def();
-    void set_relating_profile_def(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingProfileDef();
+    void set_RelatingProfileDef(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelConnects : public GDIfcRelationship {
-    GDCLASS(GDIfcRelConnects, GDIfcRelationship)
+class IfcRelConnects : public IfcRelationship {
+    GDCLASS(IfcRelConnects, IfcRelationship)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcRelConnectsElements : public GDIfcRelConnects {
-    GDCLASS(GDIfcRelConnectsElements, GDIfcRelConnects)
+class IfcRelConnectsElements : public IfcRelConnects {
+    GDCLASS(IfcRelConnectsElements, IfcRelConnects)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_connection_geometry();
-    void set_connection_geometry(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_relating_element();
-    void set_relating_element(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_related_element();
-    void set_related_element(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_ConnectionGeometry();
+    void set_ConnectionGeometry(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingElement();
+    void set_RelatingElement(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatedElement();
+    void set_RelatedElement(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelConnectsPathElements : public GDIfcRelConnectsElements {
-    GDCLASS(GDIfcRelConnectsPathElements, GDIfcRelConnectsElements)
+class IfcRelConnectsPathElements : public IfcRelConnectsElements {
+    GDCLASS(IfcRelConnectsPathElements, IfcRelConnectsElements)
 protected:
     static void _bind_methods();
 public:
-    godot::PackedInt64Array get_relating_priorities();
-    void set_relating_priorities(godot::PackedInt64Array v);
-    godot::PackedInt64Array get_related_priorities();
-    void set_related_priorities(godot::PackedInt64Array v);
-    godot::String get_related_connection_type();
-    void set_related_connection_type(godot::String v);
-    godot::String get_relating_connection_type();
-    void set_relating_connection_type(godot::String v);
+    godot::PackedInt64Array get_RelatingPriorities();
+    void set_RelatingPriorities(godot::PackedInt64Array v);
+    godot::PackedInt64Array get_RelatedPriorities();
+    void set_RelatedPriorities(godot::PackedInt64Array v);
+    godot::String get_RelatedConnectionType();
+    void set_RelatedConnectionType(godot::String v);
+    godot::String get_RelatingConnectionType();
+    void set_RelatingConnectionType(godot::String v);
 };
 
-class GDIfcRelConnectsPortToElement : public GDIfcRelConnects {
-    GDCLASS(GDIfcRelConnectsPortToElement, GDIfcRelConnects)
+class IfcRelConnectsPortToElement : public IfcRelConnects {
+    GDCLASS(IfcRelConnectsPortToElement, IfcRelConnects)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_port();
-    void set_relating_port(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_related_element();
-    void set_related_element(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingPort();
+    void set_RelatingPort(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatedElement();
+    void set_RelatedElement(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelConnectsPorts : public GDIfcRelConnects {
-    GDCLASS(GDIfcRelConnectsPorts, GDIfcRelConnects)
+class IfcRelConnectsPorts : public IfcRelConnects {
+    GDCLASS(IfcRelConnectsPorts, IfcRelConnects)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_port();
-    void set_relating_port(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_related_port();
-    void set_related_port(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_realizing_element();
-    void set_realizing_element(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingPort();
+    void set_RelatingPort(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatedPort();
+    void set_RelatedPort(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RealizingElement();
+    void set_RealizingElement(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelConnectsStructuralActivity : public GDIfcRelConnects {
-    GDCLASS(GDIfcRelConnectsStructuralActivity, GDIfcRelConnects)
+class IfcRelConnectsStructuralActivity : public IfcRelConnects {
+    GDCLASS(IfcRelConnectsStructuralActivity, IfcRelConnects)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_element();
-    void set_relating_element(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_related_structural_activity();
-    void set_related_structural_activity(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingElement();
+    void set_RelatingElement(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatedStructuralActivity();
+    void set_RelatedStructuralActivity(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelConnectsStructuralMember : public GDIfcRelConnects {
-    GDCLASS(GDIfcRelConnectsStructuralMember, GDIfcRelConnects)
+class IfcRelConnectsStructuralMember : public IfcRelConnects {
+    GDCLASS(IfcRelConnectsStructuralMember, IfcRelConnects)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_structural_member();
-    void set_relating_structural_member(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_related_structural_connection();
-    void set_related_structural_connection(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_applied_condition();
-    void set_applied_condition(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_additional_conditions();
-    void set_additional_conditions(Ref<GDIFCEntityBase> v);
-    double get_supported_length();
-    void set_supported_length(double v);
-    Ref<GDIFCEntityBase> get_condition_coordinate_system();
-    void set_condition_coordinate_system(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingStructuralMember();
+    void set_RelatingStructuralMember(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatedStructuralConnection();
+    void set_RelatedStructuralConnection(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_AppliedCondition();
+    void set_AppliedCondition(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_AdditionalConditions();
+    void set_AdditionalConditions(Ref<GDIFCEntityBase> v);
+    double get_SupportedLength();
+    void set_SupportedLength(double v);
+    Ref<GDIFCEntityBase> get_ConditionCoordinateSystem();
+    void set_ConditionCoordinateSystem(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelConnectsWithEccentricity : public GDIfcRelConnectsStructuralMember {
-    GDCLASS(GDIfcRelConnectsWithEccentricity, GDIfcRelConnectsStructuralMember)
+class IfcRelConnectsWithEccentricity : public IfcRelConnectsStructuralMember {
+    GDCLASS(IfcRelConnectsWithEccentricity, IfcRelConnectsStructuralMember)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_connection_constraint();
-    void set_connection_constraint(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_ConnectionConstraint();
+    void set_ConnectionConstraint(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelConnectsWithRealizingElements : public GDIfcRelConnectsElements {
-    GDCLASS(GDIfcRelConnectsWithRealizingElements, GDIfcRelConnectsElements)
+class IfcRelConnectsWithRealizingElements : public IfcRelConnectsElements {
+    GDCLASS(IfcRelConnectsWithRealizingElements, IfcRelConnectsElements)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_realizing_elements();
-    void set_realizing_elements(godot::Array v);
-    godot::String get_connection_type();
-    void set_connection_type(godot::String v);
+    godot::Array get_RealizingElements();
+    void set_RealizingElements(godot::Array v);
+    godot::String get_ConnectionType();
+    void set_ConnectionType(godot::String v);
 };
 
-class GDIfcRelContainedInSpatialStructure : public GDIfcRelConnects {
-    GDCLASS(GDIfcRelContainedInSpatialStructure, GDIfcRelConnects)
+class IfcRelContainedInSpatialStructure : public IfcRelConnects {
+    GDCLASS(IfcRelContainedInSpatialStructure, IfcRelConnects)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_related_elements();
-    void set_related_elements(godot::Array v);
-    Ref<GDIFCEntityBase> get_relating_structure();
-    void set_relating_structure(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedElements();
+    void set_RelatedElements(godot::Array v);
+    Ref<GDIFCEntityBase> get_RelatingStructure();
+    void set_RelatingStructure(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelCoversBldgElements : public GDIfcRelConnects {
-    GDCLASS(GDIfcRelCoversBldgElements, GDIfcRelConnects)
+class IfcRelCoversBldgElements : public IfcRelConnects {
+    GDCLASS(IfcRelCoversBldgElements, IfcRelConnects)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_building_element();
-    void set_relating_building_element(Ref<GDIFCEntityBase> v);
-    godot::Array get_related_coverings();
-    void set_related_coverings(godot::Array v);
+    Ref<GDIFCEntityBase> get_RelatingBuildingElement();
+    void set_RelatingBuildingElement(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedCoverings();
+    void set_RelatedCoverings(godot::Array v);
 };
 
-class GDIfcRelCoversSpaces : public GDIfcRelConnects {
-    GDCLASS(GDIfcRelCoversSpaces, GDIfcRelConnects)
+class IfcRelCoversSpaces : public IfcRelConnects {
+    GDCLASS(IfcRelCoversSpaces, IfcRelConnects)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_space();
-    void set_relating_space(Ref<GDIFCEntityBase> v);
-    godot::Array get_related_coverings();
-    void set_related_coverings(godot::Array v);
+    Ref<GDIFCEntityBase> get_RelatingSpace();
+    void set_RelatingSpace(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedCoverings();
+    void set_RelatedCoverings(godot::Array v);
 };
 
-class GDIfcRelDeclares : public GDIfcRelationship {
-    GDCLASS(GDIfcRelDeclares, GDIfcRelationship)
+class IfcRelDeclares : public IfcRelationship {
+    GDCLASS(IfcRelDeclares, IfcRelationship)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_context();
-    void set_relating_context(Ref<GDIFCEntityBase> v);
-    godot::Array get_related_definitions();
-    void set_related_definitions(godot::Array v);
+    Ref<GDIFCEntityBase> get_RelatingContext();
+    void set_RelatingContext(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedDefinitions();
+    void set_RelatedDefinitions(godot::Array v);
 };
 
-class GDIfcRelDefines : public GDIfcRelationship {
-    GDCLASS(GDIfcRelDefines, GDIfcRelationship)
+class IfcRelDefines : public IfcRelationship {
+    GDCLASS(IfcRelDefines, IfcRelationship)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcRelDefinesByObject : public GDIfcRelDefines {
-    GDCLASS(GDIfcRelDefinesByObject, GDIfcRelDefines)
+class IfcRelDefinesByObject : public IfcRelDefines {
+    GDCLASS(IfcRelDefinesByObject, IfcRelDefines)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_related_objects();
-    void set_related_objects(godot::Array v);
-    Ref<GDIFCEntityBase> get_relating_object();
-    void set_relating_object(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedObjects();
+    void set_RelatedObjects(godot::Array v);
+    Ref<GDIFCEntityBase> get_RelatingObject();
+    void set_RelatingObject(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelDefinesByProperties : public GDIfcRelDefines {
-    GDCLASS(GDIfcRelDefinesByProperties, GDIfcRelDefines)
+class IfcRelDefinesByProperties : public IfcRelDefines {
+    GDCLASS(IfcRelDefinesByProperties, IfcRelDefines)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_related_objects();
-    void set_related_objects(godot::Array v);
-    Ref<GDIFCEntityBase> get_relating_property_definition();
-    void set_relating_property_definition(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedObjects();
+    void set_RelatedObjects(godot::Array v);
+    Ref<GDIFCEntityBase> get_RelatingPropertyDefinition();
+    void set_RelatingPropertyDefinition(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelDefinesByTemplate : public GDIfcRelDefines {
-    GDCLASS(GDIfcRelDefinesByTemplate, GDIfcRelDefines)
+class IfcRelDefinesByTemplate : public IfcRelDefines {
+    GDCLASS(IfcRelDefinesByTemplate, IfcRelDefines)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_related_property_sets();
-    void set_related_property_sets(godot::Array v);
-    Ref<GDIFCEntityBase> get_relating_template();
-    void set_relating_template(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedPropertySets();
+    void set_RelatedPropertySets(godot::Array v);
+    Ref<GDIFCEntityBase> get_RelatingTemplate();
+    void set_RelatingTemplate(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelDefinesByType : public GDIfcRelDefines {
-    GDCLASS(GDIfcRelDefinesByType, GDIfcRelDefines)
+class IfcRelDefinesByType : public IfcRelDefines {
+    GDCLASS(IfcRelDefinesByType, IfcRelDefines)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_related_objects();
-    void set_related_objects(godot::Array v);
-    Ref<GDIFCEntityBase> get_relating_type();
-    void set_relating_type(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedObjects();
+    void set_RelatedObjects(godot::Array v);
+    Ref<GDIFCEntityBase> get_RelatingType();
+    void set_RelatingType(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelFillsElement : public GDIfcRelConnects {
-    GDCLASS(GDIfcRelFillsElement, GDIfcRelConnects)
+class IfcRelFillsElement : public IfcRelConnects {
+    GDCLASS(IfcRelFillsElement, IfcRelConnects)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_opening_element();
-    void set_relating_opening_element(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_related_building_element();
-    void set_related_building_element(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingOpeningElement();
+    void set_RelatingOpeningElement(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatedBuildingElement();
+    void set_RelatedBuildingElement(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelFlowControlElements : public GDIfcRelConnects {
-    GDCLASS(GDIfcRelFlowControlElements, GDIfcRelConnects)
+class IfcRelFlowControlElements : public IfcRelConnects {
+    GDCLASS(IfcRelFlowControlElements, IfcRelConnects)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_related_control_elements();
-    void set_related_control_elements(godot::Array v);
-    Ref<GDIFCEntityBase> get_relating_flow_element();
-    void set_relating_flow_element(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedControlElements();
+    void set_RelatedControlElements(godot::Array v);
+    Ref<GDIFCEntityBase> get_RelatingFlowElement();
+    void set_RelatingFlowElement(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelInterferesElements : public GDIfcRelConnects {
-    GDCLASS(GDIfcRelInterferesElements, GDIfcRelConnects)
+class IfcRelInterferesElements : public IfcRelConnects {
+    GDCLASS(IfcRelInterferesElements, IfcRelConnects)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_element();
-    void set_relating_element(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_related_element();
-    void set_related_element(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_interference_geometry();
-    void set_interference_geometry(Ref<GDIFCEntityBase> v);
-    godot::String get_interference_type();
-    void set_interference_type(godot::String v);
-    godot::String get_implied_order();
-    void set_implied_order(godot::String v);
-    Ref<GDIFCEntityBase> get_interference_space();
-    void set_interference_space(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingElement();
+    void set_RelatingElement(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatedElement();
+    void set_RelatedElement(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_InterferenceGeometry();
+    void set_InterferenceGeometry(Ref<GDIFCEntityBase> v);
+    godot::String get_InterferenceType();
+    void set_InterferenceType(godot::String v);
+    godot::String get_ImpliedOrder();
+    void set_ImpliedOrder(godot::String v);
+    Ref<GDIFCEntityBase> get_InterferenceSpace();
+    void set_InterferenceSpace(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelNests : public GDIfcRelDecomposes {
-    GDCLASS(GDIfcRelNests, GDIfcRelDecomposes)
+class IfcRelNests : public IfcRelDecomposes {
+    GDCLASS(IfcRelNests, IfcRelDecomposes)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_object();
-    void set_relating_object(Ref<GDIFCEntityBase> v);
-    godot::Array get_related_objects();
-    void set_related_objects(godot::Array v);
+    Ref<GDIFCEntityBase> get_RelatingObject();
+    void set_RelatingObject(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedObjects();
+    void set_RelatedObjects(godot::Array v);
 };
 
-class GDIfcRelPositions : public GDIfcRelConnects {
-    GDCLASS(GDIfcRelPositions, GDIfcRelConnects)
+class IfcRelPositions : public IfcRelConnects {
+    GDCLASS(IfcRelPositions, IfcRelConnects)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_positioning_element();
-    void set_relating_positioning_element(Ref<GDIFCEntityBase> v);
-    godot::Array get_related_products();
-    void set_related_products(godot::Array v);
+    Ref<GDIFCEntityBase> get_RelatingPositioningElement();
+    void set_RelatingPositioningElement(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedProducts();
+    void set_RelatedProducts(godot::Array v);
 };
 
-class GDIfcRelProjectsElement : public GDIfcRelDecomposes {
-    GDCLASS(GDIfcRelProjectsElement, GDIfcRelDecomposes)
+class IfcRelProjectsElement : public IfcRelDecomposes {
+    GDCLASS(IfcRelProjectsElement, IfcRelDecomposes)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_element();
-    void set_relating_element(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_related_feature_element();
-    void set_related_feature_element(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingElement();
+    void set_RelatingElement(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatedFeatureElement();
+    void set_RelatedFeatureElement(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelReferencedInSpatialStructure : public GDIfcRelConnects {
-    GDCLASS(GDIfcRelReferencedInSpatialStructure, GDIfcRelConnects)
+class IfcRelReferencedInSpatialStructure : public IfcRelConnects {
+    GDCLASS(IfcRelReferencedInSpatialStructure, IfcRelConnects)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_related_elements();
-    void set_related_elements(godot::Array v);
-    Ref<GDIFCEntityBase> get_relating_structure();
-    void set_relating_structure(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedElements();
+    void set_RelatedElements(godot::Array v);
+    Ref<GDIFCEntityBase> get_RelatingStructure();
+    void set_RelatingStructure(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelSequence : public GDIfcRelConnects {
-    GDCLASS(GDIfcRelSequence, GDIfcRelConnects)
+class IfcRelSequence : public IfcRelConnects {
+    GDCLASS(IfcRelSequence, IfcRelConnects)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_process();
-    void set_relating_process(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_related_process();
-    void set_related_process(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_time_lag();
-    void set_time_lag(Ref<GDIFCEntityBase> v);
-    godot::String get_sequence_type();
-    void set_sequence_type(godot::String v);
-    godot::String get_user_defined_sequence_type();
-    void set_user_defined_sequence_type(godot::String v);
+    Ref<GDIFCEntityBase> get_RelatingProcess();
+    void set_RelatingProcess(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatedProcess();
+    void set_RelatedProcess(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TimeLag();
+    void set_TimeLag(Ref<GDIFCEntityBase> v);
+    godot::String get_SequenceType();
+    void set_SequenceType(godot::String v);
+    godot::String get_UserDefinedSequenceType();
+    void set_UserDefinedSequenceType(godot::String v);
 };
 
-class GDIfcRelServicesBuildings : public GDIfcRelConnects {
-    GDCLASS(GDIfcRelServicesBuildings, GDIfcRelConnects)
+class IfcRelServicesBuildings : public IfcRelConnects {
+    GDCLASS(IfcRelServicesBuildings, IfcRelConnects)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_system();
-    void set_relating_system(Ref<GDIFCEntityBase> v);
-    godot::Array get_related_buildings();
-    void set_related_buildings(godot::Array v);
+    Ref<GDIFCEntityBase> get_RelatingSystem();
+    void set_RelatingSystem(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedBuildings();
+    void set_RelatedBuildings(godot::Array v);
 };
 
-class GDIfcRelSpaceBoundary : public GDIfcRelConnects {
-    GDCLASS(GDIfcRelSpaceBoundary, GDIfcRelConnects)
+class IfcRelSpaceBoundary : public IfcRelConnects {
+    GDCLASS(IfcRelSpaceBoundary, IfcRelConnects)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_space();
-    void set_relating_space(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_related_building_element();
-    void set_related_building_element(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_connection_geometry();
-    void set_connection_geometry(Ref<GDIFCEntityBase> v);
-    godot::String get_physical_or_virtual_boundary();
-    void set_physical_or_virtual_boundary(godot::String v);
-    godot::String get_internal_or_external_boundary();
-    void set_internal_or_external_boundary(godot::String v);
+    Ref<GDIFCEntityBase> get_RelatingSpace();
+    void set_RelatingSpace(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatedBuildingElement();
+    void set_RelatedBuildingElement(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_ConnectionGeometry();
+    void set_ConnectionGeometry(Ref<GDIFCEntityBase> v);
+    godot::String get_PhysicalOrVirtualBoundary();
+    void set_PhysicalOrVirtualBoundary(godot::String v);
+    godot::String get_InternalOrExternalBoundary();
+    void set_InternalOrExternalBoundary(godot::String v);
 };
 
-class GDIfcRelSpaceBoundary1stLevel : public GDIfcRelSpaceBoundary {
-    GDCLASS(GDIfcRelSpaceBoundary1stLevel, GDIfcRelSpaceBoundary)
+class IfcRelSpaceBoundary1stLevel : public IfcRelSpaceBoundary {
+    GDCLASS(IfcRelSpaceBoundary1stLevel, IfcRelSpaceBoundary)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_parent_boundary();
-    void set_parent_boundary(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_ParentBoundary();
+    void set_ParentBoundary(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelSpaceBoundary2ndLevel : public GDIfcRelSpaceBoundary1stLevel {
-    GDCLASS(GDIfcRelSpaceBoundary2ndLevel, GDIfcRelSpaceBoundary1stLevel)
+class IfcRelSpaceBoundary2ndLevel : public IfcRelSpaceBoundary1stLevel {
+    GDCLASS(IfcRelSpaceBoundary2ndLevel, IfcRelSpaceBoundary1stLevel)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_corresponding_boundary();
-    void set_corresponding_boundary(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_CorrespondingBoundary();
+    void set_CorrespondingBoundary(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRelVoidsElement : public GDIfcRelDecomposes {
-    GDCLASS(GDIfcRelVoidsElement, GDIfcRelDecomposes)
+class IfcRelVoidsElement : public IfcRelDecomposes {
+    GDCLASS(IfcRelVoidsElement, IfcRelDecomposes)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_building_element();
-    void set_relating_building_element(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_related_opening_element();
-    void set_related_opening_element(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatingBuildingElement();
+    void set_RelatingBuildingElement(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_RelatedOpeningElement();
+    void set_RelatedOpeningElement(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcReparametrisedCompositeCurveSegment : public GDIfcCompositeCurveSegment {
-    GDCLASS(GDIfcReparametrisedCompositeCurveSegment, GDIfcCompositeCurveSegment)
+class IfcReparametrisedCompositeCurveSegment : public IfcCompositeCurveSegment {
+    GDCLASS(IfcReparametrisedCompositeCurveSegment, IfcCompositeCurveSegment)
 protected:
     static void _bind_methods();
 public:
-    double get_param_length();
-    void set_param_length(double v);
+    double get_ParamLength();
+    void set_ParamLength(double v);
 };
 
-class GDIfcRepresentation : public GDIFCEntityBase {
-    GDCLASS(GDIfcRepresentation, GDIFCEntityBase)
+class IfcRepresentation : public GDIFCEntityBase {
+    GDCLASS(IfcRepresentation, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_context_of_items();
-    void set_context_of_items(Ref<GDIFCEntityBase> v);
-    godot::String get_representation_identifier();
-    void set_representation_identifier(godot::String v);
-    godot::String get_representation_type();
-    void set_representation_type(godot::String v);
-    godot::Array get_items();
-    void set_items(godot::Array v);
+    Ref<GDIFCEntityBase> get_ContextOfItems();
+    void set_ContextOfItems(Ref<GDIFCEntityBase> v);
+    godot::String get_RepresentationIdentifier();
+    void set_RepresentationIdentifier(godot::String v);
+    godot::String get_RepresentationType();
+    void set_RepresentationType(godot::String v);
+    godot::Array get_Items();
+    void set_Items(godot::Array v);
 };
 
-class GDIfcRepresentationMap : public GDIFCEntityBase {
-    GDCLASS(GDIfcRepresentationMap, GDIFCEntityBase)
+class IfcRepresentationMap : public GDIFCEntityBase {
+    GDCLASS(IfcRepresentationMap, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_mapping_origin();
-    void set_mapping_origin(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_mapped_representation();
-    void set_mapped_representation(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_MappingOrigin();
+    void set_MappingOrigin(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_MappedRepresentation();
+    void set_MappedRepresentation(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcResourceApprovalRelationship : public GDIfcResourceLevelRelationship {
-    GDCLASS(GDIfcResourceApprovalRelationship, GDIfcResourceLevelRelationship)
+class IfcResourceApprovalRelationship : public IfcResourceLevelRelationship {
+    GDCLASS(IfcResourceApprovalRelationship, IfcResourceLevelRelationship)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_related_resource_objects();
-    void set_related_resource_objects(godot::Array v);
-    Ref<GDIFCEntityBase> get_relating_approval();
-    void set_relating_approval(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedResourceObjects();
+    void set_RelatedResourceObjects(godot::Array v);
+    Ref<GDIFCEntityBase> get_RelatingApproval();
+    void set_RelatingApproval(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcResourceConstraintRelationship : public GDIfcResourceLevelRelationship {
-    GDCLASS(GDIfcResourceConstraintRelationship, GDIfcResourceLevelRelationship)
+class IfcResourceConstraintRelationship : public IfcResourceLevelRelationship {
+    GDCLASS(IfcResourceConstraintRelationship, IfcResourceLevelRelationship)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_relating_constraint();
-    void set_relating_constraint(Ref<GDIFCEntityBase> v);
-    godot::Array get_related_resource_objects();
-    void set_related_resource_objects(godot::Array v);
+    Ref<GDIFCEntityBase> get_RelatingConstraint();
+    void set_RelatingConstraint(Ref<GDIFCEntityBase> v);
+    godot::Array get_RelatedResourceObjects();
+    void set_RelatedResourceObjects(godot::Array v);
 };
 
-class GDIfcResourceTime : public GDIfcSchedulingTime {
-    GDCLASS(GDIfcResourceTime, GDIfcSchedulingTime)
+class IfcResourceTime : public IfcSchedulingTime {
+    GDCLASS(IfcResourceTime, IfcSchedulingTime)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_schedule_work();
-    void set_schedule_work(godot::String v);
-    double get_schedule_usage();
-    void set_schedule_usage(double v);
-    godot::String get_schedule_start();
-    void set_schedule_start(godot::String v);
-    godot::String get_schedule_finish();
-    void set_schedule_finish(godot::String v);
-    godot::String get_schedule_contour();
-    void set_schedule_contour(godot::String v);
-    godot::String get_leveling_delay();
-    void set_leveling_delay(godot::String v);
-    bool get_is_over_allocated();
-    void set_is_over_allocated(bool v);
-    godot::String get_status_time();
-    void set_status_time(godot::String v);
-    godot::String get_actual_work();
-    void set_actual_work(godot::String v);
-    double get_actual_usage();
-    void set_actual_usage(double v);
-    godot::String get_actual_start();
-    void set_actual_start(godot::String v);
-    godot::String get_actual_finish();
-    void set_actual_finish(godot::String v);
-    godot::String get_remaining_work();
-    void set_remaining_work(godot::String v);
-    double get_remaining_usage();
-    void set_remaining_usage(double v);
-    double get_completion();
-    void set_completion(double v);
+    godot::String get_ScheduleWork();
+    void set_ScheduleWork(godot::String v);
+    double get_ScheduleUsage();
+    void set_ScheduleUsage(double v);
+    godot::String get_ScheduleStart();
+    void set_ScheduleStart(godot::String v);
+    godot::String get_ScheduleFinish();
+    void set_ScheduleFinish(godot::String v);
+    godot::String get_ScheduleContour();
+    void set_ScheduleContour(godot::String v);
+    godot::String get_LevelingDelay();
+    void set_LevelingDelay(godot::String v);
+    bool get_IsOverAllocated();
+    void set_IsOverAllocated(bool v);
+    godot::String get_StatusTime();
+    void set_StatusTime(godot::String v);
+    godot::String get_ActualWork();
+    void set_ActualWork(godot::String v);
+    double get_ActualUsage();
+    void set_ActualUsage(double v);
+    godot::String get_ActualStart();
+    void set_ActualStart(godot::String v);
+    godot::String get_ActualFinish();
+    void set_ActualFinish(godot::String v);
+    godot::String get_RemainingWork();
+    void set_RemainingWork(godot::String v);
+    double get_RemainingUsage();
+    void set_RemainingUsage(double v);
+    double get_Completion();
+    void set_Completion(double v);
 };
 
-class GDIfcRevolvedAreaSolid : public GDIfcSweptAreaSolid {
-    GDCLASS(GDIfcRevolvedAreaSolid, GDIfcSweptAreaSolid)
+class IfcRevolvedAreaSolid : public IfcSweptAreaSolid {
+    GDCLASS(IfcRevolvedAreaSolid, IfcSweptAreaSolid)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_axis();
-    void set_axis(Ref<GDIFCEntityBase> v);
-    double get_angle();
-    void set_angle(double v);
+    Ref<GDIFCEntityBase> get_Axis();
+    void set_Axis(Ref<GDIFCEntityBase> v);
+    double get_Angle();
+    void set_Angle(double v);
 };
 
-class GDIfcRevolvedAreaSolidTapered : public GDIfcRevolvedAreaSolid {
-    GDCLASS(GDIfcRevolvedAreaSolidTapered, GDIfcRevolvedAreaSolid)
+class IfcRevolvedAreaSolidTapered : public IfcRevolvedAreaSolid {
+    GDCLASS(IfcRevolvedAreaSolidTapered, IfcRevolvedAreaSolid)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_end_swept_area();
-    void set_end_swept_area(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_EndSweptArea();
+    void set_EndSweptArea(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcRightCircularCone : public GDIfcCsgPrimitive3D {
-    GDCLASS(GDIfcRightCircularCone, GDIfcCsgPrimitive3D)
+class IfcRightCircularCone : public IfcCsgPrimitive3D {
+    GDCLASS(IfcRightCircularCone, IfcCsgPrimitive3D)
 protected:
     static void _bind_methods();
 public:
-    double get_height();
-    void set_height(double v);
-    double get_bottom_radius();
-    void set_bottom_radius(double v);
+    double get_Height();
+    void set_Height(double v);
+    double get_BottomRadius();
+    void set_BottomRadius(double v);
 };
 
-class GDIfcRightCircularCylinder : public GDIfcCsgPrimitive3D {
-    GDCLASS(GDIfcRightCircularCylinder, GDIfcCsgPrimitive3D)
+class IfcRightCircularCylinder : public IfcCsgPrimitive3D {
+    GDCLASS(IfcRightCircularCylinder, IfcCsgPrimitive3D)
 protected:
     static void _bind_methods();
 public:
-    double get_height();
-    void set_height(double v);
-    double get_radius();
-    void set_radius(double v);
+    double get_Height();
+    void set_Height(double v);
+    double get_Radius();
+    void set_Radius(double v);
 };
 
-class GDIfcRigidOperation : public GDIfcCoordinateOperation {
-    GDCLASS(GDIfcRigidOperation, GDIfcCoordinateOperation)
+class IfcRigidOperation : public IfcCoordinateOperation {
+    GDCLASS(IfcRigidOperation, IfcCoordinateOperation)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_first_coordinate();
-    void set_first_coordinate(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_second_coordinate();
-    void set_second_coordinate(Ref<GDIFCEntityBase> v);
-    double get_height();
-    void set_height(double v);
+    Ref<GDIFCEntityBase> get_FirstCoordinate();
+    void set_FirstCoordinate(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_SecondCoordinate();
+    void set_SecondCoordinate(Ref<GDIFCEntityBase> v);
+    double get_Height();
+    void set_Height(double v);
 };
 
-class GDIfcRoad : public GDIfcFacility {
-    GDCLASS(GDIfcRoad, GDIfcFacility)
+class IfcRoad : public IfcFacility {
+    GDCLASS(IfcRoad, IfcFacility)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcRoadPart : public GDIfcFacilityPart {
-    GDCLASS(GDIfcRoadPart, GDIfcFacilityPart)
+class IfcRoadPart : public IfcFacilityPart {
+    GDCLASS(IfcRoadPart, IfcFacilityPart)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcRoof : public GDIfcBuiltElement {
-    GDCLASS(GDIfcRoof, GDIfcBuiltElement)
+class IfcRoof : public IfcBuiltElement {
+    GDCLASS(IfcRoof, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcRoofType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcRoofType, GDIfcBuiltElementType)
+class IfcRoofType : public IfcBuiltElementType {
+    GDCLASS(IfcRoofType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcRoundedRectangleProfileDef : public GDIfcRectangleProfileDef {
-    GDCLASS(GDIfcRoundedRectangleProfileDef, GDIfcRectangleProfileDef)
+class IfcRoundedRectangleProfileDef : public IfcRectangleProfileDef {
+    GDCLASS(IfcRoundedRectangleProfileDef, IfcRectangleProfileDef)
 protected:
     static void _bind_methods();
 public:
-    double get_rounding_radius();
-    void set_rounding_radius(double v);
+    double get_RoundingRadius();
+    void set_RoundingRadius(double v);
 };
 
-class GDIfcSIUnit : public GDIfcNamedUnit {
-    GDCLASS(GDIfcSIUnit, GDIfcNamedUnit)
+class IfcSIUnit : public IfcNamedUnit {
+    GDCLASS(IfcSIUnit, IfcNamedUnit)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_prefix();
-    void set_prefix(godot::String v);
-    godot::String get_name();
-    void set_name(godot::String v);
+    godot::String get_Prefix();
+    void set_Prefix(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
 };
 
-class GDIfcSanitaryTerminal : public GDIfcFlowTerminal {
-    GDCLASS(GDIfcSanitaryTerminal, GDIfcFlowTerminal)
+class IfcSanitaryTerminal : public IfcFlowTerminal {
+    GDCLASS(IfcSanitaryTerminal, IfcFlowTerminal)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSanitaryTerminalType : public GDIfcFlowTerminalType {
-    GDCLASS(GDIfcSanitaryTerminalType, GDIfcFlowTerminalType)
+class IfcSanitaryTerminalType : public IfcFlowTerminalType {
+    GDCLASS(IfcSanitaryTerminalType, IfcFlowTerminalType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSeamCurve : public GDIfcSurfaceCurve {
-    GDCLASS(GDIfcSeamCurve, GDIfcSurfaceCurve)
+class IfcSeamCurve : public IfcSurfaceCurve {
+    GDCLASS(IfcSeamCurve, IfcSurfaceCurve)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcSecondOrderPolynomialSpiral : public GDIfcSpiral {
-    GDCLASS(GDIfcSecondOrderPolynomialSpiral, GDIfcSpiral)
+class IfcSecondOrderPolynomialSpiral : public IfcSpiral {
+    GDCLASS(IfcSecondOrderPolynomialSpiral, IfcSpiral)
 protected:
     static void _bind_methods();
 public:
-    double get_quadratic_term();
-    void set_quadratic_term(double v);
-    double get_linear_term();
-    void set_linear_term(double v);
-    double get_constant_term();
-    void set_constant_term(double v);
+    double get_QuadraticTerm();
+    void set_QuadraticTerm(double v);
+    double get_LinearTerm();
+    void set_LinearTerm(double v);
+    double get_ConstantTerm();
+    void set_ConstantTerm(double v);
 };
 
-class GDIfcSectionProperties : public GDIfcPreDefinedProperties {
-    GDCLASS(GDIfcSectionProperties, GDIfcPreDefinedProperties)
+class IfcSectionProperties : public IfcPreDefinedProperties {
+    GDCLASS(IfcSectionProperties, IfcPreDefinedProperties)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_section_type();
-    void set_section_type(godot::String v);
-    Ref<GDIFCEntityBase> get_start_profile();
-    void set_start_profile(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_end_profile();
-    void set_end_profile(Ref<GDIFCEntityBase> v);
+    godot::String get_SectionType();
+    void set_SectionType(godot::String v);
+    Ref<GDIFCEntityBase> get_StartProfile();
+    void set_StartProfile(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_EndProfile();
+    void set_EndProfile(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcSectionReinforcementProperties : public GDIfcPreDefinedProperties {
-    GDCLASS(GDIfcSectionReinforcementProperties, GDIfcPreDefinedProperties)
+class IfcSectionReinforcementProperties : public IfcPreDefinedProperties {
+    GDCLASS(IfcSectionReinforcementProperties, IfcPreDefinedProperties)
 protected:
     static void _bind_methods();
 public:
-    double get_longitudinal_start_position();
-    void set_longitudinal_start_position(double v);
-    double get_longitudinal_end_position();
-    void set_longitudinal_end_position(double v);
-    double get_transverse_position();
-    void set_transverse_position(double v);
-    godot::String get_reinforcement_role();
-    void set_reinforcement_role(godot::String v);
-    Ref<GDIFCEntityBase> get_section_definition();
-    void set_section_definition(Ref<GDIFCEntityBase> v);
-    godot::Array get_cross_section_reinforcement_definitions();
-    void set_cross_section_reinforcement_definitions(godot::Array v);
+    double get_LongitudinalStartPosition();
+    void set_LongitudinalStartPosition(double v);
+    double get_LongitudinalEndPosition();
+    void set_LongitudinalEndPosition(double v);
+    double get_TransversePosition();
+    void set_TransversePosition(double v);
+    godot::String get_ReinforcementRole();
+    void set_ReinforcementRole(godot::String v);
+    Ref<GDIFCEntityBase> get_SectionDefinition();
+    void set_SectionDefinition(Ref<GDIFCEntityBase> v);
+    godot::Array get_CrossSectionReinforcementDefinitions();
+    void set_CrossSectionReinforcementDefinitions(godot::Array v);
 };
 
-class GDIfcSectionedSolid : public GDIfcSolidModel {
-    GDCLASS(GDIfcSectionedSolid, GDIfcSolidModel)
+class IfcSectionedSolid : public IfcSolidModel {
+    GDCLASS(IfcSectionedSolid, IfcSolidModel)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_directrix();
-    void set_directrix(Ref<GDIFCEntityBase> v);
-    godot::Array get_cross_sections();
-    void set_cross_sections(godot::Array v);
+    Ref<GDIFCEntityBase> get_Directrix();
+    void set_Directrix(Ref<GDIFCEntityBase> v);
+    godot::Array get_CrossSections();
+    void set_CrossSections(godot::Array v);
 };
 
-class GDIfcSectionedSolidHorizontal : public GDIfcSectionedSolid {
-    GDCLASS(GDIfcSectionedSolidHorizontal, GDIfcSectionedSolid)
+class IfcSectionedSolidHorizontal : public IfcSectionedSolid {
+    GDCLASS(IfcSectionedSolidHorizontal, IfcSectionedSolid)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_cross_section_positions();
-    void set_cross_section_positions(godot::Array v);
+    godot::Array get_CrossSectionPositions();
+    void set_CrossSectionPositions(godot::Array v);
 };
 
-class GDIfcSectionedSpine : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcSectionedSpine, GDIfcGeometricRepresentationItem)
+class IfcSectionedSpine : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcSectionedSpine, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_spine_curve();
-    void set_spine_curve(Ref<GDIFCEntityBase> v);
-    godot::Array get_cross_sections();
-    void set_cross_sections(godot::Array v);
-    godot::Array get_cross_section_positions();
-    void set_cross_section_positions(godot::Array v);
+    Ref<GDIFCEntityBase> get_SpineCurve();
+    void set_SpineCurve(Ref<GDIFCEntityBase> v);
+    godot::Array get_CrossSections();
+    void set_CrossSections(godot::Array v);
+    godot::Array get_CrossSectionPositions();
+    void set_CrossSectionPositions(godot::Array v);
 };
 
-class GDIfcSectionedSurface : public GDIfcSurface {
-    GDCLASS(GDIfcSectionedSurface, GDIfcSurface)
+class IfcSectionedSurface : public IfcSurface {
+    GDCLASS(IfcSectionedSurface, IfcSurface)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_directrix();
-    void set_directrix(Ref<GDIFCEntityBase> v);
-    godot::Array get_cross_section_positions();
-    void set_cross_section_positions(godot::Array v);
-    godot::Array get_cross_sections();
-    void set_cross_sections(godot::Array v);
+    Ref<GDIFCEntityBase> get_Directrix();
+    void set_Directrix(Ref<GDIFCEntityBase> v);
+    godot::Array get_CrossSectionPositions();
+    void set_CrossSectionPositions(godot::Array v);
+    godot::Array get_CrossSections();
+    void set_CrossSections(godot::Array v);
 };
 
-class GDIfcSegmentedReferenceCurve : public GDIfcCompositeCurve {
-    GDCLASS(GDIfcSegmentedReferenceCurve, GDIfcCompositeCurve)
+class IfcSegmentedReferenceCurve : public IfcCompositeCurve {
+    GDCLASS(IfcSegmentedReferenceCurve, IfcCompositeCurve)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_base_curve();
-    void set_base_curve(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_end_point();
-    void set_end_point(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_BaseCurve();
+    void set_BaseCurve(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_EndPoint();
+    void set_EndPoint(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcSensor : public GDIfcDistributionControlElement {
-    GDCLASS(GDIfcSensor, GDIfcDistributionControlElement)
+class IfcSensor : public IfcDistributionControlElement {
+    GDCLASS(IfcSensor, IfcDistributionControlElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSensorType : public GDIfcDistributionControlElementType {
-    GDCLASS(GDIfcSensorType, GDIfcDistributionControlElementType)
+class IfcSensorType : public IfcDistributionControlElementType {
+    GDCLASS(IfcSensorType, IfcDistributionControlElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSeventhOrderPolynomialSpiral : public GDIfcSpiral {
-    GDCLASS(GDIfcSeventhOrderPolynomialSpiral, GDIfcSpiral)
+class IfcSeventhOrderPolynomialSpiral : public IfcSpiral {
+    GDCLASS(IfcSeventhOrderPolynomialSpiral, IfcSpiral)
 protected:
     static void _bind_methods();
 public:
-    double get_septic_term();
-    void set_septic_term(double v);
-    double get_sextic_term();
-    void set_sextic_term(double v);
-    double get_quintic_term();
-    void set_quintic_term(double v);
-    double get_quartic_term();
-    void set_quartic_term(double v);
-    double get_cubic_term();
-    void set_cubic_term(double v);
-    double get_quadratic_term();
-    void set_quadratic_term(double v);
-    double get_linear_term();
-    void set_linear_term(double v);
-    double get_constant_term();
-    void set_constant_term(double v);
+    double get_SepticTerm();
+    void set_SepticTerm(double v);
+    double get_SexticTerm();
+    void set_SexticTerm(double v);
+    double get_QuinticTerm();
+    void set_QuinticTerm(double v);
+    double get_QuarticTerm();
+    void set_QuarticTerm(double v);
+    double get_CubicTerm();
+    void set_CubicTerm(double v);
+    double get_QuadraticTerm();
+    void set_QuadraticTerm(double v);
+    double get_LinearTerm();
+    void set_LinearTerm(double v);
+    double get_ConstantTerm();
+    void set_ConstantTerm(double v);
 };
 
-class GDIfcShadingDevice : public GDIfcBuiltElement {
-    GDCLASS(GDIfcShadingDevice, GDIfcBuiltElement)
+class IfcShadingDevice : public IfcBuiltElement {
+    GDCLASS(IfcShadingDevice, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcShadingDeviceType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcShadingDeviceType, GDIfcBuiltElementType)
+class IfcShadingDeviceType : public IfcBuiltElementType {
+    GDCLASS(IfcShadingDeviceType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcShapeAspect : public GDIFCEntityBase {
-    GDCLASS(GDIfcShapeAspect, GDIFCEntityBase)
+class IfcShapeAspect : public GDIFCEntityBase {
+    GDCLASS(IfcShapeAspect, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_shape_representations();
-    void set_shape_representations(godot::Array v);
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    godot::String get_product_definitional();
-    void set_product_definitional(godot::String v);
-    Ref<GDIFCEntityBase> get_part_of_product_definition_shape();
-    void set_part_of_product_definition_shape(Ref<GDIFCEntityBase> v);
+    godot::Array get_ShapeRepresentations();
+    void set_ShapeRepresentations(godot::Array v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    godot::String get_ProductDefinitional();
+    void set_ProductDefinitional(godot::String v);
+    Ref<GDIFCEntityBase> get_PartOfProductDefinitionShape();
+    void set_PartOfProductDefinitionShape(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcShapeModel : public GDIfcRepresentation {
-    GDCLASS(GDIfcShapeModel, GDIfcRepresentation)
+class IfcShapeModel : public IfcRepresentation {
+    GDCLASS(IfcShapeModel, IfcRepresentation)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcShapeRepresentation : public GDIfcShapeModel {
-    GDCLASS(GDIfcShapeRepresentation, GDIfcShapeModel)
+class IfcShapeRepresentation : public IfcShapeModel {
+    GDCLASS(IfcShapeRepresentation, IfcShapeModel)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcShellBasedSurfaceModel : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcShellBasedSurfaceModel, GDIfcGeometricRepresentationItem)
+class IfcShellBasedSurfaceModel : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcShellBasedSurfaceModel, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_sbsm_boundary();
-    void set_sbsm_boundary(godot::Array v);
+    godot::Array get_SbsmBoundary();
+    void set_SbsmBoundary(godot::Array v);
 };
 
-class GDIfcSign : public GDIfcElementComponent {
-    GDCLASS(GDIfcSign, GDIfcElementComponent)
+class IfcSign : public IfcElementComponent {
+    GDCLASS(IfcSign, IfcElementComponent)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSignType : public GDIfcElementComponentType {
-    GDCLASS(GDIfcSignType, GDIfcElementComponentType)
+class IfcSignType : public IfcElementComponentType {
+    GDCLASS(IfcSignType, IfcElementComponentType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSignal : public GDIfcFlowTerminal {
-    GDCLASS(GDIfcSignal, GDIfcFlowTerminal)
+class IfcSignal : public IfcFlowTerminal {
+    GDCLASS(IfcSignal, IfcFlowTerminal)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSignalType : public GDIfcFlowTerminalType {
-    GDCLASS(GDIfcSignalType, GDIfcFlowTerminalType)
+class IfcSignalType : public IfcFlowTerminalType {
+    GDCLASS(IfcSignalType, IfcFlowTerminalType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSimplePropertyTemplate : public GDIfcPropertyTemplate {
-    GDCLASS(GDIfcSimplePropertyTemplate, GDIfcPropertyTemplate)
+class IfcSimplePropertyTemplate : public IfcPropertyTemplate {
+    GDCLASS(IfcSimplePropertyTemplate, IfcPropertyTemplate)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_template_type();
-    void set_template_type(godot::String v);
-    godot::String get_primary_measure_type();
-    void set_primary_measure_type(godot::String v);
-    godot::String get_secondary_measure_type();
-    void set_secondary_measure_type(godot::String v);
-    Ref<GDIFCEntityBase> get_enumerators();
-    void set_enumerators(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_primary_unit();
-    void set_primary_unit(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_secondary_unit();
-    void set_secondary_unit(Ref<GDIFCEntityBase> v);
-    godot::String get_expression();
-    void set_expression(godot::String v);
-    godot::String get_access_state();
-    void set_access_state(godot::String v);
+    godot::String get_TemplateType();
+    void set_TemplateType(godot::String v);
+    godot::String get_PrimaryMeasureType();
+    void set_PrimaryMeasureType(godot::String v);
+    godot::String get_SecondaryMeasureType();
+    void set_SecondaryMeasureType(godot::String v);
+    Ref<GDIFCEntityBase> get_Enumerators();
+    void set_Enumerators(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_PrimaryUnit();
+    void set_PrimaryUnit(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_SecondaryUnit();
+    void set_SecondaryUnit(Ref<GDIFCEntityBase> v);
+    godot::String get_Expression();
+    void set_Expression(godot::String v);
+    godot::String get_AccessState();
+    void set_AccessState(godot::String v);
 };
 
-class GDIfcSineSpiral : public GDIfcSpiral {
-    GDCLASS(GDIfcSineSpiral, GDIfcSpiral)
+class IfcSineSpiral : public IfcSpiral {
+    GDCLASS(IfcSineSpiral, IfcSpiral)
 protected:
     static void _bind_methods();
 public:
-    double get_sine_term();
-    void set_sine_term(double v);
-    double get_linear_term();
-    void set_linear_term(double v);
-    double get_constant_term();
-    void set_constant_term(double v);
+    double get_SineTerm();
+    void set_SineTerm(double v);
+    double get_LinearTerm();
+    void set_LinearTerm(double v);
+    double get_ConstantTerm();
+    void set_ConstantTerm(double v);
 };
 
-class GDIfcSite : public GDIfcSpatialStructureElement {
-    GDCLASS(GDIfcSite, GDIfcSpatialStructureElement)
+class IfcSite : public IfcSpatialStructureElement {
+    GDCLASS(IfcSite, IfcSpatialStructureElement)
 protected:
     static void _bind_methods();
 public:
-    godot::PackedInt64Array get_ref_latitude();
-    void set_ref_latitude(godot::PackedInt64Array v);
-    godot::PackedInt64Array get_ref_longitude();
-    void set_ref_longitude(godot::PackedInt64Array v);
-    double get_ref_elevation();
-    void set_ref_elevation(double v);
-    godot::String get_land_title_number();
-    void set_land_title_number(godot::String v);
-    Ref<GDIFCEntityBase> get_site_address();
-    void set_site_address(Ref<GDIFCEntityBase> v);
+    godot::PackedInt64Array get_RefLatitude();
+    void set_RefLatitude(godot::PackedInt64Array v);
+    godot::PackedInt64Array get_RefLongitude();
+    void set_RefLongitude(godot::PackedInt64Array v);
+    double get_RefElevation();
+    void set_RefElevation(double v);
+    godot::String get_LandTitleNumber();
+    void set_LandTitleNumber(godot::String v);
+    Ref<GDIFCEntityBase> get_SiteAddress();
+    void set_SiteAddress(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcSlab : public GDIfcBuiltElement {
-    GDCLASS(GDIfcSlab, GDIfcBuiltElement)
+class IfcSlab : public IfcBuiltElement {
+    GDCLASS(IfcSlab, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSlabType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcSlabType, GDIfcBuiltElementType)
+class IfcSlabType : public IfcBuiltElementType {
+    GDCLASS(IfcSlabType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSlippageConnectionCondition : public GDIfcStructuralConnectionCondition {
-    GDCLASS(GDIfcSlippageConnectionCondition, GDIfcStructuralConnectionCondition)
+class IfcSlippageConnectionCondition : public IfcStructuralConnectionCondition {
+    GDCLASS(IfcSlippageConnectionCondition, IfcStructuralConnectionCondition)
 protected:
     static void _bind_methods();
 public:
-    double get_slippage_x();
-    void set_slippage_x(double v);
-    double get_slippage_y();
-    void set_slippage_y(double v);
-    double get_slippage_z();
-    void set_slippage_z(double v);
+    double get_SlippageX();
+    void set_SlippageX(double v);
+    double get_SlippageY();
+    void set_SlippageY(double v);
+    double get_SlippageZ();
+    void set_SlippageZ(double v);
 };
 
-class GDIfcSolarDevice : public GDIfcEnergyConversionDevice {
-    GDCLASS(GDIfcSolarDevice, GDIfcEnergyConversionDevice)
+class IfcSolarDevice : public IfcEnergyConversionDevice {
+    GDCLASS(IfcSolarDevice, IfcEnergyConversionDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSolarDeviceType : public GDIfcEnergyConversionDeviceType {
-    GDCLASS(GDIfcSolarDeviceType, GDIfcEnergyConversionDeviceType)
+class IfcSolarDeviceType : public IfcEnergyConversionDeviceType {
+    GDCLASS(IfcSolarDeviceType, IfcEnergyConversionDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSpace : public GDIfcSpatialStructureElement {
-    GDCLASS(GDIfcSpace, GDIfcSpatialStructureElement)
+class IfcSpace : public IfcSpatialStructureElement {
+    GDCLASS(IfcSpace, IfcSpatialStructureElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    double get_elevation_with_flooring();
-    void set_elevation_with_flooring(double v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    double get_ElevationWithFlooring();
+    void set_ElevationWithFlooring(double v);
 };
 
-class GDIfcSpaceHeater : public GDIfcFlowTerminal {
-    GDCLASS(GDIfcSpaceHeater, GDIfcFlowTerminal)
+class IfcSpaceHeater : public IfcFlowTerminal {
+    GDCLASS(IfcSpaceHeater, IfcFlowTerminal)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSpaceHeaterType : public GDIfcFlowTerminalType {
-    GDCLASS(GDIfcSpaceHeaterType, GDIfcFlowTerminalType)
+class IfcSpaceHeaterType : public IfcFlowTerminalType {
+    GDCLASS(IfcSpaceHeaterType, IfcFlowTerminalType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSpatialElementType : public GDIfcTypeProduct {
-    GDCLASS(GDIfcSpatialElementType, GDIfcTypeProduct)
+class IfcSpatialElementType : public IfcTypeProduct {
+    GDCLASS(IfcSpatialElementType, IfcTypeProduct)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_element_type();
-    void set_element_type(godot::String v);
+    godot::String get_ElementType();
+    void set_ElementType(godot::String v);
 };
 
-class GDIfcSpatialStructureElementType : public GDIfcSpatialElementType {
-    GDCLASS(GDIfcSpatialStructureElementType, GDIfcSpatialElementType)
+class IfcSpatialStructureElementType : public IfcSpatialElementType {
+    GDCLASS(IfcSpatialStructureElementType, IfcSpatialElementType)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcSpaceType : public GDIfcSpatialStructureElementType {
-    GDCLASS(GDIfcSpaceType, GDIfcSpatialStructureElementType)
+class IfcSpaceType : public IfcSpatialStructureElementType {
+    GDCLASS(IfcSpaceType, IfcSpatialStructureElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    godot::String get_long_name();
-    void set_long_name(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    godot::String get_LongName();
+    void set_LongName(godot::String v);
 };
 
-class GDIfcSpatialZone : public GDIfcSpatialElement {
-    GDCLASS(GDIfcSpatialZone, GDIfcSpatialElement)
+class IfcSpatialZone : public IfcSpatialElement {
+    GDCLASS(IfcSpatialZone, IfcSpatialElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSpatialZoneType : public GDIfcSpatialElementType {
-    GDCLASS(GDIfcSpatialZoneType, GDIfcSpatialElementType)
+class IfcSpatialZoneType : public IfcSpatialElementType {
+    GDCLASS(IfcSpatialZoneType, IfcSpatialElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    godot::String get_long_name();
-    void set_long_name(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    godot::String get_LongName();
+    void set_LongName(godot::String v);
 };
 
-class GDIfcSphere : public GDIfcCsgPrimitive3D {
-    GDCLASS(GDIfcSphere, GDIfcCsgPrimitive3D)
+class IfcSphere : public IfcCsgPrimitive3D {
+    GDCLASS(IfcSphere, IfcCsgPrimitive3D)
 protected:
     static void _bind_methods();
 public:
-    double get_radius();
-    void set_radius(double v);
+    double get_Radius();
+    void set_Radius(double v);
 };
 
-class GDIfcSphericalSurface : public GDIfcElementarySurface {
-    GDCLASS(GDIfcSphericalSurface, GDIfcElementarySurface)
+class IfcSphericalSurface : public IfcElementarySurface {
+    GDCLASS(IfcSphericalSurface, IfcElementarySurface)
 protected:
     static void _bind_methods();
 public:
-    double get_radius();
-    void set_radius(double v);
+    double get_Radius();
+    void set_Radius(double v);
 };
 
-class GDIfcStackTerminal : public GDIfcFlowTerminal {
-    GDCLASS(GDIfcStackTerminal, GDIfcFlowTerminal)
+class IfcStackTerminal : public IfcFlowTerminal {
+    GDCLASS(IfcStackTerminal, IfcFlowTerminal)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcStackTerminalType : public GDIfcFlowTerminalType {
-    GDCLASS(GDIfcStackTerminalType, GDIfcFlowTerminalType)
+class IfcStackTerminalType : public IfcFlowTerminalType {
+    GDCLASS(IfcStackTerminalType, IfcFlowTerminalType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcStair : public GDIfcBuiltElement {
-    GDCLASS(GDIfcStair, GDIfcBuiltElement)
+class IfcStair : public IfcBuiltElement {
+    GDCLASS(IfcStair, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcStairFlight : public GDIfcBuiltElement {
-    GDCLASS(GDIfcStairFlight, GDIfcBuiltElement)
+class IfcStairFlight : public IfcBuiltElement {
+    GDCLASS(IfcStairFlight, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    int64_t get_number_of_risers();
-    void set_number_of_risers(int64_t v);
-    int64_t get_number_of_treads();
-    void set_number_of_treads(int64_t v);
-    double get_riser_height();
-    void set_riser_height(double v);
-    double get_tread_length();
-    void set_tread_length(double v);
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    int64_t get_NumberOfRisers();
+    void set_NumberOfRisers(int64_t v);
+    int64_t get_NumberOfTreads();
+    void set_NumberOfTreads(int64_t v);
+    double get_RiserHeight();
+    void set_RiserHeight(double v);
+    double get_TreadLength();
+    void set_TreadLength(double v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcStairFlightType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcStairFlightType, GDIfcBuiltElementType)
+class IfcStairFlightType : public IfcBuiltElementType {
+    GDCLASS(IfcStairFlightType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcStairType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcStairType, GDIfcBuiltElementType)
+class IfcStairType : public IfcBuiltElementType {
+    GDCLASS(IfcStairType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcStructuralActivity : public GDIfcProduct {
-    GDCLASS(GDIfcStructuralActivity, GDIfcProduct)
+class IfcStructuralActivity : public IfcProduct {
+    GDCLASS(IfcStructuralActivity, IfcProduct)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_applied_load();
-    void set_applied_load(Ref<GDIFCEntityBase> v);
-    godot::String get_global_or_local();
-    void set_global_or_local(godot::String v);
+    Ref<GDIFCEntityBase> get_AppliedLoad();
+    void set_AppliedLoad(Ref<GDIFCEntityBase> v);
+    godot::String get_GlobalOrLocal();
+    void set_GlobalOrLocal(godot::String v);
 };
 
-class GDIfcStructuralAction : public GDIfcStructuralActivity {
-    GDCLASS(GDIfcStructuralAction, GDIfcStructuralActivity)
+class IfcStructuralAction : public IfcStructuralActivity {
+    GDCLASS(IfcStructuralAction, IfcStructuralActivity)
 protected:
     static void _bind_methods();
 public:
-    bool get_destabilizing_load();
-    void set_destabilizing_load(bool v);
+    bool get_DestabilizingLoad();
+    void set_DestabilizingLoad(bool v);
 };
 
-class GDIfcStructuralAnalysisModel : public GDIfcSystem {
-    GDCLASS(GDIfcStructuralAnalysisModel, GDIfcSystem)
+class IfcStructuralAnalysisModel : public IfcSystem {
+    GDCLASS(IfcStructuralAnalysisModel, IfcSystem)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    Ref<GDIFCEntityBase> get_orientation_of2_d_plane();
-    void set_orientation_of2_d_plane(Ref<GDIFCEntityBase> v);
-    godot::Array get_loaded_by();
-    void set_loaded_by(godot::Array v);
-    godot::Array get_has_results();
-    void set_has_results(godot::Array v);
-    Ref<GDIFCEntityBase> get_shared_placement();
-    void set_shared_placement(Ref<GDIFCEntityBase> v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    Ref<GDIFCEntityBase> get_OrientationOf2DPlane();
+    void set_OrientationOf2DPlane(Ref<GDIFCEntityBase> v);
+    godot::Array get_LoadedBy();
+    void set_LoadedBy(godot::Array v);
+    godot::Array get_HasResults();
+    void set_HasResults(godot::Array v);
+    Ref<GDIFCEntityBase> get_SharedPlacement();
+    void set_SharedPlacement(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcStructuralItem : public GDIfcProduct {
-    GDCLASS(GDIfcStructuralItem, GDIfcProduct)
+class IfcStructuralItem : public IfcProduct {
+    GDCLASS(IfcStructuralItem, IfcProduct)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcStructuralConnection : public GDIfcStructuralItem {
-    GDCLASS(GDIfcStructuralConnection, GDIfcStructuralItem)
+class IfcStructuralConnection : public IfcStructuralItem {
+    GDCLASS(IfcStructuralConnection, IfcStructuralItem)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_applied_condition();
-    void set_applied_condition(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_AppliedCondition();
+    void set_AppliedCondition(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcStructuralCurveAction : public GDIfcStructuralAction {
-    GDCLASS(GDIfcStructuralCurveAction, GDIfcStructuralAction)
+class IfcStructuralCurveAction : public IfcStructuralAction {
+    GDCLASS(IfcStructuralCurveAction, IfcStructuralAction)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_projected_or_true();
-    void set_projected_or_true(godot::String v);
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_ProjectedOrTrue();
+    void set_ProjectedOrTrue(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcStructuralCurveConnection : public GDIfcStructuralConnection {
-    GDCLASS(GDIfcStructuralCurveConnection, GDIfcStructuralConnection)
+class IfcStructuralCurveConnection : public IfcStructuralConnection {
+    GDCLASS(IfcStructuralCurveConnection, IfcStructuralConnection)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_axis_direction();
-    void set_axis_direction(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_AxisDirection();
+    void set_AxisDirection(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcStructuralMember : public GDIfcStructuralItem {
-    GDCLASS(GDIfcStructuralMember, GDIfcStructuralItem)
+class IfcStructuralMember : public IfcStructuralItem {
+    GDCLASS(IfcStructuralMember, IfcStructuralItem)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcStructuralCurveMember : public GDIfcStructuralMember {
-    GDCLASS(GDIfcStructuralCurveMember, GDIfcStructuralMember)
+class IfcStructuralCurveMember : public IfcStructuralMember {
+    GDCLASS(IfcStructuralCurveMember, IfcStructuralMember)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    Ref<GDIFCEntityBase> get_axis();
-    void set_axis(Ref<GDIFCEntityBase> v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    Ref<GDIFCEntityBase> get_Axis();
+    void set_Axis(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcStructuralCurveMemberVarying : public GDIfcStructuralCurveMember {
-    GDCLASS(GDIfcStructuralCurveMemberVarying, GDIfcStructuralCurveMember)
+class IfcStructuralCurveMemberVarying : public IfcStructuralCurveMember {
+    GDCLASS(IfcStructuralCurveMemberVarying, IfcStructuralCurveMember)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcStructuralReaction : public GDIfcStructuralActivity {
-    GDCLASS(GDIfcStructuralReaction, GDIfcStructuralActivity)
+class IfcStructuralReaction : public IfcStructuralActivity {
+    GDCLASS(IfcStructuralReaction, IfcStructuralActivity)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcStructuralCurveReaction : public GDIfcStructuralReaction {
-    GDCLASS(GDIfcStructuralCurveReaction, GDIfcStructuralReaction)
+class IfcStructuralCurveReaction : public IfcStructuralReaction {
+    GDCLASS(IfcStructuralCurveReaction, IfcStructuralReaction)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcStructuralLinearAction : public GDIfcStructuralCurveAction {
-    GDCLASS(GDIfcStructuralLinearAction, GDIfcStructuralCurveAction)
+class IfcStructuralLinearAction : public IfcStructuralCurveAction {
+    GDCLASS(IfcStructuralLinearAction, IfcStructuralCurveAction)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcStructuralLoad : public GDIFCEntityBase {
-    GDCLASS(GDIfcStructuralLoad, GDIFCEntityBase)
+class IfcStructuralLoad : public GDIFCEntityBase {
+    GDCLASS(IfcStructuralLoad, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
 };
 
-class GDIfcStructuralLoadGroup : public GDIfcGroup {
-    GDCLASS(GDIfcStructuralLoadGroup, GDIfcGroup)
+class IfcStructuralLoadGroup : public IfcGroup {
+    GDCLASS(IfcStructuralLoadGroup, IfcGroup)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    godot::String get_action_type();
-    void set_action_type(godot::String v);
-    godot::String get_action_source();
-    void set_action_source(godot::String v);
-    double get_coefficient();
-    void set_coefficient(double v);
-    godot::String get_purpose();
-    void set_purpose(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    godot::String get_ActionType();
+    void set_ActionType(godot::String v);
+    godot::String get_ActionSource();
+    void set_ActionSource(godot::String v);
+    double get_Coefficient();
+    void set_Coefficient(double v);
+    godot::String get_Purpose();
+    void set_Purpose(godot::String v);
 };
 
-class GDIfcStructuralLoadCase : public GDIfcStructuralLoadGroup {
-    GDCLASS(GDIfcStructuralLoadCase, GDIfcStructuralLoadGroup)
+class IfcStructuralLoadCase : public IfcStructuralLoadGroup {
+    GDCLASS(IfcStructuralLoadCase, IfcStructuralLoadGroup)
 protected:
     static void _bind_methods();
 public:
-    godot::PackedFloat64Array get_self_weight_coefficients();
-    void set_self_weight_coefficients(godot::PackedFloat64Array v);
+    godot::PackedFloat64Array get_SelfWeightCoefficients();
+    void set_SelfWeightCoefficients(godot::PackedFloat64Array v);
 };
 
-class GDIfcStructuralLoadConfiguration : public GDIfcStructuralLoad {
-    GDCLASS(GDIfcStructuralLoadConfiguration, GDIfcStructuralLoad)
+class IfcStructuralLoadConfiguration : public IfcStructuralLoad {
+    GDCLASS(IfcStructuralLoadConfiguration, IfcStructuralLoad)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_values();
-    void set_values(godot::Array v);
-    godot::Array get_locations();
+    godot::Array get_Values();
+    void set_Values(godot::Array v);
+    godot::Array get_Locations();
 };
 
-class GDIfcStructuralLoadOrResult : public GDIfcStructuralLoad {
-    GDCLASS(GDIfcStructuralLoadOrResult, GDIfcStructuralLoad)
+class IfcStructuralLoadOrResult : public IfcStructuralLoad {
+    GDCLASS(IfcStructuralLoadOrResult, IfcStructuralLoad)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcStructuralLoadStatic : public GDIfcStructuralLoadOrResult {
-    GDCLASS(GDIfcStructuralLoadStatic, GDIfcStructuralLoadOrResult)
+class IfcStructuralLoadStatic : public IfcStructuralLoadOrResult {
+    GDCLASS(IfcStructuralLoadStatic, IfcStructuralLoadOrResult)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcStructuralLoadLinearForce : public GDIfcStructuralLoadStatic {
-    GDCLASS(GDIfcStructuralLoadLinearForce, GDIfcStructuralLoadStatic)
+class IfcStructuralLoadLinearForce : public IfcStructuralLoadStatic {
+    GDCLASS(IfcStructuralLoadLinearForce, IfcStructuralLoadStatic)
 protected:
     static void _bind_methods();
 public:
-    double get_linear_force_x();
-    void set_linear_force_x(double v);
-    double get_linear_force_y();
-    void set_linear_force_y(double v);
-    double get_linear_force_z();
-    void set_linear_force_z(double v);
-    double get_linear_moment_x();
-    void set_linear_moment_x(double v);
-    double get_linear_moment_y();
-    void set_linear_moment_y(double v);
-    double get_linear_moment_z();
-    void set_linear_moment_z(double v);
+    double get_LinearForceX();
+    void set_LinearForceX(double v);
+    double get_LinearForceY();
+    void set_LinearForceY(double v);
+    double get_LinearForceZ();
+    void set_LinearForceZ(double v);
+    double get_LinearMomentX();
+    void set_LinearMomentX(double v);
+    double get_LinearMomentY();
+    void set_LinearMomentY(double v);
+    double get_LinearMomentZ();
+    void set_LinearMomentZ(double v);
 };
 
-class GDIfcStructuralLoadPlanarForce : public GDIfcStructuralLoadStatic {
-    GDCLASS(GDIfcStructuralLoadPlanarForce, GDIfcStructuralLoadStatic)
+class IfcStructuralLoadPlanarForce : public IfcStructuralLoadStatic {
+    GDCLASS(IfcStructuralLoadPlanarForce, IfcStructuralLoadStatic)
 protected:
     static void _bind_methods();
 public:
-    double get_planar_force_x();
-    void set_planar_force_x(double v);
-    double get_planar_force_y();
-    void set_planar_force_y(double v);
-    double get_planar_force_z();
-    void set_planar_force_z(double v);
+    double get_PlanarForceX();
+    void set_PlanarForceX(double v);
+    double get_PlanarForceY();
+    void set_PlanarForceY(double v);
+    double get_PlanarForceZ();
+    void set_PlanarForceZ(double v);
 };
 
-class GDIfcStructuralLoadSingleDisplacement : public GDIfcStructuralLoadStatic {
-    GDCLASS(GDIfcStructuralLoadSingleDisplacement, GDIfcStructuralLoadStatic)
+class IfcStructuralLoadSingleDisplacement : public IfcStructuralLoadStatic {
+    GDCLASS(IfcStructuralLoadSingleDisplacement, IfcStructuralLoadStatic)
 protected:
     static void _bind_methods();
 public:
-    double get_displacement_x();
-    void set_displacement_x(double v);
-    double get_displacement_y();
-    void set_displacement_y(double v);
-    double get_displacement_z();
-    void set_displacement_z(double v);
-    double get_rotational_displacement_rx();
-    void set_rotational_displacement_rx(double v);
-    double get_rotational_displacement_ry();
-    void set_rotational_displacement_ry(double v);
-    double get_rotational_displacement_rz();
-    void set_rotational_displacement_rz(double v);
+    double get_DisplacementX();
+    void set_DisplacementX(double v);
+    double get_DisplacementY();
+    void set_DisplacementY(double v);
+    double get_DisplacementZ();
+    void set_DisplacementZ(double v);
+    double get_RotationalDisplacementRX();
+    void set_RotationalDisplacementRX(double v);
+    double get_RotationalDisplacementRY();
+    void set_RotationalDisplacementRY(double v);
+    double get_RotationalDisplacementRZ();
+    void set_RotationalDisplacementRZ(double v);
 };
 
-class GDIfcStructuralLoadSingleDisplacementDistortion : public GDIfcStructuralLoadSingleDisplacement {
-    GDCLASS(GDIfcStructuralLoadSingleDisplacementDistortion, GDIfcStructuralLoadSingleDisplacement)
+class IfcStructuralLoadSingleDisplacementDistortion : public IfcStructuralLoadSingleDisplacement {
+    GDCLASS(IfcStructuralLoadSingleDisplacementDistortion, IfcStructuralLoadSingleDisplacement)
 protected:
     static void _bind_methods();
 public:
-    double get_distortion();
-    void set_distortion(double v);
+    double get_Distortion();
+    void set_Distortion(double v);
 };
 
-class GDIfcStructuralLoadSingleForce : public GDIfcStructuralLoadStatic {
-    GDCLASS(GDIfcStructuralLoadSingleForce, GDIfcStructuralLoadStatic)
+class IfcStructuralLoadSingleForce : public IfcStructuralLoadStatic {
+    GDCLASS(IfcStructuralLoadSingleForce, IfcStructuralLoadStatic)
 protected:
     static void _bind_methods();
 public:
-    double get_force_x();
-    void set_force_x(double v);
-    double get_force_y();
-    void set_force_y(double v);
-    double get_force_z();
-    void set_force_z(double v);
-    double get_moment_x();
-    void set_moment_x(double v);
-    double get_moment_y();
-    void set_moment_y(double v);
-    double get_moment_z();
-    void set_moment_z(double v);
+    double get_ForceX();
+    void set_ForceX(double v);
+    double get_ForceY();
+    void set_ForceY(double v);
+    double get_ForceZ();
+    void set_ForceZ(double v);
+    double get_MomentX();
+    void set_MomentX(double v);
+    double get_MomentY();
+    void set_MomentY(double v);
+    double get_MomentZ();
+    void set_MomentZ(double v);
 };
 
-class GDIfcStructuralLoadSingleForceWarping : public GDIfcStructuralLoadSingleForce {
-    GDCLASS(GDIfcStructuralLoadSingleForceWarping, GDIfcStructuralLoadSingleForce)
+class IfcStructuralLoadSingleForceWarping : public IfcStructuralLoadSingleForce {
+    GDCLASS(IfcStructuralLoadSingleForceWarping, IfcStructuralLoadSingleForce)
 protected:
     static void _bind_methods();
 public:
-    double get_warping_moment();
-    void set_warping_moment(double v);
+    double get_WarpingMoment();
+    void set_WarpingMoment(double v);
 };
 
-class GDIfcStructuralLoadTemperature : public GDIfcStructuralLoadStatic {
-    GDCLASS(GDIfcStructuralLoadTemperature, GDIfcStructuralLoadStatic)
+class IfcStructuralLoadTemperature : public IfcStructuralLoadStatic {
+    GDCLASS(IfcStructuralLoadTemperature, IfcStructuralLoadStatic)
 protected:
     static void _bind_methods();
 public:
-    double get_delta_t_constant();
-    void set_delta_t_constant(double v);
-    double get_delta_ty();
-    void set_delta_ty(double v);
-    double get_delta_tz();
-    void set_delta_tz(double v);
+    double get_DeltaTConstant();
+    void set_DeltaTConstant(double v);
+    double get_DeltaTY();
+    void set_DeltaTY(double v);
+    double get_DeltaTZ();
+    void set_DeltaTZ(double v);
 };
 
-class GDIfcStructuralSurfaceAction : public GDIfcStructuralAction {
-    GDCLASS(GDIfcStructuralSurfaceAction, GDIfcStructuralAction)
+class IfcStructuralSurfaceAction : public IfcStructuralAction {
+    GDCLASS(IfcStructuralSurfaceAction, IfcStructuralAction)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_projected_or_true();
-    void set_projected_or_true(godot::String v);
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_ProjectedOrTrue();
+    void set_ProjectedOrTrue(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcStructuralPlanarAction : public GDIfcStructuralSurfaceAction {
-    GDCLASS(GDIfcStructuralPlanarAction, GDIfcStructuralSurfaceAction)
+class IfcStructuralPlanarAction : public IfcStructuralSurfaceAction {
+    GDCLASS(IfcStructuralPlanarAction, IfcStructuralSurfaceAction)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcStructuralPointAction : public GDIfcStructuralAction {
-    GDCLASS(GDIfcStructuralPointAction, GDIfcStructuralAction)
+class IfcStructuralPointAction : public IfcStructuralAction {
+    GDCLASS(IfcStructuralPointAction, IfcStructuralAction)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcStructuralPointConnection : public GDIfcStructuralConnection {
-    GDCLASS(GDIfcStructuralPointConnection, GDIfcStructuralConnection)
+class IfcStructuralPointConnection : public IfcStructuralConnection {
+    GDCLASS(IfcStructuralPointConnection, IfcStructuralConnection)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_condition_coordinate_system();
-    void set_condition_coordinate_system(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_ConditionCoordinateSystem();
+    void set_ConditionCoordinateSystem(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcStructuralPointReaction : public GDIfcStructuralReaction {
-    GDCLASS(GDIfcStructuralPointReaction, GDIfcStructuralReaction)
+class IfcStructuralPointReaction : public IfcStructuralReaction {
+    GDCLASS(IfcStructuralPointReaction, IfcStructuralReaction)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcStructuralResultGroup : public GDIfcGroup {
-    GDCLASS(GDIfcStructuralResultGroup, GDIfcGroup)
+class IfcStructuralResultGroup : public IfcGroup {
+    GDCLASS(IfcStructuralResultGroup, IfcGroup)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_theory_type();
-    void set_theory_type(godot::String v);
-    Ref<GDIFCEntityBase> get_result_for_load_group();
-    void set_result_for_load_group(Ref<GDIFCEntityBase> v);
-    bool get_is_linear();
-    void set_is_linear(bool v);
+    godot::String get_TheoryType();
+    void set_TheoryType(godot::String v);
+    Ref<GDIFCEntityBase> get_ResultForLoadGroup();
+    void set_ResultForLoadGroup(Ref<GDIFCEntityBase> v);
+    bool get_IsLinear();
+    void set_IsLinear(bool v);
 };
 
-class GDIfcStructuralSurfaceConnection : public GDIfcStructuralConnection {
-    GDCLASS(GDIfcStructuralSurfaceConnection, GDIfcStructuralConnection)
+class IfcStructuralSurfaceConnection : public IfcStructuralConnection {
+    GDCLASS(IfcStructuralSurfaceConnection, IfcStructuralConnection)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcStructuralSurfaceMember : public GDIfcStructuralMember {
-    GDCLASS(GDIfcStructuralSurfaceMember, GDIfcStructuralMember)
+class IfcStructuralSurfaceMember : public IfcStructuralMember {
+    GDCLASS(IfcStructuralSurfaceMember, IfcStructuralMember)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    double get_thickness();
-    void set_thickness(double v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    double get_Thickness();
+    void set_Thickness(double v);
 };
 
-class GDIfcStructuralSurfaceMemberVarying : public GDIfcStructuralSurfaceMember {
-    GDCLASS(GDIfcStructuralSurfaceMemberVarying, GDIfcStructuralSurfaceMember)
+class IfcStructuralSurfaceMemberVarying : public IfcStructuralSurfaceMember {
+    GDCLASS(IfcStructuralSurfaceMemberVarying, IfcStructuralSurfaceMember)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcStructuralSurfaceReaction : public GDIfcStructuralReaction {
-    GDCLASS(GDIfcStructuralSurfaceReaction, GDIfcStructuralReaction)
+class IfcStructuralSurfaceReaction : public IfcStructuralReaction {
+    GDCLASS(IfcStructuralSurfaceReaction, IfcStructuralReaction)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcStyleModel : public GDIfcRepresentation {
-    GDCLASS(GDIfcStyleModel, GDIfcRepresentation)
+class IfcStyleModel : public IfcRepresentation {
+    GDCLASS(IfcStyleModel, IfcRepresentation)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcStyledItem : public GDIfcRepresentationItem {
-    GDCLASS(GDIfcStyledItem, GDIfcRepresentationItem)
+class IfcStyledItem : public IfcRepresentationItem {
+    GDCLASS(IfcStyledItem, IfcRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_item();
-    void set_item(Ref<GDIFCEntityBase> v);
-    godot::Array get_styles();
-    void set_styles(godot::Array v);
-    godot::String get_name();
-    void set_name(godot::String v);
+    Ref<GDIFCEntityBase> get_Item();
+    void set_Item(Ref<GDIFCEntityBase> v);
+    godot::Array get_Styles();
+    void set_Styles(godot::Array v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
 };
 
-class GDIfcStyledRepresentation : public GDIfcStyleModel {
-    GDCLASS(GDIfcStyledRepresentation, GDIfcStyleModel)
+class IfcStyledRepresentation : public IfcStyleModel {
+    GDCLASS(IfcStyledRepresentation, IfcStyleModel)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcSubContractResource : public GDIfcConstructionResource {
-    GDCLASS(GDIfcSubContractResource, GDIfcConstructionResource)
+class IfcSubContractResource : public IfcConstructionResource {
+    GDCLASS(IfcSubContractResource, IfcConstructionResource)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSubContractResourceType : public GDIfcConstructionResourceType {
-    GDCLASS(GDIfcSubContractResourceType, GDIfcConstructionResourceType)
+class IfcSubContractResourceType : public IfcConstructionResourceType {
+    GDCLASS(IfcSubContractResourceType, IfcConstructionResourceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSubedge : public GDIfcEdge {
-    GDCLASS(GDIfcSubedge, GDIfcEdge)
+class IfcSubedge : public IfcEdge {
+    GDCLASS(IfcSubedge, IfcEdge)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_parent_edge();
-    void set_parent_edge(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_ParentEdge();
+    void set_ParentEdge(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcSurfaceCurveSweptAreaSolid : public GDIfcDirectrixCurveSweptAreaSolid {
-    GDCLASS(GDIfcSurfaceCurveSweptAreaSolid, GDIfcDirectrixCurveSweptAreaSolid)
+class IfcSurfaceCurveSweptAreaSolid : public IfcDirectrixCurveSweptAreaSolid {
+    GDCLASS(IfcSurfaceCurveSweptAreaSolid, IfcDirectrixCurveSweptAreaSolid)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_reference_surface();
-    void set_reference_surface(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_ReferenceSurface();
+    void set_ReferenceSurface(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcSurfaceFeature : public GDIfcFeatureElement {
-    GDCLASS(GDIfcSurfaceFeature, GDIfcFeatureElement)
+class IfcSurfaceFeature : public IfcFeatureElement {
+    GDCLASS(IfcSurfaceFeature, IfcFeatureElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSweptSurface : public GDIfcSurface {
-    GDCLASS(GDIfcSweptSurface, GDIfcSurface)
+class IfcSweptSurface : public IfcSurface {
+    GDCLASS(IfcSweptSurface, IfcSurface)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_swept_curve();
-    void set_swept_curve(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_position();
-    void set_position(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_SweptCurve();
+    void set_SweptCurve(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Position();
+    void set_Position(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcSurfaceOfLinearExtrusion : public GDIfcSweptSurface {
-    GDCLASS(GDIfcSurfaceOfLinearExtrusion, GDIfcSweptSurface)
+class IfcSurfaceOfLinearExtrusion : public IfcSweptSurface {
+    GDCLASS(IfcSurfaceOfLinearExtrusion, IfcSweptSurface)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_extruded_direction();
-    void set_extruded_direction(Ref<GDIFCEntityBase> v);
-    double get_depth();
-    void set_depth(double v);
+    Ref<GDIFCEntityBase> get_ExtrudedDirection();
+    void set_ExtrudedDirection(Ref<GDIFCEntityBase> v);
+    double get_Depth();
+    void set_Depth(double v);
 };
 
-class GDIfcSurfaceOfRevolution : public GDIfcSweptSurface {
-    GDCLASS(GDIfcSurfaceOfRevolution, GDIfcSweptSurface)
+class IfcSurfaceOfRevolution : public IfcSweptSurface {
+    GDCLASS(IfcSurfaceOfRevolution, IfcSweptSurface)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_axis_position();
-    void set_axis_position(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_AxisPosition();
+    void set_AxisPosition(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcSurfaceReinforcementArea : public GDIfcStructuralLoadOrResult {
-    GDCLASS(GDIfcSurfaceReinforcementArea, GDIfcStructuralLoadOrResult)
+class IfcSurfaceReinforcementArea : public IfcStructuralLoadOrResult {
+    GDCLASS(IfcSurfaceReinforcementArea, IfcStructuralLoadOrResult)
 protected:
     static void _bind_methods();
 public:
-    godot::PackedFloat64Array get_surface_reinforcement1();
-    void set_surface_reinforcement1(godot::PackedFloat64Array v);
-    godot::PackedFloat64Array get_surface_reinforcement2();
-    void set_surface_reinforcement2(godot::PackedFloat64Array v);
-    double get_shear_reinforcement();
-    void set_shear_reinforcement(double v);
+    godot::PackedFloat64Array get_SurfaceReinforcement1();
+    void set_SurfaceReinforcement1(godot::PackedFloat64Array v);
+    godot::PackedFloat64Array get_SurfaceReinforcement2();
+    void set_SurfaceReinforcement2(godot::PackedFloat64Array v);
+    double get_ShearReinforcement();
+    void set_ShearReinforcement(double v);
 };
 
-class GDIfcSurfaceStyle : public GDIfcPresentationStyle {
-    GDCLASS(GDIfcSurfaceStyle, GDIfcPresentationStyle)
+class IfcSurfaceStyle : public IfcPresentationStyle {
+    GDCLASS(IfcSurfaceStyle, IfcPresentationStyle)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_side();
-    void set_side(godot::String v);
-    godot::Array get_styles();
-    void set_styles(godot::Array v);
+    godot::String get_Side();
+    void set_Side(godot::String v);
+    godot::Array get_Styles();
+    void set_Styles(godot::Array v);
 };
 
-class GDIfcSurfaceStyleLighting : public GDIfcPresentationItem {
-    GDCLASS(GDIfcSurfaceStyleLighting, GDIfcPresentationItem)
+class IfcSurfaceStyleLighting : public IfcPresentationItem {
+    GDCLASS(IfcSurfaceStyleLighting, IfcPresentationItem)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_diffuse_transmission_colour();
-    void set_diffuse_transmission_colour(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_diffuse_reflection_colour();
-    void set_diffuse_reflection_colour(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_transmission_colour();
-    void set_transmission_colour(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_reflectance_colour();
-    void set_reflectance_colour(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_DiffuseTransmissionColour();
+    void set_DiffuseTransmissionColour(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_DiffuseReflectionColour();
+    void set_DiffuseReflectionColour(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TransmissionColour();
+    void set_TransmissionColour(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_ReflectanceColour();
+    void set_ReflectanceColour(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcSurfaceStyleRefraction : public GDIfcPresentationItem {
-    GDCLASS(GDIfcSurfaceStyleRefraction, GDIfcPresentationItem)
+class IfcSurfaceStyleRefraction : public IfcPresentationItem {
+    GDCLASS(IfcSurfaceStyleRefraction, IfcPresentationItem)
 protected:
     static void _bind_methods();
 public:
-    double get_refraction_index();
-    void set_refraction_index(double v);
-    double get_dispersion_factor();
-    void set_dispersion_factor(double v);
+    double get_RefractionIndex();
+    void set_RefractionIndex(double v);
+    double get_DispersionFactor();
+    void set_DispersionFactor(double v);
 };
 
-class GDIfcSurfaceStyleShading : public GDIfcPresentationItem {
-    GDCLASS(GDIfcSurfaceStyleShading, GDIfcPresentationItem)
+class IfcSurfaceStyleShading : public IfcPresentationItem {
+    GDCLASS(IfcSurfaceStyleShading, IfcPresentationItem)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_surface_colour();
-    void set_surface_colour(Ref<GDIFCEntityBase> v);
-    double get_transparency();
-    void set_transparency(double v);
+    Ref<GDIFCEntityBase> get_SurfaceColour();
+    void set_SurfaceColour(Ref<GDIFCEntityBase> v);
+    double get_Transparency();
+    void set_Transparency(double v);
 };
 
-class GDIfcSurfaceStyleRendering : public GDIfcSurfaceStyleShading {
-    GDCLASS(GDIfcSurfaceStyleRendering, GDIfcSurfaceStyleShading)
+class IfcSurfaceStyleRendering : public IfcSurfaceStyleShading {
+    GDCLASS(IfcSurfaceStyleRendering, IfcSurfaceStyleShading)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_diffuse_colour();
-    void set_diffuse_colour(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_transmission_colour();
-    void set_transmission_colour(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_diffuse_transmission_colour();
-    void set_diffuse_transmission_colour(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_reflection_colour();
-    void set_reflection_colour(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_specular_colour();
-    void set_specular_colour(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_specular_highlight();
-    void set_specular_highlight(Ref<GDIFCEntityBase> v);
-    godot::String get_reflectance_method();
-    void set_reflectance_method(godot::String v);
+    Ref<GDIFCEntityBase> get_DiffuseColour();
+    void set_DiffuseColour(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TransmissionColour();
+    void set_TransmissionColour(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_DiffuseTransmissionColour();
+    void set_DiffuseTransmissionColour(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_ReflectionColour();
+    void set_ReflectionColour(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_SpecularColour();
+    void set_SpecularColour(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_SpecularHighlight();
+    void set_SpecularHighlight(Ref<GDIFCEntityBase> v);
+    godot::String get_ReflectanceMethod();
+    void set_ReflectanceMethod(godot::String v);
 };
 
-class GDIfcSurfaceStyleWithTextures : public GDIfcPresentationItem {
-    GDCLASS(GDIfcSurfaceStyleWithTextures, GDIfcPresentationItem)
+class IfcSurfaceStyleWithTextures : public IfcPresentationItem {
+    GDCLASS(IfcSurfaceStyleWithTextures, IfcPresentationItem)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_textures();
-    void set_textures(godot::Array v);
+    godot::Array get_Textures();
+    void set_Textures(godot::Array v);
 };
 
-class GDIfcSweptDiskSolid : public GDIfcSolidModel {
-    GDCLASS(GDIfcSweptDiskSolid, GDIfcSolidModel)
+class IfcSweptDiskSolid : public IfcSolidModel {
+    GDCLASS(IfcSweptDiskSolid, IfcSolidModel)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_directrix();
-    void set_directrix(Ref<GDIFCEntityBase> v);
-    double get_radius();
-    void set_radius(double v);
-    double get_inner_radius();
-    void set_inner_radius(double v);
-    double get_start_param();
-    void set_start_param(double v);
-    double get_end_param();
-    void set_end_param(double v);
+    Ref<GDIFCEntityBase> get_Directrix();
+    void set_Directrix(Ref<GDIFCEntityBase> v);
+    double get_Radius();
+    void set_Radius(double v);
+    double get_InnerRadius();
+    void set_InnerRadius(double v);
+    double get_StartParam();
+    void set_StartParam(double v);
+    double get_EndParam();
+    void set_EndParam(double v);
 };
 
-class GDIfcSweptDiskSolidPolygonal : public GDIfcSweptDiskSolid {
-    GDCLASS(GDIfcSweptDiskSolidPolygonal, GDIfcSweptDiskSolid)
+class IfcSweptDiskSolidPolygonal : public IfcSweptDiskSolid {
+    GDCLASS(IfcSweptDiskSolidPolygonal, IfcSweptDiskSolid)
 protected:
     static void _bind_methods();
 public:
-    double get_fillet_radius();
-    void set_fillet_radius(double v);
+    double get_FilletRadius();
+    void set_FilletRadius(double v);
 };
 
-class GDIfcSwitchingDevice : public GDIfcFlowController {
-    GDCLASS(GDIfcSwitchingDevice, GDIfcFlowController)
+class IfcSwitchingDevice : public IfcFlowController {
+    GDCLASS(IfcSwitchingDevice, IfcFlowController)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSwitchingDeviceType : public GDIfcFlowControllerType {
-    GDCLASS(GDIfcSwitchingDeviceType, GDIfcFlowControllerType)
+class IfcSwitchingDeviceType : public IfcFlowControllerType {
+    GDCLASS(IfcSwitchingDeviceType, IfcFlowControllerType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSystemFurnitureElement : public GDIfcFurnishingElement {
-    GDCLASS(GDIfcSystemFurnitureElement, GDIfcFurnishingElement)
+class IfcSystemFurnitureElement : public IfcFurnishingElement {
+    GDCLASS(IfcSystemFurnitureElement, IfcFurnishingElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcSystemFurnitureElementType : public GDIfcFurnishingElementType {
-    GDCLASS(GDIfcSystemFurnitureElementType, GDIfcFurnishingElementType)
+class IfcSystemFurnitureElementType : public IfcFurnishingElementType {
+    GDCLASS(IfcSystemFurnitureElementType, IfcFurnishingElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcTShapeProfileDef : public GDIfcParameterizedProfileDef {
-    GDCLASS(GDIfcTShapeProfileDef, GDIfcParameterizedProfileDef)
+class IfcTShapeProfileDef : public IfcParameterizedProfileDef {
+    GDCLASS(IfcTShapeProfileDef, IfcParameterizedProfileDef)
 protected:
     static void _bind_methods();
 public:
-    double get_depth();
-    void set_depth(double v);
-    double get_flange_width();
-    void set_flange_width(double v);
-    double get_web_thickness();
-    void set_web_thickness(double v);
-    double get_flange_thickness();
-    void set_flange_thickness(double v);
-    double get_fillet_radius();
-    void set_fillet_radius(double v);
-    double get_flange_edge_radius();
-    void set_flange_edge_radius(double v);
-    double get_web_edge_radius();
-    void set_web_edge_radius(double v);
-    double get_web_slope();
-    void set_web_slope(double v);
-    double get_flange_slope();
-    void set_flange_slope(double v);
+    double get_Depth();
+    void set_Depth(double v);
+    double get_FlangeWidth();
+    void set_FlangeWidth(double v);
+    double get_WebThickness();
+    void set_WebThickness(double v);
+    double get_FlangeThickness();
+    void set_FlangeThickness(double v);
+    double get_FilletRadius();
+    void set_FilletRadius(double v);
+    double get_FlangeEdgeRadius();
+    void set_FlangeEdgeRadius(double v);
+    double get_WebEdgeRadius();
+    void set_WebEdgeRadius(double v);
+    double get_WebSlope();
+    void set_WebSlope(double v);
+    double get_FlangeSlope();
+    void set_FlangeSlope(double v);
 };
 
-class GDIfcTable : public GDIFCEntityBase {
-    GDCLASS(GDIfcTable, GDIFCEntityBase)
+class IfcTable : public GDIFCEntityBase {
+    GDCLASS(IfcTable, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::Array get_rows();
-    void set_rows(godot::Array v);
-    godot::Array get_columns();
-    void set_columns(godot::Array v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::Array get_Rows();
+    void set_Rows(godot::Array v);
+    godot::Array get_Columns();
+    void set_Columns(godot::Array v);
 };
 
-class GDIfcTableColumn : public GDIFCEntityBase {
-    GDCLASS(GDIfcTableColumn, GDIFCEntityBase)
+class IfcTableColumn : public GDIFCEntityBase {
+    GDCLASS(IfcTableColumn, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_identifier();
-    void set_identifier(godot::String v);
-    godot::String get_name();
-    void set_name(godot::String v);
-    godot::String get_description();
-    void set_description(godot::String v);
-    Ref<GDIFCEntityBase> get_unit();
-    void set_unit(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_reference_path();
-    void set_reference_path(Ref<GDIFCEntityBase> v);
+    godot::String get_Identifier();
+    void set_Identifier(godot::String v);
+    godot::String get_Name();
+    void set_Name(godot::String v);
+    godot::String get_Description();
+    void set_Description(godot::String v);
+    Ref<GDIFCEntityBase> get_Unit();
+    void set_Unit(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_ReferencePath();
+    void set_ReferencePath(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcTableRow : public GDIFCEntityBase {
-    GDCLASS(GDIfcTableRow, GDIFCEntityBase)
+class IfcTableRow : public GDIFCEntityBase {
+    GDCLASS(IfcTableRow, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_row_cells();
-    void set_row_cells(godot::Array v);
-    bool get_is_heading();
-    void set_is_heading(bool v);
+    godot::Array get_RowCells();
+    void set_RowCells(godot::Array v);
+    bool get_IsHeading();
+    void set_IsHeading(bool v);
 };
 
-class GDIfcTank : public GDIfcFlowStorageDevice {
-    GDCLASS(GDIfcTank, GDIfcFlowStorageDevice)
+class IfcTank : public IfcFlowStorageDevice {
+    GDCLASS(IfcTank, IfcFlowStorageDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcTankType : public GDIfcFlowStorageDeviceType {
-    GDCLASS(GDIfcTankType, GDIfcFlowStorageDeviceType)
+class IfcTankType : public IfcFlowStorageDeviceType {
+    GDCLASS(IfcTankType, IfcFlowStorageDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcTask : public GDIfcProcess {
-    GDCLASS(GDIfcTask, GDIfcProcess)
+class IfcTask : public IfcProcess {
+    GDCLASS(IfcTask, IfcProcess)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_status();
-    void set_status(godot::String v);
-    godot::String get_work_method();
-    void set_work_method(godot::String v);
-    bool get_is_milestone();
-    void set_is_milestone(bool v);
-    int64_t get_priority();
-    void set_priority(int64_t v);
-    Ref<GDIFCEntityBase> get_task_time();
-    void set_task_time(Ref<GDIFCEntityBase> v);
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_Status();
+    void set_Status(godot::String v);
+    godot::String get_WorkMethod();
+    void set_WorkMethod(godot::String v);
+    bool get_IsMilestone();
+    void set_IsMilestone(bool v);
+    int64_t get_Priority();
+    void set_Priority(int64_t v);
+    Ref<GDIFCEntityBase> get_TaskTime();
+    void set_TaskTime(Ref<GDIFCEntityBase> v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcTaskTime : public GDIfcSchedulingTime {
-    GDCLASS(GDIfcTaskTime, GDIfcSchedulingTime)
+class IfcTaskTime : public IfcSchedulingTime {
+    GDCLASS(IfcTaskTime, IfcSchedulingTime)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_duration_type();
-    void set_duration_type(godot::String v);
-    godot::String get_schedule_duration();
-    void set_schedule_duration(godot::String v);
-    godot::String get_schedule_start();
-    void set_schedule_start(godot::String v);
-    godot::String get_schedule_finish();
-    void set_schedule_finish(godot::String v);
-    godot::String get_early_start();
-    void set_early_start(godot::String v);
-    godot::String get_early_finish();
-    void set_early_finish(godot::String v);
-    godot::String get_late_start();
-    void set_late_start(godot::String v);
-    godot::String get_late_finish();
-    void set_late_finish(godot::String v);
-    godot::String get_free_float();
-    void set_free_float(godot::String v);
-    godot::String get_total_float();
-    void set_total_float(godot::String v);
-    bool get_is_critical();
-    void set_is_critical(bool v);
-    godot::String get_status_time();
-    void set_status_time(godot::String v);
-    godot::String get_actual_duration();
-    void set_actual_duration(godot::String v);
-    godot::String get_actual_start();
-    void set_actual_start(godot::String v);
-    godot::String get_actual_finish();
-    void set_actual_finish(godot::String v);
-    godot::String get_remaining_time();
-    void set_remaining_time(godot::String v);
-    double get_completion();
-    void set_completion(double v);
+    godot::String get_DurationType();
+    void set_DurationType(godot::String v);
+    godot::String get_ScheduleDuration();
+    void set_ScheduleDuration(godot::String v);
+    godot::String get_ScheduleStart();
+    void set_ScheduleStart(godot::String v);
+    godot::String get_ScheduleFinish();
+    void set_ScheduleFinish(godot::String v);
+    godot::String get_EarlyStart();
+    void set_EarlyStart(godot::String v);
+    godot::String get_EarlyFinish();
+    void set_EarlyFinish(godot::String v);
+    godot::String get_LateStart();
+    void set_LateStart(godot::String v);
+    godot::String get_LateFinish();
+    void set_LateFinish(godot::String v);
+    godot::String get_FreeFloat();
+    void set_FreeFloat(godot::String v);
+    godot::String get_TotalFloat();
+    void set_TotalFloat(godot::String v);
+    bool get_IsCritical();
+    void set_IsCritical(bool v);
+    godot::String get_StatusTime();
+    void set_StatusTime(godot::String v);
+    godot::String get_ActualDuration();
+    void set_ActualDuration(godot::String v);
+    godot::String get_ActualStart();
+    void set_ActualStart(godot::String v);
+    godot::String get_ActualFinish();
+    void set_ActualFinish(godot::String v);
+    godot::String get_RemainingTime();
+    void set_RemainingTime(godot::String v);
+    double get_Completion();
+    void set_Completion(double v);
 };
 
-class GDIfcTaskTimeRecurring : public GDIfcTaskTime {
-    GDCLASS(GDIfcTaskTimeRecurring, GDIfcTaskTime)
+class IfcTaskTimeRecurring : public IfcTaskTime {
+    GDCLASS(IfcTaskTimeRecurring, IfcTaskTime)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_recurrence();
-    void set_recurrence(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Recurrence();
+    void set_Recurrence(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcTaskType : public GDIfcTypeProcess {
-    GDCLASS(GDIfcTaskType, GDIfcTypeProcess)
+class IfcTaskType : public IfcTypeProcess {
+    GDCLASS(IfcTaskType, IfcTypeProcess)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    godot::String get_work_method();
-    void set_work_method(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    godot::String get_WorkMethod();
+    void set_WorkMethod(godot::String v);
 };
 
-class GDIfcTelecomAddress : public GDIfcAddress {
-    GDCLASS(GDIfcTelecomAddress, GDIfcAddress)
+class IfcTelecomAddress : public IfcAddress {
+    GDCLASS(IfcTelecomAddress, IfcAddress)
 protected:
     static void _bind_methods();
 public:
-    godot::PackedStringArray get_telephone_numbers();
-    void set_telephone_numbers(godot::PackedStringArray v);
-    godot::PackedStringArray get_facsimile_numbers();
-    void set_facsimile_numbers(godot::PackedStringArray v);
-    godot::String get_pager_number();
-    void set_pager_number(godot::String v);
-    godot::PackedStringArray get_electronic_mail_addresses();
-    void set_electronic_mail_addresses(godot::PackedStringArray v);
-    godot::String get_www_home_page_url();
-    void set_www_home_page_url(godot::String v);
-    godot::PackedStringArray get_messaging_i_ds();
-    void set_messaging_i_ds(godot::PackedStringArray v);
+    godot::PackedStringArray get_TelephoneNumbers();
+    void set_TelephoneNumbers(godot::PackedStringArray v);
+    godot::PackedStringArray get_FacsimileNumbers();
+    void set_FacsimileNumbers(godot::PackedStringArray v);
+    godot::String get_PagerNumber();
+    void set_PagerNumber(godot::String v);
+    godot::PackedStringArray get_ElectronicMailAddresses();
+    void set_ElectronicMailAddresses(godot::PackedStringArray v);
+    godot::String get_WWWHomePageURL();
+    void set_WWWHomePageURL(godot::String v);
+    godot::PackedStringArray get_MessagingIDs();
+    void set_MessagingIDs(godot::PackedStringArray v);
 };
 
-class GDIfcTendon : public GDIfcReinforcingElement {
-    GDCLASS(GDIfcTendon, GDIfcReinforcingElement)
+class IfcTendon : public IfcReinforcingElement {
+    GDCLASS(IfcTendon, IfcReinforcingElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    double get_nominal_diameter();
-    void set_nominal_diameter(double v);
-    double get_cross_section_area();
-    void set_cross_section_area(double v);
-    double get_tension_force();
-    void set_tension_force(double v);
-    double get_pre_stress();
-    void set_pre_stress(double v);
-    double get_friction_coefficient();
-    void set_friction_coefficient(double v);
-    double get_anchorage_slip();
-    void set_anchorage_slip(double v);
-    double get_min_curvature_radius();
-    void set_min_curvature_radius(double v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    double get_NominalDiameter();
+    void set_NominalDiameter(double v);
+    double get_CrossSectionArea();
+    void set_CrossSectionArea(double v);
+    double get_TensionForce();
+    void set_TensionForce(double v);
+    double get_PreStress();
+    void set_PreStress(double v);
+    double get_FrictionCoefficient();
+    void set_FrictionCoefficient(double v);
+    double get_AnchorageSlip();
+    void set_AnchorageSlip(double v);
+    double get_MinCurvatureRadius();
+    void set_MinCurvatureRadius(double v);
 };
 
-class GDIfcTendonAnchor : public GDIfcReinforcingElement {
-    GDCLASS(GDIfcTendonAnchor, GDIfcReinforcingElement)
+class IfcTendonAnchor : public IfcReinforcingElement {
+    GDCLASS(IfcTendonAnchor, IfcReinforcingElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcTendonAnchorType : public GDIfcReinforcingElementType {
-    GDCLASS(GDIfcTendonAnchorType, GDIfcReinforcingElementType)
+class IfcTendonAnchorType : public IfcReinforcingElementType {
+    GDCLASS(IfcTendonAnchorType, IfcReinforcingElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcTendonConduit : public GDIfcReinforcingElement {
-    GDCLASS(GDIfcTendonConduit, GDIfcReinforcingElement)
+class IfcTendonConduit : public IfcReinforcingElement {
+    GDCLASS(IfcTendonConduit, IfcReinforcingElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcTendonConduitType : public GDIfcReinforcingElementType {
-    GDCLASS(GDIfcTendonConduitType, GDIfcReinforcingElementType)
+class IfcTendonConduitType : public IfcReinforcingElementType {
+    GDCLASS(IfcTendonConduitType, IfcReinforcingElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcTendonType : public GDIfcReinforcingElementType {
-    GDCLASS(GDIfcTendonType, GDIfcReinforcingElementType)
+class IfcTendonType : public IfcReinforcingElementType {
+    GDCLASS(IfcTendonType, IfcReinforcingElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    double get_nominal_diameter();
-    void set_nominal_diameter(double v);
-    double get_cross_section_area();
-    void set_cross_section_area(double v);
-    double get_sheath_diameter();
-    void set_sheath_diameter(double v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    double get_NominalDiameter();
+    void set_NominalDiameter(double v);
+    double get_CrossSectionArea();
+    void set_CrossSectionArea(double v);
+    double get_SheathDiameter();
+    void set_SheathDiameter(double v);
 };
 
-class GDIfcTextLiteral : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcTextLiteral, GDIfcGeometricRepresentationItem)
+class IfcTextLiteral : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcTextLiteral, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_literal();
-    void set_literal(godot::String v);
-    Ref<GDIFCEntityBase> get_placement();
-    void set_placement(Ref<GDIFCEntityBase> v);
-    godot::String get_path();
-    void set_path(godot::String v);
+    godot::String get_Literal();
+    void set_Literal(godot::String v);
+    Ref<GDIFCEntityBase> get_Placement();
+    void set_Placement(Ref<GDIFCEntityBase> v);
+    godot::String get_Path();
+    void set_Path(godot::String v);
 };
 
-class GDIfcTextLiteralWithExtent : public GDIfcTextLiteral {
-    GDCLASS(GDIfcTextLiteralWithExtent, GDIfcTextLiteral)
+class IfcTextLiteralWithExtent : public IfcTextLiteral {
+    GDCLASS(IfcTextLiteralWithExtent, IfcTextLiteral)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_extent();
-    void set_extent(Ref<GDIFCEntityBase> v);
-    godot::String get_box_alignment();
-    void set_box_alignment(godot::String v);
+    Ref<GDIFCEntityBase> get_Extent();
+    void set_Extent(Ref<GDIFCEntityBase> v);
+    godot::String get_BoxAlignment();
+    void set_BoxAlignment(godot::String v);
 };
 
-class GDIfcTextStyle : public GDIfcPresentationStyle {
-    GDCLASS(GDIfcTextStyle, GDIfcPresentationStyle)
+class IfcTextStyle : public IfcPresentationStyle {
+    GDCLASS(IfcTextStyle, IfcPresentationStyle)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_text_character_appearance();
-    void set_text_character_appearance(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_text_style();
-    void set_text_style(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_text_font_style();
-    void set_text_font_style(Ref<GDIFCEntityBase> v);
-    bool get_model_or_draughting();
-    void set_model_or_draughting(bool v);
+    Ref<GDIFCEntityBase> get_TextCharacterAppearance();
+    void set_TextCharacterAppearance(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TextStyle();
+    void set_TextStyle(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TextFontStyle();
+    void set_TextFontStyle(Ref<GDIFCEntityBase> v);
+    bool get_ModelOrDraughting();
+    void set_ModelOrDraughting(bool v);
 };
 
-class GDIfcTextStyleFontModel : public GDIfcPreDefinedTextFont {
-    GDCLASS(GDIfcTextStyleFontModel, GDIfcPreDefinedTextFont)
+class IfcTextStyleFontModel : public IfcPreDefinedTextFont {
+    GDCLASS(IfcTextStyleFontModel, IfcPreDefinedTextFont)
 protected:
     static void _bind_methods();
 public:
-    godot::PackedStringArray get_font_family();
-    void set_font_family(godot::PackedStringArray v);
-    godot::String get_font_style();
-    void set_font_style(godot::String v);
-    godot::String get_font_variant();
-    void set_font_variant(godot::String v);
-    godot::String get_font_weight();
-    void set_font_weight(godot::String v);
-    Ref<GDIFCEntityBase> get_font_size();
-    void set_font_size(Ref<GDIFCEntityBase> v);
+    godot::PackedStringArray get_FontFamily();
+    void set_FontFamily(godot::PackedStringArray v);
+    godot::String get_FontStyle();
+    void set_FontStyle(godot::String v);
+    godot::String get_FontVariant();
+    void set_FontVariant(godot::String v);
+    godot::String get_FontWeight();
+    void set_FontWeight(godot::String v);
+    Ref<GDIFCEntityBase> get_FontSize();
+    void set_FontSize(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcTextStyleForDefinedFont : public GDIfcPresentationItem {
-    GDCLASS(GDIfcTextStyleForDefinedFont, GDIfcPresentationItem)
+class IfcTextStyleForDefinedFont : public IfcPresentationItem {
+    GDCLASS(IfcTextStyleForDefinedFont, IfcPresentationItem)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_colour();
-    void set_colour(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_background_colour();
-    void set_background_colour(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_Colour();
+    void set_Colour(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_BackgroundColour();
+    void set_BackgroundColour(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcTextStyleTextModel : public GDIfcPresentationItem {
-    GDCLASS(GDIfcTextStyleTextModel, GDIfcPresentationItem)
+class IfcTextStyleTextModel : public IfcPresentationItem {
+    GDCLASS(IfcTextStyleTextModel, IfcPresentationItem)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_text_indent();
-    void set_text_indent(Ref<GDIFCEntityBase> v);
-    godot::String get_text_align();
-    void set_text_align(godot::String v);
-    godot::String get_text_decoration();
-    void set_text_decoration(godot::String v);
-    Ref<GDIFCEntityBase> get_letter_spacing();
-    void set_letter_spacing(Ref<GDIFCEntityBase> v);
-    Ref<GDIFCEntityBase> get_word_spacing();
-    void set_word_spacing(Ref<GDIFCEntityBase> v);
-    godot::String get_text_transform();
-    void set_text_transform(godot::String v);
-    Ref<GDIFCEntityBase> get_line_height();
-    void set_line_height(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_TextIndent();
+    void set_TextIndent(Ref<GDIFCEntityBase> v);
+    godot::String get_TextAlign();
+    void set_TextAlign(godot::String v);
+    godot::String get_TextDecoration();
+    void set_TextDecoration(godot::String v);
+    Ref<GDIFCEntityBase> get_LetterSpacing();
+    void set_LetterSpacing(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_WordSpacing();
+    void set_WordSpacing(Ref<GDIFCEntityBase> v);
+    godot::String get_TextTransform();
+    void set_TextTransform(godot::String v);
+    Ref<GDIFCEntityBase> get_LineHeight();
+    void set_LineHeight(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcTextureCoordinateGenerator : public GDIfcTextureCoordinate {
-    GDCLASS(GDIfcTextureCoordinateGenerator, GDIfcTextureCoordinate)
+class IfcTextureCoordinateGenerator : public IfcTextureCoordinate {
+    GDCLASS(IfcTextureCoordinateGenerator, IfcTextureCoordinate)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_mode();
-    void set_mode(godot::String v);
-    godot::PackedFloat64Array get_parameter();
-    void set_parameter(godot::PackedFloat64Array v);
+    godot::String get_Mode();
+    void set_Mode(godot::String v);
+    godot::PackedFloat64Array get_Parameter();
+    void set_Parameter(godot::PackedFloat64Array v);
 };
 
-class GDIfcTextureCoordinateIndices : public GDIFCEntityBase {
-    GDCLASS(GDIfcTextureCoordinateIndices, GDIFCEntityBase)
+class IfcTextureCoordinateIndices : public GDIFCEntityBase {
+    GDCLASS(IfcTextureCoordinateIndices, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::PackedInt64Array get_tex_coord_index();
-    void set_tex_coord_index(godot::PackedInt64Array v);
-    Ref<GDIFCEntityBase> get_tex_coords_of();
-    void set_tex_coords_of(Ref<GDIFCEntityBase> v);
+    godot::PackedInt64Array get_TexCoordIndex();
+    void set_TexCoordIndex(godot::PackedInt64Array v);
+    Ref<GDIFCEntityBase> get_TexCoordsOf();
+    void set_TexCoordsOf(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcTextureCoordinateIndicesWithVoids : public GDIfcTextureCoordinateIndices {
-    GDCLASS(GDIfcTextureCoordinateIndicesWithVoids, GDIfcTextureCoordinateIndices)
+class IfcTextureCoordinateIndicesWithVoids : public IfcTextureCoordinateIndices {
+    GDCLASS(IfcTextureCoordinateIndicesWithVoids, IfcTextureCoordinateIndices)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_inner_tex_coord_indices();
+    godot::Array get_InnerTexCoordIndices();
 };
 
-class GDIfcTextureMap : public GDIfcTextureCoordinate {
-    GDCLASS(GDIfcTextureMap, GDIfcTextureCoordinate)
+class IfcTextureMap : public IfcTextureCoordinate {
+    GDCLASS(IfcTextureMap, IfcTextureCoordinate)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_vertices();
-    void set_vertices(godot::Array v);
-    Ref<GDIFCEntityBase> get_mapped_to();
-    void set_mapped_to(Ref<GDIFCEntityBase> v);
+    godot::Array get_Vertices();
+    void set_Vertices(godot::Array v);
+    Ref<GDIFCEntityBase> get_MappedTo();
+    void set_MappedTo(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcTextureVertex : public GDIfcPresentationItem {
-    GDCLASS(GDIfcTextureVertex, GDIfcPresentationItem)
+class IfcTextureVertex : public IfcPresentationItem {
+    GDCLASS(IfcTextureVertex, IfcPresentationItem)
 protected:
     static void _bind_methods();
 public:
-    godot::PackedFloat64Array get_coordinates();
-    void set_coordinates(godot::PackedFloat64Array v);
+    godot::PackedFloat64Array get_Coordinates();
+    void set_Coordinates(godot::PackedFloat64Array v);
 };
 
-class GDIfcTextureVertexList : public GDIfcPresentationItem {
-    GDCLASS(GDIfcTextureVertexList, GDIfcPresentationItem)
+class IfcTextureVertexList : public IfcPresentationItem {
+    GDCLASS(IfcTextureVertexList, IfcPresentationItem)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_tex_coords_list();
+    godot::Array get_TexCoordsList();
 };
 
-class GDIfcThirdOrderPolynomialSpiral : public GDIfcSpiral {
-    GDCLASS(GDIfcThirdOrderPolynomialSpiral, GDIfcSpiral)
+class IfcThirdOrderPolynomialSpiral : public IfcSpiral {
+    GDCLASS(IfcThirdOrderPolynomialSpiral, IfcSpiral)
 protected:
     static void _bind_methods();
 public:
-    double get_cubic_term();
-    void set_cubic_term(double v);
-    double get_quadratic_term();
-    void set_quadratic_term(double v);
-    double get_linear_term();
-    void set_linear_term(double v);
-    double get_constant_term();
-    void set_constant_term(double v);
+    double get_CubicTerm();
+    void set_CubicTerm(double v);
+    double get_QuadraticTerm();
+    void set_QuadraticTerm(double v);
+    double get_LinearTerm();
+    void set_LinearTerm(double v);
+    double get_ConstantTerm();
+    void set_ConstantTerm(double v);
 };
 
-class GDIfcTimePeriod : public GDIFCEntityBase {
-    GDCLASS(GDIfcTimePeriod, GDIFCEntityBase)
+class IfcTimePeriod : public GDIFCEntityBase {
+    GDCLASS(IfcTimePeriod, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_start_time();
-    void set_start_time(godot::String v);
-    godot::String get_end_time();
-    void set_end_time(godot::String v);
+    godot::String get_StartTime();
+    void set_StartTime(godot::String v);
+    godot::String get_EndTime();
+    void set_EndTime(godot::String v);
 };
 
-class GDIfcTimeSeriesValue : public GDIFCEntityBase {
-    GDCLASS(GDIfcTimeSeriesValue, GDIFCEntityBase)
+class IfcTimeSeriesValue : public GDIFCEntityBase {
+    GDCLASS(IfcTimeSeriesValue, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_list_values();
-    void set_list_values(godot::Array v);
+    godot::Array get_ListValues();
+    void set_ListValues(godot::Array v);
 };
 
-class GDIfcTopologyRepresentation : public GDIfcShapeModel {
-    GDCLASS(GDIfcTopologyRepresentation, GDIfcShapeModel)
+class IfcTopologyRepresentation : public IfcShapeModel {
+    GDCLASS(IfcTopologyRepresentation, IfcShapeModel)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcToroidalSurface : public GDIfcElementarySurface {
-    GDCLASS(GDIfcToroidalSurface, GDIfcElementarySurface)
+class IfcToroidalSurface : public IfcElementarySurface {
+    GDCLASS(IfcToroidalSurface, IfcElementarySurface)
 protected:
     static void _bind_methods();
 public:
-    double get_major_radius();
-    void set_major_radius(double v);
-    double get_minor_radius();
-    void set_minor_radius(double v);
+    double get_MajorRadius();
+    void set_MajorRadius(double v);
+    double get_MinorRadius();
+    void set_MinorRadius(double v);
 };
 
-class GDIfcTrackElement : public GDIfcBuiltElement {
-    GDCLASS(GDIfcTrackElement, GDIfcBuiltElement)
+class IfcTrackElement : public IfcBuiltElement {
+    GDCLASS(IfcTrackElement, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcTrackElementType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcTrackElementType, GDIfcBuiltElementType)
+class IfcTrackElementType : public IfcBuiltElementType {
+    GDCLASS(IfcTrackElementType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcTransformer : public GDIfcEnergyConversionDevice {
-    GDCLASS(GDIfcTransformer, GDIfcEnergyConversionDevice)
+class IfcTransformer : public IfcEnergyConversionDevice {
+    GDCLASS(IfcTransformer, IfcEnergyConversionDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcTransformerType : public GDIfcEnergyConversionDeviceType {
-    GDCLASS(GDIfcTransformerType, GDIfcEnergyConversionDeviceType)
+class IfcTransformerType : public IfcEnergyConversionDeviceType {
+    GDCLASS(IfcTransformerType, IfcEnergyConversionDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcTransportationDevice : public GDIfcElement {
-    GDCLASS(GDIfcTransportationDevice, GDIfcElement)
+class IfcTransportationDevice : public IfcElement {
+    GDCLASS(IfcTransportationDevice, IfcElement)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcTransportElement : public GDIfcTransportationDevice {
-    GDCLASS(GDIfcTransportElement, GDIfcTransportationDevice)
+class IfcTransportElement : public IfcTransportationDevice {
+    GDCLASS(IfcTransportElement, IfcTransportationDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcTransportationDeviceType : public GDIfcElementType {
-    GDCLASS(GDIfcTransportationDeviceType, GDIfcElementType)
+class IfcTransportationDeviceType : public IfcElementType {
+    GDCLASS(IfcTransportationDeviceType, IfcElementType)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcTransportElementType : public GDIfcTransportationDeviceType {
-    GDCLASS(GDIfcTransportElementType, GDIfcTransportationDeviceType)
+class IfcTransportElementType : public IfcTransportationDeviceType {
+    GDCLASS(IfcTransportElementType, IfcTransportationDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcTrapeziumProfileDef : public GDIfcParameterizedProfileDef {
-    GDCLASS(GDIfcTrapeziumProfileDef, GDIfcParameterizedProfileDef)
+class IfcTrapeziumProfileDef : public IfcParameterizedProfileDef {
+    GDCLASS(IfcTrapeziumProfileDef, IfcParameterizedProfileDef)
 protected:
     static void _bind_methods();
 public:
-    double get_bottom_x_dim();
-    void set_bottom_x_dim(double v);
-    double get_top_x_dim();
-    void set_top_x_dim(double v);
-    double get_y_dim();
-    void set_y_dim(double v);
-    double get_top_x_offset();
-    void set_top_x_offset(double v);
+    double get_BottomXDim();
+    void set_BottomXDim(double v);
+    double get_TopXDim();
+    void set_TopXDim(double v);
+    double get_YDim();
+    void set_YDim(double v);
+    double get_TopXOffset();
+    void set_TopXOffset(double v);
 };
 
-class GDIfcTriangulatedFaceSet : public GDIfcTessellatedFaceSet {
-    GDCLASS(GDIfcTriangulatedFaceSet, GDIfcTessellatedFaceSet)
+class IfcTriangulatedFaceSet : public IfcTessellatedFaceSet {
+    GDCLASS(IfcTriangulatedFaceSet, IfcTessellatedFaceSet)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_normals();
-    bool get_closed();
-    void set_closed(bool v);
-    godot::Array get_coord_index();
-    godot::PackedInt64Array get_pn_index();
-    void set_pn_index(godot::PackedInt64Array v);
+    godot::Array get_Normals();
+    bool get_Closed();
+    void set_Closed(bool v);
+    godot::Array get_CoordIndex();
+    godot::PackedInt64Array get_PnIndex();
+    void set_PnIndex(godot::PackedInt64Array v);
 };
 
-class GDIfcTriangulatedIrregularNetwork : public GDIfcTriangulatedFaceSet {
-    GDCLASS(GDIfcTriangulatedIrregularNetwork, GDIfcTriangulatedFaceSet)
+class IfcTriangulatedIrregularNetwork : public IfcTriangulatedFaceSet {
+    GDCLASS(IfcTriangulatedIrregularNetwork, IfcTriangulatedFaceSet)
 protected:
     static void _bind_methods();
 public:
-    godot::PackedInt64Array get_flags();
-    void set_flags(godot::PackedInt64Array v);
+    godot::PackedInt64Array get_Flags();
+    void set_Flags(godot::PackedInt64Array v);
 };
 
-class GDIfcTrimmedCurve : public GDIfcBoundedCurve {
-    GDCLASS(GDIfcTrimmedCurve, GDIfcBoundedCurve)
+class IfcTrimmedCurve : public IfcBoundedCurve {
+    GDCLASS(IfcTrimmedCurve, IfcBoundedCurve)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_basis_curve();
-    void set_basis_curve(Ref<GDIFCEntityBase> v);
-    godot::Array get_trim1();
-    void set_trim1(godot::Array v);
-    godot::Array get_trim2();
-    void set_trim2(godot::Array v);
-    bool get_sense_agreement();
-    void set_sense_agreement(bool v);
-    godot::String get_master_representation();
-    void set_master_representation(godot::String v);
+    Ref<GDIFCEntityBase> get_BasisCurve();
+    void set_BasisCurve(Ref<GDIFCEntityBase> v);
+    godot::Array get_Trim1();
+    void set_Trim1(godot::Array v);
+    godot::Array get_Trim2();
+    void set_Trim2(godot::Array v);
+    bool get_SenseAgreement();
+    void set_SenseAgreement(bool v);
+    godot::String get_MasterRepresentation();
+    void set_MasterRepresentation(godot::String v);
 };
 
-class GDIfcTubeBundle : public GDIfcEnergyConversionDevice {
-    GDCLASS(GDIfcTubeBundle, GDIfcEnergyConversionDevice)
+class IfcTubeBundle : public IfcEnergyConversionDevice {
+    GDCLASS(IfcTubeBundle, IfcEnergyConversionDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcTubeBundleType : public GDIfcEnergyConversionDeviceType {
-    GDCLASS(GDIfcTubeBundleType, GDIfcEnergyConversionDeviceType)
+class IfcTubeBundleType : public IfcEnergyConversionDeviceType {
+    GDCLASS(IfcTubeBundleType, IfcEnergyConversionDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcUShapeProfileDef : public GDIfcParameterizedProfileDef {
-    GDCLASS(GDIfcUShapeProfileDef, GDIfcParameterizedProfileDef)
+class IfcUShapeProfileDef : public IfcParameterizedProfileDef {
+    GDCLASS(IfcUShapeProfileDef, IfcParameterizedProfileDef)
 protected:
     static void _bind_methods();
 public:
-    double get_depth();
-    void set_depth(double v);
-    double get_flange_width();
-    void set_flange_width(double v);
-    double get_web_thickness();
-    void set_web_thickness(double v);
-    double get_flange_thickness();
-    void set_flange_thickness(double v);
-    double get_fillet_radius();
-    void set_fillet_radius(double v);
-    double get_edge_radius();
-    void set_edge_radius(double v);
-    double get_flange_slope();
-    void set_flange_slope(double v);
+    double get_Depth();
+    void set_Depth(double v);
+    double get_FlangeWidth();
+    void set_FlangeWidth(double v);
+    double get_WebThickness();
+    void set_WebThickness(double v);
+    double get_FlangeThickness();
+    void set_FlangeThickness(double v);
+    double get_FilletRadius();
+    void set_FilletRadius(double v);
+    double get_EdgeRadius();
+    void set_EdgeRadius(double v);
+    double get_FlangeSlope();
+    void set_FlangeSlope(double v);
 };
 
-class GDIfcUnitAssignment : public GDIFCEntityBase {
-    GDCLASS(GDIfcUnitAssignment, GDIFCEntityBase)
+class IfcUnitAssignment : public GDIFCEntityBase {
+    GDCLASS(IfcUnitAssignment, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_units();
-    void set_units(godot::Array v);
+    godot::Array get_Units();
+    void set_Units(godot::Array v);
 };
 
-class GDIfcUnitaryControlElement : public GDIfcDistributionControlElement {
-    GDCLASS(GDIfcUnitaryControlElement, GDIfcDistributionControlElement)
+class IfcUnitaryControlElement : public IfcDistributionControlElement {
+    GDCLASS(IfcUnitaryControlElement, IfcDistributionControlElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcUnitaryControlElementType : public GDIfcDistributionControlElementType {
-    GDCLASS(GDIfcUnitaryControlElementType, GDIfcDistributionControlElementType)
+class IfcUnitaryControlElementType : public IfcDistributionControlElementType {
+    GDCLASS(IfcUnitaryControlElementType, IfcDistributionControlElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcUnitaryEquipment : public GDIfcEnergyConversionDevice {
-    GDCLASS(GDIfcUnitaryEquipment, GDIfcEnergyConversionDevice)
+class IfcUnitaryEquipment : public IfcEnergyConversionDevice {
+    GDCLASS(IfcUnitaryEquipment, IfcEnergyConversionDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcUnitaryEquipmentType : public GDIfcEnergyConversionDeviceType {
-    GDCLASS(GDIfcUnitaryEquipmentType, GDIfcEnergyConversionDeviceType)
+class IfcUnitaryEquipmentType : public IfcEnergyConversionDeviceType {
+    GDCLASS(IfcUnitaryEquipmentType, IfcEnergyConversionDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcValve : public GDIfcFlowController {
-    GDCLASS(GDIfcValve, GDIfcFlowController)
+class IfcValve : public IfcFlowController {
+    GDCLASS(IfcValve, IfcFlowController)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcValveType : public GDIfcFlowControllerType {
-    GDCLASS(GDIfcValveType, GDIfcFlowControllerType)
+class IfcValveType : public IfcFlowControllerType {
+    GDCLASS(IfcValveType, IfcFlowControllerType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcVector : public GDIfcGeometricRepresentationItem {
-    GDCLASS(GDIfcVector, GDIfcGeometricRepresentationItem)
+class IfcVector : public IfcGeometricRepresentationItem {
+    GDCLASS(IfcVector, IfcGeometricRepresentationItem)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_orientation();
-    void set_orientation(Ref<GDIFCEntityBase> v);
-    double get_magnitude();
-    void set_magnitude(double v);
+    Ref<GDIFCEntityBase> get_Orientation();
+    void set_Orientation(Ref<GDIFCEntityBase> v);
+    double get_Magnitude();
+    void set_Magnitude(double v);
 };
 
-class GDIfcVehicle : public GDIfcTransportationDevice {
-    GDCLASS(GDIfcVehicle, GDIfcTransportationDevice)
+class IfcVehicle : public IfcTransportationDevice {
+    GDCLASS(IfcVehicle, IfcTransportationDevice)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcVehicleType : public GDIfcTransportationDeviceType {
-    GDCLASS(GDIfcVehicleType, GDIfcTransportationDeviceType)
+class IfcVehicleType : public IfcTransportationDeviceType {
+    GDCLASS(IfcVehicleType, IfcTransportationDeviceType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcVertex : public GDIfcTopologicalRepresentationItem {
-    GDCLASS(GDIfcVertex, GDIfcTopologicalRepresentationItem)
+class IfcVertex : public IfcTopologicalRepresentationItem {
+    GDCLASS(IfcVertex, IfcTopologicalRepresentationItem)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcVertexLoop : public GDIfcLoop {
-    GDCLASS(GDIfcVertexLoop, GDIfcLoop)
+class IfcVertexLoop : public IfcLoop {
+    GDCLASS(IfcVertexLoop, IfcLoop)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_loop_vertex();
-    void set_loop_vertex(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_LoopVertex();
+    void set_LoopVertex(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcVertexPoint : public GDIfcVertex {
-    GDCLASS(GDIfcVertexPoint, GDIfcVertex)
+class IfcVertexPoint : public IfcVertex {
+    GDCLASS(IfcVertexPoint, IfcVertex)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_vertex_geometry();
-    void set_vertex_geometry(Ref<GDIFCEntityBase> v);
+    Ref<GDIFCEntityBase> get_VertexGeometry();
+    void set_VertexGeometry(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcVibrationDamper : public GDIfcElementComponent {
-    GDCLASS(GDIfcVibrationDamper, GDIfcElementComponent)
+class IfcVibrationDamper : public IfcElementComponent {
+    GDCLASS(IfcVibrationDamper, IfcElementComponent)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcVibrationDamperType : public GDIfcElementComponentType {
-    GDCLASS(GDIfcVibrationDamperType, GDIfcElementComponentType)
+class IfcVibrationDamperType : public IfcElementComponentType {
+    GDCLASS(IfcVibrationDamperType, IfcElementComponentType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcVibrationIsolator : public GDIfcElementComponent {
-    GDCLASS(GDIfcVibrationIsolator, GDIfcElementComponent)
+class IfcVibrationIsolator : public IfcElementComponent {
+    GDCLASS(IfcVibrationIsolator, IfcElementComponent)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcVibrationIsolatorType : public GDIfcElementComponentType {
-    GDCLASS(GDIfcVibrationIsolatorType, GDIfcElementComponentType)
+class IfcVibrationIsolatorType : public IfcElementComponentType {
+    GDCLASS(IfcVibrationIsolatorType, IfcElementComponentType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcVirtualElement : public GDIfcElement {
-    GDCLASS(GDIfcVirtualElement, GDIfcElement)
+class IfcVirtualElement : public IfcElement {
+    GDCLASS(IfcVirtualElement, IfcElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcVirtualGridIntersection : public GDIFCEntityBase {
-    GDCLASS(GDIfcVirtualGridIntersection, GDIFCEntityBase)
+class IfcVirtualGridIntersection : public GDIFCEntityBase {
+    GDCLASS(IfcVirtualGridIntersection, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_intersecting_axes();
-    void set_intersecting_axes(godot::Array v);
-    godot::PackedFloat64Array get_offset_distances();
-    void set_offset_distances(godot::PackedFloat64Array v);
+    godot::Array get_IntersectingAxes();
+    void set_IntersectingAxes(godot::Array v);
+    godot::PackedFloat64Array get_OffsetDistances();
+    void set_OffsetDistances(godot::PackedFloat64Array v);
 };
 
-class GDIfcVoidingFeature : public GDIfcFeatureElementSubtraction {
-    GDCLASS(GDIfcVoidingFeature, GDIfcFeatureElementSubtraction)
+class IfcVoidingFeature : public IfcFeatureElementSubtraction {
+    GDCLASS(IfcVoidingFeature, IfcFeatureElementSubtraction)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcWall : public GDIfcBuiltElement {
-    GDCLASS(GDIfcWall, GDIfcBuiltElement)
+class IfcWall : public IfcBuiltElement {
+    GDCLASS(IfcWall, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcWallStandardCase : public GDIfcWall {
-    GDCLASS(GDIfcWallStandardCase, GDIfcWall)
+class IfcWallStandardCase : public IfcWall {
+    GDCLASS(IfcWallStandardCase, IfcWall)
 protected:
     static void _bind_methods();
 };
 
-class GDIfcWallType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcWallType, GDIfcBuiltElementType)
+class IfcWallType : public IfcBuiltElementType {
+    GDCLASS(IfcWallType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcWasteTerminal : public GDIfcFlowTerminal {
-    GDCLASS(GDIfcWasteTerminal, GDIfcFlowTerminal)
+class IfcWasteTerminal : public IfcFlowTerminal {
+    GDCLASS(IfcWasteTerminal, IfcFlowTerminal)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcWasteTerminalType : public GDIfcFlowTerminalType {
-    GDCLASS(GDIfcWasteTerminalType, GDIfcFlowTerminalType)
+class IfcWasteTerminalType : public IfcFlowTerminalType {
+    GDCLASS(IfcWasteTerminalType, IfcFlowTerminalType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcWellKnownText : public GDIFCEntityBase {
-    GDCLASS(GDIfcWellKnownText, GDIFCEntityBase)
+class IfcWellKnownText : public GDIFCEntityBase {
+    GDCLASS(IfcWellKnownText, GDIFCEntityBase)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_well_known_text();
-    void set_well_known_text(godot::String v);
-    Ref<GDIFCEntityBase> get_coordinate_reference_system();
-    void set_coordinate_reference_system(Ref<GDIFCEntityBase> v);
+    godot::String get_WellKnownText();
+    void set_WellKnownText(godot::String v);
+    Ref<GDIFCEntityBase> get_CoordinateReferenceSystem();
+    void set_CoordinateReferenceSystem(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcWindow : public GDIfcBuiltElement {
-    GDCLASS(GDIfcWindow, GDIfcBuiltElement)
+class IfcWindow : public IfcBuiltElement {
+    GDCLASS(IfcWindow, IfcBuiltElement)
 protected:
     static void _bind_methods();
 public:
-    double get_overall_height();
-    void set_overall_height(double v);
-    double get_overall_width();
-    void set_overall_width(double v);
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    godot::String get_partitioning_type();
-    void set_partitioning_type(godot::String v);
-    godot::String get_user_defined_partitioning_type();
-    void set_user_defined_partitioning_type(godot::String v);
+    double get_OverallHeight();
+    void set_OverallHeight(double v);
+    double get_OverallWidth();
+    void set_OverallWidth(double v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    godot::String get_PartitioningType();
+    void set_PartitioningType(godot::String v);
+    godot::String get_UserDefinedPartitioningType();
+    void set_UserDefinedPartitioningType(godot::String v);
 };
 
-class GDIfcWindowLiningProperties : public GDIfcPreDefinedPropertySet {
-    GDCLASS(GDIfcWindowLiningProperties, GDIfcPreDefinedPropertySet)
+class IfcWindowLiningProperties : public IfcPreDefinedPropertySet {
+    GDCLASS(IfcWindowLiningProperties, IfcPreDefinedPropertySet)
 protected:
     static void _bind_methods();
 public:
-    double get_lining_depth();
-    void set_lining_depth(double v);
-    double get_lining_thickness();
-    void set_lining_thickness(double v);
-    double get_transom_thickness();
-    void set_transom_thickness(double v);
-    double get_mullion_thickness();
-    void set_mullion_thickness(double v);
-    double get_first_transom_offset();
-    void set_first_transom_offset(double v);
-    double get_second_transom_offset();
-    void set_second_transom_offset(double v);
-    double get_first_mullion_offset();
-    void set_first_mullion_offset(double v);
-    double get_second_mullion_offset();
-    void set_second_mullion_offset(double v);
-    Ref<GDIFCEntityBase> get_shape_aspect_style();
-    void set_shape_aspect_style(Ref<GDIFCEntityBase> v);
-    double get_lining_offset();
-    void set_lining_offset(double v);
-    double get_lining_to_panel_offset_x();
-    void set_lining_to_panel_offset_x(double v);
-    double get_lining_to_panel_offset_y();
-    void set_lining_to_panel_offset_y(double v);
+    double get_LiningDepth();
+    void set_LiningDepth(double v);
+    double get_LiningThickness();
+    void set_LiningThickness(double v);
+    double get_TransomThickness();
+    void set_TransomThickness(double v);
+    double get_MullionThickness();
+    void set_MullionThickness(double v);
+    double get_FirstTransomOffset();
+    void set_FirstTransomOffset(double v);
+    double get_SecondTransomOffset();
+    void set_SecondTransomOffset(double v);
+    double get_FirstMullionOffset();
+    void set_FirstMullionOffset(double v);
+    double get_SecondMullionOffset();
+    void set_SecondMullionOffset(double v);
+    Ref<GDIFCEntityBase> get_ShapeAspectStyle();
+    void set_ShapeAspectStyle(Ref<GDIFCEntityBase> v);
+    double get_LiningOffset();
+    void set_LiningOffset(double v);
+    double get_LiningToPanelOffsetX();
+    void set_LiningToPanelOffsetX(double v);
+    double get_LiningToPanelOffsetY();
+    void set_LiningToPanelOffsetY(double v);
 };
 
-class GDIfcWindowPanelProperties : public GDIfcPreDefinedPropertySet {
-    GDCLASS(GDIfcWindowPanelProperties, GDIfcPreDefinedPropertySet)
+class IfcWindowPanelProperties : public IfcPreDefinedPropertySet {
+    GDCLASS(IfcWindowPanelProperties, IfcPreDefinedPropertySet)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_operation_type();
-    void set_operation_type(godot::String v);
-    godot::String get_panel_position();
-    void set_panel_position(godot::String v);
-    double get_frame_depth();
-    void set_frame_depth(double v);
-    double get_frame_thickness();
-    void set_frame_thickness(double v);
-    Ref<GDIFCEntityBase> get_shape_aspect_style();
-    void set_shape_aspect_style(Ref<GDIFCEntityBase> v);
+    godot::String get_OperationType();
+    void set_OperationType(godot::String v);
+    godot::String get_PanelPosition();
+    void set_PanelPosition(godot::String v);
+    double get_FrameDepth();
+    void set_FrameDepth(double v);
+    double get_FrameThickness();
+    void set_FrameThickness(double v);
+    Ref<GDIFCEntityBase> get_ShapeAspectStyle();
+    void set_ShapeAspectStyle(Ref<GDIFCEntityBase> v);
 };
 
-class GDIfcWindowType : public GDIfcBuiltElementType {
-    GDCLASS(GDIfcWindowType, GDIfcBuiltElementType)
+class IfcWindowType : public IfcBuiltElementType {
+    GDCLASS(IfcWindowType, IfcBuiltElementType)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
-    godot::String get_partitioning_type();
-    void set_partitioning_type(godot::String v);
-    bool get_parameter_takes_precedence();
-    void set_parameter_takes_precedence(bool v);
-    godot::String get_user_defined_partitioning_type();
-    void set_user_defined_partitioning_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
+    godot::String get_PartitioningType();
+    void set_PartitioningType(godot::String v);
+    bool get_ParameterTakesPrecedence();
+    void set_ParameterTakesPrecedence(bool v);
+    godot::String get_UserDefinedPartitioningType();
+    void set_UserDefinedPartitioningType(godot::String v);
 };
 
-class GDIfcWorkCalendar : public GDIfcControl {
-    GDCLASS(GDIfcWorkCalendar, GDIfcControl)
+class IfcWorkCalendar : public IfcControl {
+    GDCLASS(IfcWorkCalendar, IfcControl)
 protected:
     static void _bind_methods();
 public:
-    godot::Array get_working_times();
-    void set_working_times(godot::Array v);
-    godot::Array get_exception_times();
-    void set_exception_times(godot::Array v);
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::Array get_WorkingTimes();
+    void set_WorkingTimes(godot::Array v);
+    godot::Array get_ExceptionTimes();
+    void set_ExceptionTimes(godot::Array v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcWorkControl : public GDIfcControl {
-    GDCLASS(GDIfcWorkControl, GDIfcControl)
+class IfcWorkControl : public IfcControl {
+    GDCLASS(IfcWorkControl, IfcControl)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_creation_date();
-    void set_creation_date(godot::String v);
-    godot::Array get_creators();
-    void set_creators(godot::Array v);
-    godot::String get_purpose();
-    void set_purpose(godot::String v);
-    godot::String get_duration();
-    void set_duration(godot::String v);
-    godot::String get_total_float();
-    void set_total_float(godot::String v);
-    godot::String get_start_time();
-    void set_start_time(godot::String v);
-    godot::String get_finish_time();
-    void set_finish_time(godot::String v);
+    godot::String get_CreationDate();
+    void set_CreationDate(godot::String v);
+    godot::Array get_Creators();
+    void set_Creators(godot::Array v);
+    godot::String get_Purpose();
+    void set_Purpose(godot::String v);
+    godot::String get_Duration();
+    void set_Duration(godot::String v);
+    godot::String get_TotalFloat();
+    void set_TotalFloat(godot::String v);
+    godot::String get_StartTime();
+    void set_StartTime(godot::String v);
+    godot::String get_FinishTime();
+    void set_FinishTime(godot::String v);
 };
 
-class GDIfcWorkPlan : public GDIfcWorkControl {
-    GDCLASS(GDIfcWorkPlan, GDIfcWorkControl)
+class IfcWorkPlan : public IfcWorkControl {
+    GDCLASS(IfcWorkPlan, IfcWorkControl)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcWorkSchedule : public GDIfcWorkControl {
-    GDCLASS(GDIfcWorkSchedule, GDIfcWorkControl)
+class IfcWorkSchedule : public IfcWorkControl {
+    GDCLASS(IfcWorkSchedule, IfcWorkControl)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_predefined_type();
-    void set_predefined_type(godot::String v);
+    godot::String get_PredefinedType();
+    void set_PredefinedType(godot::String v);
 };
 
-class GDIfcWorkTime : public GDIfcSchedulingTime {
-    GDCLASS(GDIfcWorkTime, GDIfcSchedulingTime)
+class IfcWorkTime : public IfcSchedulingTime {
+    GDCLASS(IfcWorkTime, IfcSchedulingTime)
 protected:
     static void _bind_methods();
 public:
-    Ref<GDIFCEntityBase> get_recurrence_pattern();
-    void set_recurrence_pattern(Ref<GDIFCEntityBase> v);
-    godot::String get_start_date();
-    void set_start_date(godot::String v);
-    godot::String get_finish_date();
-    void set_finish_date(godot::String v);
+    Ref<GDIFCEntityBase> get_RecurrencePattern();
+    void set_RecurrencePattern(Ref<GDIFCEntityBase> v);
+    godot::String get_StartDate();
+    void set_StartDate(godot::String v);
+    godot::String get_FinishDate();
+    void set_FinishDate(godot::String v);
 };
 
-class GDIfcZShapeProfileDef : public GDIfcParameterizedProfileDef {
-    GDCLASS(GDIfcZShapeProfileDef, GDIfcParameterizedProfileDef)
+class IfcZShapeProfileDef : public IfcParameterizedProfileDef {
+    GDCLASS(IfcZShapeProfileDef, IfcParameterizedProfileDef)
 protected:
     static void _bind_methods();
 public:
-    double get_depth();
-    void set_depth(double v);
-    double get_flange_width();
-    void set_flange_width(double v);
-    double get_web_thickness();
-    void set_web_thickness(double v);
-    double get_flange_thickness();
-    void set_flange_thickness(double v);
-    double get_fillet_radius();
-    void set_fillet_radius(double v);
-    double get_edge_radius();
-    void set_edge_radius(double v);
+    double get_Depth();
+    void set_Depth(double v);
+    double get_FlangeWidth();
+    void set_FlangeWidth(double v);
+    double get_WebThickness();
+    void set_WebThickness(double v);
+    double get_FlangeThickness();
+    void set_FlangeThickness(double v);
+    double get_FilletRadius();
+    void set_FilletRadius(double v);
+    double get_EdgeRadius();
+    void set_EdgeRadius(double v);
 };
 
-class GDIfcZone : public GDIfcSystem {
-    GDCLASS(GDIfcZone, GDIfcSystem)
+class IfcZone : public IfcSystem {
+    GDCLASS(IfcZone, IfcSystem)
 protected:
     static void _bind_methods();
 public:
-    godot::String get_long_name();
-    void set_long_name(godot::String v);
+    godot::String get_LongName();
+    void set_LongName(godot::String v);
 };

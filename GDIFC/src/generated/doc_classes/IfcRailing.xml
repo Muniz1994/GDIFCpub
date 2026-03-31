@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRailing" inherits="IfcBuiltElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition of IAI : The railing is a frame assembly adjacent to human circulation spaces and at some space boundaries where it is used in lieu of walls or to compliment walls. Designed to aid humans, either as an optional physical support, or to prevent injury by falling. HISTORY New Entity in IFC Release 2.0 Type Use Definition IfcRailing defines the occuurence of any railing, common information 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic types for a railing that are specified in an enumeration. There may be a property set given for the predefined types. NOTE: The use of the predefined type directly at the occurrence object level of IfcRailing is only permitted, if no type object IfcRailingType is assigned. IFC2x PLATFORM CHANGE: The attribute has been changed into an OPTIONAL attribute.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

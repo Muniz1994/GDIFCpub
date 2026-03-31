@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcExtrudedAreaSolid" inherits="IfcSweptAreaSolid"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The IfcExtrudedAreaSolid is defined by sweeping a cross section provided by a profile definition. The direction of the extrusion is given by the ExtrudedDirection attribute and the length of the extrusion is given by the Depth attribute. If the planar area has inner boundaries (holes defined), then those holes shall be swept into holes of the solid. The extruded direction can be any direction whic
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ExtrudedDirection" type="GDIFCEntityBase" setter="set_ExtrudedDirection" getter="get_ExtrudedDirection">
+			The direction in which the surface, provided by SweptArea is to be swept.
+		</member>
+		<member name="Depth" type="float" setter="set_Depth" getter="get_Depth">
+			The distance the surface is to be swept along the ExtrudedDirection .
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

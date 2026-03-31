@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelDefinesByType" inherits="IfcRelDefines"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The objectified relationship IfcRelDefinesByType defines the relationship between an object type and object occurrences. The IfcRelDefinesByType is a 1-to-N relationship, as it allows for the assignment of one type information to a single or to many objects. Those objects then share the same object type, and the property sets and properties assigned to the object type. HISTORY New entity in IFC2x.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatedObjects" type="Array" setter="set_RelatedObjects" getter="get_RelatedObjects">
+		</member>
+		<member name="RelatingType" type="GDIFCEntityBase" setter="set_RelatingType" getter="get_RelatingType">
+			Reference to the type (or style) information for that object or set of objects.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMonetaryUnit" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcMonetaryUnit is a unit to define currency for money. HISTORY: New entity in IFC Release 2x. IFC2x4 CHANGE: Type of the attribute Currency changed.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Currency" type="String" setter="set_Currency" getter="get_Currency">
+			Code or name of the currency. Permissible values are the three-letter alphabetic currency codes as per ISO 4217 , for example CNY, EUR, GBP, JPY, USD.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

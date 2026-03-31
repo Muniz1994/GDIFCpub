@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTextLiteralWithExtent" inherits="IfcTextLiteral"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The text literal with extent is a text literal with the additional explicit information of the planar extent (or surrounding text box). An alignment attribute defines, how the text box is aligned to the placement and how it may expand. NOTE The IfcTextLiteralWithExtent is an entity that had been adopted from ISO 10303, Industrial automation systems and integration—Product data representation and e
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Extent" type="GDIFCEntityBase" setter="set_Extent" getter="get_Extent">
+			The extent in the x and y direction of the text literal.
+		</member>
+		<member name="BoxAlignment" type="String" setter="set_BoxAlignment" getter="get_BoxAlignment">
+			The alignment of the text literal relative to its position.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

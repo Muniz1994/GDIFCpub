@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcEdge" inherits="IfcTopologicalRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : An edge is the topological construct corresponding to the connection of two vertices. More abstractly, it may stand for a logical relationship between two vertices. The domain of an edge, if present, is a finite, non-self-intersecting open curve in R M , that is, a connected 1-dimensional manifold. The bounds of an edge are two vertices, which need not be dis
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="EdgeStart" type="GDIFCEntityBase" setter="set_EdgeStart" getter="get_EdgeStart">
+			Start point (vertex) of the edge.
+		</member>
+		<member name="EdgeEnd" type="GDIFCEntityBase" setter="set_EdgeEnd" getter="get_EdgeEnd">
+			End point (vertex) of the edge. The same vertex can be used for both EdgeStart and EdgeEnd.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcIndexedTextureMap" inherits="IfcTextureCoordinate"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="MappedTo" type="GDIFCEntityBase" setter="set_MappedTo" getter="get_MappedTo">
+		</member>
+		<member name="TexCoords" type="GDIFCEntityBase" setter="set_TexCoords" getter="get_TexCoords">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

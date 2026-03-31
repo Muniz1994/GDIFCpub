@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcEventType" inherits="IfcTypeProcess"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcEventType defines a particular type of event that may be specified. HISTORY New entity in IFC2x4 An IfcEventType provides for all forms of types of event that may be specified. Usage of IfcEventType defines the parameters for one or more occurrences of IfcEvent . Parameters may be specified through property sets that may be enumerated in the IfcEventTypeEnum data type or through explicit att
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Identifies the predefined types of an event from which the type required may be set.
+		</member>
+		<member name="EventTriggerType" type="String" setter="set_EventTriggerType" getter="get_EventTriggerType">
+			Identifies the predefined types of event trigger from which the type required may be set.
+		</member>
+		<member name="UserDefinedEventTriggerType" type="String" setter="set_UserDefinedEventTriggerType" getter="get_UserDefinedEventTriggerType">
+			A user defined event trigger type, the value of which is asserted when the value of an event trigger type is declared as USERDEFINED.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCartesianTransformationOperator2DnonUniform" inherits="IfcCartesianTransformationOperator2D"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A Cartesian transformation operator 2d non uniform defines a geometric transformation in two-dimensional space composed of translation, rotation, mirroring and non uniform scaling. Non uniform scaling is given by two different scaling factors: SELF\IfcCartesianTransformationOperator.Scale : the x axis scale factor Scale2 : the y axis scale factor If the Scale factor (at supertype IfcCartesianTrans
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Scale2" type="float" setter="set_Scale2" getter="get_Scale2">
+			The scaling value specified for the transformation along the axis 2. This is normally the y scale factor.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

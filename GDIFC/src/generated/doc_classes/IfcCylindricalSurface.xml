@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCylindricalSurface" inherits="IfcElementarySurface"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A cylindrical surface is a surface at a constant distance (the radius) from a straight line. A cylindrical surface is defined by its radius and its orientation and location. The data is to be interpreted as follows: C = Position.Location x = Position.P[1] y = Position.P[2] z = Position.P[3] R = Radius and the surface is parameterized as: where the parametric 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Radius" type="float" setter="set_Radius" getter="get_Radius">
+			The radius of the cylindrical surface.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

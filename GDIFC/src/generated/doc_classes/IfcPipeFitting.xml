@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPipeFitting" inherits="IfcFlowFitting"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A pipe fitting is a junction or transition in a piping flow distribution system or used to connect pipe segments, resulting changes in flow characteristics to the fluid such as direction or flow rate. HISTORY New entity in IFC2x4 Type Use Definition IfcPipeFitting defines the occurrence of any pipe fitting; common information about pipe fitting types is handled by IfcPipeFittingType . The IfcPipeF
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

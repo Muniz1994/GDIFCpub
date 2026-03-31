@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcComplexProperty" inherits="IfcProperty"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcComplexProperty is used to define complex properties to be handled completely within a property set. The included set of properties may be a mixed or consistent collection of IfcProperty subtypes. This enables the definition of a set of properties to be included as a single 'property' entry in an IfcPropertySet . The definition of such an IfcComplexProperty can be reused in many different IfcPr
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="UsageName" type="String" setter="set_UsageName" getter="get_UsageName">
+			Usage description of the IfcComplexProperty within the property set which references the IfcComplexProperty . NOTE: Consider a complex property for glazing properties. The Name attribute of the IfcComplexProperty could be Pset_GlazingProperties , and the UsageName attribute could be OuterGlazingPane .
+		</member>
+		<member name="HasProperties" type="Array" setter="set_HasProperties" getter="get_HasProperties">
+			Set of properties that can be used within this complex property (may include other complex properties).
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

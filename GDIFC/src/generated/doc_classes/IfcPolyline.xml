@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPolyline" inherits="IfcBoundedCurve"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A polyline is a bounded curve of n - 1 linear segments, defined by a list of n points, P 1 , P 2 ... P n . The i th segment of the curve is parameterized as follows: for 1 ≤ i ≤ n - 1 where i - 1 ≤ u ≤ i and with parametric range of 0 u ≤ n - 1. NOTE Corresponding ISO 10303 entity: polyline. Please refer to ISO/IS 10303-42:1994, p. 45 for the final definition
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Points" type="Array" setter="set_Points" getter="get_Points">
+			The points defining the polyline.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

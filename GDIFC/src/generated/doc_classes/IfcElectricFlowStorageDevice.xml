@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcElectricFlowStorageDevice" inherits="IfcFlowStorageDevice"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An electric flow storage device is a device in which electrical energy is stored and from which energy may be progressively released. HISTORY New entity in IFC2x4 Type Use Definition IfcElectricFlowStorageDevice defines the occurrence of any electric flow storage device; common information about electric flow storage device types is handled by IfcElectricFlowStorageDeviceType . The IfcElectricFlow
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

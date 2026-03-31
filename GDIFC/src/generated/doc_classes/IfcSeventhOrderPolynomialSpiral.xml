@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSeventhOrderPolynomialSpiral" inherits="IfcSpiral"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="SepticTerm" type="float" setter="set_SepticTerm" getter="get_SepticTerm">
+		</member>
+		<member name="SexticTerm" type="float" setter="set_SexticTerm" getter="get_SexticTerm">
+		</member>
+		<member name="QuinticTerm" type="float" setter="set_QuinticTerm" getter="get_QuinticTerm">
+		</member>
+		<member name="QuarticTerm" type="float" setter="set_QuarticTerm" getter="get_QuarticTerm">
+		</member>
+		<member name="CubicTerm" type="float" setter="set_CubicTerm" getter="get_CubicTerm">
+		</member>
+		<member name="QuadraticTerm" type="float" setter="set_QuadraticTerm" getter="get_QuadraticTerm">
+		</member>
+		<member name="LinearTerm" type="float" setter="set_LinearTerm" getter="get_LinearTerm">
+		</member>
+		<member name="ConstantTerm" type="float" setter="set_ConstantTerm" getter="get_ConstantTerm">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

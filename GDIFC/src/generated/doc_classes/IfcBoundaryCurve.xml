@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcBoundaryCurve" inherits="IfcCompositeCurveOnSurface"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 ÿ A boundary curve is a type of bounded curve suitable for the definition of a surface boundary. NOTEÿ Corresponding ISO 10303 entity: boundary_curve. Please refer to ISO/IS 10303-42:1994, p.89 for the final definition of the formal standard. HISTORYÿ New entity in IFC2x4.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

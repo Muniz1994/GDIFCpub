@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralSurfaceMember" inherits="IfcStructuralMember"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: Instances of IfcStructuralSurfaceMember describe face members, i.e. structural analysis idealizations of slabs, walls, shells, etc.. Surface members may be planar or curved. HISTORY: New entity in IFC 2x2. IFC 2x4 change: Use definitions changed, WHERE rule added. Coordinate Systems : See definitions at IfcStructuralItem . The local coordinate system is established by the refe
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Type of member with respect to its load carrying behavior in this analysis idealization.
+		</member>
+		<member name="Thickness" type="float" setter="set_Thickness" getter="get_Thickness">
+			Defines the typically understood thickness of the structural surface member, measured normal to its reference surface.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

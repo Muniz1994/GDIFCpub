@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcGeometricRepresentationSubContext" inherits="IfcGeometricRepresentationContext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcGeometricRepresentationSubContext defines the context that applies to several shape representations of a product being a sub context, sharing the WorldCoordinateSystem , CoordinateSpaceDimension , Precision and TrueNorth attributes with the parent IfcGeometricRepresentationContext . The IfcGeometricRepresentationSubContext is used to define semantically distinguished representation types for di
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ParentContext" type="GDIFCEntityBase" setter="set_ParentContext" getter="get_ParentContext">
+			Parent context from which the sub context derives its world coordinate system, precision, space coordinate dimension and true north.
+		</member>
+		<member name="TargetScale" type="float" setter="set_TargetScale" getter="get_TargetScale">
+			The target plot scale of the representation to which this representation context applies. Scale indicates the target plot scale for the representation sub context, all annotation styles are given in plot dimensions according to this target plot scale. If multiple instances of IfcGeometricRepresentationSubContext are given having the same TargetView value, the target plot scale applies up to the next smaller scale, or up to unlimited small scale. Note: Scale 1:100 (given as 0.01 within TargetScale ) is bigger then 1:200 (given as 0.005 within TargetScale ).
+		</member>
+		<member name="TargetView" type="String" setter="set_TargetView" getter="get_TargetView">
+			Target view of the representation to which this representation context applies.
+		</member>
+		<member name="UserDefinedTargetView" type="String" setter="set_UserDefinedTargetView" getter="get_UserDefinedTargetView">
+			User defined target view, this attribute value shall be given, if the TargetView attribute is set to USERDEFINED.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

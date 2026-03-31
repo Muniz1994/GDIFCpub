@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcLightSource" inherits="IfcGeometricRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-46:1992 : The light source entity is determined by the reflectance specified in the surface style rendering. Lighting is applied on a surface by surface basis: no interactions between surfaces such as shadows or reflections are defined. NOTE: Corresponding STEP entity: light_source. Please refer to ISO/IS 10303-46:1994, p. 31 for the final definition of the formal stan
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			The name given to the light source in presentation.
+		</member>
+		<member name="LightColour" type="GDIFCEntityBase" setter="set_LightColour" getter="get_LightColour">
+			Definition from ISO/CD 10303-46:1992: Based on the current lighting model, the colour of the light to be used for shading. Definition from VRML97 - ISO/IEC 14772-1:1997: The color field specifies the spectral color properties of both the direct and ambient light emission as an RGB value.
+		</member>
+		<member name="AmbientIntensity" type="float" setter="set_AmbientIntensity" getter="get_AmbientIntensity">
+			Definition from VRML97 - ISO/IEC 14772-1:1997: The ambientIntensity specifies the intensity of the ambient emission from the light. Light intensity may range from 0.0 (no light emission) to 1.0 (full intensity).
+		</member>
+		<member name="Intensity" type="float" setter="set_Intensity" getter="get_Intensity">
+			Definition from VRML97 - ISO/IEC 14772-1:1997: The intensity field specifies the brightness of the direct emission from the ligth. Light intensity may range from 0.0 (no light emission) to 1.0 (full intensity).
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

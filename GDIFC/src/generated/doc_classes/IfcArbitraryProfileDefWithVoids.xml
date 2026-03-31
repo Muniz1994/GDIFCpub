@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcArbitraryProfileDefWithVoids" inherits="IfcArbitraryClosedProfileDef"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The IfcArbitraryProfileDefWithVoids defines an arbitrary closed two-dimensional profile with holes defined for the use for the swept area solid or a sectioned spine. It is given by an outer boundary and inner boundaries from with the solid the can be constructed. HISTORY New entity in IFC2x. Informal propositions : The outer curve and all inner curves shall be closed curves. The outer curve shall 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="InnerCurves" type="Array" setter="set_InnerCurves" getter="get_InnerCurves">
+			Set of bounded curves, defining the inner boundaries of the arbitrary profile.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

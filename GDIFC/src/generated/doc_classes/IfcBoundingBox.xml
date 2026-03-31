@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcBoundingBox" inherits="IfcGeometricRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A box domain is an orthogonal box parallel to the axes of the geometric coordinate system which may be used to limit the domain of a half space solid. A box domain is specified by the coordinates of the bottom left corner, and the lengths of the sides measured in the directions of the coordinate axes. Every semantic object having a physical extent might have 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Corner" type="GDIFCEntityBase" setter="set_Corner" getter="get_Corner">
+			Location of the bottom left corner (having the minimum values).
+		</member>
+		<member name="XDim" type="float" setter="set_XDim" getter="get_XDim">
+			Length attribute (measured along the edge parallel to the X Axis)
+		</member>
+		<member name="YDim" type="float" setter="set_YDim" getter="get_YDim">
+			Width attribute (measured along the edge parallel to the Y Axis)
+		</member>
+		<member name="ZDim" type="float" setter="set_ZDim" getter="get_ZDim">
+			Height attribute (measured along the edge parallel to the Z Axis).
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

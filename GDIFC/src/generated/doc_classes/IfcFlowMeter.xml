@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFlowMeter" inherits="IfcFlowController"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A flow meter is a device that is used to measure the flow rate in a system. HISTORY New entity in IFC2x4 Type Use Definition IfcFlowMeter defines the occurrence of any flow meter; common information about flow meter types is handled by IfcFlowMeterType . The IfcFlowMeterType (if present) may establish the common type name, usage (predefined type), properties, materials, ports, composition, assignm
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRegularTimeSeries" inherits="IfcTimeSeries"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		In a regular time series, the data arrives predictably at predefined intervals. In a regular time series there is no need to store multiple time stamps and the algorithms for analyzing the time series are therefore significantly simpler. Using the start time provided in the supertype, the time step is used to identify the frequency of the occurrences of the list of values. EXAMPLE: A smoke detecto
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="TimeStep" type="float" setter="set_TimeStep" getter="get_TimeStep">
+			A duration of time intervals between values.
+		</member>
+		<member name="Values" type="Array" setter="set_Values" getter="get_Values">
+			The collection of time series values.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

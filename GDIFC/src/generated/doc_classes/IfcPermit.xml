@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPermit" inherits="IfcControl"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A permit is a permission to perform work in places and on artifacts where regulatory, security or other access restrictions apply. HISTORY New entity in IFC2x2 IFC2x4 CHANGE PermitID renamed to Identification and promoted to supertype IfcControl, Attributes PredefinedType , Status , and LongDescription added. Property Set Use Definition The property sets relating to this entity are defined by IfcP
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Identifies the predefined types of permit that can be granted. IFC2x4 CHANGE The attribute has been added.
+		</member>
+		<member name="Status" type="String" setter="set_Status" getter="get_Status">
+			The status currently assigned to the permit. IFC2x4 CHANGE The attribute has been added.
+		</member>
+		<member name="LongDescription" type="String" setter="set_LongDescription" getter="get_LongDescription">
+			Detailed description of the request. IFC2x4 CHANGE The attribute has been added.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

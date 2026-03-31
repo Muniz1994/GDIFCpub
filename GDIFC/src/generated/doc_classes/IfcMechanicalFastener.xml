@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMechanicalFastener" inherits="IfcElementComponent"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: Fasteners connecting building elements mechanically. A single instance of this class may represent one or many of actual mechanical fasteners, for example an array of bolts or a row of nails. HISTORY New entity in IFC Release 2x2 IFC 2x4 change: Supertype changed from IfcFastener to IfcElementComponent . Attribute PredefinedType added. Attributes NominalDiameter and NominalLen
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="NominalDiameter" type="float" setter="set_NominalDiameter" getter="get_NominalDiameter">
+			Subtype of mechanical fastener
+		</member>
+		<member name="NominalLength" type="float" setter="set_NominalLength" getter="get_NominalLength">
+		</member>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

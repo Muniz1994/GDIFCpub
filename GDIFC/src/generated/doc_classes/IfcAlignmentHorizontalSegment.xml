@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcAlignmentHorizontalSegment" inherits="IfcAlignmentParameterSegment"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="StartPoint" type="GDIFCEntityBase" setter="set_StartPoint" getter="get_StartPoint">
+		</member>
+		<member name="StartDirection" type="float" setter="set_StartDirection" getter="get_StartDirection">
+		</member>
+		<member name="StartRadiusOfCurvature" type="float" setter="set_StartRadiusOfCurvature" getter="get_StartRadiusOfCurvature">
+		</member>
+		<member name="EndRadiusOfCurvature" type="float" setter="set_EndRadiusOfCurvature" getter="get_EndRadiusOfCurvature">
+		</member>
+		<member name="SegmentLength" type="float" setter="set_SegmentLength" getter="get_SegmentLength">
+		</member>
+		<member name="GravityCenterLineHeight" type="float" setter="set_GravityCenterLineHeight" getter="get_GravityCenterLineHeight">
+		</member>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

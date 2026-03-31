@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMaterialProperties" inherits="IfcExtendedProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcMaterialProperties is defined as an abstract supertype for entities that apply material properties to material definitions. A set of material properties that are assigned to an individual material definiton may be identified by a Name and a Description . NOTE The set of material properties can be assigned to an individual IfcMaterial , a set or composite of materials ( IfcMaterialConstituent , 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Material" type="GDIFCEntityBase" setter="set_Material" getter="get_Material">
+			The name given to the set of extended properties.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

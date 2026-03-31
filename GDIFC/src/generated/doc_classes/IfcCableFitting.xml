@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCableFitting" inherits="IfcFlowFitting"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A cable fitting is a fitting that is placed at a junction, transition or termination in a cable system. HISTORY New entity in IFC2x4 Type Use Definition IfcCableFitting defines the occurrence of any cable fitting; common information about cable fitting types is handled by IfcCableFittingType . The IfcCableFittingType (if present) may establish the common type name, usage (predefined type), propert
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Identifies the predefined types of cable fitting from which the type required may be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcVirtualGridIntersection" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcVirtualGridIntersection defines the derived location of the intersection between two grid axes. Offset values may be given to set an offset distance to the grid axis for the calculation of the virtual grid intersection. The two intersecting axes ( IntersectingAxes ) define the intersection point, which exact location (in terms of the Cartesian point representing the intersection) has to be calc
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="IntersectingAxes" type="Array" setter="set_IntersectingAxes" getter="get_IntersectingAxes">
+			Two grid axes which intersects at exactly one intersection (see also informal proposition at IfcGrid). If attribute OffsetDistances is omitted, the intersection defines the placement or ref direction of a grid placement directly. If OffsetDistances are given, the intersection is defined by the offset curves to the grid axes.
+		</member>
+		<member name="OffsetDistances" type="PackedFloat64Array" setter="set_OffsetDistances" getter="get_OffsetDistances">
+			Offset distances to the grid axes. If given, it defines virtual offset curves to the grid axes. The intersection of the offset curves specify the virtual grid intersection.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

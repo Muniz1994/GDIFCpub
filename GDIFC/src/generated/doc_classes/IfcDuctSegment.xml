@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDuctSegment" inherits="IfcFlowSegment"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A duct segment is used to typically join two sections of duct network. HISTORY New entity in IFC2x4 Type Use Definition IfcDuctSegment defines the occurrence of any duct segment; common information about duct segment types is handled by IfcDuctSegmentType . The IfcDuctSegmentType (if present) may establish the common type name, usage (predefined type), properties, materials, ports, composition, as
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

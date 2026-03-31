@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSweptSurface" inherits="IfcSurface"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A swept surface is one that is constructed by sweeping a curve along another curve. NOTE: Corresponding ISO 10303 entity: swept_surface. Please refer to ISO/IS 10303-42:1994, p.76 for the final definition of the formal standard. HISTORY: New entity in IFC Release 2x.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="SweptCurve" type="GDIFCEntityBase" setter="set_SweptCurve" getter="get_SweptCurve">
+			The curve to be swept in defining the surface. The curve is defined as a profile within the position coordinate system.
+		</member>
+		<member name="Position" type="GDIFCEntityBase" setter="set_Position" getter="get_Position">
+			Position coordinate system for the placement of the profile within the xy plane of the axis placement.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

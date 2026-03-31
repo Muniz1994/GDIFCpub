@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPropertySetDefinition" inherits="IfcPropertyDefinition"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcPropertySetDefinition is a generalization of all individual property sets that can be assigned to an object or type object. The property set definition can be either: Dynamically extendable property sets - IfcPropertySet , a set of properties for which the IFC model only provides a kind of "meta model", to be further declared by agreement. This means no entity definition of the properties exist
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

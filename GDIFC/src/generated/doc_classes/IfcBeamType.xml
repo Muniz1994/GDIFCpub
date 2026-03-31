@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcBeamType" inherits="IfcBuiltElementType"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : The element type IfcBeamType defines commonly shared information for occurrences of beams. The set of shared information may include: common properties within shared property sets common material information common profile definitions common shape representations It is used to define a beam specification, or beam style (i.e. the specific product information that is common to 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Identifies the predefined types of a beam element from which the type required may be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

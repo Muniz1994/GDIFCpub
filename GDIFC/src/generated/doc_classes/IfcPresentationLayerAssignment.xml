@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPresentationLayerAssignment" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The presentation layer assignment provides the layer name (and optionally a description and an identifier) for a collection of geometric representation items. The IfcPresentationLayerAssignment corresponds to the term "CAD Layer" and is used mainly for grouping and visibility control. NOTE The use of presentation layer shall be restricted to simple grouping and displaying purposes. Visibility and 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			Name of the layer.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			Additional description of the layer.
+		</member>
+		<member name="AssignedItems" type="Array" setter="set_AssignedItems" getter="get_AssignedItems">
+			The set of layered items, which are assigned to this layer.
+		</member>
+		<member name="Identifier" type="String" setter="set_Identifier" getter="get_Identifier">
+			An (internal) identifier assigned to the layer.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

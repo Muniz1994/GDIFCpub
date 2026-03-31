@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTypeResource" inherits="IfcTypeObject"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcTypeResource defines a specific (or type) definition of a resource.ÿIt is used to define a resource specification (the specific resource, that is common to all occurrences that are defined for that resource) and could act as a resource template. An IfcTypeResource may have a list of property sets attached. Values of these properties are common to all occurrences of that resource type. The type 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Identification" type="String" setter="set_Identification" getter="get_Identification">
+			An identifying designation given to a resource type.
+		</member>
+		<member name="LongDescription" type="String" setter="set_LongDescription" getter="get_LongDescription">
+			An long description, or text, describing the resource in detail. NOTE The inherited SELF\IfcRoot.Description attribute is used as the short description.
+		</member>
+		<member name="ResourceType" type="String" setter="set_ResourceType" getter="get_ResourceType">
+			The type denotes a particular type that indicates the resource further. The use has to be established at the level of instantiable subtypes. In particular it holds the user defined type, if the enumeration of the attribute 'PredefinedType' is set to USERDEFINED.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

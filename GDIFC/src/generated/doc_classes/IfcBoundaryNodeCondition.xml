@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcBoundaryNodeCondition" inherits="IfcBoundaryCondition"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: Describes linearly elastic support conditions or connection conditions. Applicability: Point supports and connections. HISTORY: New entity in IFC 2x2. IFC 2x4 change: Attributes LinearStiffnessX/Y/Z renamed to TranslationalStiffnessX/Y/Z . IFC 2x4 change: All attribute data types changed from numeric to SELECT between Boolean and numeric. Stiffnesses may now also be negative, 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="TranslationalStiffnessX" type="GDIFCEntityBase" setter="set_TranslationalStiffnessX" getter="get_TranslationalStiffnessX">
+			Translational stiffness value in x-direction of the coordinate system defined by the instance which uses this resource object.
+		</member>
+		<member name="TranslationalStiffnessY" type="GDIFCEntityBase" setter="set_TranslationalStiffnessY" getter="get_TranslationalStiffnessY">
+			Translational stiffness value in y-direction of the coordinate system defined by the instance which uses this resource object.
+		</member>
+		<member name="TranslationalStiffnessZ" type="GDIFCEntityBase" setter="set_TranslationalStiffnessZ" getter="get_TranslationalStiffnessZ">
+			Translational stiffness value in z-direction of the coordinate system defined by the instance which uses this resource object.
+		</member>
+		<member name="RotationalStiffnessX" type="GDIFCEntityBase" setter="set_RotationalStiffnessX" getter="get_RotationalStiffnessX">
+			Rotational stiffness value about the x-axis of the coordinate system defined by the instance which uses this resource object.
+		</member>
+		<member name="RotationalStiffnessY" type="GDIFCEntityBase" setter="set_RotationalStiffnessY" getter="get_RotationalStiffnessY">
+			Rotational stiffness value about the y-axis of the coordinate system defined by the instance which uses this resource object.
+		</member>
+		<member name="RotationalStiffnessZ" type="GDIFCEntityBase" setter="set_RotationalStiffnessZ" getter="get_RotationalStiffnessZ">
+			Rotational stiffness value about the z-axis of the coordinate system defined by the instance which uses this resource object.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

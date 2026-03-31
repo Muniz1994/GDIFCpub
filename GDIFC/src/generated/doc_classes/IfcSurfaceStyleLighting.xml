@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSurfaceStyleLighting" inherits="IfcPresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcSurfaceStyleLighting is a container class for properties for calculation of physically exact illuminance related to a particular surface style. Figure 294 shows the reflection and transmission components from an incident ray. The sum of the components for reflection and transmission is a value of 1.0 denoting that the incident ray is completely decomposed into reflection and transmission compon
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="DiffuseTransmissionColour" type="GDIFCEntityBase" setter="set_DiffuseTransmissionColour" getter="get_DiffuseTransmissionColour">
+			The degree of diffusion of the transmitted light. In the case of completely transparent materials there is no diffusion. The greater the diffusing power, the smaller the direct component of the transmitted light, up to the point where only diffuse light is produced.A value of 1 means totally diffuse for that colour part of the light. The factor can be measured physically and has three ratios for the red, green and blue part of the light.
+		</member>
+		<member name="DiffuseReflectionColour" type="GDIFCEntityBase" setter="set_DiffuseReflectionColour" getter="get_DiffuseReflectionColour">
+			The degree of diffusion of the reflected light. In the case of specular surfaces there is no diffusion. The greater the diffusing power of the reflecting surface, the smaller the specular component of the reflected light, up to the point where only diffuse light is produced. A value of 1 means totally diffuse for that colour part of the light. The factor can be measured physically and has three ratios for the red, green and blue part of the light.
+		</member>
+		<member name="TransmissionColour" type="GDIFCEntityBase" setter="set_TransmissionColour" getter="get_TransmissionColour">
+			Describes how the light falling on a body is totally or partially transmitted. The factor can be measured physically and has three ratios for the red, green and blue part of the light.
+		</member>
+		<member name="ReflectanceColour" type="GDIFCEntityBase" setter="set_ReflectanceColour" getter="get_ReflectanceColour">
+			A coefficient that determines the extent that the light falling onto a surface is fully or partially reflected. The factor can be measured physically and has three ratios for the red, green and blue part of the light.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

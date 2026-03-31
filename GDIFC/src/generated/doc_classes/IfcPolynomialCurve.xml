@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPolynomialCurve" inherits="IfcCurve"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Position" type="GDIFCEntityBase" setter="set_Position" getter="get_Position">
+		</member>
+		<member name="CoefficientsX" type="PackedFloat64Array" setter="set_CoefficientsX" getter="get_CoefficientsX">
+		</member>
+		<member name="CoefficientsY" type="PackedFloat64Array" setter="set_CoefficientsY" getter="get_CoefficientsY">
+		</member>
+		<member name="CoefficientsZ" type="PackedFloat64Array" setter="set_CoefficientsZ" getter="get_CoefficientsZ">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

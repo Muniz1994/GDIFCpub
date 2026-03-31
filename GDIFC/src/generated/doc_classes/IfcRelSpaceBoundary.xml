@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelSpaceBoundary" inherits="IfcRelConnects"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The space boundary defines the physical or virtual delimiter of a space by the relationship IfcRelSpaceBoundary to the surrounding elements. In the case of a physical space boundary, the placement and shape of the boundary may be given, and the building element, providing the boundary, is referenced, In the case of a virtual space boundary, the placement and shape of the boundary may be given, but
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingSpace" type="GDIFCEntityBase" setter="set_RelatingSpace" getter="get_RelatingSpace">
+			Reference to one spaces that is delimited by this boundary.
+		</member>
+		<member name="RelatedBuildingElement" type="GDIFCEntityBase" setter="set_RelatedBuildingElement" getter="get_RelatedBuildingElement">
+			Reference to Building Element, that defines the Space Boundaries. IFC2x PLATFORM CHANGE The data type has been changed from IfcBuildingElement to IfcElement with upward compatibility for file based exchange. IFC2x4 CHANGE The attribute has been changed to be mandatory.
+		</member>
+		<member name="ConnectionGeometry" type="GDIFCEntityBase" setter="set_ConnectionGeometry" getter="get_ConnectionGeometry">
+			Physical representation of the space boundary. Provided as a curve or surface given within the LCS of the space. IFC2x PLATFORM CHANGE The data type has been changed from IfcConnectionSurfaceGeometry to IfcConnectionGeometry with upward compatibility for file based exchange.
+		</member>
+		<member name="PhysicalOrVirtualBoundary" type="String" setter="set_PhysicalOrVirtualBoundary" getter="get_PhysicalOrVirtualBoundary">
+			Defines, whether the Space Boundary is physical (Physical) or virtual (Virtual).
+		</member>
+		<member name="InternalOrExternalBoundary" type="String" setter="set_InternalOrExternalBoundary" getter="get_InternalOrExternalBoundary">
+			Defines, whether the Space Boundary is internal (Internal), or external, i.e. adjacent to open space (that can be an partially enclosed space, such as terrace (External).
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

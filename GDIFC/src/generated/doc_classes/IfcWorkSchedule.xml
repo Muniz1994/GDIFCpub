@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcWorkSchedule" inherits="IfcWorkControl"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcWorkSchedule represents a task schedule of a work plan, which in turn can contain a set of schedules for different purposes. HISTORY: New Entity in IFC Release 2.0 Assignment Use Definition An IfcWorkSchedule controls a set of tasks and resources defined through IfcRelAssignsToControl . Additionally, through the IfcWorkControl abstract supertype, the actors creating the schedule can be speci
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Identifies the predefined types of a work schedule from which the type required may be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

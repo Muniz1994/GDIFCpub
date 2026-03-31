@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCurveSegment" inherits="IfcSegment"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Placement" type="GDIFCEntityBase" setter="set_Placement" getter="get_Placement">
+		</member>
+		<member name="SegmentStart" type="GDIFCEntityBase" setter="set_SegmentStart" getter="get_SegmentStart">
+		</member>
+		<member name="SegmentLength" type="GDIFCEntityBase" setter="set_SegmentLength" getter="get_SegmentLength">
+		</member>
+		<member name="ParentCurve" type="GDIFCEntityBase" setter="set_ParentCurve" getter="get_ParentCurve">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

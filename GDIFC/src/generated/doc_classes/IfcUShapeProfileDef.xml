@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcUShapeProfileDef" inherits="IfcParameterizedProfileDef"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcUShapeProfileDef defines a section profile that provides the defining parameters of a U-shape (channel) section to be used by the swept area solid. Its parameters and orientation relative to the position coordinate system are according to the following illustration. The centre of the position coordinate system is in the profile's centre of the bounding box. HISTORY New entity in IFC2x2. IFC2x3 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Depth" type="float" setter="set_Depth" getter="get_Depth">
+			Web lengths, see illustration above (= h).
+		</member>
+		<member name="FlangeWidth" type="float" setter="set_FlangeWidth" getter="get_FlangeWidth">
+			Flange lengths, see illustration above (= b).
+		</member>
+		<member name="WebThickness" type="float" setter="set_WebThickness" getter="get_WebThickness">
+			Constant wall thickness of web (= ts).
+		</member>
+		<member name="FlangeThickness" type="float" setter="set_FlangeThickness" getter="get_FlangeThickness">
+			Constant wall thickness of flange (= tg).
+		</member>
+		<member name="FilletRadius" type="float" setter="set_FilletRadius" getter="get_FilletRadius">
+			Fillet radius according the above illustration (= r1).
+		</member>
+		<member name="EdgeRadius" type="float" setter="set_EdgeRadius" getter="get_EdgeRadius">
+			Edge radius according the above illustration (= r2).
+		</member>
+		<member name="FlangeSlope" type="float" setter="set_FlangeSlope" getter="get_FlangeSlope">
+			Slope of flange of the profile.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

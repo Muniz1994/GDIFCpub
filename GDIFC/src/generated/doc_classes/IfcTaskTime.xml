@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTaskTime" inherits="IfcSchedulingTime"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcTaskTime captures the time-related information about a task including the different types (actual or scheduled) of starting and ending times. HISTORY: New entity in IFC2x4, adapted from IfcScheduleTimeControl . Differently to IfcScheduleTimeControl it is also possible to differentiate duration time measures between the two possible types; (1) work time and (2) elapsed time. Use definitions All 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="DurationType" type="String" setter="set_DurationType" getter="get_DurationType">
+			Enables to specify the type of duration values for ScheduleDuration , ActualDuration and RemainingTime . The duration type is either work time or elapsed time.
+		</member>
+		<member name="ScheduleDuration" type="String" setter="set_ScheduleDuration" getter="get_ScheduleDuration">
+			The amount of time which is scheduled for completion of a task. The value might be measured or somehow calculated, which is defined by ScheduleDataOrigin . The value is either given as elapsed time or work time, which is defined by DurationType . NOTE: Scheduled Duration may be calculated as the time from scheduled start date to scheduled finish date.
+		</member>
+		<member name="ScheduleStart" type="String" setter="set_ScheduleStart" getter="get_ScheduleStart">
+			The date on which a task is scheduled to be started. The value might be measured or somehow calculated, which is defined by ScheduleDataOrigin . NOTE: The scheduled start date must be greater than or equal to the earliest start date.
+		</member>
+		<member name="ScheduleFinish" type="String" setter="set_ScheduleFinish" getter="get_ScheduleFinish">
+			The date on which a task is scheduled to be finished. The value might be measured or somehow calculated, which is defined by ScheduleDataOrigin . NOTE: The scheduled finish date must be greater than or equal to the earliest finish date.
+		</member>
+		<member name="EarlyStart" type="String" setter="set_EarlyStart" getter="get_EarlyStart">
+			The earliest date on which a task can be started. It is a calculated value.
+		</member>
+		<member name="EarlyFinish" type="String" setter="set_EarlyFinish" getter="get_EarlyFinish">
+			The earliest date on which a task can be finished. It is a calculated value.
+		</member>
+		<member name="LateStart" type="String" setter="set_LateStart" getter="get_LateStart">
+			The latest date on which a task can be started. It is a calculated value.
+		</member>
+		<member name="LateFinish" type="String" setter="set_LateFinish" getter="get_LateFinish">
+			The latest date on which a task can be finished. It is a calculated value.
+		</member>
+		<member name="FreeFloat" type="String" setter="set_FreeFloat" getter="get_FreeFloat">
+			The amount of time during which the start or finish of a task may be varied without any effect on the overall programme of work. It is a calculated elapsed time value.
+		</member>
+		<member name="TotalFloat" type="String" setter="set_TotalFloat" getter="get_TotalFloat">
+			The difference between the duration available to carry out a task and the scheduled duration of the task. It is a calculated elapsed time value. NOTE: Total Float time may be calculated as being the difference between the scheduled duration of a task and the available duration from earliest start to latest finish. Float time may be either positive, zero or negative. Where it is zero or negative, the task becomes critical.
+		</member>
+		<member name="IsCritical" type="bool" setter="set_IsCritical" getter="get_IsCritical">
+			A flag which identifies whether a scheduled task is a critical item within the programme. NOTE: A task becomes critical when the float time becomes zero or negative.
+		</member>
+		<member name="StatusTime" type="String" setter="set_StatusTime" getter="get_StatusTime">
+			The date or time at which the status of the tasks within the schedule is analyzed.
+		</member>
+		<member name="ActualDuration" type="String" setter="set_ActualDuration" getter="get_ActualDuration">
+			The actual duration of the task. It is a measured value. The value is either given as elapsed time or work time, which is defined by DurationType .
+		</member>
+		<member name="ActualStart" type="String" setter="set_ActualStart" getter="get_ActualStart">
+			The date on which a task is actually started. It is a measured value. NOTE: The scheduled start date must be greater than or equal to the earliest start date. No constraint is applied to the actual start date with respect to the scheduled start date since a task may be started earlier than had originally been scheduled if circumstances allow.
+		</member>
+		<member name="ActualFinish" type="String" setter="set_ActualFinish" getter="get_ActualFinish">
+			The date on which a task is actually finished.
+		</member>
+		<member name="RemainingTime" type="String" setter="set_RemainingTime" getter="get_RemainingTime">
+			The amount of time remaining to complete a task. It is a predicted value. The value is either given as elapsed time or work time, which is defined by DurationType . NOTE: The time remaining in which to complete a task may be determined both for tasks which have not yet started and those which have. Remaining time for a task not yet started has the same value as the scheduled duration. For a task already started, remaining time is calculated as the difference between the scheduled finish and the point of analysis.
+		</member>
+		<member name="Completion" type="float" setter="set_Completion" getter="get_Completion">
+			The extent of completion expressed as a ratio or percentage. It is a measured value.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

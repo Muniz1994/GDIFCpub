@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStyledItem" inherits="IfcRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-46:1992 : The styled item is an assignment of style for presentation to a geometric representation item as it is used in a representation. NOTE Corresponding ISO 10303 name: styled_item. Please refer to ISO/IS 10303-46:1994 for the final definition of the formal standard. The IfcStyledItem holds presentation style information for products, either explicitly for an IfcG
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Item" type="GDIFCEntityBase" setter="set_Item" getter="get_Item">
+			A geometric representation item to which the style is assigned. IFC2x Edition 2 Addendum 2 CHANGE The attribute Item has been made optional. Upward compatibility for file based exchange is guaranteed.
+		</member>
+		<member name="Styles" type="Array" setter="set_Styles" getter="get_Styles">
+			Representation styles which are assigned, either to an geometric representation item, or to a material definition. IFC2x4 CHANGE The data type has been changed to IfcStyleAssignmentSelect with upward compatibility for file based exchange. NOTE Only the select item IfcPresentationStyle shall be used from IFC2x4 onwards, the IfcPresentationStyleAssignment has been deprecated.
+		</member>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			The word, or group of words, by which the styled item is referred to.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSpaceHeaterType" inherits="IfcFlowTerminalType"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The energy conversion device type IfcSpaceHeaterType defines commonly shared information for occurrences of space heaters. The set of shared information may include: common properties with shared property sets common representations of shape common materials common composition of elements common ports applicable assignment of process types It is used to define a space heater specification (i.e. th
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Enumeration of possible types of space heater (e.g., baseboard heater, convector, radiator, etc.).
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

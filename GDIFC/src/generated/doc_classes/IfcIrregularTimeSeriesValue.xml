@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcIrregularTimeSeriesValue" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The IfcIrregularTimeSeriesValue describes a value (or set of values) at a particular time point. HISTORY: New entity in IFC 2x2.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="TimeStamp" type="String" setter="set_TimeStamp" getter="get_TimeStamp">
+			The specification of the time point.
+		</member>
+		<member name="ListValues" type="Array" setter="set_ListValues" getter="get_ListValues">
+			A list of time-series values. At least one value is required.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcBSplineSurfaceWithKnots" inherits="IfcBSplineSurface"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO 10303:42:1994 : This is a B-spline surface in which the knot values are explicitly given. This subtype shall be used to represent non-uniform B-spline surfaces, and may also be used for other knot types. All knot multiplicities except the first and the last shall be in the range 1,...., d ; the first and last may have a maximum value of d + 1. In evaluating the basis functions,
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="UMultiplicities" type="PackedInt64Array" setter="set_UMultiplicities" getter="get_UMultiplicities">
+			The multiplicities of the knots in the u parameter direction.
+		</member>
+		<member name="VMultiplicities" type="PackedInt64Array" setter="set_VMultiplicities" getter="get_VMultiplicities">
+			The multiplicities of the knots in the v parameter direction.
+		</member>
+		<member name="UKnots" type="PackedFloat64Array" setter="set_UKnots" getter="get_UKnots">
+			The list of the distinct knots in the u parameter direction.
+		</member>
+		<member name="VKnots" type="PackedFloat64Array" setter="set_VKnots" getter="get_VKnots">
+			The list of the distinct knots in the v parameter direction.
+		</member>
+		<member name="KnotSpec" type="String" setter="set_KnotSpec" getter="get_KnotSpec">
+			The description of the knot type.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

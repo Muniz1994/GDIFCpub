@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcApproval" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition: An IfcApproval represents information about approval processes such as for a plan, a design, a proposal, or a change order in a construction or facilities management project. IfcApproval is referenced by IfcRelAssociatesApproval in IfcControlExtension schema, and thereby can be related to all subtypes of IfcRoot . An approval may also be given to resource objects using IfcResourceAppro
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Identifier" type="String" setter="set_Identifier" getter="get_Identifier">
+			A computer interpretable identifier by which the approval is known.
+		</member>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			A human readable name given to an approval.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			A general textual description of a design, work task, plan, etc. that is being approved for.
+		</member>
+		<member name="TimeOfApproval" type="String" setter="set_TimeOfApproval" getter="get_TimeOfApproval">
+			Date and time when the result of the approval process is produced. IFC2x4 CHANGE Attribute data type changed to IfcDateTime using ISO 8601 representation, renamed from ApprovalDateTime and made OPTIONAL.
+		</member>
+		<member name="Status" type="String" setter="set_Status" getter="get_Status">
+			The result or current status of the approval, e.g. Requested, Processed, Approved, Not Approved.
+		</member>
+		<member name="Level" type="String" setter="set_Level" getter="get_Level">
+			Level of the approval e.g. Draft v.s. Completed design.
+		</member>
+		<member name="Qualifier" type="String" setter="set_Qualifier" getter="get_Qualifier">
+			Textual description of special constraints or conditions for the approval.
+		</member>
+		<member name="RequestingApproval" type="GDIFCEntityBase" setter="set_RequestingApproval" getter="get_RequestingApproval">
+			The actor that is acting in the role specified at IfcOrganization or individually at IfcPerson and requesting an approval. IFC2x4 CHANGE New attribute for approval request replacing IfcApprovalActorRelationship (being deleted).
+		</member>
+		<member name="GivingApproval" type="GDIFCEntityBase" setter="set_GivingApproval" getter="get_GivingApproval">
+			The actor that is acting in the role specified at IfcOrganization or individually at IfcPerson and giving an approval. IFC2x4 CHANGE New attribute for approval provision replacing IfcApprovalActorRelationship (being deleted).
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

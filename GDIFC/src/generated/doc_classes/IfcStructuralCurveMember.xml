@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralCurveMember" inherits="IfcStructuralMember"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: Instances of IfcStructuralCurveMember describe edge members, i.e. structural analysis idealizations of beams, columns, rods etc.. Curve members may be straight or curved. HISTORY: New entity in IFC 2x2. IFC 2x4 change: Attribute Axis and WHERE rule added. Use definitions changed. Coordinate Systems : See definitions at IfcStructuralItem . The local coordinate system is establi
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Type of member with respect to its load carrying behavior in this analysis idealization.
+		</member>
+		<member name="Axis" type="GDIFCEntityBase" setter="set_Axis" getter="get_Axis">
+			Direction which is used in the definition of the local z axis. Axis is specified relative to the so-called global coordinate system, i.e. the SELF\IfcProduct.ObjectPlacement . NOTE It is desirable and usually possible that many instances of IfcStructuralCurveConnection and IfcStructuralCurveMember share a common instance of IfcDirection as their Axis attribute.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

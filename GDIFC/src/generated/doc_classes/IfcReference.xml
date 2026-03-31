@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcReference" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="TypeIdentifier" type="String" setter="set_TypeIdentifier" getter="get_TypeIdentifier">
+		</member>
+		<member name="AttributeIdentifier" type="String" setter="set_AttributeIdentifier" getter="get_AttributeIdentifier">
+		</member>
+		<member name="InstanceName" type="String" setter="set_InstanceName" getter="get_InstanceName">
+		</member>
+		<member name="ListPositions" type="PackedInt64Array" setter="set_ListPositions" getter="get_ListPositions">
+		</member>
+		<member name="InnerReference" type="GDIFCEntityBase" setter="set_InnerReference" getter="get_InnerReference">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcAlignmentCantSegment" inherits="IfcAlignmentParameterSegment"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="StartDistAlong" type="float" setter="set_StartDistAlong" getter="get_StartDistAlong">
+		</member>
+		<member name="HorizontalLength" type="float" setter="set_HorizontalLength" getter="get_HorizontalLength">
+		</member>
+		<member name="StartCantLeft" type="float" setter="set_StartCantLeft" getter="get_StartCantLeft">
+		</member>
+		<member name="EndCantLeft" type="float" setter="set_EndCantLeft" getter="get_EndCantLeft">
+		</member>
+		<member name="StartCantRight" type="float" setter="set_StartCantRight" getter="get_StartCantRight">
+		</member>
+		<member name="EndCantRight" type="float" setter="set_EndCantRight" getter="get_EndCantRight">
+		</member>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

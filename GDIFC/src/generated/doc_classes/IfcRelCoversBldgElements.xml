@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelCoversBldgElements" inherits="IfcRelConnects"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : The IfcRelCoversBldgElements is an objectified relationship between an element and one to many coverings, which cover the building element. IfcRelCoversBldgElements , this relationship, expresses the primary relation to the element, IfcRelCoversSpaces expresses the primary relation to the space. HISTORY New Entity in IFC Release 1.5 IFC2x4 CHANGE: The data type of the attribu
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingBuildingElement" type="GDIFCEntityBase" setter="set_RelatingBuildingElement" getter="get_RelatingBuildingElement">
+			Relationship to the building element that is covered. IFC2x4 CHANGE: The attribute type has been changed from IfcElement to IfcBuildingElement .
+		</member>
+		<member name="RelatedCoverings" type="Array" setter="set_RelatedCoverings" getter="get_RelatedCoverings">
+			Relationship to the set of coverings at this element.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

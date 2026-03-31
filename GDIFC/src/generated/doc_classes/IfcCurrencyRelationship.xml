@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCurrencyRelationship" inherits="IfcResourceLevelRelationship"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcCurrencyRelationship defines the rate of exchange that applies between two designated currencies at a particular time and as published by a particular source. HISTORY New Entity in IFC2x2. IFC2x4 CHANGE Subtyped from IfcResourceLevelRelationship , attribute order changed. Use definitions An IfcCurrencyRelationship is used where there may be a need to reference an IfcCostValue in one currency to
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingMonetaryUnit" type="GDIFCEntityBase" setter="set_RelatingMonetaryUnit" getter="get_RelatingMonetaryUnit">
+			The monetary unit from which an exchange is derived. For instance, in the case of a conversion from GBP to USD, the relating monetary unit is GBP.
+		</member>
+		<member name="RelatedMonetaryUnit" type="GDIFCEntityBase" setter="set_RelatedMonetaryUnit" getter="get_RelatedMonetaryUnit">
+			The monetary unit to which an exchange results. For instance, in the case of a conversion from GBP to USD, the related monetary unit is USD.
+		</member>
+		<member name="ExchangeRate" type="float" setter="set_ExchangeRate" getter="get_ExchangeRate">
+			The currently agreed ratio of the amount of a related monetary unit that is equivalent to a unit amount of the relating monetary unit in a currency relationship. For instance, in the case of a conversion from GBP to USD, the value of the exchange rate may be 1.486 (USD) : 1 (GBP).
+		</member>
+		<member name="RateDateTime" type="String" setter="set_RateDateTime" getter="get_RateDateTime">
+			The date and time at which an exchange rate applies. IFC2x4 CHANGE Type changed from IfcDateTimeSelect. Attribute made optional.
+		</member>
+		<member name="RateSource" type="GDIFCEntityBase" setter="set_RateSource" getter="get_RateSource">
+			The source from which an exchange rate is obtained.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

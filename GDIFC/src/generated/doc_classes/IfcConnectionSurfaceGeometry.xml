@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcConnectionSurfaceGeometry" inherits="IfcConnectionGeometry"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcConnectionSurfaceGeometry is used to describe the geometric constraints that facilitate the physical connection of two objects at a surface or at a face with surface geometry associated. It is envisioned as a control that applies to the element connection relationships. HISTORY New entity in IFC Release 2x. IFC2x Edition 3 CHANGE The provision of topology with associated geometry, IfcFaceSurfac
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="SurfaceOnRelatingElement" type="GDIFCEntityBase" setter="set_SurfaceOnRelatingElement" getter="get_SurfaceOnRelatingElement">
+			Surface at which related object is aligned at the relating element, given in the LCS of the relating element.
+		</member>
+		<member name="SurfaceOnRelatedElement" type="GDIFCEntityBase" setter="set_SurfaceOnRelatedElement" getter="get_SurfaceOnRelatedElement">
+			Surface at which the relating element is aligned at the related element, given in the LCS of the related element. If the information is omitted, then the origin of the related element is used.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

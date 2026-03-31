@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCartesianTransformationOperator" inherits="IfcGeometricRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A Cartesian transformation operator defines a geometric transformation composed of translation, rotation, mirroring and uniform scaling. The list of normalized vectors u defines the columns of an orthogonal matrix T. These vectors are computed, by the base axis function, from the direction attributes axis1, axis2 and, in Cartesian transformation operator 3d, 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Axis1" type="GDIFCEntityBase" setter="set_Axis1" getter="get_Axis1">
+			The direction used to determine U[1], the derived X axis direction.
+		</member>
+		<member name="Axis2" type="GDIFCEntityBase" setter="set_Axis2" getter="get_Axis2">
+			The direction used to determine U[2], the derived Y axis direction.
+		</member>
+		<member name="LocalOrigin" type="GDIFCEntityBase" setter="set_LocalOrigin" getter="get_LocalOrigin">
+			The required translation, specified as a cartesian point. The actual translation included in the transformation is from the geometric origin to the local origin.
+		</member>
+		<member name="Scale" type="float" setter="set_Scale" getter="get_Scale">
+			The scaling value specified for the transformation.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

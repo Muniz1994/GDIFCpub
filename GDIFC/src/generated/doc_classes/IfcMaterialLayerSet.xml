@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMaterialLayerSet" inherits="IfcMaterialDefinition"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcMaterialLayerSet is a designation by which materials of an element constructed of a number of material layers is known and through which the relative positioning of individual layers can be expressed. The Material Layer Set Base (MlsBase) describes the axis along which the material layers are positioned. The MlsBase is positioned along the reference axis or reference plane of the element suppor
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="MaterialLayers" type="Array" setter="set_MaterialLayers" getter="get_MaterialLayers">
+			Identification of the layers from which the material layer set is composed.
+		</member>
+		<member name="LayerSetName" type="String" setter="set_LayerSetName" getter="get_LayerSetName">
+			The name by which the material layer set is known.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			Definition of the material layer set in descriptive terms. IFC2x4 CHANGE The attribute has been added at the end of attribute list.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

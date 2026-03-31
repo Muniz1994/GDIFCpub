@@ -102,7 +102,56 @@ Attach to `GDIFCManager.geometric_settings` to control the loader.
 | `plane_refit_iterations` | `10` | Maximum iterations for the plane-refit solver. |
 | `boolean_union_threshold` | `150` | Maximum number of boolean union operations per object before the operation is skipped. |
 
-## Building from Source
+---
+
+## Typed IFC Access
+
+Every IFC entity class is exposed as a native Godot class following the IFC naming convention (`IfcWall`, `IfcSlab`, `IfcDoor`, …). Each class inherits from `GDIFCEntityBase` and exposes its own IFC attributes as typed Godot properties with the exact IFC attribute names (e.g. `PredefinedType`, `Name`, `Description`).
+
+### Cast to a specific IFC type
+
+```gdscript
+# ifc_node.ifc_object is a GDIFCEntityBase reference.
+# Cast it to the typed class to access typed properties.
+var wall := ifc_node.ifc_object as IfcWall
+if wall:
+    print(wall.PredefinedType)   # e.g. "SOLIDWALL"
+    print(wall.Name)             # e.g. "External Wall"
+```
+
+### Traverse the model tree
+
+```gdscript
+# Iterate all children of the GDIFCManager and access typed data.
+for child in ifc_manager.get_children():
+    if child is IFCNode:
+        var slab := child.ifc_object as IfcSlab
+        if slab:
+            print("Slab name: ", slab.Name)
+            print("Slab type: ", slab.PredefinedType)
+```
+
+### Create and modify an IFC object at runtime
+
+```gdscript
+# All generated classes exist in the ClassDB — you can instantiate them.
+var wall: IfcWall = IfcWall.new()
+wall.Name = "New Wall"
+wall.PredefinedType = "SOLIDWALL"
+```
+
+### Dynamic fallback via GDIFCEntityBase
+
+When the exact IFC class is not known at compile time, use the generic base-class API:
+
+```gdscript
+var entity: GDIFCEntityBase = ifc_node.ifc_object
+print(entity.get_type())                      # e.g. "IfcWall"
+print(entity.get_attribute("Name"))           # generic attribute read
+print(entity.get_all_attributes())            # Dictionary of all attributes
+```
+
+
 
 ### Requirements
 

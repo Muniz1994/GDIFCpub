@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcExtendedProperties" inherits="IfcPropertyAbstraction"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+		</member>
+		<member name="Properties" type="Array" setter="set_Properties" getter="get_Properties">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

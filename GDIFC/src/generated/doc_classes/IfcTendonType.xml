@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTendonType" inherits="IfcReinforcingElementType"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+		<member name="NominalDiameter" type="float" setter="set_NominalDiameter" getter="get_NominalDiameter">
+		</member>
+		<member name="CrossSectionArea" type="float" setter="set_CrossSectionArea" getter="get_CrossSectionArea">
+		</member>
+		<member name="SheathDiameter" type="float" setter="set_SheathDiameter" getter="get_SheathDiameter">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

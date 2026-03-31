@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcEvaporator" inherits="IfcEnergyConversionDevice"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An evaporator is a device in which a liquid refrigerent is vaporized and absorbs heat from the surrounding fluid. HISTORY New entity in IFC2x4 Type Use Definition IfcEvaporator defines the occurrence of any evaporator; common information about evaporator types is handled by IfcEvaporatorType . The IfcEvaporatorType (if present) may establish the common type name, usage (predefined type), propertie
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

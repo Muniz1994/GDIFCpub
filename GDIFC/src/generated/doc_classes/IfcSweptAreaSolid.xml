@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSweptAreaSolid" inherits="IfcSolidModel"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992: The swept area solid entity collects the entities which are defined procedurally by sweeping action on planar bounded surfaces. The position is space of the swept solid will be dependent upon the position of the swept area. The swept area will be a face of the resulting swept area solid, except for the case of a revolved area solid with angle equal to 2π (or 3
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="SweptArea" type="GDIFCEntityBase" setter="set_SweptArea" getter="get_SweptArea">
+			The surface defining the area to be swept. It is given as a profile definition within the xy plane of the position coordinate system.
+		</member>
+		<member name="Position" type="GDIFCEntityBase" setter="set_Position" getter="get_Position">
+			Position coordinate system for the swept area, provided by a profile definition within the XY plane of the Position .
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

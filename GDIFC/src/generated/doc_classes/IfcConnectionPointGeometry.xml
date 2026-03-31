@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcConnectionPointGeometry" inherits="IfcConnectionGeometry"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcConnectionPointGeometry is used to describe the geometric constraints that facilitate the physical connection of two objects at a point (here IfcCartesianPoint ) or at an vertex with point coordinates associated. It is envisioned as a control that applies to the element connection relationships. EXAMPLE The connection relationship between two path based elements (like a column and a beam) has a
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PointOnRelatingElement" type="GDIFCEntityBase" setter="set_PointOnRelatingElement" getter="get_PointOnRelatingElement">
+			Point at which the connected object is aligned at the relating element, given in the LCS of the relating element.
+		</member>
+		<member name="PointOnRelatedElement" type="GDIFCEntityBase" setter="set_PointOnRelatedElement" getter="get_PointOnRelatedElement">
+			Point at which connected objects are aligned at the related element, given in the LCS of the related element. If the information is omitted, then the origin of the related element is used.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

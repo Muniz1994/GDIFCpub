@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelAssociatesDocument" inherits="IfcRelAssociates"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The objectified relationship ( IfcRelAssociatesDocument ) handles the assignment of a document information (items of the select IfcDocumentSelect ) to objects occurrences (subtypes of IfcObject ) or object types (subtypes of IfcTypeObject ). The relationship is used to assign a document reference or a more detailed document information to objects. A single document reference can be applied to mult
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingDocument" type="GDIFCEntityBase" setter="set_RelatingDocument" getter="get_RelatingDocument">
+			Document information or reference which is applied to the objects.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTextStyle" inherits="IfcPresentationStyle"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-46:1992 : The text style is a presentation style for annotation text. The IfcTextStyle provides the text style table for presentation information assigned to text literals. The style is defined by color, text font characteristics, and text box characteristics. The definitions are based upon: definitions from ISO/IS 10303-46:1994 for (old) vector based and monospace tex
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="TextCharacterAppearance" type="GDIFCEntityBase" setter="set_TextCharacterAppearance" getter="get_TextCharacterAppearance">
+			A character style to be used for presented text.
+		</member>
+		<member name="TextStyle" type="GDIFCEntityBase" setter="set_TextStyle" getter="get_TextStyle">
+			The style applied to the text block for its visual appearance. It defines the text block characteristics, either for vector based or monospace text fonts (see select item IfcTextStyleWithBoxCharacteristics ), or for true type text fonts (see select item IfcTextStyleTextModel . IFC2x Edition 3 CHANGE The attribute TextBlockStyle has been changed from SET[1:?] to a non-aggregated optional, it has been renamed from TextStyles.
+		</member>
+		<member name="TextFontStyle" type="GDIFCEntityBase" setter="set_TextFontStyle" getter="get_TextFontStyle">
+			The style applied to the text font for its visual appearance. It defines the font family, font style, weight and size. IFC2x Edition 2 Addendum 2 CHANGE The attribute TextFontStyle is a new attribute attached to IfcTextStyle .
+		</member>
+		<member name="ModelOrDraughting" type="bool" setter="set_ModelOrDraughting" getter="get_ModelOrDraughting">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

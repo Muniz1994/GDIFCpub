@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelAssociatesLibrary" inherits="IfcRelAssociates"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The objectified relationship ( IfcRelAssociatesLibrary ) handles the assignment of a library item (items of the select IfcLibrarySelect ) to subtypes of IfcObjectDefinition or IfcPropertyDefinition . The relationship is used to assign a library reference or a more detailed link to a library information to objects, property sets or types. A single library reference can be applied to multiple items.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingLibrary" type="GDIFCEntityBase" setter="set_RelatingLibrary" getter="get_RelatingLibrary">
+			Reference to a library, from which the definition of the property set is taken.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSurfaceStyleShading" inherits="IfcPresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-46:1992 : The surface style rendering allows the realistic visualization of surfaces referring to rendering techniques based on the laws of physics and mathematics. The entity IfcSurfaceStyleShading allows for colour information used for shading, whereas subtypes provide data for more sophisticated rendering techniques. The surface colour is used for colouring or simpl
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="SurfaceColour" type="GDIFCEntityBase" setter="set_SurfaceColour" getter="get_SurfaceColour">
+			The colour used to render the surface. The surface colour for visualisation is defined by specifying the intensity of red, green and blue.
+		</member>
+		<member name="Transparency" type="float" setter="set_Transparency" getter="get_Transparency">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

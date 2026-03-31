@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMaterialProfileSetUsage" inherits="IfcMaterialUsageDefinition"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcMaterialProfileSetUsage determines the usage of IfcMaterialProfileSet in terms of its location relative to the associated element geometry. The location of a material profile set shall be compatible with the building element geometry (that is, material profiles shall fit inside the element geometry). The rules to ensure the compatibility depend on the type of the building element. For building 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ForProfileSet" type="GDIFCEntityBase" setter="set_ForProfileSet" getter="get_ForProfileSet">
+			The IfcMaterialProfileSet set to which the usage is applied.
+		</member>
+		<member name="CardinalPoint" type="int" setter="set_CardinalPoint" getter="get_CardinalPoint">
+			Index reference to a significant point in the section profile. Describes how the section is aligned relative to the (longitudinal) axis of the member it is associated with. This parametric specification of profile alignment can be provided redundantly to the explicit alignment defined by ForProfileSet.MaterialProfiles[*].Profile.
+		</member>
+		<member name="ReferenceExtent" type="float" setter="set_ReferenceExtent" getter="get_ReferenceExtent">
+			EPM-HTML> Extent of the extrusion of the elements body shape representation to which the IfcMaterialProfileSetUsage applies. It is used as the reference value for the upper OffsetValues[2] provided by the IfcMaterialProfileSetWithOffsets subtype for included material profiles. NOTE 1 The attribute ReferenceExtent shall be asserted, if an IfcMaterialProfileSetWithOffsets is included in the ForProfileSet.MaterialProfiles list of maerial layers. NOTE 2 The ReferenceExtent for IfcBeamStandardCase , IfcColumnStandardCase , and IfcMemberStandardCase is the reference length starting at z=0 being the XY plane of the object coordinate system.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcVibrationIsolatorType" inherits="IfcElementComponentType"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The element component type IfcVibrationIsolatorType defines commonly shared information for occurrences of vibration isolators. The set of shared information may include: common properties with shared property sets common representations of shape common materials common composition of elements applicable assignment of process types It is used to define a vibration isolator specification (i.e. the 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Defines the type of vibration isolator.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

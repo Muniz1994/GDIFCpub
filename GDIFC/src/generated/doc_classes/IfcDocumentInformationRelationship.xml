@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDocumentInformationRelationship" inherits="IfcResourceLevelRelationship"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcDocumentInformationRelationship is a relationship class that enables a document to have the ability to reference other documents. HISTORY New entity in Release IFC2x. IFC2x4 CHANGE Subtyped from IfcResourceLevelRelationship , order of attributes changed. Use definitions This class can be used to describe relationships in which one document may reference one or more other sub documents or whe
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingDocument" type="GDIFCEntityBase" setter="set_RelatingDocument" getter="get_RelatingDocument">
+			The document that acts as the parent, referencing or original document in a relationship.
+		</member>
+		<member name="RelatedDocuments" type="Array" setter="set_RelatedDocuments" getter="get_RelatedDocuments">
+			The document that acts as the child, referenced or replacing document in a relationship.
+		</member>
+		<member name="RelationshipType" type="String" setter="set_RelationshipType" getter="get_RelationshipType">
+			Describes the type of relationship between documents. This could be sub-document, replacement etc. The interpretation has to be established in an application context.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

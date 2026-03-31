@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRoof" inherits="IfcBuiltElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO 6707-1:1989 : Construction enclosing the building from above. The IfcRoof is a description of the total roof. It acts as a container entity, that aggregates all components of the roof, it represents. The aggregation is handled via the IfcRelAggregates relationship, relating an IfcRoof with the related roof elements, like slabs (represented by IfcSlab ), rafters and purlins (rep
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined shape types for a roof that are specified in an enumeration. IFC2x4 CHANGE The attribute has been renamed from ShapeType and changed to be OPTIONAL with upward compatibility for file based exchange.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

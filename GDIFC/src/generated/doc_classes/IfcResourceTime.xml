@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcResourceTime" inherits="IfcSchedulingTime"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcResourceTime captures the time-related information about a construction resource. HISTORY: New entity in IFC2x4.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ScheduleWork" type="String" setter="set_ScheduleWork" getter="get_ScheduleWork">
+			Indicates the total work (e.g. person-hours) allocated to the task on behalf of the resource. Note: this is not necessarily the same as the task duration (IfcTaskTime.ScheduleDuration); it may vary according to the resource usage ratio and other resources assigned to the task.
+		</member>
+		<member name="ScheduleUsage" type="float" setter="set_ScheduleUsage" getter="get_ScheduleUsage">
+			Indicates the amount of the resource used concurrently. For example, 100% means 1 worker, 300% means 3 workers, 50% means half of 1 worker's time for scenarios where multitasking is feasible. If not provided, then the usage ratio is considered to be 100%.
+		</member>
+		<member name="ScheduleStart" type="String" setter="set_ScheduleStart" getter="get_ScheduleStart">
+			Indicates the time when the resource is scheduled to start working.
+		</member>
+		<member name="ScheduleFinish" type="String" setter="set_ScheduleFinish" getter="get_ScheduleFinish">
+			Indicates the time when the resource is scheduled to finish working.
+		</member>
+		<member name="ScheduleContour" type="String" setter="set_ScheduleContour" getter="get_ScheduleContour">
+			Indicates how a resource should be leveled over time by adjusting the resource usage according to a specified curve. Standard values include: 'Flat', 'BackLoaded', 'FrontLoaded', 'DoublePeak', 'EarlyPeak', 'LatePeak', 'Bell', and 'Turtle'. Custom values may specify a custom name or formula.
+		</member>
+		<member name="LevelingDelay" type="String" setter="set_LevelingDelay" getter="get_LevelingDelay">
+			Indicates a delay in the ScheduleStart caused by leveling.
+		</member>
+		<member name="IsOverAllocated" type="bool" setter="set_IsOverAllocated" getter="get_IsOverAllocated">
+			Indicates that the resource is scheduled in excess of its capacity.
+		</member>
+		<member name="StatusTime" type="String" setter="set_StatusTime" getter="get_StatusTime">
+			Indicates the date and time for which status values are applicable; particularly completion, actual, and remaining values. If values are time-phased (the referencing IfcConstructionResource has associated time series values for attributes), then the status values may be determined from such time-phased data as of the StatusTime.
+		</member>
+		<member name="ActualWork" type="String" setter="set_ActualWork" getter="get_ActualWork">
+			Indicates the actual work performed by the resource as of the StatusTime.
+		</member>
+		<member name="ActualUsage" type="float" setter="set_ActualUsage" getter="get_ActualUsage">
+			Indicates the actual amount of the resource used concurrently.
+		</member>
+		<member name="ActualStart" type="String" setter="set_ActualStart" getter="get_ActualStart">
+			Indicates the time when the resource actually started working.
+		</member>
+		<member name="ActualFinish" type="String" setter="set_ActualFinish" getter="get_ActualFinish">
+			Indicates the time when the resource actually finished working.
+		</member>
+		<member name="RemainingWork" type="String" setter="set_RemainingWork" getter="get_RemainingWork">
+			Indicates the work remaining to be completed by the resource.
+		</member>
+		<member name="RemainingUsage" type="float" setter="set_RemainingUsage" getter="get_RemainingUsage">
+		</member>
+		<member name="Completion" type="float" setter="set_Completion" getter="get_Completion">
+			Indicates the percent completion of this resource. If the resource is assigned to a task, then indicates completion of the task on behalf of the resource; if the resource is partitioned into sub-allocations, then indicates overall completion of sub-allocations.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

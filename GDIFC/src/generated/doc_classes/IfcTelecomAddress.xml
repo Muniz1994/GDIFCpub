@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTelecomAddress" inherits="IfcAddress"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition: Address to which telephone, electronic mail and other forms of telecommunications should be addressed. HISTORY New entity in IFC Release 2x. IFC 2x4 change: Added attribute MessagingIDs . Type of attribute WWWHomePageURL compatibly changed from IfcLabel to IfcURIReference .
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="TelephoneNumbers" type="PackedStringArray" setter="set_TelephoneNumbers" getter="get_TelephoneNumbers">
+			The list of telephone numbers at which telephone messages may be received.
+		</member>
+		<member name="FacsimileNumbers" type="PackedStringArray" setter="set_FacsimileNumbers" getter="get_FacsimileNumbers">
+			The list of fax numbers at which fax messages may be received.
+		</member>
+		<member name="PagerNumber" type="String" setter="set_PagerNumber" getter="get_PagerNumber">
+			The pager number at which paging messages may be received.
+		</member>
+		<member name="ElectronicMailAddresses" type="PackedStringArray" setter="set_ElectronicMailAddresses" getter="get_ElectronicMailAddresses">
+			The list of Email addresses at which Email messages may be received.
+		</member>
+		<member name="WWWHomePageURL" type="String" setter="set_WWWHomePageURL" getter="get_WWWHomePageURL">
+			The world wide web address at which the preliminary page of information for the person or organization can be located. NOTE: Information on the world wide web for a person or organization may be separated into a number of pages and across a number of host sites, all of which may be linked together. It is assumed that all such information may be referenced from a single page that is termed the home page for that person or organization.
+		</member>
+		<member name="MessagingIDs" type="PackedStringArray" setter="set_MessagingIDs" getter="get_MessagingIDs">
+			IDs or addresses for any other means of telecommunication, for example instant messaging, voice-over-IP, or file transfer protocols. The communication protocol is indicated by the URI value with scheme designations such as irc:, sip:, or ftp:.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

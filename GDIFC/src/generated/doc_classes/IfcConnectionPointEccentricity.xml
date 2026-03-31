@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcConnectionPointEccentricity" inherits="IfcConnectionPointGeometry"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcConnectionPointEccentricity is used to describe the geometric constraints that facilitate the physical connection of two objects at a point or vertex point with associated point coordinates. There is a physical distance, or eccentricity, etween the connection points of both object. The eccentricity can be either given by: providing the PointOnRelatingElement and the PointOnRelatedElement , wher
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="EccentricityInX" type="float" setter="set_EccentricityInX" getter="get_EccentricityInX">
+			Distance in x direction between the two points (or vertex points) engaged in the point connection.
+		</member>
+		<member name="EccentricityInY" type="float" setter="set_EccentricityInY" getter="get_EccentricityInY">
+			Distance in y direction between the two points (or vertex points) engaged in the point connection.
+		</member>
+		<member name="EccentricityInZ" type="float" setter="set_EccentricityInZ" getter="get_EccentricityInZ">
+			Distance in z direction between the two points (or vertex points) engaged in the point connection.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

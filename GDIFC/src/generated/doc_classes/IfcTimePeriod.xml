@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTimePeriod" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcTimePeriod defines a time period given by a start and end time. Both time definitions consider the time zone and allow for the daylight savings offset. HISTORY: New entity in IFC R2x4. Use definitions A time period is defined by a start and an end time, which is defined by IfcTime . The given time period should be within reasonable values (for example, the start time must be before the end time
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="StartTime" type="String" setter="set_StartTime" getter="get_StartTime">
+			Start time of the time period.
+		</member>
+		<member name="EndTime" type="String" setter="set_EndTime" getter="get_EndTime">
+			End time of the time period.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

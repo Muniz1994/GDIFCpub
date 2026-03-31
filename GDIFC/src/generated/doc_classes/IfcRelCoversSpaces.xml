@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelCoversSpaces" inherits="IfcRelConnects"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : The objectified relationship, IfcRelCoversSpace , relatesÿa space object to one or many coverings, which faces (or is assigned to) the space. NOTE Particularly floorings, ceilings and wall coverings, such as claddings or tiling are often considered as space coverings, rather then wall or slab coverings. In some life cycle phases, such as the operation phase, the relationship 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingSpace" type="GDIFCEntityBase" setter="set_RelatingSpace" getter="get_RelatingSpace">
+			Relationship to the space object that is covered. IFC2x4 CHANGE: The attribute name has been changed from RelatedSpace to RelatingSpace with upward compatibility for file based exchange.
+		</member>
+		<member name="RelatedCoverings" type="Array" setter="set_RelatedCoverings" getter="get_RelatedCoverings">
+			Relationship to the set of coverings covering this space.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

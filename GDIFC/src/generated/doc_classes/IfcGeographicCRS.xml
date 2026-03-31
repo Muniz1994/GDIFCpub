@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcGeographicCRS" inherits="IfcCoordinateReferenceSystem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PrimeMeridian" type="String" setter="set_PrimeMeridian" getter="get_PrimeMeridian">
+		</member>
+		<member name="AngleUnit" type="GDIFCEntityBase" setter="set_AngleUnit" getter="get_AngleUnit">
+		</member>
+		<member name="HeightUnit" type="GDIFCEntityBase" setter="set_HeightUnit" getter="get_HeightUnit">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

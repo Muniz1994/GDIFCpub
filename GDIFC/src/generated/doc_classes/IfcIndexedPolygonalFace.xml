@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcIndexedPolygonalFace" inherits="IfcTessellatedItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="CoordIndex" type="PackedInt64Array" setter="set_CoordIndex" getter="get_CoordIndex">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

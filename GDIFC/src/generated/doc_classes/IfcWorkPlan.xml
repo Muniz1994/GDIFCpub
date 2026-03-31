@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcWorkPlan" inherits="IfcWorkControl"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcWorkPlan represents work plans in a construction or a facilities management project. HISTORY: New Entity in IFC 2.0 A work plan contains a set of work schedules for different purposes (including construction and facilities management). Contained work schedules are defined through the IfcRelAggregates relationship. Through inheritance from IfcWorkControl it is also possible to define referenc
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Identifies the predefined types of a work plan from which the type required may be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

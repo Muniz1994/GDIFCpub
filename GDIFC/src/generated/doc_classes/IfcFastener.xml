@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFastener" inherits="IfcElementComponent"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: Representations of fixing parts which are used as fasteners to connect or join elements with other elements. HISTORY New entity in IFC Release 2x2 IFC 2x4 change: Attribute PredefinedType added.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Subtype of fastener
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

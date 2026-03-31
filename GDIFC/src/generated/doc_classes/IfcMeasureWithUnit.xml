@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMeasureWithUnit" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-41:1992 : A measure with unit is the specification of a physical quantity as defined in ISO 31 (clause 2). IfcMeasureWithUnit has two usages: 1. For representing measure value together with its unit on the entity type attribute level; thus overriding the IFC model global unit assignments. 2. For conversion based unit to give the conversion rate and its base. NOTE Corre
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ValueComponent" type="GDIFCEntityBase" setter="set_ValueComponent" getter="get_ValueComponent">
+			The value of the physical quantity when expressed in the specified units.
+		</member>
+		<member name="UnitComponent" type="GDIFCEntityBase" setter="set_UnitComponent" getter="get_UnitComponent">
+			The unit in which the physical quantity is expressed.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

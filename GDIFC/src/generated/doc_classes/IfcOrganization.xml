@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcOrganization" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A named and structured grouping with a corporate identity. NOTE: The relationships between IfcOrganizations , like a Department within a Company, can be expressed using IfcOrganizationRelationship . NOTE Corresponds to the following entity in ISO-10303-41: organization. HISTORY New entity in IFC Release 1.5.1. IFC 2x4 change: attribute Id renamed to Identification .
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Identification" type="String" setter="set_Identification" getter="get_Identification">
+			Identification of the organization.
+		</member>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			The word, or group of words, by which the organization is referred to.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			Text that relates the nature of the organization.
+		</member>
+		<member name="Roles" type="Array" setter="set_Roles" getter="get_Roles">
+			Roles played by the organization.
+		</member>
+		<member name="Addresses" type="Array" setter="set_Addresses" getter="get_Addresses">
+			Postal and telecom addresses of an organization. NOTE: There may be several addresses related to an organization.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

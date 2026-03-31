@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcComplexPropertyTemplate" inherits="IfcPropertyTemplate"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The IfcComplexPropertyTemplate defines the template for all complex properties, either the IfcComplexProperty 's, or the IfcPhysicalComplexQuantity 's. The individual complex property templates are interpreted according to their Name attribute and and optional UsageName attribute. HISTORY New entity in IFC2x4.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="UsageName" type="String" setter="set_UsageName" getter="get_UsageName">
+		</member>
+		<member name="TemplateType" type="String" setter="set_TemplateType" getter="get_TemplateType">
+		</member>
+		<member name="HasPropertyTemplates" type="Array" setter="set_HasPropertyTemplates" getter="get_HasPropertyTemplates">
+			Reference to a set of property templates. It should only be provided, if the PropertyType is set to COMPLEX .
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

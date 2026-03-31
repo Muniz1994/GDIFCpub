@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcGeometricRepresentationItem" inherits="IfcRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-43:1992 : An geometric representation item is a representation item that has the additional meaning of having geometric position or orientation or both. This meaning is present by virtue of: being a Cartesian point or a direction referencing directly a Cartesian point or direction referencing indirectly a Cartesian point or direction An indirect reference to a Cartesia
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

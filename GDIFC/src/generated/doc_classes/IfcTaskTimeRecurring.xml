@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTaskTimeRecurring" inherits="IfcTaskTime"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcTaskTimeRecurring is a recurring instance of IfcTaskTime for handling regularly scheduled or repetitive tasks. HISTORY: New entity in IFC2x4.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Recurrence" type="GDIFCEntityBase" setter="set_Recurrence" getter="get_Recurrence">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCartesianTransformationOperator3D" inherits="IfcCartesianTransformationOperator"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A Cartesian transformation operator 3d defines a geometric transformation in three-dimensional space composed of translation, rotation, mirroring and uniform scaling. The list of normalized vectors u defines the columns of an orthogonal matrix T . These vectors are computed from the direction attributes axis1, axis2 and axis3 by the base axis function. If | T
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Axis3" type="GDIFCEntityBase" setter="set_Axis3" getter="get_Axis3">
+			The exact direction of U[3], the derived Z axis direction.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

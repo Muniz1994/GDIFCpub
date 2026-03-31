@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcAsset" inherits="IfcGroup"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An asset is a uniquely identifiable grouping of elements acting as a single entity that has a financial value or that can be operated on as a single unit. An asset is generally the level of granularity at which maintenance operations are undertaken. An asset is a group that can contain one or more elements. Whilst the financial value of a component or element can be defined, financial value is als
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Identification" type="String" setter="set_Identification" getter="get_Identification">
+			A unique identification assigned to an asset that enables its differentiation from other assets. NOTE: The asset identifier is unique within the asset register. It differs from the globally unique id assigned to the instance of an entity populating a database.
+		</member>
+		<member name="OriginalValue" type="GDIFCEntityBase" setter="set_OriginalValue" getter="get_OriginalValue">
+			The cost value of the asset at the time of purchase.
+		</member>
+		<member name="CurrentValue" type="GDIFCEntityBase" setter="set_CurrentValue" getter="get_CurrentValue">
+			The current cost value of the asset.
+		</member>
+		<member name="TotalReplacementCost" type="GDIFCEntityBase" setter="set_TotalReplacementCost" getter="get_TotalReplacementCost">
+			The total cost of replacement of the asset.
+		</member>
+		<member name="Owner" type="GDIFCEntityBase" setter="set_Owner" getter="get_Owner">
+			The name of the person or organization that 'owns' the asset.
+		</member>
+		<member name="User" type="GDIFCEntityBase" setter="set_User" getter="get_User">
+			The name of the person or organization that 'uses' the asset.
+		</member>
+		<member name="ResponsiblePerson" type="GDIFCEntityBase" setter="set_ResponsiblePerson" getter="get_ResponsiblePerson">
+			The person designated to be responsible for the asset. NOTE: In some regulations (for example, UK Health and Safety at Work Act, Electricity at Work Regulations), management of assets must have a person identified as being responsible and to whom regulatory, insurance and other organizations communicate. In places where there is not a legal requirement, the responsible person would be the asset manager but would not have a legal status.
+		</member>
+		<member name="IncorporationDate" type="String" setter="set_IncorporationDate" getter="get_IncorporationDate">
+			The date on which an asset was incorporated into the works, installed, constructed, erected or completed. NOTE: This is the date on which an asset is considered to start depreciating. IFC2x4 CHANGE Type changed from IfcDateTimeSelect.
+		</member>
+		<member name="DepreciatedValue" type="GDIFCEntityBase" setter="set_DepreciatedValue" getter="get_DepreciatedValue">
+			The current value of an asset within the accounting rules and procedures of an organization.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

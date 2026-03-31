@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTextureVertex" inherits="IfcPresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcTextureVertex is a list of 2 (S, T) texture coordinates. The following additional definitions from ISO 19775 apply: Each vertex-based geometry node uses a set of 2D texture coordinates that map textures to vertices. Texture map values ( ImageTexture, PixelTexture) range from [0.0, 1.0] along the S-axis and T-axis. However, texture coordinate values may be in the range (-∞,∞). Texture coordin
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Coordinates" type="PackedFloat64Array" setter="set_Coordinates" getter="get_Coordinates">
+			The first coordinate[1] is the S, the second coordinate[2] is the T parameter value.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDistributionSystem" inherits="IfcSystem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A distribution system is a network designed to receive, store, maintain, distribute, or control the flow of a distribution media. A common example is a heating hot water system that consists of a pump, a tank, and an interconnected piping system for distributing hot water to terminals. HISTORY New entity in IFC 2x4. The group IfcDistributionSystem defines the occurrence of a specialized system for
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="LongName" type="String" setter="set_LongName" getter="get_LongName">
+			Long name for a system, used for informal purposes. It should be used, if available, in conjunction with the inherited Name attribute. NOTE In many scenarios the Name attribute refers to the short name or number of a distribution system or branch circuit, and the LongName refers to a descriptive name.
+		</member>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined types of distribution systems.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

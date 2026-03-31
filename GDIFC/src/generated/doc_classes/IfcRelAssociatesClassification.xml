@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelAssociatesClassification" inherits="IfcRelAssociates"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The objectified relationship IfcRelAssociatesClassification handles the assignment of a classification item (items of the select IfcClassificationSelect ) to objects occurrences (subtypes of IfcObject ) or object types (subtypes of IfcTypeObject ). The relationship is used to assign a classification item, or a classification system itself to objects. Depending on the type of the RelatingClassifica
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingClassification" type="GDIFCEntityBase" setter="set_RelatingClassification" getter="get_RelatingClassification">
+			Classification applied to the objects.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

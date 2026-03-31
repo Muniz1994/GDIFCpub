@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFeatureElement" inherits="IfcElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : Generalization of all existence dependent elements which modify the shape and appearance of the associated master element. The IfcFeatureElement offers the ability to handle shape modifiers as semantic objects within the IFC object model. NOTE The term "feature" has a predefined meaning in a context of "feature-based modeling" and within steel construction work. It is introdu
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

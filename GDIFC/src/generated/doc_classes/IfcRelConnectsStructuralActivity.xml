@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelConnectsStructuralActivity" inherits="IfcRelConnects"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: The IfcRelConnectsStructuralActivity relationship connects a structural activity (either an action or reaction) to a structural member, structural connection, or element. HISTORY: New entity in IFC 2x2.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingElement" type="GDIFCEntityBase" setter="set_RelatingElement" getter="get_RelatingElement">
+			Reference to a structural item or element to which the specified activity is applied.
+		</member>
+		<member name="RelatedStructuralActivity" type="GDIFCEntityBase" setter="set_RelatedStructuralActivity" getter="get_RelatedStructuralActivity">
+			Reference to a structural activity which is acting upon the specified structural item or element.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

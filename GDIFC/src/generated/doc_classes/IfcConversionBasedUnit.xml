@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcConversionBasedUnit" inherits="IfcNamedUnit"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-41:1992 : A conversion based unit is a unit that is defined based on a measure with unit. NOTE Corresponding ISO 10303 name: conversion_based_unit, please refer to ISO/IS 10303-41 for the final definition of the formal standard. HISTORY New entity in IFC Release 1.5.1. IFC 2x3 change: standard names of typical units added. IFC 2x4 change: further names added: square in
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			The word, or group of words, by which the conversion based unit is referred to.
+		</member>
+		<member name="ConversionFactor" type="GDIFCEntityBase" setter="set_ConversionFactor" getter="get_ConversionFactor">
+			The physical quantity from which the converted unit is derived.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

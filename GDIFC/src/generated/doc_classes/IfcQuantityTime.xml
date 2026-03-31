@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcQuantityTime" inherits="IfcPhysicalSimpleQuantity"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcQuantityTime is an element quantity that defines a time measure to provide an property of time related to an element. It is normally given by the recipe information of the element under the specific measure rules given by a method of measurement. EXAMPLE The amount of time needed to pour concrete for a wall is given as a time quantity for the labor part of the recipe information. HISTORY New en
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="TimeValue" type="float" setter="set_TimeValue" getter="get_TimeValue">
+			Time measure value of this quantity.
+		</member>
+		<member name="Formula" type="String" setter="set_Formula" getter="get_Formula">
+			A formula by which the quantity has been calculated. It can be assigned in addition to the actual value of the quantity. Formulas could be mathematic calculations (like width x height), database links, or a combination. The formula is for informational purposes only. IFC2x4 CHANGE Attribute added to the end of the attribute list.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

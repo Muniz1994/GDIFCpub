@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTrimmedCurve" inherits="IfcBoundedCurve"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A trimmed curve is a bounded curve which is created by taking a selected portion, between two identified points, of the associated basis curve. The basis curve itself is unaltered and more than one trimmed curve may reference the same basis curve. Trimming points for the curve may be identified by: parametric value geometric position both of the above At leas
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="BasisCurve" type="GDIFCEntityBase" setter="set_BasisCurve" getter="get_BasisCurve">
+			The curve to be trimmed. For curves with multiple representations any parameter values given as Trim1 or Trim2 refer to the master representation of the BasisCurve only.
+		</member>
+		<member name="Trim1" type="Array" setter="set_Trim1" getter="get_Trim1">
+			The first trimming point which may be specified as a Cartesian point, as a real parameter or both.
+		</member>
+		<member name="Trim2" type="Array" setter="set_Trim2" getter="get_Trim2">
+			The second trimming point which may be specified as a Cartesian point, as a real parameter or both.
+		</member>
+		<member name="SenseAgreement" type="bool" setter="set_SenseAgreement" getter="get_SenseAgreement">
+			Flag to indicate whether the direction of the trimmed curve agrees with or is opposed to the direction of the basis curve.
+		</member>
+		<member name="MasterRepresentation" type="String" setter="set_MasterRepresentation" getter="get_MasterRepresentation">
+			Where both parameter and point are present at either end of the curve this indicates the preferred form.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

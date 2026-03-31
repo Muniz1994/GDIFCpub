@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPhysicalComplexQuantity" inherits="IfcPhysicalQuantity"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The complex physical quantity, IfcPhysicalComplexQuantity , is an entity that holds a set of single quantity measure value (as defined at the subtypes of IfcPhysicalSimpleQuantity ), that all apply to a given component or aspect of the element. EXAMPLE: A layered element, like a wall, may have several material layers, each having individual quantities, like footprint area, side area and volume. An
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="HasQuantities" type="Array" setter="set_HasQuantities" getter="get_HasQuantities">
+			Set of physical quantities that are grouped by this complex physical quantity according to a given discrimination.
+		</member>
+		<member name="Discrimination" type="String" setter="set_Discrimination" getter="get_Discrimination">
+			Identification of the discrimination by which this physical complex property is distinguished. Examples of discriminations are 'layer', 'steel bar diameter', etc.
+		</member>
+		<member name="Quality" type="String" setter="set_Quality" getter="get_Quality">
+			Additional indication of a quality of the quantities that are grouped under this physical complex quantity.
+		</member>
+		<member name="Usage" type="String" setter="set_Usage" getter="get_Usage">
+			Additional indication of a usage type of the quantities that are grouped under this physical complex quantity.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

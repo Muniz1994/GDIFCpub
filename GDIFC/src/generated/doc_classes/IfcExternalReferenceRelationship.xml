@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcExternalReferenceRelationship" inherits="IfcResourceLevelRelationship"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcExternalReferenceRelationship is a relationship entity that enables objects from the IfcResourceObjectSelect to have the ability to be tagged by external references. NOTE This relationship is used to assign classification, library or document information to entities that do not inherit from IfcRoot . It has a similar functionality as the subtypes of IfcRelAssociates . HISTORY New Entity in IFC 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingReference" type="GDIFCEntityBase" setter="set_RelatingReference" getter="get_RelatingReference">
+			An external reference that can be used to tag an object within the range of IfcResourceObjectSelect . NOTE External references can be a library reference (for example a dictionary or a catalogue reference), a classification reference, or a documentation reference.
+		</member>
+		<member name="RelatedResourceObjects" type="Array" setter="set_RelatedResourceObjects" getter="get_RelatedResourceObjects">
+			Objects within the list of IfcResourceObjectSelect that can be tagged by an external reference to a dictionary, library, catalogue, classification or documentation.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

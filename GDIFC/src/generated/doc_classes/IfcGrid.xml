@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcGrid" inherits="IfcPositioningElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcGrid ia a planar design grid defined in 3D space used as an aid in locating structural and design elements. The position of the grid ( ObjectPlacement ) is defined by a 3D coordinate system (and thereby the design grid can be used in plan, section or in any position relative to the world coordinate system). The position can be relative to the object placement of other products or grids. The XY 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="UAxes" type="Array" setter="set_UAxes" getter="get_UAxes">
+			List of grid axes defining the first row of grid lines.
+		</member>
+		<member name="VAxes" type="Array" setter="set_VAxes" getter="get_VAxes">
+			List of grid axes defining the second row of grid lines.
+		</member>
+		<member name="WAxes" type="Array" setter="set_WAxes" getter="get_WAxes">
+			List of grid axes defining the third row of grid lines. It may be given in the case of a triangular grid.
+		</member>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Relationship to a spatial structure element, to which the grid is primarily associated. IFC2x PLATFORM CHANGE The inverse relationship has been added to IfcGrid with upward compatibility
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

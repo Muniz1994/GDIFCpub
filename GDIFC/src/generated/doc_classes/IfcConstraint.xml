@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcConstraint" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcConstraint is used to define a constraint or limiting value or boundary condition that may be applied to an object or to the value of a property. HISTORY: New Entity in IFC Release 2.0 Use Definition IfcConstraint may be associated with any subtype of IfcRoot (unless restricted in specific subtypes) through the IfcRelAssociatesConstraint relationship in the IfcControlExtension schema, or may
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			A name to be used for the constraint (e.g., ChillerCoefficientOfPerformance).
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			A description that may apply additional information about a constraint.
+		</member>
+		<member name="ConstraintGrade" type="String" setter="set_ConstraintGrade" getter="get_ConstraintGrade">
+			Enumeration that qualifies the type of constraint.
+		</member>
+		<member name="ConstraintSource" type="String" setter="set_ConstraintSource" getter="get_ConstraintSource">
+			Any source material, such as a code or standard, from which the constraint originated.
+		</member>
+		<member name="CreatingActor" type="GDIFCEntityBase" setter="set_CreatingActor" getter="get_CreatingActor">
+			Person and/or organization that has created the constraint.
+		</member>
+		<member name="CreationTime" type="String" setter="set_CreationTime" getter="get_CreationTime">
+			Time when information specifying the constraint instance was created. Note IFC2x4 CHANGE: Attribute data type changed to IfcDateTime using ISO 8601 representation
+		</member>
+		<member name="UserDefinedGrade" type="String" setter="set_UserDefinedGrade" getter="get_UserDefinedGrade">
+			Allows for specification of user defined grade of the constraint beyond the enumeration values (hard, soft, advisory) provided by ConstraintGrade attribute of type IfcConstraintEnum . When a value is provided for attribute UserDefinedGrade in parallel the attribute ConstraintGrade shall have enumeration value USERDEFINED.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcLightIntensityDistribution" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcLightIntensityDistribution defines the the luminous intensity of a light source that changes according to the direction of the ray. It is based on some standardized light distribution curves, which are defined by the LightDistributionCurve attribute. New entity in IFC2x2.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="LightDistributionCurve" type="String" setter="set_LightDistributionCurve" getter="get_LightDistributionCurve">
+			Standardized light distribution curve used to define the luminous intensity of the light in all directions.
+		</member>
+		<member name="DistributionData" type="Array" setter="set_DistributionData" getter="get_DistributionData">
+			Light distribution data applied to the light source. It is defined by a list of main plane angles (B or C according to the light distribution curve chosen) that includes (for each B or C angle) a second list of secondary plane angles (the β or γ angles) and the according luminous intensity distribution measures.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

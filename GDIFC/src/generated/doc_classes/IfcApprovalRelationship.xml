@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcApprovalRelationship" inherits="IfcResourceLevelRelationship"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcApprovalRelationship associates approvals (one relating approval and one or more related approvals), each having different status or level as the approval process or the approved objects evolve. HISTORY: New entity in Release IFC2x2. IFC2x4 CHANGE Subtyped from IfcResourceLevelRelationship , order of attributes changed.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingApproval" type="GDIFCEntityBase" setter="set_RelatingApproval" getter="get_RelatingApproval">
+			The approval that other approval is related to.
+		</member>
+		<member name="RelatedApprovals" type="Array" setter="set_RelatedApprovals" getter="get_RelatedApprovals">
+			The approvals that are related to another (relating) approval. IFC2x Edition 4 CHANGE The cardinality of this attribute has been changed to SET.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

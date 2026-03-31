@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralConnection" inherits="IfcStructuralItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: An IfcStructuralConnection represents a structural connection object (node i.e. vertex connection, or edge connection, or surface connection) or supports. HISTORY: New entity in IFC 2x2.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="AppliedCondition" type="GDIFCEntityBase" setter="set_AppliedCondition" getter="get_AppliedCondition">
+			Optional boundary conditions which define support conditions of this connection object, given in local coordinate directions of the connection object. If left unspecified, the connection object is assumed to have no supports besides being connected with members.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

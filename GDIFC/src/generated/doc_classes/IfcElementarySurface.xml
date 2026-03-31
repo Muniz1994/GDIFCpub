@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcElementarySurface" inherits="IfcSurface"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : An elementary surface ( IfcElementarySurface ) is a simple analytic surface with defined parametric representation. NOTE Corresponding ISO 10303 entity: elementary_surface. Only the subtype plane is incorporated as IfcPlane. The derived attribute Dim has been added (see also note at IfcGeometricRepresentationItem ). Please refer to ISO/IS 10303-42:1994, p. 69
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Position" type="GDIFCEntityBase" setter="set_Position" getter="get_Position">
+			The position and orientation of the surface. This attribute is used in the definition of the parameterization of the surface.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

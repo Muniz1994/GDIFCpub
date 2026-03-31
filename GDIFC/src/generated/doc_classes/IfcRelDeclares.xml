@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelDeclares" inherits="IfcRelationship"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The objectified relationship IfcRelDeclares handles the declaration of objects (subtypes of IfcObject ) or properties (subtypes of IfcPropertyDefinition ) to a project or project library (represented by IfcProject , or IfcProjectLibrary ). The relationship handles the assignment of other objects, like IfcActor , or IfcTypeObject to the project, or project libary. The attribute RelatedDefinitions p
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingContext" type="GDIFCEntityBase" setter="set_RelatingContext" getter="get_RelatingContext">
+			Reference to the IfcProject to which additional information is assigned.
+		</member>
+		<member name="RelatedDefinitions" type="Array" setter="set_RelatedDefinitions" getter="get_RelatedDefinitions">
+			Set of object or property definitions that are assigned to a context and to which the unit and representation context definitions of that context apply.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcWorkControl" inherits="IfcControl"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcWorkControl is an abstract supertype which captures information that is common to both IfcWorkPlan and IfcWorkSchedule . HISTORY New class in IFC 2x CHANGE IFC2x4 Corrected assignment of resources to work control in documentation. Assignment of tasks to work control updated based on changes of task time definitions and the introduction of a summary task. Identifier has been renamed (now Iden
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="CreationDate" type="String" setter="set_CreationDate" getter="get_CreationDate">
+			The date that the plan is created.
+		</member>
+		<member name="Creators" type="Array" setter="set_Creators" getter="get_Creators">
+			The authors of the work plan.
+		</member>
+		<member name="Purpose" type="String" setter="set_Purpose" getter="get_Purpose">
+			A description of the purpose of the work schedule.
+		</member>
+		<member name="Duration" type="String" setter="set_Duration" getter="get_Duration">
+			The total duration of the entire work schedule.
+		</member>
+		<member name="TotalFloat" type="String" setter="set_TotalFloat" getter="get_TotalFloat">
+			The total time float of the entire work schedule.
+		</member>
+		<member name="StartTime" type="String" setter="set_StartTime" getter="get_StartTime">
+			The start time of the schedule.
+		</member>
+		<member name="FinishTime" type="String" setter="set_FinishTime" getter="get_FinishTime">
+			The finish time of the schedule.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

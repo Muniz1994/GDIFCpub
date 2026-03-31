@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcConnectionCurveGeometry" inherits="IfcConnectionGeometry"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcConnectionCurveGeometry is used to describe the geometric constraints that facilitate the physical connection of two objects at a curve or at an edge with curve geometry associated. It is envisioned as a control that applies to the element connection relationships. EXAMPLE The connection relationship between two walls has a geometric constraint which describes the end caps (or cut-off of the wa
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="CurveOnRelatingElement" type="GDIFCEntityBase" setter="set_CurveOnRelatingElement" getter="get_CurveOnRelatingElement">
+			The bounded curve at which the connected objects are aligned at the relating element, given in the LCS of the relating element.
+		</member>
+		<member name="CurveOnRelatedElement" type="GDIFCEntityBase" setter="set_CurveOnRelatedElement" getter="get_CurveOnRelatedElement">
+			The bounded curve at which the connected objects are aligned at the related element, given in the LCS of the related element. If the information is omitted, then the origin of the related element is used.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

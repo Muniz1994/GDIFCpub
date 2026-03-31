@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcBooleanClippingResult" inherits="IfcBooleanResult"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A clipping result is defined as a special subtype of the general Boolean result ( IfcBooleanResult ). It constrains the operands and the operator of the Boolean result. A clipping result is the Boolean difference between a solid (restricted to swept area solid) and a half space solid, whereas more than one difference operation can be applied to the Boolean result. NOTE The IfcBooleanClippingResult
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

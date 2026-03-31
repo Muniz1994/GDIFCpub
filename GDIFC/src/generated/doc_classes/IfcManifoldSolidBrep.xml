@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcManifoldSolidBrep" inherits="IfcSolidModel"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A manifold solid B-rep is a finite, arcwise connected volume bounded by one or more surfaces, each of which is a connected, oriented, finite, closed 2-manifold. There is no restriction on the genus of the volume, nor on the number of voids within the volume. The Boundary Representation (B-rep) of a manifold solid utilizes a graph of edges and vertices embedde
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Outer" type="GDIFCEntityBase" setter="set_Outer" getter="get_Outer">
+			A closed shell defining the exterior boundary of the solid. The shell normal shall point away from the interior of the solid.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRevolvedAreaSolid" inherits="IfcSweptAreaSolid"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcRevolvedAreaSolid is a solid created by revolving a cross section provided by a profile definition about an axis. The axis and the cross section shall be in the same plane. NOTE Both the axis and the cross section are required to lie in the xy plane of the object position coordinate system. The following definitions from ISO 10303-42 apply: A revolved area solid is a solid formed by revolvin
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Axis" type="GDIFCEntityBase" setter="set_Axis" getter="get_Axis">
+			Axis about which revolution will take place.
+		</member>
+		<member name="Angle" type="float" setter="set_Angle" getter="get_Angle">
+			The angle through which the sweep will be made. This angle is measured from the plane of the swept area provided by the XY plane of the position coordinate system.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

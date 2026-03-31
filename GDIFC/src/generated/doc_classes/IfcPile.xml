@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPile" inherits="IfcDeepFoundation"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A pile is a slender timber, concrete, or steel structural element, driven, jetted, or otherwise embedded on end in the ground for the purpose of supporting a load. HISTORY New entity in IFC2x2 Property Set Use Definition The following property set definitions are part of this IFC release: Pset_PileCommon : common property set for all pile occurrences. Quantity Use Definition The quantities relatin
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			The predefined generic type of the pile according to function. IFC 2x4 change: Attribute made optional. Type information can be provided by IfcRelDefinesByType and IfcPileType .
+		</member>
+		<member name="ConstructionType" type="String" setter="set_ConstructionType" getter="get_ConstructionType">
+			General designator for how the pile is constructed. IFC 2x4 change: Material profile association capability by means of IfcRelAssociatesMaterial has been added. The attribute ConstructionType should not be used whenever its information can be provided by a material profile set, either associated with the IfcPile object or, if present, with a corresponding instance of IfcPileType .
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

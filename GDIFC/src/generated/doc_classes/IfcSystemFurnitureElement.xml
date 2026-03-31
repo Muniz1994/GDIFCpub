@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSystemFurnitureElement" inherits="IfcFurnishingElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A system furniture element defines components of modular furniture which are not directly placed in a building structure but aggregated inside furniture. HISTORY: New entity in IFC2x2 Type Use Definition IfcSystemFurnitureElement defines the occurrence of any furniture element; common information about furniture element types is handled by IfcSystemFurnitureElementType . The IfcSystemFurnitureElem
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

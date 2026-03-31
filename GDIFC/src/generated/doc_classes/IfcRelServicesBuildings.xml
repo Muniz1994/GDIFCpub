@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelServicesBuildings" inherits="IfcRelConnects"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : An objectified relationship that defines the relationship between a system and the sites, buildings, storeys or spaces, it serves. Examples of systems are: building service systems (heating, cooling, waste water system) represented by instances of IfcSystem idealized structural analysis systems represented by instances of IfcStructuralAnalysisSystem HISTORY New entity in IFC 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingSystem" type="GDIFCEntityBase" setter="set_RelatingSystem" getter="get_RelatingSystem">
+			System that services the Buildings.
+		</member>
+		<member name="RelatedBuildings" type="Array" setter="set_RelatedBuildings" getter="get_RelatedBuildings">
+			Spatial structure elements (including site, building, storeys) that are serviced by the system. IFC2x PLATFORM CHANGE The data type has been changed from IfcBuilding to IfcSpatialStructureElement with upward compatibility for file based exchange. IFC2x Edition 4 CHANGE The data type has been changed from IfcSpatialStructureElement to IfcSpatialElement with upward compatibility for file based exchange.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelConnectsWithEccentricity" inherits="IfcRelConnectsStructuralMember"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: The entity IfcRelConnectsWithEccentricity adds the definition of eccentricity to the connection between a structural member and a structural connection (representing either a node or support). NOTE Another eccentricity model is available independently of eccentric connection specification: The section profile of a curve member may be inserted eccentrically with respect to the 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ConnectionConstraint" type="GDIFCEntityBase" setter="set_ConnectionConstraint" getter="get_ConnectionConstraint">
+			The connection constraint explicitly states the eccentricity between a structural member and a structural connection by means of two topological objects (vertex and vertex, or edge and edge, or face and face).
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

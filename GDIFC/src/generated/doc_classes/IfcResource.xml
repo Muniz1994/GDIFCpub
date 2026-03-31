@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcResource" inherits="IfcObject"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcResource contains the information needed to represent the costs, schedule, and other impacts from the use of a thing in a process. It is not intended to use IfcResource to model the general properties of the things themselves, while an optional linkage from IfcResource to the things to be used can be specified (specifically, the relationship from subtypes of IfcResource to IfcProduct through th
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Identification" type="String" setter="set_Identification" getter="get_Identification">
+			An identifying designation given to a resource. It is the identifier at the occurrence level. IFC2x4 CHANGE Attribute promoted from subtype IfcConstructionResource .
+		</member>
+		<member name="LongDescription" type="String" setter="set_LongDescription" getter="get_LongDescription">
+			A detailed description of the resource (e.g. the skillset for a labor resource). IFC2x4 NOTE: The attribute LongDescription is added replacing the ResourceGroup attribute at subtype IfcConstructionResource .
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

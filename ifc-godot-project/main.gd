@@ -13,5 +13,5 @@ func _run() -> void:
 		manager = managers[0]
 		
 	for wall in manager.get_elements_by_class("IfcWall"):
-		if wall.ifc_object is GDIfcWall:
-			print(wall.ifc_object.global_id)
+		if wall.ifc_object is IfcWall:
+			print(wall.ifc_object.GlobalId)

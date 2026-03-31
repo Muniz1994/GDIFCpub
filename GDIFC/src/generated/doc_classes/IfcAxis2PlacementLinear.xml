@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcAxis2PlacementLinear" inherits="IfcPlacement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Axis" type="GDIFCEntityBase" setter="set_Axis" getter="get_Axis">
+		</member>
+		<member name="RefDirection" type="GDIFCEntityBase" setter="set_RefDirection" getter="get_RefDirection">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

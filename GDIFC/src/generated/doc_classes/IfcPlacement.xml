@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPlacement" inherits="IfcGeometricRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A placement entity defines the local environment for the definition of a geometry item. It locates the item to be defined and, in the case of the axis placement subtypes, gives its orientation. Additional definition from ISO/WD SC4/WG12/N071 Part42.2 geometry_schema : A placement locates a geometric item with respect to the coordinate system of its geometric 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Location" type="GDIFCEntityBase" setter="set_Location" getter="get_Location">
+			The geometric position of a reference point, such as the center of a circle, of the item to be located.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

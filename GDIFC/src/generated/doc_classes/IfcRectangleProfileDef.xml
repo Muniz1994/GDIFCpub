@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRectangleProfileDef" inherits="IfcParameterizedProfileDef"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcRectangleProfileDef defines a rectangle as the profile definition used by the swept surface geometry or the swept area solid. It is given by its X extent and its Y extent, and placed within the 2D position coordinate system, established by the Position attribute. It is placed centric within the position coordinate system. HISTORY: New class in IFC 1.5. The use definition has changed in IFC Rele
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="XDim" type="float" setter="set_XDim" getter="get_XDim">
+			The extent of the rectangle in the direction of the x-axis.
+		</member>
+		<member name="YDim" type="float" setter="set_YDim" getter="get_YDim">
+			The extent of the rectangle in the direction of the y-axis.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

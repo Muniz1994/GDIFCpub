@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCableCarrierSegment" inherits="IfcFlowSegment"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A cable carrier segment is a flow segment that is specifically used to carry and support cabling. HISTORY New entity in IFC2x4 Type Use Definition IfcCableCarrierSegment defines the occurrence of any cable carrier segment; common information about cable carrier segment types is handled by IfcCableCarrierSegmentType . The IfcCableCarrierSegmentType (if present) may establish the common type name, u
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Identifies the predefined types of cable carrier segment from which the type required may be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPerson" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition: an individual human being. NOTE Many countries have legislation concerning the identification of individual persons within databases. Although the intent of the IFC Model is to act as a specification for data exchange and sharing, an IFC file might in some situations be considered to be a database that enables identification of a particular person under the terms of such legislation. U
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Identification" type="String" setter="set_Identification" getter="get_Identification">
+			Identification of the person.
+		</member>
+		<member name="FamilyName" type="String" setter="set_FamilyName" getter="get_FamilyName">
+			The name by which the family identity of the person may be recognized. NOTE: Depending on geographical location and culture, family name may appear either as the first or last component of a name.
+		</member>
+		<member name="GivenName" type="String" setter="set_GivenName" getter="get_GivenName">
+			The name by which a person is known within a family and by which he or she may be familiarly recognized. NOTE: Depending on geographical location and culture, given name may appear either as the first or last component of a name.
+		</member>
+		<member name="MiddleNames" type="PackedStringArray" setter="set_MiddleNames" getter="get_MiddleNames">
+			Additional names given to a person that enable their identification apart from others who may have the same or similar family and given names. NOTE: Middle names are not normally used in familiar communication but may be asserted to provide additional identification of a particular person if necessary. They may be particularly useful in situations where the person concerned has a family name that occurs commonly in the geographical region.
+		</member>
+		<member name="PrefixTitles" type="PackedStringArray" setter="set_PrefixTitles" getter="get_PrefixTitles">
+			The word, or group of words, which specify the person's social and/or professional standing and appear before his/her names.
+		</member>
+		<member name="SuffixTitles" type="PackedStringArray" setter="set_SuffixTitles" getter="get_SuffixTitles">
+			The word, or group of words, which specify the person's social and/or professional standing and appear after his/her names.
+		</member>
+		<member name="Roles" type="Array" setter="set_Roles" getter="get_Roles">
+			Roles played by the person.
+		</member>
+		<member name="Addresses" type="Array" setter="set_Addresses" getter="get_Addresses">
+			Postal and telecommunication addresses of a person. NOTE - A person may have several addresses.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

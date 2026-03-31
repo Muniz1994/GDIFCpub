@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSegmentedReferenceCurve" inherits="IfcCompositeCurve"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="BaseCurve" type="GDIFCEntityBase" setter="set_BaseCurve" getter="get_BaseCurve">
+		</member>
+		<member name="EndPoint" type="GDIFCEntityBase" setter="set_EndPoint" getter="get_EndPoint">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRightCircularCylinder" inherits="IfcCsgPrimitive3D"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The IfcRightCircularCylinder is a Construction Solid Geometry (CSG) 3D primitive. It is a solid with a circular base and top. The cylindrical surface between if formed by points at a fixed distance from the axis of the cylinder. The inherited Position attribute defines the IfcAxisPlacement3D and provides: SELF\IfcCsgPrimitive3D.Position : The location and orientation of the axis system for the pri
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Height" type="float" setter="set_Height" getter="get_Height">
+			The distance between the planar circular faces of the cylinder.
+		</member>
+		<member name="Radius" type="float" setter="set_Radius" getter="get_Radius">
+			The radius of the cylinder.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

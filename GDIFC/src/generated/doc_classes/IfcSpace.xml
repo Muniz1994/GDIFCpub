@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSpace" inherits="IfcSpatialStructureElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A space represents an area or volume bounded actually or theoretically. Spaces are areas or volumes that provide for certain functions within a building. A space is associated to a building storey (or in case of exterior spaces to a site). A space may span over several connected spaces. Therefore a space group provides for a collection of spaces included in a storey. A space can also be decomposed
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic types for a space that are specified in an enumeration. There might be property sets defined specifically for each predefined type. Previous use, prior to IFC2x4, had been to indicates whether the IfcSpace is an interior space by value INTERNAL, or an exterior space by value EXTERNAL. This use is now deprecated, the property 'IsExternal' at 'Pset_SpaceCommon' should be used instead. IFC2x4 CHANGE The attribute has been renamed from ExteriorOrInteriorSpace with upward compatibility for file based exchange.
+		</member>
+		<member name="ElevationWithFlooring" type="float" setter="set_ElevationWithFlooring" getter="get_ElevationWithFlooring">
+			Level of flooring of this space; the average shall be taken, if the space ground surface is sloping or if there are level differences within this space.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

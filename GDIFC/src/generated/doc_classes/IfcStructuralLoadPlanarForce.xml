@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralLoadPlanarForce" inherits="IfcStructuralLoadStatic"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: An instance of the entity IfcStructuralLoadPlanarForce shall be used to define actions on faces. HISTORY: New entity in Release IFC2x edition 2.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PlanarForceX" type="float" setter="set_PlanarForceX" getter="get_PlanarForceX">
+			Planar force value in x-direction.
+		</member>
+		<member name="PlanarForceY" type="float" setter="set_PlanarForceY" getter="get_PlanarForceY">
+			Planar force value in y-direction.
+		</member>
+		<member name="PlanarForceZ" type="float" setter="set_PlanarForceZ" getter="get_PlanarForceZ">
+			Planar force value in z-direction.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

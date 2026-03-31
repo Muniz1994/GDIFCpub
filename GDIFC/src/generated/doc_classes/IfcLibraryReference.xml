@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcLibraryReference" inherits="IfcExternalReference"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcLibraryReference is a reference into a library of information by Location (provided as a URI). It also provides an optional inherited Identification key to allow more specific references to library sections or tables. The inherited Name attribute allows for a human interpretable identification of the library item. Also, general information on the library from which the reference is taken, is
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			Additional description provided for the library reference. IFC2x4 CHANGE New attribute added at the end of the attribute list.
+		</member>
+		<member name="Language" type="String" setter="set_Language" getter="get_Language">
+			The language in which a library reference is expressed. IFC2x4 CHANGE New attribute added at the end of the attribute list.
+		</member>
+		<member name="ReferencedLibrary" type="GDIFCEntityBase" setter="set_ReferencedLibrary" getter="get_ReferencedLibrary">
+			The library information that is being referenced.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

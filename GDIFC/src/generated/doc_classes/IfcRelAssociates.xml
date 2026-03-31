@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelAssociates" inherits="IfcRelationship"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The association relationship IfcRelAssociates refers to external sources of information (most notably a classification, library or document). There is no dependency implied by the association. EXAMPLE Further information may be given to the tank equipment (as subtype of IfcProduct ) in terms of its classification and instruction documents, the source of the additional information is held external 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatedObjects" type="Array" setter="set_RelatedObjects" getter="get_RelatedObjects">
+			Set of object or property definitions to which the external references or information is associated. It includes object and type objects, property set templates, property templates and property sets and contexts. IFC2x4 CHANGE The attribute datatype has been changed from IfcRoot to IfcDefinitionSelect .
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

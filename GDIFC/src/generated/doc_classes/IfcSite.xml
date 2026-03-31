@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSite" inherits="IfcSpatialStructureElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO 6707-1:1989 : Area where construction works are undertaken. A site is a defined area of land, possibly covered with water, on which the project construction is to be completed. A site may be used to erect building(s) or other AEC products. A site ( IfcSite ) may include a definition of the single geographic reference point for this site (global position using WGS84 with Longitu
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RefLatitude" type="PackedInt64Array" setter="set_RefLatitude" getter="get_RefLatitude">
+			World Latitude at reference point (most likely defined in legal description). Defined as integer values for degrees, minutes, seconds, and, optionally, millionths of seconds with respect to the world geodetic system WGS84. Latitudes are measured relative to the geodetic equator, north of the equator by positive values - from 0 till +90, south of the equator by negative values - from 0 till -90.
+		</member>
+		<member name="RefLongitude" type="PackedInt64Array" setter="set_RefLongitude" getter="get_RefLongitude">
+			World Longitude at reference point (most likely defined in legal description). Defined as integer values for degrees, minutes, seconds, and, optionally, millionths of seconds with respect to the world geodetic system WGS84. Longitudes are measured relative to the geodetic zero meridian, nominally the same as the Greenwich prime meridian: longitudes west of the zero meridian have negative values - from 0 till -180, longitudes east of the zero meridian have positive values - from 0 till -180. Example: Chicago Harbor Light has according to WGS84 a longitude -87.35.40 (or 87.35.40W) and a latitude 41.53.30 (or 41.53.30N).
+		</member>
+		<member name="RefElevation" type="float" setter="set_RefElevation" getter="get_RefElevation">
+			Datum elevation relative to sea level.
+		</member>
+		<member name="LandTitleNumber" type="String" setter="set_LandTitleNumber" getter="get_LandTitleNumber">
+			The land title number (designation of the site within a regional system).
+		</member>
+		<member name="SiteAddress" type="GDIFCEntityBase" setter="set_SiteAddress" getter="get_SiteAddress">
+			Address given to the site for postal purposes.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

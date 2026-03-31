@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelConnectsElements" inherits="IfcRelConnects"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : The IfcRelConnectsElements objectified relationship provides the generalization of the connectivity between elements. It is a 1 to 1 relationship. The concept of two elements being physically or logically connected is described independently from the connecting elements. The connectivity may be related to the shape representation of the connected entities by providing a conne
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ConnectionGeometry" type="GDIFCEntityBase" setter="set_ConnectionGeometry" getter="get_ConnectionGeometry">
+			The geometric shape representation of the connection geometry that is provided in the object coordinate system of the RelatingElement (mandatory) and in the object coordinate system of the RelatedElement (optionally).
+		</member>
+		<member name="RelatingElement" type="GDIFCEntityBase" setter="set_RelatingElement" getter="get_RelatingElement">
+			Reference to a subtype of IfcElement that is connected by the connection relationship in the role of RelatingElement .
+		</member>
+		<member name="RelatedElement" type="GDIFCEntityBase" setter="set_RelatedElement" getter="get_RelatedElement">
+			Reference to a subtype of IfcElement that is connected by the connection relationship in the role of RelatedElement .
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPointOnSurface" inherits="IfcPoint"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A point on surface is a point which lies on a parametric surface. The point is determined by evaluating the surface at a particular pair of parameter values. NOTE: Corresponding ISO 10303 entity: point_on_surface. Please refer to ISO/IS 10303-42:1994, p. 24 for the final definition of the formal standard. HISTORY: New entity in Release IFC2x Edition 2. Inform
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="BasisSurface" type="GDIFCEntityBase" setter="set_BasisSurface" getter="get_BasisSurface">
+			The surface to which the parameter values relate.
+		</member>
+		<member name="PointParameterU" type="float" setter="set_PointParameterU" getter="get_PointParameterU">
+			The first parameter value of the point location.
+		</member>
+		<member name="PointParameterV" type="float" setter="set_PointParameterV" getter="get_PointParameterV">
+			The second parameter value of the point location.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

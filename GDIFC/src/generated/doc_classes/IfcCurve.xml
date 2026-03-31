@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCurve" inherits="IfcGeometricRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A curve can be envisioned as the path of a point moving in its coordinate space. NOTE: Corresponding ISO 10303 entity: curve, only the following subtypes have been incorporated into IFC: line as IfcLine , conic as IfcConic , bounded_curve as IfcBoundedCurve . Please refer to ISO/IS 10303-42:1994, p.37 for the final definition of the formal standard. The deriv
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

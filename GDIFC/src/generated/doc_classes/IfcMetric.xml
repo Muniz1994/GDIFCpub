@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMetric" inherits="IfcConstraint"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcMetric is used to capture quantitative resultant metrics that can be applied to objectives. HISTORY: New Entity in IFC Release 2.0 Use Definition IfcMetric is a subtype of IfcConstraint and may be associated with any subtype of IfcRoot through the IfcRelAssociatesConstraint relationship in the IfcControlExtension schema, or may be associated with IfcProperty by IfcPropertyConstraintRelations
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Benchmark" type="String" setter="set_Benchmark" getter="get_Benchmark">
+			Enumeration that identifies the type of benchmark data.
+		</member>
+		<member name="ValueSource" type="String" setter="set_ValueSource" getter="get_ValueSource">
+			Reference source for data values.
+		</member>
+		<member name="DataValue" type="GDIFCEntityBase" setter="set_DataValue" getter="get_DataValue">
+			The value with data type defined by the underlying type accesses via IfcMetricValueSelect .
+		</member>
+		<member name="ReferencePath" type="GDIFCEntityBase" setter="set_ReferencePath" getter="get_ReferencePath">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDoorType" inherits="IfcBuiltElementType"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : The element type IfcDoorType defines commonly shared information for occurrences of doors. The set of shared information may include: common properties within shared property sets common material information common operation type definitions common shape representations A door type defines the particular parameter of the lining and one (or several) panels through the IfcDoorL
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Identifies the predefined types of a door element from which the type required may be set.
+		</member>
+		<member name="OperationType" type="String" setter="set_OperationType" getter="get_OperationType">
+			Type defining the general layout and operation of the door type in terms of the partitioning of panels and panel operations.
+		</member>
+		<member name="ParameterTakesPrecedence" type="bool" setter="set_ParameterTakesPrecedence" getter="get_ParameterTakesPrecedence">
+		</member>
+		<member name="UserDefinedOperationType" type="String" setter="set_UserDefinedOperationType" getter="get_UserDefinedOperationType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

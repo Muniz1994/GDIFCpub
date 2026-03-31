@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcConnectionVolumeGeometry" inherits="IfcConnectionGeometry"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcConnectionVolumeGeometry is used to describe the geometric constraints that facilitate the physical connection (or overlap) of two objects at a volume defined by a solid or closed shell. It is envisioned as a control that applies to the element connection or interference relationships. HISTORYÿ New entity in IFC2x4. Geometry use definitions The IfcSolidModel (or the IfcClosedShell ) at the Volu
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="VolumeOnRelatingElement" type="GDIFCEntityBase" setter="set_VolumeOnRelatingElement" getter="get_VolumeOnRelatingElement">
+			Volume at which related object overlaps with the relating element, given in the LCS of the relating element.
+		</member>
+		<member name="VolumeOnRelatedElement" type="GDIFCEntityBase" setter="set_VolumeOnRelatedElement" getter="get_VolumeOnRelatedElement">
+			Volume at which related object overlaps with the relating element, given in the LCS of the related element.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCostValue" inherits="IfcAppliedValue"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcCostValue is an amount of money or a value that affects an amount of money. HISTORY: New Entity in IFC Release 1.0 Use definitions Each instance of IfcCostValue may also have a CostType . There are many possible types of cost value that may be identified. While there is a broad understanding of the meaning of names that may be assigned to different types of costs, there is no general standard f
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

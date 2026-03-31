@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCompositeCurveSegment" inherits="IfcSegment"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A composite curve segment is a bounded curve together with transition information which is used to construct a composite curve ( IfcCompositeCurve ). The derived attribute Dim has been added (see also note at IfcGeometricRepresentationItem ). The IfcCompositeCurveSegment is a subtype of IfcGeometricRepresentationItem (whereas in ISO 10303-42 composite_curve_s
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="SameSense" type="bool" setter="set_SameSense" getter="get_SameSense">
+			The state of transition (i.e., geometric continuity from the last point of this segment to the first point of the next segment) in a composite curve.
+		</member>
+		<member name="ParentCurve" type="GDIFCEntityBase" setter="set_ParentCurve" getter="get_ParentCurve">
+			An indicator of whether or not the sense of the segment agrees with, or opposes, that of the parent curve. If SameSense is false, the point with highest parameter value is taken as the first point of the segment. NOTE If the datatype of ParentCurve is IfcTrimmedCurve , the value of SameSense overrides the value of IfcTrimmedCurve.SenseAgreement
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

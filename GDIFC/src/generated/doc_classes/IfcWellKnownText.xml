@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcWellKnownText" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="WellKnownText" type="String" setter="set_WellKnownText" getter="get_WellKnownText">
+		</member>
+		<member name="CoordinateReferenceSystem" type="GDIFCEntityBase" setter="set_CoordinateReferenceSystem" getter="get_CoordinateReferenceSystem">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

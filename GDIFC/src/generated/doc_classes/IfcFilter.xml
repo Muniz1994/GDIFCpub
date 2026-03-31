@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFilter" inherits="IfcFlowTreatmentDevice"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A filter is an apparatus used to remove particulate or gaseous matter from fluids and gases. HISTORY New entity in IFC2x4 Type Use Definition IfcFilter defines the occurrence of any filter; common information about filter types is handled by IfcFilterType . The IfcFilterType (if present) may establish the common type name, usage (predefined type), properties, materials, ports, composition, assignm
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSchedulingTime" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcSchedulingTime is the abstract supertype of entities that capture time-related information of processes. HISTORY: New entity in IFC2x4.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			Optional name for the time definition.
+		</member>
+		<member name="DataOrigin" type="String" setter="set_DataOrigin" getter="get_DataOrigin">
+			Specifies the origin of the scheduling time entity. It currently differentiates between predicted, simulated, measured, and user defined values.
+		</member>
+		<member name="UserDefinedDataOrigin" type="String" setter="set_UserDefinedDataOrigin" getter="get_UserDefinedDataOrigin">
+			Value of the data origin if DataOrigin attribute is USERDEFINED.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

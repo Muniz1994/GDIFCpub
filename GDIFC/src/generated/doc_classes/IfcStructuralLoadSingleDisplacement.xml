@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralLoadSingleDisplacement" inherits="IfcStructuralLoadStatic"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: Instances of the entity IfcStructuralLoadSingleDisplacement shall be used to define displacements. HISTORY: New entity in Release IFC2x edition 2.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="DisplacementX" type="float" setter="set_DisplacementX" getter="get_DisplacementX">
+			Displacement in x-direction.
+		</member>
+		<member name="DisplacementY" type="float" setter="set_DisplacementY" getter="get_DisplacementY">
+			Displacement in y-direction.
+		</member>
+		<member name="DisplacementZ" type="float" setter="set_DisplacementZ" getter="get_DisplacementZ">
+			Displacement in z-direction.
+		</member>
+		<member name="RotationalDisplacementRX" type="float" setter="set_RotationalDisplacementRX" getter="get_RotationalDisplacementRX">
+			Rotation about the x-axis.
+		</member>
+		<member name="RotationalDisplacementRY" type="float" setter="set_RotationalDisplacementRY" getter="get_RotationalDisplacementRY">
+			Rotation about the y-axis.
+		</member>
+		<member name="RotationalDisplacementRZ" type="float" setter="set_RotationalDisplacementRZ" getter="get_RotationalDisplacementRZ">
+			Rotation about the z-axis.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralLoadGroup" inherits="IfcGroup"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: The entity IfcStructuralLoadGroup is used to structure the physical impacts. By using the grouping features inherited from IfcGroup , instances of IfcStructuralAction (or its subclasses) and of IfcStructuralLoadGroup can be used to define load groups, load cases and load combinations. (See also IfcLoadGroupTypeEnum .) NOTE: Important functionality for the description of a load
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Selects a predefined type for the load group. It can be differentiated between load groups, load cases, load combinations, or userdefined grouping levels.
+		</member>
+		<member name="ActionType" type="String" setter="set_ActionType" getter="get_ActionType">
+			Type of actions in the group. Normally needed if 'PredefinedType' specifies a LOAD_CASE.
+		</member>
+		<member name="ActionSource" type="String" setter="set_ActionSource" getter="get_ActionSource">
+			Source of actions in the group. Normally needed if 'PredefinedType' specifies a LOAD_CASE.
+		</member>
+		<member name="Coefficient" type="float" setter="set_Coefficient" getter="get_Coefficient">
+			Load factor. If omitted, a factor is not yet known or not specified. A load factor of 1.0 shall be explicitly exported as Coefficient = 1.0.
+		</member>
+		<member name="Purpose" type="String" setter="set_Purpose" getter="get_Purpose">
+			Description of the purpose of this instance. Among else, possible values of the Purpose of load combinations are 'SLS', 'ULS', 'ALS' to indicate serviceability, ultimate, or accidental limit state.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

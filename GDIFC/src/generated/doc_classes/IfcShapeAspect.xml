@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcShapeAspect" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-41:1992 : The shape aspect is an identifiable element of the shape of a product. IfcShapeAspect allows for grouping of shape representation items that represent aspects (or components) of the shape of a product. Thereby shape representations of components of the product shape represent a distinctive part to a product that can be explicitly addressed. NOTE ÿThe definiti
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ShapeRepresentations" type="Array" setter="set_ShapeRepresentations" getter="get_ShapeRepresentations">
+			List of shape representations. Each member defines a valid representation of a particular type within a particular representation context as being an aspect (or part) of a product definition. IFC2x Edition 3 CHANGE The data type has been changed from IfcShapeRepresentation to IfcShapeModel with upward compatibility
+		</member>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			The word or group of words by which the shape aspect is known. It is a tag to indicate the particular semantic of a component within the product definition shape, used to provide meaning. Example: use the tag "Glazing" to define which component of a window shape defines the glazing area.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			The word or group of words that characterize the shape aspect. It can be used to add additional meaning to the name of the aspect.
+		</member>
+		<member name="ProductDefinitional" type="String" setter="set_ProductDefinitional" getter="get_ProductDefinitional">
+			An indication that the shape aspect is on the physical boundary of the product definition shape. If the value of this attribute is TRUE, it shall be asserted that the shape aspect being identified is on such a boundary. If the value is FALSE, it shall be asserted that the shape aspect being identified is not on such a boundary. If the value is UNKNOWN, it shall be asserted that it is not known whether or not the shape aspect being identified is on such a boundary. --- EXAMPLE: Would be FALSE for a center line, identified as shape aspect; would be TRUE for a cantilever. ---
+		</member>
+		<member name="PartOfProductDefinitionShape" type="GDIFCEntityBase" setter="set_PartOfProductDefinitionShape" getter="get_PartOfProductDefinitionShape">
+			Reference to the product definition shape of which this class is an aspect.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

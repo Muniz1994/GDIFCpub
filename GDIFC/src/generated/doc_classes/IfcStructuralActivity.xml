@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralActivity" inherits="IfcProduct"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: The abstract entity IfcStructuralActivity combines the definition of actions (such as forces, displacements, etc.) and reactions (support reactions, internal forces, deflections, etc.) which are specified by using the basic load definitions from the IfcStructuralLoadResource . The differentiation between actions and reactions is realized by instantiating objects either from su
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="AppliedLoad" type="GDIFCEntityBase" setter="set_AppliedLoad" getter="get_AppliedLoad">
+			Load or result resource object which defines the load type, direction, and load values. In case of activities which are variably distributed over curves or surfaces, IfcStructuralLoadConfiguration is used which provides a list of load samples and their locations within the load distribution, measured in local coordinates of the curve or surface on which this activity acts. The contents of this load or result distribution may be further restricted by definitions at subtypes of IfcStructuralActivity .
+		</member>
+		<member name="GlobalOrLocal" type="String" setter="set_GlobalOrLocal" getter="get_GlobalOrLocal">
+			Indicates whether the load directions refer to the global coordinate system (global to the analysis model, i.e. as established by IfcStructuralAnalysisModel.SharedPlacement ) or to the local coordinate system (local to the activity or connected item, as established by an explicit or implied representation and its parameter space). NOTE, the informal definition of IfcRepresentationResource.IfcGlobalOrLocalEnum doe s not distinguish between "global coordinate system" and "world coordinate system". On the other hand, this distinction is necessary in the IfcStructuralAnalysisDomain where the shared "global" coordinate system of an analysis model may very well not be the same as the project-wide world coordinate system. In the scope of IfcStructuralActivity.GlobalOrLocal , the meaning of GLOBAL_COORDS is therefore not to be taken as world coordinate system but as the analysis model specific shared coordinate system. In contrast, LOCAL_COORDS is to be taken as coordinates which are local to individual structural items and activities, as established by subclass-specific geometry use definitions.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

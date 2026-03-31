@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSpatialZone" inherits="IfcSpatialElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : A spatial element is the generalization of all spatial elements that might be used to define a spatial structure or to define spatial zones. a hierarchical spatial structure element as IfcSpatialStructureElement a spatial structure is a hiearchical decomposition of the project. That spatial structure is often used to provide a project structure to organize a building project.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined types to define the particular type of the spatial zone. There may be property set definitions available for each predefined type.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

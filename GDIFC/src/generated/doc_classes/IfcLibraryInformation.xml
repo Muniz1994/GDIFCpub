@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcLibraryInformation" inherits="IfcExternalInformation"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcLibraryInformation describes a library where a library is a structured store of information, normally organized in a manner which allows information lookup through an index or reference value. IfcLibraryInformation provides the library Name and optional Version , VersionDate and Publisher attributes. A Location may be added for electronic access to the library. NOTE The complete definition o
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			The name which is used to identify the library.
+		</member>
+		<member name="Version" type="String" setter="set_Version" getter="get_Version">
+			Identifier for the library version used for reference.
+		</member>
+		<member name="Publisher" type="GDIFCEntityBase" setter="set_Publisher" getter="get_Publisher">
+			Information of the organization that acts as the library publisher.
+		</member>
+		<member name="VersionDate" type="String" setter="set_VersionDate" getter="get_VersionDate">
+			Date of the referenced version of the library. IFC2x4 CHANGE The data type has been changed to IfcDate , the date string according to ISO8601.
+		</member>
+		<member name="Location" type="String" setter="set_Location" getter="get_Location">
+			Resource identifier or locator, provided as URI, URN or URL, of the library information for online references. IFC2x4 CHANGE New attribute added at the end of the attribute list.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			The library information with which objects are associated. IFC2x4 CHANGE New inverse attribute.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDirectrixCurveSweptAreaSolid" inherits="IfcSweptAreaSolid"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Directrix" type="GDIFCEntityBase" setter="set_Directrix" getter="get_Directrix">
+		</member>
+		<member name="StartParam" type="GDIFCEntityBase" setter="set_StartParam" getter="get_StartParam">
+		</member>
+		<member name="EndParam" type="GDIFCEntityBase" setter="set_EndParam" getter="get_EndParam">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

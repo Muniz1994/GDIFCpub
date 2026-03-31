@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPolygonalFaceSet" inherits="IfcTessellatedFaceSet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Closed" type="bool" setter="set_Closed" getter="get_Closed">
+		</member>
+		<member name="Faces" type="Array" setter="set_Faces" getter="get_Faces">
+		</member>
+		<member name="PnIndex" type="PackedInt64Array" setter="set_PnIndex" getter="get_PnIndex">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

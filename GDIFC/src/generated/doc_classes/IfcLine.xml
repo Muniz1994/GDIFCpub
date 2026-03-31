@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcLine" inherits="IfcCurve"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A line is an unbounded curve with constant tangent direction. A line is defined by a point and a direction. The positive direction of the line is in the direction of the Dir vector. The line is parameterized as follows: P = Pnt V = Dir λ( u ) = P + u V and the parametric range is: ∞ < u < ∞ NOTE Corresponding ISO 10303 entity: line. Please refer to ISO/IS 103
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Pnt" type="GDIFCEntityBase" setter="set_Pnt" getter="get_Pnt">
+			The location of the line.
+		</member>
+		<member name="Dir" type="GDIFCEntityBase" setter="set_Dir" getter="get_Dir">
+			The direction of the line, the magnitude and units of Dir affect the parameterization of the line.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCostSchedule" inherits="IfcControl"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcCostSchedule brings together instances of IfcCostItem either for the purpose of identifying purely cost information as in an estimate for constructions costs or for including cost information within another presentation form such as a work order. HISTORY New Entity in IFC Release 2.0. Modified in IFC 2x2 IFC2x4 CHANGE Attribute 'ID' changed to Identification and promoted to supertype IfcCont
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic type for a cost schedule that is specified in an enumeration. There may be a property set given specifically for the predefined types. IFC2x4 CHANGE The attribute has been made optional.
+		</member>
+		<member name="Status" type="String" setter="set_Status" getter="get_Status">
+			The current status of a cost schedule. Examples of status values that might be used for a cost schedule status include: PLANNED APPROVED AGREED ISSUED STARTED
+		</member>
+		<member name="SubmittedOn" type="String" setter="set_SubmittedOn" getter="get_SubmittedOn">
+			The date and time on which the cost schedule was submitted. IFC2x4 CHANGE Type changed from IfcDateTimeSelect.
+		</member>
+		<member name="UpdateDate" type="String" setter="set_UpdateDate" getter="get_UpdateDate">
+			The date and time that this cost schedule is updated; this allows tracking the schedule history. IFC2x4 CHANGE Type changed from IfcDateTimeSelect.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

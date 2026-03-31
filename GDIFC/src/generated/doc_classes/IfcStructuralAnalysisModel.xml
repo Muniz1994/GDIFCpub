@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralAnalysisModel" inherits="IfcSystem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: The IfcStructuralAnalysisModel is used to assemble all information needed to represent a structural analysis model. It encompasses certain general properties (such as analysis type), references to all contained structural members, structural supports or connections, as well as loads and the respective load results. Important functionalities for the description of an analysis m
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Defines the type of the structural analysis model.
+		</member>
+		<member name="OrientationOf2DPlane" type="GDIFCEntityBase" setter="set_OrientationOf2DPlane" getter="get_OrientationOf2DPlane">
+			If the selected model type ( PredefinedType ) describes a 2D system, the orientation defines the analysis plane (P[1], P[2]) and the normal to the analysis plane (P[3]). This is needed because structural items and activities are always defined in three-dimensional space even if they are meant to be analysed in a two-dimensional manner. In case of predefined type IN_PLANE_LOADING_2D, the analysis is to be performed within the projection into the P[1], P[2] plane. In case of predefined type OUT_PLANE_LOADING_2D, only the P[3] component of loads and their effects is meant to be analyzed. This is used for beam grids and for typical slab analyses. In case of predefined type LOADING_3D, OrientationOf2DPlane shall be omitted.
+		</member>
+		<member name="LoadedBy" type="Array" setter="set_LoadedBy" getter="get_LoadedBy">
+			References to all load groups to be analyzed.
+		</member>
+		<member name="HasResults" type="Array" setter="set_HasResults" getter="get_HasResults">
+			References to all result groups available for this structural analysis model.
+		</member>
+		<member name="SharedPlacement" type="GDIFCEntityBase" setter="set_SharedPlacement" getter="get_SharedPlacement">
+			Object placement which shall be common to all items and activities which are grouped into this instance of IfcStructuralAnalysisModel . This placement establishes a coordinate system which is referred to as 'global coordinate system' in use definitions of various classes of structural items and activities. NOTE Most commonly, but not necessarily, the SharedPlacement is an IfcLocalPlacement whose z axis is parallel with the z axis of the IfcProject 's world coordinate system and directed like the WCS z axis (i.e. pointing "upwards") or directed against the WCS z axis (i.e. points "downwards"). NOTE Per informal proposition, this attribute is not optional as soon as at least one IfcStructuralItem is grouped into the instance of IfcStructuralAnalysisModel .
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

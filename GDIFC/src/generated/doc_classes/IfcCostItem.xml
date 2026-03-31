@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCostItem" inherits="IfcControl"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcCostItem describes a cost or financial value together with descriptive information that describes its context in a form that enables it to be used within a cost schedule. An IfcCostItem can be used to represent the cost of goods and services, the execution of works by a process, lifecycle cost and more. Each instance of IfcCostItem may have a name and a description. Depending on the use for 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic type for a cost item that is specified in an enumeration. There may be a property set given specificly for the predefined types. IFC2x4 CHANGE The attribute has been added.
+		</member>
+		<member name="CostValues" type="Array" setter="set_CostValues" getter="get_CostValues">
+			Component costs for which the total cost for the cost item is calculated, and then multiplied by the total CostQuantities if provided. If CostQuantities is provided then values indicate unit costs, otherwise values indicate total costs. For calculation purposes, the cost values may be directly added unless they have qualifications. Cost values with qualifications (e.g. IfcCostValue.ApplicableDate , IfcCostValue.FixedUntilDate ) should be excluded from such calculation if they do not apply. IFC2x4 CHANGE The attribute has been added.
+		</member>
+		<member name="CostQuantities" type="Array" setter="set_CostQuantities" getter="get_CostQuantities">
+			Component quantities of the same type for which the total quantity for the cost item is calculated as the sum. IFC2x4 CHANGE The attribute has been added.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSimplePropertyTemplate" inherits="IfcPropertyTemplate"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The IfcSimplePropertyTemplate defines the template for all dynamically extensible properties, either the subtypes of IfcSimpleProperty , or the subtypes of IfcPhysicalSimpleQuantity . The individual property templates are interpreted according to their Name attribute and may have a predefined template type, property units, and property data types. The correct interpretation of the attributes: Prim
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="TemplateType" type="String" setter="set_TemplateType" getter="get_TemplateType">
+			Property type defining whether the property template defines a property with a single value, a bounded value, a list value, a table value, an enumerated value, or a reference value. Or the quantity type defining whether the template defines a quantity with a length, area, volume, weight or time value. NOTE the value of this property determines the correct use of the PrimaryUnit , SecondaryUnit , PrimaryDataType , SecondaryDataType , and Expression attributes.
+		</member>
+		<member name="PrimaryMeasureType" type="String" setter="set_PrimaryMeasureType" getter="get_PrimaryMeasureType">
+			Primary data type assigned to the definition of the property. It should be provided, if the PropertyType is set to: P_SINGLEVALUE : determining the data type of IfcPropertySingleValue.NominalValue P_ENUMERATEDVALUE : determining the data type of IfcPropertyEnumeratedValue.EnumerationValues P_BOUNDEDVALUE : determining the data type of IfcPropertyBoundedValue.LowerBoundValue P_LISTVALUE : determining the data type of IfcPropertyListValue.ListValues P_TABLEVALUE : determining the data type of IfcPropertyTableValue.DefiningValues P_REFERENCEVALUE : determining the data type of IfcPropertyTableValue.PropertyReference The value range of the data type is within the select type IfcValue for all PropertyType 's with the exeption of P_REFERENCEVALUE . Here it is within the select type IfcObjectReferenceSelect .
+		</member>
+		<member name="SecondaryMeasureType" type="String" setter="set_SecondaryMeasureType" getter="get_SecondaryMeasureType">
+			Secondary data type assigned to the definition of the property. It should be provided, if the PropertyType is set to: P_ENUMERATEDVALUE : determining the values of IfcPropertyEnumeration.EnumerationValues as a comma delimited list P_BOUNDEDVALUE : determining the data type of IfcPropertyBoundedValue.UpperBoundValue P_TABLEVALUE : determining the data type of IfcPropertyTableValue.DefinedValues The value range of the data type is within the select type IfcValue for all PropertyType 's with the exeption of P_ENUMERATEDVALUE . Here it is the comma delimited list of enumerators. NOTE The data type of IfcPropertyEnumeration.EnumerationValues is provided as PrimaryDataType .
+		</member>
+		<member name="Enumerators" type="GDIFCEntityBase" setter="set_Enumerators" getter="get_Enumerators">
+			Primary unit assigned to the definition of the property. It should be provided, if the PropertyType is set to: P_SINGLEVALUE : determining the IfcPropertySingleValue.Unit P_ENUMERATEDVALUE : determining the IfcPropertyEnumeration.Unit P_BOUNDEDVALUE : determining the IfcPropertyBoundedValue.Unit P_LISTVALUE : determining the IfcPropertyListValue.Unit P_TABLEVALUE : determining the IfcPropertyTableValue.DefiningUnit
+		</member>
+		<member name="PrimaryUnit" type="GDIFCEntityBase" setter="set_PrimaryUnit" getter="get_PrimaryUnit">
+			Secondary unit assigned to the definition of the property. It should be provided, if the PropertyType is set to: P_TABLEVALUE : determining the IfcPropertyTableValue.DefinedUnit
+		</member>
+		<member name="SecondaryUnit" type="GDIFCEntityBase" setter="set_SecondaryUnit" getter="get_SecondaryUnit">
+			The expression used to store additional information for the property template depending on the PropertyType . It should the following definitions, if the PropertyType is set to: P_TABLEVALUE : the expression that could be evaluated to define the correlation between the defining values and the defined values. Q_LENGTH, Q_AREA, Q_VOLUME, Q_COUNT, Q_WEIGTH, Q_TIME : the formula to be used to calculate the quantity NOTE No value shall be asserted if the PropertyType is not listed above.
+		</member>
+		<member name="Expression" type="String" setter="set_Expression" getter="get_Expression">
+			Information about the access state of the property. It determines whether a property be viewed and/or modified by any receiving application without specific knowledge of it. Attribute use definition for IfcStateEnum READWRITE: Properties of this template are readable and writable. They may be viewed and modified by users of any application. These are typical informational properties set by a user. READONLY: Properties of this template are read-only. They may be viewed but not modified by users of any application. (Applications may generate such values). These are typical automatically generated properties that should be displayed only, but not written back. LOCKED: Properties of this template are locked. They may only be accessed by the owning application (the publisher of the property set template). These are typically application depended, internal properties that should not be published. READWRITELOCKED: Properties of this template are locked, readable, and writable. They may only be accessed by the owning application. READONLYLOCKED: Properties of this template are locked and read-only. They may only be accessed by the owning application.
+		</member>
+		<member name="AccessState" type="String" setter="set_AccessState" getter="get_AccessState">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

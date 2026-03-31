@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCircleProfileDef" inherits="IfcParameterizedProfileDef"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcCircleProfileDef defines a circle as the profile definition used by the swept surface geometry or by the swept area solid. It is given by its Radius attribute and placed within the 2D position coordinate system, established by the Position attribute. HISTORY New class in IFC 1.5. Figure 313 illustrates parameters for the circle profile definition. The parameterized profile defines its own posit
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Radius" type="float" setter="set_Radius" getter="get_Radius">
+			The radius of the circle.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

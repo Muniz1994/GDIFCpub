@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcOccupant" inherits="IfcActor"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An occupant is a type of actor that defines the form of occupancy of a property. The principal purpose of IfcOccupant is to determine the nature of occupancy of a property for a particular actor. All characteristics relating to the actor (name and organization details) are inherited from the IfcActor class. HISTORY: New entity in IFC2x Assignment Use Definition The IfcOccupant may have assignments
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined occupant types from which that required may be set. IFC2x4 CHANGE Attribute made optional.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

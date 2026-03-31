@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcLightSourceAmbient" inherits="IfcLightSource"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-46:1992 : The light source ambient entity is a subtype of light source. It lights a surface independent of the surface's orientation and position. NOTE: Corresponding ISO 10303 entity: light_source_ambient. Please refer to ISO/IS 10303-46:1994, p. 31 for the final definition of the formal standard. NOTE: In addition to the attributes as defined in ISO 10303-46 the addi
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

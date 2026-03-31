@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcActor" inherits="IfcObject"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The IfcActor defines all actors or human agents involved in a project during its full life cycle. It facilitates the use of person and organization definitions in the resource part of the IFC object model. This includes name, address, telecommunication addresses, and roles. HISTORY New Entity in IFC Release 2.0 Relationship use definition Actors are assigned (such as to a process or a resource) by
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="TheActor" type="GDIFCEntityBase" setter="set_TheActor" getter="get_TheActor">
+			Information about the actor.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

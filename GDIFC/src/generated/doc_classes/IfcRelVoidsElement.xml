@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelVoidsElement" inherits="IfcRelDecomposes"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcRelVoidsElement is an objectified relationship between a building element and one opening element that creates a void in the element. It is a one-to-one relationship. This relationship implies a Boolean operation of subtraction between the geometric bodies of the element and the opening. As shown in Figure 50, the insertion of a void into a wall is represented by the relationship IfcRelVoidsEle
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingBuildingElement" type="GDIFCEntityBase" setter="set_RelatingBuildingElement" getter="get_RelatingBuildingElement">
+			Reference to building element in which a void is created by associated opening feature subtraction element. IFC2x PLATFORM CHANGE The data type has been changed from IfcBuildingElement to IfcElement with upward compatibility for file based exchange. IFC2x4 CHANGE Renamed to RelatingElement .
+		</member>
+		<member name="RelatedOpeningElement" type="GDIFCEntityBase" setter="set_RelatedOpeningElement" getter="get_RelatedOpeningElement">
+			Reference to the opening feature subtraction element which defines a void in the associated opening element. IFC2x PLATFORM CHANGE The data type has been changed from IfcOpeningElement to IfcFeatureElementSubtraction with upward compatibility for file based exchange. IFC2x4 CHANGE Renamed to RelatedOpening .
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

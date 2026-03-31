@@ -24,6 +24,8 @@ Outputs in <output_dir>:
     gd_ifc_entities_register.cpp       - ClassDB + factory registrations
 """
 
+import csv
+import html
 import os
 import re
 import sys
@@ -85,8 +87,113 @@ def to_snake(name: str) -> str:
     return s.lower()
 
 def gd_class_name(ifc_name: str) -> str:
-    """IFC entity name → Godot GDClass name (e.g. IfcWall → GDIfcWall)."""
-    return "GD" + ifc_name
+    """IFC entity name → Godot GDClass name (e.g. IfcWall → IfcWall)."""
+    return ifc_name
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Documentation helpers  (CSV → Godot XML)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _strip_html(text: str) -> str:
+    """Remove HTML tags, unescape entities, and normalise whitespace."""
+    text = re.sub(r'<[^>]+>', ' ', text)
+    text = html.unescape(text)
+    return ' '.join(text.split())
+
+
+def _load_entity_docs(csv_path: str) -> dict:
+    """Returns {doc_line_int: (entity_name, plain_description)}."""
+    result = {}
+    with open(csv_path, newline='', encoding='cp1252', errors='replace') as f:
+        for row in csv.reader(f, delimiter=';'):
+            if len(row) >= 3:
+                try:
+                    result[int(row[0])] = (row[1].strip(), _strip_html(row[2]))
+                except ValueError:
+                    pass
+    return result
+
+
+def _load_attr_docs(csv_path: str) -> dict:
+    """Returns {doc_line_int: plain_description}."""
+    result = {}
+    with open(csv_path, newline='', encoding='cp1252', errors='replace') as f:
+        for row in csv.reader(f, delimiter=';'):
+            if len(row) >= 3:
+                try:
+                    result[int(row[0])] = _strip_html(row[2])
+                except ValueError:
+                    pass
+    return result
+
+
+def _load_entity_attr_docs(csv_path: str) -> dict:
+    """Returns {entity_line_int: {attr_position_int: attr_doc_line_int}}."""
+    result = {}
+    with open(csv_path, newline='', encoding='cp1252', errors='replace') as f:
+        for row in csv.reader(f, delimiter=';'):
+            if len(row) >= 3:
+                try:
+                    e_line = int(row[0])
+                    pos = int(row[1])
+                    a_line = int(row[2])
+                    result.setdefault(e_line, {})[pos] = a_line
+                except ValueError:
+                    pass
+    return result
+
+
+# Map C++ type → Godot XML type name for doc generation
+_CPP_TO_XML_TYPE = {
+    "godot::String":             "String",
+    "int64_t":                   "int",
+    "double":                    "float",
+    "bool":                      "bool",
+    "godot::Array":              "Array",
+    "godot::PackedStringArray":  "PackedStringArray",
+    "godot::PackedInt64Array":   "PackedInt64Array",
+    "godot::PackedFloat64Array": "PackedFloat64Array",
+    "Ref<GDIFCEntityBase>":      "GDIFCEntityBase",
+}
+
+
+def emit_xml_doc(entity_name: str, parent_name: str | None,
+                 attrs: list, entity_desc: str, attr_descs: dict) -> str:
+    """
+    Emit a Godot XML doc file for one IFC entity class.
+    attr_descs: {attr_position_in_own_attrs (0-based) -> plain_description}
+    """
+    parent = parent_name if parent_name else "GDIFCEntityBase"
+    brief = entity_desc[:400] if entity_desc else ""
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8" ?>',
+        f'<class name="{entity_name}" inherits="{parent}"',
+        '    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
+        '    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">',
+        '\t<brief_description>',
+        f'\t\t{brief}' if brief else '',
+        '\t</brief_description>',
+        '\t<description></description>',
+        '\t<tutorials/>',
+        '\t<methods/>',
+        '\t<members>',
+    ]
+    for i, a in enumerate(attrs):
+        if a["type_info"] is not None:
+            cpp_type, variant_type, _, setter_helper, _ = a["type_info"]
+            xml_type = _CPP_TO_XML_TYPE.get(cpp_type, "Variant")
+            setter_attr = f'setter="set_{a["name"]}"' if setter_helper else 'setter=""'
+            desc = attr_descs.get(i, "")
+            lines.append(
+                f'\t\t<member name="{a["name"]}" type="{xml_type}"'
+                f' {setter_attr} getter="get_{a["name"]}">'
+            )
+            if desc:
+                lines.append(f'\t\t\t{desc}')
+            lines.append('\t\t</member>')
+    lines += ['\t</members>', '\t<signals/>', '\t<constants/>', '</class>']
+    return '\n'.join(lines) + '\n'
+
 
 def topological_sort(entities: dict) -> list:
     """Return entity names in parent-before-child order."""
@@ -175,7 +282,6 @@ def get_entity_attrs(entity_name: str, entity, mapping: Mapping) -> list:
 
         attrs.append({
             "name": attr_name,
-            "snake": to_snake(attr_name),
             "arg_type": arg_type,
             "type_info": type_info,
         })
@@ -203,9 +309,9 @@ def emit_class_decl(entity_name: str, parent_name: str | None, attrs: list) -> s
         lines.append("public:")
         for a in bindable:
             cpp_type, _, _, setter_helper, _ = a["type_info"]
-            lines.append(f"    {cpp_type} get_{a['snake']}();")
+            lines.append(f"    {cpp_type} get_{a['name']}();")
             if setter_helper is not None:
-                lines.append(f"    void set_{a['snake']}({cpp_type} v);")
+                lines.append(f"    void set_{a['name']}({cpp_type} v);")
     lines.append("};")
     return "\n".join(lines)
 
@@ -219,41 +325,41 @@ def emit_bind_methods(entity_name: str, attrs: list, start_idx: int) -> str:
     for a in attrs:
         if a["type_info"] is not None:
             cpp_type, variant_type, _, setter_helper, _ = a["type_info"]
-            snake = a["snake"]
+            attr_name = a["name"]
             hint_part = f", {ENTITY_HINT}" if "OBJECT" in variant_type else ""
             lines.append(
-                f'    ClassDB::bind_method(D_METHOD("get_{snake}"), &{gd_class}::get_{snake});')
+                f'    ClassDB::bind_method(D_METHOD("get_{attr_name}"), &{gd_class}::get_{attr_name});')
             if setter_helper is not None:
                 lines.append(
-                    f'    ClassDB::bind_method(D_METHOD("set_{snake}","v"), &{gd_class}::set_{snake});')
+                    f'    ClassDB::bind_method(D_METHOD("set_{attr_name}","v"), &{gd_class}::set_{attr_name});')
                 lines.append(
-                    f'    ADD_PROPERTY(PropertyInfo({variant_type}, "{snake}"{hint_part}), "set_{snake}", "get_{snake}");')
+                    f'    ADD_PROPERTY(PropertyInfo({variant_type}, "{attr_name}"{hint_part}), "set_{attr_name}", "get_{attr_name}");')
             else:
                 lines.append(
-                    f'    ADD_PROPERTY(PropertyInfo({variant_type}, "{snake}"{hint_part}), "", "get_{snake}");')
+                    f'    ADD_PROPERTY(PropertyInfo({variant_type}, "{attr_name}"{hint_part}), "", "get_{attr_name}");')
         idx += 1
 
     lines.append("}")
     return "\n".join(lines)
 
 
-def emit_getter(entity_name: str, snake: str, cpp_type: str, getter_helper: str,
+def emit_getter(entity_name: str, attr_name: str, cpp_type: str, getter_helper: str,
                 default_val: str, idx: int, needs_file: bool) -> str:
     gd_class = gd_class_name(entity_name)
     file_arg = ", file_" if needs_file else ""
     return (
-        f"{cpp_type} {gd_class}::get_{snake}() {{\n"
+        f"{cpp_type} {gd_class}::get_{attr_name}() {{\n"
         f"    if (!entity_) return {default_val};\n"
         f"    return {getter_helper}(entity_->get_attribute_value({idx}){file_arg});\n"
         f"}}"
     )
 
 
-def emit_setter(entity_name: str, snake: str, cpp_type: str,
+def emit_setter(entity_name: str, attr_name: str, cpp_type: str,
                 setter_helper: str, idx: int) -> str:
     gd_class = gd_class_name(entity_name)
     return (
-        f"void {gd_class}::set_{snake}({cpp_type} v) {{\n"
+        f"void {gd_class}::set_{attr_name}({cpp_type} v) {{\n"
         f"    if (!entity_) return;\n"
         f"    {setter_helper}(entity_, {idx}, v);\n"
         f"}}"
@@ -362,6 +468,22 @@ def generate(exp_path: str, output_dir: str):
         start_idx = start_index_map.get(name, 0)
         entity_info.append((name, parent_name, attrs, start_idx))
 
+    # ── Load documentation from CSVs ─────────────────────────────────────────
+    entity_doc_csv = os.path.join(_here, "DocEntity.csv")
+    attr_doc_csv   = os.path.join(_here, "DocAttribute.csv")
+    entity_attr_csv = os.path.join(_here, "DocEntityAttributes.csv")
+
+    entity_docs_by_line  = _load_entity_docs(entity_doc_csv)  if os.path.exists(entity_doc_csv)  else {}
+    attr_docs_by_line    = _load_attr_docs(attr_doc_csv)      if os.path.exists(attr_doc_csv)    else {}
+    entity_attr_links    = _load_entity_attr_docs(entity_attr_csv) if os.path.exists(entity_attr_csv) else {}
+
+    # Build reverse lookup: entity_name (lowercased) → (doc_line, description)
+    entity_name_to_doc = {}
+    for doc_line, (ename, edesc) in entity_docs_by_line.items():
+        entity_name_to_doc[ename.lower()] = (doc_line, edesc)
+
+    print(f"[godot_codegen] Loaded docs for {len(entity_name_to_doc)} entities.")
+
     # ── Open output files ─────────────────────────────────────────────────────
     header_lines = [_HEADER_PREAMBLE.format(schema_name=schema_name)]
     impl_shards = {k: [_IMPL_PREAMBLE] for k in ('A', 'B', 'C', 'D')}
@@ -393,11 +515,11 @@ def generate(exp_path: str, output_dir: str):
             if a["type_info"] is not None:
                 cpp_type, _, getter_helper, setter_helper, default_val = a["type_info"]
                 needs_file = getter_helper in ("gd_attr_entity", "gd_attr_agg_entity")
-                impl.append(emit_getter(name, a["snake"], cpp_type, getter_helper,
+                impl.append(emit_getter(name, a["name"], cpp_type, getter_helper,
                                         default_val, idx, needs_file))
                 impl.append("")
                 if setter_helper is not None:
-                    impl.append(emit_setter(name, a["snake"], cpp_type, setter_helper, idx))
+                    impl.append(emit_setter(name, a["name"], cpp_type, setter_helper, idx))
                     impl.append("")
             idx += 1
 
@@ -437,6 +559,32 @@ def generate(exp_path: str, output_dir: str):
     total_attrs = sum(len([a for a in attrs if a["type_info"]]) for _, _, attrs, _ in entity_info)
     print(f"[godot_codegen] Generated {len(entity_info)} entity classes, "
           f"{total_attrs} typed accessors.")
+
+    # ── Write Godot XML doc files ─────────────────────────────────────────────
+    doc_dir = os.path.join(output_dir, "doc_classes")
+    os.makedirs(doc_dir, exist_ok=True)
+
+    for name, parent_name, attrs, _ in entity_info:
+        e_line, e_desc = entity_name_to_doc.get(name.lower(), (None, ""))
+        attr_descs = {}
+        if e_line is not None and e_line in entity_attr_links:
+            for pos, a_line in entity_attr_links[e_line].items():
+                attr_descs[pos] = attr_docs_by_line.get(a_line, "")
+        xml_path = os.path.join(doc_dir, f"{name}.xml")
+        with open(xml_path, "w", encoding="utf-8") as fxml:
+            fxml.write(emit_xml_doc(name, parent_name, attrs, e_desc, attr_descs))
+
+    print(f"[godot_codegen] Wrote {len(entity_info)} XML doc files to {doc_dir}")
+
+    # ── Generate compressed doc data .cpp ────────────────────────────────────
+    sys.path.insert(0, os.path.join(_here, "..", "godot-cpp"))
+    try:
+        from doc_source_generator import generate_doc_source_from_directory
+        gen_cpp_path = os.path.join(output_dir, "gd_ifc_doc_data.gen.cpp")
+        generate_doc_source_from_directory(gen_cpp_path, doc_dir)
+        print(f"[godot_codegen] Wrote {gen_cpp_path}")
+    except ImportError as e:
+        print(f"[godot_codegen] WARNING: could not import doc_source_generator: {e}")
 
 
 # ─────────────────────────────────────────────────────────────────────────────

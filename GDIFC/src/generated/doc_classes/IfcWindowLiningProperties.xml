@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcWindowLiningProperties" inherits="IfcPreDefinedPropertySet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The window lining is the outer frame which enables the window to be fixed in position. The window lining is used to hold the window panels or other casements. The parameter of the IfcWindowLiningProperties define the geometrically relevant parameter of the lining. NOTEÿ The IfcWindowLiningProperties shall only be applied to construct the 3D shape of a window, if the attribute IfcWindowStyle.Parame
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="LiningDepth" type="float" setter="set_LiningDepth" getter="get_LiningDepth">
+			Depth of the window lining (dimension measured perpendicular to window elevation plane).
+		</member>
+		<member name="LiningThickness" type="float" setter="set_LiningThickness" getter="get_LiningThickness">
+			Thickness of the window lining (measured parallel to the window elevation plane).
+		</member>
+		<member name="TransomThickness" type="float" setter="set_TransomThickness" getter="get_TransomThickness">
+			Thickness of the transom (horizontal separator of window panels within a window), measured parallel to the window elevation plane. The transom is part of the lining and the transom depth is assumed to be identical to the lining depth.
+		</member>
+		<member name="MullionThickness" type="float" setter="set_MullionThickness" getter="get_MullionThickness">
+			Thickness of the mullion (vertical separator of window panels within a window), measured parallel to the window elevation plane. The mullion is part of the lining and the mullion depth is assumed to be identical to the lining depth.
+		</member>
+		<member name="FirstTransomOffset" type="float" setter="set_FirstTransomOffset" getter="get_FirstTransomOffset">
+			Offset of the transom centerline, measured along the z-axis of the window placement co-ordinate system. An offset value = 0.5 indicates that the transom is positioned in the middle of the window.
+		</member>
+		<member name="SecondTransomOffset" type="float" setter="set_SecondTransomOffset" getter="get_SecondTransomOffset">
+			Offset of the transom centerline for the second transom, measured along the x-axis of the window placement co-ordinate system. An offset value = 0.666 indicates that the second transom is positioned at two/third of the window.
+		</member>
+		<member name="FirstMullionOffset" type="float" setter="set_FirstMullionOffset" getter="get_FirstMullionOffset">
+			Offset of the mullion centerline, measured along the x-axis of the window placement co-ordinate system. An offset value = 0.5 indicates that the mullion is positioned in the middle of the window.
+		</member>
+		<member name="SecondMullionOffset" type="float" setter="set_SecondMullionOffset" getter="get_SecondMullionOffset">
+			Offset of the mullion centerline for the second mullion, measured along the x-axis of the window placement co-ordinate system. An offset value = 0.666 indicates that the second mullion is positioned at two/third of the window.
+		</member>
+		<member name="ShapeAspectStyle" type="GDIFCEntityBase" setter="set_ShapeAspectStyle" getter="get_ShapeAspectStyle">
+			Optional link to a shape aspect definition, which points to the part of the geometric representation of the window style, which is used to represent the lining. IFC2x4 CHANGE The attribute is deprecated and shall no longer be used, i.e. the value shall be NIL ($).
+		</member>
+		<member name="LiningOffset" type="float" setter="set_LiningOffset" getter="get_LiningOffset">
+			Offset of the window lining. The offset is given as distance along the y axis of the local placement (perpendicular to the window plane). IFC2x4 CHANGE: New attribute added at the end of the entity definition.
+		</member>
+		<member name="LiningToPanelOffsetX" type="float" setter="set_LiningToPanelOffsetX" getter="get_LiningToPanelOffsetX">
+			Offset between the lining and the window panel measured along the x-axis of the local placement. Should be smaller or equal to the LiningThickness . IFC2x4 CHANGE: New attribute added at the end of the entity definition.
+		</member>
+		<member name="LiningToPanelOffsetY" type="float" setter="set_LiningToPanelOffsetY" getter="get_LiningToPanelOffsetY">
+			Offset between the lining and the window panel measured along the y-axis of the local placement. Should be smaller or equal to the IfcWindowPanelProperties.PanelThickness . IFC2x4 CHANGE: New attribute added at the end of the entity definition.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

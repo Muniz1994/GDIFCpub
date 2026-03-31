@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFillAreaStyleTiles" inherits="IfcGeometricRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-46:1992 : The fill area style tiles defines a two dimensional tile to be used for the filling of annotation fill areas or other closed regions. The content of a tile is defined by the tile set, and the placement of each tile determined by the filling pattern which indicates how to place tiles next to each other. Tiles or parts of tiles outside of the annotation fill ar
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="TilingPattern" type="Array" setter="set_TilingPattern" getter="get_TilingPattern">
+			A two direction repeat factor defining the shape and relative positioning of the tiles.
+		</member>
+		<member name="Tiles" type="Array" setter="set_Tiles" getter="get_Tiles">
+			A set of constituents of the tile.
+		</member>
+		<member name="TilingScale" type="float" setter="set_TilingScale" getter="get_TilingScale">
+			The scale factor applied to each tile as it is placed in the annotation fill area.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcProductRepresentation" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcProductRepresentation defines a representation of a product, including its (geometric or topological) representation. A product can have zero, one or many geometric representations, and a single geometric representation can be shared among various products using mapped representations. NOTE: The definition of this entity relates to the ISO 10303 entity property_definition. The use of the term ‘
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			The word or group of words by which the product representation is known.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			The word or group of words that characterize the product representation. It can be used to add additional meaning to the name of the product representation.
+		</member>
+		<member name="Representations" type="Array" setter="set_Representations" getter="get_Representations">
+			Contained list of representations (including shape representations). Each member defines a valid representation of a particular type within a particular representation context.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

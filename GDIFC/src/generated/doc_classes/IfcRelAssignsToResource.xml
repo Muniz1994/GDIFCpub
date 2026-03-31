@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelAssignsToResource" inherits="IfcRelAssigns"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The objectified relationship IfcRelAssignsToResource handles the assignment of objects (as subtypes of IfcObject ), acting as a resource usage or consumption, to a resource (as subtypes of IfcResource ). EXAMPLE The assignment of a resource usage to a construction resource is an application of this generic relationship. It could be an actor, as person or organization assigned to a labor resource, 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingResource" type="GDIFCEntityBase" setter="set_RelatingResource" getter="get_RelatingResource">
+			Reference to the resource to which the objects are assigned to. IFC2x4 CHANGE Datatype expanded to include IfcResource and IfcTypeResource .
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

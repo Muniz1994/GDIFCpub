@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcConstructionEquipmentResource" inherits="IfcConstructionResource"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcConstructionEquipmentResource is usage of construction equipment to assist in the performance of construction. Construction Equipment resources are wholly or partially consumed or occupied in the performance of construction. HISTORY: New Entity in IFC Release 2.0. Base type and documentation extended in IFC2x4. Occurrences of IfcConstructionEquipmentResource are products that are used as resour
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Defines types of construction equipment resources. IFC2x4 New attribute
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

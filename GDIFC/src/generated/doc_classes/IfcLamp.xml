@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcLamp" inherits="IfcFlowTerminal"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A lamp is an artificial light source such as a light bulb or tube. HISTORY New entity in IFC2x4 Type Use Definition IfcLamp defines the occurrence of any lamp; common information about lamp types is handled by IfcLampType . The IfcLampType (if present) may establish the common type name, usage (predefined type), properties, materials, ports, composition, assignments, and representations. The IfcLa
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

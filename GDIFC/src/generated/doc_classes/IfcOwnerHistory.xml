@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcOwnerHistory" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcOwnerHistory defines all history and identification related information. In order to provide fast access it is directly attached to all independent objects, relationships and properties. IfcOwnerHistory is used to identify the creating and owning application and user for the associated object, as well as capture the last modifying application and user. HISTORY New entity in IFC R1.0. Modified i
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="OwningUser" type="GDIFCEntityBase" setter="set_OwningUser" getter="get_OwningUser">
+			Direct reference to the end user who currently "owns" this object. Note that IFC includes the concept of ownership transfer from one user to another and therefore distinguishes between the Owning User and Creating User.
+		</member>
+		<member name="OwningApplication" type="GDIFCEntityBase" setter="set_OwningApplication" getter="get_OwningApplication">
+			Direct reference to the application which currently "Owns" this object on behalf of the owning user, who uses this application. Note that IFC includes the concept of ownership transfer from one application to another and therefore distinguishes between the Owning Application and Creating Application.
+		</member>
+		<member name="State" type="String" setter="set_State" getter="get_State">
+			Enumeration that defines the current access state of the object.
+		</member>
+		<member name="ChangeAction" type="String" setter="set_ChangeAction" getter="get_ChangeAction">
+			Enumeration that defines the actions associated with changes made to the object.
+		</member>
+		<member name="LastModifiedDate" type="int" setter="set_LastModifiedDate" getter="get_LastModifiedDate">
+			Date and Time expressed in UTC (Universal Time Coordinated, formerly Greenwich Mean Time or GMT) at which the last modification was made by LastModifyingUser and LastModifyingApplication.
+		</member>
+		<member name="LastModifyingUser" type="GDIFCEntityBase" setter="set_LastModifyingUser" getter="get_LastModifyingUser">
+			User who carried out the last modification using LastModifyingApplication.
+		</member>
+		<member name="LastModifyingApplication" type="GDIFCEntityBase" setter="set_LastModifyingApplication" getter="get_LastModifyingApplication">
+			Application used to make the last modification.
+		</member>
+		<member name="CreationDate" type="int" setter="set_CreationDate" getter="get_CreationDate">
+			The date and time expressed in UTC (Universal Time Coordinated, formerly Greenwich Mean Time or GMT) when first created by the original OwningApplication. Once defined this value remains unchanged through the lifetime of the entity.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcReinforcingBarType" inherits="IfcReinforcingElementType"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: A steel bar, usually with manufactured deformations in the surface, used in concrete and masonry construction to provide additional strength. HISTORY New entity in IFC Release 2x4 Material Use Definition : An associated material denotes the steel grade, preferrably by material classification. Geometry Use Definition : The IfcReinforcingBarType may define the shared geometric r
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			The nominal diameter defining the cross-section size of the reinforcing bar.
+		</member>
+		<member name="NominalDiameter" type="float" setter="set_NominalDiameter" getter="get_NominalDiameter">
+			The effective cross-section area of the reinforcing bar.
+		</member>
+		<member name="CrossSectionArea" type="float" setter="set_CrossSectionArea" getter="get_CrossSectionArea">
+			The total length of the reinforcing bar. The total length of bended bars are calculated according to local standards with corrections for the bends.
+		</member>
+		<member name="BarLength" type="float" setter="set_BarLength" getter="get_BarLength">
+			Indicator for whether the bar surface is plain or textured.
+		</member>
+		<member name="BarSurface" type="String" setter="set_BarSurface" getter="get_BarSurface">
+			The predefined type is always BAR.
+		</member>
+		<member name="BendingShapeCode" type="String" setter="set_BendingShapeCode" getter="get_BendingShapeCode">
+		</member>
+		<member name="BendingParameters" type="Array" setter="set_BendingParameters" getter="get_BendingParameters">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

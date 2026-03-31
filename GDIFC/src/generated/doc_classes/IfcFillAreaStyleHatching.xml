@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFillAreaStyleHatching" inherits="IfcGeometricRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-46:1992 : The fill area style hatching defines a styled pattern of curves for hatching an annotation fill area or a surface. The IfcFillAreaStyleHatching is used to define simple, vector-based hatching patterns, based on styled straight lines. The curve font, color and thickness is given by the HatchLineAppearance , the angle by the HatchLineAngle and the distance to t
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="HatchLineAppearance" type="GDIFCEntityBase" setter="set_HatchLineAppearance" getter="get_HatchLineAppearance">
+			The curve style of the hatching lines. Any curve style pattern shall start at the origin of each hatch line.
+		</member>
+		<member name="StartOfNextHatchLine" type="GDIFCEntityBase" setter="set_StartOfNextHatchLine" getter="get_StartOfNextHatchLine">
+			A repetition factor that determines the distance between adjacent hatch lines. IFC2x Edition 3 CHANGE The attribute type of StartOfNextHatchLine has changed to a SELECT of IfcPositiveLengthMeasure (new) and IfcOneDirectionRepeatFactor .
+		</member>
+		<member name="PointOfReferenceHatchLine" type="GDIFCEntityBase" setter="set_PointOfReferenceHatchLine" getter="get_PointOfReferenceHatchLine">
+			A Cartesian point which defines the offset of the reference hatch line from the origin of the (virtual) hatching coordinate system. The origin is used for mapping the fill area style hatching onto an annotation fill area or surface. The reference hatch line would then appear with this offset from the fill style target point. If not given the reference hatch lines goes through the origin of the (virtual) hatching coordinate system. IFC2x Edition 3 CHANGE The usage of the attribute PointOfReferenceHatchLine has changed to not provide the Cartesian point which is the origin for mapping, but to provide an offset to the origin for the mapping. The attribute has been made OPTIONAL.
+		</member>
+		<member name="PatternStart" type="GDIFCEntityBase" setter="set_PatternStart" getter="get_PatternStart">
+			A distance along the reference hatch line which is the start point for the curve style font pattern of the reference hatch line. If not given, the start point of the curve style font pattern is at the (virtual) hatching coordinate system. IFC2x Edition 2 Addendum 2 CHANGE The attribute PatternStart has been made OPTIONAL.
+		</member>
+		<member name="HatchLineAngle" type="float" setter="set_HatchLineAngle" getter="get_HatchLineAngle">
+			A plane angle measure determining the direction of the parallel hatching lines.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>
