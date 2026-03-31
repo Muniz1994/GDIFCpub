@@ -68,6 +68,7 @@ func _on_file_selected(path: String):
 	ifc_manager.read_ifc(path,create_collision,collision_elements)
 	
 	ifc_manager.set_display_folded(true)
+	ifc_manager.ifc_read.connect(_on_readed_file)
 
-const BATCH_SIZE = 100 # The number of nodes to process per frame. 
-var _nodes_processed = 0
+func _on_readed_file()->void:
+	loading_label.hide()
