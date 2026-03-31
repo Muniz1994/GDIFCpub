@@ -10,6 +10,7 @@
 #include <godot_cpp/templates/hash_map.hpp>
 #include <godot_cpp/classes/time.hpp>
 #include <godot_cpp/core/error_macros.hpp>
+#include <godot_cpp/classes/marshalls.hpp>
 
 #include <parsing/IfcLoader.h>
 #include <schema/IfcSchemaManager.h>
@@ -130,6 +131,9 @@ class GDIFCManager : public Node3D {
 
     Ref<GDIFCLoaderSettings> geometric_settings;
 
+    // Buffer shared between read_ifc / read_ifc_base64 and the worker thread
+    PackedByteArray pending_buffer;
+
     uint64_t start_loading_time{};
 
   protected:
@@ -140,10 +144,11 @@ class GDIFCManager : public Node3D {
     ~GDIFCManager() override;
 
     Error read_ifc(const String &_path, bool _create_collision, const Array &_collision_classes);
+    Error read_ifc_base64(const String &_base64_data, bool _create_collision, const Array &_collision_classes);
     void _process(double delta) override;
 
     // Thread Functions
-    void _thread_task(const String& _path);
+    void _thread_task();
 
     // Main Thread Functions
     void _process_generation_queue();

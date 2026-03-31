@@ -1,4 +1,5 @@
 #include "web_ifc_manager.h"
+#include <stdexcept>
 
 
 void WEBIFCManager::read_ifc_file(const char* data, size_t length) const
@@ -9,7 +10,13 @@ void WEBIFCManager::read_ifc_file(const char* data, size_t length) const
     // Windows, Android, and Web/WASM because the actual file reading
     // is done earlier via Godot's FileAccess.
     std::istringstream stream(std::string(data, length));
-    this->loader->LoadFile(stream);
+    try {
+        this->loader->LoadFile(stream);
+    } catch (const std::exception& e) {
+        throw std::runtime_error(std::string("[web-ifc] LoadFile failed: ") + e.what());
+    } catch (...) {
+        throw std::runtime_error("[web-ifc] LoadFile failed: unknown error.");
+    }
 }
 
 // old ReadValue
@@ -279,8 +286,13 @@ godot::Array WEBIFCManager::get_type_properties( uint32_t modelID, uint32_t elem
 
 void WEBIFCManager::initialize_geometry_processor()
 {
-
-    this->geometry_loader = std::make_unique<webifc::geometry::IfcGeometryProcessor>(*loader, schemaManager, set->getCircleSegments(), set->getCoordinateToOrigin(), set->getTolerancePlaneIntersection(), set->getTolerancePlaneDeviation(), set->getToleranceBackDeviationDistance(), set->getToleranceInsideOutsidePerimeter(), set->getToleranceScalarEquality(), set->getPlaneRefitIterations(), set->getBooleanUnionThreshold());
+    try {
+        this->geometry_loader = std::make_unique<webifc::geometry::IfcGeometryProcessor>(*loader, schemaManager, set->getCircleSegments(), set->getCoordinateToOrigin(), set->getTolerancePlaneIntersection(), set->getTolerancePlaneDeviation(), set->getToleranceBackDeviationDistance(), set->getToleranceInsideOutsidePerimeter(), set->getToleranceScalarEquality(), set->getPlaneRefitIterations(), set->getBooleanUnionThreshold());
+    } catch (const std::exception& e) {
+        throw std::runtime_error(std::string("[web-ifc] Geometry processor init failed: ") + e.what());
+    } catch (...) {
+        throw std::runtime_error("[web-ifc] Geometry processor init failed: unknown error.");
+    }
 }
 
 

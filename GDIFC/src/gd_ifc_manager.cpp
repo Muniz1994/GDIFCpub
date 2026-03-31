@@ -1,6 +1,7 @@
 #include "gd_ifc_manager.h"
 #include <algorithm> // Required for std::sort
 #include <functional> // Required for lambdas
+#include <stdexcept>  // Required for std::exception
 
 #include "godot_cpp/classes/file_access.hpp"
 #include "godot_cpp/classes/scene_tree.hpp"
@@ -9,7 +10,8 @@ using namespace godot;
 
 void GDIFCManager::_bind_methods() {
     ClassDB::bind_method(D_METHOD("read_ifc", "path", "create_collision", "collision_classes"), &GDIFCManager::read_ifc, DEFVAL(false), DEFVAL(Array{}));
-    ClassDB::bind_method(D_METHOD("_thread_task", "path"), &GDIFCManager::_thread_task);
+    ClassDB::bind_method(D_METHOD("read_ifc_base64", "base64_data", "create_collision", "collision_classes"), &GDIFCManager::read_ifc_base64, DEFVAL(false), DEFVAL(Array{}));
+    ClassDB::bind_method(D_METHOD("_thread_task"), &GDIFCManager::_thread_task);
     ClassDB::bind_method(D_METHOD("get_gdifc_settings"), &GDIFCManager::get_gdifc_settings);
     ClassDB::bind_method(D_METHOD("set_gdifc_settings","gdifc_settings"), &GDIFCManager::set_gdifc_settings);
 
@@ -28,6 +30,17 @@ Error GDIFCManager::read_ifc(const String &_path, bool _create_collision, const 
 
     ERR_FAIL_COND_V_MSG((current_state != IDLE && current_state != DONE),Error::FAILED,"Already loading!");
 
+    // Read the file into the shared buffer
+    Ref<FileAccess> fa = FileAccess::open(_path, FileAccess::READ);
+    if (!fa.is_valid()) {
+        ERR_FAIL_V_MSG(Error::FAILED, String("Failed to open IFC file: ") + _path
+                       + String(" (error: ") + String::num_int64((int64_t)FileAccess::get_open_error()) + String(")"));
+    }
+    this->pending_buffer = fa->get_buffer(fa->get_length());
+    fa.unref();
+
+    ERR_FAIL_COND_V_MSG(this->pending_buffer.is_empty(), Error::FAILED, "IFC file is empty.");
+
     // Reset
     this->should_create_collisions = _create_collision;
     this->collision_classes = _collision_classes;
@@ -37,7 +50,36 @@ Error GDIFCManager::read_ifc(const String &_path, bool _create_collision, const 
     this->current_state = LOADING_THREAD;
 
     // Start Thread
-    Callable callable = Callable(this, "_thread_task").bind(_path);
+    Callable callable = Callable(this, "_thread_task");
+    task_id = WorkerThreadPool::get_singleton()->add_task(callable, true);
+    set_process(true);
+    return Error::OK;
+}
+
+Error GDIFCManager::read_ifc_base64(const String &_base64_data, bool _create_collision, const Array &_collision_classes) {
+
+    UtilityFunctions::print_rich("[color=blue]Started loading IFC from base64");
+
+    start_loading_time = Time::get_singleton()->get_ticks_usec();
+
+    ERR_FAIL_COND_V_MSG((current_state != IDLE && current_state != DONE), Error::FAILED, "Already loading!");
+    ERR_FAIL_COND_V_MSG(_base64_data.is_empty(), Error::FAILED, "Base64 data is empty.");
+
+    // Decode base64 into the shared buffer
+    this->pending_buffer = Marshalls::get_singleton()->base64_to_raw(_base64_data);
+
+    ERR_FAIL_COND_V_MSG(this->pending_buffer.is_empty(), Error::FAILED, "Failed to decode base64 data.");
+
+    // Reset
+    this->should_create_collisions = _create_collision;
+    this->collision_classes = _collision_classes;
+    this->generation_queue.clear();
+    this->material_cache.clear();
+    this->current_generation_index = 0;
+    this->current_state = LOADING_THREAD;
+
+    // Start Thread
+    Callable callable = Callable(this, "_thread_task");
     task_id = WorkerThreadPool::get_singleton()->add_task(callable, true);
     set_process(true);
     return Error::OK;
@@ -63,34 +105,34 @@ void GDIFCManager::_process(double delta) {
 // ---------------------------------------------------------
 // BACKGROUND THREAD
 // ---------------------------------------------------------
-void GDIFCManager::_thread_task(const String& _path) {
+void GDIFCManager::_thread_task() {
 
-    // ------------------------------------------------------------------
-    // Read the IFC file once using Godot FileAccess.
-    // FileAccess works transparently on every platform Godot supports
-    // (Linux, Windows with Unicode paths, Android content providers,
-    //  and the Web/WASM virtual filesystem).
-    // The resulting buffer is then shared with both parsing back-ends,
-    // avoiding duplicate I/O and platform-specific fopen/ifstream calls.
-    // ------------------------------------------------------------------
-    Ref<FileAccess> fa = FileAccess::open(_path, FileAccess::READ);
-    if (!fa.is_valid()) {
-        this->current_state = FAILED;
-        ERR_FAIL_MSG(String("Failed to open IFC file: ") + _path
-                     + String(" (error: ") + String::num_int64((int64_t)FileAccess::get_open_error()) + String(")"));
-    }
-    PackedByteArray file_buffer = fa->get_buffer(fa->get_length());
-    fa.unref(); // close the file handle immediately
-
-    const char* buf_ptr  = reinterpret_cast<const char*>(file_buffer.ptr());
-    int         buf_size = static_cast<int>(file_buffer.size());
+    const char* buf_ptr  = reinterpret_cast<const char*>(this->pending_buffer.ptr());
+    int         buf_size = static_cast<int>(this->pending_buffer.size());
 
     // Load file [web-ifc] — from memory buffer
     auto temp_ifc_manager = std::make_unique<WEBIFCManager>(*geometric_settings);
-    temp_ifc_manager->read_ifc_file(buf_ptr, buf_size);
+    try {
+        temp_ifc_manager->read_ifc_file(buf_ptr, buf_size);
+    } catch (const std::exception& e) {
+        this->current_state = FAILED;
+        ERR_FAIL_MSG(String("[web-ifc] Failed to read IFC file: ") + e.what());
+    } catch (...) {
+        this->current_state = FAILED;
+        ERR_FAIL_MSG("[web-ifc] Failed to read IFC file: unknown error.");
+    }
 
     // Load file [IFCParse] — from memory buffer (void*, int constructor)
-    auto temp_file = std::make_unique<IfcParse::IfcFile>((void*)buf_ptr, buf_size);
+    std::unique_ptr<IfcParse::IfcFile> temp_file;
+    try {
+        temp_file = std::make_unique<IfcParse::IfcFile>((void*)buf_ptr, buf_size);
+    } catch (const std::exception& e) {
+        this->current_state = FAILED;
+        ERR_FAIL_MSG(String("[IfcParse] Failed to parse IFC file: ") + e.what());
+    } catch (...) {
+        this->current_state = FAILED;
+        ERR_FAIL_MSG("[IfcParse] Failed to parse IFC file: unknown error.");
+    }
 
     if (!temp_file->good()) {
         this->current_state = FAILED;
@@ -120,19 +162,33 @@ void GDIFCManager::_thread_task(const String& _path) {
     int schema_index = schema_map[current_schema];
 
     // Init Geometry [web-ifc]
-    temp_ifc_manager->initialize_geometry_processor();
+    try {
+        temp_ifc_manager->initialize_geometry_processor();
+    } catch (const std::exception& e) {
+        this->current_state = FAILED;
+        ERR_FAIL_MSG(String("[web-ifc] Failed to initialize geometry processor: ") + e.what());
+    } catch (...) {
+        this->current_state = FAILED;
+        ERR_FAIL_MSG("[web-ifc] Failed to initialize geometry processor: unknown error.");
+    }
 
     Vector<PrecalculatedIFCItem> temp_queue;
 
     // Build hierarchy parent map (EXPRESSID, EXPRESSID), of elements based on its parent if they exist
     std::unordered_map<int, int> parent_map;
 
-    switch (schema_index) {
-        case 0: parent_map = build_spatial_hierarchy<Ifc4>(*temp_file); break;
-        case 1: parent_map = build_spatial_hierarchy<Ifc4x3>(*temp_file); break;
-        case 2: parent_map = build_spatial_hierarchy<Ifc2x3>(*temp_file); break;
-        case 3: parent_map = build_spatial_hierarchy<Ifc4x3_add2>(*temp_file); break;
-        default: ;
+    try {
+        switch (schema_index) {
+            case 0: parent_map = build_spatial_hierarchy<Ifc4>(*temp_file); break;
+            case 1: parent_map = build_spatial_hierarchy<Ifc4x3>(*temp_file); break;
+            case 2: parent_map = build_spatial_hierarchy<Ifc2x3>(*temp_file); break;
+            case 3: parent_map = build_spatial_hierarchy<Ifc4x3_add2>(*temp_file); break;
+            default: ;
+        }
+    } catch (const std::exception& e) {
+        ERR_PRINT(String("[IfcParse] Failed to build spatial hierarchy: ") + e.what());
+    } catch (...) {
+        ERR_PRINT("[IfcParse] Failed to build spatial hierarchy: unknown error.");
     }
 
 
@@ -152,6 +208,7 @@ void GDIFCManager::_thread_task(const String& _path) {
         if (!instances) continue;
 
         for(int i=0; i<instances->size(); i++) {
+            try {
             auto ent = instances->operator[](i);
 
             int id = ent->id();
@@ -252,6 +309,12 @@ void GDIFCManager::_thread_task(const String& _path) {
 
             temp_queue.push_back(item);
             processed_ids.insert(id);
+
+            } catch (const std::exception& e) {
+                ERR_PRINT(String("Failed to process spatial entity ") + s_type.c_str() + " #" + String::num_int64(i) + ": " + e.what());
+            } catch (...) {
+                ERR_PRINT(String("Failed to process spatial entity ") + s_type.c_str() + " #" + String::num_int64(i) + ": unknown error.");
+            }
         }
     }
 
@@ -263,6 +326,7 @@ void GDIFCManager::_thread_task(const String& _path) {
     std::sort(other_parents.begin(), other_parents.end());
 
     for (int id : other_parents) {
+        try {
         auto ent = temp_file->instance_by_id(id);
         if (!ent) continue;
 
@@ -307,12 +371,19 @@ void GDIFCManager::_thread_task(const String& _path) {
 
         temp_queue.push_back(item);
         processed_ids.insert(id);
+
+        } catch (const std::exception& e) {
+            ERR_PRINT(String("Failed to process parent entity #") + String::num_int64(id) + ": " + e.what());
+        } catch (...) {
+            ERR_PRINT(String("Failed to process parent entity #") + String::num_int64(id) + ": unknown error.");
+        }
     }
 
     // 3. HEAVY LOOP: Process everything else
     for (auto type : temp_ifc_manager->schemaManager.GetIfcElementList()) {
         auto expressIDs = temp_ifc_manager->loader->GetExpressIDsWithType(type);
         for (uint32_t expressID : expressIDs) {
+            try {
 
             if (processed_ids.find(expressID) != processed_ids.end()) continue;
 
@@ -405,6 +476,12 @@ void GDIFCManager::_thread_task(const String& _path) {
             if (!item.geometry.empty() || is_container_node) {
                 temp_queue.push_back(item);
             }
+
+            } catch (const std::exception& e) {
+                ERR_PRINT(String("Failed to process element #") + String::num_int64(expressID) + ": " + e.what());
+            } catch (...) {
+                ERR_PRINT(String("Failed to process element #") + String::num_int64(expressID) + ": unknown error.");
+            }
         }
     }
 
@@ -451,6 +528,9 @@ void GDIFCManager::_thread_task(const String& _path) {
     this->web_ifc_manager = std::move(temp_ifc_manager);
     this->ifc_parse_file = std::move(temp_file);
     this->generation_queue = temp_queue;
+
+    // Free the raw buffer — both parsers have consumed it
+    this->pending_buffer = PackedByteArray();
 }
 
 // ---------------------------------------------------------
@@ -600,6 +680,7 @@ void GDIFCManager::set_gdifc_settings(Ref<GDIFCLoaderSettings> gdifc_settings) {
 template <typename schema>
 godot::Dictionary get_ifc_property_sets(IfcParse::IfcFile& file, int expressID) {
     godot::Dictionary psets;
+    try {
 
     // 1. Early exit validation
     auto instance = file.instance_by_id(expressID);
@@ -735,11 +816,19 @@ godot::Dictionary get_ifc_property_sets(IfcParse::IfcFile& file, int expressID) 
     }
 
     return psets;
+
+    } catch (const std::exception& e) {
+        ERR_PRINT(godot::String("Failed to get property sets for entity #") + godot::String::num_int64(expressID) + ": " + e.what());
+    } catch (...) {
+        ERR_PRINT(godot::String("Failed to get property sets for entity #") + godot::String::num_int64(expressID) + ": unknown error.");
+    }
+    return psets;
 }
 
 template <typename schema>
 godot::Dictionary get_ifc_quantity_sets(IfcParse::IfcFile& file, int expressID) {
     godot::Dictionary qsets;
+    try {
 
     // 1. Early exit validation
     auto instance = file.instance_by_id(expressID);
@@ -846,12 +935,20 @@ godot::Dictionary get_ifc_quantity_sets(IfcParse::IfcFile& file, int expressID) 
     }
 
     return qsets;
+
+    } catch (const std::exception& e) {
+        ERR_PRINT(godot::String("Failed to get quantity sets for entity #") + godot::String::num_int64(expressID) + ": " + e.what());
+    } catch (...) {
+        ERR_PRINT(godot::String("Failed to get quantity sets for entity #") + godot::String::num_int64(expressID) + ": unknown error.");
+    }
+    return qsets;
 }
 
 template <typename schema>
 godot::Dictionary get_ifc_object_attributes(IfcParse::IfcFile& file, int expressID) {
 
     godot::Dictionary attributes;
+    try {
 
     auto instance = file.instance_by_id(expressID);
 
@@ -873,6 +970,13 @@ godot::Dictionary get_ifc_object_attributes(IfcParse::IfcFile& file, int express
     }
 
 
+    return attributes;
+
+    } catch (const std::exception& e) {
+        ERR_PRINT(godot::String("Failed to get attributes for entity #") + godot::String::num_int64(expressID) + ": " + e.what());
+    } catch (...) {
+        ERR_PRINT(godot::String("Failed to get attributes for entity #") + godot::String::num_int64(expressID) + ": unknown error.");
+    }
     return attributes;
 }
 
@@ -958,17 +1062,13 @@ godot::GeorreferenceData get_georreference(IfcParse::IfcFile &file) {
     if (std::is_same_v<schema,Ifc2x3>)
     {return {};}
     else {
-        aggregate_of_instance project_list = *file.instances_by_type("IfcMapConversion");
-
-        IfcUtil::IfcBaseClass* obj;
-
-        if (0 < project_list.size()) {
-            obj = project_list[0];
-
-        }
-        else {
+        try {
+        auto instances = file.instances_by_type("IfcMapConversion");
+        if (!instances || instances->size() == 0) {
             return {};
         }
+
+        IfcUtil::IfcBaseClass* obj = (*instances)[0];
 
         auto map_conversion = obj->template as<typename schema::IfcMapConversion>();
 
@@ -988,8 +1088,12 @@ godot::GeorreferenceData get_georreference(IfcParse::IfcFile &file) {
                                      projected_crs->VerticalDatum().value_or("").c_str()}
         );
 
-
-
+        } catch (const std::exception& e) {
+            ERR_PRINT(godot::String("Failed to get georeference data: ") + e.what());
+        } catch (...) {
+            ERR_PRINT("Failed to get georeference data: unknown error.");
+        }
+        return {};
     }
 }
 
@@ -999,6 +1103,7 @@ std::unordered_map<int, int> build_spatial_hierarchy(IfcParse::IfcFile &file) {
     std::unordered_map<int, int> child_to_parent;
 
     // Handle Aggregation
+    try {
     auto rel_aggregates = file.instances_by_type("IfcRelAggregates");
 
     if (rel_aggregates) {
@@ -1017,8 +1122,14 @@ std::unordered_map<int, int> build_spatial_hierarchy(IfcParse::IfcFile &file) {
             }
         }
     }
+    } catch (const std::exception& e) {
+        ERR_PRINT(godot::String("Failed to process IfcRelAggregates: ") + e.what());
+    } catch (...) {
+        ERR_PRINT("Failed to process IfcRelAggregates: unknown error.");
+    }
 
     // Handle Spatial Containment
+    try {
     auto rel_contained = file.instances_by_type("IfcRelContainedInSpatialStructure");
     if (rel_contained) {
         for (int i = 0; i < rel_contained->size(); i++) {
@@ -1036,8 +1147,14 @@ std::unordered_map<int, int> build_spatial_hierarchy(IfcParse::IfcFile &file) {
             }
         }
     }
+    } catch (const std::exception& e) {
+        ERR_PRINT(godot::String("Failed to process IfcRelContainedInSpatialStructure: ") + e.what());
+    } catch (...) {
+        ERR_PRINT("Failed to process IfcRelContainedInSpatialStructure: unknown error.");
+    }
 
     // Handle nesting
+    try {
     auto rel_nests = file.instances_by_type("IfcRelNests");
     if (rel_nests) {
         for (int i = 0; i < rel_nests->size(); i++) {
@@ -1055,7 +1172,13 @@ std::unordered_map<int, int> build_spatial_hierarchy(IfcParse::IfcFile &file) {
             }
         }
     }
+    } catch (const std::exception& e) {
+        ERR_PRINT(godot::String("Failed to process IfcRelNests: ") + e.what());
+    } catch (...) {
+        ERR_PRINT("Failed to process IfcRelNests: unknown error.");
+    }
 
+    try {
     if (schema::get_schema().name() == Ifc4x3_add2::get_schema().name()) {
         auto rel_adheres = file.instances_by_type("IfcRelAdheresToElement");
 
@@ -1076,6 +1199,11 @@ std::unordered_map<int, int> build_spatial_hierarchy(IfcParse::IfcFile &file) {
             }
         }
 
+    }
+    } catch (const std::exception& e) {
+        ERR_PRINT(godot::String("Failed to process IfcRelAdheresToElement: ") + e.what());
+    } catch (...) {
+        ERR_PRINT("Failed to process IfcRelAdheresToElement: unknown error.");
     }
 
 
