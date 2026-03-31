@@ -18,6 +18,8 @@
 		<member name="IsLinear" type="bool" setter="set_IsLinear" getter="get_IsLinear">
 			This value allows to easily recognize whether a linear analysis has been applied (allowing the superposition of analysis results).
 		</member>
+		<member name="ResultGroupFor" type="Array" setter="" getter="get_ResultGroupFor">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

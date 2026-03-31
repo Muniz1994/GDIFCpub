@@ -15,6 +15,10 @@
 		<member name="ElevationWithFlooring" type="float" setter="set_ElevationWithFlooring" getter="get_ElevationWithFlooring">
 			Level of flooring of this space; the average shall be taken, if the space ground surface is sloping or if there are level differences within this space.
 		</member>
+		<member name="HasCoverings" type="Array" setter="" getter="get_HasCoverings">
+		</member>
+		<member name="BoundedBy" type="Array" setter="" getter="get_BoundedBy">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

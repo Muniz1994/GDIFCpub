@@ -18,6 +18,8 @@
 		<member name="HasPropertyTemplates" type="Array" setter="set_HasPropertyTemplates" getter="get_HasPropertyTemplates">
 			Set of IfcPropertyTemplate 's that are defined within the scope of the IfcPropertySetTemplate .
 		</member>
+		<member name="Defines" type="Array" setter="" getter="get_Defines">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

@@ -24,6 +24,8 @@
 		<member name="PartOfProductDefinitionShape" type="GDIFCEntityBase" setter="set_PartOfProductDefinitionShape" getter="get_PartOfProductDefinitionShape">
 			Reference to the product definition shape of which this class is an aspect.
 		</member>
+		<member name="HasExternalReferences" type="Array" setter="" getter="get_HasExternalReferences">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

@@ -30,6 +30,8 @@
 		<member name="Priority" type="int" setter="set_Priority" getter="get_Priority">
 			The relative priority of the layer, expressed as ratio measure, normalised to 0..1. Controls how layers intersect in connections and corners of building elements: a layer from one element protrudes into (i.e. displaces) a layer from another element in a joint of these elements if the former element's layer has higher priority than the latter. The priorty value for a material layer in an element has to be set and maintained by software applications, in relation to the material layers in connected elements. The usage has to be further specified for each element, especially to avoid simultanious use with IfcLayerOffset .
 		</member>
+		<member name="ToMaterialLayerSet" type="Array" setter="" getter="get_ToMaterialLayerSet">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

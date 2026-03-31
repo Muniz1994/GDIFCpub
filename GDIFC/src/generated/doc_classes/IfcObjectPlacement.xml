@@ -12,6 +12,10 @@
 		<member name="PlacementRelTo" type="GDIFCEntityBase" setter="set_PlacementRelTo" getter="get_PlacementRelTo">
 			The IfcObjectPlacement shall be used to provide a placement and an object coordinate system for a single one or many instances of IfcProduct . If an IfcObjectPlacement is shared by many instances of IfcProduct it does not apply a semantic meaning of being a shared property that needs to be maintained. Using the same instance of IfcObjectPlacement could simply be used to reduce exchange file size. IFC2x3 CHANGE New inverse attribute. IFC2x4 CHANGE The cardinality has changed to 1..n to allow reuse of instances of IfcObjectPlacement as placement object in one to many products.
 		</member>
+		<member name="PlacesObject" type="Array" setter="" getter="get_PlacesObject">
+		</member>
+		<member name="ReferencedByPlacements" type="Array" setter="" getter="get_ReferencedByPlacements">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

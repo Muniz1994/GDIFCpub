@@ -15,6 +15,8 @@
 		<member name="HasPropertySets" type="Array" setter="set_HasPropertySets" getter="get_HasPropertySets">
 			Set list of unique property sets, that are associated with the object type and are common to all object occurrences referring to this object type. IFC2x3 CHANGE The attribute aggregate type has been changed from LIST to SET.
 		</member>
+		<member name="Types" type="Array" setter="" getter="get_Types">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

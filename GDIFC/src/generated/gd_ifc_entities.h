@@ -906,6 +906,14 @@ class IfcObjectDefinition : public IfcRoot {
     GDCLASS(IfcObjectDefinition, IfcRoot)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_HasAssignments();
+    godot::Array get_Nests();
+    godot::Array get_IsNestedBy();
+    godot::Array get_HasContext();
+    godot::Array get_IsDecomposedBy();
+    godot::Array get_Decomposes();
+    godot::Array get_HasAssociations();
 };
 
 class IfcObject : public IfcObjectDefinition {
@@ -915,6 +923,10 @@ protected:
 public:
     godot::String get_ObjectType();
     void set_ObjectType(godot::String v);
+    godot::Array get_IsDeclaredBy();
+    godot::Array get_Declares();
+    godot::Array get_IsTypedBy();
+    godot::Array get_IsDefinedBy();
 };
 
 class IfcControl : public IfcObject {
@@ -924,6 +936,7 @@ protected:
 public:
     godot::String get_Identification();
     void set_Identification(godot::String v);
+    godot::Array get_Controls();
 };
 
 class IfcActionRequest : public IfcControl {
@@ -946,6 +959,7 @@ protected:
 public:
     Ref<GDIFCEntityBase> get_TheActor();
     void set_TheActor(Ref<GDIFCEntityBase> v);
+    godot::Array get_IsActingUpon();
 };
 
 class IfcActorRole : public GDIFCEntityBase {
@@ -959,6 +973,7 @@ public:
     void set_UserDefinedRole(godot::String v);
     godot::String get_Description();
     void set_Description(godot::String v);
+    godot::Array get_HasExternalReference();
 };
 
 class IfcProduct : public IfcObject {
@@ -970,6 +985,9 @@ public:
     void set_ObjectPlacement(Ref<GDIFCEntityBase> v);
     Ref<GDIFCEntityBase> get_Representation();
     void set_Representation(Ref<GDIFCEntityBase> v);
+    godot::Array get_ReferencedBy();
+    godot::Array get_PositionedRelativeTo();
+    godot::Array get_ReferencedInStructures();
 };
 
 class IfcElement : public IfcProduct {
@@ -979,18 +997,34 @@ protected:
 public:
     godot::String get_Tag();
     void set_Tag(godot::String v);
+    godot::Array get_FillsVoids();
+    godot::Array get_ConnectedTo();
+    godot::Array get_IsInterferedByElements();
+    godot::Array get_InterferesElements();
+    godot::Array get_HasProjections();
+    godot::Array get_HasOpenings();
+    godot::Array get_IsConnectionRealization();
+    godot::Array get_ProvidesBoundaries();
+    godot::Array get_ConnectedFrom();
+    godot::Array get_ContainedInStructure();
+    godot::Array get_HasCoverings();
+    godot::Array get_HasSurfaceFeatures();
 };
 
 class IfcDistributionElement : public IfcElement {
     GDCLASS(IfcDistributionElement, IfcElement)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_HasPorts();
 };
 
 class IfcDistributionControlElement : public IfcDistributionElement {
     GDCLASS(IfcDistributionControlElement, IfcDistributionElement)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_AssignedToFlowElement();
 };
 
 class IfcActuator : public IfcDistributionControlElement {
@@ -1011,6 +1045,7 @@ public:
     void set_ApplicableOccurrence(godot::String v);
     godot::Array get_HasPropertySets();
     void set_HasPropertySets(godot::Array v);
+    godot::Array get_Types();
 };
 
 class IfcTypeProduct : public IfcTypeObject {
@@ -1022,6 +1057,7 @@ public:
     void set_RepresentationMaps(godot::Array v);
     godot::String get_Tag();
     void set_Tag(godot::String v);
+    godot::Array get_ReferencedBy();
 };
 
 class IfcElementType : public IfcTypeProduct {
@@ -1065,12 +1101,17 @@ public:
     void set_Description(godot::String v);
     godot::String get_UserDefinedPurpose();
     void set_UserDefinedPurpose(godot::String v);
+    godot::Array get_OfPerson();
+    godot::Array get_OfOrganization();
 };
 
 class IfcRepresentationItem : public GDIFCEntityBase {
     GDCLASS(IfcRepresentationItem, GDIFCEntityBase)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_LayerAssignment();
+    godot::Array get_StyledByItem();
 };
 
 class IfcGeometricRepresentationItem : public IfcRepresentationItem {
@@ -1122,6 +1163,7 @@ protected:
 public:
     godot::Array get_Bounds();
     void set_Bounds(godot::Array v);
+    godot::Array get_HasTextureMaps();
 };
 
 class IfcFaceSurface : public IfcFace {
@@ -1145,6 +1187,8 @@ class IfcDistributionFlowElement : public IfcDistributionElement {
     GDCLASS(IfcDistributionFlowElement, IfcDistributionElement)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_HasControlElements();
 };
 
 class IfcFlowTerminal : public IfcDistributionFlowElement {
@@ -1265,6 +1309,9 @@ class IfcPositioningElement : public IfcProduct {
     GDCLASS(IfcPositioningElement, IfcProduct)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_ContainedInStructure();
+    godot::Array get_Positions();
 };
 
 class IfcLinearPositioningElement : public IfcPositioningElement {
@@ -1399,6 +1446,7 @@ protected:
 public:
     godot::String get_PredefinedType();
     void set_PredefinedType(godot::String v);
+    godot::Array get_ContainedInStructure();
 };
 
 class IfcAnnotationFillArea : public IfcGeometricRepresentationItem {
@@ -1452,6 +1500,7 @@ public:
     void set_ArithmeticOperator(godot::String v);
     godot::Array get_Components();
     void set_Components(godot::Array v);
+    godot::Array get_HasExternalReference();
 };
 
 class IfcApproval : public GDIFCEntityBase {
@@ -1477,6 +1526,11 @@ public:
     void set_RequestingApproval(Ref<GDIFCEntityBase> v);
     Ref<GDIFCEntityBase> get_GivingApproval();
     void set_GivingApproval(Ref<GDIFCEntityBase> v);
+    godot::Array get_HasExternalReferences();
+    godot::Array get_ApprovedObjects();
+    godot::Array get_ApprovedResources();
+    godot::Array get_IsRelatedWith();
+    godot::Array get_Relates();
 };
 
 class IfcResourceLevelRelationship : public GDIFCEntityBase {
@@ -1510,6 +1564,8 @@ public:
     void set_ProfileType(godot::String v);
     godot::String get_ProfileName();
     void set_ProfileName(godot::String v);
+    godot::Array get_HasExternalReference();
+    godot::Array get_HasProperties();
 };
 
 class IfcArbitraryClosedProfileDef : public IfcProfileDef {
@@ -1543,6 +1599,9 @@ class IfcGroup : public IfcObject {
     GDCLASS(IfcGroup, IfcObject)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_IsGroupedBy();
+    godot::Array get_ReferencedInStructures();
 };
 
 class IfcAsset : public IfcGroup {
@@ -1837,6 +1896,8 @@ public:
     void set_TextureTransform(Ref<GDIFCEntityBase> v);
     godot::PackedStringArray get_Parameter();
     void set_Parameter(godot::PackedStringArray v);
+    godot::Array get_IsMappedBy();
+    godot::Array get_UsedInStyles();
 };
 
 class IfcBlobTexture : public IfcSurfaceTexture {
@@ -2061,6 +2122,11 @@ protected:
 public:
     godot::String get_LongName();
     void set_LongName(godot::String v);
+    godot::Array get_ContainsElements();
+    godot::Array get_ServicedBySystems();
+    godot::Array get_ReferencesElements();
+    godot::Array get_IsInterferedByElements();
+    godot::Array get_InterferesElements();
 };
 
 class IfcSpatialStructureElement : public IfcSpatialElement {
@@ -2179,6 +2245,9 @@ class IfcSystem : public IfcGroup {
     GDCLASS(IfcSystem, IfcGroup)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_ServicesBuildings();
+    godot::Array get_ServicesFacilities();
 };
 
 class IfcBuildingSystem : public IfcSystem {
@@ -2573,6 +2642,8 @@ public:
     void set_Specification(godot::String v);
     godot::PackedStringArray get_ReferenceTokens();
     void set_ReferenceTokens(godot::PackedStringArray v);
+    godot::Array get_ClassificationForObjects();
+    godot::Array get_HasReferences();
 };
 
 class IfcExternalReference : public GDIFCEntityBase {
@@ -2586,6 +2657,7 @@ public:
     void set_Identification(godot::String v);
     godot::String get_Name();
     void set_Name(godot::String v);
+    godot::Array get_ExternalReferenceForResources();
 };
 
 class IfcClassificationReference : public IfcExternalReference {
@@ -2599,6 +2671,8 @@ public:
     void set_Description(godot::String v);
     godot::String get_Sort();
     void set_Sort(godot::String v);
+    godot::Array get_ClassificationRefForObjects();
+    godot::Array get_HasReferences();
 };
 
 class IfcConnectedFaceSet : public IfcTopologicalRepresentationItem {
@@ -2722,6 +2796,8 @@ class IfcPropertyAbstraction : public GDIFCEntityBase {
     GDCLASS(IfcPropertyAbstraction, GDIFCEntityBase)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_HasExternalReferences();
 };
 
 class IfcProperty : public IfcPropertyAbstraction {
@@ -2733,6 +2809,12 @@ public:
     void set_Name(godot::String v);
     godot::String get_Specification();
     void set_Specification(godot::String v);
+    godot::Array get_PartOfPset();
+    godot::Array get_PropertyForDependance();
+    godot::Array get_PropertyDependsOn();
+    godot::Array get_PartOfComplex();
+    godot::Array get_HasConstraints();
+    godot::Array get_HasApprovals();
 };
 
 class IfcComplexProperty : public IfcProperty {
@@ -2750,6 +2832,9 @@ class IfcPropertyDefinition : public IfcRoot {
     GDCLASS(IfcPropertyDefinition, IfcRoot)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_HasContext();
+    godot::Array get_HasAssociations();
 };
 
 class IfcPropertyTemplateDefinition : public IfcPropertyDefinition {
@@ -2762,6 +2847,9 @@ class IfcPropertyTemplate : public IfcPropertyTemplateDefinition {
     GDCLASS(IfcPropertyTemplate, IfcPropertyTemplateDefinition)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_PartOfComplexTemplate();
+    godot::Array get_PartOfPsetTemplate();
 };
 
 class IfcComplexPropertyTemplate : public IfcPropertyTemplate {
@@ -2784,6 +2872,7 @@ protected:
 public:
     godot::String get_Transition();
     void set_Transition(godot::String v);
+    godot::Array get_UsingCurves();
 };
 
 class IfcCompositeCurveSegment : public IfcSegment {
@@ -2938,6 +3027,8 @@ public:
     void set_CreationTime(godot::String v);
     godot::String get_UserDefinedGrade();
     void set_UserDefinedGrade(godot::String v);
+    godot::Array get_HasExternalReferences();
+    godot::Array get_PropertiesForConstraint();
 };
 
 class IfcResource : public IfcObject {
@@ -2949,6 +3040,7 @@ public:
     void set_Identification(godot::String v);
     godot::String get_LongDescription();
     void set_LongDescription(godot::String v);
+    godot::Array get_ResourceOf();
 };
 
 class IfcConstructionResource : public IfcResource {
@@ -2984,6 +3076,7 @@ public:
     void set_LongDescription(godot::String v);
     godot::String get_ResourceType();
     void set_ResourceType(godot::String v);
+    godot::Array get_ResourceOf();
 };
 
 class IfcConstructionResourceType : public IfcTypeResource {
@@ -3057,6 +3150,8 @@ public:
     void set_RepresentationContexts(godot::Array v);
     Ref<GDIFCEntityBase> get_UnitsInContext();
     void set_UnitsInContext(Ref<GDIFCEntityBase> v);
+    godot::Array get_IsDefinedBy();
+    godot::Array get_Declares();
 };
 
 class IfcNamedUnit : public GDIFCEntityBase {
@@ -3077,6 +3172,7 @@ protected:
 public:
     godot::String get_Name();
     void set_Name(godot::String v);
+    godot::Array get_HasExternalReference();
 };
 
 class IfcController : public IfcDistributionControlElement {
@@ -3106,6 +3202,7 @@ public:
     void set_Name(godot::String v);
     Ref<GDIFCEntityBase> get_ConversionFactor();
     void set_ConversionFactor(Ref<GDIFCEntityBase> v);
+    godot::Array get_HasExternalReference();
 };
 
 class IfcConversionBasedUnitWithOffset : public IfcConversionBasedUnit {
@@ -3193,6 +3290,8 @@ public:
     void set_Description(godot::String v);
     godot::String get_GeodeticDatum();
     void set_GeodeticDatum(godot::String v);
+    godot::Array get_HasCoordinateOperation();
+    godot::Array get_WellKnownText();
 };
 
 class IfcCosineSpiral : public IfcSpiral {
@@ -3265,6 +3364,8 @@ protected:
 public:
     godot::String get_PredefinedType();
     void set_PredefinedType(godot::String v);
+    godot::Array get_CoversSpaces();
+    godot::Array get_CoversElements();
 };
 
 class IfcCoveringType : public IfcBuiltElementType {
@@ -3657,6 +3758,10 @@ class IfcPort : public IfcProduct {
     GDCLASS(IfcPort, IfcProduct)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_ContainedIn();
+    godot::Array get_ConnectedFrom();
+    godot::Array get_ConnectedTo();
 };
 
 class IfcDistributionPort : public IfcPort {
@@ -3711,6 +3816,10 @@ public:
     void set_Confidentiality(godot::String v);
     godot::String get_Status();
     void set_Status(godot::String v);
+    godot::Array get_DocumentInfoForObjects();
+    godot::Array get_HasDocumentReferences();
+    godot::Array get_IsPointedTo();
+    godot::Array get_IsPointer();
 };
 
 class IfcDocumentInformationRelationship : public IfcResourceLevelRelationship {
@@ -3735,6 +3844,7 @@ public:
     void set_Description(godot::String v);
     Ref<GDIFCEntityBase> get_ReferencedDocument();
     void set_ReferencedDocument(Ref<GDIFCEntityBase> v);
+    godot::Array get_DocumentRefForObjects();
 };
 
 class IfcDoor : public IfcBuiltElement {
@@ -3758,6 +3868,10 @@ class IfcPropertySetDefinition : public IfcPropertyDefinition {
     GDCLASS(IfcPropertySetDefinition, IfcPropertyDefinition)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_DefinesType();
+    godot::Array get_IsDefinedBy();
+    godot::Array get_DefinesOccurrence();
 };
 
 class IfcPreDefinedPropertySet : public IfcPropertySetDefinition {
@@ -3940,6 +4054,8 @@ class IfcFeatureElementSubtraction : public IfcFeatureElement {
     GDCLASS(IfcFeatureElementSubtraction, IfcFeatureElement)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_VoidsElements();
 };
 
 class IfcEarthworksCut : public IfcFeatureElementSubtraction {
@@ -4263,6 +4379,9 @@ public:
     void set_Identification(godot::String v);
     godot::String get_LongDescription();
     void set_LongDescription(godot::String v);
+    godot::Array get_IsPredecessorTo();
+    godot::Array get_IsSuccessorFrom();
+    godot::Array get_OperatesOn();
 };
 
 class IfcEvent : public IfcProcess {
@@ -4319,6 +4438,7 @@ public:
     void set_LongDescription(godot::String v);
     godot::String get_ProcessType();
     void set_ProcessType(godot::String v);
+    godot::Array get_OperatesOn();
 };
 
 class IfcEventType : public IfcTypeProcess {
@@ -4371,6 +4491,7 @@ protected:
 public:
     godot::String get_PredefinedType();
     void set_PredefinedType(godot::String v);
+    godot::Array get_BoundedBy();
 };
 
 class IfcExternallyDefinedHatchStyle : public IfcExternalReference {
@@ -4529,6 +4650,8 @@ class IfcFeatureElementAddition : public IfcFeatureElement {
     GDCLASS(IfcFeatureElementAddition, IfcFeatureElement)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_ProjectsElements();
 };
 
 class IfcFillAreaStyle : public IfcPresentationStyle {
@@ -4749,6 +4872,7 @@ public:
     void set_ContextIdentifier(godot::String v);
     godot::String get_ContextType();
     void set_ContextType(godot::String v);
+    godot::Array get_RepresentationsInContext();
 };
 
 class IfcGeometricRepresentationContext : public IfcRepresentationContext {
@@ -4764,6 +4888,8 @@ public:
     void set_WorldCoordinateSystem(Ref<GDIFCEntityBase> v);
     Ref<GDIFCEntityBase> get_TrueNorth();
     void set_TrueNorth(Ref<GDIFCEntityBase> v);
+    godot::Array get_HasSubContexts();
+    godot::Array get_HasCoordinateOperation();
 };
 
 class IfcGeometricRepresentationSubContext : public IfcGeometricRepresentationContext {
@@ -4839,6 +4965,10 @@ public:
     void set_AxisCurve(Ref<GDIFCEntityBase> v);
     bool get_SameSense();
     void set_SameSense(bool v);
+    godot::Array get_PartOfW();
+    godot::Array get_PartOfV();
+    godot::Array get_PartOfU();
+    godot::Array get_HasIntersections();
 };
 
 class IfcObjectPlacement : public GDIFCEntityBase {
@@ -4848,6 +4978,8 @@ protected:
 public:
     Ref<GDIFCEntityBase> get_PlacementRelTo();
     void set_PlacementRelTo(Ref<GDIFCEntityBase> v);
+    godot::Array get_PlacesObject();
+    godot::Array get_ReferencedByPlacements();
 };
 
 class IfcGridPlacement : public IfcObjectPlacement {
@@ -4986,6 +5118,8 @@ protected:
 public:
     godot::PackedInt64Array get_CoordIndex();
     void set_CoordIndex(godot::PackedInt64Array v);
+    godot::Array get_ToFaceSet();
+    godot::Array get_HasTexCoords();
 };
 
 class IfcIndexedPolygonalFaceWithVoids : public IfcIndexedPolygonalFace {
@@ -5110,6 +5244,7 @@ public:
     void set_UserDefinedDataOrigin(godot::String v);
     Ref<GDIFCEntityBase> get_Unit();
     void set_Unit(Ref<GDIFCEntityBase> v);
+    godot::Array get_HasExternalReference();
 };
 
 class IfcIrregularTimeSeries : public IfcTimeSeries {
@@ -5251,6 +5386,8 @@ public:
     void set_Location(godot::String v);
     godot::String get_Description();
     void set_Description(godot::String v);
+    godot::Array get_LibraryInfoForObjects();
+    godot::Array get_HasLibraryReferences();
 };
 
 class IfcLibraryReference : public IfcExternalReference {
@@ -5264,6 +5401,7 @@ public:
     void set_Language(godot::String v);
     Ref<GDIFCEntityBase> get_ReferencedLibrary();
     void set_ReferencedLibrary(Ref<GDIFCEntityBase> v);
+    godot::Array get_LibraryRefForObjects();
 };
 
 class IfcLightDistributionData : public GDIFCEntityBase {
@@ -5503,6 +5641,10 @@ class IfcMaterialDefinition : public GDIFCEntityBase {
     GDCLASS(IfcMaterialDefinition, GDIFCEntityBase)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_AssociatedTo();
+    godot::Array get_HasExternalReferences();
+    godot::Array get_HasProperties();
 };
 
 class IfcMaterial : public IfcMaterialDefinition {
@@ -5516,6 +5658,9 @@ public:
     void set_Description(godot::String v);
     godot::String get_Category();
     void set_Category(godot::String v);
+    godot::Array get_HasRepresentation();
+    godot::Array get_IsRelatedWith();
+    godot::Array get_RelatesTo();
 };
 
 class IfcMaterialClassificationRelationship : public GDIFCEntityBase {
@@ -5544,6 +5689,7 @@ public:
     void set_Fraction(double v);
     godot::String get_Category();
     void set_Category(godot::String v);
+    godot::Array get_ToMaterialConstituentSet();
 };
 
 class IfcMaterialConstituentSet : public IfcMaterialDefinition {
@@ -5600,6 +5746,7 @@ public:
     void set_Category(godot::String v);
     int64_t get_Priority();
     void set_Priority(int64_t v);
+    godot::Array get_ToMaterialLayerSet();
 };
 
 class IfcMaterialLayerSet : public IfcMaterialDefinition {
@@ -5619,6 +5766,8 @@ class IfcMaterialUsageDefinition : public GDIFCEntityBase {
     GDCLASS(IfcMaterialUsageDefinition, GDIFCEntityBase)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_AssociatedTo();
 };
 
 class IfcMaterialLayerSetUsage : public IfcMaterialUsageDefinition {
@@ -5675,6 +5824,7 @@ public:
     void set_Priority(int64_t v);
     godot::String get_Category();
     void set_Category(godot::String v);
+    godot::Array get_ToMaterialProfileSet();
 };
 
 class IfcMaterialProfileSet : public IfcMaterialDefinition {
@@ -6020,6 +6170,7 @@ protected:
 public:
     godot::String get_PredefinedType();
     void set_PredefinedType(godot::String v);
+    godot::Array get_HasFillings();
 };
 
 class IfcOrganization : public GDIFCEntityBase {
@@ -6037,6 +6188,9 @@ public:
     void set_Roles(godot::Array v);
     godot::Array get_Addresses();
     void set_Addresses(godot::Array v);
+    godot::Array get_IsRelatedBy();
+    godot::Array get_Relates();
+    godot::Array get_Engages();
 };
 
 class IfcOrganizationRelationship : public IfcResourceLevelRelationship {
@@ -6208,6 +6362,7 @@ public:
     void set_Roles(godot::Array v);
     godot::Array get_Addresses();
     void set_Addresses(godot::Array v);
+    godot::Array get_EngagedIn();
 };
 
 class IfcPersonAndOrganization : public GDIFCEntityBase {
@@ -6232,6 +6387,8 @@ public:
     void set_Name(godot::String v);
     godot::String get_Description();
     void set_Description(godot::String v);
+    godot::Array get_HasExternalReferences();
+    godot::Array get_PartOfComplex();
 };
 
 class IfcPhysicalComplexQuantity : public IfcPhysicalQuantity {
@@ -6441,6 +6598,8 @@ protected:
 public:
     Ref<GDIFCEntityBase> get_Coordinates();
     void set_Coordinates(Ref<GDIFCEntityBase> v);
+    godot::Array get_HasColours();
+    godot::Array get_HasTextures();
 };
 
 class IfcPolygonalFaceSet : public IfcTessellatedFaceSet {
@@ -6565,6 +6724,9 @@ class IfcProductDefinitionShape : public IfcProductRepresentation {
     GDCLASS(IfcProductDefinitionShape, IfcProductRepresentation)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_ShapeOfProduct();
+    godot::Array get_HasShapeAspects();
 };
 
 class IfcProfileProperties : public IfcExtendedProperties {
@@ -6725,6 +6887,7 @@ public:
     void set_ApplicableEntity(godot::String v);
     godot::Array get_HasPropertyTemplates();
     void set_HasPropertyTemplates(godot::Array v);
+    godot::Array get_Defines();
 };
 
 class IfcPropertySingleValue : public IfcSimpleProperty {
@@ -7784,6 +7947,7 @@ protected:
 public:
     Ref<GDIFCEntityBase> get_ParentBoundary();
     void set_ParentBoundary(Ref<GDIFCEntityBase> v);
+    godot::Array get_InnerBoundaries();
 };
 
 class IfcRelSpaceBoundary2ndLevel : public IfcRelSpaceBoundary1stLevel {
@@ -7793,6 +7957,7 @@ protected:
 public:
     Ref<GDIFCEntityBase> get_CorrespondingBoundary();
     void set_CorrespondingBoundary(Ref<GDIFCEntityBase> v);
+    godot::Array get_Corresponds();
 };
 
 class IfcRelVoidsElement : public IfcRelDecomposes {
@@ -7828,6 +7993,9 @@ public:
     void set_RepresentationType(godot::String v);
     godot::Array get_Items();
     void set_Items(godot::Array v);
+    godot::Array get_RepresentationMap();
+    godot::Array get_LayerAssignments();
+    godot::Array get_OfProductRepresentation();
 };
 
 class IfcRepresentationMap : public GDIFCEntityBase {
@@ -7839,6 +8007,8 @@ public:
     void set_MappingOrigin(Ref<GDIFCEntityBase> v);
     Ref<GDIFCEntityBase> get_MappedRepresentation();
     void set_MappedRepresentation(Ref<GDIFCEntityBase> v);
+    godot::Array get_HasShapeAspects();
+    godot::Array get_MapUsage();
 };
 
 class IfcResourceApprovalRelationship : public IfcResourceLevelRelationship {
@@ -8211,12 +8381,15 @@ public:
     void set_ProductDefinitional(godot::String v);
     Ref<GDIFCEntityBase> get_PartOfProductDefinitionShape();
     void set_PartOfProductDefinitionShape(Ref<GDIFCEntityBase> v);
+    godot::Array get_HasExternalReferences();
 };
 
 class IfcShapeModel : public IfcRepresentation {
     GDCLASS(IfcShapeModel, IfcRepresentation)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_OfShapeAspect();
 };
 
 class IfcShapeRepresentation : public IfcShapeModel {
@@ -8381,6 +8554,8 @@ public:
     void set_PredefinedType(godot::String v);
     double get_ElevationWithFlooring();
     void set_ElevationWithFlooring(double v);
+    godot::Array get_HasCoverings();
+    godot::Array get_BoundedBy();
 };
 
 class IfcSpaceHeater : public IfcFlowTerminal {
@@ -8536,6 +8711,7 @@ public:
     void set_AppliedLoad(Ref<GDIFCEntityBase> v);
     godot::String get_GlobalOrLocal();
     void set_GlobalOrLocal(godot::String v);
+    godot::Array get_AssignedToStructuralItem();
 };
 
 class IfcStructuralAction : public IfcStructuralActivity {
@@ -8568,6 +8744,8 @@ class IfcStructuralItem : public IfcProduct {
     GDCLASS(IfcStructuralItem, IfcProduct)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_AssignedStructuralActivity();
 };
 
 class IfcStructuralConnection : public IfcStructuralItem {
@@ -8577,6 +8755,7 @@ protected:
 public:
     Ref<GDIFCEntityBase> get_AppliedCondition();
     void set_AppliedCondition(Ref<GDIFCEntityBase> v);
+    godot::Array get_ConnectsStructuralMembers();
 };
 
 class IfcStructuralCurveAction : public IfcStructuralAction {
@@ -8603,6 +8782,8 @@ class IfcStructuralMember : public IfcStructuralItem {
     GDCLASS(IfcStructuralMember, IfcStructuralItem)
 protected:
     static void _bind_methods();
+public:
+    godot::Array get_ConnectedBy();
 };
 
 class IfcStructuralCurveMember : public IfcStructuralMember {
@@ -8667,6 +8848,8 @@ public:
     void set_Coefficient(double v);
     godot::String get_Purpose();
     void set_Purpose(godot::String v);
+    godot::Array get_SourceOfResultGroup();
+    godot::Array get_LoadGroupFor();
 };
 
 class IfcStructuralLoadCase : public IfcStructuralLoadGroup {
@@ -8850,6 +9033,7 @@ public:
     void set_ResultForLoadGroup(Ref<GDIFCEntityBase> v);
     bool get_IsLinear();
     void set_IsLinear(bool v);
+    godot::Array get_ResultGroupFor();
 };
 
 class IfcStructuralSurfaceConnection : public IfcStructuralConnection {
@@ -8952,6 +9136,7 @@ protected:
 public:
     godot::String get_PredefinedType();
     void set_PredefinedType(godot::String v);
+    godot::Array get_AdheresToElement();
 };
 
 class IfcSweptSurface : public IfcSurface {
@@ -9503,6 +9688,7 @@ public:
     void set_TexCoordIndex(godot::PackedInt64Array v);
     Ref<GDIFCEntityBase> get_TexCoordsOf();
     void set_TexCoordsOf(Ref<GDIFCEntityBase> v);
+    godot::Array get_ToTexMap();
 };
 
 class IfcTextureCoordinateIndicesWithVoids : public IfcTextureCoordinateIndices {

@@ -24,6 +24,12 @@
 		<member name="Addresses" type="Array" setter="set_Addresses" getter="get_Addresses">
 			Postal and telecom addresses of an organization. NOTE: There may be several addresses related to an organization.
 		</member>
+		<member name="IsRelatedBy" type="Array" setter="" getter="get_IsRelatedBy">
+		</member>
+		<member name="Relates" type="Array" setter="" getter="get_Relates">
+		</member>
+		<member name="Engages" type="Array" setter="" getter="get_Engages">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

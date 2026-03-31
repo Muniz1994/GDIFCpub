@@ -15,6 +15,8 @@
 		<member name="GlobalOrLocal" type="String" setter="set_GlobalOrLocal" getter="get_GlobalOrLocal">
 			Indicates whether the load directions refer to the global coordinate system (global to the analysis model, i.e. as established by IfcStructuralAnalysisModel.SharedPlacement ) or to the local coordinate system (local to the activity or connected item, as established by an explicit or implied representation and its parameter space). NOTE, the informal definition of IfcRepresentationResource.IfcGlobalOrLocalEnum doe s not distinguish between "global coordinate system" and "world coordinate system". On the other hand, this distinction is necessary in the IfcStructuralAnalysisDomain where the shared "global" coordinate system of an analysis model may very well not be the same as the project-wide world coordinate system. In the scope of IfcStructuralActivity.GlobalOrLocal , the meaning of GLOBAL_COORDS is therefore not to be taken as world coordinate system but as the analysis model specific shared coordinate system. In contrast, LOCAL_COORDS is to be taken as coordinates which are local to individual structural items and activities, as established by subclass-specific geometry use definitions.
 		</member>
+		<member name="AssignedToStructuralItem" type="Array" setter="" getter="get_AssignedToStructuralItem">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

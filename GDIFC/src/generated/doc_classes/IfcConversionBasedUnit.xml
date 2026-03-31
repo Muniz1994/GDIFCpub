@@ -15,6 +15,8 @@
 		<member name="ConversionFactor" type="GDIFCEntityBase" setter="set_ConversionFactor" getter="get_ConversionFactor">
 			The physical quantity from which the converted unit is derived.
 		</member>
+		<member name="HasExternalReference" type="Array" setter="" getter="get_HasExternalReference">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

@@ -11,6 +11,10 @@
 	<members>
 		<member name="Coordinates" type="GDIFCEntityBase" setter="set_Coordinates" getter="get_Coordinates">
 		</member>
+		<member name="HasColours" type="Array" setter="" getter="get_HasColours">
+		</member>
+		<member name="HasTextures" type="Array" setter="" getter="get_HasTextures">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

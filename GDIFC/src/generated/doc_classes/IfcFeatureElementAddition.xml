@@ -9,6 +9,8 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="ProjectsElements" type="Array" setter="" getter="get_ProjectsElements">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

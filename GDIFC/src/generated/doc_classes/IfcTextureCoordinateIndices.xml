@@ -13,6 +13,8 @@
 		</member>
 		<member name="TexCoordsOf" type="GDIFCEntityBase" setter="set_TexCoordsOf" getter="get_TexCoordsOf">
 		</member>
+		<member name="ToTexMap" type="Array" setter="" getter="get_ToTexMap">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

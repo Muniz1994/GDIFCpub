@@ -38,6 +38,8 @@
 		</member>
 		<member name="Components" type="Array" setter="set_Components" getter="get_Components">
 		</member>
+		<member name="HasExternalReference" type="Array" setter="" getter="get_HasExternalReference">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

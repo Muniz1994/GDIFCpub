@@ -18,6 +18,10 @@
 		<member name="GeodeticDatum" type="String" setter="set_GeodeticDatum" getter="get_GeodeticDatum">
 			Name by which this datum is identified. The geodetic datum is associated with the coordinate reference system and indicates the shape and size of the rotation ellipsoid and this ellipsoid's connection and orientation to the actual globe/earth. Examples for geodetic datums include: ED50 EUREF89 WSG84
 		</member>
+		<member name="HasCoordinateOperation" type="Array" setter="" getter="get_HasCoordinateOperation">
+		</member>
+		<member name="WellKnownText" type="Array" setter="" getter="get_WellKnownText">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

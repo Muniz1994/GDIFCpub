@@ -9,6 +9,8 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="HasControlElements" type="Array" setter="" getter="get_HasControlElements">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

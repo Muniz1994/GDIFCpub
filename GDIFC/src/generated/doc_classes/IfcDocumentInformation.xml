@@ -60,6 +60,14 @@
 		<member name="Status" type="String" setter="set_Status" getter="get_Status">
 			Resource identifier or locator, provided as URI, URN or URL, of the document information for online references. IFC2x4 CHANGE New attribute added at end of attribute list.
 		</member>
+		<member name="DocumentInfoForObjects" type="Array" setter="" getter="get_DocumentInfoForObjects">
+		</member>
+		<member name="HasDocumentReferences" type="Array" setter="" getter="get_HasDocumentReferences">
+		</member>
+		<member name="IsPointedTo" type="Array" setter="" getter="get_IsPointedTo">
+		</member>
+		<member name="IsPointer" type="Array" setter="" getter="get_IsPointer">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

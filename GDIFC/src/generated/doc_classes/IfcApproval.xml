@@ -36,6 +36,16 @@
 		<member name="GivingApproval" type="GDIFCEntityBase" setter="set_GivingApproval" getter="get_GivingApproval">
 			The actor that is acting in the role specified at IfcOrganization or individually at IfcPerson and giving an approval. IFC2x4 CHANGE New attribute for approval provision replacing IfcApprovalActorRelationship (being deleted).
 		</member>
+		<member name="HasExternalReferences" type="Array" setter="" getter="get_HasExternalReferences">
+		</member>
+		<member name="ApprovedObjects" type="Array" setter="" getter="get_ApprovedObjects">
+		</member>
+		<member name="ApprovedResources" type="Array" setter="" getter="get_ApprovedResources">
+		</member>
+		<member name="IsRelatedWith" type="Array" setter="" getter="get_IsRelatedWith">
+		</member>
+		<member name="Relates" type="Array" setter="" getter="get_Relates">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

@@ -24,6 +24,8 @@
 		<member name="Category" type="String" setter="set_Category" getter="get_Category">
 			Category of the material constituent, e.g. the role it has in the constituent set it belongs to.
 		</member>
+		<member name="ToMaterialConstituentSet" type="Array" setter="" getter="get_ToMaterialConstituentSet">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

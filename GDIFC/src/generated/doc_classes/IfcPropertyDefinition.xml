@@ -9,6 +9,10 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="HasContext" type="Array" setter="" getter="get_HasContext">
+		</member>
+		<member name="HasAssociations" type="Array" setter="" getter="get_HasAssociations">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

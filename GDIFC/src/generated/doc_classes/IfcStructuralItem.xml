@@ -9,6 +9,8 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="AssignedStructuralActivity" type="Array" setter="" getter="get_AssignedStructuralActivity">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

@@ -27,6 +27,8 @@
 		<member name="Category" type="String" setter="set_Category" getter="get_Category">
 			Category of the material profile, e.g. the role it has in the profile set it belongs to.
 		</member>
+		<member name="ToMaterialProfileSet" type="Array" setter="" getter="get_ToMaterialProfileSet">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

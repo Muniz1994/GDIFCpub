@@ -9,6 +9,20 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="HasAssignments" type="Array" setter="" getter="get_HasAssignments">
+		</member>
+		<member name="Nests" type="Array" setter="" getter="get_Nests">
+		</member>
+		<member name="IsNestedBy" type="Array" setter="" getter="get_IsNestedBy">
+		</member>
+		<member name="HasContext" type="Array" setter="" getter="get_HasContext">
+		</member>
+		<member name="IsDecomposedBy" type="Array" setter="" getter="get_IsDecomposedBy">
+		</member>
+		<member name="Decomposes" type="Array" setter="" getter="get_Decomposes">
+		</member>
+		<member name="HasAssociations" type="Array" setter="" getter="get_HasAssociations">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

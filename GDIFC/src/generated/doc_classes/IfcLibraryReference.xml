@@ -18,6 +18,8 @@
 		<member name="ReferencedLibrary" type="GDIFCEntityBase" setter="set_ReferencedLibrary" getter="get_ReferencedLibrary">
 			The library information that is being referenced.
 		</member>
+		<member name="LibraryRefForObjects" type="Array" setter="" getter="get_LibraryRefForObjects">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

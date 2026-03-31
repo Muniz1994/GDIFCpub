@@ -12,6 +12,8 @@
 		<member name="CorrespondingBoundary" type="GDIFCEntityBase" setter="set_CorrespondingBoundary" getter="get_CorrespondingBoundary">
 			Reference to the host, or parent, space boundary within which this inner boundary is defined.
 		</member>
+		<member name="Corresponds" type="Array" setter="" getter="get_Corresponds">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

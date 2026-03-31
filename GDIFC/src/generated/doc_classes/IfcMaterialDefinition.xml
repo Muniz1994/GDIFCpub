@@ -9,6 +9,12 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="AssociatedTo" type="Array" setter="" getter="get_AssociatedTo">
+		</member>
+		<member name="HasExternalReferences" type="Array" setter="" getter="get_HasExternalReferences">
+		</member>
+		<member name="HasProperties" type="Array" setter="" getter="get_HasProperties">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

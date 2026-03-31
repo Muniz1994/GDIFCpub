@@ -9,6 +9,10 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="LayerAssignment" type="Array" setter="" getter="get_LayerAssignment">
+		</member>
+		<member name="StyledByItem" type="Array" setter="" getter="get_StyledByItem">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

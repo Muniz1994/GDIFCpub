@@ -18,6 +18,10 @@
 		<member name="UserDefinedPurpose" type="String" setter="set_UserDefinedPurpose" getter="get_UserDefinedPurpose">
 			Allows for specification of user specific purpose of the address beyond the enumeration values provided by Purpose attribute of type IfcAddressTypeEnum. When a value is provided for attribute UserDefinedPurpose, in parallel the attribute Purpose shall have enumeration value USERDEFINED.
 		</member>
+		<member name="OfPerson" type="Array" setter="" getter="get_OfPerson">
+		</member>
+		<member name="OfOrganization" type="Array" setter="" getter="get_OfOrganization">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

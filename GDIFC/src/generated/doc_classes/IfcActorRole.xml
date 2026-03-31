@@ -18,6 +18,8 @@
 		<member name="Description" type="String" setter="set_Description" getter="get_Description">
 			A textual description relating the nature of the role played by an actor.
 		</member>
+		<member name="HasExternalReference" type="Array" setter="" getter="get_HasExternalReference">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

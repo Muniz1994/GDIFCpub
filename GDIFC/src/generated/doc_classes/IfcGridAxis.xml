@@ -18,6 +18,14 @@
 		<member name="SameSense" type="bool" setter="set_SameSense" getter="get_SameSense">
 			Defines whether the original sense of curve is used or whether it is reversed in the context of the grid axis.
 		</member>
+		<member name="PartOfW" type="Array" setter="" getter="get_PartOfW">
+		</member>
+		<member name="PartOfV" type="Array" setter="" getter="get_PartOfV">
+		</member>
+		<member name="PartOfU" type="Array" setter="" getter="get_PartOfU">
+		</member>
+		<member name="HasIntersections" type="Array" setter="" getter="get_HasIntersections">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

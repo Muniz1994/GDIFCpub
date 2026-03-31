@@ -9,6 +9,10 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="PartOfComplexTemplate" type="Array" setter="" getter="get_PartOfComplexTemplate">
+		</member>
+		<member name="PartOfPsetTemplate" type="Array" setter="" getter="get_PartOfPsetTemplate">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

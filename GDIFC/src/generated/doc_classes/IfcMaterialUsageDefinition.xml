@@ -9,6 +9,8 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="AssociatedTo" type="Array" setter="" getter="get_AssociatedTo">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

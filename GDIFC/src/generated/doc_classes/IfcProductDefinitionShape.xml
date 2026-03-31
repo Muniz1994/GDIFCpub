@@ -9,6 +9,10 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="ShapeOfProduct" type="Array" setter="" getter="get_ShapeOfProduct">
+		</member>
+		<member name="HasShapeAspects" type="Array" setter="" getter="get_HasShapeAspects">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

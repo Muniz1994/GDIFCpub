@@ -12,6 +12,8 @@
 		<member name="Name" type="String" setter="set_Name" getter="get_Name">
 			The word, or group of words, by which the context dependent unit is referred to.
 		</member>
+		<member name="HasExternalReference" type="Array" setter="" getter="get_HasExternalReference">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

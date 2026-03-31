@@ -33,6 +33,8 @@
 		<member name="Addresses" type="Array" setter="set_Addresses" getter="get_Addresses">
 			Postal and telecommunication addresses of a person. NOTE - A person may have several addresses.
 		</member>
+		<member name="EngagedIn" type="Array" setter="" getter="get_EngagedIn">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

@@ -15,6 +15,12 @@
 		<member name="LongDescription" type="String" setter="set_LongDescription" getter="get_LongDescription">
 			An extended description or narrative that may be provided. IFC2x4 CHANGE New attribute.
 		</member>
+		<member name="IsPredecessorTo" type="Array" setter="" getter="get_IsPredecessorTo">
+		</member>
+		<member name="IsSuccessorFrom" type="Array" setter="" getter="get_IsSuccessorFrom">
+		</member>
+		<member name="OperatesOn" type="Array" setter="" getter="get_OperatesOn">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

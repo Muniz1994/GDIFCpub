@@ -9,6 +9,8 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="OfShapeAspect" type="Array" setter="" getter="get_OfShapeAspect">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

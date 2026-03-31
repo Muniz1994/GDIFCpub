@@ -12,6 +12,8 @@
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 			Indicates the kind of surface feature.
 		</member>
+		<member name="AdheresToElement" type="Array" setter="" getter="get_AdheresToElement">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

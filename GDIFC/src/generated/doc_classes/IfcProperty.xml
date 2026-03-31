@@ -15,6 +15,18 @@
 		<member name="Specification" type="String" setter="set_Specification" getter="get_Specification">
 			Informative text to explain the property.
 		</member>
+		<member name="PartOfPset" type="Array" setter="" getter="get_PartOfPset">
+		</member>
+		<member name="PropertyForDependance" type="Array" setter="" getter="get_PropertyForDependance">
+		</member>
+		<member name="PropertyDependsOn" type="Array" setter="" getter="get_PropertyDependsOn">
+		</member>
+		<member name="PartOfComplex" type="Array" setter="" getter="get_PartOfComplex">
+		</member>
+		<member name="HasConstraints" type="Array" setter="" getter="get_HasConstraints">
+		</member>
+		<member name="HasApprovals" type="Array" setter="" getter="get_HasApprovals">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

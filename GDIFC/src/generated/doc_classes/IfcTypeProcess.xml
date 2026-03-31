@@ -18,6 +18,8 @@
 		<member name="ProcessType" type="String" setter="set_ProcessType" getter="get_ProcessType">
 			The type denotes a particular type that indicates the process further. The use has to be established at the level of instantiable subtypes. In particular it holds the user defined type, if the enumeration of the attribute 'PredefinedType' is set to USERDEFINED.
 		</member>
+		<member name="OperatesOn" type="Array" setter="" getter="get_OperatesOn">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

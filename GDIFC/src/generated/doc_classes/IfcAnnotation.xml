@@ -12,6 +12,8 @@
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 			Relationship to a spatial structure element, to which the associate is primarily associated.
 		</member>
+		<member name="ContainedInStructure" type="Array" setter="" getter="get_ContainedInStructure">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

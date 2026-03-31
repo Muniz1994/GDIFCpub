@@ -12,6 +12,8 @@
 		<member name="Bounds" type="Array" setter="set_Bounds" getter="get_Bounds">
 			Boundaries of the face.
 		</member>
+		<member name="HasTextureMaps" type="Array" setter="" getter="get_HasTextureMaps">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

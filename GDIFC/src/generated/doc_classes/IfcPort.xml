@@ -9,6 +9,12 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="ContainedIn" type="Array" setter="" getter="get_ContainedIn">
+		</member>
+		<member name="ConnectedFrom" type="Array" setter="" getter="get_ConnectedFrom">
+		</member>
+		<member name="ConnectedTo" type="Array" setter="" getter="get_ConnectedTo">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

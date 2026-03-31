@@ -12,6 +12,8 @@
 		<member name="TheActor" type="GDIFCEntityBase" setter="set_TheActor" getter="get_TheActor">
 			Information about the actor.
 		</member>
+		<member name="IsActingUpon" type="Array" setter="" getter="get_IsActingUpon">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

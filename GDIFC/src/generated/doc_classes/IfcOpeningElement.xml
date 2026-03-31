@@ -12,6 +12,8 @@
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 			Predefined generic type for an opening that is specified in an enumeration. There may be a property set given specificly for the predefined types. IFC2x4 CHANGE The attribute has been added at the end of the entity definition.
 		</member>
+		<member name="HasFillings" type="Array" setter="" getter="get_HasFillings">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

@@ -15,6 +15,8 @@
 		<member name="ReferencedDocument" type="GDIFCEntityBase" setter="set_ReferencedDocument" getter="get_ReferencedDocument">
 			The document that is referenced.
 		</member>
+		<member name="DocumentRefForObjects" type="Array" setter="" getter="get_DocumentRefForObjects">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

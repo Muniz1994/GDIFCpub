@@ -21,6 +21,12 @@
 		<member name="Items" type="Array" setter="set_Items" getter="get_Items">
 			Set of geometric representation items that are defined for this representation.
 		</member>
+		<member name="RepresentationMap" type="Array" setter="" getter="get_RepresentationMap">
+		</member>
+		<member name="LayerAssignments" type="Array" setter="" getter="get_LayerAssignments">
+		</member>
+		<member name="OfProductRepresentation" type="Array" setter="" getter="get_OfProductRepresentation">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

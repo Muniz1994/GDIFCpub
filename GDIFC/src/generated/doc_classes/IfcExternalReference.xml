@@ -18,6 +18,8 @@
 		<member name="Name" type="String" setter="set_Name" getter="get_Name">
 			Optional name to further specify the reference. It can provide a human readable identifier (which does not necessarily need to have a counterpart in the internal structure of the document).
 		</member>
+		<member name="ExternalReferenceForResources" type="Array" setter="" getter="get_ExternalReferenceForResources">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

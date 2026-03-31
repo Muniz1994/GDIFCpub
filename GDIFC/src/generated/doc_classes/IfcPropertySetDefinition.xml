@@ -9,6 +9,12 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="DefinesType" type="Array" setter="" getter="get_DefinesType">
+		</member>
+		<member name="IsDefinedBy" type="Array" setter="" getter="get_IsDefinedBy">
+		</member>
+		<member name="DefinesOccurrence" type="Array" setter="" getter="get_DefinesOccurrence">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

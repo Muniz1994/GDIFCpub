@@ -9,6 +9,8 @@ void IfcControl::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Identification"), &IfcControl::get_Identification);
     ClassDB::bind_method(D_METHOD("set_Identification","v"), &IfcControl::set_Identification);
     ADD_PROPERTY(PropertyInfo(Variant::STRING, "Identification"), "set_Identification", "get_Identification");
+    ClassDB::bind_method(D_METHOD("get_Controls"), &IfcControl::get_Controls);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "Controls"), "", "get_Controls");
 }
 
 godot::String IfcControl::get_Identification() {
@@ -19,6 +21,10 @@ godot::String IfcControl::get_Identification() {
 void IfcControl::set_Identification(godot::String v) {
     if (!entity_) return;
     gd_set_string(entity_, 5, v);
+}
+
+godot::Array IfcControl::get_Controls() {
+    return get_inverse(godot::String("Controls"));
 }
 
 void IfcActionRequest::_bind_methods() {
@@ -67,6 +73,8 @@ void IfcActor::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_TheActor"), &IfcActor::get_TheActor);
     ClassDB::bind_method(D_METHOD("set_TheActor","v"), &IfcActor::set_TheActor);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "TheActor", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_TheActor", "get_TheActor");
+    ClassDB::bind_method(D_METHOD("get_IsActingUpon"), &IfcActor::get_IsActingUpon);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "IsActingUpon"), "", "get_IsActingUpon");
 }
 
 Ref<GDIFCEntityBase> IfcActor::get_TheActor() {
@@ -79,6 +87,10 @@ void IfcActor::set_TheActor(Ref<GDIFCEntityBase> v) {
     gd_set_entity(entity_, 5, v);
 }
 
+godot::Array IfcActor::get_IsActingUpon() {
+    return get_inverse(godot::String("IsActingUpon"));
+}
+
 void IfcActorRole::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Role"), &IfcActorRole::get_Role);
     ClassDB::bind_method(D_METHOD("set_Role","v"), &IfcActorRole::set_Role);
@@ -89,6 +101,8 @@ void IfcActorRole::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Description"), &IfcActorRole::get_Description);
     ClassDB::bind_method(D_METHOD("set_Description","v"), &IfcActorRole::set_Description);
     ADD_PROPERTY(PropertyInfo(Variant::STRING, "Description"), "set_Description", "get_Description");
+    ClassDB::bind_method(D_METHOD("get_HasExternalReference"), &IfcActorRole::get_HasExternalReference);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasExternalReference"), "", "get_HasExternalReference");
 }
 
 godot::String IfcActorRole::get_Role() {
@@ -121,10 +135,38 @@ void IfcActorRole::set_Description(godot::String v) {
     gd_set_string(entity_, 2, v);
 }
 
+godot::Array IfcActorRole::get_HasExternalReference() {
+    return get_inverse(godot::String("HasExternalReference"));
+}
+
 void IfcElement::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Tag"), &IfcElement::get_Tag);
     ClassDB::bind_method(D_METHOD("set_Tag","v"), &IfcElement::set_Tag);
     ADD_PROPERTY(PropertyInfo(Variant::STRING, "Tag"), "set_Tag", "get_Tag");
+    ClassDB::bind_method(D_METHOD("get_FillsVoids"), &IfcElement::get_FillsVoids);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "FillsVoids"), "", "get_FillsVoids");
+    ClassDB::bind_method(D_METHOD("get_ConnectedTo"), &IfcElement::get_ConnectedTo);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ConnectedTo"), "", "get_ConnectedTo");
+    ClassDB::bind_method(D_METHOD("get_IsInterferedByElements"), &IfcElement::get_IsInterferedByElements);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "IsInterferedByElements"), "", "get_IsInterferedByElements");
+    ClassDB::bind_method(D_METHOD("get_InterferesElements"), &IfcElement::get_InterferesElements);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "InterferesElements"), "", "get_InterferesElements");
+    ClassDB::bind_method(D_METHOD("get_HasProjections"), &IfcElement::get_HasProjections);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasProjections"), "", "get_HasProjections");
+    ClassDB::bind_method(D_METHOD("get_HasOpenings"), &IfcElement::get_HasOpenings);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasOpenings"), "", "get_HasOpenings");
+    ClassDB::bind_method(D_METHOD("get_IsConnectionRealization"), &IfcElement::get_IsConnectionRealization);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "IsConnectionRealization"), "", "get_IsConnectionRealization");
+    ClassDB::bind_method(D_METHOD("get_ProvidesBoundaries"), &IfcElement::get_ProvidesBoundaries);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ProvidesBoundaries"), "", "get_ProvidesBoundaries");
+    ClassDB::bind_method(D_METHOD("get_ConnectedFrom"), &IfcElement::get_ConnectedFrom);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ConnectedFrom"), "", "get_ConnectedFrom");
+    ClassDB::bind_method(D_METHOD("get_ContainedInStructure"), &IfcElement::get_ContainedInStructure);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ContainedInStructure"), "", "get_ContainedInStructure");
+    ClassDB::bind_method(D_METHOD("get_HasCoverings"), &IfcElement::get_HasCoverings);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasCoverings"), "", "get_HasCoverings");
+    ClassDB::bind_method(D_METHOD("get_HasSurfaceFeatures"), &IfcElement::get_HasSurfaceFeatures);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasSurfaceFeatures"), "", "get_HasSurfaceFeatures");
 }
 
 godot::String IfcElement::get_Tag() {
@@ -137,10 +179,70 @@ void IfcElement::set_Tag(godot::String v) {
     gd_set_string(entity_, 7, v);
 }
 
+godot::Array IfcElement::get_FillsVoids() {
+    return get_inverse(godot::String("FillsVoids"));
+}
+
+godot::Array IfcElement::get_ConnectedTo() {
+    return get_inverse(godot::String("ConnectedTo"));
+}
+
+godot::Array IfcElement::get_IsInterferedByElements() {
+    return get_inverse(godot::String("IsInterferedByElements"));
+}
+
+godot::Array IfcElement::get_InterferesElements() {
+    return get_inverse(godot::String("InterferesElements"));
+}
+
+godot::Array IfcElement::get_HasProjections() {
+    return get_inverse(godot::String("HasProjections"));
+}
+
+godot::Array IfcElement::get_HasOpenings() {
+    return get_inverse(godot::String("HasOpenings"));
+}
+
+godot::Array IfcElement::get_IsConnectionRealization() {
+    return get_inverse(godot::String("IsConnectionRealization"));
+}
+
+godot::Array IfcElement::get_ProvidesBoundaries() {
+    return get_inverse(godot::String("ProvidesBoundaries"));
+}
+
+godot::Array IfcElement::get_ConnectedFrom() {
+    return get_inverse(godot::String("ConnectedFrom"));
+}
+
+godot::Array IfcElement::get_ContainedInStructure() {
+    return get_inverse(godot::String("ContainedInStructure"));
+}
+
+godot::Array IfcElement::get_HasCoverings() {
+    return get_inverse(godot::String("HasCoverings"));
+}
+
+godot::Array IfcElement::get_HasSurfaceFeatures() {
+    return get_inverse(godot::String("HasSurfaceFeatures"));
+}
+
 void IfcDistributionElement::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_HasPorts"), &IfcDistributionElement::get_HasPorts);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasPorts"), "", "get_HasPorts");
+}
+
+godot::Array IfcDistributionElement::get_HasPorts() {
+    return get_inverse(godot::String("HasPorts"));
 }
 
 void IfcDistributionControlElement::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_AssignedToFlowElement"), &IfcDistributionControlElement::get_AssignedToFlowElement);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "AssignedToFlowElement"), "", "get_AssignedToFlowElement");
+}
+
+godot::Array IfcDistributionControlElement::get_AssignedToFlowElement() {
+    return get_inverse(godot::String("AssignedToFlowElement"));
 }
 
 void IfcActuator::_bind_methods() {
@@ -207,6 +309,10 @@ void IfcAddress::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_UserDefinedPurpose"), &IfcAddress::get_UserDefinedPurpose);
     ClassDB::bind_method(D_METHOD("set_UserDefinedPurpose","v"), &IfcAddress::set_UserDefinedPurpose);
     ADD_PROPERTY(PropertyInfo(Variant::STRING, "UserDefinedPurpose"), "set_UserDefinedPurpose", "get_UserDefinedPurpose");
+    ClassDB::bind_method(D_METHOD("get_OfPerson"), &IfcAddress::get_OfPerson);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "OfPerson"), "", "get_OfPerson");
+    ClassDB::bind_method(D_METHOD("get_OfOrganization"), &IfcAddress::get_OfOrganization);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "OfOrganization"), "", "get_OfOrganization");
 }
 
 godot::String IfcAddress::get_Purpose() {
@@ -239,6 +345,14 @@ void IfcAddress::set_UserDefinedPurpose(godot::String v) {
     gd_set_string(entity_, 2, v);
 }
 
+godot::Array IfcAddress::get_OfPerson() {
+    return get_inverse(godot::String("OfPerson"));
+}
+
+godot::Array IfcAddress::get_OfOrganization() {
+    return get_inverse(godot::String("OfOrganization"));
+}
+
 void IfcAdvancedBrep::_bind_methods() {
 }
 
@@ -262,6 +376,12 @@ void IfcAdvancedFace::_bind_methods() {
 }
 
 void IfcDistributionFlowElement::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_HasControlElements"), &IfcDistributionFlowElement::get_HasControlElements);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasControlElements"), "", "get_HasControlElements");
+}
+
+godot::Array IfcDistributionFlowElement::get_HasControlElements() {
+    return get_inverse(godot::String("HasControlElements"));
 }
 
 void IfcAirTerminal::_bind_methods() {
@@ -770,6 +890,8 @@ void IfcAnnotation::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcAnnotation::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcAnnotation::set_PredefinedType);
     ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ClassDB::bind_method(D_METHOD("get_ContainedInStructure"), &IfcAnnotation::get_ContainedInStructure);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ContainedInStructure"), "", "get_ContainedInStructure");
 }
 
 godot::String IfcAnnotation::get_PredefinedType() {
@@ -780,6 +902,10 @@ godot::String IfcAnnotation::get_PredefinedType() {
 void IfcAnnotation::set_PredefinedType(godot::String v) {
     if (!entity_) return;
     gd_set_string(entity_, 7, v);
+}
+
+godot::Array IfcAnnotation::get_ContainedInStructure() {
+    return get_inverse(godot::String("ContainedInStructure"));
 }
 
 void IfcAnnotationFillArea::_bind_methods() {
@@ -897,6 +1023,8 @@ void IfcAppliedValue::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Components"), &IfcAppliedValue::get_Components);
     ClassDB::bind_method(D_METHOD("set_Components","v"), &IfcAppliedValue::set_Components);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "Components"), "set_Components", "get_Components");
+    ClassDB::bind_method(D_METHOD("get_HasExternalReference"), &IfcAppliedValue::get_HasExternalReference);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasExternalReference"), "", "get_HasExternalReference");
 }
 
 godot::String IfcAppliedValue::get_Name() {
@@ -999,6 +1127,10 @@ void IfcAppliedValue::set_Components(godot::Array v) {
     gd_set_agg_entity(entity_, 9, v);
 }
 
+godot::Array IfcAppliedValue::get_HasExternalReference() {
+    return get_inverse(godot::String("HasExternalReference"));
+}
+
 void IfcApproval::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Identifier"), &IfcApproval::get_Identifier);
     ClassDB::bind_method(D_METHOD("set_Identifier","v"), &IfcApproval::set_Identifier);
@@ -1027,6 +1159,16 @@ void IfcApproval::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_GivingApproval"), &IfcApproval::get_GivingApproval);
     ClassDB::bind_method(D_METHOD("set_GivingApproval","v"), &IfcApproval::set_GivingApproval);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "GivingApproval", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_GivingApproval", "get_GivingApproval");
+    ClassDB::bind_method(D_METHOD("get_HasExternalReferences"), &IfcApproval::get_HasExternalReferences);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasExternalReferences"), "", "get_HasExternalReferences");
+    ClassDB::bind_method(D_METHOD("get_ApprovedObjects"), &IfcApproval::get_ApprovedObjects);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ApprovedObjects"), "", "get_ApprovedObjects");
+    ClassDB::bind_method(D_METHOD("get_ApprovedResources"), &IfcApproval::get_ApprovedResources);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ApprovedResources"), "", "get_ApprovedResources");
+    ClassDB::bind_method(D_METHOD("get_IsRelatedWith"), &IfcApproval::get_IsRelatedWith);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "IsRelatedWith"), "", "get_IsRelatedWith");
+    ClassDB::bind_method(D_METHOD("get_Relates"), &IfcApproval::get_Relates);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "Relates"), "", "get_Relates");
 }
 
 godot::String IfcApproval::get_Identifier() {
@@ -1117,6 +1259,26 @@ Ref<GDIFCEntityBase> IfcApproval::get_GivingApproval() {
 void IfcApproval::set_GivingApproval(Ref<GDIFCEntityBase> v) {
     if (!entity_) return;
     gd_set_entity(entity_, 8, v);
+}
+
+godot::Array IfcApproval::get_HasExternalReferences() {
+    return get_inverse(godot::String("HasExternalReferences"));
+}
+
+godot::Array IfcApproval::get_ApprovedObjects() {
+    return get_inverse(godot::String("ApprovedObjects"));
+}
+
+godot::Array IfcApproval::get_ApprovedResources() {
+    return get_inverse(godot::String("ApprovedResources"));
+}
+
+godot::Array IfcApproval::get_IsRelatedWith() {
+    return get_inverse(godot::String("IsRelatedWith"));
+}
+
+godot::Array IfcApproval::get_Relates() {
+    return get_inverse(godot::String("Relates"));
 }
 
 void IfcApprovalRelationship::_bind_methods() {
@@ -3294,6 +3456,10 @@ void IfcClassification::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_ReferenceTokens"), &IfcClassification::get_ReferenceTokens);
     ClassDB::bind_method(D_METHOD("set_ReferenceTokens","v"), &IfcClassification::set_ReferenceTokens);
     ADD_PROPERTY(PropertyInfo(Variant::PACKED_STRING_ARRAY, "ReferenceTokens"), "set_ReferenceTokens", "get_ReferenceTokens");
+    ClassDB::bind_method(D_METHOD("get_ClassificationForObjects"), &IfcClassification::get_ClassificationForObjects);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ClassificationForObjects"), "", "get_ClassificationForObjects");
+    ClassDB::bind_method(D_METHOD("get_HasReferences"), &IfcClassification::get_HasReferences);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasReferences"), "", "get_HasReferences");
 }
 
 godot::String IfcClassification::get_Source() {
@@ -3366,6 +3532,14 @@ void IfcClassification::set_ReferenceTokens(godot::PackedStringArray v) {
     gd_set_agg_string(entity_, 6, v);
 }
 
+godot::Array IfcClassification::get_ClassificationForObjects() {
+    return get_inverse(godot::String("ClassificationForObjects"));
+}
+
+godot::Array IfcClassification::get_HasReferences() {
+    return get_inverse(godot::String("HasReferences"));
+}
+
 void IfcExternalReference::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Location"), &IfcExternalReference::get_Location);
     ClassDB::bind_method(D_METHOD("set_Location","v"), &IfcExternalReference::set_Location);
@@ -3376,6 +3550,8 @@ void IfcExternalReference::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Name"), &IfcExternalReference::get_Name);
     ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcExternalReference::set_Name);
     ADD_PROPERTY(PropertyInfo(Variant::STRING, "Name"), "set_Name", "get_Name");
+    ClassDB::bind_method(D_METHOD("get_ExternalReferenceForResources"), &IfcExternalReference::get_ExternalReferenceForResources);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ExternalReferenceForResources"), "", "get_ExternalReferenceForResources");
 }
 
 godot::String IfcExternalReference::get_Location() {
@@ -3408,6 +3584,10 @@ void IfcExternalReference::set_Name(godot::String v) {
     gd_set_string(entity_, 2, v);
 }
 
+godot::Array IfcExternalReference::get_ExternalReferenceForResources() {
+    return get_inverse(godot::String("ExternalReferenceForResources"));
+}
+
 void IfcClassificationReference::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_ReferencedSource"), &IfcClassificationReference::get_ReferencedSource);
     ClassDB::bind_method(D_METHOD("set_ReferencedSource","v"), &IfcClassificationReference::set_ReferencedSource);
@@ -3418,6 +3598,10 @@ void IfcClassificationReference::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Sort"), &IfcClassificationReference::get_Sort);
     ClassDB::bind_method(D_METHOD("set_Sort","v"), &IfcClassificationReference::set_Sort);
     ADD_PROPERTY(PropertyInfo(Variant::STRING, "Sort"), "set_Sort", "get_Sort");
+    ClassDB::bind_method(D_METHOD("get_ClassificationRefForObjects"), &IfcClassificationReference::get_ClassificationRefForObjects);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ClassificationRefForObjects"), "", "get_ClassificationRefForObjects");
+    ClassDB::bind_method(D_METHOD("get_HasReferences"), &IfcClassificationReference::get_HasReferences);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasReferences"), "", "get_HasReferences");
 }
 
 Ref<GDIFCEntityBase> IfcClassificationReference::get_ReferencedSource() {
@@ -3448,6 +3632,14 @@ godot::String IfcClassificationReference::get_Sort() {
 void IfcClassificationReference::set_Sort(godot::String v) {
     if (!entity_) return;
     gd_set_string(entity_, 5, v);
+}
+
+godot::Array IfcClassificationReference::get_ClassificationRefForObjects() {
+    return get_inverse(godot::String("ClassificationRefForObjects"));
+}
+
+godot::Array IfcClassificationReference::get_HasReferences() {
+    return get_inverse(godot::String("HasReferences"));
 }
 
 void IfcConnectedFaceSet::_bind_methods() {
@@ -4025,6 +4217,10 @@ void IfcConstraint::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_UserDefinedGrade"), &IfcConstraint::get_UserDefinedGrade);
     ClassDB::bind_method(D_METHOD("set_UserDefinedGrade","v"), &IfcConstraint::set_UserDefinedGrade);
     ADD_PROPERTY(PropertyInfo(Variant::STRING, "UserDefinedGrade"), "set_UserDefinedGrade", "get_UserDefinedGrade");
+    ClassDB::bind_method(D_METHOD("get_HasExternalReferences"), &IfcConstraint::get_HasExternalReferences);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasExternalReferences"), "", "get_HasExternalReferences");
+    ClassDB::bind_method(D_METHOD("get_PropertiesForConstraint"), &IfcConstraint::get_PropertiesForConstraint);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "PropertiesForConstraint"), "", "get_PropertiesForConstraint");
 }
 
 godot::String IfcConstraint::get_Name() {
@@ -4095,6 +4291,14 @@ godot::String IfcConstraint::get_UserDefinedGrade() {
 void IfcConstraint::set_UserDefinedGrade(godot::String v) {
     if (!entity_) return;
     gd_set_string(entity_, 6, v);
+}
+
+godot::Array IfcConstraint::get_HasExternalReferences() {
+    return get_inverse(godot::String("HasExternalReferences"));
+}
+
+godot::Array IfcConstraint::get_PropertiesForConstraint() {
+    return get_inverse(godot::String("PropertiesForConstraint"));
 }
 
 void IfcConstructionResource::_bind_methods() {
@@ -4280,6 +4484,10 @@ void IfcContext::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_UnitsInContext"), &IfcContext::get_UnitsInContext);
     ClassDB::bind_method(D_METHOD("set_UnitsInContext","v"), &IfcContext::set_UnitsInContext);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "UnitsInContext", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_UnitsInContext", "get_UnitsInContext");
+    ClassDB::bind_method(D_METHOD("get_IsDefinedBy"), &IfcContext::get_IsDefinedBy);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "IsDefinedBy"), "", "get_IsDefinedBy");
+    ClassDB::bind_method(D_METHOD("get_Declares"), &IfcContext::get_Declares);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "Declares"), "", "get_Declares");
 }
 
 godot::String IfcContext::get_ObjectType() {
@@ -4332,10 +4540,20 @@ void IfcContext::set_UnitsInContext(Ref<GDIFCEntityBase> v) {
     gd_set_entity(entity_, 8, v);
 }
 
+godot::Array IfcContext::get_IsDefinedBy() {
+    return get_inverse(godot::String("IsDefinedBy"));
+}
+
+godot::Array IfcContext::get_Declares() {
+    return get_inverse(godot::String("Declares"));
+}
+
 void IfcContextDependentUnit::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Name"), &IfcContextDependentUnit::get_Name);
     ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcContextDependentUnit::set_Name);
     ADD_PROPERTY(PropertyInfo(Variant::STRING, "Name"), "set_Name", "get_Name");
+    ClassDB::bind_method(D_METHOD("get_HasExternalReference"), &IfcContextDependentUnit::get_HasExternalReference);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasExternalReference"), "", "get_HasExternalReference");
 }
 
 godot::String IfcContextDependentUnit::get_Name() {
@@ -4346,6 +4564,10 @@ godot::String IfcContextDependentUnit::get_Name() {
 void IfcContextDependentUnit::set_Name(godot::String v) {
     if (!entity_) return;
     gd_set_string(entity_, 2, v);
+}
+
+godot::Array IfcContextDependentUnit::get_HasExternalReference() {
+    return get_inverse(godot::String("HasExternalReference"));
 }
 
 void IfcController::_bind_methods() {
@@ -4387,6 +4609,8 @@ void IfcConversionBasedUnit::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_ConversionFactor"), &IfcConversionBasedUnit::get_ConversionFactor);
     ClassDB::bind_method(D_METHOD("set_ConversionFactor","v"), &IfcConversionBasedUnit::set_ConversionFactor);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "ConversionFactor", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_ConversionFactor", "get_ConversionFactor");
+    ClassDB::bind_method(D_METHOD("get_HasExternalReference"), &IfcConversionBasedUnit::get_HasExternalReference);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasExternalReference"), "", "get_HasExternalReference");
 }
 
 godot::String IfcConversionBasedUnit::get_Name() {
@@ -4407,6 +4631,10 @@ Ref<GDIFCEntityBase> IfcConversionBasedUnit::get_ConversionFactor() {
 void IfcConversionBasedUnit::set_ConversionFactor(Ref<GDIFCEntityBase> v) {
     if (!entity_) return;
     gd_set_entity(entity_, 3, v);
+}
+
+godot::Array IfcConversionBasedUnit::get_HasExternalReference() {
+    return get_inverse(godot::String("HasExternalReference"));
 }
 
 void IfcConversionBasedUnitWithOffset::_bind_methods() {
@@ -4560,6 +4788,10 @@ void IfcCoordinateReferenceSystem::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_GeodeticDatum"), &IfcCoordinateReferenceSystem::get_GeodeticDatum);
     ClassDB::bind_method(D_METHOD("set_GeodeticDatum","v"), &IfcCoordinateReferenceSystem::set_GeodeticDatum);
     ADD_PROPERTY(PropertyInfo(Variant::STRING, "GeodeticDatum"), "set_GeodeticDatum", "get_GeodeticDatum");
+    ClassDB::bind_method(D_METHOD("get_HasCoordinateOperation"), &IfcCoordinateReferenceSystem::get_HasCoordinateOperation);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasCoordinateOperation"), "", "get_HasCoordinateOperation");
+    ClassDB::bind_method(D_METHOD("get_WellKnownText"), &IfcCoordinateReferenceSystem::get_WellKnownText);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "WellKnownText"), "", "get_WellKnownText");
 }
 
 godot::String IfcCoordinateReferenceSystem::get_Name() {
@@ -4590,6 +4822,14 @@ godot::String IfcCoordinateReferenceSystem::get_GeodeticDatum() {
 void IfcCoordinateReferenceSystem::set_GeodeticDatum(godot::String v) {
     if (!entity_) return;
     gd_set_string(entity_, 2, v);
+}
+
+godot::Array IfcCoordinateReferenceSystem::get_HasCoordinateOperation() {
+    return get_inverse(godot::String("HasCoordinateOperation"));
+}
+
+godot::Array IfcCoordinateReferenceSystem::get_WellKnownText() {
+    return get_inverse(godot::String("WellKnownText"));
 }
 
 void IfcCosineSpiral::_bind_methods() {
@@ -4757,6 +4997,10 @@ void IfcCovering::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCovering::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCovering::set_PredefinedType);
     ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ClassDB::bind_method(D_METHOD("get_CoversSpaces"), &IfcCovering::get_CoversSpaces);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "CoversSpaces"), "", "get_CoversSpaces");
+    ClassDB::bind_method(D_METHOD("get_CoversElements"), &IfcCovering::get_CoversElements);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "CoversElements"), "", "get_CoversElements");
 }
 
 godot::String IfcCovering::get_PredefinedType() {
@@ -4767,6 +5011,14 @@ godot::String IfcCovering::get_PredefinedType() {
 void IfcCovering::set_PredefinedType(godot::String v) {
     if (!entity_) return;
     gd_set_string(entity_, 8, v);
+}
+
+godot::Array IfcCovering::get_CoversSpaces() {
+    return get_inverse(godot::String("CoversSpaces"));
+}
+
+godot::Array IfcCovering::get_CoversElements() {
+    return get_inverse(godot::String("CoversElements"));
 }
 
 void IfcCoveringType::_bind_methods() {
@@ -5794,6 +6046,14 @@ void IfcDocumentInformation::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Status"), &IfcDocumentInformation::get_Status);
     ClassDB::bind_method(D_METHOD("set_Status","v"), &IfcDocumentInformation::set_Status);
     ADD_PROPERTY(PropertyInfo(Variant::STRING, "Status"), "set_Status", "get_Status");
+    ClassDB::bind_method(D_METHOD("get_DocumentInfoForObjects"), &IfcDocumentInformation::get_DocumentInfoForObjects);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "DocumentInfoForObjects"), "", "get_DocumentInfoForObjects");
+    ClassDB::bind_method(D_METHOD("get_HasDocumentReferences"), &IfcDocumentInformation::get_HasDocumentReferences);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasDocumentReferences"), "", "get_HasDocumentReferences");
+    ClassDB::bind_method(D_METHOD("get_IsPointedTo"), &IfcDocumentInformation::get_IsPointedTo);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "IsPointedTo"), "", "get_IsPointedTo");
+    ClassDB::bind_method(D_METHOD("get_IsPointer"), &IfcDocumentInformation::get_IsPointer);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "IsPointer"), "", "get_IsPointer");
 }
 
 godot::String IfcDocumentInformation::get_Identification() {
@@ -5966,6 +6226,22 @@ void IfcDocumentInformation::set_Status(godot::String v) {
     gd_set_string(entity_, 16, v);
 }
 
+godot::Array IfcDocumentInformation::get_DocumentInfoForObjects() {
+    return get_inverse(godot::String("DocumentInfoForObjects"));
+}
+
+godot::Array IfcDocumentInformation::get_HasDocumentReferences() {
+    return get_inverse(godot::String("HasDocumentReferences"));
+}
+
+godot::Array IfcDocumentInformation::get_IsPointedTo() {
+    return get_inverse(godot::String("IsPointedTo"));
+}
+
+godot::Array IfcDocumentInformation::get_IsPointer() {
+    return get_inverse(godot::String("IsPointer"));
+}
+
 void IfcDocumentInformationRelationship::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_RelatingDocument"), &IfcDocumentInformationRelationship::get_RelatingDocument);
     ClassDB::bind_method(D_METHOD("set_RelatingDocument","v"), &IfcDocumentInformationRelationship::set_RelatingDocument);
@@ -6015,6 +6291,8 @@ void IfcDocumentReference::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_ReferencedDocument"), &IfcDocumentReference::get_ReferencedDocument);
     ClassDB::bind_method(D_METHOD("set_ReferencedDocument","v"), &IfcDocumentReference::set_ReferencedDocument);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "ReferencedDocument", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_ReferencedDocument", "get_ReferencedDocument");
+    ClassDB::bind_method(D_METHOD("get_DocumentRefForObjects"), &IfcDocumentReference::get_DocumentRefForObjects);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "DocumentRefForObjects"), "", "get_DocumentRefForObjects");
 }
 
 godot::String IfcDocumentReference::get_Description() {
@@ -6035,6 +6313,10 @@ Ref<GDIFCEntityBase> IfcDocumentReference::get_ReferencedDocument() {
 void IfcDocumentReference::set_ReferencedDocument(Ref<GDIFCEntityBase> v) {
     if (!entity_) return;
     gd_set_entity(entity_, 4, v);
+}
+
+godot::Array IfcDocumentReference::get_DocumentRefForObjects() {
+    return get_inverse(godot::String("DocumentRefForObjects"));
 }
 
 void IfcDoor::_bind_methods() {
@@ -7293,6 +7575,8 @@ void IfcExternalSpatialElement::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcExternalSpatialElement::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcExternalSpatialElement::set_PredefinedType);
     ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ClassDB::bind_method(D_METHOD("get_BoundedBy"), &IfcExternalSpatialElement::get_BoundedBy);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "BoundedBy"), "", "get_BoundedBy");
 }
 
 godot::String IfcExternalSpatialElement::get_PredefinedType() {
@@ -7303,6 +7587,10 @@ godot::String IfcExternalSpatialElement::get_PredefinedType() {
 void IfcExternalSpatialElement::set_PredefinedType(godot::String v) {
     if (!entity_) return;
     gd_set_string(entity_, 8, v);
+}
+
+godot::Array IfcExternalSpatialElement::get_BoundedBy() {
+    return get_inverse(godot::String("BoundedBy"));
 }
 
 void IfcExternallyDefinedHatchStyle::_bind_methods() {

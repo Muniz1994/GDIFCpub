@@ -33,6 +33,8 @@
 		<member name="Unit" type="GDIFCEntityBase" setter="set_Unit" getter="get_Unit">
 			The unit to be assigned to all values within the time series. Note that mixing units is not allowed. If the value is not given, the global unit for the type of IfcValue , as defined at IfcProject.UnitsInContext is used.
 		</member>
+		<member name="HasExternalReference" type="Array" setter="" getter="get_HasExternalReference">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

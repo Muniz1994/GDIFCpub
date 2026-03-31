@@ -9,6 +9,10 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="ServicesBuildings" type="Array" setter="" getter="get_ServicesBuildings">
+		</member>
+		<member name="ServicesFacilities" type="Array" setter="" getter="get_ServicesFacilities">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

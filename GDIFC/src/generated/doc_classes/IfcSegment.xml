@@ -11,6 +11,8 @@
 	<members>
 		<member name="Transition" type="String" setter="set_Transition" getter="get_Transition">
 		</member>
+		<member name="UsingCurves" type="Array" setter="" getter="get_UsingCurves">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

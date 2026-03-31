@@ -30,6 +30,10 @@
 		<member name="UserDefinedGrade" type="String" setter="set_UserDefinedGrade" getter="get_UserDefinedGrade">
 			Allows for specification of user defined grade of the constraint beyond the enumeration values (hard, soft, advisory) provided by ConstraintGrade attribute of type IfcConstraintEnum . When a value is provided for attribute UserDefinedGrade in parallel the attribute ConstraintGrade shall have enumeration value USERDEFINED.
 		</member>
+		<member name="HasExternalReferences" type="Array" setter="" getter="get_HasExternalReferences">
+		</member>
+		<member name="PropertiesForConstraint" type="Array" setter="" getter="get_PropertiesForConstraint">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

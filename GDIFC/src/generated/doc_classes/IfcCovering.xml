@@ -12,6 +12,10 @@
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 			Predefined types to define the particular type of the covering. There may be property set definitions available for each predefined type.
 		</member>
+		<member name="CoversSpaces" type="Array" setter="" getter="get_CoversSpaces">
+		</member>
+		<member name="CoversElements" type="Array" setter="" getter="get_CoversElements">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

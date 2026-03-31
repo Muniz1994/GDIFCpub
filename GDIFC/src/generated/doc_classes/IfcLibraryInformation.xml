@@ -27,6 +27,10 @@
 		<member name="Description" type="String" setter="set_Description" getter="get_Description">
 			The library information with which objects are associated. IFC2x4 CHANGE New inverse attribute.
 		</member>
+		<member name="LibraryInfoForObjects" type="Array" setter="" getter="get_LibraryInfoForObjects">
+		</member>
+		<member name="HasLibraryReferences" type="Array" setter="" getter="get_HasLibraryReferences">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

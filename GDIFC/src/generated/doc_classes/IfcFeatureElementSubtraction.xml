@@ -9,6 +9,8 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="VoidsElements" type="Array" setter="" getter="get_VoidsElements">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

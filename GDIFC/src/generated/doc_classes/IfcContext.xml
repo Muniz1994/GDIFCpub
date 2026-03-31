@@ -24,6 +24,10 @@
 		<member name="UnitsInContext" type="GDIFCEntityBase" setter="set_UnitsInContext" getter="get_UnitsInContext">
 			Units globally assigned to measure types used within the context. IFC2x4 CHANGE The attribute has been changed to be optional. Change made with upward compatibility for file based exchange.
 		</member>
+		<member name="IsDefinedBy" type="Array" setter="" getter="get_IsDefinedBy">
+		</member>
+		<member name="Declares" type="Array" setter="" getter="get_Declares">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

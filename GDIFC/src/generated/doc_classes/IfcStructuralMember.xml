@@ -9,6 +9,8 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="ConnectedBy" type="Array" setter="" getter="get_ConnectedBy">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

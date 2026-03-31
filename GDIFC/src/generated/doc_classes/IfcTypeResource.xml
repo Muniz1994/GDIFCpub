@@ -18,6 +18,8 @@
 		<member name="ResourceType" type="String" setter="set_ResourceType" getter="get_ResourceType">
 			The type denotes a particular type that indicates the resource further. The use has to be established at the level of instantiable subtypes. In particular it holds the user defined type, if the enumeration of the attribute 'PredefinedType' is set to USERDEFINED.
 		</member>
+		<member name="ResourceOf" type="Array" setter="" getter="get_ResourceOf">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

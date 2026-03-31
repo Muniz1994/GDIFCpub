@@ -24,6 +24,10 @@
 		<member name="Purpose" type="String" setter="set_Purpose" getter="get_Purpose">
 			Description of the purpose of this instance. Among else, possible values of the Purpose of load combinations are 'SLS', 'ULS', 'ALS' to indicate serviceability, ultimate, or accidental limit state.
 		</member>
+		<member name="SourceOfResultGroup" type="Array" setter="" getter="get_SourceOfResultGroup">
+		</member>
+		<member name="LoadGroupFor" type="Array" setter="" getter="get_LoadGroupFor">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

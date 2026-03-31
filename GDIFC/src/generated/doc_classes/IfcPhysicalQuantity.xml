@@ -15,6 +15,10 @@
 		<member name="Description" type="String" setter="set_Description" getter="get_Description">
 			Further explanation that might be given to the quantity.
 		</member>
+		<member name="HasExternalReferences" type="Array" setter="" getter="get_HasExternalReferences">
+		</member>
+		<member name="PartOfComplex" type="Array" setter="" getter="get_PartOfComplex">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

@@ -12,6 +12,5 @@ func _run() -> void:
 	if managers.size()> 0:
 		manager = managers[0]
 		
-	for wall in manager.get_elements_by_class("IfcWall"):
-		if wall.ifc_object is IfcWall:
-			print(wall.ifc_object.GlobalId)
+	for alignemnt:IfcAlignment in manager.get_elements_by_class("IfcAlignment"):
+		print(alignemnt.PredefinedType)

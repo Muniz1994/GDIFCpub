@@ -18,6 +18,10 @@
 		<member name="Sort" type="String" setter="set_Sort" getter="get_Sort">
 			The classification reference with which objects are associated. IFC2x4 CHANGE New inverse attribute.
 		</member>
+		<member name="ClassificationRefForObjects" type="Array" setter="" getter="get_ClassificationRefForObjects">
+		</member>
+		<member name="HasReferences" type="Array" setter="" getter="get_HasReferences">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

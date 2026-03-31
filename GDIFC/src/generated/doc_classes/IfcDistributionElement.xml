@@ -9,6 +9,8 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="HasPorts" type="Array" setter="" getter="get_HasPorts">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

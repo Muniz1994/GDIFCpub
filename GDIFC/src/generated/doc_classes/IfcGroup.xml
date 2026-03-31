@@ -9,6 +9,10 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="IsGroupedBy" type="Array" setter="" getter="get_IsGroupedBy">
+		</member>
+		<member name="ReferencedInStructures" type="Array" setter="" getter="get_ReferencedInStructures">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

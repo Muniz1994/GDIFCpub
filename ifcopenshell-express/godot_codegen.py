@@ -158,7 +158,8 @@ _CPP_TO_XML_TYPE = {
 
 
 def emit_xml_doc(entity_name: str, parent_name: str | None,
-                 attrs: list, entity_desc: str, attr_descs: dict) -> str:
+                 attrs: list, entity_desc: str, attr_descs: dict,
+                 inverse_attrs: list) -> str:
     """
     Emit a Godot XML doc file for one IFC entity class.
     attr_descs: {attr_position_in_own_attrs (0-based) -> plain_description}
@@ -191,6 +192,9 @@ def emit_xml_doc(entity_name: str, parent_name: str | None,
             if desc:
                 lines.append(f'\t\t\t{desc}')
             lines.append('\t\t</member>')
+    for inv_name in inverse_attrs:
+        lines.append(f'\t\t<member name="{inv_name}" type="Array" setter="" getter="get_{inv_name}">')
+        lines.append('\t\t</member>')
     lines += ['\t</members>', '\t<signals/>', '\t<constants/>', '</class>']
     return '\n'.join(lines) + '\n'
 
@@ -288,11 +292,25 @@ def get_entity_attrs(entity_name: str, entity, mapping: Mapping) -> list:
     return attrs
 
 
+def get_entity_inverse_attrs(entity) -> list:
+    """Return list of own inverse attribute names for this entity."""
+    result = []
+    if not entity.inverse:
+        return result
+    for ia in entity.inverse:
+        try:
+            result.append(str(ia.name))
+        except Exception:
+            pass
+    return result
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Code emission helpers
 # ─────────────────────────────────────────────────────────────────────────────
 
-def emit_class_decl(entity_name: str, parent_name: str | None, attrs: list) -> str:
+def emit_class_decl(entity_name: str, parent_name: str | None, attrs: list,
+                    inverse_attrs: list) -> str:
     """Emit a single class declaration block for the header."""
     gd_class = gd_class_name(entity_name)
     gd_parent = gd_class_name(parent_name) if parent_name else "GDIFCEntityBase"
@@ -305,18 +323,21 @@ def emit_class_decl(entity_name: str, parent_name: str | None, attrs: list) -> s
     ]
 
     bindable = [a for a in attrs if a["type_info"] is not None]
-    if bindable:
+    if bindable or inverse_attrs:
         lines.append("public:")
         for a in bindable:
             cpp_type, _, _, setter_helper, _ = a["type_info"]
             lines.append(f"    {cpp_type} get_{a['name']}();")
             if setter_helper is not None:
                 lines.append(f"    void set_{a['name']}({cpp_type} v);")
+        for inv_name in inverse_attrs:
+            lines.append(f"    godot::Array get_{inv_name}();")
     lines.append("};")
     return "\n".join(lines)
 
 
-def emit_bind_methods(entity_name: str, attrs: list, start_idx: int) -> str:
+def emit_bind_methods(entity_name: str, attrs: list, start_idx: int,
+                      inverse_attrs: list) -> str:
     """Emit the _bind_methods() body for one entity."""
     gd_class = gd_class_name(entity_name)
     lines = [f"void {gd_class}::_bind_methods() {{"]
@@ -338,6 +359,12 @@ def emit_bind_methods(entity_name: str, attrs: list, start_idx: int) -> str:
                 lines.append(
                     f'    ADD_PROPERTY(PropertyInfo({variant_type}, "{attr_name}"{hint_part}), "", "get_{attr_name}");')
         idx += 1
+
+    for inv_name in inverse_attrs:
+        lines.append(
+            f'    ClassDB::bind_method(D_METHOD("get_{inv_name}"), &{gd_class}::get_{inv_name});')
+        lines.append(
+            f'    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "{inv_name}"), "", "get_{inv_name}");')
 
     lines.append("}")
     return "\n".join(lines)
@@ -365,6 +392,14 @@ def emit_setter(entity_name: str, attr_name: str, cpp_type: str,
         f"}}"
     )
 
+def emit_inverse_getter(entity_name: str, inv_name: str) -> str:
+    """Emit a getter that delegates to get_inverse() for one inverse attr."""
+    gd_class = gd_class_name(entity_name)
+    return (
+        f"godot::Array {gd_class}::get_{inv_name}() {{\n"
+        f'    return get_inverse(godot::String("{inv_name}"));\n'
+        f"}}"
+    )
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Main generation
@@ -457,7 +492,7 @@ def generate(exp_path: str, output_dir: str):
     start_index_map, _ = build_attr_index_cache(sorted_names, ent_dict)
 
     # ── Collect per-entity information ───────────────────────────────────────
-    entity_info = []  # list of (name, parent_name, attrs, start_idx)
+    entity_info = []  # list of (name, parent_name, attrs, start_idx, inv_attrs)
     for name in sorted_names:
         ent = ent_dict.get(name)
         if ent is None:
@@ -466,7 +501,8 @@ def generate(exp_path: str, output_dir: str):
         parent_name = str(supertypes[0]) if supertypes else None
         attrs = get_entity_attrs(name, ent, m)
         start_idx = start_index_map.get(name, 0)
-        entity_info.append((name, parent_name, attrs, start_idx))
+        inv_attrs = get_entity_inverse_attrs(ent)
+        entity_info.append((name, parent_name, attrs, start_idx, inv_attrs))
 
     # ── Load documentation from CSVs ─────────────────────────────────────────
     entity_doc_csv = os.path.join(_here, "DocEntity.csv")
@@ -491,14 +527,14 @@ def generate(exp_path: str, output_dir: str):
 
     # ── Forward declarations ──────────────────────────────────────────────────
     header_lines.append("// Forward declarations\n")
-    for name, _, _, _ in entity_info:
+    for name, _, _, _, _ in entity_info:
         header_lines.append(f"class {gd_class_name(name)};")
     header_lines.append("\n")
 
     # ── Class definitions + implementations ───────────────────────────────────
-    for name, parent_name, attrs, start_idx in entity_info:
+    for name, parent_name, attrs, start_idx, inv_attrs in entity_info:
         # Header declaration
-        header_lines.append(emit_class_decl(name, parent_name, attrs))
+        header_lines.append(emit_class_decl(name, parent_name, attrs, inv_attrs))
         header_lines.append("")
 
         # Shard key
@@ -506,7 +542,7 @@ def generate(exp_path: str, output_dir: str):
         impl = impl_shards[shard]
 
         # _bind_methods
-        impl.append(emit_bind_methods(name, attrs, start_idx))
+        impl.append(emit_bind_methods(name, attrs, start_idx, inv_attrs))
         impl.append("")
 
         # Getters and setters
@@ -522,6 +558,11 @@ def generate(exp_path: str, output_dir: str):
                     impl.append(emit_setter(name, a["name"], cpp_type, setter_helper, idx))
                     impl.append("")
             idx += 1
+
+        # Inverse getters
+        for inv_name in inv_attrs:
+            impl.append(emit_inverse_getter(name, inv_name))
+            impl.append("")
 
         # Registration: ClassDB + factory
         gd = gd_class_name(name)
@@ -556,7 +597,9 @@ def generate(exp_path: str, output_dir: str):
         f.write("\n".join(reg_lines))
     print(f"[godot_codegen] Wrote {reg_path}")
 
-    total_attrs = sum(len([a for a in attrs if a["type_info"]]) for _, _, attrs, _ in entity_info)
+    total_attrs = sum(len([a for a in attrs if a["type_info"]]) for _, _, attrs, _, _ in entity_info)
+    total_inv = sum(len(inv) for _, _, _, _, inv in entity_info)
+    print(f"[godot_codegen] Inverse attribute getters: {total_inv}")
     print(f"[godot_codegen] Generated {len(entity_info)} entity classes, "
           f"{total_attrs} typed accessors.")
 
@@ -564,7 +607,7 @@ def generate(exp_path: str, output_dir: str):
     doc_dir = os.path.join(output_dir, "doc_classes")
     os.makedirs(doc_dir, exist_ok=True)
 
-    for name, parent_name, attrs, _ in entity_info:
+    for name, parent_name, attrs, _, inv_attrs in entity_info:
         e_line, e_desc = entity_name_to_doc.get(name.lower(), (None, ""))
         attr_descs = {}
         if e_line is not None and e_line in entity_attr_links:
@@ -572,7 +615,7 @@ def generate(exp_path: str, output_dir: str):
                 attr_descs[pos] = attr_docs_by_line.get(a_line, "")
         xml_path = os.path.join(doc_dir, f"{name}.xml")
         with open(xml_path, "w", encoding="utf-8") as fxml:
-            fxml.write(emit_xml_doc(name, parent_name, attrs, e_desc, attr_descs))
+            fxml.write(emit_xml_doc(name, parent_name, attrs, e_desc, attr_descs, inv_attrs))
 
     print(f"[godot_codegen] Wrote {len(entity_info)} XML doc files to {doc_dir}")
 

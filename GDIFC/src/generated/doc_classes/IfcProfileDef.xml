@@ -15,6 +15,10 @@
 		<member name="ProfileName" type="String" setter="set_ProfileName" getter="get_ProfileName">
 			Human-readable name of the profile, for example according to a standard profile table. As noted above, machine-readable standardized profile designations should be provided in IfcExternalReference.ItemReference .
 		</member>
+		<member name="HasExternalReference" type="Array" setter="" getter="get_HasExternalReference">
+		</member>
+		<member name="HasProperties" type="Array" setter="" getter="get_HasProperties">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

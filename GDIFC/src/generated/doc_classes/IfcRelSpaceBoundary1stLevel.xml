@@ -12,6 +12,8 @@
 		<member name="ParentBoundary" type="GDIFCEntityBase" setter="set_ParentBoundary" getter="get_ParentBoundary">
 			Reference to the host, or parent, space boundary within which this inner boundary is defined.
 		</member>
+		<member name="InnerBoundaries" type="Array" setter="" getter="get_InnerBoundaries">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

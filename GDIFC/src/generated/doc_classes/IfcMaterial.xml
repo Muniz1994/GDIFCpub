@@ -18,6 +18,12 @@
 		<member name="Category" type="String" setter="set_Category" getter="get_Category">
 			Definition of the category (group or type) of material, in more general terms than given by attribute Name . EXAMPLE A view definition may require each Material.Name to be unique, e.g. for each concrete or steel grade used in a project, in which case Material.Category could take the values 'Concrete' or 'Steel'. IFC2x4 CHANGE The attribute has been added at the end of attribute list.
 		</member>
+		<member name="HasRepresentation" type="Array" setter="" getter="get_HasRepresentation">
+		</member>
+		<member name="IsRelatedWith" type="Array" setter="" getter="get_IsRelatedWith">
+		</member>
+		<member name="RelatesTo" type="Array" setter="" getter="get_RelatesTo">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

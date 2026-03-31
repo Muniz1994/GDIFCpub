@@ -9,6 +9,8 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="AssignedToFlowElement" type="Array" setter="" getter="get_AssignedToFlowElement">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

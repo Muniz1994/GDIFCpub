@@ -15,6 +15,10 @@
 		<member name="MappedRepresentation" type="GDIFCEntityBase" setter="set_MappedRepresentation" getter="get_MappedRepresentation">
 			A representation that is mapped to at least one mapped item.
 		</member>
+		<member name="HasShapeAspects" type="Array" setter="" getter="get_HasShapeAspects">
+		</member>
+		<member name="MapUsage" type="Array" setter="" getter="get_MapUsage">
+		</member>
 	</members>
 	<signals/>
 	<constants/>

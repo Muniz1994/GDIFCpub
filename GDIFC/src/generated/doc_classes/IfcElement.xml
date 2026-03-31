@@ -12,6 +12,30 @@
 		<member name="Tag" type="String" setter="set_Tag" getter="get_Tag">
 			The tag (or label) identifier at the particular instance of a product, e.g. the serial number, or the position number. It is the identifier at the occurrence level.
 		</member>
+		<member name="FillsVoids" type="Array" setter="" getter="get_FillsVoids">
+		</member>
+		<member name="ConnectedTo" type="Array" setter="" getter="get_ConnectedTo">
+		</member>
+		<member name="IsInterferedByElements" type="Array" setter="" getter="get_IsInterferedByElements">
+		</member>
+		<member name="InterferesElements" type="Array" setter="" getter="get_InterferesElements">
+		</member>
+		<member name="HasProjections" type="Array" setter="" getter="get_HasProjections">
+		</member>
+		<member name="HasOpenings" type="Array" setter="" getter="get_HasOpenings">
+		</member>
+		<member name="IsConnectionRealization" type="Array" setter="" getter="get_IsConnectionRealization">
+		</member>
+		<member name="ProvidesBoundaries" type="Array" setter="" getter="get_ProvidesBoundaries">
+		</member>
+		<member name="ConnectedFrom" type="Array" setter="" getter="get_ConnectedFrom">
+		</member>
+		<member name="ContainedInStructure" type="Array" setter="" getter="get_ContainedInStructure">
+		</member>
+		<member name="HasCoverings" type="Array" setter="" getter="get_HasCoverings">
+		</member>
+		<member name="HasSurfaceFeatures" type="Array" setter="" getter="get_HasSurfaceFeatures">
+		</member>
 	</members>
 	<signals/>
 	<constants/>
