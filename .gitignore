@@ -16,10 +16,6 @@
 *.gch
 *.pch
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
 
 # Fortran module files
 *.mod
@@ -84,9 +80,8 @@ ifc-godot-project/addons/GDIFC/*.pdb
 ifc-godot-project/addons/GDIFC/*.ilk
 
 # Platform binaries in addon dir (built artifacts)
-ifc-godot-project/addons/GDIFC/libgdifc*
-ifc-godot-project/addons/GDIFC/gdifc*.dll
-ifc-godot-project/addons/GDIFC/gdifc*.so
-ifc-godot-project/addons/GDIFC/gdifc*.wasm
-ifc-godot-project/addons/GDIFC/gdifc*.dylib
 *.os
+ifc-godot-project/addons/GDIFC/~libgdifc.windows.template_debug.x86_64.dll
+
+
+*.template_debug.*
