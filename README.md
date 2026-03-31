@@ -1,5 +1,7 @@
 # GDIFC
 
+![GDIFC](images/GDIFC.png)
+
 A GDExtension for loading [buildingSMART IFC](https://www.buildingsmart.org/standards/bsi-standards/industry-foundation-classes/) files directly in Godot 4.  
 It creates a node tree of `IFCNode` meshes with the full geometry, properties, and quantity sets of the model.
 

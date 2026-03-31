@@ -17,7 +17,7 @@ func _enter_tree():
 
 
 func _exit_tree():
-	# Clean-up of the plugin goes here.
+
 	# Remove the dock.
 	remove_control_from_docks(dock)
 	# Erase the control from the memory.

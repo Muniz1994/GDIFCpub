@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://fja2j7bui5qu"]
 
-[ext_resource type="Script" uid="uid://r3roinbdlw77" path="res://addons/GDIFC/gdifcdock.gd" id="1_ae86c"]
+[ext_resource type="Script" uid="uid://iph5rdx8l8b7" path="res://addons/GDIFC/gdifcdock.gd" id="1_ae86c"]
 [ext_resource type="Texture2D" uid="uid://cugvxdyscp2my" path="res://addons/GDIFC/assets/icons/upload.png" id="2_2lejx"]
 [ext_resource type="GDIFCLoaderSettings" uid="uid://c6nxagj6y41n4" path="res://addons/GDIFC/settings/default_gdifc_geometric_settings.tres" id="2_3o44k"]
 
@@ -46,6 +46,7 @@ theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
 [node name="Panel" type="Panel" parent="MarginContainer" unique_id=59619446]
+custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_2lejx")
 
@@ -150,7 +151,7 @@ max_columns = 2
 same_column_width = true
 item_0/text = "IfcSlab"
 item_1/text = "IfcRoof"
-item_2/text = "IfcStairs"
+item_2/text = "IfcStair"
 item_3/text = "IfcWall"
 item_4/text = "IfcRail"
 item_5/text = "IfcDoor"
