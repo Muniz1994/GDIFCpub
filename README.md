@@ -15,6 +15,10 @@ It creates a node tree of `IFCNode` meshes with the full geometry, properties, a
 - Georeferencing data (`MapConversion` / `ProjectedCRS`) available after load
 - Platforms: Windows, Linux, Android, Web (WASM)
 
+![Bridge](images/Bridge4.3.jpg)
+
+IFC 4.3 example on godot 4.7 dev outline branch
+
 ## Installation
 
 ### Godot Asset Library (recommended)
