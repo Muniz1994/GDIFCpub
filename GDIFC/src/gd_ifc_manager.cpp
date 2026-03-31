@@ -625,6 +625,17 @@ void GDIFCManager::_process_generation_queue() {
         node_registry.clear();
         invisible_staging_root->set_name("IFCModel");
         add_child(invisible_staging_root, true);
+
+        // Set ownership recursively so all nodes are selectable in the editor
+        Node* scene_owner = get_owner() != nullptr ? get_owner() : this;
+        std::function<void(Node*)> set_owner_recursive = [&](Node* n) {
+            n->set_owner(scene_owner);
+            for (int i = 0; i < n->get_child_count(); i++) {
+                set_owner_recursive(n->get_child(i));
+            }
+        };
+        set_owner_recursive(invisible_staging_root);
+
         invisible_staging_root = nullptr;
         current_state = DONE;
         emit_signal("ifc_read");

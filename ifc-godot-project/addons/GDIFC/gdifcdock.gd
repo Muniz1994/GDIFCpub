@@ -67,32 +67,7 @@ func _on_file_selected(path: String):
 	# 3. Generate the geometry (This creates hidden children)
 	ifc_manager.read_ifc(path,create_collision,collision_elements)
 	
-	ifc_manager.ifc_read.connect(_set_owner)
 	ifc_manager.set_display_folded(true)
 
 const BATCH_SIZE = 100 # The number of nodes to process per frame. 
 var _nodes_processed = 0
-
-func _set_owner():
-	_nodes_processed = 0
-
-	# Wait for the recursive function to finish completely
-	await _set_owner_recursive_async(ifc_manager, current_scene_root)
-
-	# Hide the loading label ONLY after all owners are set
-	loading_label.visible = false
-	print("IFC Loading and ownership assignment complete!")
-
-# --- Helper Function ---
-func _set_owner_recursive_async(node: Node, root: Node):
-	for child in node.get_children():
-		child.owner = root
-		_nodes_processed += 1
-
-		# Every BATCH_SIZE nodes, pause this function and yield to the main thread
-		if _nodes_processed % BATCH_SIZE == 0:
-			await get_tree().process_frame
-			
-		# If the child has children, recursively call and await
-		if child.get_child_count() > 0:
-			await _set_owner_recursive_async(child, root)
