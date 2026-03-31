@@ -88,3 +88,4 @@ ifc-godot-project/addons/GDIFC/gdifc*.dll
 ifc-godot-project/addons/GDIFC/gdifc*.so
 ifc-godot-project/addons/GDIFC/gdifc*.wasm
 ifc-godot-project/addons/GDIFC/gdifc*.dylib
+*.os
