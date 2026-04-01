@@ -1,8 +1,8 @@
-[gd_scene format=3 uid="uid://fja2j7bui5qu"]
+[gd_scene format=3]
 
-[ext_resource type="Script" uid="uid://iph5rdx8l8b7" path="res://addons/GDIFC/gdifcdock.gd" id="1_ae86c"]
-[ext_resource type="Texture2D" uid="uid://cugvxdyscp2my" path="res://addons/GDIFC/assets/icons/upload.png" id="2_2lejx"]
-[ext_resource type="GDIFCLoaderSettings" uid="uid://c6nxagj6y41n4" path="res://addons/GDIFC/settings/default_gdifc_geometric_settings.tres" id="2_3o44k"]
+[ext_resource type="Script" path="res://addons/GDIFC/gdifcdock.gd" id="1_ae86c"]
+[ext_resource type="Texture2D" path="res://addons/GDIFC/assets/icons/upload.png" id="2_2lejx"]
+[ext_resource type="GDIFCLoaderSettings" path="res://addons/GDIFC/settings/default_gdifc_geometric_settings.tres" id="2_3o44k"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2lejx"]
 content_margin_left = 0.0
