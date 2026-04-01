@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcAlignmentParameterSegment" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="StartTag" type="String" setter="set_StartTag" getter="get_StartTag">
+		</member>
+		<member name="EndTag" type="String" setter="set_EndTag" getter="get_EndTag">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

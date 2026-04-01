@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralMember" inherits="IfcStructuralItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: The abstract entity IfcStructuralMember is the superclass of all structural items which represent the idealized structural behavior of building elements. HISTORY: New entity in IFC 2x2. IFC 2x4 change: Use definitions moved to supertype and subtypes.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ConnectedBy" type="Array" setter="" getter="get_ConnectedBy">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

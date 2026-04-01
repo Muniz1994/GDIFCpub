@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSurface" inherits="IfcGeometricRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A surface can be envisioned as a set of connected points in 3-dimensional space which is always locally 2-dimensional, but need not be a manifold. NOTE Corresponding ISO 10303 entity: surface, the following subtypes have been incorporated into IFC - elementary_surface (as IfcElementarySurface ), swept_surface (as IfcSweptSurface ) and bounded_surface (as IfcB
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

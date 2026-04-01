@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcProjectOrder" inherits="IfcControl"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A project order is a directive to purchase products and/or perform work, such as for construction or facilities management. Project orders are typically formal contracts between two organizations, where cost and time information may be rigid or flexible according to contained schedule types and constraints. HISTORY New entity in IFC 2.0 IFC2x4 CHANGE Attribute 'ID' changed to Identification and pr
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic type for a project order that is specified in an enumeration. There may be a property set given specificly for the predefined types. IFC2x4 CHANGE The attribute has been made optional.
+		</member>
+		<member name="Status" type="String" setter="set_Status" getter="get_Status">
+			The current status of a project order.Examples of status values that might be used for a project order status include: PLANNED REQUESTED APPROVED ISSUED STARTED DELAYED DONE
+		</member>
+		<member name="LongDescription" type="String" setter="set_LongDescription" getter="get_LongDescription">
+			A detailed description of the project order describing the work to be completed.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

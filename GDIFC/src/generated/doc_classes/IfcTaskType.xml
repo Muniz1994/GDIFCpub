@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTaskType" inherits="IfcTypeProcess"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcTaskType defines a particular type of task that may be specified for use within a work control. HISTORY New entity in IFC2x4 An IfcTaskType provides for all forms of types of task that may be specified. Usage of IfcTaskType defines the parameters for one or more occurrences of IfcTask . Parameters may be specified through property sets that may be enumerated in the IfcTaskTypeEnum data type 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Identifies the predefined types of a task type from which the type required may be set.
+		</member>
+		<member name="WorkMethod" type="String" setter="set_WorkMethod" getter="get_WorkMethod">
+			The method of work used in carrying out a task.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

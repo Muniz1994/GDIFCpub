@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcToroidalSurface" inherits="IfcElementarySurface"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="MajorRadius" type="float" setter="set_MajorRadius" getter="get_MajorRadius">
+		</member>
+		<member name="MinorRadius" type="float" setter="set_MinorRadius" getter="get_MinorRadius">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

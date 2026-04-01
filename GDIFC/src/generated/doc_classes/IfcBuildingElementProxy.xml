@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcBuildingElementProxy" inherits="IfcBuiltElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : The IfcBuildingElementProxy is a proxy definition that provides the same functionality as an IfcBuildingElement , but without having a predefined meaning of the special type of building element, it represents. Proxies can also be used as spatial place holders or provisions, that maybe later replaced by special types of elements. One use of the proxy object is a provision for 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

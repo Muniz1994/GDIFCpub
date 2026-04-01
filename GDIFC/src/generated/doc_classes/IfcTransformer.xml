@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTransformer" inherits="IfcEnergyConversionDevice"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A transformer is an inductive stationary device that transfers electrical energy from one circuit to another. IfcTransformer is used to transform electric power; conversion of electric signals for other purposes is handled at other entities: IfcController converts arbitrary signals, IfcAudioVisualAppliance converts signals for audio or video streams, and IfcCommunicationsAppliance converts signals
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

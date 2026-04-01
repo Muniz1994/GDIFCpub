@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcLightDistributionData" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcLightDistributionData defines the luminous intensity of a light source given at a particular main plane angle. It is based on some standardized light distribution curves; the MainPlaneAngle is either the A angle; if the IfcLightDistributionCurveEnum is set to TYPE_A B angle; if the IfcLightDistributionCurveEnum is set to TYPE_B C angle; if the IfcLightDistributionCurveEnum is set to TYPE_C For 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="MainPlaneAngle" type="float" setter="set_MainPlaneAngle" getter="get_MainPlaneAngle">
+			The main plane angle (A, B or C angles, according to the light distribution curve chosen).
+		</member>
+		<member name="SecondaryPlaneAngle" type="PackedFloat64Array" setter="set_SecondaryPlaneAngle" getter="get_SecondaryPlaneAngle">
+			The list of secondary plane angles (the α, β or γ angles) according to the light distribution curve chosen. NOTE: The SecondaryPlaneAngle and LuminousIntensity lists are corresponding lists.
+		</member>
+		<member name="LuminousIntensity" type="PackedFloat64Array" setter="set_LuminousIntensity" getter="get_LuminousIntensity">
+			The luminous intensity distribution measure for this pair of main and secondary plane angles according to the light distribution curve chosen.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

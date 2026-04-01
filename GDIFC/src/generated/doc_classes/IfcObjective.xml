@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcObjective" inherits="IfcConstraint"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcObjective captures qualitative information for an objective-based constraint. HISTORY: New Entity in IFC Release 2.0 Use definition IfcObjective is a subtype of IfcConstraint and may be associated with any subtype of IfcRoot through the IfcRelAssociatesConstraint relationship in the IfcControlExtension schema, or may be associated with IfcProperty by IfcPropertyConstraintRelationship . The a
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="BenchmarkValues" type="Array" setter="set_BenchmarkValues" getter="get_BenchmarkValues">
+			A list of any benchmark values used for comparison purposes.
+		</member>
+		<member name="LogicalAggregator" type="String" setter="set_LogicalAggregator" getter="get_LogicalAggregator">
+			A list of any resultant values used for comparison purposes.
+		</member>
+		<member name="ObjectiveQualifier" type="String" setter="set_ObjectiveQualifier" getter="get_ObjectiveQualifier">
+			Enumeration that qualifies the type of objective constraint.
+		</member>
+		<member name="UserDefinedQualifier" type="String" setter="set_UserDefinedQualifier" getter="get_UserDefinedQualifier">
+			A user defined value that qualifies the type of objective constraint when ObjectiveQualifier attribute of type IfcObjectiveEnum has value USERDEFINED.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

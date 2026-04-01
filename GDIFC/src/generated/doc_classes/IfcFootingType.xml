@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFootingType" inherits="IfcBuiltElementType"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: Provides shared material, decomposition, representation maps, and property sets for instances of IfcFooting . HISTORY New entity in IFC Release 2x4 Note, slab foundation types are not instantiated as IfcFootingType but as IfcSlabType with a predefined type of IfcSlabTypeEnum .BASESLAB. Material Use Definition : Material profile set or material layer set association analogous t
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Subtype of footing.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

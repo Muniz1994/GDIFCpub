@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDistributionChamberElementType" inherits="IfcDistributionFlowElementType"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The distribution flow element type IfcDistributionChamberElementType defines commonly shared information for occurrences of distribution chamber elements. The set of shared information may include: common properties with shared property sets common materials common ports common composition of elements common assignment of process types common representations of shape and style It is used to define
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined types of distribution chambers.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

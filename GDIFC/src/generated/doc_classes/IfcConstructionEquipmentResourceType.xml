@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcConstructionEquipmentResourceType" inherits="IfcConstructionResourceType"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The resource type IfcConstructionEquipmentType defines commonly shared information for occurrences of construction equipment resources. The set of shared information may include: common productivities common cost rates common properties within shared property sets It is used to define a construction equipment resource specification (the specific resource information that is common to all occurrenc
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Defines types of construction equipment resources.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

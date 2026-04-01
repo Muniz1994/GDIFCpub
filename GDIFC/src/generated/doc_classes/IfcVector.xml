@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcVector" inherits="IfcGeometricRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : The vector is defined in terms of the direction and magnitude of the vector. The value of the magnitude attribute defines the magnitude of the vector. NOTE: The magnitude of the vector can not be reliable calculated from the components of the Orientation attribute. This form of representation was selected to reduce problems with numerical instability. For exa
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Orientation" type="GDIFCEntityBase" setter="set_Orientation" getter="get_Orientation">
+			The direction of the vector.
+		</member>
+		<member name="Magnitude" type="float" setter="set_Magnitude" getter="get_Magnitude">
+			The magnitude of the vector. All vectors of Magnitude 0.0 are regarded as equal in value regardless of the orientation attribute.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

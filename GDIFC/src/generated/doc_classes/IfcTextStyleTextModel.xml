@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTextStyleTextModel" inherits="IfcPresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from CSS1 (W3C Recommendation) : The properties defined in the text model affect the visual presentation of characters, spaces, words, and paragraphs. The IfcTextStyleTextModel combines all text style properties, that affect the presentation of a text literal within a given extent. It includes the spacing between characters and words, the horizontal and vertical alignment of the text wi
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="TextIndent" type="GDIFCEntityBase" setter="set_TextIndent" getter="get_TextIndent">
+			The property specifies the indentation that appears before the first formatted line. NOTE It has been introduced for later compliance to full CSS1 support.
+		</member>
+		<member name="TextAlign" type="String" setter="set_TextAlign" getter="get_TextAlign">
+			This property describes how text is aligned horizontally within the element. The actual justification algorithm used is dependent on the rendering algorithm.
+		</member>
+		<member name="TextDecoration" type="String" setter="set_TextDecoration" getter="get_TextDecoration">
+			This property describes decorations that are added to the text of an element.
+		</member>
+		<member name="LetterSpacing" type="GDIFCEntityBase" setter="set_LetterSpacing" getter="get_LetterSpacing">
+			The length unit indicates an addition to the default space between characters. Values can be negative, but there may be implementation-specific limits. The user agent is free to select the exact spacing algorithm. The letter spacing may also be influenced by justification (which is a value of the 'align' property). NOTE The following values are allowed, IfcDescriptiveMeasure with value='normal', or IfcLengthMeasure , the length unit is globally defined at IfcUnitAssignment .
+		</member>
+		<member name="WordSpacing" type="GDIFCEntityBase" setter="set_WordSpacing" getter="get_WordSpacing">
+			The length unit indicates an addition to the default space between words. Values can be negative, but there may be implementation-specific limits. The user agent is free to select the exact spacing algorithm. The word spacing may also be influenced by justification (which is a value of the 'text-align' property). NOTE It has been introduced for later compliance to full CSS1 support.
+		</member>
+		<member name="TextTransform" type="String" setter="set_TextTransform" getter="get_TextTransform">
+			This property describes how text characters may transform to upper case, lower case, or capitalized case, independent of the character case used in the text literal. NOTE It has been introduced for later compliance to full CSS1 support.
+		</member>
+		<member name="LineHeight" type="GDIFCEntityBase" setter="set_LineHeight" getter="get_LineHeight">
+			The property sets the distance between two adjacent lines' baselines. When a ratio value is specified, the line height is given by the font size of the current element multiplied with the numerical value. A value of 'normal' sets the line height to a reasonable value for the element's font. It is suggested that user agents set the 'normal' value to be a ratio number in the range of 1.0 to 1.2. NOTE The following values are allowed: IfcDescriptiveMeasure with value='normal', or IfcLengthMeasure , with non-negative values, the length unit is globally defined at IfcUnitAssignment , or IfcRatioMeasure .
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPort" inherits="IfcProduct"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : An IfcPort provides the means for an element to connect to other elements. An IfcPort is associated with an IfcElement , it belongs to, through the objectified relationship IfcRelConnectsPortToElement . Exactly two ports, belonging to two different elements, are connected with each other through the objectified relationship IfcRelConnectsPorts . An instance of IfcElement may 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ContainedIn" type="Array" setter="" getter="get_ContainedIn">
+		</member>
+		<member name="ConnectedFrom" type="Array" setter="" getter="get_ConnectedFrom">
+		</member>
+		<member name="ConnectedTo" type="Array" setter="" getter="get_ConnectedTo">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

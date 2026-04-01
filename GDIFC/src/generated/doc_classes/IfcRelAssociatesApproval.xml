@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelAssociatesApproval" inherits="IfcRelAssociates"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The entity IfcRelAssociatesApproval is used to apply approval information defined by IfcApproval , in IfcApprovalResource schema, to subtypes of IfcRoot . HISTORY: New entity in IFC2x2.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingApproval" type="GDIFCEntityBase" setter="set_RelatingApproval" getter="get_RelatingApproval">
+			Reference to approval that is being applied using this relationship.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

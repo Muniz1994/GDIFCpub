@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPreDefinedPropertySet" inherits="IfcPropertySetDefinition"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcPreDefinedPropertySet is a generalization of all statically defined property sets that are assigned to an object or type object. The statically or pre-defined property sets are entities with a fixed list of attributes having particular defined data types. IfcPreDefinedPropertySet 's can be assigned to objects and object types but do not have a defining property set template. HISTORY New Entity 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

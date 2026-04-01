@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelationship" inherits="IfcRoot"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcRelationship is the abstract generalization of all objectified relationships in IFC. Objectified relationships are the preferred way to handle relationships among objects. This allows to keep relationship specific properties directly at the relationship and opens the possibility to later handle relationship specific behavior. There are two different types of relationships, 1-to-1 relationships 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

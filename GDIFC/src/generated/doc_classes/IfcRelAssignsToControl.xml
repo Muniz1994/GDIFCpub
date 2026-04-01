@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelAssignsToControl" inherits="IfcRelAssigns"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The objectified relationship IfcRelAssignsToControl handles the assignment of a control (represented by subtypes of IfcControl ) to other objects (represented by subtypes of IfcObject , with the exception of controls). EXAMPLEÿ The assignment of a performance history (as subtype of IfcControl ) for a building service element (as subtype of IfcObject ) is an application of this generic relationship
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingControl" type="GDIFCEntityBase" setter="set_RelatingControl" getter="get_RelatingControl">
+			Reference to the IfcControl that applies a control upon objects.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

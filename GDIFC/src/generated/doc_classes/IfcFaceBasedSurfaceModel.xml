@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFaceBasedSurfaceModel" inherits="IfcGeometricRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A face based surface model is described by a set of connected face sets of dimensionality 2. The connected face sets shall not intersect except at edges and vertices, except that a face in one connected face set may overlap a face in another connected face set, provided the face boundaries are identical. There shall be at least one connected face set. A conne
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="FbsmFaces" type="Array" setter="set_FbsmFaces" getter="get_FbsmFaces">
+			The set of connected face sets comprising the face based surface model.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

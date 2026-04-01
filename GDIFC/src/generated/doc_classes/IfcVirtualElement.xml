@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcVirtualElement" inherits="IfcElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A virtual element is a special element used to provide imaginary boundaries, such as between two adjacent, but not separated, spaces. Virtual elements are usually not displayed and does not have quantities and other measures. Therefore IfcVirtualElement does not have material information and quantities attached. NOTE The main purpose of IfcVirtualElement is the provision of a virtual space boundar
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

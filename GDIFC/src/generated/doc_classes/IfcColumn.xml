@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcColumn" inherits="IfcBuiltElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO 6707-1:1989 : Structural member of slender form, usually vertical, that transmits to its base the forces, primarily in compression, that are applied to it. IfcColumn is a vertical structural member which often is aligned with a structural grid intersection. It represents a vertical, or nearly vertical, structural member that transmits, through compression, the weight of the str
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic type for a column that is specified in an enumeration. There may be a property set given specificly for the predefined types. NOTE The PredefinedType shall only be used, if no type object IfcColumnType is assigned, providing its own IfcColumnType.PredefinedType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

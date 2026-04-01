@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralPointConnection" inherits="IfcStructuralConnection"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: Instances of IfcStructuralPointConnection describe structural nodes or point supports. HISTORY: New entity in IFC 2x2. IFC 2x4 change: Attribute ConditionCoordinateSystem added, allowing for skewed supports. Use definitions added. Coordinate Systems : See definitions at IfcStructuralItem . The local coordinate system is established by the reference point given by topology repr
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ConditionCoordinateSystem" type="GDIFCEntityBase" setter="set_ConditionCoordinateSystem" getter="get_ConditionCoordinateSystem">
+			Defines a coordinate system used for the description of the support condition properties in SELF\IfcStructuralConnection.SupportCondition , specified relative to the global coordinate system (global to the structural analysis model) established by SELF.\IfcProduct.ObjectPlacement . If left unspecified, the placement IfcAxis2Placement3D ((x,y,z), ?, ?) is implied with x,y,z being the coordinates of the reference point of this IfcStructuralPointConnection and the default axes directions being in parallel with the global axes.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

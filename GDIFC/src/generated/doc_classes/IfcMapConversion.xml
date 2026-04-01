@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMapConversion" inherits="IfcCoordinateOperation"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The map conversion deals with transforming the local engineering coordinate system, often called world coordinate system, into the coordinate reference system of the underlying map. NOTE The IfcMapConversion does not handle the projection of a map from the geodetic coordinate reference system. The map conversion allows to convert the local origin of the local engineering coordinate system to its p
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Eastings" type="float" setter="set_Eastings" getter="get_Eastings">
+			Specifies the location along the easting of the coordinate system of the target map coordinate reference system. NOTE for right-handed Cartesian coordinate systems this would establish the location along the x axis
+		</member>
+		<member name="Northings" type="float" setter="set_Northings" getter="get_Northings">
+			Specifies the location along the northing of the coordinate system of the target map coordinate reference system. NOTE for right-handed Cartesian coordinate systems this would establish the location along the y axis
+		</member>
+		<member name="OrthogonalHeight" type="float" setter="set_OrthogonalHeight" getter="get_OrthogonalHeight">
+			Orthogonal height relativ to the vertical datum specified. NOTE for right-handed Cartesian coordinate systems this would establish the location along the z axis
+		</member>
+		<member name="XAxisAbscissa" type="float" setter="set_XAxisAbscissa" getter="get_XAxisAbscissa">
+			Specifies the value along the easing axis of the end point of a vector indicating the position of the local x axis of the engineering coordinate reference system. NOTE for right-handed Cartesian coordinate systems this would establish the location along the x axis NOTE together with the XAxisOrdinate it provides the direction of the local x axis within the horizontal plane of the map coordinate system
+		</member>
+		<member name="XAxisOrdinate" type="float" setter="set_XAxisOrdinate" getter="get_XAxisOrdinate">
+			Specifies the value along the northing axis of the end point of a vector indicating the position of the local x axis of the engineering coordinate reference system. NOTE for right-handed Cartesian coordinate systems this would establish the location along the y axis NOTE together with the XAxisAbscissa it provides the direction of the local x axis within the horizontal plane of the map coordinate system
+		</member>
+		<member name="Scale" type="float" setter="set_Scale" getter="get_Scale">
+			Scale to be used, when the units of the CRS are not identical to the units of the engineering coordinate system. If omited, the value of 1.0 is assumed.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

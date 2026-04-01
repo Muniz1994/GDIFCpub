@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelReferencedInSpatialStructure" inherits="IfcRelConnects"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The objectified relationship, IfcRelReferencedInSpatialStructure is used to assign elements in addition to those levels of the project spatialÿstructure, in which they are referenced, but not primarily contained.ÿ NOTE ÿThe primary containment relationship between an element and the spatial structure is handled byÿ IfcRelContainsInSpatialStructure . Any element can be referencedÿto zero, one or se
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatedElements" type="Array" setter="set_RelatedElements" getter="get_RelatedElements">
+			Set of products, which are referenced within this level of the spatial structure hierarchy. NOTE Referenced elements are contained elsewhere within the spatial structure, they are referenced additionally by this spatial structure element, e.g., because they span several stories.
+		</member>
+		<member name="RelatingStructure" type="GDIFCEntityBase" setter="set_RelatingStructure" getter="get_RelatingStructure">
+			Spatial structure element, within which the element is referenced. Any element can be contained within zero, one or many elements of the project spatial and zoning structure. IFC2x Edition 4 CHANGE The attribute relatingStructure as been promoted to the new supertype IfcSpatialElement with upward compatibility for file based exchange.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

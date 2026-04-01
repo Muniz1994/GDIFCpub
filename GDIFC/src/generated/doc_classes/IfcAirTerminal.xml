@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcAirTerminal" inherits="IfcFlowTerminal"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An air terminal is a terminating or origination point for the transfer of air between distribution system(s) and one or more spaces. It can also be used for the transfer of air between adjacent spaces. HISTORY New entity in IFC2x4 Type Use Definition IfcAirTerminal defines the occurrence of any air terminal; common information about air terminal types is handled by IfcAirTerminalType . The IfcAirT
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

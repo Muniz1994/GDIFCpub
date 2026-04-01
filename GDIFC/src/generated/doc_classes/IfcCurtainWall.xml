@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCurtainWall" inherits="IfcBuiltElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO 6707-1:1989 : Non load bearing wall positioned on the outside of a building and enclosing it. A curtain wall is an exterior wall of a building which is an assembly of components, hung from the edge of the floor/roof structure rather than bearing on a floor. Curtain wall is represented as a building element assembly and implemented as a subtype of IfcBuildingElement that uses an
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic type for a curtain wall that is specified in an enumeration. There may be a property set given specificly for the predefined types. NOTE The PredefinedType shall only be used, if no type object IfcCurtainWallType is assigned, providing its own IfcCurtainWallType.PredefinedType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

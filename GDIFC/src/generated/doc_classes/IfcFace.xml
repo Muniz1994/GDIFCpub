@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFace" inherits="IfcTopologicalRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A face is a topological entity of dimensionality 2 corresponding to the intuitive notion of a piece of surface bounded by loops. Its domain, if present, is an oriented, connected, finite 2-manifold in R m . A face domain shall not have handles but it may have holes, each hole bounded by a loop. The domain of the underlying geometry of the face, if present, do
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Bounds" type="Array" setter="set_Bounds" getter="get_Bounds">
+			Boundaries of the face.
+		</member>
+		<member name="HasTextureMaps" type="Array" setter="" getter="get_HasTextureMaps">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

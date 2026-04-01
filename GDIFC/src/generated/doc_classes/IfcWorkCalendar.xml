@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcWorkCalendar" inherits="IfcControl"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcWorkCalendar defines working and non-working time periods for tasks and resources. It enables to define both specific time periods, such as from 7:00 till 12:00 on 25th August 2009, as well as repetitive time periods based on frequently used recurrence patterns, such as each Monday from 7:00 till 12:00 between 1st March 2009 and 31st December 2009. HISTORY New entity in IFC2x4. A work calend
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="WorkingTimes" type="Array" setter="set_WorkingTimes" getter="get_WorkingTimes">
+			Set of times periods that are regarded as an initial set-up of working times. Exception times can then further restrict these working times.
+		</member>
+		<member name="ExceptionTimes" type="Array" setter="set_ExceptionTimes" getter="get_ExceptionTimes">
+			Set of times periods that define exceptions (non-working times) for the given working times including the base calendar, if provided.
+		</member>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Identifies the predefined types of a work calendar from which the type required may be set. Added in IFC 2x4
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

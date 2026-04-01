@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelPositions" inherits="IfcRelConnects"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingPositioningElement" type="GDIFCEntityBase" setter="set_RelatingPositioningElement" getter="get_RelatingPositioningElement">
+		</member>
+		<member name="RelatedProducts" type="Array" setter="set_RelatedProducts" getter="get_RelatedProducts">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

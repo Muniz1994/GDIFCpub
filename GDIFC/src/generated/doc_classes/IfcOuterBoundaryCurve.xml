@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcOuterBoundaryCurve" inherits="IfcBoundaryCurve"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 ÿ This is a special subtype of boundary curve which has the additional semantics of defining an outer boundary of a surface. No more than one such curve shall be included in the set of boundaries of a curve bounded surface. NOTEÿ Corresponding ISO 10303 entity: outer_boundary_curve. Please refer to ISO/IS 10303-42:1994, p.89 for the final definition of the form
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcOpenCrossProfileDef" inherits="IfcProfileDef"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="HorizontalWidths" type="bool" setter="set_HorizontalWidths" getter="get_HorizontalWidths">
+		</member>
+		<member name="Widths" type="PackedFloat64Array" setter="set_Widths" getter="get_Widths">
+		</member>
+		<member name="Slopes" type="PackedFloat64Array" setter="set_Slopes" getter="get_Slopes">
+		</member>
+		<member name="Tags" type="PackedStringArray" setter="set_Tags" getter="get_Tags">
+		</member>
+		<member name="OffsetPoint" type="GDIFCEntityBase" setter="set_OffsetPoint" getter="get_OffsetPoint">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

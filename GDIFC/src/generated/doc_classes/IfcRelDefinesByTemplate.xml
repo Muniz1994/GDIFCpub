@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelDefinesByTemplate" inherits="IfcRelDefines"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The objectified relationship IfcRelDefinesByTemplate defines the relationships between property set template and property sets. Common information about property sets, e.g. the applicable name, description, contained properties, is defined by the property set template and assigned to all property sets. The IfcRelDefinesByTemplate is a 1-to-N relationship, as it allows for the assignment of one pro
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatedPropertySets" type="Array" setter="set_RelatedPropertySets" getter="get_RelatedPropertySets">
+			One or many property sets defined by a single property set template.
+		</member>
+		<member name="RelatingTemplate" type="GDIFCEntityBase" setter="set_RelatingTemplate" getter="get_RelatingTemplate">
+			Property set template that provides the common definition of related property sets.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

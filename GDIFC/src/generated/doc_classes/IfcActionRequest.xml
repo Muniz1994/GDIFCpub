@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcActionRequest" inherits="IfcControl"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A request is the act or instance of asking for something, such as a request for information, bid submission, or performance of work. Requests may take many forms depending on the need including fault reports for maintenance, requests for small works, and purchase requests (where these are to be made through a help desk or buying function). HISTORY: New entity in IFC2x2 IFC2x4 CHANGE RequestID rena
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Identifies the predefined type of sources through which a request can be made. IFC2x4 CHANGE The attribute has been added.
+		</member>
+		<member name="Status" type="String" setter="set_Status" getter="get_Status">
+			The status currently assigned to the request. Possible values include: Hold: wait to see if further requests are received before deciding on action NoAction: no action is required on this request Schedule: plan action to take place as part of maintenance or other task planning/scheduling Urgent: take action immediately IFC2x4 CHANGE The attribute has been added.
+		</member>
+		<member name="LongDescription" type="String" setter="set_LongDescription" getter="get_LongDescription">
+			Detailed description of the permit. IFC2x4 CHANGE The attribute has been added.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

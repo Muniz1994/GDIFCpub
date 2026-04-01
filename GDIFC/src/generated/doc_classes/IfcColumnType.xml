@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcColumnType" inherits="IfcBuiltElementType"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : The element type IfcColumnType defines commonly shared information for occurrences of columns. The set of shared information may include: common properties within shared property sets common material information common profile definitions common shape representations It is used to define a column specification, or column style (i.e. the specific product information that is co
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Identifies the predefined types of a column element from which the type required may be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

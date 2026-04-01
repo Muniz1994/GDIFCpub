@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRigidOperation" inherits="IfcCoordinateOperation"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="FirstCoordinate" type="GDIFCEntityBase" setter="set_FirstCoordinate" getter="get_FirstCoordinate">
+		</member>
+		<member name="SecondCoordinate" type="GDIFCEntityBase" setter="set_SecondCoordinate" getter="get_SecondCoordinate">
+		</member>
+		<member name="Height" type="float" setter="set_Height" getter="get_Height">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

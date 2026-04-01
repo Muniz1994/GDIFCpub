@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPileType" inherits="IfcDeepFoundationType"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: Provides shared material, decomposition, representation maps, and property sets for instances of IfcPile . HISTORY New entity in IFC Release 2x4 Material Use Definition : Material profile set association analogous to IfcColumnStandardCase should be used when applicable.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Subtype of pile.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

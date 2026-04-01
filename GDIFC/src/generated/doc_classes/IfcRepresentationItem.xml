@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRepresentationItem" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-43:1992 : A representation item is an element of product data that participates in one or more representations or contributes to the definition of another representation item. A representation item contributes to the definition of another representation item when it is referenced by that representation item. NOTE Corresponding entity in ISO 10303-43:1994: representatio
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="LayerAssignment" type="Array" setter="" getter="get_LayerAssignment">
+		</member>
+		<member name="StyledByItem" type="Array" setter="" getter="get_StyledByItem">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

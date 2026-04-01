@@ -34,6 +34,8 @@
 
 #include "gd_ifc_node.h"
 #include "gd_ifc_settings.h"
+#include "gd_ifc_entity_base.h"
+#include "gd_ifc_model.h"
 
 namespace godot {
 // Holds the geometric data to allow the creation of the Godot
@@ -117,12 +119,13 @@ class GDIFCManager : public Node3D {
 
     // Storage
     std::unique_ptr<WEBIFCManager> web_ifc_manager;
-    std::unique_ptr<IfcParse::IfcFile> ifc_parse_file;
+    std::shared_ptr<IfcParse::IfcFile> ifc_parse_file;
 
     // The Optimized Queue
     Vector<PrecalculatedIFCItem> generation_queue;
     int current_generation_index = 0;
     Node3D* main_node_root = nullptr;
+    IFCModel* ifc_model_node_ = nullptr;
 
     // Material Cache to reduce draw calls and allocation time
     HashMap<String, Ref<StandardMaterial3D>> material_cache;
@@ -161,6 +164,18 @@ class GDIFCManager : public Node3D {
 
     Ref<GDIFCLoaderSettings> get_gdifc_settings();
     void set_gdifc_settings(Ref<GDIFCLoaderSettings> gdifc_settings);
+
+    /// Return the IFCModel root node (available after loading completes).
+    IFCModel* get_ifc_model();
+
+    /// Find a scene node by IFC GlobalId string.
+    IFCNode* get_node_by_global_id(godot::String global_id);
+
+    /// Get a typed IFC entity object by GlobalId (does not require node existence).
+    Ref<GDIFCEntityBase> get_ifc_object_by_global_id(godot::String global_id);
+
+    /// Return all scene nodes that belong to the given IFC class (including subtypes).
+    godot::Array get_elements_by_class(godot::String ifc_class);
 };
 
 

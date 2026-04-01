@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralLoadSingleDisplacementDistortion" inherits="IfcStructuralLoadSingleDisplacement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: Defines a displacement with warping. HISTORY: New entity in IFC 2x2.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Distortion" type="float" setter="set_Distortion" getter="get_Distortion">
+			The distortion curvature (warping, i.e. a cross-sectional deplanation) given to the displacement load.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

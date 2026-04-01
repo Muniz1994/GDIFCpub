@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSubedge" inherits="IfcEdge"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/DIS 10303-42:1999(E) : A subedge is an edge whose domain is a connected portion of the domain of an existing edge. The topological constraints on a subedge are the same as those on an edge. Informal propositions: The domain of the subedge is formally defined to be the domain of the parent edge, as trimmed by the subedge start vertex and subedge end vertex. The start vertex and 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ParentEdge" type="GDIFCEntityBase" setter="set_ParentEdge" getter="get_ParentEdge">
+			The Edge, or Subedge, which contains the Subedge.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

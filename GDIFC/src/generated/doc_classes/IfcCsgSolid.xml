@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCsgSolid" inherits="IfcSolidModel"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A solid represented as a CSG model is defined by a collection of so-called primitive solids, combined using regularized Boolean operations. The allowed operations are intersection, union, and difference. As a special case a CSG solid can also consists of a single CSG primitive. A CSG solid requires two kinds of information for its complete definition: geometr
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="TreeRootExpression" type="GDIFCEntityBase" setter="set_TreeRootExpression" getter="get_TreeRootExpression">
+			Boolean expression of primitives and regularized operators describing the solid. The root of the tree of Boolean expressions is given explicitly as an IfcBooleanResult entitiy or as a primitive (subtypes of IfcCsgPrimitive3D ).
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

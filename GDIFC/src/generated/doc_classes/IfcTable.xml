@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTable" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcTable is a data structure for the provision of information in the form of rows and columns. Each instance may have IfcTableColumn instances that define the name, description and units for each column. The rows of information are stored as a list of IfcTableRow objects. Limitation: For backwards compatibility, the rows of an IfcTable object are constrained to have the same number of cells. Th
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			A unique name which is intended to describe the usage of the Table.
+		</member>
+		<member name="Rows" type="Array" setter="set_Rows" getter="get_Rows">
+			Reference to information content of rows.
+		</member>
+		<member name="Columns" type="Array" setter="set_Columns" getter="get_Columns">
+			The column information associated with this table.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

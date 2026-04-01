@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRepresentationContext" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A representation context is a context in which a set of representation items are related. The IfcRepresentationContext defines the context to which the IfcRepresentation of a product is related. NOTE The definition of this class relates to the ISO 10303 entity representation_context. Please refer to ISO/IS 10303-43:1994 for the final definition of the formal 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ContextIdentifier" type="String" setter="set_ContextIdentifier" getter="get_ContextIdentifier">
+			The optional identifier of the representation context as used within a project.
+		</member>
+		<member name="ContextType" type="String" setter="set_ContextType" getter="get_ContextType">
+			The description of the type of a representation context. The supported values for context type are to be specified by implementers agreements.
+		</member>
+		<member name="RepresentationsInContext" type="Array" setter="" getter="get_RepresentationsInContext">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

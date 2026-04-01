@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcUnitAssignment" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcUnitAssignment indicates a set of units which may be assigned. Within an IfcUnitAssigment each unit definition shall be unique; that is, there shall be no redundant unit definitions for the same unit type such as length unit or area unit. For currencies, there shall be only a single IfcMonetaryUnit within an IfcUnitAssignment . NOTE A project ( IfcProject ) has a unit assignment which establish
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Units" type="Array" setter="set_Units" getter="get_Units">
+			Units to be included within a unit assignment.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

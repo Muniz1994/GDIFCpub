@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcOrganizationRelationship" inherits="IfcResourceLevelRelationship"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition: establishes an association between one relating organization and one or more related organizations. NOTE Corresponds to the following entity in ISO-10303-41: organization_relationship. HISTORY New entity in IFC Release 2x. IFC 2x4 change: attribute Name made optional.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingOrganization" type="GDIFCEntityBase" setter="set_RelatingOrganization" getter="get_RelatingOrganization">
+			The word or group of words by which the relationship is referred to.
+		</member>
+		<member name="RelatedOrganizations" type="Array" setter="set_RelatedOrganizations" getter="get_RelatedOrganizations">
+			Text that relates the nature of the relationship.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRectangleHollowProfileDef" inherits="IfcRectangleProfileDef"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcRectangleHollowProfileDef defines a section profile that provides the defining parameters of a rectangular (or square) hollow section to be used by the swept surface geometry or the swept area solid. Its parameters and orientation relative to the position coordinate system are according to the following illustration. A square hollow section can be defined by equal values for h and b. The centre
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="WallThickness" type="float" setter="set_WallThickness" getter="get_WallThickness">
+			Thickness of the material.
+		</member>
+		<member name="InnerFilletRadius" type="float" setter="set_InnerFilletRadius" getter="get_InnerFilletRadius">
+			Inner corner radius.
+		</member>
+		<member name="OuterFilletRadius" type="float" setter="set_OuterFilletRadius" getter="get_OuterFilletRadius">
+			Outer corner radius.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

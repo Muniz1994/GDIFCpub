@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcOffsetCurveByDistances" inherits="IfcOffsetCurve"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="OffsetValues" type="Array" setter="set_OffsetValues" getter="get_OffsetValues">
+		</member>
+		<member name="Tag" type="String" setter="set_Tag" getter="get_Tag">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

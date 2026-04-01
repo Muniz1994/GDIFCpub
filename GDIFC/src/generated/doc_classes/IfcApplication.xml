@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcApplication" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcApplication holds the information about an IFC compliant application developed by an application developer. The IfcApplication utilizes a short identifying name as provided by the application developer. HISTORY New entity in IFC R1.5.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ApplicationDeveloper" type="GDIFCEntityBase" setter="set_ApplicationDeveloper" getter="get_ApplicationDeveloper">
+			Name of the application developer, being requested to be member of the IAI.
+		</member>
+		<member name="Version" type="String" setter="set_Version" getter="get_Version">
+			The version number of this software as specified by the developer of the application.
+		</member>
+		<member name="ApplicationFullName" type="String" setter="set_ApplicationFullName" getter="get_ApplicationFullName">
+			The full name of the application as specified by the application developer.
+		</member>
+		<member name="ApplicationIdentifier" type="String" setter="set_ApplicationIdentifier" getter="get_ApplicationIdentifier">
+			Short identifying name for the application.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

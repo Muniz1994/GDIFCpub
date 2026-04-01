@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelNests" inherits="IfcRelDecomposes"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The nesting relationship IfcRelNests is a special type of the general composition/decomposition (or whole/part) relationship IfcRelDecomposes . The nesting relationship can be applied to all non physical subtypes of object and object types, namely processes, controls (like cost items), and resources. The nesting implies an order among the nested parts. EXAMPLE1 A nesting of costs items in a cost s
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingObject" type="GDIFCEntityBase" setter="set_RelatingObject" getter="get_RelatingObject">
+			The object definition, either an non-product object type or a non-product object occurrence, that represents the nest. It is the whole within the whole/part relationship. IFC2x4 CHANGE The attribute has been demoted from the supertype IfcRelDecomposes and defines the ordered nesting relationship.
+		</member>
+		<member name="RelatedObjects" type="Array" setter="set_RelatedObjects" getter="get_RelatedObjects">
+			The object definitions, either non-product object occurrences or non-product object types, that are being nestes. They are defined as the parts in the ordered whole/part relationship - i.e. there is an implied order among the parts expressed by the position within the list of RelatedObjects . IFC2x4 CHANGE The attribute has been demoted from the supertype IfcRelDecomposes and defines the ordered set of parts within the nest.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelAssociatesConstraint" inherits="IfcRelAssociates"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The entity IfcRelAssociatesConstraint is used to apply constraint information defined by IfcConstraint , in the IfcConstraintResource schema, to subtypes of IfcRoot . HISTORY: New entity in IFC2x2.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Intent" type="String" setter="set_Intent" getter="get_Intent">
+			The intent of the constraint usage with regard to its related IfcConstraint and IfcObjects, IfcPropertyDefinitions or IfcRelationships. Typical values can be e.g. RATIONALE or EXPECTED PERFORMANCE.
+		</member>
+		<member name="RelatingConstraint" type="GDIFCEntityBase" setter="set_RelatingConstraint" getter="get_RelatingConstraint">
+			Reference to constraint that is being applied using this relationship.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

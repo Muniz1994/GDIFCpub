@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPlate" inherits="IfcBuiltElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : An IfcPlate is a planar and often flat part with constant thickness. A plate can be a structural part carrying loads between or beyond points of support, however it is not required to be load bearing.ÿThe location of the plate (being horizontal, vertical or sloped) is not relevant to its definition (in contrary to IfcWall and IfcSlab (as floor slab)).ÿ NOTE ÿPlates areÿnormal
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic type for a plate that is specified in an enumeration. There may be a property set given specificly for the predefined types. NOTE The PredefinedType shall only be used, if no type object IfcPlateType is assigned, providing its own IfcPlateType.PredefinedType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

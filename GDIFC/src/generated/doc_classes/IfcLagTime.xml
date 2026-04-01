@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcLagTime" inherits="IfcSchedulingTime"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcLagTime describes the time parameters that may exist within a sequence relationship between two processes. HISTORY: New entity in IFC Release 2x4. Use Definitions An IfcLagTime provides information about the time lag that exists between the predecessor and successor process in a sequence. The assertion of the time lag is optional for a sequence but for work schedules that specifically deal with
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="LagValue" type="GDIFCEntityBase" setter="set_LagValue" getter="get_LagValue">
+			Value of the time lag selected as being either a ratio or a time measure.
+		</member>
+		<member name="DurationType" type="String" setter="set_DurationType" getter="get_DurationType">
+			The allowed types of task duration that specify the lag time measurement (work time or elapsed time).
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

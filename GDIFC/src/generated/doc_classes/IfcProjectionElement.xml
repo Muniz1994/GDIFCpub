@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcProjectionElement" inherits="IfcFeatureElementAddition"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The projection element is a specialization of the general feature element to represent projections applied to building elements. It represents a solid attached to any element that has physical manifestation. EXAMPLE A wall projection such as a pilaster strip is handled by IfcProjectionElement NOTE View definitions or implementer agreements may restrict the types of elements to which IfcProjectionE
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic type for a projection element that is specified in an enumeration. There may be a property set given specificly for the predefined types. IFC2x4 CHANGE The attribute has been added at the end of the entity definition.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

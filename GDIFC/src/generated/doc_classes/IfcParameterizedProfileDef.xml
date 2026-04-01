@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcParameterizedProfileDef" inherits="IfcProfileDef"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The parameterized profile definition defines a 2D position coordinate system to which the parameters of the different profiles relate to. All profiles are defined centric to the origin of the position coordinate system, or more specific, the origin [0.,0.] shall be in the center of the bounding box of the profile. The Position attribute of IfcParameterizedProfileDef is used to position the profile
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Position" type="GDIFCEntityBase" setter="set_Position" getter="get_Position">
+			Position coordinate system of the parameterized profile definition. If unspecified, no translation and no rotation is applied.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

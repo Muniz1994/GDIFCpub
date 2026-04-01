@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFurnitureType" inherits="IfcFurnishingElementType"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The furnishing element type IfcFurnitureType defines commonly shared information for occurrences of furnitures. The set of shared information may include: common properties with shared property sets common representations of shape common materials common composition of elements applicable assignment of process types It is used to define a furniture specification (i.e. the specific product informat
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="AssemblyPlace" type="String" setter="set_AssemblyPlace" getter="get_AssemblyPlace">
+			A designation of where the assembly is intended to take place. A selection of alternatives s provided in an enumerated list.
+		</member>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

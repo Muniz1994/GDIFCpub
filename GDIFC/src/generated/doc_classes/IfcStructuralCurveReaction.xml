@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralCurveReaction" inherits="IfcStructuralReaction"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: Defines a reaction which occurs distributed over a curve. A curve reaction may be connected with a curve member or curve connection, or surface member or surface connection. HISTORY: New entity in IFC 2x4. Coordinate Systems : See definitions at IfcStructuralActivity . Topology Use Definitions : Standard Case: If connected with a curve item, instances of IfcStructuralCurveRect
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Type of reaction according to its distribution of load values.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

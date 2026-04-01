@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMaterialUsageDefinition" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcMaterialUsageDefinition is a general supertype for all material related information items in IFC that have occurrence specific assignment parameters to assign a set of materials with shape parameters to a reference geometry item of that component. There are two ways of assigning a set of materials with shape parameters: a layer set to a reference curve - assigning a material layer set with mate
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="AssociatedTo" type="Array" setter="" getter="get_AssociatedTo">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

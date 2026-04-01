@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcBoxedHalfSpace" inherits="IfcHalfSpaceSolid"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : This entity is a subtype of the half space solid which is trimmed by a surrounding rectangular box. The box has its edges parallel to the coordinate axes of the geometric coordinate system. NOTE The purpose of the box is to facilitate CSG computations by producing a solid of finite size. The IfcBoxedHalfSpace is used (as its supertype IfcHalfSpaceSolid ) only
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Enclosure" type="GDIFCEntityBase" setter="set_Enclosure" getter="get_Enclosure">
+			The box which bounds the resulting solid of the Boolean operation involving the half space solid for computational purposes only.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

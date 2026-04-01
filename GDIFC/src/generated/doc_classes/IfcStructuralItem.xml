@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralItem" inherits="IfcProduct"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: The abstract entity IfcStructuralItem is the generalization of structural members and structural connections, i.e. analysis idealizations of elements in the building model. It defines the relation between structural members and connections with structural activities (actions and reactions). Relationships between elements in the building model and structural items as their idea
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="AssignedStructuralActivity" type="Array" setter="" getter="get_AssignedStructuralActivity">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

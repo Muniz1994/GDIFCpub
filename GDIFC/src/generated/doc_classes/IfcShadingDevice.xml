@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcShadingDevice" inherits="IfcBuiltElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : Shading devices are purpose built devices to protect from the sunlight, from natural light, or screening them from view. Shading devices can form part of the facade or can be mounted inside the building, they can be fixed or operable. NOTE Also other building elements such as protruding slabs or balconies can act as shading devices. Those elements however have another primary
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic type for a shading device that is specified in an enumeration. There may be a property set given specificly for the predefined types. NOTE The PredefinedType shall only be used, if no type object IfcShadingDeviceType is assigned, providing its own IfcShadingDeviceType.PredefinedType .
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

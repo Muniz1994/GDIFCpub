@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPropertySet" inherits="IfcPropertySetDefinition"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcPropertySet defines all dynamically extensible properties. The property set is a container class that holds properties within a property tree. These properties are interpreted according to their name attribute. The same IfcPropertySet can be assignd to multiple object occurrences, it should then be assigned by a single instance of IfcRelDefinedByProperties to a set of related objects. Those pro
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="HasProperties" type="Array" setter="set_HasProperties" getter="get_HasProperties">
+			Contained set of properties. For property sets defined as part of the IFC Object model, the property objects within a property set are defined as part of the standard. If a property is not contained within the set of predefined properties, its value has not been set at this time.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

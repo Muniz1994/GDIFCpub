@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcLoop" inherits="IfcTopologicalRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992: A loop is a topological entity constructed from a single vertex, or by stringing together connected (oriented) edges, or linear segments beginning and ending at the same vertex. It is typically used to bound a face lying on a surface. A loop has dimensionality of 0 or 1. The domain of a 0-dimensional loop is a single point. The domain of a 1-dimensional loop i
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

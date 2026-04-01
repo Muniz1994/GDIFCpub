@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFacetedBrepWithVoids" inherits="IfcFacetedBrep"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The IfcFacetedBrepWithVoids is a specialization of a faceted B-rep which contains one or more voids in its interior. The voids are represented as closed shells which are defined so that the shell normal point into the void. NOTEÿ Corresponding ISO 10303-42 entity: brep_with_voids (see note above). Please refer to ISO/IS 10303-42:1994, p. 173 for the final definition of the formal standard. In IFC 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Voids" type="Array" setter="set_Voids" getter="get_Voids">
+			Set of closed shells defining voids within the solid.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

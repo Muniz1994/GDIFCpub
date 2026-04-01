@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcBlobTexture" inherits="IfcSurfaceTexture"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcBlobTexture provides a 2-dimensional distribution of the lighting parameters of a surface onto which it is mapped. The texture itself is given as a single binary blob, representing the content of a pixel format file. The file format of the pixel file is given by the RasterFormat attribute and allowable formats are guided by where rule SupportedRasterFormat . NOTE Toolbox specific implementat
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RasterFormat" type="String" setter="set_RasterFormat" getter="get_RasterFormat">
+			The format of the RasterCode often using a compression.
+		</member>
+		<member name="RasterCode" type="String" setter="set_RasterCode" getter="get_RasterCode">
+			Blob, given as a single binary, to capture the texture within one popular file (compression) format. The file format is provided by the RasterFormat attribute.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

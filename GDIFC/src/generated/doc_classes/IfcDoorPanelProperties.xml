@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDoorPanelProperties" inherits="IfcPreDefinedPropertySet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A door panel is normally a door leaf that opens to allow people or goods to pass. The parameters of the door panel define the geometrically relevant parameter of the panel, The IfcDoorPanelProperties are used to parametrically describe the shape and operation of door panels. The parametric definition can be added solely or additionally to the explicit shape representation of the door. The IfcDoorS
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PanelDepth" type="float" setter="set_PanelDepth" getter="get_PanelDepth">
+			Depth of the door panel, measured perpendicular to the plane of the door leaf.
+		</member>
+		<member name="PanelOperation" type="String" setter="set_PanelOperation" getter="get_PanelOperation">
+			The PanelOperation defines the way of operation of that panel. The PanelOperation of the door panel has to correspond with the OperationType of the IfcDoorStyle by which it is referenced.
+		</member>
+		<member name="PanelWidth" type="float" setter="set_PanelWidth" getter="get_PanelWidth">
+			Width of this panel, given as ratio relative to the total clear opening width of the door. If omited, it defaults to 1. A value has to be provided for all doors with OperationType 's at IfcDoorStyle defining a door with more then one panel.
+		</member>
+		<member name="PanelPosition" type="String" setter="set_PanelPosition" getter="get_PanelPosition">
+			Position of this panel within the door. The PanelPosition of the door panel has to correspond with the OperationType of the IfcDoorStyle by which it is referenced.
+		</member>
+		<member name="ShapeAspectStyle" type="GDIFCEntityBase" setter="set_ShapeAspectStyle" getter="get_ShapeAspectStyle">
+			Pointer to the shape aspect, if given. The shape aspect reflects the part of the door shape, which represents the door panel. IFC2x4 CHANGE The attribute is deprecated and shall no longer be used, i.e. the value shall be NIL ($).
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

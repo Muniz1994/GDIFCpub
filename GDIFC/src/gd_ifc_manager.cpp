@@ -15,6 +15,11 @@ void GDIFCManager::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_gdifc_settings"), &GDIFCManager::get_gdifc_settings);
     ClassDB::bind_method(D_METHOD("set_gdifc_settings","gdifc_settings"), &GDIFCManager::set_gdifc_settings);
 
+    ClassDB::bind_method(D_METHOD("get_ifc_model"), &GDIFCManager::get_ifc_model);
+    ClassDB::bind_method(D_METHOD("get_node_by_global_id","global_id"), &GDIFCManager::get_node_by_global_id);
+    ClassDB::bind_method(D_METHOD("get_ifc_object_by_global_id","global_id"), &GDIFCManager::get_ifc_object_by_global_id);
+    ClassDB::bind_method(D_METHOD("get_elements_by_class","ifc_class"), &GDIFCManager::get_elements_by_class);
+
     ADD_SIGNAL(MethodInfo("ifc_read"));
 }
 
@@ -94,8 +99,9 @@ void GDIFCManager::_process(double delta) {
         if (WorkerThreadPool::get_singleton()->is_task_completed(task_id)) {
             WorkerThreadPool::get_singleton()->wait_for_task_completion(task_id);
             task_id = -1;
-            invisible_staging_root = memnew(Node3D);
+            invisible_staging_root = memnew(IFCModel);
             invisible_staging_root->set_name("IFC_Staging_Area");
+            ifc_model_node_ = Object::cast_to<IFCModel>(invisible_staging_root);
             current_state = GENERATING_NODES;
         }
     } else if (current_state == GENERATING_NODES) {
@@ -123,9 +129,9 @@ void GDIFCManager::_thread_task() {
     }
 
     // Load file [IFCParse] — from memory buffer (void*, int constructor)
-    std::unique_ptr<IfcParse::IfcFile> temp_file;
+    std::shared_ptr<IfcParse::IfcFile> temp_file;
     try {
-        temp_file = std::make_unique<IfcParse::IfcFile>((void*)buf_ptr, buf_size);
+        temp_file = std::make_shared<IfcParse::IfcFile>((void*)buf_ptr, buf_size);
     } catch (const std::exception& e) {
         this->current_state = FAILED;
         ERR_FAIL_MSG(String("[IfcParse] Failed to parse IFC file: ") + e.what());
@@ -554,6 +560,16 @@ void GDIFCManager::_process_generation_queue() {
         element_node->set_attributes(item.attributes);
         element_node->set_ifc_class(item.ifc_class);
 
+        // Wrap the IFC entity with the typed GD object
+        if (ifc_parse_file) {
+            try {
+                auto* inst = ifc_parse_file->instance_by_id(item.express_id);
+                if (inst) {
+                    element_node->set_ifc_object(GDIFCEntityBase::wrap(inst, ifc_parse_file));
+                }
+            } catch (...) {}
+        }
+
         // 2. REGISTER NODE
         if (item.express_id > 0) {
             node_registry[item.express_id] = element_node;
@@ -622,9 +638,13 @@ void GDIFCManager::_process_generation_queue() {
     }
 
     if (current_generation_index >= generation_queue.size()) {
-        node_registry.clear();
         invisible_staging_root->set_name("IFCModel");
         add_child(invisible_staging_root, true);
+
+        // Initialise the IFCModel node with the loaded file
+        if (ifc_model_node_ && ifc_parse_file) {
+            ifc_model_node_->init(ifc_parse_file);
+        }
 
         // Set ownership recursively so all nodes are selectable in the editor
         Node* scene_owner = get_owner() != nullptr ? get_owner() : this;
@@ -686,6 +706,41 @@ Ref<GDIFCLoaderSettings> GDIFCManager::get_gdifc_settings() {
 void GDIFCManager::set_gdifc_settings(Ref<GDIFCLoaderSettings> gdifc_settings) {
 
     geometric_settings = gdifc_settings;
+}
+
+IFCModel* GDIFCManager::get_ifc_model() {
+    return ifc_model_node_;
+}
+
+IFCNode* GDIFCManager::get_node_by_global_id(godot::String global_id) {
+    if (!ifc_parse_file) return nullptr;
+    try {
+        auto* inst = ifc_parse_file->instance_by_guid(
+            std::string(global_id.utf8().get_data()));
+        if (!inst) return nullptr;
+        int id = static_cast<int>(inst->id());
+        if (!node_registry.has(id)) return nullptr;
+        return Object::cast_to<IFCNode>(node_registry[id]);
+    } catch (...) {
+        return nullptr;
+    }
+}
+
+Ref<GDIFCEntityBase> GDIFCManager::get_ifc_object_by_global_id(godot::String global_id) {
+    if (!ifc_parse_file) return {};
+    try {
+        auto* inst = ifc_parse_file->instance_by_guid(
+            std::string(global_id.utf8().get_data()));
+        if (!inst) return {};
+        return GDIFCEntityBase::wrap(inst, ifc_parse_file);
+    } catch (...) {
+        return {};
+    }
+}
+
+godot::Array GDIFCManager::get_elements_by_class(godot::String ifc_class) {
+    if (!get_tree()) return godot::Array();
+    return get_tree()->get_nodes_in_group(ifc_class);
 }
 
 template <typename schema>

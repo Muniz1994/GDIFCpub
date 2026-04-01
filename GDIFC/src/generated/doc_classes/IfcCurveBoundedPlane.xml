@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCurveBoundedPlane" inherits="IfcBoundedSurface"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : The curve bounded surface is a parametric surface with curved boundaries defined by one or more boundary curves. The bounded surface is defined to be the portion of the basis surface in the direction of N x T from any point on the boundary, where N is the surface normal and T the boundary curve tangent vector at this point. The region so defined shall be arcw
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="BasisSurface" type="GDIFCEntityBase" setter="set_BasisSurface" getter="get_BasisSurface">
+			The surface to be bound.
+		</member>
+		<member name="OuterBoundary" type="GDIFCEntityBase" setter="set_OuterBoundary" getter="get_OuterBoundary">
+			The outer boundary of the surface.
+		</member>
+		<member name="InnerBoundaries" type="Array" setter="set_InnerBoundaries" getter="get_InnerBoundaries">
+			An optional set of inner boundaries. They shall not intersect each other or the outer boundary.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

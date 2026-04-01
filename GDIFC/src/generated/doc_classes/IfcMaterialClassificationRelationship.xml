@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMaterialClassificationRelationship" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcMaterialClassificationRelationship is a relationship assigning classifications to materials. HISTORYÿ New entity in IFC2x. IFC2x4 CHANGEÿ The entity IfcMaterialClassificationRelationship is deprecated since IFC2x4 and shall no longer be used. Use IfcExternalReferenceRelationship instead.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="MaterialClassifications" type="Array" setter="set_MaterialClassifications" getter="get_MaterialClassifications">
+			The material classifications identifying the type of material.
+		</member>
+		<member name="ClassifiedMaterial" type="GDIFCEntityBase" setter="set_ClassifiedMaterial" getter="get_ClassifiedMaterial">
+			Material being classified.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

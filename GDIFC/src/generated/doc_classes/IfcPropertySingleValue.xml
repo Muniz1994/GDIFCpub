@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPropertySingleValue" inherits="IfcSimpleProperty"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The property with a single value IfcPropertySingleValue defines a property object which has a single (numeric or descriptive) value assigned. It defines a property - single value combination for which the property Name , an optional Description ,ÿand an optional NominalValue with measure type is provided. In addition, the default unit as specified within the project unit context can be overriden b
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="NominalValue" type="GDIFCEntityBase" setter="set_NominalValue" getter="get_NominalValue">
+			Value and measure type of this property. NOTE By virtue of the defined data type, that is selected from the SELECT IfcValue , the appropriate unit can be found within the IfcUnitAssignment , defined for the project if no value for the unit attribute is given. IFC2x3 CHANGE The attribute has been made optional with upward compatibility for file based exchange.
+		</member>
+		<member name="Unit" type="GDIFCEntityBase" setter="set_Unit" getter="get_Unit">
+			Unit for the nominal value, if not given, the default value for the measure type (given by the TYPE of nominal value) is used as defined by the global unit assignment at IfcProject.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcBoundedCurve" inherits="IfcCurve"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A bounded curve is a curve of finite arc length with identifiable end points. NOTE Corresponding ISO 10303 name: bounded_curve, only the following subtypes have been incorporated into IFC: polyline as IfcPolyline , trimmed_curve as IfcTrimmedCurve , composite_curve as IfcCompositeCurve . Please refer to ISO/IS 10303-42:1994, p.44 for the final definition of t
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

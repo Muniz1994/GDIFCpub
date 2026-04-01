@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPipeSegment" inherits="IfcFlowSegment"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A pipe segment is used to typically join two sections of a piping network. HISTORY New entity in IFC2x4 Type Use Definition IfcPipeSegment defines the occurrence of any pipe segment; common information about pipe segment types is handled by IfcPipeSegmentType . The IfcPipeSegmentType (if present) may establish the common type name, usage (predefined type), properties, materials, ports, composition
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

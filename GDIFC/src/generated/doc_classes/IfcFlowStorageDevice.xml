@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFlowStorageDevice" inherits="IfcDistributionFlowElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The distribution flow element IfcFlowStorageDevice defines the occurrence of a device that participates in a distribution system and is used for temporary storage of a fluid such as a liquid or a gas (e.g., tank). Its type is defined by IfcFlowStorageDeviceType or its subtypes. HISTORY: New entity in IFC R2x. IFC 2x4 NOTE: This entity has been deprecated for instantiation and will become ABSTRACT 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

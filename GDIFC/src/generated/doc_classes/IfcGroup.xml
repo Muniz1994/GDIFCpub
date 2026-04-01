@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcGroup" inherits="IfcObject"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcGroup is an generalization of any arbitrary group. A group is a logical collection of objects. It does not have its own position, nor can it hold its own shape representation. Therefore a group is an aggregation under some non-geometrical / topological grouping aspects. NOTE Use IfcRelDecomposes together with the appropriate subtypes of IfcProduct to define an aggregation of products that may h
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="IsGroupedBy" type="Array" setter="" getter="get_IsGroupedBy">
+		</member>
+		<member name="ReferencedInStructures" type="Array" setter="" getter="get_ReferencedInStructures">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

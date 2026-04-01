@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTableRow" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcTableRow contains data for a single row within an IfcTable . Limitation: For backward compatibility, all IfcTableRow objects referenced by an IfcTable shall have the same number of Row Cells. The actual number of Cells shall be taken from the number of cells of the first IfcTableRow for that table. The number of Cells is calculated by the derived attribute NumberOfCellsInRow in the associated I
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RowCells" type="Array" setter="set_RowCells" getter="get_RowCells">
+			The data value of the table cell..
+		</member>
+		<member name="IsHeading" type="bool" setter="set_IsHeading" getter="get_IsHeading">
+			Flag which identifies if the row is a heading row or a row which contains row values. NOTE - If the row is a heading, the flag takes the value = TRUE.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

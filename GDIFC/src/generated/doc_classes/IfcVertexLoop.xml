@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcVertexLoop" inherits="IfcLoop"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A vertex_loop is a loop of zero genus consisting of a single vertex. A vertex can exist independently of a vertex loop. The topological data shall satisfy the following constraint: Informal propositions: A vertex loop has zero extent and dimensionality. The vertex loop has genus 0. NOTE Corresponding ISO 10303 entity: vertex_loop. Please refer to ISO/IS 10303
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="LoopVertex" type="GDIFCEntityBase" setter="set_LoopVertex" getter="get_LoopVertex">
+			The vertex which defines the entire loop.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

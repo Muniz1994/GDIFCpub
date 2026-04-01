@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralPlanarAction" inherits="IfcStructuralSurfaceAction"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: Defines an action with constant value which is distributed over a surface. HISTORY: New entity in IFC 2x2. IFC 2x4 change: Intermediate supertype IfcStructuralSurfaceAction inserted. Derived attribute PredefinedType added. NOTE Like its supertype IfcStructuralSurfaceAction , this action type may also act on curved faces.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

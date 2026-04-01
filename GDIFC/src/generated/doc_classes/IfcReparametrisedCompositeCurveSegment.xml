@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcReparametrisedCompositeCurveSegment" inherits="IfcCompositeCurveSegment"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : The reparametrised composite curve segment is a special type of composite curve segment which provides the capability to re-define its parametric length without changing its geometry. Let l = ParamLength . If t 0 ≤ t ≤ t 1 is the parameter range of ParentCurve , the new parameter . for the reparametrised composite curve segment is given by the equation: if Sa
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ParamLength" type="float" setter="set_ParamLength" getter="get_ParamLength">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

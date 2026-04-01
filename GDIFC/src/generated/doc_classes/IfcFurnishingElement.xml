@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFurnishingElement" inherits="IfcElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : Generalization of all furniture related objects. Furnishing objects are characterized as being pre-manufactured and assembled on-site, or manufactured on-site (built-in) Thus furnishing elements can either be movable, or not (as the built-ins). HISTORY New entity in IFC Release 2x. IFC2x4 CHANGE The entity is marked as deprecated for instantiation - will be made ABSTRACT afte
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

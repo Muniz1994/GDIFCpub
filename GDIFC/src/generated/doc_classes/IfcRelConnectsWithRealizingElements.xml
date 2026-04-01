@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelConnectsWithRealizingElements" inherits="IfcRelConnectsElements"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : IfcRelConnectsWithRealizingElements defines a generic relationship that is made between two elements that require the realization of that relationship by means of further realizing elements. An IfcRelConnectsWithRealizingElements is a specialization of IfcRelConnectsElement where the connecting operation has the additional attribute of (one or many) realizing elements that ma
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RealizingElements" type="Array" setter="set_RealizingElements" getter="get_RealizingElements">
+			Defines the elements that realize a connection relationship.
+		</member>
+		<member name="ConnectionType" type="String" setter="set_ConnectionType" getter="get_ConnectionType">
+			The type of the connection given for informal purposes, it may include labels, like 'joint', 'rigid joint', 'flexible joint', etc.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

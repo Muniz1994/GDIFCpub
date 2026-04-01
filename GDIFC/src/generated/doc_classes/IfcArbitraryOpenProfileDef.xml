@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcArbitraryOpenProfileDef" inherits="IfcProfileDef"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The open profile IfcArbitraryOpenProfileDef defines an arbitrary two-dimensional open profile for the use within the swept surface geometry. It is given by an open boundary from with the surface can be constructed. HISTORY New entity in IFC2x. Informal proposition : The Curve has to be an open curve. Figure 308 illustrates the arbitrary open profile definition. The Curve is defined in the underlyi
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Curve" type="GDIFCEntityBase" setter="set_Curve" getter="get_Curve">
+			Open bounded curve defining the profile.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

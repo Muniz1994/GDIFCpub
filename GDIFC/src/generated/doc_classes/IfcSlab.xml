@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSlab" inherits="IfcBuiltElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A slab is a component of the construction that normally encloses a space vertically. The slab may provide the lower support (floor) or upper construction (roof slab) in any space in a building. It shall be noted, that only the core or constructional part of this construction is considered to be a slap. The upper finish (flooring, roofing) and the lower finish (ceiling, suspended ceiling) are consi
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic type for a slab that is specified in an enumeration. There may be a property set given specifically for the predefined types. NOTE The PredefinedType shall only be used, if no type object IfcSlabType is assigned, providing its own IfcSlabType.PredefinedType . FC2x PLATFORM CHANGE: The attribute has been changed into an OPTIONAL attribute.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

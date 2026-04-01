@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFastenerType" inherits="IfcElementComponentType"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : The element type ( IfcFastenerType ) defines a list of commonly shared property set definitions of a fastener and an optional set of product representations. It is used to define fasteners mainly within structural and building services domains (i.e. the specific type information common to all occurrences of that type). The occurrences of the IfcFastenerType are represented by
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Subtype of fastener
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

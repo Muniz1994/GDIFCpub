@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFeatureElementSubtraction" inherits="IfcFeatureElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The IfcFeatureElementSubtraction is specialization of the general feature element, that represents an existence dependent elements which modifies the shape and appearance of the associated master element. The IfcFeatureElementSubtraction offers the ability to handle shape modifiers as semantic objects within the IFC object model that subtract from the shape of the master element. A single subtract
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="VoidsElements" type="Array" setter="" getter="get_VoidsElements">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

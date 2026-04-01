@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralLoadSingleForce" inherits="IfcStructuralLoadStatic"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: Instances of the entity IfcStructuralLoadSingleForce shall be used to define the forces and moments of an action operating on a single point. HISTORY: New entity in Release IFC2x edition 2.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ForceX" type="float" setter="set_ForceX" getter="get_ForceX">
+			Force value in x-direction.
+		</member>
+		<member name="ForceY" type="float" setter="set_ForceY" getter="get_ForceY">
+			Force value in y-direction.
+		</member>
+		<member name="ForceZ" type="float" setter="set_ForceZ" getter="get_ForceZ">
+			Force value in z-direction.
+		</member>
+		<member name="MomentX" type="float" setter="set_MomentX" getter="get_MomentX">
+			Moment about the x-axis.
+		</member>
+		<member name="MomentY" type="float" setter="set_MomentY" getter="get_MomentY">
+			Moment about the y-axis.
+		</member>
+		<member name="MomentZ" type="float" setter="set_MomentZ" getter="get_MomentZ">
+			Moment about the z-axis.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

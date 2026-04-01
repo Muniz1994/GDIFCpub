@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcExternalSpatialElement" inherits="IfcExternalSpatialStructureElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : The external spatial element defines external regions at the building site. Those regions can be defined: logically - e.g. an instance of IfcExternalSpatialElement could represent the air space around the building without having an own shape representation, or physically - e.g. an instance of IfcExternalSpatialElement could represent the sloping ground around the building to 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic types for an external spatial element that are specified in an enumeration. There might be property sets defined specifically for each predefined type.
+		</member>
+		<member name="BoundedBy" type="Array" setter="" getter="get_BoundedBy">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

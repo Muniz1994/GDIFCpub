@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRectangularPyramid" inherits="IfcCsgPrimitive3D"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The IfcRectangularPyramid is a Construction Solid Geometry (CSG) 3D primitive. It is a solid with a rectangular base and a point called apex as the top. The tapers from the base to the top. The axis from the center of the base to the apex is perpendicular to the base. The inherited Position attribute defines the IfcAxisPlacement3D and provides the location and orientation of the pyramid: SELF\IfcC
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="XLength" type="float" setter="set_XLength" getter="get_XLength">
+			The length of the base measured along the placement X axis. It is provided by the inherited axis placement through SELF\IfcCsgPrimitive3D.Position.P[1] .
+		</member>
+		<member name="YLength" type="float" setter="set_YLength" getter="get_YLength">
+			The length of the base measured along the placement Y axis. It is provided by the inherited axis placement through SELF\IfcCsgPrimitive3D.Position.P[2] .
+		</member>
+		<member name="Height" type="float" setter="set_Height" getter="get_Height">
+			The height of the apex above the plane of the base, measured in the direction of the placement Z axis, the SELF\IfcCsgPrimitive3D.Position.P[2] .
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

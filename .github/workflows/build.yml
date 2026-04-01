@@ -14,25 +14,24 @@ env:
 jobs:
   build:
     name: ${{ matrix.name }}
+    # Upgraded to 24.04 for better C++20 support (GCC 13)
     runs-on: ${{ matrix.runner }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          # ── Linux x86_64 ──────────────────────────────────────────────
           - name: Linux Debug
-            runner: ubuntu-22.04
+            runner: ubuntu-24.04
             platform: linux
             target: template_debug
             arch: x86_64
 
           - name: Linux Release
-            runner: ubuntu-22.04
+            runner: ubuntu-24.04
             platform: linux
             target: template_release
             arch: x86_64
 
-          # ── Windows x86_64 ────────────────────────────────────────────
           - name: Windows Debug
             runner: windows-2022
             platform: windows
@@ -45,28 +44,26 @@ jobs:
             target: template_release
             arch: x86_64
 
-          # ── Android arm64 ─────────────────────────────────────────────
           - name: Android Debug
-            runner: ubuntu-22.04
+            runner: ubuntu-24.04
             platform: android
             target: template_debug
             arch: arm64
 
           - name: Android Release
-            runner: ubuntu-22.04
+            runner: ubuntu-24.04
             platform: android
             target: template_release
             arch: arm64
 
-          # ── Web wasm32 ────────────────────────────────────────────────
           - name: Web Debug
-            runner: ubuntu-22.04
+            runner: ubuntu-24.04
             platform: web
             target: template_debug
             arch: wasm32
 
           - name: Web Release
-            runner: ubuntu-22.04
+            runner: ubuntu-24.04
             platform: web
             target: template_release
             arch: wasm32
@@ -89,8 +86,9 @@ jobs:
 
       - name: (Linux) Install build dependencies
         if: matrix.platform == 'linux'
-        run: sudo apt-get update && sudo apt-get install -y build-essential gcc-12 g++-12
-        
+        run: |
+          sudo apt-get update && sudo apt-get install -y build-essential
+
       - name: (Android) Set up NDK
         if: matrix.platform == 'android'
         uses: nttld/setup-ndk@v1
@@ -98,9 +96,11 @@ jobs:
         with:
           ndk-version: r28b
 
-      - name: (Android) Set ANDROID_HOME
+      - name: (Android) Set ANDROID_NDK_ROOT
         if: matrix.platform == 'android'
-        run: echo "ANDROID_HOME=${{ steps.setup-ndk.outputs.ndk-path }}/.." >> $GITHUB_ENV
+        run: |
+          echo "ANDROID_NDK_ROOT=${{ steps.setup-ndk.outputs.ndk-path }}" >> $GITHUB_ENV
+          echo "ANDROID_HOME=" >> $GITHUB_ENV
 
       - name: (Web) Set up Emscripten
         if: matrix.platform == 'web'
@@ -142,13 +142,12 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: gdifc-${{ matrix.platform }}-${{ matrix.target }}-${{ matrix.arch }}
-          path: ifc-godot-project/addons/GDIFC/libgdifc*
+          path: addons/GDIFC/libgdifc*
           if-no-files-found: error
 
-  # ── Merge all platform artifacts into one ─────────────────────────────
   package:
     name: Package All Platforms
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     needs: build
     steps:
       - name: Checkout
@@ -163,18 +162,15 @@ jobs:
       - name: Collect binaries
         run: |
           mkdir -p package/addons/GDIFC
-          # Copy the .gdextension and addon files
           cp ifc-godot-project/addons/GDIFC/gdifc.gdextension package/addons/GDIFC/
           cp ifc-godot-project/addons/GDIFC/plugin.cfg package/addons/GDIFC/ || true
           cp -r ifc-godot-project/addons/GDIFC/assets package/addons/GDIFC/ || true
           cp -r ifc-godot-project/addons/GDIFC/settings package/addons/GDIFC/ || true
           cp ifc-godot-project/addons/GDIFC/*.gd package/addons/GDIFC/ || true
           cp ifc-godot-project/addons/GDIFC/*.tscn package/addons/GDIFC/ || true
-          # Copy all platform binaries
           for dir in artifacts/gdifc-*/; do
             cp "$dir"/libgdifc* package/addons/GDIFC/ || true
           done
-          ls -la package/addons/GDIFC/
 
       - name: Upload complete addon
         uses: actions/upload-artifact@v4

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDirection" inherits="IfcGeometricRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : This entity defines a general direction vector in two or three dimensional space. The actual magnitudes of the components have no effect upon the direction being defined, only the ratios X:Y:Z or X:Y are significant. NOTE: The components of this entity are not normalized. If a unit vector is required it should be normalized before use. NOTE: Corresponding ISO
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="DirectionRatios" type="PackedFloat64Array" setter="set_DirectionRatios" getter="get_DirectionRatios">
+			The components in the direction of X axis (DirectionRatios[1]), of Y axis (DirectionRatios[2]), and of Z axis (DirectionRatios[3])
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

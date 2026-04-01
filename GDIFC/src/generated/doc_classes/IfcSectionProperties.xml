@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSectionProperties" inherits="IfcPreDefinedProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcSectionProperties defines the cross section properties for a single longitudinal piece of a cross section. It is a special-purpose helper class for IfcSectionReinforcementProperties . HISTORY New entity in IFC2x2. The section piece may be either uniform or tapered. In the latter case an end profile should also be provided. The start and end profiles are assumed to be of the same profile type. G
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="SectionType" type="String" setter="set_SectionType" getter="get_SectionType">
+			An indicator whether a specific piece of a cross section is uniform or tapered in longitudinal direction.
+		</member>
+		<member name="StartProfile" type="GDIFCEntityBase" setter="set_StartProfile" getter="get_StartProfile">
+			The cross section profile at the start point of the longitudinal section.
+		</member>
+		<member name="EndProfile" type="GDIFCEntityBase" setter="set_EndProfile" getter="get_EndProfile">
+			The cross section profile at the end point of the longitudinal section.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

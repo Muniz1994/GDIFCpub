@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDiscreteAccessory" inherits="IfcElementComponent"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: Representation of different kinds of accessories included in or added to elements. HISTORY New entity in IFC Release 2x2 IFC 2x4 change: Attribute PredefinedType added. General usage The exact type information of the IfcDiscreteAccessory is given in the ObjectType attribute inherited from IfcObject . Standard type designations are provided for guideline below. The list is not 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Subtype of discrete accessory
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

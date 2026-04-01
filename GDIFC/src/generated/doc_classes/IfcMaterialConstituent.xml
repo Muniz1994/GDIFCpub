@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMaterialConstituent" inherits="IfcMaterialDefinition"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcMaterialConstituent is a single and identifiable part of an element which is constructed of a number of part (one or more) each having an individual material. The association of the material constituent to the part is provided by a keyword as value of the Name attribute. NOTE See the "Material Use Definition" at the individual element to which an IfcMaterialConstituentSet may apply for a requir
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			The name by which the material constituent is known.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			Definition of the material constituent in descriptive terms.
+		</member>
+		<member name="Material" type="GDIFCEntityBase" setter="set_Material" getter="get_Material">
+			Reference to the material from which the constituent is constructed.
+		</member>
+		<member name="Fraction" type="float" setter="set_Fraction" getter="get_Fraction">
+			Optional provision of a fraction of the total amount (volume or weight) that applies to the IfcMaterialConstituentSet that is contributed by this IfcMaterialConstituent .
+		</member>
+		<member name="Category" type="String" setter="set_Category" getter="get_Category">
+			Category of the material constituent, e.g. the role it has in the constituent set it belongs to.
+		</member>
+		<member name="ToMaterialConstituentSet" type="Array" setter="" getter="get_ToMaterialConstituentSet">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcIndexedPolyCurve" inherits="IfcBoundedCurve"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Points" type="GDIFCEntityBase" setter="set_Points" getter="get_Points">
+		</member>
+		<member name="Segments" type="Array" setter="set_Segments" getter="get_Segments">
+		</member>
+		<member name="SelfIntersect" type="bool" setter="set_SelfIntersect" getter="get_SelfIntersect">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

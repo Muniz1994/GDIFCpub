@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMaterialConstituentSet" inherits="IfcMaterialDefinition"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcMaterialConstituentSet is a collection of individual material constituents, each assigning a material to a part of an element. The parts are only identified by a keyword (as opposed to an IfcMaterialLayerSet or IfcMaterialProfileSet where each part has an individual shape parameter (layer thickness or layer profile). EXAMPLE The different materials of a window construction shall be provided for
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			The name by which the constituent set is known.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			Definition of the material constituent set in descriptive terms.
+		</member>
+		<member name="MaterialConstituents" type="Array" setter="set_MaterialConstituents" getter="get_MaterialConstituents">
+			Identification of the constituents from which the material constituent set is composed.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

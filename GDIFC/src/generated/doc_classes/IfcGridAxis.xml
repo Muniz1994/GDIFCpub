@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcGridAxis" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An individual axis, IfcGridAxis , is defined in the context of a design grid. The axis definition is based on a curve of dimensionality 2. The grid axis is positioned within the XY plane of the position coordinate system defined by the IfcDesignGrid . HISTORY New entity in IFC Release 1.0 Geometry use definitions The standard geometric representation of IfcGridAxis is defined using a 2D curve enti
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="AxisTag" type="String" setter="set_AxisTag" getter="get_AxisTag">
+			The tag or name for this grid axis.
+		</member>
+		<member name="AxisCurve" type="GDIFCEntityBase" setter="set_AxisCurve" getter="get_AxisCurve">
+			Underlying curve which provides the geometry for this grid axis.
+		</member>
+		<member name="SameSense" type="bool" setter="set_SameSense" getter="get_SameSense">
+			Defines whether the original sense of curve is used or whether it is reversed in the context of the grid axis.
+		</member>
+		<member name="PartOfW" type="Array" setter="" getter="get_PartOfW">
+		</member>
+		<member name="PartOfV" type="Array" setter="" getter="get_PartOfV">
+		</member>
+		<member name="PartOfU" type="Array" setter="" getter="get_PartOfU">
+		</member>
+		<member name="HasIntersections" type="Array" setter="" getter="get_HasIntersections">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

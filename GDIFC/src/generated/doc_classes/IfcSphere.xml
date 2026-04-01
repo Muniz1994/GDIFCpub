@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSphere" inherits="IfcCsgPrimitive3D"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The IfcSphere is a Construction Solid Geometry (CSG) 3D primitive. It is a solid where all points at the surface have the same distance from the center point. The inherited Position attribute defines the IfcAxisPlacement3D and provides: SELF\IfcCsgPrimitive3D.Position : The location and orientation of the axis system for the primitive. SELF\IfcCsgPrimitive3D.Position.Location : The center of the s
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Radius" type="float" setter="set_Radius" getter="get_Radius">
+			The radius of the sphere.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

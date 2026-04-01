@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcBuildingSystem" inherits="IfcSystem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : A building system is a group by which building elements are group according to a common function within the building. HISTORY: New entity in IFC 2x4. The group IfcBuildingSystem defines the occurrence of a specialized system for use within the context of a building and finishing fabric. Important functionalities for the description of a building system are derived from supert
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined types of distribution systems.
+		</member>
+		<member name="LongName" type="String" setter="set_LongName" getter="get_LongName">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

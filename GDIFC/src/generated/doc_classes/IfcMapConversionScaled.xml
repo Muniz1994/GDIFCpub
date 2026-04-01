@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMapConversionScaled" inherits="IfcMapConversion"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="FactorX" type="float" setter="set_FactorX" getter="get_FactorX">
+		</member>
+		<member name="FactorY" type="float" setter="set_FactorY" getter="get_FactorY">
+		</member>
+		<member name="FactorZ" type="float" setter="set_FactorZ" getter="get_FactorZ">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

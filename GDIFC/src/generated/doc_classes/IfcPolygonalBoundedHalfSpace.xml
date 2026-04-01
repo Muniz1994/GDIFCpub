@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPolygonalBoundedHalfSpace" inherits="IfcHalfSpaceSolid"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The polygonal bounded half space is a special subtype of a half space solid, where the material of the half space used in Boolean expressions is bounded by a polygonal boundary. The base surface of the half space is positioned by its normal relativeto the object coordinate system (as defined at the supertype IfcHalfSpaceSolid ), and its polygonal (with or without arc segments) boundary is defined 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Position" type="GDIFCEntityBase" setter="set_Position" getter="get_Position">
+			Definition of the position coordinate system for the bounding polyline and the base surface .
+		</member>
+		<member name="PolygonalBoundary" type="GDIFCEntityBase" setter="set_PolygonalBoundary" getter="get_PolygonalBoundary">
+			Two-dimensional polyline bounded curve, defined in the xy plane of the position coordinate system. IFC2x Edition 3 CHANGE The attribute type has been changed from IfcPolyline to its supertype IfcBoundedCurve with upward compatibility for file based exchange.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

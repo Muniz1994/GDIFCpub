@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTextureCoordinateIndices" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="TexCoordIndex" type="PackedInt64Array" setter="set_TexCoordIndex" getter="get_TexCoordIndex">
+		</member>
+		<member name="TexCoordsOf" type="GDIFCEntityBase" setter="set_TexCoordsOf" getter="get_TexCoordsOf">
+		</member>
+		<member name="ToTexMap" type="Array" setter="" getter="get_ToTexMap">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

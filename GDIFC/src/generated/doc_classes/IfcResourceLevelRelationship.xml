@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcResourceLevelRelationship" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcResourceLevelRelationship is an abstract base class for relationships between resource-level entities. HISTORY New Entity in IFC 2x4
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			A name used to identify or qualify the relationship.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			A description that may apply additional information about the relationship.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

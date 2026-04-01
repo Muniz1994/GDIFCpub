@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcGeometricSet" inherits="IfcGeometricRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : This entity is intended for the transfer of models when a topological structure is not available. The IfcGeometricSet is used for the exchange of shape representations consisting of (2D or 3D) points, curves, and/or surfaces, which do not have a topological structure (such as connected face sets or shells) and are not solid models (such as swept solids, CSG o
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Elements" type="Array" setter="set_Elements" getter="get_Elements">
+			The geometric elements which make up the geometric set, these may be points, curves or surfaces; but are required to be of the same coordinate space dimensionality.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

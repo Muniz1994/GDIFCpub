@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcImageTexture" inherits="IfcSurfaceTexture"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcImageTexture provides a 2-dimensional texture that can be applied to a surface of an geometric item and that provides lighting parameters of a surface onto which it is mapped. The texture is provided as an image file at an external location for which an URL is provided. The following definitions from ISO/IEC 19775-1 X3D Architecture and base components ( X3D Specification ) apply: The ImageT
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="URLReference" type="String" setter="set_URLReference" getter="get_URLReference">
+			Location, provided as an URI, at which the image texture is electronically published.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

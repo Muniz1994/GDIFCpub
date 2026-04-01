@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcQuantityLength" inherits="IfcPhysicalSimpleQuantity"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcQuantityLength is a physical quantity that defines a derived length measure to provide an element's physical property. It is normally derived from the physical properties of the element under the specific measure rules given by a method of measurement. EXAMPLE A rafter within a roof construction may be measured according to its length (taking a common cross section into account). The actual siz
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="LengthValue" type="float" setter="set_LengthValue" getter="get_LengthValue">
+			Length measure value of this quantity.
+		</member>
+		<member name="Formula" type="String" setter="set_Formula" getter="get_Formula">
+			A formula by which the quantity has been calculated. It can be assigned in addition to the actual value of the quantity. Formulas could be mathematic calculations (like width x height), database links, or a combination. The formula is for informational purposes only. IFC2x4 CHANGE Attribute added to the end of the attribute list.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

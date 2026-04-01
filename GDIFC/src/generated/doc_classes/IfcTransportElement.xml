@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTransportElement" inherits="IfcTransportationDevice"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : Generalization of all transport related objects that move people, animals or goods within a building or building complex. The IfcTransportElement defines the occurrence of a transport element, that (if given), is expressed by the IfcTransportElementType . EXAMPLE Transportation elements include elevator (lift), escalator, moving walkway, etc. NOTE More detailed equipment that
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic types for a transportation element that are specified in an enumeration. There might be property sets defined specifically for each predefined type. IFC2x4 CHANGE The attribute has been changed to be optional.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

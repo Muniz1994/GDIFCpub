@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPropertyTemplate" inherits="IfcPropertyTemplateDefinition"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The IfcPropertyTemplate is an abstract supertype comprising the templates for all dynamically extensible properties, either as an IfcComplexPropertyTemplate , or an IfcSimplePropertyTemplate . These templates determine the structure of: in case of IfcComplexPropertyTemplate an IfcComplexProperty an IfcPhysicalComplexQuantity in case of IfcSimplePropertyTemplate a subtype of IfcSimpleProperty a sub
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PartOfComplexTemplate" type="Array" setter="" getter="get_PartOfComplexTemplate">
+		</member>
+		<member name="PartOfPsetTemplate" type="Array" setter="" getter="get_PartOfPsetTemplate">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

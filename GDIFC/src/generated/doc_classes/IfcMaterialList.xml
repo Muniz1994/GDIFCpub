@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMaterialList" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcMaterialList is a list of the different materials that are used in an element. NOTE: The class IfcMaterialList will normally be used where an element is described at a more abstract level. For example, for an architectural specification writer, the only information that may be needed about a concrete column is that it contains concrete, reinforcing steel and mild steel ligatures. It shall not b
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Materials" type="Array" setter="set_Materials" getter="get_Materials">
+			Materials used in a composition of substances.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

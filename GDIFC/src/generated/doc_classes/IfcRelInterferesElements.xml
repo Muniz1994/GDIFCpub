@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelInterferesElements" inherits="IfcRelConnects"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : The IfcRelInterferesElements objectified relationship indicates that two elements interfere. Interference is a spatial overlap between the two elements. It is a 1 to 1 relationship. The concept of two elements interfering physically or logically is described independently from the elements. The interference may be related to the shape representation of the entities by providi
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingElement" type="GDIFCEntityBase" setter="set_RelatingElement" getter="get_RelatingElement">
+			Reference to a subtype of IfcElement that is the RelatingElement in the interference relationship. Depending on the value of ImpliedOrder the RelatingElement may carry the notion to be the element from which the interference geometry should be subtracted.
+		</member>
+		<member name="RelatedElement" type="GDIFCEntityBase" setter="set_RelatedElement" getter="get_RelatedElement">
+			Reference to a subtype of IfcElement that is the RelatedElement in the interference relationship. Depending on the value of ImpliedOrder the RelatedElement may carry the notion to be the element from which the interference geometry should not be subtracted.
+		</member>
+		<member name="InterferenceGeometry" type="GDIFCEntityBase" setter="set_InterferenceGeometry" getter="get_InterferenceGeometry">
+			The geometric shape representation of the interference geometry that is provided in the object coordinate system of the RelatingElement (mandatory) and in the object coordinate system of the RelatedElement (optionally).
+		</member>
+		<member name="InterferenceType" type="String" setter="set_InterferenceType" getter="get_InterferenceType">
+			Optional identifier that describes the nature of the interference. Examples could include 'Clash', 'ProvisionForVoid', etc.
+		</member>
+		<member name="ImpliedOrder" type="String" setter="set_ImpliedOrder" getter="get_ImpliedOrder">
+			Logical value indicating whether the interference geometry should be subtracted from the RelatingElement (if TRUE), or whether it should be either subtracted from the RelatingElement or the RelatedElement (if FALSE), or whether no indication can be provided (if UNKNOWN).
+		</member>
+		<member name="InterferenceSpace" type="GDIFCEntityBase" setter="set_InterferenceSpace" getter="get_InterferenceSpace">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

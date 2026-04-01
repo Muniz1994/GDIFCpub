@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTextStyleForDefinedFont" inherits="IfcPresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-46:1992 : A text style for defined font is a character glyph style for pre-defined or externally defined text fonts. Definition from CSS1 (W3C Recommendation) : These properties describe the color (often called foreground color) and background of an element (i.e. the surface onto which the content is rendered). One can set a background color. NOTE The CSS1 definition a
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Colour" type="GDIFCEntityBase" setter="set_Colour" getter="get_Colour">
+			This property describes the text color of an element (often referred to as the foreground color).
+		</member>
+		<member name="BackgroundColour" type="GDIFCEntityBase" setter="set_BackgroundColour" getter="get_BackgroundColour">
+			This property sets the background color of an element.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDistributionElement" inherits="IfcElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : Generalization of all elements that participate in a distribution system. Typical examples of IfcDistributionElement are (among others): building service elements within a heating systems building service elements within a cooling system building service elements within a ventilation system building service elements within a plumbing system e.g. sanitary elements, fire suppre
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="HasPorts" type="Array" setter="" getter="get_HasPorts">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcBuilding" inherits="IfcFacility"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO 6707-1:1989 : Construction work that has the provision of shelter for its occupants or contents as one of its main purpose and is normally designed to stand permanently in one place. A building represents a structure that provides shelter for its occupants or contents and stands in one place. The building is also used to provide a basic element within the spatial structure hier
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ElevationOfRefHeight" type="float" setter="set_ElevationOfRefHeight" getter="get_ElevationOfRefHeight">
+			Elevation above sea level of the reference height used for all storey elevation measures, equals to height 0.0. It is usually the ground floor level.
+		</member>
+		<member name="ElevationOfTerrain" type="float" setter="set_ElevationOfTerrain" getter="get_ElevationOfTerrain">
+			Elevation above the minimal terrain level around the foot print of the building, given in elevation above sea level.
+		</member>
+		<member name="BuildingAddress" type="GDIFCEntityBase" setter="set_BuildingAddress" getter="get_BuildingAddress">
+			Address given to the building for postal purposes.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

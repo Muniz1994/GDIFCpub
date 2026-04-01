@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcContext" inherits="IfcObjectDefinition"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcContext is the generalization of a project context in which objects, type objects, property sets, and properties are defined. The IfcProject as subtype of IfcContext provides the context for all information on a construction project, it may include one or several IfcProjectLibrary as subtype of IfcContext to register the included libraries for the project. Context definitions can be named, usin
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ObjectType" type="String" setter="set_ObjectType" getter="get_ObjectType">
+			The type denotes a particular type that indicates the object further. The use has to be established at the level of instantiable subtypes.
+		</member>
+		<member name="LongName" type="String" setter="set_LongName" getter="get_LongName">
+			Long name for the context as used for reference purposes.
+		</member>
+		<member name="Phase" type="String" setter="set_Phase" getter="get_Phase">
+			Current project phase, or life-cycle phase of this project. Applicable values have to be agreed upon by view definitions or implementer agreements.
+		</member>
+		<member name="RepresentationContexts" type="Array" setter="set_RepresentationContexts" getter="get_RepresentationContexts">
+			Context of the representations used within the context. When the context is a project and it includes shape representations for its components, one or several geometric representation contexts need to be included that define e.g. the world coordinate system, the coordinate space dimensions, and/or the precision factor. IFC2x4 CHANGE The attribute has been changed to be optional. Change made with upward compatibility for file based exchange.
+		</member>
+		<member name="UnitsInContext" type="GDIFCEntityBase" setter="set_UnitsInContext" getter="get_UnitsInContext">
+			Units globally assigned to measure types used within the context. IFC2x4 CHANGE The attribute has been changed to be optional. Change made with upward compatibility for file based exchange.
+		</member>
+		<member name="IsDefinedBy" type="Array" setter="" getter="get_IsDefinedBy">
+		</member>
+		<member name="Declares" type="Array" setter="" getter="get_Declares">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

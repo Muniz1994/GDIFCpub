@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTimeSeries" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A time series is a set of a time-stamped data entries. It allows a natural association of data collected over intervals of time. Time series can be regular or irregular. In regular time series data arrive predictably at predefined intervals. In irregular time series some or all time stamps do not follow a repetitive pattern and unpredictable bursts of data may arrive at unspecified points in time.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			An unique name for the time series.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			A text description of the data that the series represents.
+		</member>
+		<member name="StartTime" type="String" setter="set_StartTime" getter="get_StartTime">
+			The start time of a time series.
+		</member>
+		<member name="EndTime" type="String" setter="set_EndTime" getter="get_EndTime">
+			The end time of a time series.
+		</member>
+		<member name="TimeSeriesDataType" type="String" setter="set_TimeSeriesDataType" getter="get_TimeSeriesDataType">
+			The time series data type.
+		</member>
+		<member name="DataOrigin" type="String" setter="set_DataOrigin" getter="get_DataOrigin">
+			The orgin of a time series data.
+		</member>
+		<member name="UserDefinedDataOrigin" type="String" setter="set_UserDefinedDataOrigin" getter="get_UserDefinedDataOrigin">
+			Value of the data origin if DataOrigin attribute is USERDEFINED.
+		</member>
+		<member name="Unit" type="GDIFCEntityBase" setter="set_Unit" getter="get_Unit">
+			The unit to be assigned to all values within the time series. Note that mixing units is not allowed. If the value is not given, the global unit for the type of IfcValue , as defined at IfcProject.UnitsInContext is used.
+		</member>
+		<member name="HasExternalReference" type="Array" setter="" getter="get_HasExternalReference">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

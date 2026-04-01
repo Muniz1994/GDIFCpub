@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFlowTerminal" inherits="IfcDistributionFlowElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The distribution flow element IfcFlowTerminal defines the occurrence of a permanently attached element that acts as a terminus or beginning of a distribution system (e.g., air outlet, drain, water closet, sink, etc.). A terminal is typically a point at which a system interfaces with an external environment. Its type is defined by IfcFlowTerminalType or its subtypes. HISTORY: New entity in IFC R2.0
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

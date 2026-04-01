@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDimensionalExponents" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-41:1992 : The dimensionality of any quantity can be expressed as a product of powers of the dimensions of base quantities. The dimensional exponents entity defines the powers of the dimensions of the base quantities. All the physical quantities are founded on seven base quantities (ISO 31 (clause 2)). NOTE: Length, mass, time, electric current, thermodynamic temperatur
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="LengthExponent" type="int" setter="set_LengthExponent" getter="get_LengthExponent">
+			The power of the length base quantity.
+		</member>
+		<member name="MassExponent" type="int" setter="set_MassExponent" getter="get_MassExponent">
+			The power of the mass base quantity.
+		</member>
+		<member name="TimeExponent" type="int" setter="set_TimeExponent" getter="get_TimeExponent">
+			The power of the time base quantity.
+		</member>
+		<member name="ElectricCurrentExponent" type="int" setter="set_ElectricCurrentExponent" getter="get_ElectricCurrentExponent">
+			The power of the electric current base quantity.
+		</member>
+		<member name="ThermodynamicTemperatureExponent" type="int" setter="set_ThermodynamicTemperatureExponent" getter="get_ThermodynamicTemperatureExponent">
+			The power of the thermodynamic temperature base quantity.
+		</member>
+		<member name="AmountOfSubstanceExponent" type="int" setter="set_AmountOfSubstanceExponent" getter="get_AmountOfSubstanceExponent">
+			The power of the amount of substance base quantity.
+		</member>
+		<member name="LuminousIntensityExponent" type="int" setter="set_LuminousIntensityExponent" getter="get_LuminousIntensityExponent">
+			The power of the luminous intensity base quantity.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

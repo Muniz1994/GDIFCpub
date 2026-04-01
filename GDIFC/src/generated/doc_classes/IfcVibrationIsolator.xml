@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcVibrationIsolator" inherits="IfcElementComponent"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A vibration isolator is a device used to minimize the effects of vibration transmissibility in a building. HISTORY New entity in IFC2x4 Type Use Definition IfcVibrationIsolator defines the occurrence of any vibration isolator; common information about vibration isolator types is handled by IfcVibrationIsolatorType . The IfcVibrationIsolatorType (if present) may establish the common type name, usag
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

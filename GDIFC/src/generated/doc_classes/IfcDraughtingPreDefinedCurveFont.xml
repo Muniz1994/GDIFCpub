@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDraughtingPreDefinedCurveFont" inherits="IfcPreDefinedCurveFont"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The draughting predefined curve font type defines a selection of widely used curve fonts for draughting purposes by name. NOTE The IfcDraughtingPreDefinedCurveFont is an entity that had been adopted from ISO 10303, Industrial automation systems and integration—Product data representation and exchange, Part 46 Technical Corrigendum 2: Integrated generic resources: Visual presentation. Figure 291 (f
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

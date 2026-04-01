@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSurfaceOfRevolution" inherits="IfcSweptSurface"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A surface of revolution ( IfcSurfaceOfRevolution ) is the surface obtained by rotating a curve one complete revolution about an axis. The data shall be interpreted as below. The parameterization is as follows where the curve has a parameterization l ( u ): C = AxisPosition.Location V = AxisPosition.Z In order to produce a single-value surface the a complete r
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="AxisPosition" type="GDIFCEntityBase" setter="set_AxisPosition" getter="get_AxisPosition">
+			A point on the axis of revolution and the direction of the axis of revolution.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

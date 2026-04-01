@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCartesianPointList2D" inherits="IfcCartesianPointList"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="CoordList" type="Array" setter="" getter="get_CoordList">
+		</member>
+		<member name="TagList" type="PackedStringArray" setter="set_TagList" getter="get_TagList">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

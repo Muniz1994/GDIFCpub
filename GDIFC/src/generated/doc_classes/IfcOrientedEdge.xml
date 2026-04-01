@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcOrientedEdge" inherits="IfcEdge"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : An oriented edge is an edge constructed from another edge and contains a BOOLEAN direction flag to indicate whether or not the orientation of the constructed edge agrees with the orientation of the original edge. Except for perhaps orientation, the oriented edge is equivalent to the original edge. NOTE A common practice is solid modelling systems is to have a
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="EdgeElement" type="GDIFCEntityBase" setter="set_EdgeElement" getter="get_EdgeElement">
+			Edge entity used to construct this oriented edge.
+		</member>
+		<member name="Orientation" type="bool" setter="set_Orientation" getter="get_Orientation">
+			BOOLEAN, If TRUE the topological orientation as used coincides with the orientation from start vertex to end vertex of the edge element. If FALSE otherwise.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

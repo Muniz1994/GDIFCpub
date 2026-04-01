@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelAssignsToGroupByFactor" inherits="IfcRelAssignsToGroup"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The objectified relationship IfcRelAssignsToGroupByFactor is a specialization of the general grouping mechanism. It allows to add a factor to define the ratio that applies to the assignment of object definitions (individual object occurrences as subtypes of IfcObject and object types as subtypes of IfcTypeObject ) to a group (subtypes of IfcGroup ). The ratio can be used to define a percentage ass
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Factor" type="float" setter="set_Factor" getter="get_Factor">
+			Factor provided as a ratio measure that identifies the fraction or weighted factor that applies to the group assignment.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

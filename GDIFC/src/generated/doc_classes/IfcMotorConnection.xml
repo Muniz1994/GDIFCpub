@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMotorConnection" inherits="IfcEnergyConversionDevice"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A motor connection provides the means for connecting a motor as the driving device to the driven device. HISTORY New entity in IFC2x4 Type Use Definition IfcMotorConnection defines the occurrence of any motor connection; common information about motor connection types is handled by IfcMotorConnectionType . The IfcMotorConnectionType (if present) may establish the common type name, usage (predefine
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

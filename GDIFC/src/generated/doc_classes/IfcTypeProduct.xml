@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTypeProduct" inherits="IfcTypeObject"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcTypeProduct defines a type definition of a product without being already inserted into a project structure (without having a placement), and not being included into the geometric representation context of the project.ÿIt is used to define a product specification, that is, the specific product information that is common to all occurrences of that product type. An IfcTypeProduct may have a list o
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RepresentationMaps" type="Array" setter="set_RepresentationMaps" getter="get_RepresentationMaps">
+			List of unique representation maps. Each representation map describes a block definition of the shape of the product style. By providing more than one representation map, a multi-view block definition can be given.
+		</member>
+		<member name="Tag" type="String" setter="set_Tag" getter="get_Tag">
+			The tag (or label) identifier at the particular type of a product, e.g. the article number (like the EAN). It is the identifier at the specific level.
+		</member>
+		<member name="ReferencedBy" type="Array" setter="" getter="get_ReferencedBy">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

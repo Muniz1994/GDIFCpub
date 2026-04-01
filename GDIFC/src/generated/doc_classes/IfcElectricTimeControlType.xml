@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcElectricTimeControlType" inherits="IfcFlowControllerType"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The flow controller type IfcElectricTimeControlType defines commonly shared information for occurrences of electric time controls. The set of shared information may include: common properties with shared property sets common representations of shape common materials common composition of elements common ports applicable assignment of process types It is used to define a electric time control speci
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Identifies the predefined types of electrical time control from which the type required may be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

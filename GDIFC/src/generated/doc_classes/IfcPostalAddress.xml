@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPostalAddress" inherits="IfcAddress"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition: The address for delivery of paper based mail. HISTORY New entity in IFC Release 2x.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="InternalLocation" type="String" setter="set_InternalLocation" getter="get_InternalLocation">
+			An organization defined address for internal mail delivery.
+		</member>
+		<member name="AddressLines" type="PackedStringArray" setter="set_AddressLines" getter="get_AddressLines">
+			The postal address. NOTE: A postal address may occupy several lines (or elements) when recorded. It is expected that normal usage will incorporate relevant elements of the following address concepts: A location within a building (e.g. 3rd Floor) Building name (e.g. Interoperability House) Street number (e.g. 6400) Street name (e.g. Alliance Boulevard). Typical content of address lines may vary in different countries.
+		</member>
+		<member name="PostalBox" type="String" setter="set_PostalBox" getter="get_PostalBox">
+			An address that is implied by an identifiable mail drop.
+		</member>
+		<member name="Town" type="String" setter="set_Town" getter="get_Town">
+			The name of a town.
+		</member>
+		<member name="Region" type="String" setter="set_Region" getter="get_Region">
+			The name of a region. NOTE: The counties of the United Kingdom and the states of North America are examples of regions.
+		</member>
+		<member name="PostalCode" type="String" setter="set_PostalCode" getter="get_PostalCode">
+			The code that is used by the country's postal service.
+		</member>
+		<member name="Country" type="String" setter="set_Country" getter="get_Country">
+			The name of a country.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

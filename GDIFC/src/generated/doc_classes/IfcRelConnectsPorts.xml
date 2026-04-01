@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelConnectsPorts" inherits="IfcRelConnects"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : An IfcRelConnectsPorts defines the relationship that is made between two ports at their point of connection. It may include the connection geometry between two ports. IfcRelConnectsPorts is required for defining how instances of IfcPort connect together. Each of the port is being logically attached to the IfcElement by using the IfcRelConnectsPortToElement relationship. HISTO
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingPort" type="GDIFCEntityBase" setter="set_RelatingPort" getter="get_RelatingPort">
+			Reference to the first port that is connected by the objectified relationship.
+		</member>
+		<member name="RelatedPort" type="GDIFCEntityBase" setter="set_RelatedPort" getter="get_RelatedPort">
+			Reference to the second port that is connected by the objectified relationship.
+		</member>
+		<member name="RealizingElement" type="GDIFCEntityBase" setter="set_RealizingElement" getter="get_RealizingElement">
+			Defines the element that realizes a port connection relationship.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

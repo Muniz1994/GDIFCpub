@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcResourceApprovalRelationship" inherits="IfcResourceLevelRelationship"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcResourceApprovalRelationship is used for associating an approval to resource objects. A single approval might be given to one or many items via IfcResourceObjectSelect . HISTORY New Entity in IFC Release 2x4
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatedResourceObjects" type="Array" setter="set_RelatedResourceObjects" getter="get_RelatedResourceObjects">
+			Resource objects that are approved.
+		</member>
+		<member name="RelatingApproval" type="GDIFCEntityBase" setter="set_RelatingApproval" getter="get_RelatingApproval">
+			The approval for the resource objects selected.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

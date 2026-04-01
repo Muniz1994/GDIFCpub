@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcLightFixture" inherits="IfcFlowTerminal"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A light fixture is a container that is designed for the purpose of housing one or more lamps and optionally devices that control, restrict or vary their emission. HISTORY New entity in IFC2x4 Type Use Definition IfcLightFixture defines the occurrence of any light fixture; common information about light fixture types is handled by IfcLightFixtureType . The IfcLightFixtureType (if present) may estab
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

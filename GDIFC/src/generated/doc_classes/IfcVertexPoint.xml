@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcVertexPoint" inherits="IfcVertex"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A vertex point is a vertex which has its geometry defined as a point. NOTE Corresponding ISO 10303 entity: vertex_point. Please refer to ISO/IS 10303-42:1994, p. 130 for the final definition of the formal standard. Due to the general IFC model specification rule not to use multiple inheritance, the subtype relationship to geometric_representation_item is not 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="VertexGeometry" type="GDIFCEntityBase" setter="set_VertexGeometry" getter="get_VertexGeometry">
+			The geometric point, which defines the position in geometric space of the vertex.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

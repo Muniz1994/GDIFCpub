@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFlowFitting" inherits="IfcDistributionFlowElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The distribution flow element IfcFlowFitting defines the occurrence of a junction or transition in a flow distribution system, such as an elbow or tee. Its type is defined by IfcFlowFittingType or its subtypes. HISTORY: New entity in IFC R2.0. IFC 2x4 NOTE: This entity has been deprecated for instantiation and will become ABSTRACT in a future release; new subtypes should now be used instead.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

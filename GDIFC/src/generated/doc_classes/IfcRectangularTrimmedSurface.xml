@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRectangularTrimmedSurface" inherits="IfcBoundedSurface"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : The trimmed surface is a simple bounded surface in which the boundaries are the constant parametric lines u 1 = u1, u 2 = u2, v 1 = v1 and v 2 = v2. All these values shall be within the parametric range of the referenced surface. Cyclic properties of the parameter range are assumed. NOTE 1 For example, 370 degrees is equivalent to 10 degrees, for those surfac
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="BasisSurface" type="GDIFCEntityBase" setter="set_BasisSurface" getter="get_BasisSurface">
+			Surface being trimmed.
+		</member>
+		<member name="U1" type="float" setter="set_U1" getter="get_U1">
+			First u parametric value.
+		</member>
+		<member name="V1" type="float" setter="set_V1" getter="get_V1">
+			First v parametric value.
+		</member>
+		<member name="U2" type="float" setter="set_U2" getter="get_U2">
+			Second u parametric value.
+		</member>
+		<member name="V2" type="float" setter="set_V2" getter="get_V2">
+			Second v parametric value.
+		</member>
+		<member name="Usense" type="bool" setter="set_Usense" getter="get_Usense">
+			Flag to indicate whether the direction of the first parameter of the trimmed surface agrees with or opposes the sense of u in the basis surface.
+		</member>
+		<member name="Vsense" type="bool" setter="set_Vsense" getter="get_Vsense">
+			Flag to indicate whether the direction of the second parameter of the trimmed surface agrees with or opposes the sense of v in the basis surface.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

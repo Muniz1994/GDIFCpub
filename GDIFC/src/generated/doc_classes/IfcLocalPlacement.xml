@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcLocalPlacement" inherits="IfcObjectPlacement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcLocalPlacement defines the relative placement of a product in relation to the placement of another product or the absolute placement of a product within the geometric representation context of the project. IfcLocalPlacement allows that an IfcProduct can be placed by this IfcLocalPlacement (through the attribute ObjectPlacement ) within the local coordinate system of the object placement of anot
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelativePlacement" type="GDIFCEntityBase" setter="set_RelativePlacement" getter="get_RelativePlacement">
+			Reference to Object that provides the relative placement by its local coordinate system. If it is omitted, then the local placement is given to the WCS, established by the geometric representation context.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

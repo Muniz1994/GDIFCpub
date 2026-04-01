@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcResourceConstraintRelationship" inherits="IfcResourceLevelRelationship"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcResourceConstraintRelationship is a relationship entity that enables a constraint to be related to one or more resource level objects. HISTORY New Entity in Release IFC2x2. IFC2x4 CHANGE Renamed from IfcPropertyConstraintRelationship and extended to apply to all resource level entities. Subtyped from IfcResourceLevelRelationship . Use definition An IfcResourceConstraintRelationship allows fo
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingConstraint" type="GDIFCEntityBase" setter="set_RelatingConstraint" getter="get_RelatingConstraint">
+			The constraint that is to be related.
+		</member>
+		<member name="RelatedResourceObjects" type="Array" setter="set_RelatedResourceObjects" getter="get_RelatedResourceObjects">
+			The properties to which a constraint is to be related.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

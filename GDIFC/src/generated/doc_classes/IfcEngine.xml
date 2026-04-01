@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcEngine" inherits="IfcEnergyConversionDevice"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An engine is a device that converts fuel into mechanical energy through combustion. HISTORY New entity in IFC2x4 Type Use Definition IfcEngine defines the occurrence of any engine; common information about engine types is handled by IfcEngineType . The IfcEngineType (if present) may establish the common type name, usage (predefined type), properties, materials, ports, composition, assignments, and
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

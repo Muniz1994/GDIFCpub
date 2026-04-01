@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcActorRole" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition: A role which is performed by an actor, either a person, an organization or a person related to an organization. NOTE: The list of roles of the enumeration values of the Role attribute can never be complete. Therefore using enumeration value USERDEFINED, the user can provide his/her own role as a value of the attribute UserDefinedRole . Corresponds to the following entity in ISO-10303-4
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Role" type="String" setter="set_Role" getter="get_Role">
+			The name of the role played by an actor. If the Role has value USERDEFINED, then the user defined role shall be provided as a value of the attribute UserDefinedRole.
+		</member>
+		<member name="UserDefinedRole" type="String" setter="set_UserDefinedRole" getter="get_UserDefinedRole">
+			Allows for specification of user defined roles beyond the enumeration values provided by Role attribute of type IfcRoleEnum. When a value is provided for attribute UserDefinedRole in parallel the attribute Role shall have enumeration value USERDEFINED.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			A textual description relating the nature of the role played by an actor.
+		</member>
+		<member name="HasExternalReference" type="Array" setter="" getter="get_HasExternalReference">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelAssignsToProduct" inherits="IfcRelAssigns"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The objectified relationshipÿ IfcRelAssignsToProduct handles the assignment of objects (subtypes of IfcObject ) to a product (subtypes of IfcProduct ). The Name attribute should be used to classify the usage of the IfcRelAssignsToProduct objectified relationship. The following Name values are proposed: 'Context' : Assignment of a context specific representation, such as of structural members to a 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingProduct" type="GDIFCEntityBase" setter="set_RelatingProduct" getter="get_RelatingProduct">
+			Reference to the product or product type to which the objects are assigned to. IFC2x4 CHANGE Datatype expanded to include IfcProduct and IfcTypeProduct .
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcReinforcementDefinitionProperties" inherits="IfcPreDefinedPropertySet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: An IfcReinforcementDefinitionProperties defines the cross section properties of reinforcement included in reinforced concrete building elements. The property set definition may be used both in conjunction with insitu and precast structures. HISTORY New entity in IFC Release 2x2 IFC 2x4 change: Supertype changed from IfcPropertySetDefinition to IfcPreDefinedPropertySet General 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="DefinitionType" type="String" setter="set_DefinitionType" getter="get_DefinitionType">
+			Descriptive type name applied to reinforcement definition properties.
+		</member>
+		<member name="ReinforcementSectionDefinitions" type="Array" setter="set_ReinforcementSectionDefinitions" getter="get_ReinforcementSectionDefinitions">
+			The list of section reinforcement properties attached to the reinforcement definition properties.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

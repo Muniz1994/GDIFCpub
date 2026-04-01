@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcProjectLibrary" inherits="IfcContext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcProjectLibrary collects all library elements that are included within a referenced project data set. Examples for project libraries include: type libraries (also called style or family libraries): a collection of subtypes of IfcTypeObject property definition libraries: a collections of IfcPropertySetTemplate or IfcPropertyTemplates HISTORY New entity in IFC2x4. Attribute use definition SELF\Ifc
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

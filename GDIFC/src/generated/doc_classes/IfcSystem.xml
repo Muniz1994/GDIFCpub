@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSystem" inherits="IfcGroup"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : Organized combination of related parts within an AEC product, composed for a common purpose or function or to provide a service. System is essentially a functionally related aggregation of products. The grouping relationship to one or several instances of IfcProduct (the system members) is handled by IfcRelAssignsToGroup . NOTE: The use of IfcSystem often applies to the repre
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ServicesBuildings" type="Array" setter="" getter="get_ServicesBuildings">
+		</member>
+		<member name="ServicesFacilities" type="Array" setter="" getter="get_ServicesFacilities">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcProperty" inherits="IfcPropertyAbstraction"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcProperty is an abstract generalization for all types of properties that can be associated with IFC objects through the property set mechanism. HISTORY New entity in IFC Release 1.0.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			Name for this property. This label is the significant name string that defines the semantic meaning for the property.
+		</member>
+		<member name="Specification" type="String" setter="set_Specification" getter="get_Specification">
+			Informative text to explain the property.
+		</member>
+		<member name="PartOfPset" type="Array" setter="" getter="get_PartOfPset">
+		</member>
+		<member name="PropertyForDependance" type="Array" setter="" getter="get_PropertyForDependance">
+		</member>
+		<member name="PropertyDependsOn" type="Array" setter="" getter="get_PropertyDependsOn">
+		</member>
+		<member name="PartOfComplex" type="Array" setter="" getter="get_PartOfComplex">
+		</member>
+		<member name="HasConstraints" type="Array" setter="" getter="get_HasConstraints">
+		</member>
+		<member name="HasApprovals" type="Array" setter="" getter="get_HasApprovals">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPropertyEnumeration" inherits="IfcPropertyAbstraction"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcPropertyEnumeration is a collection of simple or measure values that define a prescribed set of alternatives from which 'enumeration values' are selected. This enables inclusion of enumeration values in property sets. IfcPropertyEnumeration provides a name for the enumeration as well as a list of unique (numeric or descriptive) values (that may have a measure type assigned). The entity defines 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			Name of this enumeration.
+		</member>
+		<member name="EnumerationValues" type="Array" setter="set_EnumerationValues" getter="get_EnumerationValues">
+			List of values that form the enumeration.
+		</member>
+		<member name="Unit" type="GDIFCEntityBase" setter="set_Unit" getter="get_Unit">
+			Unit for the enumerator values, if not given, the default value for the measure type (given by the TYPE of nominal value) is used as defined by the global unit assignment at IfcProject.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

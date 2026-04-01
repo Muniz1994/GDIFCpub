@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcBeam" inherits="IfcBuiltElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO 6707-1:1989 : Structural member designed to carry loads between or beyond points of support, usually narrow in relation to its length and horizontal or nearly so. An IfcBeam is a horizontal, or nearly horizontal, structural member that is capable of withstanding load primarily by resisting bending. It represents such a member from an architectural point of view. It is not requi
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic type for a beam that is specified in an enumeration. There may be a property set given specificly for the predefined types. NOTE The PredefinedType shall only be used, if no type object IfcBeamType is assigned, providing its own IfcBeamType.PredefinedType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

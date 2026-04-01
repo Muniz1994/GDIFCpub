@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcAddress" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition: An abstract entity type for various kinds of postal and telecom addresses. NOTE Corresponds to the following entity in ISO-10303-41: address. HISTORY New entity in IFC Release 1.5.1.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Purpose" type="String" setter="set_Purpose" getter="get_Purpose">
+			Identifies the logical location of the address.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			Text that relates the nature of the address.
+		</member>
+		<member name="UserDefinedPurpose" type="String" setter="set_UserDefinedPurpose" getter="get_UserDefinedPurpose">
+			Allows for specification of user specific purpose of the address beyond the enumeration values provided by Purpose attribute of type IfcAddressTypeEnum. When a value is provided for attribute UserDefinedPurpose, in parallel the attribute Purpose shall have enumeration value USERDEFINED.
+		</member>
+		<member name="OfPerson" type="Array" setter="" getter="get_OfPerson">
+		</member>
+		<member name="OfOrganization" type="Array" setter="" getter="get_OfOrganization">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

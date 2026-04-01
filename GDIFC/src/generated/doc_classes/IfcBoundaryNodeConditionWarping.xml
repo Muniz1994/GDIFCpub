@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcBoundaryNodeConditionWarping" inherits="IfcBoundaryNodeCondition"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: Describes linearly elastic support conditions or connection conditions, including linearly elastic warping restraints. Applicability: Point supports and connections. HISTORY: New entity in IFC 2x2. IFC 2x4 change: All attribute data types changed from numeric to SELECT between Boolean and numeric. Stiffnesses may now also be negative, for example to capture destabilizing effec
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="WarpingStiffness" type="GDIFCEntityBase" setter="set_WarpingStiffness" getter="get_WarpingStiffness">
+			Defines the warping stiffness value.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

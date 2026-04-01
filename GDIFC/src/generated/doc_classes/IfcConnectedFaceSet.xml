@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcConnectedFaceSet" inherits="IfcTopologicalRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A connected_face_set is a set of faces such that the domain of faces together with their bounding edges and vertices is connected. NOTE Corresponding ISO 10303 entity: connected_face_set, the subtype closed_shell is included as IfcClosedShell and the subtype open_shell is included as IfcOpenShell . Please refer to ISO/IS 10303-42:1994, p. 144 for the final de
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="CfsFaces" type="Array" setter="set_CfsFaces" getter="get_CfsFaces">
+			The set of faces arcwise connected along common edges or vertices.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

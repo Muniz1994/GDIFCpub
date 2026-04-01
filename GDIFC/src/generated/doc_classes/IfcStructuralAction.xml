@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralAction" inherits="IfcStructuralActivity"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: A structural action is a structural activity that acts upon a structural item or building element. HISTORY New entity in IFC 2x2. IFC 2x4 change: Attribute DestabilizingLoad made optional. Attribute CausedBy deleted; use IfcRelAssignsToProduct via ReferencedBy instead. Structural actions are grouped into either an IfcStructuralLoadGroup of predefined type LOAD_GROUP or, more o
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="DestabilizingLoad" type="bool" setter="set_DestabilizingLoad" getter="get_DestabilizingLoad">
+			Indicates if this action may cause a stability problem. If it is 'FALSE', no further investigations regarding stability problems are necessary.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

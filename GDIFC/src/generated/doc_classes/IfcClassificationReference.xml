@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcClassificationReference" inherits="IfcExternalReference"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcClassificationReference is a reference into a classification system or source (see IfcClassification ) for a specific classification key (or notation). The inherited attributes have the following meaning: Identification : holds the key provided for a specific references to classification items (or tables). Name : allows for a human interpretable designation of a classification notation. Loca
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ReferencedSource" type="GDIFCEntityBase" setter="set_ReferencedSource" getter="get_ReferencedSource">
+			The classification system or source that is referenced.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			Description of the classification reference for informational purposes. IFC2x4 CHANGE New attribute added at the end of the attribute list.
+		</member>
+		<member name="Sort" type="String" setter="set_Sort" getter="get_Sort">
+			The classification reference with which objects are associated. IFC2x4 CHANGE New inverse attribute.
+		</member>
+		<member name="ClassificationRefForObjects" type="Array" setter="" getter="get_ClassificationRefForObjects">
+		</member>
+		<member name="HasReferences" type="Array" setter="" getter="get_HasReferences">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

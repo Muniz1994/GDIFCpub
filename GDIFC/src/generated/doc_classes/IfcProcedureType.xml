@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcProcedureType" inherits="IfcTypeProcess"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcProcedureType defines a particular type of procedure that may be specified. HISTORY New entity in IFC2x4 An IfcProcedureType provides for all forms of types of procedure that may be specified. Usage of IfcProcedureType defines the parameters for one or more occurrences of IfcProcedure . Parameters may be specified through property sets that may be enumerated in the IfcProcedureTypeEnum data 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Identifies the predefined types of a procedure from which the type required may be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

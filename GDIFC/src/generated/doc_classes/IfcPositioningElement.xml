@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPositioningElement" inherits="IfcProduct"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ContainedInStructure" type="Array" setter="" getter="get_ContainedInStructure">
+		</member>
+		<member name="Positions" type="Array" setter="" getter="get_Positions">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

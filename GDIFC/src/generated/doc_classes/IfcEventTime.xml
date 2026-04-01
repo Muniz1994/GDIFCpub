@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcEventTime" inherits="IfcSchedulingTime"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcEventTime captures the time-related information about an event including the different types of event dates (i.e. actual, scheduled, early, and late). HISTORY: New entity in IFC2x4. Use definitions All given values should be provided by the application, i.e. the IFC schema does not deal with dependencies between process time values. At this stage there is also no consistency check through where
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ActualDate" type="String" setter="set_ActualDate" getter="get_ActualDate">
+			The date on which an event actually occurs. It is a measured value.
+		</member>
+		<member name="EarlyDate" type="String" setter="set_EarlyDate" getter="get_EarlyDate">
+			The earliest date on which an event can occur. It is a calculated value.
+		</member>
+		<member name="LateDate" type="String" setter="set_LateDate" getter="get_LateDate">
+			The latest date on which an event can occur. It is a calculated value.
+		</member>
+		<member name="ScheduleDate" type="String" setter="set_ScheduleDate" getter="get_ScheduleDate">
+			The date on which an event is scheduled to occur. The value might be measured or somehow calculated, which is defined by ScheduleDataOrigin .
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

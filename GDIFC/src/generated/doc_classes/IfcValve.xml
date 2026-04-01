@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcValve" inherits="IfcFlowController"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A valve is used in a building services piping distribution system to control or modulate the flow of the fluid. HISTORY New entity in IFC2x4 Type Use Definition IfcValve defines the occurrence of any valve; common information about valve types is handled by IfcValveType . The IfcValveType (if present) may establish the common type name, usage (predefined type), properties, materials, ports, compos
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

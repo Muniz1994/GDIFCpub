@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcIrregularTimeSeries" inherits="IfcTimeSeries"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		In an irregular time series, unpredictable bursts of data arrive at unspecified points in time, or most time stamps cannot be characterized by a repeating pattern. EXAMPLE: A circulating pump cycles on and off at unpredictable times as dictated by the demands on the piping system; the amount of light in a classroom varies depending on when the lights are manually switched on and off and and how ma
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Values" type="Array" setter="set_Values" getter="get_Values">
+			The collection of time series values.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTableColumn" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcTableColumn is a data structure that captures column information for use in an IfcTable . Each instance defines the name, description, identifier, and units of measure that are applicable to the columnar data associated with the IfcTableRow objects. The use of IfcTableColumn supercedes the IsHeading flag associated with IfcTableRow . HISTORY New entity in IFC2x4.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Identifier" type="String" setter="set_Identifier" getter="get_Identifier">
+			The table column display name.
+		</member>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			Descriptive text for the table column.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			Table column identifier.
+		</member>
+		<member name="Unit" type="GDIFCEntityBase" setter="set_Unit" getter="get_Unit">
+			The unit of measure to be used for this column's data.
+		</member>
+		<member name="ReferencePath" type="GDIFCEntityBase" setter="set_ReferencePath" getter="get_ReferencePath">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

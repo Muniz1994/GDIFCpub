@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPlane" inherits="IfcElementarySurface"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A plane is an unbounded surface with a constant normal. A plane is defined by a point on the plane and the normal direction to the plane. The data is to be interpreted as follows: C = Position.Location x = Position.P[1] y = Position.P[2] z = Position.P[3] => normal to plane and the surface is parameterized as: where the parametric range is -∞ < u,v < ∞. In th
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

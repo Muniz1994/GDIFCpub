@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcAppliedValue" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcAppliedValue is an abstract supertype that specifies the common attributes for cost values. HISTORY: New Entity in IFC2x2. Modifed in IFC2x4 to use IfcDate for date values. Use definitions The extent of the IfcAppliedValue is determined by the AppliedValue attribute which may be defined either as an IfcMeasureWithUnit or as an IfcMonetaryMeasure or as an IfcRatioMeasure via the IfcAppliedValueS
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			A name or additional clarification given to a cost value.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			The description that may apply additional information about a cost value.
+		</member>
+		<member name="AppliedValue" type="GDIFCEntityBase" setter="set_AppliedValue" getter="get_AppliedValue">
+			The extent or quantity or amount of an applied value.
+		</member>
+		<member name="UnitBasis" type="GDIFCEntityBase" setter="set_UnitBasis" getter="get_UnitBasis">
+			The number and unit of measure on which the unit cost is based. Note: As well as the normally expected units of measure such as length, area, volume etc., costs may be based on units of measure which need to be defined e.g. sack, drum, pallet, item etc. Unit costs may be based on quantities greater (or lesser) than a unitary value of the basis measure. For instance, timber may have a unit cost rate per X meters where X > 1; similarly for cable, piping and many other items. The basis number may be either an integer or a real value. Note: This attribute should be asserted for all circumstances where the cost to be applied is per unit quantity. It may be asserted even for circumstances where an item price is used, in which case the unit cost basis should be by item (or equivalent definition).
+		</member>
+		<member name="ApplicableDate" type="String" setter="set_ApplicableDate" getter="get_ApplicableDate">
+			The date on or from which an applied value is applicable. IFC2x4 CHANGE Type changed from IfcDateTimeSelect.
+		</member>
+		<member name="FixedUntilDate" type="String" setter="set_FixedUntilDate" getter="get_FixedUntilDate">
+			The date until which applied value is applicable. IFC2x4 CHANGE Type changed from IfcDateTimeSelect.
+		</member>
+		<member name="Category" type="String" setter="set_Category" getter="get_Category">
+			Reference to an external reference, e.g. library, classification, or document information, that is associated to the IfcAppliedValue. IFC2x4 CHANGE New inverse attribute.
+		</member>
+		<member name="Condition" type="String" setter="set_Condition" getter="get_Condition">
+			The total (or subtotal) value of the components within the applied value relationship expressed as a single applied value.
+		</member>
+		<member name="ArithmeticOperator" type="String" setter="set_ArithmeticOperator" getter="get_ArithmeticOperator">
+			The value of the single applied value which is used by the applied value relationship to express a complex applied value.
+		</member>
+		<member name="Components" type="Array" setter="set_Components" getter="get_Components">
+		</member>
+		<member name="HasExternalReference" type="Array" setter="" getter="get_HasExternalReference">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

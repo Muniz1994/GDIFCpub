@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTextureCoordinate" inherits="IfcPresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The IfcTextureCoordinate a an abstract supertype of the different kinds to apply texture coordinates to geometries. For vertex based geometries an explicit assignment of 2D texture vertices to the 3D geometry points is supported by the subtype IfcTextureMap , in addition there can be a procedural description of how texture coordinates shall be applied to geometric items. If no IfcTextureCoordinate
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Maps" type="Array" setter="set_Maps" getter="get_Maps">
+			Reference to the one (or in case of multi textures with identity transformation to geometric surfaces) subtype of IfcSurfaceTexture that is applied to a geometric surface by the texture coordinate transformation.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

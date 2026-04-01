@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRepresentation" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-43:1992 : A representation is one or more representation items that are related in a specified representation context as the representation of some concept. IfcRepresentation defines the general concept of representing product properties. Representation Use Definition Each representation, either IfcShapeRepresentation , or IfcTopologyRepresentation shall have a well de
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ContextOfItems" type="GDIFCEntityBase" setter="set_ContextOfItems" getter="get_ContextOfItems">
+			Definition of the representation context for which the different subtypes of representation are valid.
+		</member>
+		<member name="RepresentationIdentifier" type="String" setter="set_RepresentationIdentifier" getter="get_RepresentationIdentifier">
+			The optional identifier of the representation as used within a project.
+		</member>
+		<member name="RepresentationType" type="String" setter="set_RepresentationType" getter="get_RepresentationType">
+			The description of the type of a representation context. The representation type defines the type of geometry or topology used for representing the product representation. More information is given at the subtypes IfcShapeRepresentation and IfcTopologyRepresentation . The supported values for context type are to be specified by implementers agreements.
+		</member>
+		<member name="Items" type="Array" setter="set_Items" getter="get_Items">
+			Set of geometric representation items that are defined for this representation.
+		</member>
+		<member name="RepresentationMap" type="Array" setter="" getter="get_RepresentationMap">
+		</member>
+		<member name="LayerAssignments" type="Array" setter="" getter="get_LayerAssignments">
+		</member>
+		<member name="OfProductRepresentation" type="Array" setter="" getter="get_OfProductRepresentation">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

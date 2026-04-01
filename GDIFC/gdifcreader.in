@@ -7,6 +7,8 @@ reloadable = true
 [icons]
 GDIFCManager = "res://addons/GDIFC/assets/icons/building.svg"
 IFCNode = "res://addons/GDIFC/assets/icons/box.svg"
+IFCModel = "res://addons/GDIFC/assets/icons/building.svg"
+GDIFCEntityBase = "res://addons/GDIFC/assets/icons/box.svg"
 
 [libraries]
 

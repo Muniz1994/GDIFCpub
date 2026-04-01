@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRepresentationMap" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-43:1992 : A representation map is the identification of a representation and a representation item in that representation for the purpose of mapping. The representation item defines the origin of the mapping. The representation map is used as the source of a mapping by a mapped item. NOTE Corresponding ISO 10303 entity: representation_map. Please refer to ISO/IS 10303-
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="MappingOrigin" type="GDIFCEntityBase" setter="set_MappingOrigin" getter="get_MappingOrigin">
+			An axis2 placement that defines the position about which the mapped representation is mapped.
+		</member>
+		<member name="MappedRepresentation" type="GDIFCEntityBase" setter="set_MappedRepresentation" getter="get_MappedRepresentation">
+			A representation that is mapped to at least one mapped item.
+		</member>
+		<member name="HasShapeAspects" type="Array" setter="" getter="get_HasShapeAspects">
+		</member>
+		<member name="MapUsage" type="Array" setter="" getter="get_MapUsage">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

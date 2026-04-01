@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcGeographicElement" inherits="IfcElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : An IfcGeographicElement is a generalization of all elements within a geographical landscape. It includes occurrences of typical geographical element, often referred to as features, such as roads, zones, trees, etc. Common type information behind several occurrences of IfcGeographicElement is provided by the IfcGeographicElementType .ÿ HISTORY ÿNew entity in Release IFC2x4. Ty
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic types for a geographic element that are specified in an enumeration. There might be property sets defined specifically for each predefined type.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

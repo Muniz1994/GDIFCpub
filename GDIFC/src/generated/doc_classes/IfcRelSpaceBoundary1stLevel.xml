@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelSpaceBoundary1stLevel" inherits="IfcRelSpaceBoundary"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The 1st level space boundary defines the physical or virtual delimiter of a space by the relationship IfcRelSpaceBoundary1stLevel to the surrounding elements. 1st level space boundaries are characterizeda by: 1st level space boundaries are the boundaries of a space defined by the surfaces of building elements bounding this space (physical space boundaries) or by virtual surfaces provided by an adj
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ParentBoundary" type="GDIFCEntityBase" setter="set_ParentBoundary" getter="get_ParentBoundary">
+			Reference to the host, or parent, space boundary within which this inner boundary is defined.
+		</member>
+		<member name="InnerBoundaries" type="Array" setter="" getter="get_InnerBoundaries">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

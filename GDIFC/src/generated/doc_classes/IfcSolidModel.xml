@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSolidModel" inherits="IfcGeometricRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992: A solid model is a complete representation of the nominal shape of a product such that all points in the interior are connected. Any point can be classified as being inside, outside, or on the boundary of a solid. There are several different types of solid model representations. NOTE: Corresponding ISO 10303-42 entity: solid_model, only three subtypes have bee
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

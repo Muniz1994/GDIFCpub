@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDocumentInformation" inherits="IfcExternalInformation"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcDocumentInformation captures "metadata" of an external document. The actual content of the document is not defined in IFC; instead, it can be found following the reference given to IfcDocumentReference . HISTORY: New entity in IFC 2x.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Identification" type="String" setter="set_Identification" getter="get_Identification">
+			Identifier that uniquely identifies a document.
+		</member>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			File name or document name assigned by owner.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			Description of document and its content.
+		</member>
+		<member name="Location" type="String" setter="set_Location" getter="get_Location">
+			Purpose for this document.
+		</member>
+		<member name="Purpose" type="String" setter="set_Purpose" getter="get_Purpose">
+			Intended use for this document.
+		</member>
+		<member name="IntendedUse" type="String" setter="set_IntendedUse" getter="get_IntendedUse">
+			Scope for this document.
+		</member>
+		<member name="Scope" type="String" setter="set_Scope" getter="get_Scope">
+			Document revision designation.
+		</member>
+		<member name="Revision" type="String" setter="set_Revision" getter="get_Revision">
+			Information about the person and/or organization acknowledged as the 'owner' of this document. In some contexts, the document owner determines who has access to or editing right to the document.
+		</member>
+		<member name="DocumentOwner" type="GDIFCEntityBase" setter="set_DocumentOwner" getter="get_DocumentOwner">
+			The persons and/or organizations who have created this document or contributed to it.
+		</member>
+		<member name="Editors" type="Array" setter="set_Editors" getter="get_Editors">
+			Date and time stamp when the document was originally created. IFC2x4 CHANGE The data type has been changed to IfcDateTime , the date time string according to ISO8601.
+		</member>
+		<member name="CreationTime" type="String" setter="set_CreationTime" getter="get_CreationTime">
+			Date and time stamp when this document version was created. IFC2x4 CHANGE The data type has been changed to IfcDateTime , the date time string according to ISO8601.
+		</member>
+		<member name="LastRevisionTime" type="String" setter="set_LastRevisionTime" getter="get_LastRevisionTime">
+			Describes the electronic format of the document being referenced, providing the file extension and the manner in which the content is provided.
+		</member>
+		<member name="ElectronicFormat" type="String" setter="set_ElectronicFormat" getter="get_ElectronicFormat">
+			Date when the document becomes valid. IFC2x4 CHANGE The data type has been changed to IfcDate , the date string according to ISO8601.
+		</member>
+		<member name="ValidFrom" type="String" setter="set_ValidFrom" getter="get_ValidFrom">
+			Date until which the document remains valid. IFC2x4 CHANGE The data type has been changed to IfcDate , the date string according to ISO8601.
+		</member>
+		<member name="ValidUntil" type="String" setter="set_ValidUntil" getter="get_ValidUntil">
+			The level of confidentiality of the document.
+		</member>
+		<member name="Confidentiality" type="String" setter="set_Confidentiality" getter="get_Confidentiality">
+			The current status of the document. Examples of status values that might be used for a document information status include: - DRAFT - FINAL DRAFT - FINAL - REVISION
+		</member>
+		<member name="Status" type="String" setter="set_Status" getter="get_Status">
+			Resource identifier or locator, provided as URI, URN or URL, of the document information for online references. IFC2x4 CHANGE New attribute added at end of attribute list.
+		</member>
+		<member name="DocumentInfoForObjects" type="Array" setter="" getter="get_DocumentInfoForObjects">
+		</member>
+		<member name="HasDocumentReferences" type="Array" setter="" getter="get_HasDocumentReferences">
+		</member>
+		<member name="IsPointedTo" type="Array" setter="" getter="get_IsPointedTo">
+		</member>
+		<member name="IsPointer" type="Array" setter="" getter="get_IsPointer">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

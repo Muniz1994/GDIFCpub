@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcBlock" inherits="IfcCsgPrimitive3D"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The IfcBlock is a Construction Solid Geometry (CSG) 3D primitive. It is defined by a position and a positve distance along the three orthogonal axes. The inherited Position attribute has the IfcAxisPlacement3D type and provides: SELF\IfcCsgPrimitive3D.Position : The location and orientation of the axis system for the primitive. SELF\IfcCsgPrimitive3D.Position.Location : The block has one vertex at
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="XLength" type="float" setter="set_XLength" getter="get_XLength">
+			The size of the block along the placement X axis. It is provided by the inherited axis placement through SELF\IfcCsgPrimitive3D.Position.P[1] .
+		</member>
+		<member name="YLength" type="float" setter="set_YLength" getter="get_YLength">
+			The size of the block along the placement Y axis. It is provided by the inherited axis placement through SELF\IfcCsgPrimitive3D.Position.P[2] .
+		</member>
+		<member name="ZLength" type="float" setter="set_ZLength" getter="get_ZLength">
+			The size of the block along the placement Z axis. It is provided by the inherited axis placement through SELF\IfcCsgPrimitive3D.Position.P[3] .
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

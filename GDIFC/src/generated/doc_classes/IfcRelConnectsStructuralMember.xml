@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelConnectsStructuralMember" inherits="IfcRelConnects"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The entity IfcRelConnectsStructuralMember defines all needed properties describing the connection between structural members and structural connection objects (nodes or supports). HISTORY New entity in IFC2x2. Use Definition Point Connection Instances of the entity IfcRelConnectsStructuralMember shall be used to describe a connection between an instance of IfcStructuralPointConnection and either a
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingStructuralMember" type="GDIFCEntityBase" setter="set_RelatingStructuralMember" getter="get_RelatingStructuralMember">
+			Reference to an instance of IfcStructuralMember (or its subclasses) which is connected to the specified structural connection.
+		</member>
+		<member name="RelatedStructuralConnection" type="GDIFCEntityBase" setter="set_RelatedStructuralConnection" getter="get_RelatedStructuralConnection">
+			Reference to an instance of IfcStructuralConnection (or its subclasses) which is connected to the specified structural member.
+		</member>
+		<member name="AppliedCondition" type="GDIFCEntityBase" setter="set_AppliedCondition" getter="get_AppliedCondition">
+			Conditions which define the connections properties. Connection conditions are often called "release" but are not only used to define mechanisms like hinges but also rigid, elastic, and other conditions.
+		</member>
+		<member name="AdditionalConditions" type="GDIFCEntityBase" setter="set_AdditionalConditions" getter="get_AdditionalConditions">
+			Describes additional connection properties.
+		</member>
+		<member name="SupportedLength" type="float" setter="set_SupportedLength" getter="get_SupportedLength">
+			Defines the 'supported length' of this structural connection. See Fig. for more detail.
+		</member>
+		<member name="ConditionCoordinateSystem" type="GDIFCEntityBase" setter="set_ConditionCoordinateSystem" getter="get_ConditionCoordinateSystem">
+			Defines a coordinate system used for the description of the connection properties in ConnectionCondition relative to the local coordinate system of RelatingStructuralMember . If left unspecified, the placement IfcAxis2Placement3D ((x,y,z), ?, ?) is implied with x,y,z being the local member coordinates where the connection is made and the default axes directions being in parallel with the local axes of RelatingStructuralMember .
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

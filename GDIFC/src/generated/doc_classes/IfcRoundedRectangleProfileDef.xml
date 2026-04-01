@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRoundedRectangleProfileDef" inherits="IfcRectangleProfileDef"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcRoundedRectangleProfileDef defines a rectangle with equally rounded corners as the profile definition used by the swept surface geometry or the swept area solid. It is given by the X extent, the Y extent, and the radius for the rounded corners, and placed within the 2D position coordinate system, established by the Position attribute. It is placed centric within the position coordinate system, 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RoundingRadius" type="float" setter="set_RoundingRadius" getter="get_RoundingRadius">
+			Radius of the circular arcs by which all four corners of the rectangle are equally rounded.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

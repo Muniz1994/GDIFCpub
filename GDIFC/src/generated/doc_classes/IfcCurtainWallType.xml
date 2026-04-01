@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCurtainWallType" inherits="IfcBuiltElementType"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : The element type ( IfcCurtainWallType ) defines a list of commonly shared property set definitions of a curtain wall element and an optional set of product representations. It is used to define a curtain wall specification (i.e. the specific product information, that is common to all occurrences of that product type). NOTE: The product representations are defined as represent
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Identifies the predefined types of a curtain wall element from which the type required may be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

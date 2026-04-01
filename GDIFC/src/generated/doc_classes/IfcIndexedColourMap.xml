@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcIndexedColourMap" inherits="IfcPresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="MappedTo" type="GDIFCEntityBase" setter="set_MappedTo" getter="get_MappedTo">
+		</member>
+		<member name="Opacity" type="float" setter="set_Opacity" getter="get_Opacity">
+		</member>
+		<member name="Colours" type="GDIFCEntityBase" setter="set_Colours" getter="get_Colours">
+		</member>
+		<member name="ColourIndex" type="PackedInt64Array" setter="set_ColourIndex" getter="get_ColourIndex">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

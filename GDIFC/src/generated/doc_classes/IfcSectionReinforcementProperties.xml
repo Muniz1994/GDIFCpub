@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSectionReinforcementProperties" inherits="IfcPreDefinedProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcSectionReinforcementProperties defines the cross section properties of reinforcement for a single longitudinal piece of a cross section with a specific reinforcement usage type. HISTORY New entity in IFC2x2. Several sets of cross section reinforcement properties represented by instances of IfcReinforcementProperties may be attached to the section reinforcement properties ( IfcReinforcementDefin
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="LongitudinalStartPosition" type="float" setter="set_LongitudinalStartPosition" getter="get_LongitudinalStartPosition">
+			The start position in longitudinal direction for the section reinforcement properties.
+		</member>
+		<member name="LongitudinalEndPosition" type="float" setter="set_LongitudinalEndPosition" getter="get_LongitudinalEndPosition">
+			The end position in longitudinal direction for the section reinforcement properties.
+		</member>
+		<member name="TransversePosition" type="float" setter="set_TransversePosition" getter="get_TransversePosition">
+			The position for the section reinforcement properties in transverse direction.
+		</member>
+		<member name="ReinforcementRole" type="String" setter="set_ReinforcementRole" getter="get_ReinforcementRole">
+			The role, purpose or usage of the reinforcement, i.e. the kind of loads and stresses it is intended to carry, defined for the section reinforcement properties.
+		</member>
+		<member name="SectionDefinition" type="GDIFCEntityBase" setter="set_SectionDefinition" getter="get_SectionDefinition">
+			Definition of the cross section profile and longitudinal section type.
+		</member>
+		<member name="CrossSectionReinforcementDefinitions" type="Array" setter="set_CrossSectionReinforcementDefinitions" getter="get_CrossSectionReinforcementDefinitions">
+			The set of reinforcment properties attached to a section reinforcement properties definition.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

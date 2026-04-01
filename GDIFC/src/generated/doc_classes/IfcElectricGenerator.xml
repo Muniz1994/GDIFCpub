@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcElectricGenerator" inherits="IfcEnergyConversionDevice"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An electric generator is an engine that is a machine for converting mechanical energy into electrical energy. HISTORY New entity in IFC2x4 Type Use Definition IfcElectricGenerator defines the occurrence of any electric generator; common information about electric generator types is handled by IfcElectricGeneratorType . The IfcElectricGeneratorType (if present) may establish the common type name, u
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

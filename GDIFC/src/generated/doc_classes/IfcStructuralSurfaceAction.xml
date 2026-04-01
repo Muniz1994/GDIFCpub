@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralSurfaceAction" inherits="IfcStructuralAction"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: Defines an action which is distributed over a surface. A surface action may be connected with a surface member or surface connection. HISTORY: New entity in IFC 2x4. IFC 2x4 change: Former entity IfcStructuralPlanarActionVarying from IFC 2x2 has been removed and are replaced by this entity. Coordinate Systems : See definitions at IfcStructuralActivity . Topology Use Definition
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ProjectedOrTrue" type="String" setter="set_ProjectedOrTrue" getter="get_ProjectedOrTrue">
+			Defines whether load values are given per true lengths of the surface on which they act, or per lengths of the projection of the surface in load direction. The latter is only applicable to loads which act in global coordinate directions.
+		</member>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Type of action according to its distribution of load values.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

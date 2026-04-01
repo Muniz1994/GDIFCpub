@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDistributionPort" inherits="IfcPort"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A distribution port is an inlet or outlet of a product through which a particular substance may flow. Distribution ports are used for passage of solid, liquid, or gas substances, as well as electricity for power or communications. Flow segments (pipes, ducts, cables) may be used to connect ports across products. Distribution ports are defined by system type and flow direction such that for two por
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="FlowDirection" type="String" setter="set_FlowDirection" getter="get_FlowDirection">
+			Enumeration that identifies if this port is a Sink (inlet), a Source (outlet) or both a SinkAndSource.
+		</member>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Enumeration that identifies the system type. If a system type is defined, the port may only be connected to other ports having the same system type.
+		</member>
+		<member name="SystemType" type="String" setter="set_SystemType" getter="get_SystemType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcExternallyDefinedTextFont" inherits="IfcExternalReference"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-46:1992 : The externally defined text font is an external reference to a text font NOTE Restrictions of the font source and font names to be used may be exposed by implementation guidelines. NOTE Corresponding ISO 10303 name: externally_defined_text_font. Please refer to ISO/IS 10303-46:1994, p. 137 for the final definition of the formal standard. HISTORY New entity in
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

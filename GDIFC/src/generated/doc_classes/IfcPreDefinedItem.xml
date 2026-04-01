@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPreDefinedItem" inherits="IfcPresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A pre defined item is a qualified name given to a style or font which is determined within the data exchange specification by convention on using the Name attribute value (in contrary to externally defined items, which are agreed by an external source). NOTE The convention on using the Name value is defined at the subtypes of IfcPreDefinedItem and is part of the specification. NOTE Corresponding I
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			The string by which the pre defined item is identified. Allowable values for the string are declared at the level of subtypes.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

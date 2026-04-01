@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFaceBound" inherits="IfcTopologicalRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A face bound is a loop which is intended to be used for bounding a face. NOTE Corresponding ISO 10303 entity: face_bound. Please refer to ISO/IS 10303-42:1994, p. 139 for the final definition of the formal standard. HISTORY New class in IFC Release 1.0
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Bound" type="GDIFCEntityBase" setter="set_Bound" getter="get_Bound">
+			The loop which will be used as a face boundary.
+		</member>
+		<member name="Orientation" type="bool" setter="set_Orientation" getter="get_Orientation">
+			This indicated whether (TRUE) or not (FALSE) the loop has the same sense when used to bound the face as when first defined. If sense is FALSE the senses of all its component oriented edges are implicitly reversed when used in the face.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

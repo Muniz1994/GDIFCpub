@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPersonAndOrganization" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition: Identification of a person within an organization. NOTE Corresponds to the following entity in ISO-10303-41: person_and_organization. HISTORY New entity in IFC Release 1.5.1
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ThePerson" type="GDIFCEntityBase" setter="set_ThePerson" getter="get_ThePerson">
+			The person who is related to the organization.
+		</member>
+		<member name="TheOrganization" type="GDIFCEntityBase" setter="set_TheOrganization" getter="get_TheOrganization">
+			The organization to which the person is related.
+		</member>
+		<member name="Roles" type="Array" setter="set_Roles" getter="get_Roles">
+			Roles played by the person within the context of an organization. These may differ from the roles in ThePerson.Roles which may be asserted without organizational context.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

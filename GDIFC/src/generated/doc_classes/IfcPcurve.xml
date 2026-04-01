@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPcurve" inherits="IfcCurve"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-42:1992 : A pcurve is a curve which lies on the basis of a surface and is defined in the parameter space of that surface. The basis curve is a curve defined in the two-dimensional parametric space of a reference basis surface. Although it is defined by a curve in two dimensional space, the variables involved are u and v , which occur in the parametric representation of
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="BasisSurface" type="GDIFCEntityBase" setter="set_BasisSurface" getter="get_BasisSurface">
+		</member>
+		<member name="ReferenceCurve" type="GDIFCEntityBase" setter="set_ReferenceCurve" getter="get_ReferenceCurve">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

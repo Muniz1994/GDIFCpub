@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPermeableCoveringProperties" inherits="IfcPreDefinedPropertySet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		This entity is a description of a panel within a door or window (as fillers for opening) which allows for air flow. It is given by its properties ( IfcPermeableCoveringProperties ). A permeable covering is a casement, such as a component, fixed or opening, consisting essentially of a frame and the infilling. The infilling is normally a grill, a louver or a screen. The way of operation is defined i
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="OperationType" type="String" setter="set_OperationType" getter="get_OperationType">
+			Types of permeable covering operations. Also used to assign standard symbolic presentations according to national building standards.
+		</member>
+		<member name="PanelPosition" type="String" setter="set_PanelPosition" getter="get_PanelPosition">
+			Position of this permeable covering panel within the overall window or door type.
+		</member>
+		<member name="FrameDepth" type="float" setter="set_FrameDepth" getter="get_FrameDepth">
+			Depth of panel frame (used to include the permeable covering), measured from front face to back face horizontally (i.e. perpendicular to the window or door (elevation) plane.
+		</member>
+		<member name="FrameThickness" type="float" setter="set_FrameThickness" getter="get_FrameThickness">
+			Width of panel frame (used to include the permeable covering), measured from inside of panel (at permeable covering) to outside of panel (at lining), i.e. parallel to the window or door (elevation) plane.
+		</member>
+		<member name="ShapeAspectStyle" type="GDIFCEntityBase" setter="set_ShapeAspectStyle" getter="get_ShapeAspectStyle">
+			Optional link to a shape aspect definition, which points to the part of the geometric representation of the window style, which is used to represent the permeable covering.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

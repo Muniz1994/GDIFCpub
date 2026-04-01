@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelAssignsToActor" inherits="IfcRelAssigns"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The objectified relationship IfcRelAssignsToActor handles the assignment of objects (subtypes of IfcObject ) to an actor (subtypes of IfcActor ). The IfcRelAssignsToActor objectified relationship defines a relationship between an IfcActor and one or many objects. A particular role of the actor played in that relationship can be associated. If specified, it takes priority over the role that may be 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingActor" type="GDIFCEntityBase" setter="set_RelatingActor" getter="get_RelatingActor">
+			Reference to the information about the actor. It comprises the information about the person or organization and its addresses.
+		</member>
+		<member name="ActingRole" type="GDIFCEntityBase" setter="set_ActingRole" getter="get_ActingRole">
+			Role of the actor played within the context of the assignment to the object(s).
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

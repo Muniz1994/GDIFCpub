@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcController" inherits="IfcDistributionControlElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A controller is a device that monitors inputs and controls outputs within a building automation system. A controller may be physical (having placement within a spatial structure) or logical (a software interface or aggregated within a programmable physical controller). HISTORY New entity in IFC2x4 Type Use Definition IfcController defines the occurrence of any controller; common information about 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

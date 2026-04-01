@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTrapeziumProfileDef" inherits="IfcParameterizedProfileDef"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcTrapeziumProfileDef defines a trapezium as the profile definition used by the swept surface geometry or the swept area solid. It is given by its Top X and Bottom X extent and its Y extent as well as by the offset of the Top X extend, and placed within the 2D position coordinate system, established by the Position attribute. It is placed centric within the position coordinate system, that is, in
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="BottomXDim" type="float" setter="set_BottomXDim" getter="get_BottomXDim">
+			The extent of the bottom line measured along the implicit x-axis.
+		</member>
+		<member name="TopXDim" type="float" setter="set_TopXDim" getter="get_TopXDim">
+			The extent of the top line measured along the implicit x-axis.
+		</member>
+		<member name="YDim" type="float" setter="set_YDim" getter="get_YDim">
+			The extent of the distance between the parallel bottom and top lines measured along the implicit y-axis.
+		</member>
+		<member name="TopXOffset" type="float" setter="set_TopXOffset" getter="get_TopXOffset">
+			Offset from the beginning of the top line to the bottom line, measured along the implicit x-axis.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

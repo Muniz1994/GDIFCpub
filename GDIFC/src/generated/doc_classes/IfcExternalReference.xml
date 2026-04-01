@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcExternalReference" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcExternalReference is the identification of information that is not explicitly represented in the current model or in the project database (as an implementation of the current model). Such information may be contained in classifications, documents or libraries. The IfcExternalReference identifies a particular item, such as a dictionary entry, a classification notation, or a document reference
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Location" type="String" setter="set_Location" getter="get_Location">
+			Location, where the external source (classification, document or library) can be accessed by electronic means. The electronic location is provided as an URI, and would normally be given as an URL location string. IFC2x4 CHANGE The data type has been changed from IfcLabel to IfcURIReference .
+		</member>
+		<member name="Identification" type="String" setter="set_Identification" getter="get_Identification">
+			The Identification provides a unique identifier of the referenced item within the external source (classification, document or library). It may be provided as a key, e.g. a classification notation, like NF2.3 a handle a uuid or guid It may be human readable (such as a key) or not (such as a handle or uuid) depending on the context of its usage (which has to be determined by local agreement). IFC2x4 CHANGE Attribute renamed from ItemReference for consistency.
+		</member>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			Optional name to further specify the reference. It can provide a human readable identifier (which does not necessarily need to have a counterpart in the internal structure of the document).
+		</member>
+		<member name="ExternalReferenceForResources" type="Array" setter="" getter="get_ExternalReferenceForResources">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

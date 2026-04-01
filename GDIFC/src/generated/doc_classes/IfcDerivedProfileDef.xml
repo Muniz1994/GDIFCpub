@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDerivedProfileDef" inherits="IfcProfileDef"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcDerivedProfileDef defines the profile by transformation from the parent profile. The transformation is given by a two dimensional transformation operator. Transformation includes translation, rotation, mirror and scaling. The latter can be uniform or non uniform. The derived profiles may be used to define swept surfaces, swept area solids or sectioned spines. The transformation effects the posi
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ParentProfile" type="GDIFCEntityBase" setter="set_ParentProfile" getter="get_ParentProfile">
+			The parent profile provides the origin of the transformation.
+		</member>
+		<member name="Operator" type="GDIFCEntityBase" setter="set_Operator" getter="get_Operator">
+			Transformation operator applied to the parent profile.
+		</member>
+		<member name="Label" type="String" setter="set_Label" getter="get_Label">
+			The name by which the transformation may be referred to. The actual meaning of the name has to be defined in the context of applications.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

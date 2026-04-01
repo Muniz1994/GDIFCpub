@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcReinforcingMesh" inherits="IfcReinforcingElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: A series of longitudinal and transverse wires or bars of various gauges, arranged at right angles to each other and welded at all points of intersection; usually used for concrete slab reinforcement. Also known as welded wire fabric. HISTORY New entity in IFC Release 2x2 IFC 2x4 CHANGE All attributes removed; information now provided by IfcReinforcingMeshType . Geometry Use De
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="MeshLength" type="float" setter="set_MeshLength" getter="get_MeshLength">
+			The predefined type is always MESH.
+		</member>
+		<member name="MeshWidth" type="float" setter="set_MeshWidth" getter="get_MeshWidth">
+		</member>
+		<member name="LongitudinalBarNominalDiameter" type="float" setter="set_LongitudinalBarNominalDiameter" getter="get_LongitudinalBarNominalDiameter">
+		</member>
+		<member name="TransverseBarNominalDiameter" type="float" setter="set_TransverseBarNominalDiameter" getter="get_TransverseBarNominalDiameter">
+		</member>
+		<member name="LongitudinalBarCrossSectionArea" type="float" setter="set_LongitudinalBarCrossSectionArea" getter="get_LongitudinalBarCrossSectionArea">
+		</member>
+		<member name="TransverseBarCrossSectionArea" type="float" setter="set_TransverseBarCrossSectionArea" getter="get_TransverseBarCrossSectionArea">
+		</member>
+		<member name="LongitudinalBarSpacing" type="float" setter="set_LongitudinalBarSpacing" getter="get_LongitudinalBarSpacing">
+		</member>
+		<member name="TransverseBarSpacing" type="float" setter="set_TransverseBarSpacing" getter="get_TransverseBarSpacing">
+		</member>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

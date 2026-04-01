@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPhysicalSimpleQuantity" inherits="IfcPhysicalQuantity"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The physical quantity, IfcPhysicalSimpleQuantity , is an entity that holds a single quantity measure value (as defined at the subtypes of IfcPhysicalSimpleQuantity ) together with a semantic definition of the usage for the measure value. EXAMPLE An element, like a wall, may have several area measures, like footprint area, left wall face area, right wall face area. These areas would be given by thr
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Unit" type="GDIFCEntityBase" setter="set_Unit" getter="get_Unit">
+			Optional assignment of a unit. If no unit is given, then the global unit assignment, as established at the IfcProject, applies to the quantity measures.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

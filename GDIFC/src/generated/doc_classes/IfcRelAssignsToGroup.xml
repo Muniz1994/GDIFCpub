@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelAssignsToGroup" inherits="IfcRelAssigns"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The objectified relationship IfcRelAssignsToGroup handles the assignment of object definitions (individual object occurrences as subtypes of IfcObject , and object types as subtypes of IfcTypeObject ) to a group (subtypes of IfcGroup ). The relationship handles the assignment of group members to the group object. It allows for grouping arbitrary objects within a group, including other groups. The 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingGroup" type="GDIFCEntityBase" setter="set_RelatingGroup" getter="get_RelatingGroup">
+			Reference to group that contains all assigned group members.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

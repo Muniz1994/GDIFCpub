@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPropertyListValue" inherits="IfcSimpleProperty"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcPropertyListValue defines a property that has several (numeric or descriptive) values assigned, these values are given by an ordered list.ÿIt defines a property - list value combination for which the property Name , an optional Description ,ÿthe optional ListValues with measure type and optionally an Unit is given. An IfcPropertyListValue is a list of values. The order in which values appear
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ListValues" type="Array" setter="set_ListValues" getter="get_ListValues">
+			List of property values. IFC2x4 CHANGE The attribute has been made optional with upward compatibility for file based exchange.
+		</member>
+		<member name="Unit" type="GDIFCEntityBase" setter="set_Unit" getter="get_Unit">
+			Unit for the list values, if not given, the default value for the measure type (given by the TYPE of nominal value) is used as defined by the global unit assignment at IfcProject.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

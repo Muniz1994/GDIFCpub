@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRampFlight" inherits="IfcBuiltElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A ramp is an inclined slab segment, normally providing a human circulation link between two landings, floors or slabs at different elevations. An IfcRampFlight is normally aggregated by an IfcRamp through the IfcRelAggregates relationship, the ramp flight is then included in the set of IfcRelAggregates.RelatedObjects . An IfcRampFlight normally connects the floor slab of zero to two different stor
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic type for a ramp flight that is specified in an enumeration. There may be a property set given specificly for the predefined types. NOTE The PredefinedType shall only be used, if no type object IfcRampFlightType is assigned, providing its own IfcRampFlightType.PredefinedType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

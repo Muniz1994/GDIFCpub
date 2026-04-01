@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcChillerType" inherits="IfcEnergyConversionDeviceType"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The energy conversion device type IfcChillerType defines commonly shared information for occurrences of chillers. The set of shared information may include: common properties with shared property sets common representations of shape common materials common composition of elements common ports applicable assignment of process types It is used to define a chiller specification (i.e. the specific pro
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Defines the typical types of chillers (e.g., air-cooled, water-cooled, etc.).
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

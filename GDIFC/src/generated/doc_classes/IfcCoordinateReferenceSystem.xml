@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCoordinateReferenceSystem" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from OpenGIS® Abstract Specification, Topic 2 : A coordinate reference system is a coordinate system which is related to the real world by a datum. The coordinate system is composed of a set of coordinate axes with specified units of measure. The datum specifies the relationship of a coordinate system to the earth. The resulting combination of coordinate system and datum is a coordinate
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			Name by which the coordinate reference system is identified. Note The name shall be taken from the list recognized by the European Petroleum Survey Group EPSG.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			Informal description of this coordinate reference system.
+		</member>
+		<member name="GeodeticDatum" type="String" setter="set_GeodeticDatum" getter="get_GeodeticDatum">
+			Name by which this datum is identified. The geodetic datum is associated with the coordinate reference system and indicates the shape and size of the rotation ellipsoid and this ellipsoid's connection and orientation to the actual globe/earth. Examples for geodetic datums include: ED50 EUREF89 WSG84
+		</member>
+		<member name="HasCoordinateOperation" type="Array" setter="" getter="get_HasCoordinateOperation">
+		</member>
+		<member name="WellKnownText" type="Array" setter="" getter="get_WellKnownText">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

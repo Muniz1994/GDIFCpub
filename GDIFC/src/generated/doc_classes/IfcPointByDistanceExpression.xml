@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPointByDistanceExpression" inherits="IfcPoint"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="DistanceAlong" type="GDIFCEntityBase" setter="set_DistanceAlong" getter="get_DistanceAlong">
+		</member>
+		<member name="OffsetLateral" type="float" setter="set_OffsetLateral" getter="get_OffsetLateral">
+		</member>
+		<member name="OffsetVertical" type="float" setter="set_OffsetVertical" getter="get_OffsetVertical">
+		</member>
+		<member name="OffsetLongitudinal" type="float" setter="set_OffsetLongitudinal" getter="get_OffsetLongitudinal">
+		</member>
+		<member name="BasisCurve" type="GDIFCEntityBase" setter="set_BasisCurve" getter="get_BasisCurve">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

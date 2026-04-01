@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTextureMap" inherits="IfcTextureCoordinate"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcTextureMap provides the mapping of the 2-dimensional texture coordinates to the surface onto which it is mapped. It is used for mapping the texture to surfaces of vertex based geometry models, such as IfcFacetedBrep IfcFacetedBrepWithVoids IfcFaceBasedSurfaceModel IfcShellBasedSurfaceModel The IfcTextureMap has a list of TextureVertex , that corresponds to the points of the face bound of the
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Vertices" type="Array" setter="set_Vertices" getter="get_Vertices">
+			List of texture coordinate vertices that are applied to the corresponding points of the polyloop defining a face bound. NOTE The corresponding face bound may be an inner loop.
+		</member>
+		<member name="MappedTo" type="GDIFCEntityBase" setter="set_MappedTo" getter="get_MappedTo">
+			Th face bound that defines the corresponding list of points along the bounding poly loop. NOTE The face bound may be an inner loop. In this case it defines an area to which no texturing shall be applied.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

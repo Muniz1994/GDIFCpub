@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDistributionChamberElement" inherits="IfcDistributionFlowElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A distribution chamber element defines a place at which distribution systems and their constituent elements may be inspected or through which they may travel. An IfcDistributionChamberElement is a formed volume used in a distribution system, such as a sump, trench or manhole. Instances of IfcDistributionSystem or IfcDistributionFlowElement may be related to the IfcDistributionChamberElement enabli
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

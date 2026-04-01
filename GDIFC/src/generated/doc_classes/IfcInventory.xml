@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcInventory" inherits="IfcGroup"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An inventory is a list of items within an enterprise. Various types of inventory can be included. These are identified by the range of values within the inventory type enumeration which includes space, asset, and furniture. User defined inventories can also be defined for lists of particular types of element such as may be required in operating and maintenance instructions. Such inventories should
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			A list of the types of inventories from which that required may be selected. IFC2x4 CHANGE Attribute made optional.
+		</member>
+		<member name="Jurisdiction" type="GDIFCEntityBase" setter="set_Jurisdiction" getter="get_Jurisdiction">
+			The organizational unit to which the inventory is applicable.
+		</member>
+		<member name="ResponsiblePersons" type="Array" setter="set_ResponsiblePersons" getter="get_ResponsiblePersons">
+			Persons who are responsible for the inventory.
+		</member>
+		<member name="LastUpdateDate" type="String" setter="set_LastUpdateDate" getter="get_LastUpdateDate">
+			The date on which the last update of the inventory was carried out. IFC2x4 CHANGE Type changed from IfcDateTimeSelect.
+		</member>
+		<member name="CurrentValue" type="GDIFCEntityBase" setter="set_CurrentValue" getter="get_CurrentValue">
+			An estimate of the current cost value of the inventory.
+		</member>
+		<member name="OriginalValue" type="GDIFCEntityBase" setter="set_OriginalValue" getter="get_OriginalValue">
+			An estimate of the original cost value of the inventory.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMaterial" inherits="IfcMaterialDefinition"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcMaterial is a homogeneous or inhomogeneous substance that can be used to form elements (physical products or their components). IfcMaterial is the basic entity for material designation and definition; this includes identification by name and classification (via reference to an external classification), as well as association of material properties (isotropic or anisotropic) defined by (subtypes
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			Name of the material. EXAMPLE A view definition may require Material.Name to uniquely specify e.g. concrete or steel grade, in which case the attribute Material.Category could take the value 'Concrete' or 'Steel'. NOTE Material grade may have diffenrent meaning in different view definitions, e.g. strength grade for structural design and analysis, or visible appearance grade in architectural application. Also, more elaborate material grade definition may be associated as classification via inverse attribute HasExternalReferences .
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			Definition of the material in more descriptive terms than given by attributes Name or Category . IFC2x4 CHANGE The attribute has been added at the end of attribute list.
+		</member>
+		<member name="Category" type="String" setter="set_Category" getter="get_Category">
+			Definition of the category (group or type) of material, in more general terms than given by attribute Name . EXAMPLE A view definition may require each Material.Name to be unique, e.g. for each concrete or steel grade used in a project, in which case Material.Category could take the values 'Concrete' or 'Steel'. IFC2x4 CHANGE The attribute has been added at the end of attribute list.
+		</member>
+		<member name="HasRepresentation" type="Array" setter="" getter="get_HasRepresentation">
+		</member>
+		<member name="IsRelatedWith" type="Array" setter="" getter="get_IsRelatedWith">
+		</member>
+		<member name="RelatesTo" type="Array" setter="" getter="get_RelatesTo">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

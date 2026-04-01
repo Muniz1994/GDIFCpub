@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSpatialStructureElement" inherits="IfcSpatialElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A spatial structure element ( IfcSpatialStructureElement ) is the generalization of all spatial elements that might be used to define a spatial structure. That spatial structure is often used to provide a project structure to organize a building project. A spatial project structure might define as many levels of decomposition as necessary for the building project. Elements within the spatial proje
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="CompositionType" type="String" setter="set_CompositionType" getter="get_CompositionType">
+			Denotes, whether the predefined spatial structure element represents itself, or an aggregate (complex) or a part (part). The interpretation is given separately for each subtype of spatial structure element. If no CompositionType is asserted, the dafault value 'ELEMENT' applies. IFC2x4 CHANGE Attribute made optional.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcConversionBasedUnitWithOffset" inherits="IfcConversionBasedUnit"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcConversionBasedUnitWithOffset is a unit which is converted from another unit by applying a conversion factor and an offset. HISTORY New entity in IFC 2x4. Example: The temperature unit Fahrenheit is based on the temperature unit Kelvin as follows: f = k · 1.8 – 459.67 wherein k is an absolute temperature expressed in Kelvin and f is the same temperature in Fahrenheit. The following entity insta
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ConversionOffset" type="float" setter="set_ConversionOffset" getter="get_ConversionOffset">
+			A positive or negative offset to add after the inherited ConversionFactor was applied.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

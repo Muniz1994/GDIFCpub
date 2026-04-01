@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCableCarrierFitting" inherits="IfcFlowFitting"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A cable carrier fitting is a fitting that is placed at junction or transition in a cable carrier system. HISTORY New entity in IFC2x4 Type Use Definition IfcCableCarrierFitting defines the occurrence of any cable carrier fitting; common information about cable carrier fitting types is handled by IfcCableCarrierFittingType . The IfcCableCarrierFittingType (if present) may establish the common type 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Identifies the predefined types of cable carrier fitting from which the type required may be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

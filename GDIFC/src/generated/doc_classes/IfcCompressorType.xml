@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCompressorType" inherits="IfcFlowMovingDeviceType"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The flow moving device type IfcCompressorType defines commonly shared information for occurrences of compressors. The set of shared information may include: common properties with shared property sets common representations of shape common materials common composition of elements common ports applicable assignment of process types It is used to define a compressor specification (i.e. the specific 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Defines the type of compressor (e.g., hermetic, reciprocating, etc.).
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

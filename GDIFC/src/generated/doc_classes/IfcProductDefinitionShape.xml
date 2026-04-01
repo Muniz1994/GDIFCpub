@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcProductDefinitionShape" inherits="IfcProductRepresentation"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The IfcProductDefinitionShape defines all shape relevant information about an IfcProduct . It allows for multiple geometric shape representations of the same product. The shape relevant information includes: the shape representation including geometric representation items (for 3D solids, 2D annotations, etc.) and: associated presentation information (line color, line type, surface rendering prope
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ShapeOfProduct" type="Array" setter="" getter="get_ShapeOfProduct">
+		</member>
+		<member name="HasShapeAspects" type="Array" setter="" getter="get_HasShapeAspects">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

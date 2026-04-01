@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcReinforcingMeshType" inherits="IfcReinforcingElementType"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: A series of longitudinal and transverse wires or bars of various gauges, arranged at right angles to each other and welded at all points of intersection; usually used for concrete slab reinforcement. Also known as welded wire fabric. HISTORY New entity in IFC Release 2x4 Material Use Definition : An associated material denotes the steel grade, preferrably via material classifi
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			The overall length of the mesh measured in its longitudinal direction.
+		</member>
+		<member name="MeshLength" type="float" setter="set_MeshLength" getter="get_MeshLength">
+			The overall width of the mesh measured in its transversal direction.
+		</member>
+		<member name="MeshWidth" type="float" setter="set_MeshWidth" getter="get_MeshWidth">
+			The nominal diameter denoting the cross-section size of the longitudinal bars.
+		</member>
+		<member name="LongitudinalBarNominalDiameter" type="float" setter="set_LongitudinalBarNominalDiameter" getter="get_LongitudinalBarNominalDiameter">
+			The nominal diameter denoting the cross-section size of the transverse bars.
+		</member>
+		<member name="TransverseBarNominalDiameter" type="float" setter="set_TransverseBarNominalDiameter" getter="get_TransverseBarNominalDiameter">
+			The effective cross-section area of the longitudinal bars of the mesh.
+		</member>
+		<member name="LongitudinalBarCrossSectionArea" type="float" setter="set_LongitudinalBarCrossSectionArea" getter="get_LongitudinalBarCrossSectionArea">
+			The effective cross-section area of the transverse bars of the mesh.
+		</member>
+		<member name="TransverseBarCrossSectionArea" type="float" setter="set_TransverseBarCrossSectionArea" getter="get_TransverseBarCrossSectionArea">
+			The spacing between the longitudinal bars. Note: an even distribution of bars is presumed; other cases are handled by classification or property sets.
+		</member>
+		<member name="LongitudinalBarSpacing" type="float" setter="set_LongitudinalBarSpacing" getter="get_LongitudinalBarSpacing">
+			The spacing between the transverse bars. Note: an even distribution of bars is presumed; other cases are handled by classification or property sets.
+		</member>
+		<member name="TransverseBarSpacing" type="float" setter="set_TransverseBarSpacing" getter="get_TransverseBarSpacing">
+			The predefined type is always MESH.
+		</member>
+		<member name="BendingShapeCode" type="String" setter="set_BendingShapeCode" getter="get_BendingShapeCode">
+		</member>
+		<member name="BendingParameters" type="Array" setter="set_BendingParameters" getter="get_BendingParameters">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

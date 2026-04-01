@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcEvent" inherits="IfcProcess"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcEvent is something that happens that triggers an action or response. HISTORY New entity in IFC2x4 Use definitions IfcEvent is used to capture information about particular things that happen or that may happen. Particularly used in work plans (or process maps) they identify e.g. a point at which a message containing information may be issued or at which a rule or constraint is invoked. Type u
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Identifies the predefined types of an event from which the type required may be set.
+		</member>
+		<member name="EventTriggerType" type="String" setter="set_EventTriggerType" getter="get_EventTriggerType">
+			Identifies the predefined types of event trigger from which the type required may be set.
+		</member>
+		<member name="UserDefinedEventTriggerType" type="String" setter="set_UserDefinedEventTriggerType" getter="get_UserDefinedEventTriggerType">
+			A user defined event trigger type, the value of which is asserted when the value of an event trigger type is declared as USERDEFINED.
+		</member>
+		<member name="EventOccurenceTime" type="GDIFCEntityBase" setter="set_EventOccurenceTime" getter="get_EventOccurenceTime">
+			The date and/or time at which an event occurs.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

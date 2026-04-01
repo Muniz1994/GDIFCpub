@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSweptDiskSolidPolygonal" inherits="IfcSweptDiskSolid"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The IfcSweptDiskSolidPolygonal is a IfcSweptDiskSolid where the Directrix is restricted to be provided by an IfcPolyline only. An optional FilletRadius attribute can be asserted, it is then applied as a fillet to all transitions between the segments of the IfcPolyline . HISTORY New entity in IFC2x4. Informal proposition The FilletRadius , if provided, has to be smaller then or equal to the length 
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="FilletRadius" type="float" setter="set_FilletRadius" getter="get_FilletRadius">
+			The fillet that is equally applied to all transitions between the segments of the IfcPolyline , providing the geometric representation for the Directrix . If omited, no fillet is applied to the segments.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralLoadLinearForce" inherits="IfcStructuralLoadStatic"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: An instance of the entity IfcStructuralLoadLinearForce shall be used to define actions on curves. HISTORY: New entity in Release IFC2x edition 2.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="LinearForceX" type="float" setter="set_LinearForceX" getter="get_LinearForceX">
+			Linear force value in x-direction.
+		</member>
+		<member name="LinearForceY" type="float" setter="set_LinearForceY" getter="get_LinearForceY">
+			Linear force value in y-direction.
+		</member>
+		<member name="LinearForceZ" type="float" setter="set_LinearForceZ" getter="get_LinearForceZ">
+			Linear force value in z-direction.
+		</member>
+		<member name="LinearMomentX" type="float" setter="set_LinearMomentX" getter="get_LinearMomentX">
+			Linear moment about the x-axis.
+		</member>
+		<member name="LinearMomentY" type="float" setter="set_LinearMomentY" getter="get_LinearMomentY">
+			Linear moment about the y-axis.
+		</member>
+		<member name="LinearMomentZ" type="float" setter="set_LinearMomentZ" getter="get_LinearMomentZ">
+			Linear moment about the z-axis.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

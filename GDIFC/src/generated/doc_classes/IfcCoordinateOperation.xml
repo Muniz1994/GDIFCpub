@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCoordinateOperation" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from OpenGIS® Abstract Specification, Topic 2: If the relationship between any two coordinate reference systems is known, coordinates can be transformed or converted to another coordinate reference system. Coordinate operations are divided into two subtypes: Coordinate conversion – mathematical operation on coordinates that does not include any change of datum. The best-known example of
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="SourceCRS" type="GDIFCEntityBase" setter="set_SourceCRS" getter="get_SourceCRS">
+			Source coordinate reference system for the operation.
+		</member>
+		<member name="TargetCRS" type="GDIFCEntityBase" setter="set_TargetCRS" getter="get_TargetCRS">
+			Target coordinate reference system for the operation.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

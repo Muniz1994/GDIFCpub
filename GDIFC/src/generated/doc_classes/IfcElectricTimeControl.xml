@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcElectricTimeControl" inherits="IfcFlowController"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An electric time control is a device that applies control to the provision or flow of electrical energy over time. HISTORY New entity in IFC2x4 Type Use Definition IfcElectricTimeControl defines the occurrence of any electric time control; common information about electric time control types is handled by IfcElectricTimeControlType . The IfcElectricTimeControlType (if present) may establish the co
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

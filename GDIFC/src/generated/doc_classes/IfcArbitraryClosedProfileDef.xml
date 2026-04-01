@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcArbitraryClosedProfileDef" inherits="IfcProfileDef"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The closed profile IfcArbitraryClosedProfileDef defines an arbitrary two-dimensional profile for the use within the swept surface geometry, the swept area solid or a sectioned spine. It is given by an outer boundary from which the surface or solid can be constructed. HISTORY: New entity in IFC 1.5. Entity has been renamed from IfcArbitraryProfileDef in IFC Release 2x. Informal proposition : The Ou
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="OuterCurve" type="GDIFCEntityBase" setter="set_OuterCurve" getter="get_OuterCurve">
+			Bounded curve, defining the outer boundaries of the arbitrary profile.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

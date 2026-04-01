@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSurfaceStyleRendering" inherits="IfcSurfaceStyleShading"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcSurfaceStyleRendering holds the properties for visualization related to a particular surface side style. It allows rendering properties to be defined by: a transparency component ( Transparency attribute) a colour component ( SurfaceColour attribute inherited from IfcSurfaceStyleShading ) a reflectance component, given either by applying reflectance factors to the surface colour: diffuse compon
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="DiffuseColour" type="GDIFCEntityBase" setter="set_DiffuseColour" getter="get_DiffuseColour">
+			Definition from ISO/CD 10303-46: The degree of transparency is indicated by the percentage of light traversing the surface. Definition from VRML97 - ISO/IEC 14772-1:1997: The transparency field specifies how "clear" an object is, with 1.0 being completely transparent, and 0.0 completely opaque. If not given, the value 0.0 (opaque) is assumed.
+		</member>
+		<member name="TransmissionColour" type="GDIFCEntityBase" setter="set_TransmissionColour" getter="get_TransmissionColour">
+			The diffuse part of the reflectance equation can be given as either a colour or a scalar factor. The diffuse colour field reflects all light sources depending on the angle of the surface with respect to the light source. The more directly the surface faces the light, the more diffuse light reflects. The diffuse factor field specifies how much diffuse light from light sources this surface shall reflect. Diffuse light depends on the angle of the surface with respect to the light source. The more directly the surface faces the light, the more diffuse light reflects. The diffuse colour is then defined by surface colour * diffuse factor.
+		</member>
+		<member name="DiffuseTransmissionColour" type="GDIFCEntityBase" setter="set_DiffuseTransmissionColour" getter="get_DiffuseTransmissionColour">
+			The transmissive part of the reflectance equation can be given as either a colour or a scalar factor. It only applies to materials which Transparency field is greater than zero. The transmissive colour field specifies the colour that passes through a transparant material (like the colour that shines through a glass). The transmissive factor defines the transmissive part, the transmissive colour is then defined by surface colour * transmissive factor.
+		</member>
+		<member name="ReflectionColour" type="GDIFCEntityBase" setter="set_ReflectionColour" getter="get_ReflectionColour">
+			The diffuse transmission part of the reflectance equation can be given as either a colour or a scalar factor. It only applies to materials whose Transparency field is greater than zero. The diffuse transmission colour specifies how much diffuse light is reflected at the opposite side of the material surface. The diffuse transmission factor field specifies how much diffuse light from light sources this surface shall reflect on the opposite side of the material surface. The diffuse transmissive colour is then defined by surface colour * diffuse transmissive factor.
+		</member>
+		<member name="SpecularColour" type="GDIFCEntityBase" setter="set_SpecularColour" getter="get_SpecularColour">
+			The reflection (or mirror) part of the reflectance equation can be given as either a colour or a scalar factor. Applies to "glass" and "mirror" reflection models. The reflection colour specifies the contribution made by light from the mirror direction, i.e. light being reflected from the surface. The reflection factor specifies the amount of contribution made by light from the mirror direction. The reflection colour is then defined by surface colour * reflection factor.
+		</member>
+		<member name="SpecularHighlight" type="GDIFCEntityBase" setter="set_SpecularHighlight" getter="get_SpecularHighlight">
+			The specular part of the reflectance equation can be given as either a colour or a scalar factor. The specular colour determine the specular highlights (e.g., the shiny spots on an apple). When the angle from the light to the surface is close to the angle from the surface to the viewer, the specular colour is added to the diffuse and ambient colour calculations. The specular factor defines the specular part, the specular colour is then defined by surface colour * specular factor.
+		</member>
+		<member name="ReflectanceMethod" type="String" setter="set_ReflectanceMethod" getter="get_ReflectanceMethod">
+			The exponent or roughness part of the specular reflectance.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

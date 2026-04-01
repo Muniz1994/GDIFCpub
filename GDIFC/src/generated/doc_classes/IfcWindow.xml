@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcWindow" inherits="IfcBuiltElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition form ISO 6707-1:1989 : Construction for closing a vertical or near vertical opening in a wall or pitched roof that will admit light and may admit fresh air. The window is a building element that is predominately used to provide natural light and fresh air. It includes vertical and horizontal opening (e.g. skylights or light domes). It includes constructions with swinging, pivoting, slid
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="OverallHeight" type="float" setter="set_OverallHeight" getter="get_OverallHeight">
+			Overall measure of the height, it reflects the Z Dimension of a bounding box, enclosing the body of the window opening. If omitted, the OverallHeight should be taken from the geometric representation of the IfcOpening in which the window is inserted. NOTE The body of the window might be taller then the window opening (e.g. in cases where the window lining includes a casing). In these cases the OverallHeight shall still be given as the window opening height, and not as the total height of the window lining.
+		</member>
+		<member name="OverallWidth" type="float" setter="set_OverallWidth" getter="get_OverallWidth">
+			Overall measure of the width, it reflects the X Dimension of a bounding box, enclosing the body of the window opening. If omitted, the OverallWidth should be taken from the geometric representation of the IfcOpening in which the window is inserted. NOTE The body of the window might be wider then the window opening (e.g. in cases where the window lining includes a casing). In these cases the OverallWidth shall still be given as the window opening width, and not as the total width of the window lining.
+		</member>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic type for a window that is specified in an enumeration. There may be a property set given specificly for the predefined types. NOTE The PredefinedType shall only be used, if no type object IfcWindowType is assigned, providing its own IfcWindowType.PredefinedType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition.
+		</member>
+		<member name="PartitioningType" type="String" setter="set_PartitioningType" getter="get_PartitioningType">
+			Type defining the general layout of the window in terms of the partitioning of panels. NOTE The PartitioningType shall only be used, if no type object IfcWindowType is assigned, providing its own IfcWindowType.PartitioningType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition.
+		</member>
+		<member name="UserDefinedPartitioningType" type="String" setter="set_UserDefinedPartitioningType" getter="get_UserDefinedPartitioningType">
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

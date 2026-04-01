@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSubContractResource" inherits="IfcConstructionResource"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcSubContractResource is a construction resource needed in a construction process that represents a sub-contractor. HISTORY: New Entity in IFC Release 2.0. Base type and documentation extended in IFC 2x4. IFC2x4 CHANGE: The attribute SubContractor has been deleted; use IfcRelAssignsToResource to assign an IfcActor to fulfill the role as the subcontractor. The attribute JobDescription has been del
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Defines types of subcontract resources. IFC2x4 New attribute
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

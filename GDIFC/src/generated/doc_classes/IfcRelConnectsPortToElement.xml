@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelConnectsPortToElement" inherits="IfcRelConnects"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The objectified relationship IfcRelConnectsPortToElement defines the relationship that is made between a port and the IfcElement , or IfcElementType in which it is contained. It is a 1 to 1 relationship. The IfcRelConnectsPortToElement established a whole part relationship between the element and its port. The port is used as the means to connect to other ports in other elements. Since both, the e
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelatingPort" type="GDIFCEntityBase" setter="set_RelatingPort" getter="get_RelatingPort">
+			Reference to an Port that is connected by the objectified relationship.
+		</member>
+		<member name="RelatedElement" type="GDIFCEntityBase" setter="set_RelatedElement" getter="get_RelatedElement">
+			Reference to an IfcElement , or IfcElementType that has ports assigned. IFC2x4 CHANGE Data type extended to IfcObjectDefinition to enable elements and element types for the port relationship.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

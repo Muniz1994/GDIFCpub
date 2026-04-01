@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFailureConnectionCondition" inherits="IfcStructuralConnectionCondition"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI: Defines forces at which a support or connection fails. Applicability: Point supports and connections. HISTORY: New entity in IFC 2x2.
+	</brief_description>
+	<description></description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="TensionFailureX" type="float" setter="set_TensionFailureX" getter="get_TensionFailureX">
+			Tension force in x-direction leading to failure of the connection.
+		</member>
+		<member name="TensionFailureY" type="float" setter="set_TensionFailureY" getter="get_TensionFailureY">
+			Tension force in y-direction leading to failure of the connection.
+		</member>
+		<member name="TensionFailureZ" type="float" setter="set_TensionFailureZ" getter="get_TensionFailureZ">
+			Tension force in z-direction leading to failure of the connection.
+		</member>
+		<member name="CompressionFailureX" type="float" setter="set_CompressionFailureX" getter="get_CompressionFailureX">
+			Compression force in x-direction leading to failure of the connection.
+		</member>
+		<member name="CompressionFailureY" type="float" setter="set_CompressionFailureY" getter="get_CompressionFailureY">
+			Compression force in y-direction leading to failure of the connection.
+		</member>
+		<member name="CompressionFailureZ" type="float" setter="set_CompressionFailureZ" getter="get_CompressionFailureZ">
+			Compression force in z-direction leading to failure of the connection.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>
