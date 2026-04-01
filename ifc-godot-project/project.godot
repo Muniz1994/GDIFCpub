@@ -23,7 +23,7 @@ project/assembly_name="IFCProject"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/GDIFC/plugin.cfg", "res://addons/sk_fly_camera/plugin.cfg")
+enabled=PackedStringArray("res://addons/GDIFC/plugin.cfg")
 
 [filesystem]
 
