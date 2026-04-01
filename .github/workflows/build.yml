@@ -94,13 +94,11 @@ jobs:
         uses: nttld/setup-ndk@v1
         id: setup-ndk
         with:
-          ndk-version: r26b
+          ndk-version: r28b
 
-      - name: (Android) Set NDK environment
+      - name: (Android) Set ANDROID_HOME
         if: matrix.platform == 'android'
-        run: |
-          # We set it here, and the build step will access it via $ANDROID_NDK_ROOT
-          echo "ANDROID_NDK_ROOT=${{ steps.setup-ndk.outputs.ndk-path }}" >> $GITHUB_ENV
+        run: echo "ANDROID_HOME=${{ steps.setup-ndk.outputs.ndk-path }}/.." >> $GITHUB_ENV
 
       - name: (Web) Set up Emscripten
         if: matrix.platform == 'web'
@@ -134,18 +132,7 @@ jobs:
       # ── Build ──────────────────────────────────────────────────────
 
       - name: Build GDIFC
-        shell: bash
-        run: |
-          # Define common arguments
-          SCONS_ARGS="platform=${{ matrix.platform }} target=${{ matrix.target }} arch=${{ matrix.arch }} cpp_std=c++20 -j4"
-          
-          # Add NDK path only for Android
-          if [ "${{ matrix.platform }}" == "android" ]; then
-            # Use the shell variable $ANDROID_NDK_ROOT instead of the GHA context
-            SCONS_ARGS="$SCONS_ARGS android_ndk_path=$ANDROID_NDK_ROOT"
-          fi
-          
-          scons $SCONS_ARGS
+        run: scons platform=${{ matrix.platform }} target=${{ matrix.target }} arch=${{ matrix.arch }} -j4
 
       # ── Upload artifact ────────────────────────────────────────────
 
