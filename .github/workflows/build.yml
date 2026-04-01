@@ -89,10 +89,7 @@ jobs:
 
       - name: (Linux) Install build dependencies
         if: matrix.platform == 'linux'
-        run: |
-          sudo apt-get update && sudo apt-get install -y build-essential gcc-12 g++-12
-          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100
-          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 100
+        run: sudo apt-get update && sudo apt-get install -y build-essential gcc-12 g++-12
         
       - name: (Android) Set up NDK
         if: matrix.platform == 'android'
@@ -101,11 +98,9 @@ jobs:
         with:
           ndk-version: r28b
 
-      - name: (Android) Set NDK environment
+      - name: (Android) Set ANDROID_HOME
         if: matrix.platform == 'android'
-        run: |
-          echo "ANDROID_NDK_ROOT=${{ steps.setup-ndk.outputs.ndk-path }}" >> $GITHUB_ENV
-          echo "ANDROID_HOME=" >> $GITHUB_ENV
+        run: echo "ANDROID_HOME=${{ steps.setup-ndk.outputs.ndk-path }}/.." >> $GITHUB_ENV
 
       - name: (Web) Set up Emscripten
         if: matrix.platform == 'web'
@@ -147,7 +142,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: gdifc-${{ matrix.platform }}-${{ matrix.target }}-${{ matrix.arch }}
-          path: addons/GDIFC/libgdifc*
+          path: ifc-godot-project/addons/GDIFC/libgdifc*
           if-no-files-found: error
 
   # ── Merge all platform artifacts into one ─────────────────────────────
