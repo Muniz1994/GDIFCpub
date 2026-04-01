@@ -181,7 +181,7 @@ scons platform=android target=template_release arch=arm64
 scons platform=web     target=template_release
 ```
 
-The compiled library is placed in `ifc-godot-project/addons/GDIFC/` automatically.
+The compiled library is placed in both `addons/GDIFC/` (for distribution) and `ifc-godot-project/addons/GDIFC/` (for the test project) automatically.
 
 ## Dependencies
 

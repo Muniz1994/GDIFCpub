@@ -12,5 +12,12 @@ func _run() -> void:
 	if managers.size()> 0:
 		manager = managers[0]
 		
-	for alignemnt:IfcAlignment in manager.get_elements_by_class("IfcAlignment"):
-		print(alignemnt.PredefinedType)
+		for alignemnt:IfcAlignment in manager.get_elements_by_class("IfcAlignment"):
+			alignemnt.PredefinedType = "EXTERNAL"
+
+		var model := manager.find_children("","IFCModel")[0]
+		
+		if model is IFCModel:
+			print("saving model")
+			model.save("res://new_model.ifc")
+	

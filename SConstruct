@@ -269,12 +269,15 @@ gdifc_env.Append(LIBS=[ifcparse_lib, webifc_lib])
 #   libgdifc.{platform}.{target}.{arch}.{ext}
 # env["suffix"] = ".{platform}.{target}.{arch}"
 # env["SHLIBSUFFIX"] = platform-appropriate extension (.so, .dll, .wasm, .dylib)
-addon_output_dir = "ifc-godot-project/addons/GDIFC"
+# Root addon dir (distributed via Asset Library / git)
+root_addon_dir = "addons/GDIFC"
+# Test Godot project addon dir (for local development only)
+test_addon_dir = "ifc-godot-project/addons/GDIFC"
 
 if platform == "macos":
     library = gdifc_env.SharedLibrary(
         "{}/libgdifc.{}.{}.framework/libgdifc.{}.{}".format(
-            addon_output_dir,
+            root_addon_dir,
             platform, env["target"],
             platform, env["target"],
         ),
@@ -283,12 +286,25 @@ if platform == "macos":
 else:
     library = gdifc_env.SharedLibrary(
         "{}/libgdifc{}{}".format(
-            addon_output_dir,
+            root_addon_dir,
             env["suffix"],
             env["SHLIBSUFFIX"],
         ),
         source=gdifc_sources,
     )
+
+# Mirror the compiled library into the test Godot project as well
+gdifc_env.Install(test_addon_dir, library)
+
+# Mirror all static addon source files to the test project so it stays in sync
+for _dp, _dns, _fns in os.walk(root_addon_dir):
+    for _fn in _fns:
+        if _fn.startswith("libgdifc"):
+            continue
+        _src = os.path.join(_dp, _fn)
+        _rel_dir = os.path.relpath(_dp, root_addon_dir)
+        _dst_dir = test_addon_dir if _rel_dir == "." else os.path.join(test_addon_dir, _rel_dir)
+        gdifc_env.Install(_dst_dir.replace("\\", "/"), _src)
 
 env.NoCache(library)
 Default(library)
