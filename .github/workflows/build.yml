@@ -184,6 +184,16 @@ jobs:
           git diff --cached --quiet || git commit -m "ci: update prebuilt binaries [skip ci]"
           git push
 
+      - name: Commit binaries to repo
+        if: github.event_name != 'pull_request'
+        run: |
+          cp package/addons/GDIFC/libgdifc* addons/GDIFC/
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f addons/GDIFC/libgdifc*
+          git diff --cached --quiet || git commit -m "ci: update prebuilt binaries [skip ci]"
+          git push
+
       - name: Upload complete addon
         uses: actions/upload-artifact@v4
         with:
