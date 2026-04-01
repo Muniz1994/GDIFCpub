@@ -101,9 +101,11 @@ jobs:
         with:
           ndk-version: r28b
 
-      - name: (Android) Set ANDROID_NDK_ROOT
+      - name: (Android) Set NDK environment
         if: matrix.platform == 'android'
-        run: echo "ANDROID_NDK_ROOT=${{ steps.setup-ndk.outputs.ndk-path }}" >> $GITHUB_ENV
+        run: |
+          echo "ANDROID_NDK_ROOT=${{ steps.setup-ndk.outputs.ndk-path }}" >> $GITHUB_ENV
+          echo "ANDROID_HOME=" >> $GITHUB_ENV
 
       - name: (Web) Set up Emscripten
         if: matrix.platform == 'web'
