@@ -19,6 +19,8 @@
 /web-ifc/                       export-ignore
 /thirdparty/                    export-ignore
 /tools/                         export-ignore
+/images/                        export-ignore
+/ifcopenshell-express/          export-ignore 
 
 # Build & package config
 /CMakeLists.txt                 export-ignore
@@ -29,3 +31,10 @@
 
 # Test / demo Godot project (not part of the addon)
 /ifc-godot-project/             export-ignore
+
+# GitHub workflow
+/.github/                       export-ignore 
+
+# Main directory docs
+/LICENCE
+/README
