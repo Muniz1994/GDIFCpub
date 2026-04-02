@@ -32,8 +32,11 @@
 # Test / demo Godot project (not part of the addon)
 /ifc-godot-project/             export-ignore
 
-# GitHub workflow
-/.github/                       export-ignore 
+# GitHub 
+/.github/                       export-ignore
+/.gitattributes                 export-ignore 
+/.gitignore                     export-ignore 
+/.gitmodules                    export-ignore        
 
 # Main directory docs
 /LICENCE
