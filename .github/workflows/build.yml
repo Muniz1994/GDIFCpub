@@ -189,7 +189,7 @@ jobs:
         if: github.event_name != 'pull_request'
         run: |
           cp package/addons/GDIFC/libgdifc* addons/GDIFC/
-          cp package/LICENCE addons/GDIFC/
+          cp package/LICENCE.md addons/GDIFC/
           cp package/README.md add-ons/GDIFC/
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
