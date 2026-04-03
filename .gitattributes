@@ -39,5 +39,5 @@
 /.gitmodules                    export-ignore        
 
 # Main directory docs
-/LICENCE.md
-/README.md
+/LICENCE.md                     export-ignore
+/README.md                      export-ignore
