@@ -4,7 +4,7 @@ extends Control
 @export var settings: GDIFCLoaderSettings = load("res://addons/GDIFC/settings/default_gdifc_geometric_settings.tres")
 
 @onready var button: Button = %LoadIFCButton
-@onready var create_collision_check: CheckButton = %CreateCollisionCheck
+@onready var check_box: CheckBox = %CheckBox
 @onready var elements_list: ItemList = %ElementsList
 @onready var loading_label: Label = %LoadingLabel
 @onready var geom_settings: HBoxContainer = %GeomSettings
@@ -20,6 +20,7 @@ func _ready():
 	_start_interface()
 	
 func _start_interface():
+	geom_settings_picker.size_flags_horizontal = EditorResourcePicker.SIZE_EXPAND
 	geom_settings_picker.base_type = "GDIFCLoaderSettings"
 	geom_settings_picker.edited_resource = settings
 	geom_settings.add_child(geom_settings_picker)
@@ -39,7 +40,7 @@ func _on_file_selected(path: String):
 	
 	loading_label.visible = true
 	# set options
-	var create_collision = create_collision_check.button_pressed
+	var create_collision = check_box.button_pressed
 	
 	var collision_elements_index = elements_list.get_selected_items()
 	
