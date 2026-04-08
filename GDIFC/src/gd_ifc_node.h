@@ -35,6 +35,10 @@ public:
     godot::String get_ifc_class() {return ifc_class;}
     void set_ifc_class(godot::String ifcclass) {ifc_class = ifcclass;};
 
+    /// IFC GlobalId (22-char GUID) — serialized so it survives scene save/reload.
+    godot::String get_global_id() const { return global_id_; }
+    void set_global_id(godot::String id) { global_id_ = id; }
+
     /// Access the typed IFC object wrapping the underlying data.
     godot::Ref<godot::GDIFCEntityBase> get_ifc_object() const { return ifc_object_; }
     void set_ifc_object(godot::Ref<godot::GDIFCEntityBase> obj) { ifc_object_ = obj; }
@@ -42,6 +46,7 @@ public:
 private:
 
     godot::String ifc_class;
+    godot::String global_id_;
     godot::Dictionary attributes;
     godot::Dictionary properties;
     godot::Dictionary quantities;

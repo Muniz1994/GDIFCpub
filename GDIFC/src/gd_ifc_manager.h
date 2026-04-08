@@ -90,6 +90,7 @@ struct PrecalculatedIFCItemGeometry {
         bool valid = false;
         String node_name;
         String ifc_class;
+        String global_id;    // IFC GlobalId (22-char GUID) for scene persistence
         int express_id = -1; // NEW: Track the ID
         int parent_id = -1;  // NEW: Track the parent ID
         Dictionary properties;
@@ -112,6 +113,7 @@ class GDIFCManager : public Node3D {
         IDLE,
         LOADING_THREAD,
         GENERATING_NODES,
+        RELINKING,
         DONE,
         FAILED
     };
@@ -139,6 +141,12 @@ class GDIFCManager : public Node3D {
 
     uint64_t start_loading_time{};
 
+    // Persistent IFC file path — serialized so cold-reload can re-parse
+    String ifc_file_path_;
+
+    // Set by _metadata_thread_task if the IFC file is missing
+    bool relink_failed_ = false;
+
   protected:
     static void _bind_methods();
 
@@ -149,12 +157,15 @@ class GDIFCManager : public Node3D {
     Error read_ifc(const String &_path, bool _create_collision, const Array &_collision_classes);
     Error read_ifc_base64(const String &_base64_data, bool _create_collision, const Array &_collision_classes);
     void _process(double delta) override;
+    void _ready() override;
 
     // Thread Functions
     void _thread_task();
+    void _metadata_thread_task();
 
     // Main Thread Functions
     void _process_generation_queue();
+    void _relink_ifc_objects();
     Ref<StandardMaterial3D> _get_material(Color color, bool transparent);
 
     Node3D* invisible_staging_root = nullptr;
@@ -164,6 +175,9 @@ class GDIFCManager : public Node3D {
 
     Ref<GDIFCLoaderSettings> get_gdifc_settings();
     void set_gdifc_settings(Ref<GDIFCLoaderSettings> gdifc_settings);
+
+    String get_ifc_file_path() const { return ifc_file_path_; }
+    void set_ifc_file_path(const String &path) { ifc_file_path_ = path; }
 
     /// Return the IFCModel root node (available after loading completes).
     IFCModel* get_ifc_model();
