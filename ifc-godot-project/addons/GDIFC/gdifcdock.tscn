@@ -3,13 +3,56 @@
 [ext_resource type="Script" uid="uid://iph5rdx8l8b7" path="res://addons/GDIFC/gdifcdock.gd" id="1_ae86c"]
 [ext_resource type="Texture2D" uid="uid://cugvxdyscp2my" path="res://addons/GDIFC/assets/icons/upload.png" id="2_2lejx"]
 [ext_resource type="GDIFCLoaderSettings" uid="uid://c6nxagj6y41n4" path="res://addons/GDIFC/settings/default_gdifc_geometric_settings.tres" id="2_3o44k"]
+[ext_resource type="Texture2D" uid="uid://d4drn38d6pyx0" path="res://addons/GDIFC/assets/images/title.svg" id="3_72040"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3o44k"]
 bg_color = Color(0.25882354, 0.25882354, 0.25882354, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.25882354, 0.25882354, 0.25882354, 1)
 corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_72040"]
+content_margin_left = 7.0
+bg_color = Color(0.25882354, 0.25882354, 0.25882354, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.25882354, 0.25882354, 0.25882354, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bru1x"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.25882354, 0.25882354, 0.25882354, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bh1i4"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.3372549, 0.61960787, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
 
 [node name="GDIFC" type="Control" unique_id=1888460424]
 layout_mode = 3
@@ -92,30 +135,47 @@ text = "Config"
 horizontal_alignment = 1
 text_overrun_behavior = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Config/VBoxContainer" unique_id=556540170]
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/Config/VBoxContainer" unique_id=637677302]
 layout_mode = 2
+columns = 2
 
-[node name="CreateCollisionLabel" type="Label" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/HBoxContainer" unique_id=1397557480]
+[node name="CreateCollisionLabel" type="Label" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/GridContainer" unique_id=1397557480]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Create collisions"
+autowrap_mode = 2
 
-[node name="CreateCollisionCheck" type="CheckButton" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/HBoxContainer" unique_id=1246484048]
+[node name="CheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/GridContainer" unique_id=2094389688]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_72040")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_72040")
+theme_override_styles/hover = SubResource("StyleBoxFlat_72040")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_72040")
+text = "On"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Config/VBoxContainer" unique_id=357959515]
+[node name="VBoxContainer" type="HFlowContainer" parent="MarginContainer/VBoxContainer/Config/VBoxContainer" unique_id=1779069931]
 clip_contents = true
 layout_mode = 2
+last_wrap_alignment = 1
 
 [node name="CollisionElementsLabel" type="Label" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/VBoxContainer" unique_id=78863048]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Collision elements"
+autowrap_mode = 2
 
 [node name="ElementsList" type="ItemList" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/VBoxContainer" unique_id=1922407344]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
-size_flags_vertical = 0
+size_flags_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/panel = SubResource("StyleBoxFlat_bru1x")
+theme_override_styles/selected = SubResource("StyleBoxFlat_bh1i4")
 select_mode = 2
 allow_rmb_select = true
 auto_width = true
@@ -137,7 +197,18 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="GeomSettings" type="Label" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/GeomSettings" unique_id=691066124]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Geometric settings"
+autowrap_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer" unique_id=1522868594]
+custom_minimum_size = Vector2(100, 15)
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("3_72040")
+expand_mode = 2
+stretch_mode = 5
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Main/VBoxContainer/HBoxContainer/LoadIFCButton" to="." method="_on_button_pressed"]
