@@ -22,6 +22,11 @@ void IFCNode::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY,"properties"),"set_properties","get_properties");
     ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY,"quantities"),"set_quantities","get_quantities");
     ADD_PROPERTY(PropertyInfo(Variant::STRING,"ifc_class"),"set_ifc_class","get_ifc_class");
+
+    ClassDB::bind_method(D_METHOD("get_global_id"), &IFCNode::get_global_id);
+    ClassDB::bind_method(D_METHOD("set_global_id","id"), &IFCNode::set_global_id);
+    ADD_PROPERTY(PropertyInfo(Variant::STRING,"global_id"),"set_global_id","get_global_id");
+
     ClassDB::bind_method(D_METHOD("get_ifc_object"), &IFCNode::get_ifc_object);
     ClassDB::bind_method(D_METHOD("set_ifc_object","obj"), &IFCNode::set_ifc_object);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT,"ifc_object",PROPERTY_HINT_RESOURCE_TYPE,"GDIFCEntityBase", PROPERTY_USAGE_NONE),

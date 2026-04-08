@@ -21,9 +21,15 @@ Prerequisites:
 
 import os
 import sys
+from SCons.Variables import BoolVariable
+
+# ── Custom build options ────────────────────────────────────────────────────
+opts = Variables([], ARGUMENTS)
+opts.Add(BoolVariable("local", "Install library into the test Godot project", False))
 
 # ── Build godot-cpp and get the configured environment ──────────────────────
 env = SConscript("godot-cpp/SConstruct")
+opts.Update(env)
 
 # ── Helper: platform-aware compile flags ────────────────────────────────────
 is_msvc = env.get("is_msvc", False)
@@ -293,18 +299,21 @@ else:
         source=gdifc_sources,
     )
 
-# Mirror the compiled library into the test Godot project as well
-gdifc_env.Install(test_addon_dir, library)
+# Optionally mirror into the test Godot project (scons local=yes)
+if env["local"]:
+    install_lib = gdifc_env.Install(test_addon_dir, library)
+    Default(install_lib)
 
-# Mirror all static addon source files to the test project so it stays in sync
-for _dp, _dns, _fns in os.walk(root_addon_dir):
-    for _fn in _fns:
-        if _fn.startswith("libgdifc"):
-            continue
-        _src = os.path.join(_dp, _fn)
-        _rel_dir = os.path.relpath(_dp, root_addon_dir)
-        _dst_dir = test_addon_dir if _rel_dir == "." else os.path.join(test_addon_dir, _rel_dir)
-        gdifc_env.Install(_dst_dir.replace("\\", "/"), _src)
+    # Mirror all static addon source files to the test project so it stays in sync
+    for _dp, _dns, _fns in os.walk(root_addon_dir):
+        for _fn in _fns:
+            if _fn.startswith("libgdifc"):
+                continue
+            _src = os.path.join(_dp, _fn)
+            _rel_dir = os.path.relpath(_dp, root_addon_dir)
+            _dst_dir = test_addon_dir if _rel_dir == "." else os.path.join(test_addon_dir, _rel_dir)
+            inst = gdifc_env.Install(_dst_dir.replace("\\", "/"), _src)
+            Default(inst)
 
 env.NoCache(library)
 Default(library)

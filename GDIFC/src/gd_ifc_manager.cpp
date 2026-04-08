@@ -12,8 +12,14 @@ void GDIFCManager::_bind_methods() {
     ClassDB::bind_method(D_METHOD("read_ifc", "path", "create_collision", "collision_classes"), &GDIFCManager::read_ifc, DEFVAL(false), DEFVAL(Array{}));
     ClassDB::bind_method(D_METHOD("read_ifc_base64", "base64_data", "create_collision", "collision_classes"), &GDIFCManager::read_ifc_base64, DEFVAL(false), DEFVAL(Array{}));
     ClassDB::bind_method(D_METHOD("_thread_task"), &GDIFCManager::_thread_task);
+    ClassDB::bind_method(D_METHOD("_metadata_thread_task"), &GDIFCManager::_metadata_thread_task);
     ClassDB::bind_method(D_METHOD("get_gdifc_settings"), &GDIFCManager::get_gdifc_settings);
     ClassDB::bind_method(D_METHOD("set_gdifc_settings","gdifc_settings"), &GDIFCManager::set_gdifc_settings);
+
+    ClassDB::bind_method(D_METHOD("get_ifc_file_path"), &GDIFCManager::get_ifc_file_path);
+    ClassDB::bind_method(D_METHOD("set_ifc_file_path","path"), &GDIFCManager::set_ifc_file_path);
+    ADD_PROPERTY(PropertyInfo(Variant::STRING, "ifc_file_path", PROPERTY_HINT_GLOBAL_FILE, "*.ifc"),
+        "set_ifc_file_path", "get_ifc_file_path");
 
     ClassDB::bind_method(D_METHOD("get_ifc_model"), &GDIFCManager::get_ifc_model);
     ClassDB::bind_method(D_METHOD("get_node_by_global_id","global_id"), &GDIFCManager::get_node_by_global_id);
@@ -21,17 +27,132 @@ void GDIFCManager::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_elements_by_class","ifc_class"), &GDIFCManager::get_elements_by_class);
 
     ADD_SIGNAL(MethodInfo("ifc_read"));
+    ADD_SIGNAL(MethodInfo("ifc_objects_ready"));
 }
 
 GDIFCManager::GDIFCManager() = default;
 
 GDIFCManager::~GDIFCManager() = default;
 
+// ---------------------------------------------------------
+// COLD RELOAD: detect saved IFC tree and re-parse metadata
+// ---------------------------------------------------------
+void GDIFCManager::_ready() {
+    if (ifc_file_path_.is_empty()) return;
+
+    // If "IFCModel" child already exists, this is a cold reload
+    Node* model_child = nullptr;
+    for (int i = 0; i < get_child_count(); i++) {
+        if (get_child(i)->get_name() == StringName("IFCModel")) {
+            model_child = get_child(i);
+            break;
+        }
+    }
+    if (!model_child) return;
+
+    // Point ifc_model_node_ at the existing IFCModel
+    ifc_model_node_ = Object::cast_to<IFCModel>(model_child);
+
+    UtilityFunctions::print_rich("[color=blue]Cold reload detected — re-parsing IFC metadata from: " + ifc_file_path_);
+
+    relink_failed_ = false;
+    current_state = LOADING_THREAD;
+    Callable callable = Callable(this, "_metadata_thread_task");
+    task_id = WorkerThreadPool::get_singleton()->add_task(callable, true);
+    set_process(true);
+}
+
+// ---------------------------------------------------------
+// METADATA-ONLY THREAD TASK (no geometry, no web-ifc)
+// ---------------------------------------------------------
+void GDIFCManager::_metadata_thread_task() {
+    // Check file existence
+    if (!FileAccess::file_exists(ifc_file_path_)) {
+        relink_failed_ = true;
+        return;
+    }
+
+    // Read file into memory
+    Ref<FileAccess> fa = FileAccess::open(ifc_file_path_, FileAccess::READ);
+    if (!fa.is_valid()) {
+        relink_failed_ = true;
+        return;
+    }
+    PackedByteArray buffer = fa->get_buffer(fa->get_length());
+    fa.unref();
+
+    if (buffer.is_empty()) {
+        relink_failed_ = true;
+        return;
+    }
+
+    // Parse with IfcParse only (no web-ifc geometry)
+    try {
+        auto temp_file = std::make_shared<IfcParse::IfcFile>(
+            (void*)buffer.ptr(), static_cast<int>(buffer.size()));
+        if (!temp_file->good()) {
+            relink_failed_ = true;
+            return;
+        }
+        ifc_parse_file = std::move(temp_file);
+        relink_failed_ = false;
+    } catch (...) {
+        relink_failed_ = true;
+    }
+}
+
+// ---------------------------------------------------------
+// RELINK: walk existing IFCNode tree and restore ifc_object_
+// ---------------------------------------------------------
+void GDIFCManager::_relink_ifc_objects() {
+    if (!ifc_parse_file) return;
+
+    Node* model_root = nullptr;
+    for (int i = 0; i < get_child_count(); i++) {
+        if (get_child(i)->get_name() == StringName("IFCModel")) {
+            model_root = get_child(i);
+            break;
+        }
+    }
+    if (!model_root) return;
+
+    // Initialise the IFCModel node with the loaded file
+    if (ifc_model_node_ && ifc_parse_file) {
+        ifc_model_node_->init(ifc_parse_file);
+    }
+
+    node_registry.clear();
+
+    std::function<void(Node*)> walk = [&](Node* n) {
+        IFCNode* ifc_node = Object::cast_to<IFCNode>(n);
+        if (ifc_node) {
+            String gid = ifc_node->get_global_id();
+            if (!gid.is_empty()) {
+                try {
+                    auto* inst = ifc_parse_file->instance_by_guid(
+                        std::string(gid.utf8().get_data()));
+                    if (inst) {
+                        ifc_node->set_ifc_object(GDIFCEntityBase::wrap(inst, ifc_parse_file));
+                        node_registry[static_cast<int>(inst->id())] = ifc_node;
+                    }
+                } catch (...) {}
+            }
+        }
+        for (int i = 0; i < n->get_child_count(); i++) {
+            walk(n->get_child(i));
+        }
+    };
+    walk(model_root);
+}
+
 Error GDIFCManager::read_ifc(const String &_path, bool _create_collision, const Array &_collision_classes) {
 
     UtilityFunctions::print_rich("[color=blue]Started loading IFC");
 
     start_loading_time = Time::get_singleton()->get_ticks_usec();
+
+    // Store path for cold-reload persistence
+    ifc_file_path_ = _path;
 
     ERR_FAIL_COND_V_MSG((current_state != IDLE && current_state != DONE),Error::FAILED,"Already loading!");
 
@@ -99,13 +220,35 @@ void GDIFCManager::_process(double delta) {
         if (WorkerThreadPool::get_singleton()->is_task_completed(task_id)) {
             WorkerThreadPool::get_singleton()->wait_for_task_completion(task_id);
             task_id = -1;
-            invisible_staging_root = memnew(IFCModel);
-            invisible_staging_root->set_name("IFC_Staging_Area");
-            ifc_model_node_ = Object::cast_to<IFCModel>(invisible_staging_root);
-            current_state = GENERATING_NODES;
+
+            // If we're doing a metadata-only reload, skip node generation
+            if (relink_failed_) {
+                // File was missing — warn and finish
+                WARN_PRINT(String("GDIFCManager: IFC file not found at '") + ifc_file_path_
+                    + "'. The model scene is intact but ifc_object properties are unavailable. "
+                    + "Call read_ifc() with a valid path to restore them.");
+                current_state = DONE;
+                emit_signal("ifc_objects_ready");
+                set_process(false);
+            } else if (!generation_queue.is_empty()) {
+                // Fresh load path — create staging root and generate nodes
+                invisible_staging_root = memnew(IFCModel);
+                invisible_staging_root->set_name("IFC_Staging_Area");
+                ifc_model_node_ = Object::cast_to<IFCModel>(invisible_staging_root);
+                current_state = GENERATING_NODES;
+            } else {
+                // Metadata-only reload — move to relinking
+                current_state = RELINKING;
+            }
         }
     } else if (current_state == GENERATING_NODES) {
         _process_generation_queue();
+    } else if (current_state == RELINKING) {
+        _relink_ifc_objects();
+        current_state = DONE;
+        emit_signal("ifc_objects_ready");
+        set_process(false);
+        UtilityFunctions::print("IFC objects relinked from saved scene.");
     }
 }
 // ---------------------------------------------------------
@@ -259,6 +402,11 @@ void GDIFCManager::_thread_task() {
             //  TODO: Get quantities
 
 
+            // Extract GlobalId for scene persistence
+            if (item.attributes.has("GlobalId")) {
+                item.global_id = item.attributes["GlobalId"];
+            }
+
             // Defines the parent of item
             if (parent_map.find(id) != parent_map.end()) {
                 item.parent_id = parent_map[id];
@@ -375,6 +523,11 @@ void GDIFCManager::_thread_task() {
             item.parent_id = parent_map[id];
         }
 
+        // Extract GlobalId for scene persistence
+        if (item.attributes.has("GlobalId")) {
+            item.global_id = item.attributes["GlobalId"];
+        }
+
         temp_queue.push_back(item);
         processed_ids.insert(id);
 
@@ -436,6 +589,11 @@ void GDIFCManager::_thread_task() {
             }
 
             if (parent_map.count(expressID)) item.parent_id = parent_map[expressID];
+
+            // Extract GlobalId for scene persistence
+            if (item.attributes.has("GlobalId")) {
+                item.global_id = item.attributes["GlobalId"];
+            }
 
             // Geometry (Standard Loop)
             item.geometry = {};
@@ -559,6 +717,7 @@ void GDIFCManager::_process_generation_queue() {
         element_node->set_quantities(item.quantities);
         element_node->set_attributes(item.attributes);
         element_node->set_ifc_class(item.ifc_class);
+        element_node->set_global_id(item.global_id);
 
         // Wrap the IFC entity with the typed GD object
         if (ifc_parse_file) {
@@ -659,6 +818,7 @@ void GDIFCManager::_process_generation_queue() {
         invisible_staging_root = nullptr;
         current_state = DONE;
         emit_signal("ifc_read");
+        emit_signal("ifc_objects_ready");
         set_process(false);
         UtilityFunctions::print("IFC Fully Loaded and Revealed!");
         UtilityFunctions::print((Time::get_singleton()->get_ticks_usec() - start_loading_time)/1000000," secs to load");
