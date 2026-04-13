@@ -163,9 +163,9 @@ jobs:
           WASM_OPT="${EMSDK}/upstream/bin/wasm-opt"
           WASM_FILE=$(find addons/GDIFC -name '*.wasm' | head -1)
           echo "Before wasm-opt: $(ls -lh "$WASM_FILE" | awk '{print $5}')"
-          # --no-inline prevents wasm-opt from re-merging functions that were
+          # --no-inline=* prevents wasm-opt from re-merging functions that were
           # deliberately split to stay below the browser per-function size limit.
-          "$WASM_OPT" -O2 --no-inline --strip-debug --strip-producers --low-memory-unused -o "${WASM_FILE}.opt" "${WASM_FILE}"
+          "$WASM_OPT" -O2 --no-inline='*' --strip-debug --strip-producers --low-memory-unused -o "${WASM_FILE}.opt" "${WASM_FILE}"
           mv "${WASM_FILE}.opt" "${WASM_FILE}"
           echo "After wasm-opt:  $(ls -lh "$WASM_FILE" | awk '{print $5}')"
 
