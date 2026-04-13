@@ -148,15 +148,32 @@ jobs:
 
       # ── Web WASM post-processing ──────────────────────────────────
 
-      - name: (Web) Dump largest WASM functions
+      - name: (Web) Validate WASM function sizes (pre-wasm-opt)
         if: matrix.platform == 'web'
         run: |
           WASM_FILE=$(find addons/GDIFC -name '*.wasm' | head -1)
-          echo "=== Pre-wasm-opt: top 15 largest functions ==="
-          "${EMSDK}/upstream/bin/wasm-opt" --print-function-map "$WASM_FILE" 2>/dev/null \
-            | sort -t: -k2 -n -r | head -15 || echo "(print-function-map not available)"
+          echo "=== Pre-wasm-opt validation ==="
+          python3 tools/validate_wasm_funcs.py "$WASM_FILE"
 
       - name: (Web) Optimize WASM with wasm-opt
+        if: matrix.platform == 'web'
+        timeout-minutes: 15
+        run: |
+          WASM_OPT="${EMSDK}/upstream/bin/wasm-opt"
+          WASM_FILE=$(find addons/GDIFC -name '*.wasm' | head -1)
+          echo "Before wasm-opt: $(ls -lh "$WASM_FILE" | awk '{print $5}')"
+          # --no-inline=* prevents wasm-opt from re-merging functions that were
+          # deliberately split to stay below the browser per-function size limit.
+          "$WASM_OPT" -O2 --no-inline='*' --strip-debug --strip-producers --low-memory-unused -o "${WASM_FILE}.opt" "${WASM_FILE}"
+          mv "${WASM_FILE}.opt" "${WASM_FILE}"
+          echo "After wasm-opt:  $(ls -lh "$WASM_FILE" | awk '{print $5}')"
+
+      - name: (Web) Validate WASM function sizes (post-wasm-opt)
+        if: matrix.platform == 'web'
+        run: |
+          WASM_FILE=$(find addons/GDIFC -name '*.wasm' | head -1)
+          echo "=== Post-wasm-opt validation ==="
+          python3 tools/validate_wasm_funcs.py "$WASM_FILE"
         if: matrix.platform == 'web'
         timeout-minutes: 15
         run: |
