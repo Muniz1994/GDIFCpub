@@ -109,6 +109,12 @@ def enable_exceptions(target_env):
             target_env[var] = type(flags)(new_flags) if hasattr(flags, 'data') else new_flags
         target_env.Append(CXXFLAGS=["-fexceptions"])
 
+# ── Web WASM size optimizations ─────────────────────────────────────────────
+# Enable section-level granularity so the linker (with LTO) can discard unused
+# functions and data more aggressively, reducing the final .wasm size.
+if platform == "web":
+    env.Append(CCFLAGS=["-fdata-sections", "-ffunction-sections"])
+
 # ── Build IfcParse static library ───────────────────────────────────────────
 ifcparse_env = env.Clone()
 enable_exceptions(ifcparse_env)
@@ -158,8 +164,15 @@ ifcparse_sources_no_digits = [
 ]
 
 # Schema sources (selected versions only)
+# On web, only compile schemas that are actually registered (HAS_SCHEMA_*)
+# to reduce WASM binary size. 4x1 and 4x2 have no HAS_SCHEMA define and are dead weight.
+if platform == "web":
+    _schema_list = ["4", "4x3", "4x3_add2", "2x3"]
+else:
+    _schema_list = ["4", "4x3", "4x3_add2", "4x2", "4x1", "2x3"]
+
 ifcparse_schema_sources = []
-for schema in ["4", "4x3", "4x3_add2", "4x2", "4x1", "2x3"]:
+for schema in _schema_list:
     ifcparse_schema_sources.append(f"ifcparse/Ifc{schema}.cpp")
     ifcparse_schema_sources.append(f"ifcparse/Ifc{schema}-schema.cpp")
 
@@ -266,7 +279,12 @@ gdifc_sources = [
 ]
 
 import glob as _glob
-gdifc_sources += _glob.glob("GDIFC/src/generated/*.cpp")
+_generated_sources = _glob.glob("GDIFC/src/generated/*.cpp")
+if platform == "web":
+    # Exclude documentation data from web builds — tooltips aren't useful in
+    # browser exports and the 155K-line embedded blob adds ~0.5 MiB to WASM.
+    _generated_sources = [s for s in _generated_sources if "doc_data" not in s]
+gdifc_sources += _generated_sources
 
 # Link against static libraries
 gdifc_env.Append(LIBS=[ifcparse_lib, webifc_lib])
