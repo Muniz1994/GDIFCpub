@@ -127,9 +127,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .scons-cache
-          key: scons-${{ matrix.platform }}-${{ matrix.target }}-${{ matrix.arch }}-${{ github.sha }}
+          key: scons-v2-${{ matrix.platform }}-${{ matrix.target }}-${{ matrix.arch }}-${{ github.sha }}
           restore-keys: |
-            scons-${{ matrix.platform }}-${{ matrix.target }}-${{ matrix.arch }}-
+            scons-v2-${{ matrix.platform }}-${{ matrix.target }}-${{ matrix.arch }}-
 
       # ── Build ──────────────────────────────────────────────────────
 
@@ -148,6 +148,14 @@ jobs:
 
       # ── Web WASM post-processing ──────────────────────────────────
 
+      - name: (Web) Dump largest WASM functions
+        if: matrix.platform == 'web'
+        run: |
+          WASM_FILE=$(find addons/GDIFC -name '*.wasm' | head -1)
+          echo "=== Pre-wasm-opt: top 15 largest functions ==="
+          "${EMSDK}/upstream/bin/wasm-opt" --print-function-map "$WASM_FILE" 2>/dev/null \
+            | sort -t: -k2 -n -r | head -15 || echo "(print-function-map not available)"
+
       - name: (Web) Optimize WASM with wasm-opt
         if: matrix.platform == 'web'
         timeout-minutes: 15
@@ -155,7 +163,9 @@ jobs:
           WASM_OPT="${EMSDK}/upstream/bin/wasm-opt"
           WASM_FILE=$(find addons/GDIFC -name '*.wasm' | head -1)
           echo "Before wasm-opt: $(ls -lh "$WASM_FILE" | awk '{print $5}')"
-          "$WASM_OPT" -O2 --strip-debug --strip-producers --low-memory-unused -o "${WASM_FILE}.opt" "${WASM_FILE}"
+          # --no-inline prevents wasm-opt from re-merging functions that were
+          # deliberately split to stay below the browser per-function size limit.
+          "$WASM_OPT" -O2 --no-inline --strip-debug --strip-producers --low-memory-unused -o "${WASM_FILE}.opt" "${WASM_FILE}"
           mv "${WASM_FILE}.opt" "${WASM_FILE}"
           echo "After wasm-opt:  $(ls -lh "$WASM_FILE" | awk '{print $5}')"
 
