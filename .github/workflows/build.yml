@@ -147,9 +147,10 @@ jobs:
       - name: (Web) Optimize WASM with wasm-opt
         if: matrix.platform == 'web'
         run: |
+          WASM_OPT="${EMSDK}/upstream/bin/wasm-opt"
           WASM_FILE=$(find addons/GDIFC -name '*.wasm' | head -1)
           echo "Before wasm-opt: $(ls -lh "$WASM_FILE" | awk '{print $5}')"
-          wasm-opt -Oz --strip-debug --strip-producers -o "${WASM_FILE}.opt" "${WASM_FILE}"
+          "$WASM_OPT" -Oz --strip-debug --strip-producers -o "${WASM_FILE}.opt" "${WASM_FILE}"
           mv "${WASM_FILE}.opt" "${WASM_FILE}"
           echo "After wasm-opt:  $(ls -lh "$WASM_FILE" | awk '{print $5}')"
 
