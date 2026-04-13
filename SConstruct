@@ -110,10 +110,19 @@ def enable_exceptions(target_env):
         target_env.Append(CXXFLAGS=["-fexceptions"])
 
 # ── Web WASM size optimizations ─────────────────────────────────────────────
-# Enable section-level granularity so the linker (with LTO) can discard unused
-# functions and data more aggressively, reducing the final .wasm size.
+# Browser WASM engines (V8, SpiderMonkey) enforce a per-function bytecode size
+# limit (~7.5 MiB).  Full LTO and aggressive inlining can merge hundreds of
+# template instantiations into a single mega-function that exceeds this limit,
+# causing "CompileError: wasm validation error: function body too big".
+#
+# Mitigations:
+#   1. -fdata-sections / -ffunction-sections → linker can discard unused pieces.
+#   2. -fno-inline-functions → prevent the compiler from inlining call-site
+#      heavy functions (e.g. 876× ClassDB::register_class<T>()).
+#   3. lto=none is passed from the CI build command to skip full LTO, which is
+#      the main source of cross-module mega-inlining.
 if platform == "web":
-    env.Append(CCFLAGS=["-fdata-sections", "-ffunction-sections"])
+    env.Append(CCFLAGS=["-fdata-sections", "-ffunction-sections", "-fno-inline-functions"])
 
 # ── Build IfcParse static library ───────────────────────────────────────────
 ifcparse_env = env.Clone()

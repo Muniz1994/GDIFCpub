@@ -4,7 +4,8 @@
 #include "gd_ifc_entities.h"
 #include <godot_cpp/core/class_db.hpp>
 
-void register_all_gd_ifc_entities() {
+
+static void register_gd_ifc_entities_batch_0() {
 
     ClassDB::register_class<IfcRoot>();
     GDIFCEntityBase::register_factory("IfcRoot",
@@ -806,6 +807,9 @@ void register_all_gd_ifc_entities() {
             obj->init(e, f);
             return Ref<GDIFCEntityBase>(obj);
         });
+}
+
+static void register_gd_ifc_entities_batch_1() {
     ClassDB::register_class<IfcBooleanResult>();
     GDIFCEntityBase::register_factory("IfcBooleanResult",
         [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
@@ -1606,6 +1610,9 @@ void register_all_gd_ifc_entities() {
             obj->init(e, f);
             return Ref<GDIFCEntityBase>(obj);
         });
+}
+
+static void register_gd_ifc_entities_batch_2() {
     ClassDB::register_class<IfcFlowMovingDevice>();
     GDIFCEntityBase::register_factory("IfcFlowMovingDevice",
         [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
@@ -2406,6 +2413,9 @@ void register_all_gd_ifc_entities() {
             obj->init(e, f);
             return Ref<GDIFCEntityBase>(obj);
         });
+}
+
+static void register_gd_ifc_entities_batch_3() {
     ClassDB::register_class<IfcDuctSegmentType>();
     GDIFCEntityBase::register_factory("IfcDuctSegmentType",
         [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
@@ -3206,6 +3216,9 @@ void register_all_gd_ifc_entities() {
             obj->init(e, f);
             return Ref<GDIFCEntityBase>(obj);
         });
+}
+
+static void register_gd_ifc_entities_batch_4() {
     ClassDB::register_class<IfcGridAxis>();
     GDIFCEntityBase::register_factory("IfcGridAxis",
         [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
@@ -4006,6 +4019,9 @@ void register_all_gd_ifc_entities() {
             obj->init(e, f);
             return Ref<GDIFCEntityBase>(obj);
         });
+}
+
+static void register_gd_ifc_entities_batch_5() {
     ClassDB::register_class<IfcOffsetCurve>();
     GDIFCEntityBase::register_factory("IfcOffsetCurve",
         [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
@@ -4806,6 +4822,9 @@ void register_all_gd_ifc_entities() {
             obj->init(e, f);
             return Ref<GDIFCEntityBase>(obj);
         });
+}
+
+static void register_gd_ifc_entities_batch_6() {
     ClassDB::register_class<IfcRectangularTrimmedSurface>();
     GDIFCEntityBase::register_factory("IfcRectangularTrimmedSurface",
         [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
@@ -5606,6 +5625,9 @@ void register_all_gd_ifc_entities() {
             obj->init(e, f);
             return Ref<GDIFCEntityBase>(obj);
         });
+}
+
+static void register_gd_ifc_entities_batch_7() {
     ClassDB::register_class<IfcShapeRepresentation>();
     GDIFCEntityBase::register_factory("IfcShapeRepresentation",
         [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
@@ -6406,6 +6428,9 @@ void register_all_gd_ifc_entities() {
             obj->init(e, f);
             return Ref<GDIFCEntityBase>(obj);
         });
+}
+
+static void register_gd_ifc_entities_batch_8() {
     ClassDB::register_class<IfcTelecomAddress>();
     GDIFCEntityBase::register_factory("IfcTelecomAddress",
         [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
@@ -7014,4 +7039,16 @@ void register_all_gd_ifc_entities() {
             obj->init(e, f);
             return Ref<GDIFCEntityBase>(obj);
         });
+}
+
+void register_all_gd_ifc_entities() {
+    register_gd_ifc_entities_batch_0();
+    register_gd_ifc_entities_batch_1();
+    register_gd_ifc_entities_batch_2();
+    register_gd_ifc_entities_batch_3();
+    register_gd_ifc_entities_batch_4();
+    register_gd_ifc_entities_batch_5();
+    register_gd_ifc_entities_batch_6();
+    register_gd_ifc_entities_batch_7();
+    register_gd_ifc_entities_batch_8();
 }

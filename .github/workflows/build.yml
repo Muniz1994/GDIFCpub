@@ -138,7 +138,11 @@ jobs:
         run: |
           EXTRA_ARGS=""
           if [ "${{ matrix.platform }}" = "web" ]; then
-            EXTRA_ARGS="optimize=size"
+            # optimize=size  → -Os for smaller code
+            # lto=none       → disable full LTO which creates mega-functions
+            #                   that exceed browser WASM per-function size limits
+            #                   (~7.5 MiB per function body in V8)
+            EXTRA_ARGS="optimize=size lto=none"
           fi
           scons platform=${{ matrix.platform }} target=${{ matrix.target }} arch=${{ matrix.arch }} $EXTRA_ARGS -j4
 
