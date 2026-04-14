@@ -115,17 +115,13 @@ def enable_exceptions(target_env):
 # template instantiations into a single mega-function that exceeds this limit,
 # causing "CompileError: wasm validation error: function body too big".
 #
-# Mitigations applied below:
-#   1. Strip -flto flags that godot-cpp/web.py injects (lto=full is the default).
-#      Full LTO merges functions across translation units, creating mega-functions.
-#   2. -fdata-sections / -ffunction-sections → linker can discard unused pieces.
-#   3. -fno-inline-functions → prevent the compiler from auto-inlining call-site
+# Mitigations:
+#   1. -fdata-sections / -ffunction-sections → linker can discard unused pieces.
+#   2. -fno-inline-functions → prevent the compiler from inlining call-site
 #      heavy functions (e.g. 876× ClassDB::register_class<T>()).
+#   3. lto=none is passed from the CI build command to skip full LTO, which is
+#      the main source of cross-module mega-inlining.
 if platform == "web":
-    # Remove -flto / -flto=... flags injected by godot-cpp so LTO is truly off
-    for var in ["CCFLAGS", "CXXFLAGS", "LINKFLAGS"]:
-        flags = env.get(var, [])
-        env[var] = [f for f in flags if not (isinstance(f, str) and f.startswith("-flto"))]
     env.Append(CCFLAGS=["-fdata-sections", "-ffunction-sections", "-fno-inline-functions"])
 
 # ── Build IfcParse static library ───────────────────────────────────────────
