@@ -164,7 +164,7 @@ jobs:
         run: |
           sudo apt-get install -y brotli
           WASM_FILE=$(find addons/GDIFC -name '*.wasm' | head -1)
-          brotli -f -q 11 -o "${WASM_FILE}.br" "${WASM_FILE}"
+          brotli -q 11 -o "${WASM_FILE}.br" "${WASM_FILE}"
           echo "Raw WASM:    $(ls -lh "$WASM_FILE" | awk '{print $5}')"
           echo "Brotli WASM: $(ls -lh "${WASM_FILE}.br" | awk '{print $5}')"
 
