@@ -174,6 +174,17 @@ jobs:
           WASM_FILE=$(find addons/GDIFC -name '*.wasm' | head -1)
           echo "=== Post-wasm-opt validation ==="
           python3 tools/validate_wasm_funcs.py "$WASM_FILE"
+        if: matrix.platform == 'web'
+        timeout-minutes: 15
+        run: |
+          WASM_OPT="${EMSDK}/upstream/bin/wasm-opt"
+          WASM_FILE=$(find addons/GDIFC -name '*.wasm' | head -1)
+          echo "Before wasm-opt: $(ls -lh "$WASM_FILE" | awk '{print $5}')"
+          # --no-inline=* prevents wasm-opt from re-merging functions that were
+          # deliberately split to stay below the browser per-function size limit.
+          "$WASM_OPT" -O2 --no-inline='*' --strip-debug --strip-producers --low-memory-unused -o "${WASM_FILE}.opt" "${WASM_FILE}"
+          mv "${WASM_FILE}.opt" "${WASM_FILE}"
+          echo "After wasm-opt:  $(ls -lh "$WASM_FILE" | awk '{print $5}')"
 
       - name: (Web) Brotli-compress WASM
         if: matrix.platform == 'web'
@@ -237,6 +248,17 @@ jobs:
             cp "$dir"/libgdifc* package/addons/GDIFC/ || true
           done
           
+      - name: Commit binaries to repo
+        if: github.event_name != 'pull_request'
+        run: |
+          cp package/addons/GDIFC/libgdifc* addons/GDIFC/
+          
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f addons/GDIFC/libgdifc*
+          git diff --cached --quiet || git commit -m "ci: update prebuilt binaries [skip ci]"
+          git push
+
       - name: Commit binaries to repo
         if: github.event_name != 'pull_request'
         run: |
