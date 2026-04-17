@@ -8,9 +8,8 @@ It creates a node tree of `IFCNode` meshes with the full geometry, properties, a
 ## Features
 
 - Asynchronous, threaded loading — the editor and game remain responsive while the model is parsed
-- IFC schema support: IFC 2x3, IFC 4.0, 4.1, 4.2, 4.3
+- IFC schema support: IFC 2.3.0.1 (IFC 2x3 TC1), IFC 4.0.2.1 (IFC 4 ADD2 TC1), 4.3.2.0 (IFC 4.3 ADD2)    
 - Per-object property sets, quantity sets, and attributes exposed as `Dictionary`
-- Automatic material deduplication (single draw call per unique colour/transparency)
 - Optional collision shape generation per object
 - Georeferencing data (`MapConversion` / `ProjectedCRS`) available after load
 - Platforms: Windows, Linux, Android, Web (WASM)
