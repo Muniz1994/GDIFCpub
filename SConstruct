@@ -135,7 +135,6 @@ ifcparse_env.Append(CPPDEFINES=[
     "IFC_PARSE_EXPORTS",
     "HAS_SCHEMA_4",
     "HAS_SCHEMA_2x3",
-    "HAS_SCHEMA_4x3",
     "HAS_SCHEMA_4x3_add2",
     "IFCQUERY_STATIC_LIB",
 ])
@@ -167,9 +166,9 @@ ifcparse_sources_no_digits = [
 # On web, only compile schemas that are actually registered (HAS_SCHEMA_*)
 # to reduce WASM binary size. 4x1 and 4x2 have no HAS_SCHEMA define and are dead weight.
 if platform == "web":
-    _schema_list = ["4", "4x3", "4x3_add2", "2x3"]
+    _schema_list = ["4", "4x3_add2", "2x3"]
 else:
-    _schema_list = ["4", "4x3", "4x3_add2", "4x2", "4x1", "2x3"]
+    _schema_list = ["4", "4x3_add2", "2x3"]
 
 ifcparse_schema_sources = []
 for schema in _schema_list:
@@ -250,6 +249,7 @@ enable_exceptions(gdifc_env)
 # C++17 for GDIFC
 if is_msvc:
     gdifc_env.Append(CXXFLAGS=["/std:c++17", "/bigobj"])
+    gdifc_env.Append(LINKFLAGS=["/MAP:my_program.map"])
 else:
     gdifc_env.Append(CXXFLAGS=["-std=c++17"])
 
@@ -263,7 +263,6 @@ gdifc_env.Append(CPPDEFINES=[
     "IFCQUERY_STATIC_LIB",
     "HAS_SCHEMA_4",
     "HAS_SCHEMA_2x3",
-    "HAS_SCHEMA_4x3",
     "HAS_SCHEMA_4x3_add2",
 ])
 

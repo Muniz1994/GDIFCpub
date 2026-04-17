@@ -293,7 +293,7 @@ void GDIFCManager::_thread_task() {
 
     bool is_supported_schema = (current_schema == Ifc2x3::get_schema().name()) ||
                                (current_schema == Ifc4::get_schema().name()) ||
-                               (current_schema == Ifc4x3::get_schema().name()) ||
+                            //    (current_schema == Ifc4x3::get_schema().name()) ||
                                (current_schema == Ifc4x3_add2::get_schema().name());
 
     if (!is_supported_schema) {
@@ -303,7 +303,7 @@ void GDIFCManager::_thread_task() {
 
     std::unordered_map<std::string,int> schema_map{
         {Ifc4::get_schema().name(),0},
-        {Ifc4x3::get_schema().name(),1},
+        // {Ifc4x3::get_schema().name(),1},
         {Ifc2x3::get_schema().name(),2},
         {Ifc4x3_add2::get_schema().name(),3}
     };
@@ -329,7 +329,7 @@ void GDIFCManager::_thread_task() {
     try {
         switch (schema_index) {
             case 0: parent_map = build_spatial_hierarchy<Ifc4>(*temp_file); break;
-            case 1: parent_map = build_spatial_hierarchy<Ifc4x3>(*temp_file); break;
+            // case 1: parent_map = build_spatial_hierarchy<Ifc4x3>(*temp_file); break;
             case 2: parent_map = build_spatial_hierarchy<Ifc2x3>(*temp_file); break;
             case 3: parent_map = build_spatial_hierarchy<Ifc4x3_add2>(*temp_file); break;
             default: ;
@@ -374,7 +374,7 @@ void GDIFCManager::_thread_task() {
             switch (schema_index)
             {
                 case 0: item.attributes = get_ifc_object_attributes<Ifc4>(*temp_file, id); break;
-                case 1: item.attributes = get_ifc_object_attributes<Ifc4x3>(*temp_file, id); break;
+                // case 1: item.attributes = get_ifc_object_attributes<Ifc4x3>(*temp_file, id); break;
                 case 2: item.attributes = get_ifc_object_attributes<Ifc2x3>(*temp_file, id); break;
                 case 3: item.attributes = get_ifc_object_attributes<Ifc4x3_add2>(*temp_file, id); break;
                 default: ;
@@ -384,7 +384,7 @@ void GDIFCManager::_thread_task() {
             switch (schema_index)
             {
                 case 0: item.properties = get_ifc_property_sets<Ifc4>(*temp_file, id); break;
-                case 1: item.properties = get_ifc_property_sets<Ifc4x3>(*temp_file, id); break;
+                // case 1: item.properties = get_ifc_property_sets<Ifc4x3>(*temp_file, id); break;
                 case 2: item.properties = get_ifc_property_sets<Ifc2x3>(*temp_file, id); break;
                 case 3: item.properties = get_ifc_property_sets<Ifc4x3_add2>(*temp_file, id); break;
                 default: ;
@@ -393,7 +393,7 @@ void GDIFCManager::_thread_task() {
             switch (schema_index)
             {
                 case 0: item.quantities = get_ifc_quantity_sets<Ifc4>(*temp_file, id); break;
-                case 1: item.quantities = get_ifc_quantity_sets<Ifc4x3>(*temp_file, id); break;
+                // case 1: item.quantities = get_ifc_quantity_sets<Ifc4x3>(*temp_file, id); break;
                 case 2: item.quantities = get_ifc_quantity_sets<Ifc2x3>(*temp_file, id); break;
                 case 3: item.quantities = get_ifc_quantity_sets<Ifc4x3_add2>(*temp_file, id); break;
                 default: ;
@@ -495,7 +495,7 @@ void GDIFCManager::_thread_task() {
         switch (schema_index)
         {
             case 0: item.attributes = get_ifc_object_attributes<Ifc4>(*temp_file, id); break;
-            case 1: item.attributes = get_ifc_object_attributes<Ifc4x3>(*temp_file, id); break;
+            // case 1: item.attributes = get_ifc_object_attributes<Ifc4x3>(*temp_file, id); break;
             case 2: item.attributes = get_ifc_object_attributes<Ifc2x3>(*temp_file, id); break;
             case 3: item.attributes = get_ifc_object_attributes<Ifc4x3_add2>(*temp_file, id); break;
             default: ;
@@ -504,7 +504,7 @@ void GDIFCManager::_thread_task() {
         switch (schema_index)
         {
             case 0: item.properties = get_ifc_property_sets<Ifc4>(*temp_file, id); break;
-            case 1: item.properties = get_ifc_property_sets<Ifc4x3>(*temp_file, id); break;
+            // case 1: item.properties = get_ifc_property_sets<Ifc4x3>(*temp_file, id); break;
             case 2: item.properties = get_ifc_property_sets<Ifc2x3>(*temp_file, id); break;
             case 3: item.properties = get_ifc_property_sets<Ifc4x3_add2>(*temp_file, id); break;
             default: ;
@@ -513,7 +513,7 @@ void GDIFCManager::_thread_task() {
         switch (schema_index)
         {
             case 0: item.quantities = get_ifc_quantity_sets<Ifc4>(*temp_file, id); break;
-            case 1: item.quantities = get_ifc_quantity_sets<Ifc4x3>(*temp_file, id); break;
+            // case 1: item.quantities = get_ifc_quantity_sets<Ifc4x3>(*temp_file, id); break;
             case 2: item.quantities = get_ifc_quantity_sets<Ifc2x3>(*temp_file, id); break;
             case 3: item.quantities = get_ifc_quantity_sets<Ifc4x3_add2>(*temp_file, id); break;
             default: ;
@@ -564,7 +564,7 @@ void GDIFCManager::_thread_task() {
             switch (schema_index)
             {
                 case 0: item.attributes = get_ifc_object_attributes<Ifc4>(*temp_file, expressID); break;
-                case 1: item.attributes = get_ifc_object_attributes<Ifc4x3>(*temp_file, expressID); break;
+                // case 1: item.attributes = get_ifc_object_attributes<Ifc4x3>(*temp_file, expressID); break;
                 case 2: item.attributes = get_ifc_object_attributes<Ifc2x3>(*temp_file, expressID); break;
                 case 3: item.attributes = get_ifc_object_attributes<Ifc4x3_add2>(*temp_file, expressID); break;
                 default: ;
@@ -573,7 +573,7 @@ void GDIFCManager::_thread_task() {
             switch (schema_index)
             {
                 case 0: item.properties = get_ifc_property_sets<Ifc4>(*temp_file, expressID); break;
-                case 1: item.properties = get_ifc_property_sets<Ifc4x3>(*temp_file, expressID); break;
+                // case 1: item.properties = get_ifc_property_sets<Ifc4x3>(*temp_file, expressID); break;
                 case 2: item.properties = get_ifc_property_sets<Ifc2x3>(*temp_file, expressID); break;
                 case 3: item.properties = get_ifc_property_sets<Ifc4x3_add2>(*temp_file, expressID); break;
                 default: ;
@@ -582,7 +582,7 @@ void GDIFCManager::_thread_task() {
             switch (schema_index)
             {
                 case 0: item.quantities = get_ifc_quantity_sets<Ifc4>(*temp_file, expressID); break;
-                case 1: item.quantities = get_ifc_quantity_sets<Ifc4x3>(*temp_file, expressID); break;
+                // case 1: item.quantities = get_ifc_quantity_sets<Ifc4x3>(*temp_file, expressID); break;
                 case 2: item.quantities = get_ifc_quantity_sets<Ifc2x3>(*temp_file, expressID); break;
                 case 3: item.quantities = get_ifc_quantity_sets<Ifc4x3_add2>(*temp_file, expressID); break;
                 default: ;
