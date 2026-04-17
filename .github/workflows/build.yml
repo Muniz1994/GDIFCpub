@@ -142,41 +142,6 @@ jobs:
           fi
           scons platform=${{ matrix.platform }} target=${{ matrix.target }} arch=${{ matrix.arch }} $EXTRA_ARGS -j4
 
-      # ── Web WASM post-processing ──────────────────────────────────
-
-      - name: (Web) Optimize WASM with wasm-opt
-        if: matrix.platform == 'web'
-        timeout-minutes: 15
-        run: |
-          WASM_OPT="${EMSDK}/upstream/bin/wasm-opt"
-          WASM_FILE=$(find addons/GDIFC -name '*.wasm' | head -1)
-          echo "Before wasm-opt: $(ls -lh "$WASM_FILE" | awk '{print $5}')"
-          "$WASM_OPT" -O2 --strip-debug --strip-producers --low-memory-unused -o "${WASM_FILE}.opt" "${WASM_FILE}"
-          mv "${WASM_FILE}.opt" "${WASM_FILE}"
-          echo "After wasm-opt:  $(ls -lh "$WASM_FILE" | awk '{print $5}')"
-
-      - name: (Web) Brotli-compress WASM
-        if: matrix.platform == 'web'
-        run: |
-          sudo apt-get install -y brotli
-          WASM_FILE=$(find addons/GDIFC -name '*.wasm' | head -1)
-          brotli -q 11 -o "${WASM_FILE}.br" "${WASM_FILE}"
-          echo "Raw WASM:    $(ls -lh "$WASM_FILE" | awk '{print $5}')"
-          echo "Brotli WASM: $(ls -lh "${WASM_FILE}.br" | awk '{print $5}')"
-
-      - name: (Web) Check WASM size
-        if: matrix.platform == 'web'
-        run: |
-          WASM_FILE=$(find addons/GDIFC -name '*.wasm' ! -name '*.br' | head -1)
-          SIZE=$(stat -c%s "$WASM_FILE")
-          SIZE_MB=$(echo "scale=2; $SIZE / 1048576" | bc)
-          echo "WASM size: ${SIZE_MB} MiB"
-          if [ "$SIZE" -gt 7340032 ]; then
-            echo "::warning::WASM binary is ${SIZE_MB} MiB — exceeds 7 MiB target"
-          else
-            echo "WASM binary is within the 7 MiB target"
-          fi
-
       # ── Upload artifact ────────────────────────────────────────────
 
       - name: Upload addon
