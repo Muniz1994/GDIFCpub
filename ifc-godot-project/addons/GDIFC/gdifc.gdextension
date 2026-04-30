@@ -10,11 +10,14 @@ IFCNode = "res://addons/GDIFC/assets/icons/box.svg"
 
 [libraries]
 
-
 linux.release.x86_64 = "res://addons/GDIFC/libgdifc.linux.template_release.x86_64.so"
+linux.debug.x86_64 = "res://addons/GDIFC/libgdifc.linux.template_debug.x86_64.so"
 
 windows.release.x86_64 = "res://addons/GDIFC/libgdifc.windows.template_release.x86_64.dll"
+windows.debug.x86_64 = "res://addons/GDIFC/libgdifc.windows.template_debug.x86_64.dll"
 
 android.release.arm64 = "res://addons/GDIFC/libgdifc.android.template_release.arm64.so"
+android.debug.x86_64 = "res://addons/GDIFC/libgdifc.android.template_debug.x86_64.so"
 
 web.release.wasm32 = "res://addons/GDIFC/libgdifc.web.template_release.wasm32.wasm"
+web.debug.wasm32 = "res://addons/GDIFC/libgdifc.web.template_debug.wasm32.wasm"
