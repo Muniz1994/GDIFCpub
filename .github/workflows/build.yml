@@ -20,11 +20,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: Linux Debug
-            runner: ubuntu-24.04
-            platform: linux
-            target: template_debug
-            arch: x86_64
+          # - name: Linux Debug
+          #   runner: ubuntu-24.04
+          #   platform: linux
+          #   target: template_debug
+          #   arch: x86_64
 
           - name: Linux Release
             runner: ubuntu-24.04
@@ -32,11 +32,11 @@ jobs:
             target: template_release
             arch: x86_64
 
-          - name: Windows Debug
-            runner: windows-2022
-            platform: windows
-            target: template_debug
-            arch: x86_64
+          # - name: Windows Debug
+          #   runner: windows-2022
+          #   platform: windows
+          #   target: template_debug
+          #   arch: x86_64
 
           - name: Windows Release
             runner: windows-2022
@@ -44,11 +44,11 @@ jobs:
             target: template_release
             arch: x86_64
 
-          - name: Android Debug
-            runner: ubuntu-24.04
-            platform: android
-            target: template_debug
-            arch: arm64
+          # - name: Android Debug
+          #   runner: ubuntu-24.04
+          #   platform: android
+          #   target: template_debug
+          #   arch: arm64
 
           - name: Android Release
             runner: ubuntu-24.04
@@ -56,11 +56,11 @@ jobs:
             target: template_release
             arch: arm64
 
-          - name: Web Debug
-            runner: ubuntu-24.04
-            platform: web
-            target: template_debug
-            arch: wasm32
+          # - name: Web Debug
+          #   runner: ubuntu-24.04
+          #   platform: web
+          #   target: template_debug
+          #   arch: wasm32
 
           - name: Web Release
             runner: ubuntu-24.04
