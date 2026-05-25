@@ -55,6 +55,17 @@ To load from a base-64 encoded string (e.g. data received over the network):
 ifc_manager.read_ifc_base64(base64_string, false, [])
 ```
 
+## Documentation
+
+Extended documentation is available in the [`docs/`](docs/) folder:
+
+- [Documentation Index](docs/index.md)
+- [Getting Started](docs/getting-started.md)
+- [Loading Models](docs/loading-models.md)
+- [Typed Entity Access](docs/typed-entities.md)
+- [API Reference](docs/api-reference.md)
+- [Building From Source](docs/building-from-source.md)
+
 ## API Reference
 
 ### `GDIFCManager` — `Node3D`
