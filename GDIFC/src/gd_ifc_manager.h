@@ -35,41 +35,9 @@
 #include "gd_ifc_settings.h"
 #include "gd_ifc_entity_base.h"
 #include "gd_ifc_model.h"
+#include "gd_ifc_georeference.h"
 
 namespace godot {
-// Holds the geometric data to allow the creation of the Godot
-// geometries of the IFC object
-
-    struct MapConversion{
-
-        int32_t Eastings;
-        int32_t Northings;
-        int32_t OrthogonalHeight;
-        int32_t XAxisAbscissa;
-        int32_t XAxisOrdinate;
-        int16_t Scale;
-
-    };
-
-    struct ProjectedCRS {
-
-        String Name;
-        String Description;
-        String GeodeticDatum;
-        String VerticalDatum;
-    };
-
-struct GeorreferenceData {
-    MapConversion map_conversion;
-    ProjectedCRS projected_crs;
-
-    GeorreferenceData():map_conversion{0,0,0,0,0,0},projected_crs{"NotDefined","NotDefined","NotDefined","NotDefined"}
-    {}
-
-    GeorreferenceData(MapConversion map_conversion, ProjectedCRS projected_crs): map_conversion{map_conversion},projected_crs{projected_crs}
-    {}
-
-};
 
 struct PrecalculatedIFCItemGeometry {
 

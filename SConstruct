@@ -275,6 +275,7 @@ gdifc_sources = [
     "GDIFC/src/gd_ifc_node.cpp",
     "GDIFC/src/gd_ifc_entity_base.cpp",
     "GDIFC/src/gd_ifc_model.cpp",
+    "GDIFC/src/gd_ifc_georeference.cpp",
 ]
 
 import glob as _glob

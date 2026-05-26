@@ -695,6 +695,13 @@ void GDIFCManager::_thread_task() {
         return a.express_id < b.express_id;
     });
 
+    // Get georeference data for IFC4+ schemas
+    switch (schema_index) {
+        case 0: this->georreference = get_georreference<Ifc4>(*temp_file); break;
+        case 3: this->georreference = get_georreference<Ifc4x3_add2>(*temp_file); break;
+        default: this->georreference = {}; break;
+    }
+
     // Commit results
     this->web_ifc_manager = std::move(temp_ifc_manager);
     this->ifc_parse_file = std::move(temp_file);
@@ -805,6 +812,21 @@ void GDIFCManager::_process_generation_queue() {
 
     if (current_generation_index >= generation_queue.size()) {
         invisible_staging_root->set_name("IFCModel");
+
+        // IFC4+: create Georeference node, or warn if georef data is absent
+        bool is_ifc4plus = ifc_parse_file &&
+            ifc_parse_file->schema()->name() != Ifc2x3::get_schema().name();
+        if (is_ifc4plus) {
+            if (georreference.valid) {
+                IFCGeoreference* georef_node = memnew(IFCGeoreference);
+                georef_node->set_name("Georeference");
+                georef_node->init(georreference);
+                invisible_staging_root->add_child(georef_node);
+            } else {
+                WARN_PRINT("IFC4+ file loaded without georeferencing data (IfcProjectedCRS/IfcMapConversion not found).");
+            }
+        }
+
         add_child(invisible_staging_root, true);
 
         // Initialise the IFCModel node with the loaded file
@@ -1292,35 +1314,47 @@ godot::Variant to_godot_variant(const AttributeValue& attr_value) {
 
 template <typename schema>
 godot::GeorreferenceData get_georreference(IfcParse::IfcFile &file) {
-    if (std::is_same_v<schema,Ifc2x3>)
-    {return {};}
-    else {
+    if constexpr (std::is_same_v<schema, Ifc2x3>) {
+        return {};
+    } else {
         try {
-        auto instances = file.instances_by_type("IfcMapConversion");
-        if (!instances || instances->size() == 0) {
-            return {};
-        }
+            auto instances = file.instances_by_type("IfcMapConversion");
+            if (!instances || instances->size() == 0) return {};
 
-        IfcUtil::IfcBaseClass* obj = (*instances)[0];
+            auto* obj = (*instances)[0];
+            auto* map_conversion = obj->template as<typename schema::IfcMapConversion>();
+            if (!map_conversion) return {};
 
-        auto map_conversion = obj->template as<typename schema::IfcMapConversion>();
+            // Cast TargetCRS to IfcProjectedCRS* for full attribute access.
+            // VerticalDatum is on the base class in IFC4, on IfcProjectedCRS in IFC4x3_add2.
+            auto* projected_crs = map_conversion->TargetCRS()
+                                      ->template as<typename schema::IfcProjectedCRS>();
+            if (!projected_crs) return {};
 
-        auto projected_crs = map_conversion->TargetCRS();
+            // Name is non-optional (std::string) in IFC4 but optional in IFC4x3_add2.
+            std::string crs_name;
+            if constexpr (std::is_same_v<schema, Ifc4>) {
+                crs_name = projected_crs->Name();
+            } else {
+                crs_name = projected_crs->Name().value_or("");
+            }
 
-        return GeorreferenceData(MapConversion{
-                                     (int32_t)map_conversion->Eastings(),
-                                     (int32_t)map_conversion->Northings(),
-                                     (int32_t)map_conversion->OrthogonalHeight(),
-                                     (int32_t)map_conversion->XAxisAbscissa().value_or(0),
-                                     (int32_t)map_conversion->XAxisOrdinate().value_or(0),
-                                     (int16_t)map_conversion->Scale().value_or(0)},
-                                 ProjectedCRS{
-                                     projected_crs->Name().c_str(),
-                                     projected_crs->Description().value_or("").c_str(),
-                                     projected_crs->GeodeticDatum().value_or("").c_str(),
-                                     projected_crs->VerticalDatum().value_or("").c_str()}
-        );
-
+            return GeorreferenceData(
+                MapConversion{
+                    (int32_t)map_conversion->Eastings(),
+                    (int32_t)map_conversion->Northings(),
+                    (int32_t)map_conversion->OrthogonalHeight(),
+                    (int32_t)map_conversion->XAxisAbscissa().value_or(0),
+                    (int32_t)map_conversion->XAxisOrdinate().value_or(0),
+                    (int16_t)map_conversion->Scale().value_or(0)
+                },
+                ProjectedCRS{
+                    crs_name.c_str(),
+                    projected_crs->Description().value_or("").c_str(),
+                    projected_crs->GeodeticDatum().value_or("").c_str(),
+                    projected_crs->VerticalDatum().value_or("").c_str()
+                }
+            );
         } catch (const std::exception& e) {
             ERR_PRINT(godot::String("Failed to get georeference data: ") + e.what());
         } catch (...) {
