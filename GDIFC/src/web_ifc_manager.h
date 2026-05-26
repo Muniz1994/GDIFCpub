@@ -49,14 +49,15 @@ public:
 
     WEBIFCManager(godot::GDIFCLoaderSettings *settings)
         :
-        set{settings},
+        set{},
         schemaManager{},
         model_manager(true)
-
-
-
     {
-        set.instantiate();
+        if (settings != nullptr) {
+            set = godot::Ref<godot::GDIFCLoaderSettings>(settings);
+        } else {
+            set.instantiate();
+        }
         loader = std::make_unique<webifc::parsing::IfcLoader>(this->set->getTapeSize(), this->set->getMemoryLimit(), this->set->getLineWriterBuffer(), this->schemaManager);
     }
 
@@ -65,8 +66,6 @@ public:
         set{},
         schemaManager{},
         model_manager(true)
-
-
     {
         set.instantiate();
         loader = std::make_unique<webifc::parsing::IfcLoader>(this->set->getTapeSize(), this->set->getMemoryLimit(), this->set->getLineWriterBuffer(), this->schemaManager);

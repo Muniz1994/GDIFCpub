@@ -29,9 +29,6 @@ public:
     godot::Dictionary get_quantities();
     void set_quantities(godot::Dictionary quants);
 
-    godot::String get_class();
-    void set_class(godot::String class_name);
-
     godot::String get_ifc_class() {return ifc_class;}
     void set_ifc_class(godot::String ifcclass) {ifc_class = ifcclass;};
 

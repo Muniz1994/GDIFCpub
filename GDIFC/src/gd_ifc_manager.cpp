@@ -249,6 +249,8 @@ void GDIFCManager::_process(double delta) {
         emit_signal("ifc_objects_ready");
         set_process(false);
         UtilityFunctions::print("IFC objects relinked from saved scene.");
+    } else if (current_state == FAILED) {
+        set_process(false);
     }
 }
 // ---------------------------------------------------------
@@ -668,6 +670,7 @@ void GDIFCManager::_thread_task() {
 
     // 2. Depth Sort
     std::unordered_map<int, int> depth_cache;
+    std::unordered_set<int> in_progress;
 
     std::function<int(int)> get_depth = [&](int id) -> int {
         if (id <= 0) return 0;
@@ -675,7 +678,11 @@ void GDIFCManager::_thread_task() {
         if (parent_map.find(id) == parent_map.end()) { depth_cache[id] = 0; return 0; }
         int p = parent_map[id];
         if (p == 0 || p == id) { depth_cache[id] = 0; return 0; }
+        // Cycle guard: if we're already computing depth for this node, break the cycle
+        if (in_progress.count(id)) { depth_cache[id] = 0; return 0; }
+        in_progress.insert(id);
         int d = 1 + get_depth(p);
+        in_progress.erase(id);
         depth_cache[id] = d;
         return d;
     };
