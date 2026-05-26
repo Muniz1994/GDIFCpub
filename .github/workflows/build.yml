@@ -172,7 +172,7 @@ jobs:
       - name: Collect binaries
         run: |
           mkdir -p package/addons/GDIFC
-          cp ifc-godot-project/addons/GDIFC/gdifc.gdextension package/addons/GDIFC/
+          cp addons/GDIFC/gdifc.gdextension package/addons/GDIFC/
           cp ifc-godot-project/addons/GDIFC/plugin.cfg package/addons/GDIFC/ || true
           cp -r ifc-godot-project/addons/GDIFC/assets package/addons/GDIFC/ || true
           cp -r ifc-godot-project/addons/GDIFC/settings package/addons/GDIFC/ || true
