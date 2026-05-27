@@ -64,6 +64,7 @@ struct PrecalculatedIFCItemGeometry {
         Dictionary quantities;
         Dictionary attributes;
         std::vector<PrecalculatedIFCItemGeometry> geometry;
+        Transform3D node_transform; // IFC placement transform; vertices are in this node's local space
     };
     
 

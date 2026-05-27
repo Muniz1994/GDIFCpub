@@ -30,7 +30,9 @@ void GDIFCManager::_bind_methods() {
     ADD_SIGNAL(MethodInfo("ifc_objects_ready"));
 }
 
-GDIFCManager::GDIFCManager() = default;
+GDIFCManager::GDIFCManager() {
+    geometric_settings.instantiate();
+}
 
 GDIFCManager::~GDIFCManager() = default;
 
@@ -256,13 +258,27 @@ void GDIFCManager::_process(double delta) {
 // ---------------------------------------------------------
 // BACKGROUND THREAD
 // ---------------------------------------------------------
+
+// Convert a GLM column-major 4×4 matrix to a Godot Transform3D.
+// GLM column layout: m[col][row]; columns 0-2 are the axes, column 3 is translation.
+static inline godot::Transform3D glm_to_godot_transform(const glm::dmat4& m) {
+    return godot::Transform3D(
+        godot::Basis(
+            godot::Vector3((float)m[0].x, (float)m[0].y, (float)m[0].z),  // X axis
+            godot::Vector3((float)m[1].x, (float)m[1].y, (float)m[1].z),  // Y axis
+            godot::Vector3((float)m[2].x, (float)m[2].y, (float)m[2].z)   // Z axis
+        ),
+        godot::Vector3((float)m[3].x, (float)m[3].y, (float)m[3].z)       // origin
+    );
+}
+
 void GDIFCManager::_thread_task() {
 
     const char* buf_ptr  = reinterpret_cast<const char*>(this->pending_buffer.ptr());
     int         buf_size = static_cast<int>(this->pending_buffer.size());
 
     // Load file [web-ifc] — from memory buffer
-    auto temp_ifc_manager = std::make_unique<WEBIFCManager>(*geometric_settings);
+    auto temp_ifc_manager = std::make_unique<WEBIFCManager>(geometric_settings.ptr());
     try {
         temp_ifc_manager->read_ifc_file(buf_ptr, buf_size);
     } catch (const std::exception& e) {
@@ -422,11 +438,23 @@ void GDIFCManager::_thread_task() {
 
             // Only process if geometry actually exists (IfcProject will usually skip this)
             if (!flat_mesh.geometries.empty()) {
+                glm::dmat4 node_mat(1.0);
+                bool has_node_transform = false;
                 for (auto& geom_data : flat_mesh.geometries) {
                     PrecalculatedIFCItemGeometry item_geometry;
                     auto ifc_geometry = temp_ifc_manager->geometry_loader->GetGeometry(geom_data.geometryExpressID);
 
                     if (ifc_geometry.numPoints == 0 || ifc_geometry.numFaces == 0) continue;
+
+                    // First geometry defines the node's world-space placement.
+                    if (!has_node_transform) {
+                        node_mat = geom_data.transformation;
+                        item.node_transform = glm_to_godot_transform(node_mat);
+                        has_node_transform = true;
+                    }
+
+                    // Express vertices in the node's local space.
+                    glm::dmat4 local_mat = glm::inverse(node_mat) * geom_data.transformation;
 
                     // Resize & Fill Vertices/Normals/Indices (Standard logic)
                     int v_off = item_geometry.vertices.size();
@@ -437,8 +465,8 @@ void GDIFCManager::_thread_task() {
                     item_geometry.indices.resize(i_off + (ifc_geometry.numFaces * 3));
 
                     for (uint32_t k = 0; k < ifc_geometry.numPoints; k++) {
-                        glm::dvec4 tv = geom_data.transformation * glm::dvec4(ifc_geometry.GetPoint(k), 1.0);
-                        item_geometry.vertices[v_off + k] = Vector3(tv.x, tv.y, tv.z);
+                        glm::dvec4 tv = local_mat * glm::dvec4(ifc_geometry.GetPoint(k), 1.0);
+                        item_geometry.vertices[v_off + k] = Vector3((float)tv.x, (float)tv.y, (float)tv.z);
                     }
                     for (uint32_t k = 0; k < ifc_geometry.numFaces; k++) {
                         bimGeometry::Face f = ifc_geometry.GetFace(k);
@@ -599,10 +627,22 @@ void GDIFCManager::_thread_task() {
 
             // Geometry (Standard Loop)
             item.geometry = {};
+            glm::dmat4 node_mat(1.0);
+            bool has_node_transform = false;
             for (auto& geom_data : flat_mesh.geometries) {
                 PrecalculatedIFCItemGeometry item_geometry;
                 auto ifc_geometry = temp_ifc_manager->geometry_loader->GetGeometry(geom_data.geometryExpressID);
                 if (ifc_geometry.numPoints == 0 || ifc_geometry.numFaces == 0) continue;
+
+                // First geometry defines the node's world-space placement.
+                if (!has_node_transform) {
+                    node_mat = geom_data.transformation;
+                    item.node_transform = glm_to_godot_transform(node_mat);
+                    has_node_transform = true;
+                }
+
+                // Express vertices in the node's local space.
+                glm::dmat4 local_mat = glm::inverse(node_mat) * geom_data.transformation;
 
                 int v_off = item_geometry.vertices.size();
                 int i_off = item_geometry.indices.size();
@@ -611,8 +651,8 @@ void GDIFCManager::_thread_task() {
                 item_geometry.indices.resize(i_off + (ifc_geometry.numFaces * 3));
 
                 for (uint32_t k = 0; k < ifc_geometry.numPoints; k++) {
-                    glm::dvec4 tv = geom_data.transformation * glm::dvec4(ifc_geometry.GetPoint(k), 1.0);
-                    item_geometry.vertices[v_off + k] = Vector3(tv.x, tv.y, tv.z);
+                    glm::dvec4 tv = local_mat * glm::dvec4(ifc_geometry.GetPoint(k), 1.0);
+                    item_geometry.vertices[v_off + k] = Vector3((float)tv.x, (float)tv.y, (float)tv.z);
                 }
                 for (uint32_t k = 0; k < ifc_geometry.numFaces; k++) {
                     bimGeometry::Face f = ifc_geometry.GetFace(k);
@@ -727,6 +767,7 @@ void GDIFCManager::_process_generation_queue() {
         // 1. Create Node
         IFCNode* element_node = memnew(IFCNode);
         element_node->set_name(item.node_name);
+        element_node->set_transform(item.node_transform);
         element_node->set_properties(item.properties);
         element_node->set_quantities(item.quantities);
         element_node->set_attributes(item.attributes);
