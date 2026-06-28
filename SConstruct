@@ -81,12 +81,13 @@ common_includes = [
 
 
 def objects_in_build(target_env, lib_name, sources):
-    """Compile sources into build/obj/<lib_name>/... and return object nodes."""
+    """Compile sources into build/obj/<platform>/<lib_name>/... and return object nodes."""
     object_nodes = []
+    platform_name = str(target_env.get("platform", "unknown"))
     for src in sources:
         src_path = str(src).replace("\\", "/")
         src_root, _ = os.path.splitext(src_path)
-        obj_target = os.path.join("build", "obj", lib_name, src_root).replace("\\", "/")
+        obj_target = os.path.join("build", "obj", platform_name, lib_name, src_root).replace("\\", "/")
         object_nodes.append(target_env.Object(target=obj_target, source=src))
     return object_nodes
 
