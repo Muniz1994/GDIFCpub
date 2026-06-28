@@ -82,15 +82,16 @@ common_includes = [
 ]
 
 
-def objects_in_build(target_env, lib_name, sources):
+def objects_in_build(target_env, lib_name, sources, shared=False):
     """Compile sources into build/obj/<platform>/<lib_name>/... and return object nodes."""
     object_nodes = []
     platform_name = str(target_env.get("platform", "unknown"))
+    obj_builder = target_env.SharedObject if shared else target_env.Object
     for src in sources:
         src_path = str(src).replace("\\", "/")
         src_root, _ = os.path.splitext(src_path)
         obj_target = os.path.join("build", "obj", platform_name, lib_name, src_root).replace("\\", "/")
-        object_nodes.append(target_env.Object(target=obj_target, source=src))
+        object_nodes.append(obj_builder(target=obj_target, source=src))
     return object_nodes
 
 # ── Helper: enable exceptions (godot-cpp disables them by default) ──────────
@@ -300,7 +301,7 @@ if platform == "web":
     # browser exports and the 155K-line embedded blob adds ~0.5 MiB to WASM.
     _generated_sources = [s for s in _generated_sources if "doc_data" not in s]
 gdifc_sources += _generated_sources
-gdifc_objects = objects_in_build(gdifc_env, "gdifc", gdifc_sources)
+gdifc_objects = objects_in_build(gdifc_env, "gdifc", gdifc_sources, shared=True)
 
 # Link against static libraries
 gdifc_env.Append(LIBS=[ifcparse_lib, webifc_lib])
