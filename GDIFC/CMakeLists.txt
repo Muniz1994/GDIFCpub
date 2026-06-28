@@ -30,6 +30,8 @@ set(EXT_SOURCES
 		src/gd_ifc_entity_base.cpp
 		src/gd_ifc_model.h
 		src/gd_ifc_model.cpp
+		src/gd_ifc_georeference.h
+		src/gd_ifc_georeference.cpp
 )
 
 file(GLOB GENERATED_SOURCES "src/generated/*.cpp")

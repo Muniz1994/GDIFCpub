@@ -22,6 +22,7 @@ void initialize_example_module(ModuleInitializationLevel p_level)
     // Base class must be registered before any generated subclasses
     ClassDB::register_class<GDIFCEntityBase>();
     ClassDB::register_class<IFCModel>();
+    ClassDB::register_class<IFCGeoreference>();
 
     // Register all ~876 generated per-entity classes + populate factory map
     register_all_gd_ifc_entities();

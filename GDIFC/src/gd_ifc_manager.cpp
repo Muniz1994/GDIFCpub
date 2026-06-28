@@ -30,7 +30,9 @@ void GDIFCManager::_bind_methods() {
     ADD_SIGNAL(MethodInfo("ifc_objects_ready"));
 }
 
-GDIFCManager::GDIFCManager() = default;
+GDIFCManager::GDIFCManager() {
+    geometric_settings.instantiate();
+}
 
 GDIFCManager::~GDIFCManager() = default;
 
@@ -256,13 +258,27 @@ void GDIFCManager::_process(double delta) {
 // ---------------------------------------------------------
 // BACKGROUND THREAD
 // ---------------------------------------------------------
+
+// Convert a GLM column-major 4×4 matrix to a Godot Transform3D.
+// GLM column layout: m[col][row]; columns 0-2 are the axes, column 3 is translation.
+static inline godot::Transform3D glm_to_godot_transform(const glm::dmat4& m) {
+    return godot::Transform3D(
+        godot::Basis(
+            godot::Vector3((float)m[0].x, (float)m[0].y, (float)m[0].z),  // X axis
+            godot::Vector3((float)m[1].x, (float)m[1].y, (float)m[1].z),  // Y axis
+            godot::Vector3((float)m[2].x, (float)m[2].y, (float)m[2].z)   // Z axis
+        ),
+        godot::Vector3((float)m[3].x, (float)m[3].y, (float)m[3].z)       // origin
+    );
+}
+
 void GDIFCManager::_thread_task() {
 
     const char* buf_ptr  = reinterpret_cast<const char*>(this->pending_buffer.ptr());
     int         buf_size = static_cast<int>(this->pending_buffer.size());
 
     // Load file [web-ifc] — from memory buffer
-    auto temp_ifc_manager = std::make_unique<WEBIFCManager>(*geometric_settings);
+    auto temp_ifc_manager = std::make_unique<WEBIFCManager>(geometric_settings.ptr());
     try {
         temp_ifc_manager->read_ifc_file(buf_ptr, buf_size);
     } catch (const std::exception& e) {
@@ -422,11 +438,23 @@ void GDIFCManager::_thread_task() {
 
             // Only process if geometry actually exists (IfcProject will usually skip this)
             if (!flat_mesh.geometries.empty()) {
+                glm::dmat4 node_mat(1.0);
+                bool has_node_transform = false;
                 for (auto& geom_data : flat_mesh.geometries) {
                     PrecalculatedIFCItemGeometry item_geometry;
                     auto ifc_geometry = temp_ifc_manager->geometry_loader->GetGeometry(geom_data.geometryExpressID);
 
                     if (ifc_geometry.numPoints == 0 || ifc_geometry.numFaces == 0) continue;
+
+                    // First geometry defines the node's world-space placement.
+                    if (!has_node_transform) {
+                        node_mat = geom_data.transformation;
+                        item.node_transform = glm_to_godot_transform(node_mat);
+                        has_node_transform = true;
+                    }
+
+                    // Express vertices in the node's local space.
+                    glm::dmat4 local_mat = glm::inverse(node_mat) * geom_data.transformation;
 
                     // Resize & Fill Vertices/Normals/Indices (Standard logic)
                     int v_off = item_geometry.vertices.size();
@@ -437,8 +465,8 @@ void GDIFCManager::_thread_task() {
                     item_geometry.indices.resize(i_off + (ifc_geometry.numFaces * 3));
 
                     for (uint32_t k = 0; k < ifc_geometry.numPoints; k++) {
-                        glm::dvec4 tv = geom_data.transformation * glm::dvec4(ifc_geometry.GetPoint(k), 1.0);
-                        item_geometry.vertices[v_off + k] = Vector3(tv.x, tv.y, tv.z);
+                        glm::dvec4 tv = local_mat * glm::dvec4(ifc_geometry.GetPoint(k), 1.0);
+                        item_geometry.vertices[v_off + k] = Vector3((float)tv.x, (float)tv.y, (float)tv.z);
                     }
                     for (uint32_t k = 0; k < ifc_geometry.numFaces; k++) {
                         bimGeometry::Face f = ifc_geometry.GetFace(k);
@@ -599,10 +627,22 @@ void GDIFCManager::_thread_task() {
 
             // Geometry (Standard Loop)
             item.geometry = {};
+            glm::dmat4 node_mat(1.0);
+            bool has_node_transform = false;
             for (auto& geom_data : flat_mesh.geometries) {
                 PrecalculatedIFCItemGeometry item_geometry;
                 auto ifc_geometry = temp_ifc_manager->geometry_loader->GetGeometry(geom_data.geometryExpressID);
                 if (ifc_geometry.numPoints == 0 || ifc_geometry.numFaces == 0) continue;
+
+                // First geometry defines the node's world-space placement.
+                if (!has_node_transform) {
+                    node_mat = geom_data.transformation;
+                    item.node_transform = glm_to_godot_transform(node_mat);
+                    has_node_transform = true;
+                }
+
+                // Express vertices in the node's local space.
+                glm::dmat4 local_mat = glm::inverse(node_mat) * geom_data.transformation;
 
                 int v_off = item_geometry.vertices.size();
                 int i_off = item_geometry.indices.size();
@@ -611,8 +651,8 @@ void GDIFCManager::_thread_task() {
                 item_geometry.indices.resize(i_off + (ifc_geometry.numFaces * 3));
 
                 for (uint32_t k = 0; k < ifc_geometry.numPoints; k++) {
-                    glm::dvec4 tv = geom_data.transformation * glm::dvec4(ifc_geometry.GetPoint(k), 1.0);
-                    item_geometry.vertices[v_off + k] = Vector3(tv.x, tv.y, tv.z);
+                    glm::dvec4 tv = local_mat * glm::dvec4(ifc_geometry.GetPoint(k), 1.0);
+                    item_geometry.vertices[v_off + k] = Vector3((float)tv.x, (float)tv.y, (float)tv.z);
                 }
                 for (uint32_t k = 0; k < ifc_geometry.numFaces; k++) {
                     bimGeometry::Face f = ifc_geometry.GetFace(k);
@@ -695,6 +735,13 @@ void GDIFCManager::_thread_task() {
         return a.express_id < b.express_id;
     });
 
+    // Get georeference data for IFC4+ schemas
+    switch (schema_index) {
+        case 0: this->georreference = get_georreference<Ifc4>(*temp_file); break;
+        case 3: this->georreference = get_georreference<Ifc4x3_add2>(*temp_file); break;
+        default: this->georreference = {}; break;
+    }
+
     // Commit results
     this->web_ifc_manager = std::move(temp_ifc_manager);
     this->ifc_parse_file = std::move(temp_file);
@@ -720,6 +767,7 @@ void GDIFCManager::_process_generation_queue() {
         // 1. Create Node
         IFCNode* element_node = memnew(IFCNode);
         element_node->set_name(item.node_name);
+        element_node->set_transform(item.node_transform);
         element_node->set_properties(item.properties);
         element_node->set_quantities(item.quantities);
         element_node->set_attributes(item.attributes);
@@ -805,6 +853,21 @@ void GDIFCManager::_process_generation_queue() {
 
     if (current_generation_index >= generation_queue.size()) {
         invisible_staging_root->set_name("IFCModel");
+
+        // IFC4+: create Georeference node, or warn if georef data is absent
+        bool is_ifc4plus = ifc_parse_file &&
+            ifc_parse_file->schema()->name() != Ifc2x3::get_schema().name();
+        if (is_ifc4plus) {
+            if (georreference.valid) {
+                IFCGeoreference* georef_node = memnew(IFCGeoreference);
+                georef_node->set_name("Georeference");
+                georef_node->init(georreference);
+                invisible_staging_root->add_child(georef_node);
+            } else {
+                WARN_PRINT("IFC4+ file loaded without georeferencing data (IfcProjectedCRS/IfcMapConversion not found).");
+            }
+        }
+
         add_child(invisible_staging_root, true);
 
         // Initialise the IFCModel node with the loaded file
@@ -1292,35 +1355,47 @@ godot::Variant to_godot_variant(const AttributeValue& attr_value) {
 
 template <typename schema>
 godot::GeorreferenceData get_georreference(IfcParse::IfcFile &file) {
-    if (std::is_same_v<schema,Ifc2x3>)
-    {return {};}
-    else {
+    if constexpr (std::is_same_v<schema, Ifc2x3>) {
+        return {};
+    } else {
         try {
-        auto instances = file.instances_by_type("IfcMapConversion");
-        if (!instances || instances->size() == 0) {
-            return {};
-        }
+            auto instances = file.instances_by_type("IfcMapConversion");
+            if (!instances || instances->size() == 0) return {};
 
-        IfcUtil::IfcBaseClass* obj = (*instances)[0];
+            auto* obj = (*instances)[0];
+            auto* map_conversion = obj->template as<typename schema::IfcMapConversion>();
+            if (!map_conversion) return {};
 
-        auto map_conversion = obj->template as<typename schema::IfcMapConversion>();
+            // Cast TargetCRS to IfcProjectedCRS* for full attribute access.
+            // VerticalDatum is on the base class in IFC4, on IfcProjectedCRS in IFC4x3_add2.
+            auto* projected_crs = map_conversion->TargetCRS()
+                                      ->template as<typename schema::IfcProjectedCRS>();
+            if (!projected_crs) return {};
 
-        auto projected_crs = map_conversion->TargetCRS();
+            // Name is non-optional (std::string) in IFC4 but optional in IFC4x3_add2.
+            std::string crs_name;
+            if constexpr (std::is_same_v<schema, Ifc4>) {
+                crs_name = projected_crs->Name();
+            } else {
+                crs_name = projected_crs->Name().value_or("");
+            }
 
-        return GeorreferenceData(MapConversion{
-                                     (int32_t)map_conversion->Eastings(),
-                                     (int32_t)map_conversion->Northings(),
-                                     (int32_t)map_conversion->OrthogonalHeight(),
-                                     (int32_t)map_conversion->XAxisAbscissa().value_or(0),
-                                     (int32_t)map_conversion->XAxisOrdinate().value_or(0),
-                                     (int16_t)map_conversion->Scale().value_or(0)},
-                                 ProjectedCRS{
-                                     projected_crs->Name().c_str(),
-                                     projected_crs->Description().value_or("").c_str(),
-                                     projected_crs->GeodeticDatum().value_or("").c_str(),
-                                     projected_crs->VerticalDatum().value_or("").c_str()}
-        );
-
+            return GeorreferenceData(
+                MapConversion{
+                    (int32_t)map_conversion->Eastings(),
+                    (int32_t)map_conversion->Northings(),
+                    (int32_t)map_conversion->OrthogonalHeight(),
+                    (int32_t)map_conversion->XAxisAbscissa().value_or(0),
+                    (int32_t)map_conversion->XAxisOrdinate().value_or(0),
+                    (int16_t)map_conversion->Scale().value_or(0)
+                },
+                ProjectedCRS{
+                    crs_name.c_str(),
+                    projected_crs->Description().value_or("").c_str(),
+                    projected_crs->GeodeticDatum().value_or("").c_str(),
+                    projected_crs->VerticalDatum().value_or("").c_str()
+                }
+            );
         } catch (const std::exception& e) {
             ERR_PRINT(godot::String("Failed to get georeference data: ") + e.what());
         } catch (...) {
