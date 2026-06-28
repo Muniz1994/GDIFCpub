@@ -6,10 +6,12 @@ Builds for: Linux (x86_64), Windows (x86_64), Android (arm64), Web (wasm32)
 
 Usage:
     scons                                    # Build for host platform, template_debug
-    scons platform=linux target=template_release
-    scons platform=windows target=template_release
-    scons platform=android target=template_release arch=arm64
-    scons platform=web target=template_release
+    scons platform=linux target=template_release local=1  # Build for Linux, install into test Godot project
+    scons platform=windows target=template_release local=1  # Build for Windows, install into test Godot project
+    scons platform=android target=template_release arch=arm64 local=1  # Build for Android, install into test Godot project
+    scons platform=web target=template_release local=1  # Build for Web, install into test Godot project
+
+The build will produce a shared library in the addons/GDIFC/ directory (or ifc-godot-project/addons/GDIFC/ if local=1).
 
 Prerequisites:
     - godot-cpp submodule initialized (git submodule update --init --recursive)
@@ -78,6 +80,19 @@ common_includes = [
     spdlog_include,
     stduuid_include,
 ]
+
+
+def objects_in_build(target_env, lib_name, sources, shared=False):
+    """Compile sources into build/obj/<platform>/<lib_name>/... and return object nodes."""
+    object_nodes = []
+    platform_name = str(target_env.get("platform", "unknown"))
+    obj_builder = target_env.SharedObject if shared else target_env.Object
+    for src in sources:
+        src_path = str(src).replace("\\", "/")
+        src_root, _ = os.path.splitext(src_path)
+        obj_target = os.path.join("build", "obj", platform_name, lib_name, src_root).replace("\\", "/")
+        object_nodes.append(obj_builder(target=obj_target, source=src))
+    return object_nodes
 
 # ── Helper: enable exceptions (godot-cpp disables them by default) ──────────
 def enable_exceptions(target_env):
@@ -176,9 +191,10 @@ for schema in _schema_list:
     ifcparse_schema_sources.append(f"ifcparse/Ifc{schema}-schema.cpp")
 
 ifcparse_all_sources = ifcparse_sources_no_digits + ifcparse_schema_sources
+ifcparse_objects = objects_in_build(ifcparse_env, "ifcparse", ifcparse_all_sources)
 ifcparse_lib = ifcparse_env.StaticLibrary(
     target="ifcparse/IfcParse",
-    source=ifcparse_all_sources,
+    source=ifcparse_objects,
 )
 
 # ── Build web-ifc static library ───────────────────────────────────────────
@@ -237,9 +253,10 @@ webifc_sources = [
     "web-ifc/web-ifc/geometry/operations/bim-geometry/cylindricalRevolution.cpp",
 ]
 
+webifc_objects = objects_in_build(webifc_env, "webifc", webifc_sources)
 webifc_lib = webifc_env.StaticLibrary(
     target="web-ifc/web-ifc",
-    source=webifc_sources,
+    source=webifc_objects,
 )
 
 # ── Build GDIFC shared library (GDExtension) ───────────────────────────────
@@ -249,7 +266,6 @@ enable_exceptions(gdifc_env)
 # C++17 for GDIFC
 if is_msvc:
     gdifc_env.Append(CXXFLAGS=["/std:c++17", "/bigobj"])
-    gdifc_env.Append(LINKFLAGS=["/MAP:my_program.map"])
 else:
     gdifc_env.Append(CXXFLAGS=["-std=c++17"])
 
@@ -285,6 +301,7 @@ if platform == "web":
     # browser exports and the 155K-line embedded blob adds ~0.5 MiB to WASM.
     _generated_sources = [s for s in _generated_sources if "doc_data" not in s]
 gdifc_sources += _generated_sources
+gdifc_objects = objects_in_build(gdifc_env, "gdifc", gdifc_sources, shared=True)
 
 # Link against static libraries
 gdifc_env.Append(LIBS=[ifcparse_lib, webifc_lib])
@@ -307,7 +324,7 @@ if platform == "macos":
             platform, env["target"],
             platform, env["target"],
         ),
-        source=gdifc_sources,
+        source=gdifc_objects,
     )
 else:
     library = gdifc_env.SharedLibrary(
@@ -316,7 +333,7 @@ else:
             env["suffix"],
             env["SHLIBSUFFIX"],
         ),
-        source=gdifc_sources,
+        source=gdifc_objects,
     )
 
 
