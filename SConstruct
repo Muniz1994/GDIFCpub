@@ -79,6 +79,17 @@ common_includes = [
     stduuid_include,
 ]
 
+
+def objects_in_build(target_env, lib_name, sources):
+    """Compile sources into build/obj/<lib_name>/... and return object nodes."""
+    object_nodes = []
+    for src in sources:
+        src_path = str(src).replace("\\", "/")
+        src_root, _ = os.path.splitext(src_path)
+        obj_target = os.path.join("build", "obj", lib_name, src_root).replace("\\", "/")
+        object_nodes.append(target_env.Object(target=obj_target, source=src))
+    return object_nodes
+
 # ── Helper: enable exceptions (godot-cpp disables them by default) ──────────
 def enable_exceptions(target_env):
     """Re-enable C++ exceptions which godot-cpp disables."""
@@ -176,9 +187,10 @@ for schema in _schema_list:
     ifcparse_schema_sources.append(f"ifcparse/Ifc{schema}-schema.cpp")
 
 ifcparse_all_sources = ifcparse_sources_no_digits + ifcparse_schema_sources
+ifcparse_objects = objects_in_build(ifcparse_env, "ifcparse", ifcparse_all_sources)
 ifcparse_lib = ifcparse_env.StaticLibrary(
     target="ifcparse/IfcParse",
-    source=ifcparse_all_sources,
+    source=ifcparse_objects,
 )
 
 # ── Build web-ifc static library ───────────────────────────────────────────
@@ -237,9 +249,10 @@ webifc_sources = [
     "web-ifc/web-ifc/geometry/operations/bim-geometry/cylindricalRevolution.cpp",
 ]
 
+webifc_objects = objects_in_build(webifc_env, "webifc", webifc_sources)
 webifc_lib = webifc_env.StaticLibrary(
     target="web-ifc/web-ifc",
-    source=webifc_sources,
+    source=webifc_objects,
 )
 
 # ── Build GDIFC shared library (GDExtension) ───────────────────────────────
@@ -285,6 +298,7 @@ if platform == "web":
     # browser exports and the 155K-line embedded blob adds ~0.5 MiB to WASM.
     _generated_sources = [s for s in _generated_sources if "doc_data" not in s]
 gdifc_sources += _generated_sources
+gdifc_objects = objects_in_build(gdifc_env, "gdifc", gdifc_sources)
 
 # Link against static libraries
 gdifc_env.Append(LIBS=[ifcparse_lib, webifc_lib])
@@ -307,7 +321,7 @@ if platform == "macos":
             platform, env["target"],
             platform, env["target"],
         ),
-        source=gdifc_sources,
+        source=gdifc_objects,
     )
 else:
     library = gdifc_env.SharedLibrary(
@@ -316,7 +330,7 @@ else:
             env["suffix"],
             env["SHLIBSUFFIX"],
         ),
-        source=gdifc_sources,
+        source=gdifc_objects,
     )
 
 
