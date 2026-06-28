@@ -6,10 +6,12 @@ Builds for: Linux (x86_64), Windows (x86_64), Android (arm64), Web (wasm32)
 
 Usage:
     scons                                    # Build for host platform, template_debug
-    scons platform=linux target=template_release
-    scons platform=windows target=template_release
-    scons platform=android target=template_release arch=arm64
-    scons platform=web target=template_release
+    scons platform=linux target=template_release local=1  # Build for Linux, install into test Godot project
+    scons platform=windows target=template_release local=1  # Build for Windows, install into test Godot project
+    scons platform=android target=template_release arch=arm64 local=1  # Build for Android, install into test Godot project
+    scons platform=web target=template_release local=1  # Build for Web, install into test Godot project
+
+The build will produce a shared library in the addons/GDIFC/ directory (or ifc-godot-project/addons/GDIFC/ if local=1).
 
 Prerequisites:
     - godot-cpp submodule initialized (git submodule update --init --recursive)
