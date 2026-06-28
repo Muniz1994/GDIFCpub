@@ -263,7 +263,6 @@ enable_exceptions(gdifc_env)
 # C++17 for GDIFC
 if is_msvc:
     gdifc_env.Append(CXXFLAGS=["/std:c++17", "/bigobj"])
-    gdifc_env.Append(LINKFLAGS=["/MAP:my_program.map"])
 else:
     gdifc_env.Append(CXXFLAGS=["-std=c++17"])
 
