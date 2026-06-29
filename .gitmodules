@@ -37,7 +37,3 @@
 	path = thirdparty/stduuid
 	url = https://github.com/mariusbancila/stduuid
 	shallow = true
-[submodule "web-ifc"]
-	path = web-ifc
-	url = https://github.com/ThatOpen/engine_web-ifc.git
-	sparse = true
