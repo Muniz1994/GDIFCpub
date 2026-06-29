@@ -225,6 +225,7 @@ webifc_sources = Glob("thirdparty/web-ifc/src/cpp/web-ifc/**/*.cpp") + Glob("thi
 webifc_sources = [
     "thirdparty/web-ifc/src/cpp/web-ifc/schema/schema-functions.cpp",
     "thirdparty/web-ifc/src/cpp/web-ifc/schema/IfcSchemaManager.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/cache/IfcCache.cpp",
     "thirdparty/web-ifc/src/cpp/web-ifc/parsing/IfcLoader.cpp",
     "thirdparty/web-ifc/src/cpp/web-ifc/parsing/IfcFileStream.cpp",
     "thirdparty/web-ifc/src/cpp/web-ifc/parsing/IfcTokenStream.cpp",
