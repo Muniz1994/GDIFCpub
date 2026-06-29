@@ -4,9 +4,12 @@ entry_symbol = "gdifc_library_init"
 compatibility_minimum = "4.2"
 reloadable = true
 
+
 [icons]
 GDIFCManager = "res://addons/GDIFC/assets/icons/building.svg"
 IFCNode = "res://addons/GDIFC/assets/icons/box.svg"
+IFCGeoreference = "res://addons/GDIFC/assets/icons/geo.svg"
+IFCModel = "res://addons/GDIFC/assets/icons/model.svg"
 
 [libraries]
 
