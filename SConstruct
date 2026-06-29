@@ -61,11 +61,12 @@ earcut_include = os.path.join(thirdparty_dir, "earcut", "include")
 cdt_include = os.path.join(thirdparty_dir, "cdt", "CDT", "include")
 spdlog_include = os.path.join(thirdparty_dir, "spdlog", "include")
 stduuid_include = os.path.join(thirdparty_dir, "stduuid", "include")
+unordered_dense_include = os.path.join(thirdparty_dir, "unordered_dense", "include")
 
 # Source directories
 ifcparse_dir = Dir("ifcparse").srcnode().abspath
-webifc_dir = Dir("web-ifc").srcnode().abspath
-webifc_src_dir = os.path.join(webifc_dir, "web-ifc")
+webifc_dir = Dir("thirdparty/web-ifc").srcnode().abspath
+webifc_src_dir = os.path.join(webifc_dir, "src", "cpp", "web-ifc")
 gdifc_dir = Dir("GDIFC").srcnode().abspath
 
 # ── Common include paths ────────────────────────────────────────────────────
@@ -79,6 +80,7 @@ common_includes = [
     cdt_include,
     spdlog_include,
     stduuid_include,
+    unordered_dense_include,
 ]
 
 
@@ -216,41 +218,43 @@ else:
 webifc_env.Append(CPPPATH=[webifc_src_dir] + common_includes)
 webifc_env.Append(CPPDEFINES=["IFCQUERY_STATIC_LIB"])
 
-webifc_sources = Glob("web-ifc/web-ifc/**/*.cpp") + Glob("web-ifc/web-ifc/**/**/*.cpp") + Glob("web-ifc/web-ifc/**/**/**/*.cpp")
+# TODO: test rm Glob("thirdparty/web-ifc/src/cpp/web-ifc/**/*.cpp") + Glob("thirdparty/web-ifc/src/cpp/web-ifc/**/**/*.cpp") + Glob("thirdparty/web-ifc/src/cpp/web-ifc/**/**/**/*.cpp")
+webifc_sources = Glob("thirdparty/web-ifc/src/cpp/web-ifc/**/*.cpp") + Glob("thirdparty/web-ifc/src/cpp/web-ifc/**/**/*.cpp") + Glob("thirdparty/web-ifc/src/cpp/web-ifc/**/**/**/*.cpp")
 
 # SCons Glob with ** doesn't recurse properly. List explicitly.
 webifc_sources = [
-    "web-ifc/web-ifc/schema/schema-functions.cpp",
-    "web-ifc/web-ifc/schema/IfcSchemaManager.cpp",
-    "web-ifc/web-ifc/parsing/IfcLoader.cpp",
-    "web-ifc/web-ifc/parsing/IfcFileStream.cpp",
-    "web-ifc/web-ifc/parsing/IfcTokenStream.cpp",
-    "web-ifc/web-ifc/parsing/IfcTokenChunk.cpp",
-    "web-ifc/web-ifc/parsing/uuid_utils.cpp",
-    "web-ifc/web-ifc/parsing/string_parsing.cpp",
-    "web-ifc/web-ifc/modelmanager/ModelManager.cpp",
-    "web-ifc/web-ifc/geometry/IfcGeometryProcessor.cpp",
-    "web-ifc/web-ifc/geometry/IfcGeometryLoader.cpp",
-    "web-ifc/web-ifc/geometry/nurbs.cpp",
-    "web-ifc/web-ifc/geometry/representation/IfcGeometry.cpp",
-    "web-ifc/web-ifc/geometry/representation/IfcCurve.cpp",
-    "web-ifc/web-ifc/geometry/operations/bim-geometry/aabb.cpp",
-    "web-ifc/web-ifc/geometry/operations/bim-geometry/arc.cpp",
-    "web-ifc/web-ifc/geometry/operations/bim-geometry/alignment.cpp",
-    "web-ifc/web-ifc/geometry/operations/bim-geometry/face.cpp",
-    "web-ifc/web-ifc/geometry/operations/bim-geometry/extrusion.cpp",
-    "web-ifc/web-ifc/geometry/operations/bim-geometry/plane.cpp",
-    "web-ifc/web-ifc/geometry/operations/bim-geometry/circularSweep.cpp",
-    "web-ifc/web-ifc/geometry/operations/bim-geometry/buffers.cpp",
-    "web-ifc/web-ifc/geometry/operations/bim-geometry/clothoid.cpp",
-    "web-ifc/web-ifc/geometry/operations/bim-geometry/boolean.cpp",
-    "web-ifc/web-ifc/geometry/operations/bim-geometry/parabola.cpp",
-    "web-ifc/web-ifc/geometry/operations/bim-geometry/profile.cpp",
-    "web-ifc/web-ifc/geometry/operations/bim-geometry/geometry.cpp",
-    "web-ifc/web-ifc/geometry/operations/bim-geometry/curve.cpp",
-    "web-ifc/web-ifc/geometry/operations/bim-geometry/sweep.cpp",
-    "web-ifc/web-ifc/geometry/operations/bim-geometry/revolution.cpp",
-    "web-ifc/web-ifc/geometry/operations/bim-geometry/cylindricalRevolution.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/schema/schema-functions.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/schema/IfcSchemaManager.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/cache/IfcCache.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/parsing/IfcLoader.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/parsing/IfcFileStream.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/parsing/IfcTokenStream.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/parsing/IfcTokenChunk.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/parsing/uuid_utils.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/parsing/string_parsing.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/modelmanager/ModelManager.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/IfcGeometryProcessor.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/IfcGeometryLoader.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/nurbs.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/representation/IfcGeometry.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/representation/IfcCurve.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/operations/bim-geometry/aabb.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/operations/bim-geometry/arc.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/operations/bim-geometry/alignment.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/operations/bim-geometry/face.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/operations/bim-geometry/extrusion.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/operations/bim-geometry/plane.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/operations/bim-geometry/circularSweep.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/operations/bim-geometry/buffers.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/operations/bim-geometry/clothoid.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/operations/bim-geometry/boolean.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/operations/bim-geometry/parabola.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/operations/bim-geometry/profile.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/operations/bim-geometry/geometry.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/operations/bim-geometry/curve.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/operations/bim-geometry/sweep.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/operations/bim-geometry/revolution.cpp",
+    "thirdparty/web-ifc/src/cpp/web-ifc/geometry/operations/bim-geometry/cylindricalRevolution.cpp",
 ]
 
 webifc_objects = objects_in_build(webifc_env, "webifc", webifc_sources)

@@ -37,3 +37,13 @@
 	path = thirdparty/stduuid
 	url = https://github.com/mariusbancila/stduuid
 	shallow = true
+[submodule "web-ifc"]
+	path = thirdparty/web-ifc
+	url = https://github.com/ThatOpen/engine_web-ifc.git
+	
+[submodule "unordered_dense"]
+	path = thirdparty/unordered_dense
+	url = https://github.com/martinus/unordered_dense.git
+[submodule "thirdparty/unordered_dense"]
+	path = thirdparty/unordered_dense
+	url = https://github.com/martinus/unordered_dense.git
