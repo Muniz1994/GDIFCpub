@@ -61,6 +61,7 @@ earcut_include = os.path.join(thirdparty_dir, "earcut", "include")
 cdt_include = os.path.join(thirdparty_dir, "cdt", "CDT", "include")
 spdlog_include = os.path.join(thirdparty_dir, "spdlog", "include")
 stduuid_include = os.path.join(thirdparty_dir, "stduuid", "include")
+unordered_dense_include = os.path.join(thirdparty_dir, "unordered_dense", "include")
 
 # Source directories
 ifcparse_dir = Dir("ifcparse").srcnode().abspath
@@ -79,6 +80,7 @@ common_includes = [
     cdt_include,
     spdlog_include,
     stduuid_include,
+    unordered_dense_include,
 ]
 
 
