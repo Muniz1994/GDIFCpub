@@ -1382,12 +1382,12 @@ godot::GeorreferenceData get_georreference(IfcParse::IfcFile &file) {
 
             return GeorreferenceData(
                 MapConversion{
-                    (int32_t)map_conversion->Eastings(),
-                    (int32_t)map_conversion->Northings(),
-                    (int32_t)map_conversion->OrthogonalHeight(),
-                    (int32_t)map_conversion->XAxisAbscissa().value_or(0),
-                    (int32_t)map_conversion->XAxisOrdinate().value_or(0),
-                    (int16_t)map_conversion->Scale().value_or(0)
+                    (double)map_conversion->Eastings(),
+                    (double)map_conversion->Northings(),
+                    (double)map_conversion->OrthogonalHeight(),
+                    (double)map_conversion->XAxisAbscissa().value_or(0.0),
+                    (double)map_conversion->XAxisOrdinate().value_or(0.0),
+                    (double)map_conversion->Scale().value_or(0.0)
                 },
                 ProjectedCRS{
                     crs_name.c_str(),

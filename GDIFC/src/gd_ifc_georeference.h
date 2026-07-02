@@ -10,12 +10,12 @@ namespace godot {
 // ── Georeferencing data structs (moved from gd_ifc_manager.h) ────────────
 
 struct MapConversion {
-    int32_t Eastings         = 0;
-    int32_t Northings        = 0;
-    int32_t OrthogonalHeight = 0;
-    int32_t XAxisAbscissa    = 0;
-    int32_t XAxisOrdinate    = 0;
-    int16_t Scale            = 0;
+    double Eastings         = 0.0;
+    double Northings        = 0.0;
+    double OrthogonalHeight = 0.0;
+    double XAxisAbscissa    = 0.0;
+    double XAxisOrdinate    = 0.0;
+    double Scale            = 0.0;
 };
 
 struct ProjectedCRS {
@@ -32,7 +32,7 @@ struct GeorreferenceData {
 
     GeorreferenceData()
         : valid(false),
-          map_conversion{0, 0, 0, 0, 0, 0},
+          map_conversion{0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
           projected_crs{"NotDefined", "NotDefined", "NotDefined", "NotDefined"} {}
 
     GeorreferenceData(MapConversion mc, ProjectedCRS crs)
