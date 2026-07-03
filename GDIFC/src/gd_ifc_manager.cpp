@@ -447,11 +447,11 @@ void GDIFCManager::_thread_task() {
                     if (ifc_geometry.numPoints == 0 || ifc_geometry.numFaces == 0) continue;
 
                     // First geometry defines the node's world-space placement.
-                    if (!has_node_transform) {
-                        node_mat = geom_data.transformation;
-                        item.node_transform = glm_to_godot_transform(node_mat);
-                        has_node_transform = true;
-                    }
+                    // if (!has_node_transform) {
+                    //     node_mat = geom_data.transformation;
+                    //     item.node_transform = glm_to_godot_transform(node_mat);
+                    //     has_node_transform = true;
+                    // }
 
                     // Express vertices in the node's local space.
                     glm::dmat4 local_mat = glm::inverse(node_mat) * geom_data.transformation;
@@ -635,11 +635,11 @@ void GDIFCManager::_thread_task() {
                 if (ifc_geometry.numPoints == 0 || ifc_geometry.numFaces == 0) continue;
 
                 // First geometry defines the node's world-space placement.
-                if (!has_node_transform) {
-                    node_mat = geom_data.transformation;
-                    item.node_transform = glm_to_godot_transform(node_mat);
-                    has_node_transform = true;
-                }
+                // if (!has_node_transform) {
+                //     node_mat = geom_data.transformation;
+                //     item.node_transform = glm_to_godot_transform(node_mat);
+                //     has_node_transform = true;
+                // }
 
                 // Express vertices in the node's local space.
                 glm::dmat4 local_mat = glm::inverse(node_mat) * geom_data.transformation;
