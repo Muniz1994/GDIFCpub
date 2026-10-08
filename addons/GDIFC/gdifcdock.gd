@@ -48,16 +48,15 @@ func _on_file_selected(path: String):
 	for i in collision_elements_index:
 		collision_elements.append(elements_list.get_item_text(i))
 	
-	ifc_manager = GDIFCManager.new()
-	ifc_manager.set_gdifc_settings(geom_settings_picker.edited_resource)
-	
-	print(ifc_manager.get_gdifc_settings().coordinate_to_origin)
-	
 	current_scene_root = EditorInterface.get_edited_scene_root()
 	
 	if not current_scene_root:
 		print("No scene is currently open!")
+		loading_label.hide()
 		return
+	
+	ifc_manager = GDIFCManager.new()
+	ifc_manager.set_gdifc_settings(geom_settings_picker.edited_resource)
 
 	# 1. Add the manager to the scene
 	current_scene_root.add_child(ifc_manager,true)
@@ -70,6 +69,7 @@ func _on_file_selected(path: String):
 	
 	ifc_manager.set_display_folded(true)
 	ifc_manager.ifc_read.connect(_on_readed_file)
+	ifc_manager.ifc_load_failed.connect(_on_readed_file)
 
 func _on_readed_file()->void:
 	loading_label.hide()
