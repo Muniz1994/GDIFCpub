@@ -30,6 +30,7 @@
 
 #include <godot_cpp/templates/vector.hpp> 
 #include <string> // Standard string for the struct
+#include <atomic>
 
 #include "gd_ifc_node.h"
 #include "gd_ifc_settings.h"
@@ -75,7 +76,8 @@ class GDIFCManager : public Node3D {
     int64_t task_id = -1;
     bool should_create_collisions = false;
     Array collision_classes = Array();
-    HashMap<int, Node*> node_registry;
+    // Express ID -> generated node. ObjectID so lookups survive nodes freed by the user.
+    HashMap<int, ObjectID> node_registry;
 
     enum LoadState {
         IDLE,
@@ -91,11 +93,15 @@ class GDIFCManager : public Node3D {
     std::unique_ptr<WEBIFCManager> web_ifc_manager;
     std::shared_ptr<IfcParse::IfcFile> ifc_parse_file;
 
+    // Written by worker tasks, committed to the members above by _process() once the task completes
+    std::shared_ptr<IfcParse::IfcFile> pending_ifc_parse_file;
+    GeorreferenceData pending_georreference;
+    std::atomic<bool> thread_failed_{false};
+
     // The Optimized Queue
     Vector<PrecalculatedIFCItem> generation_queue;
     int current_generation_index = 0;
-    Node3D* main_node_root = nullptr;
-    IFCModel* ifc_model_node_ = nullptr;
+    ObjectID ifc_model_node_id_;
 
     // Material Cache to reduce draw calls and allocation time
     HashMap<String, Ref<StandardMaterial3D>> material_cache;
@@ -114,6 +120,9 @@ class GDIFCManager : public Node3D {
 
     // Set by _metadata_thread_task if the IFC file is missing
     bool relink_failed_ = false;
+
+    Error _start_loading(bool _create_collision, const Array &_collision_classes);
+    void _wait_for_task();
 
   protected:
     static void _bind_methods();
@@ -134,7 +143,7 @@ class GDIFCManager : public Node3D {
     // Main Thread Functions
     void _process_generation_queue();
     void _relink_ifc_objects();
-    Ref<StandardMaterial3D> _get_material(Color color, bool transparent);
+    Ref<StandardMaterial3D> _get_material(Color color, bool transparent, bool is_space);
 
     Node3D* invisible_staging_root = nullptr;
 
