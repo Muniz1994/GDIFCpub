@@ -11,10 +11,10 @@ using namespace godot;
 void GDIFCManager::_bind_methods() {
     ClassDB::bind_method(D_METHOD("read_ifc", "path", "create_collision", "collision_classes"), &GDIFCManager::read_ifc, DEFVAL(false), DEFVAL(Array{}));
     ClassDB::bind_method(D_METHOD("read_ifc_base64", "base64_data", "create_collision", "collision_classes"), &GDIFCManager::read_ifc_base64, DEFVAL(false), DEFVAL(Array{}));
-    ClassDB::bind_method(D_METHOD("_thread_task"), &GDIFCManager::_thread_task);
-    ClassDB::bind_method(D_METHOD("_metadata_thread_task"), &GDIFCManager::_metadata_thread_task);
     ClassDB::bind_method(D_METHOD("get_gdifc_settings"), &GDIFCManager::get_gdifc_settings);
     ClassDB::bind_method(D_METHOD("set_gdifc_settings","gdifc_settings"), &GDIFCManager::set_gdifc_settings);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "geometric_settings", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCLoaderSettings"),
+        "set_gdifc_settings", "get_gdifc_settings");
 
     ClassDB::bind_method(D_METHOD("get_ifc_file_path"), &GDIFCManager::get_ifc_file_path);
     ClassDB::bind_method(D_METHOD("set_ifc_file_path","path"), &GDIFCManager::set_ifc_file_path);
@@ -28,13 +28,29 @@ void GDIFCManager::_bind_methods() {
 
     ADD_SIGNAL(MethodInfo("ifc_read"));
     ADD_SIGNAL(MethodInfo("ifc_objects_ready"));
+    ADD_SIGNAL(MethodInfo("ifc_load_failed"));
 }
 
 GDIFCManager::GDIFCManager() {
     geometric_settings.instantiate();
 }
 
-GDIFCManager::~GDIFCManager() = default;
+GDIFCManager::~GDIFCManager() {
+    // A running task writes into this object, so it must finish before the members go away.
+    _wait_for_task();
+
+    // Freed mid-generation: the staging root and its children are not in the tree yet.
+    if (invisible_staging_root) {
+        memdelete(invisible_staging_root);
+        invisible_staging_root = nullptr;
+    }
+}
+
+void GDIFCManager::_wait_for_task() {
+    if (task_id == -1) return;
+    WorkerThreadPool::get_singleton()->wait_for_task_completion(task_id);
+    task_id = -1;
+}
 
 // ---------------------------------------------------------
 // COLD RELOAD: detect saved IFC tree and re-parse metadata
@@ -52,15 +68,17 @@ void GDIFCManager::_ready() {
     }
     if (!model_child) return;
 
-    // Point ifc_model_node_ at the existing IFCModel
-    ifc_model_node_ = Object::cast_to<IFCModel>(model_child);
+    // Point the model reference at the existing IFCModel
+    if (Object::cast_to<IFCModel>(model_child)) {
+        ifc_model_node_id_ = model_child->get_instance_id();
+    }
 
     UtilityFunctions::print_rich("[color=blue]Cold reload detected — re-parsing IFC metadata from: " + ifc_file_path_);
 
     relink_failed_ = false;
+    thread_failed_ = false;
     current_state = LOADING_THREAD;
-    Callable callable = Callable(this, "_metadata_thread_task");
-    task_id = WorkerThreadPool::get_singleton()->add_task(callable, true);
+    task_id = WorkerThreadPool::get_singleton()->add_task(callable_mp(this, &GDIFCManager::_metadata_thread_task), true);
     set_process(true);
 }
 
@@ -96,7 +114,7 @@ void GDIFCManager::_metadata_thread_task() {
             relink_failed_ = true;
             return;
         }
-        ifc_parse_file = std::move(temp_file);
+        pending_ifc_parse_file = std::move(temp_file);
         relink_failed_ = false;
     } catch (...) {
         relink_failed_ = true;
@@ -109,19 +127,11 @@ void GDIFCManager::_metadata_thread_task() {
 void GDIFCManager::_relink_ifc_objects() {
     if (!ifc_parse_file) return;
 
-    Node* model_root = nullptr;
-    for (int i = 0; i < get_child_count(); i++) {
-        if (get_child(i)->get_name() == StringName("IFCModel")) {
-            model_root = get_child(i);
-            break;
-        }
-    }
+    IFCModel* model_root = get_ifc_model();
     if (!model_root) return;
 
     // Initialise the IFCModel node with the loaded file
-    if (ifc_model_node_ && ifc_parse_file) {
-        ifc_model_node_->init(ifc_parse_file);
-    }
+    model_root->init(ifc_parse_file);
 
     node_registry.clear();
 
@@ -135,7 +145,7 @@ void GDIFCManager::_relink_ifc_objects() {
                         std::string(gid.utf8().get_data()));
                     if (inst) {
                         ifc_node->set_ifc_object(GDIFCEntityBase::wrap(inst, ifc_parse_file));
-                        node_registry[static_cast<int>(inst->id())] = ifc_node;
+                        node_registry[static_cast<int>(inst->id())] = ifc_node->get_instance_id();
                     }
                 } catch (...) {}
             }
@@ -149,14 +159,12 @@ void GDIFCManager::_relink_ifc_objects() {
 
 Error GDIFCManager::read_ifc(const String &_path, bool _create_collision, const Array &_collision_classes) {
 
+    ERR_FAIL_COND_V_MSG(current_state == LOADING_THREAD || current_state == GENERATING_NODES || current_state == RELINKING,
+                        ERR_BUSY, "Already loading!");
+
     UtilityFunctions::print_rich("[color=blue]Started loading IFC");
 
     start_loading_time = Time::get_singleton()->get_ticks_usec();
-
-    // Store path for cold-reload persistence
-    ifc_file_path_ = _path;
-
-    ERR_FAIL_COND_V_MSG((current_state != IDLE && current_state != DONE),Error::FAILED,"Already loading!");
 
     // Read the file into the shared buffer
     Ref<FileAccess> fa = FileAccess::open(_path, FileAccess::READ);
@@ -169,46 +177,47 @@ Error GDIFCManager::read_ifc(const String &_path, bool _create_collision, const 
 
     ERR_FAIL_COND_V_MSG(this->pending_buffer.is_empty(), Error::FAILED, "IFC file is empty.");
 
-    // Reset
-    this->should_create_collisions = _create_collision;
-    this->collision_classes = _collision_classes;
-    this->generation_queue.clear();
-    this->material_cache.clear();
-    this->current_generation_index = 0;
-    this->current_state = LOADING_THREAD;
+    // Store path for cold-reload persistence
+    ifc_file_path_ = _path;
 
-    // Start Thread
-    Callable callable = Callable(this, "_thread_task");
-    task_id = WorkerThreadPool::get_singleton()->add_task(callable, true);
-    set_process(true);
-    return Error::OK;
+    return _start_loading(_create_collision, _collision_classes);
 }
 
 Error GDIFCManager::read_ifc_base64(const String &_base64_data, bool _create_collision, const Array &_collision_classes) {
 
+    ERR_FAIL_COND_V_MSG(current_state == LOADING_THREAD || current_state == GENERATING_NODES || current_state == RELINKING,
+                        ERR_BUSY, "Already loading!");
+    ERR_FAIL_COND_V_MSG(_base64_data.is_empty(), Error::FAILED, "Base64 data is empty.");
+
     UtilityFunctions::print_rich("[color=blue]Started loading IFC from base64");
 
     start_loading_time = Time::get_singleton()->get_ticks_usec();
-
-    ERR_FAIL_COND_V_MSG((current_state != IDLE && current_state != DONE), Error::FAILED, "Already loading!");
-    ERR_FAIL_COND_V_MSG(_base64_data.is_empty(), Error::FAILED, "Base64 data is empty.");
 
     // Decode base64 into the shared buffer
     this->pending_buffer = Marshalls::get_singleton()->base64_to_raw(_base64_data);
 
     ERR_FAIL_COND_V_MSG(this->pending_buffer.is_empty(), Error::FAILED, "Failed to decode base64 data.");
 
+    // No file on disk to re-parse on cold reload
+    ifc_file_path_ = String();
+
+    return _start_loading(_create_collision, _collision_classes);
+}
+
+Error GDIFCManager::_start_loading(bool _create_collision, const Array &_collision_classes) {
     // Reset
     this->should_create_collisions = _create_collision;
     this->collision_classes = _collision_classes;
     this->generation_queue.clear();
     this->material_cache.clear();
+    this->node_registry.clear();
     this->current_generation_index = 0;
+    this->thread_failed_ = false;
+    this->relink_failed_ = false;
     this->current_state = LOADING_THREAD;
 
     // Start Thread
-    Callable callable = Callable(this, "_thread_task");
-    task_id = WorkerThreadPool::get_singleton()->add_task(callable, true);
+    task_id = WorkerThreadPool::get_singleton()->add_task(callable_mp(this, &GDIFCManager::_thread_task), true);
     set_process(true);
     return Error::OK;
 }
@@ -220,8 +229,22 @@ void GDIFCManager::_process(double delta) {
 
     if (current_state == LOADING_THREAD) {
         if (WorkerThreadPool::get_singleton()->is_task_completed(task_id)) {
-            WorkerThreadPool::get_singleton()->wait_for_task_completion(task_id);
-            task_id = -1;
+            _wait_for_task();
+
+            if (thread_failed_) {
+                // The task returned early and left its partial results behind
+                pending_ifc_parse_file.reset();
+                generation_queue.clear();
+                pending_buffer = PackedByteArray();
+                current_state = FAILED;
+                emit_signal("ifc_load_failed");
+                set_process(false);
+                return;
+            }
+
+            if (pending_ifc_parse_file) {
+                ifc_parse_file = std::move(pending_ifc_parse_file);
+            }
 
             // If we're doing a metadata-only reload, skip node generation
             if (relink_failed_) {
@@ -234,9 +257,10 @@ void GDIFCManager::_process(double delta) {
                 set_process(false);
             } else if (!generation_queue.is_empty()) {
                 // Fresh load path — create staging root and generate nodes
+                georreference = pending_georreference;
                 invisible_staging_root = memnew(IFCModel);
                 invisible_staging_root->set_name("IFC_Staging_Area");
-                ifc_model_node_ = Object::cast_to<IFCModel>(invisible_staging_root);
+                ifc_model_node_id_ = invisible_staging_root->get_instance_id();
                 current_state = GENERATING_NODES;
             } else {
                 // Metadata-only reload — move to relinking
@@ -251,8 +275,6 @@ void GDIFCManager::_process(double delta) {
         emit_signal("ifc_objects_ready");
         set_process(false);
         UtilityFunctions::print("IFC objects relinked from saved scene.");
-    } else if (current_state == FAILED) {
-        set_process(false);
     }
 }
 // ---------------------------------------------------------
@@ -272,6 +294,64 @@ static inline godot::Transform3D glm_to_godot_transform(const glm::dmat4& m) {
     );
 }
 
+// Fill attributes, property sets and quantity sets for one entity.
+template <typename schema>
+static void fill_item_metadata(IfcParse::IfcFile& file, PrecalculatedIFCItem& item) {
+    item.attributes = get_ifc_object_attributes<schema>(file, item.express_id);
+    item.properties = get_ifc_property_sets<schema>(file, item.express_id);
+    item.quantities = get_ifc_quantity_sets<schema>(file, item.express_id);
+}
+
+// Tessellate an entity's flat mesh into one surface per placed geometry.
+// Node transforms are currently identity, so vertices are baked in world space.
+static void fill_item_geometry(webifc::geometry::IfcGeometryProcessor& geometry_loader,
+                               const webifc::geometry::IfcFlatMesh& flat_mesh,
+                               bool is_space, PrecalculatedIFCItem& item) {
+    for (const auto& geom_data : flat_mesh.geometries) {
+        auto& ifc_geometry = geometry_loader.GetGeometry(geom_data.geometryExpressID);
+        if (ifc_geometry.numPoints == 0 || ifc_geometry.numFaces == 0) continue;
+
+        PrecalculatedIFCItemGeometry item_geometry;
+        item_geometry.vertices.resize(ifc_geometry.numPoints);
+        item_geometry.normals.resize(ifc_geometry.numPoints);
+        item_geometry.indices.resize(ifc_geometry.numFaces * 3);
+
+        Vector3* vertices = item_geometry.vertices.ptrw();
+        Vector3* normals = item_geometry.normals.ptrw();
+        int32_t* indices = item_geometry.indices.ptrw();
+
+        for (uint32_t k = 0; k < ifc_geometry.numPoints; k++) {
+            glm::dvec4 tv = geom_data.transformation * glm::dvec4(ifc_geometry.GetPoint(k), 1.0);
+            vertices[k] = Vector3((float)tv.x, (float)tv.y, (float)tv.z);
+        }
+        for (uint32_t k = 0; k < ifc_geometry.numFaces; k++) {
+            bimGeometry::Face f = ifc_geometry.GetFace(k);
+            indices[k*3+0] = f.i2;
+            indices[k*3+1] = f.i1;
+            indices[k*3+2] = f.i0;
+
+            // Simple flat normals calculation
+            Vector3 n = (vertices[f.i1] - vertices[f.i0]).cross(vertices[f.i2] - vertices[f.i0]).normalized();
+            normals[f.i0] = n;
+            normals[f.i1] = n;
+            normals[f.i2] = n;
+        }
+
+        if (is_space) {
+            item_geometry.is_transparent = true;
+            item_geometry.color = Color(0.025, 0.037, 0.034, 0.1);
+        } else {
+            item_geometry.color = Color(geom_data.color.r, geom_data.color.g, geom_data.color.b, geom_data.color.a);
+            item_geometry.is_transparent = (geom_data.color.a < 0.7);
+        }
+
+        item.geometry.push_back(std::move(item_geometry));
+    }
+}
+
+// Runs on a WorkerThreadPool thread. It must not touch current_state or any member the
+// main thread reads during loading; results go into pending_* members and generation_queue,
+// which _process() commits after the task completes. Failures set thread_failed_.
 void GDIFCManager::_thread_task() {
 
     const char* buf_ptr  = reinterpret_cast<const char*>(this->pending_buffer.ptr());
@@ -282,10 +362,10 @@ void GDIFCManager::_thread_task() {
     try {
         temp_ifc_manager->read_ifc_file(buf_ptr, buf_size);
     } catch (const std::exception& e) {
-        this->current_state = FAILED;
+        thread_failed_ = true;
         ERR_FAIL_MSG(String("[web-ifc] Failed to read IFC file: ") + e.what());
     } catch (...) {
-        this->current_state = FAILED;
+        thread_failed_ = true;
         ERR_FAIL_MSG("[web-ifc] Failed to read IFC file: unknown error.");
     }
 
@@ -294,15 +374,15 @@ void GDIFCManager::_thread_task() {
     try {
         temp_file = std::make_shared<IfcParse::IfcFile>((void*)buf_ptr, buf_size);
     } catch (const std::exception& e) {
-        this->current_state = FAILED;
+        thread_failed_ = true;
         ERR_FAIL_MSG(String("[IfcParse] Failed to parse IFC file: ") + e.what());
     } catch (...) {
-        this->current_state = FAILED;
+        thread_failed_ = true;
         ERR_FAIL_MSG("[IfcParse] Failed to parse IFC file: unknown error.");
     }
 
     if (!temp_file->good()) {
-        this->current_state = FAILED;
+        thread_failed_ = true;
         ERR_FAIL_MSG("Failed to parse IFC file.");
     }
 
@@ -315,7 +395,7 @@ void GDIFCManager::_thread_task() {
                                (current_schema == Ifc4x3_add2::get_schema().name());
 
     if (!is_supported_schema) {
-        this->current_state = FAILED;
+        thread_failed_ = true;
         ERR_FAIL_MSG("Schema not supported.");
     }
 
@@ -332,12 +412,14 @@ void GDIFCManager::_thread_task() {
     try {
         temp_ifc_manager->initialize_geometry_processor();
     } catch (const std::exception& e) {
-        this->current_state = FAILED;
+        thread_failed_ = true;
         ERR_FAIL_MSG(String("[web-ifc] Failed to initialize geometry processor: ") + e.what());
     } catch (...) {
-        this->current_state = FAILED;
+        thread_failed_ = true;
         ERR_FAIL_MSG("[web-ifc] Failed to initialize geometry processor: unknown error.");
     }
+
+    auto& geometry_loader = *temp_ifc_manager->geometry_loader;
 
     Vector<PrecalculatedIFCItem> temp_queue;
 
@@ -358,6 +440,27 @@ void GDIFCManager::_thread_task() {
         ERR_PRINT("[IfcParse] Failed to build spatial hierarchy: unknown error.");
     }
 
+    // Attributes, psets, quantities, GlobalId and parent for one item.
+    auto fill_metadata = [&](PrecalculatedIFCItem& item) {
+        switch (schema_index) {
+            case 0: fill_item_metadata<Ifc4>(*temp_file, item); break;
+            // case 1: fill_item_metadata<Ifc4x3>(*temp_file, item); break;
+            case 2: fill_item_metadata<Ifc2x3>(*temp_file, item); break;
+            case 3: fill_item_metadata<Ifc4x3_add2>(*temp_file, item); break;
+            default: ;
+        }
+
+        // Extract GlobalId for scene persistence
+        if (item.attributes.has("GlobalId")) {
+            item.global_id = item.attributes["GlobalId"];
+        }
+
+        // Defines the parent of item
+        auto parent_it = parent_map.find(item.express_id);
+        if (parent_it != parent_map.end()) {
+            item.parent_id = parent_it->second;
+        }
+    };
 
     std::unordered_set<int> active_parents;
     for (const auto& pair : parent_map) active_parents.insert(pair.second);
@@ -388,108 +491,10 @@ void GDIFCManager::_thread_task() {
             item.node_name = String(s_type.c_str()) + "_" + String::num_int64(id); // Godot demands an unique name per node at the same tree level
             item.ifc_class = s_type.c_str();
 
-            //  Get attributes
-            switch (schema_index)
-            {
-                case 0: item.attributes = get_ifc_object_attributes<Ifc4>(*temp_file, id); break;
-                // case 1: item.attributes = get_ifc_object_attributes<Ifc4x3>(*temp_file, id); break;
-                case 2: item.attributes = get_ifc_object_attributes<Ifc2x3>(*temp_file, id); break;
-                case 3: item.attributes = get_ifc_object_attributes<Ifc4x3_add2>(*temp_file, id); break;
-                default: ;
-            }
+            fill_metadata(item);
 
-            //  Get psets
-            switch (schema_index)
-            {
-                case 0: item.properties = get_ifc_property_sets<Ifc4>(*temp_file, id); break;
-                // case 1: item.properties = get_ifc_property_sets<Ifc4x3>(*temp_file, id); break;
-                case 2: item.properties = get_ifc_property_sets<Ifc2x3>(*temp_file, id); break;
-                case 3: item.properties = get_ifc_property_sets<Ifc4x3_add2>(*temp_file, id); break;
-                default: ;
-            }
-
-            switch (schema_index)
-            {
-                case 0: item.quantities = get_ifc_quantity_sets<Ifc4>(*temp_file, id); break;
-                // case 1: item.quantities = get_ifc_quantity_sets<Ifc4x3>(*temp_file, id); break;
-                case 2: item.quantities = get_ifc_quantity_sets<Ifc2x3>(*temp_file, id); break;
-                case 3: item.quantities = get_ifc_quantity_sets<Ifc4x3_add2>(*temp_file, id); break;
-                default: ;
-            }
-
-            //  TODO: Get quantities
-
-
-            // Extract GlobalId for scene persistence
-            if (item.attributes.has("GlobalId")) {
-                item.global_id = item.attributes["GlobalId"];
-            }
-
-            // Defines the parent of item
-            if (parent_map.find(id) != parent_map.end()) {
-                item.parent_id = parent_map[id];
-            }
-
-            // ------------------------------------------------------------------
-            // Extract Geometry for Spatial Elements (IfcSite Terrain)
-            // ------------------------------------------------------------------
-            item.geometry = {};
-            auto flat_mesh = temp_ifc_manager->geometry_loader->GetFlatMesh(id);
-
-            // Only process if geometry actually exists (IfcProject will usually skip this)
-            if (!flat_mesh.geometries.empty()) {
-                glm::dmat4 node_mat(1.0);
-                bool has_node_transform = false;
-                for (auto& geom_data : flat_mesh.geometries) {
-                    PrecalculatedIFCItemGeometry item_geometry;
-                    auto ifc_geometry = temp_ifc_manager->geometry_loader->GetGeometry(geom_data.geometryExpressID);
-
-                    if (ifc_geometry.numPoints == 0 || ifc_geometry.numFaces == 0) continue;
-
-                    // First geometry defines the node's world-space placement.
-                    // if (!has_node_transform) {
-                    //     node_mat = geom_data.transformation;
-                    //     item.node_transform = glm_to_godot_transform(node_mat);
-                    //     has_node_transform = true;
-                    // }
-
-                    // Express vertices in the node's local space.
-                    glm::dmat4 local_mat = glm::inverse(node_mat) * geom_data.transformation;
-
-                    // Resize & Fill Vertices/Normals/Indices (Standard logic)
-                    int v_off = item_geometry.vertices.size();
-                    int i_off = item_geometry.indices.size();
-
-                    item_geometry.vertices.resize(v_off + ifc_geometry.numPoints);
-                    item_geometry.normals.resize(v_off + ifc_geometry.numPoints);
-                    item_geometry.indices.resize(i_off + (ifc_geometry.numFaces * 3));
-
-                    for (uint32_t k = 0; k < ifc_geometry.numPoints; k++) {
-                        glm::dvec4 tv = local_mat * glm::dvec4(ifc_geometry.GetPoint(k), 1.0);
-                        item_geometry.vertices[v_off + k] = Vector3((float)tv.x, (float)tv.y, (float)tv.z);
-                    }
-                    for (uint32_t k = 0; k < ifc_geometry.numFaces; k++) {
-                        bimGeometry::Face f = ifc_geometry.GetFace(k);
-                        item_geometry.indices[i_off + k*3+0] = v_off + f.i2;
-                        item_geometry.indices[i_off + k*3+1] = v_off + f.i1;
-                        item_geometry.indices[i_off + k*3+2] = v_off + f.i0;
-
-                        // Simple flat normals calculation
-                        Vector3 p0 = item_geometry.vertices[v_off + f.i0];
-                        Vector3 p1 = item_geometry.vertices[v_off + f.i1];
-                        Vector3 p2 = item_geometry.vertices[v_off + f.i2];
-                        Vector3 n = (p1 - p0).cross(p2 - p0).normalized();
-                        item_geometry.normals[v_off + f.i0] = n;
-                        item_geometry.normals[v_off + f.i1] = n;
-                        item_geometry.normals[v_off + f.i2] = n;
-                    }
-
-                    item_geometry.color = Color(geom_data.color.r, geom_data.color.g, geom_data.color.b, geom_data.color.a);
-                    item_geometry.is_transparent = (geom_data.color.a < 0.7);
-
-                    if (item_geometry.vertices.size() > 0) item.geometry.push_back(item_geometry);
-                }
-            }
+            // Spatial elements can carry geometry (e.g. IfcSite terrain); IfcProject usually has none
+            fill_item_geometry(geometry_loader, geometry_loader.GetFlatMesh(id), false, item);
 
             temp_queue.push_back(item);
             processed_ids.insert(id);
@@ -502,7 +507,9 @@ void GDIFCManager::_thread_task() {
         }
     }
 
-    // PHASE B: SECONDARY PARENTS (Assemblies, etc.)
+    // PHASE B: SECONDARY PARENTS (Assemblies, elements with nested ports, spaces, etc.)
+    // These can have their own geometry, so it is extracted here: the heavy loop below
+    // skips every processed id.
     std::vector<int> other_parents;
     for (int p_id : active_parents) {
         if (processed_ids.find(p_id) == processed_ids.end()) other_parents.push_back(p_id);
@@ -522,40 +529,10 @@ void GDIFCManager::_thread_task() {
         item.node_name = String(s_type.c_str()) + "_" + String::num_int64(id);
         item.ifc_class = s_type.c_str();
 
-        switch (schema_index)
-        {
-            case 0: item.attributes = get_ifc_object_attributes<Ifc4>(*temp_file, id); break;
-            // case 1: item.attributes = get_ifc_object_attributes<Ifc4x3>(*temp_file, id); break;
-            case 2: item.attributes = get_ifc_object_attributes<Ifc2x3>(*temp_file, id); break;
-            case 3: item.attributes = get_ifc_object_attributes<Ifc4x3_add2>(*temp_file, id); break;
-            default: ;
-        }
+        fill_metadata(item);
 
-        switch (schema_index)
-        {
-            case 0: item.properties = get_ifc_property_sets<Ifc4>(*temp_file, id); break;
-            // case 1: item.properties = get_ifc_property_sets<Ifc4x3>(*temp_file, id); break;
-            case 2: item.properties = get_ifc_property_sets<Ifc2x3>(*temp_file, id); break;
-            case 3: item.properties = get_ifc_property_sets<Ifc4x3_add2>(*temp_file, id); break;
-            default: ;
-        }
-
-        switch (schema_index)
-        {
-            case 0: item.quantities = get_ifc_quantity_sets<Ifc4>(*temp_file, id); break;
-            // case 1: item.quantities = get_ifc_quantity_sets<Ifc4x3>(*temp_file, id); break;
-            case 2: item.quantities = get_ifc_quantity_sets<Ifc2x3>(*temp_file, id); break;
-            case 3: item.quantities = get_ifc_quantity_sets<Ifc4x3_add2>(*temp_file, id); break;
-            default: ;
-        }
-
-        if (parent_map.find(id) != parent_map.end()) {
-            item.parent_id = parent_map[id];
-        }
-
-        // Extract GlobalId for scene persistence
-        if (item.attributes.has("GlobalId")) {
-            item.global_id = item.attributes["GlobalId"];
+        if (s_type != "IfcOpeningElement") {
+            fill_item_geometry(geometry_loader, geometry_loader.GetFlatMesh(id), s_type == "IfcSpace", item);
         }
 
         temp_queue.push_back(item);
@@ -568,7 +545,7 @@ void GDIFCManager::_thread_task() {
         }
     }
 
-    // 3. HEAVY LOOP: Process everything else
+    // 3. HEAVY LOOP: Process everything else (parents were all handled above)
     for (auto type : temp_ifc_manager->schemaManager.GetIfcElementList()) {
         auto expressIDs = temp_ifc_manager->loader->GetExpressIDsWithType(type);
         for (uint32_t expressID : expressIDs) {
@@ -579,11 +556,8 @@ void GDIFCManager::_thread_task() {
             std::string type_str = temp_ifc_manager->schemaManager.IfcTypeCodeToType(temp_ifc_manager->loader->GetLineType(expressID));
             if (type_str == "IfcOpeningElement") continue;
 
-            auto flat_mesh = temp_ifc_manager->geometry_loader->GetFlatMesh(expressID);
-            bool has_geometry = !flat_mesh.geometries.empty();
-            bool is_container_node = (active_parents.find(expressID) != active_parents.end());
-
-            if (!has_geometry && !is_container_node) continue;
+            auto flat_mesh = geometry_loader.GetFlatMesh(expressID);
+            if (flat_mesh.geometries.empty()) continue;
 
             PrecalculatedIFCItem item;
             item.valid = true;
@@ -591,97 +565,11 @@ void GDIFCManager::_thread_task() {
             item.node_name = String(type_str.c_str()) + "_" + String::num_int64(expressID);
             item.ifc_class = type_str.c_str();
 
-            switch (schema_index)
-            {
-                case 0: item.attributes = get_ifc_object_attributes<Ifc4>(*temp_file, expressID); break;
-                // case 1: item.attributes = get_ifc_object_attributes<Ifc4x3>(*temp_file, expressID); break;
-                case 2: item.attributes = get_ifc_object_attributes<Ifc2x3>(*temp_file, expressID); break;
-                case 3: item.attributes = get_ifc_object_attributes<Ifc4x3_add2>(*temp_file, expressID); break;
-                default: ;
-            }
+            fill_item_geometry(geometry_loader, flat_mesh, type_str == "IfcSpace", item);
+            if (item.geometry.empty()) continue;
 
-            switch (schema_index)
-            {
-                case 0: item.properties = get_ifc_property_sets<Ifc4>(*temp_file, expressID); break;
-                // case 1: item.properties = get_ifc_property_sets<Ifc4x3>(*temp_file, expressID); break;
-                case 2: item.properties = get_ifc_property_sets<Ifc2x3>(*temp_file, expressID); break;
-                case 3: item.properties = get_ifc_property_sets<Ifc4x3_add2>(*temp_file, expressID); break;
-                default: ;
-            }
-
-            switch (schema_index)
-            {
-                case 0: item.quantities = get_ifc_quantity_sets<Ifc4>(*temp_file, expressID); break;
-                // case 1: item.quantities = get_ifc_quantity_sets<Ifc4x3>(*temp_file, expressID); break;
-                case 2: item.quantities = get_ifc_quantity_sets<Ifc2x3>(*temp_file, expressID); break;
-                case 3: item.quantities = get_ifc_quantity_sets<Ifc4x3_add2>(*temp_file, expressID); break;
-                default: ;
-            }
-
-            if (parent_map.count(expressID)) item.parent_id = parent_map[expressID];
-
-            // Extract GlobalId for scene persistence
-            if (item.attributes.has("GlobalId")) {
-                item.global_id = item.attributes["GlobalId"];
-            }
-
-            // Geometry (Standard Loop)
-            item.geometry = {};
-            glm::dmat4 node_mat(1.0);
-            bool has_node_transform = false;
-            for (auto& geom_data : flat_mesh.geometries) {
-                PrecalculatedIFCItemGeometry item_geometry;
-                auto ifc_geometry = temp_ifc_manager->geometry_loader->GetGeometry(geom_data.geometryExpressID);
-                if (ifc_geometry.numPoints == 0 || ifc_geometry.numFaces == 0) continue;
-
-                // First geometry defines the node's world-space placement.
-                // if (!has_node_transform) {
-                //     node_mat = geom_data.transformation;
-                //     item.node_transform = glm_to_godot_transform(node_mat);
-                //     has_node_transform = true;
-                // }
-
-                // Express vertices in the node's local space.
-                glm::dmat4 local_mat = glm::inverse(node_mat) * geom_data.transformation;
-
-                int v_off = item_geometry.vertices.size();
-                int i_off = item_geometry.indices.size();
-                item_geometry.vertices.resize(v_off + ifc_geometry.numPoints);
-                item_geometry.normals.resize(v_off + ifc_geometry.numPoints);
-                item_geometry.indices.resize(i_off + (ifc_geometry.numFaces * 3));
-
-                for (uint32_t k = 0; k < ifc_geometry.numPoints; k++) {
-                    glm::dvec4 tv = local_mat * glm::dvec4(ifc_geometry.GetPoint(k), 1.0);
-                    item_geometry.vertices[v_off + k] = Vector3((float)tv.x, (float)tv.y, (float)tv.z);
-                }
-                for (uint32_t k = 0; k < ifc_geometry.numFaces; k++) {
-                    bimGeometry::Face f = ifc_geometry.GetFace(k);
-                    item_geometry.indices[i_off + k*3+0] = v_off + f.i2;
-                    item_geometry.indices[i_off + k*3+1] = v_off + f.i1;
-                    item_geometry.indices[i_off + k*3+2] = v_off + f.i0;
-
-                    Vector3 p0 = item_geometry.vertices[v_off + f.i0];
-                    Vector3 p1 = item_geometry.vertices[v_off + f.i1];
-                    Vector3 p2 = item_geometry.vertices[v_off + f.i2];
-                    Vector3 n = (p1 - p0).cross(p2 - p0).normalized();
-                    item_geometry.normals[v_off + f.i0] = n;
-                    item_geometry.normals[v_off + f.i1] = n;
-                    item_geometry.normals[v_off + f.i2] = n;
-                }
-                item_geometry.color = Color(geom_data.color.r, geom_data.color.g, geom_data.color.b, geom_data.color.a);
-                if (type_str == "IfcSpace") {
-                    item_geometry.is_transparent = true;
-                    item_geometry.color = Color(0.025, 0.037, 0.034, 0.1);
-                } else {
-                    item_geometry.is_transparent = (geom_data.color.a < 0.7);
-                }
-
-                if (item_geometry.vertices.size() > 0) item.geometry.push_back(item_geometry);
-            }
-
-            if (!item.geometry.empty() || is_container_node) {
-                temp_queue.push_back(item);
-            }
+            fill_metadata(item);
+            temp_queue.push_back(item);
 
             } catch (const std::exception& e) {
                 ERR_PRINT(String("Failed to process element #") + String::num_int64(expressID) + ": " + e.what());
@@ -737,14 +625,14 @@ void GDIFCManager::_thread_task() {
 
     // Get georeference data for IFC4+ schemas
     switch (schema_index) {
-        case 0: this->georreference = get_georreference<Ifc4>(*temp_file); break;
-        case 3: this->georreference = get_georreference<Ifc4x3_add2>(*temp_file); break;
-        default: this->georreference = {}; break;
+        case 0: this->pending_georreference = get_georreference<Ifc4>(*temp_file); break;
+        case 3: this->pending_georreference = get_georreference<Ifc4x3_add2>(*temp_file); break;
+        default: this->pending_georreference = {}; break;
     }
 
-    // Commit results
+    // Hand results to the main thread
     this->web_ifc_manager = std::move(temp_ifc_manager);
-    this->ifc_parse_file = std::move(temp_file);
+    this->pending_ifc_parse_file = std::move(temp_file);
     this->generation_queue = temp_queue;
 
     // Free the raw buffer — both parsers have consumed it
@@ -786,12 +674,15 @@ void GDIFCManager::_process_generation_queue() {
 
         // 2. REGISTER NODE
         if (item.express_id > 0) {
-            node_registry[item.express_id] = element_node;
+            node_registry[item.express_id] = element_node->get_instance_id();
         }
 
         // 3. PARENTING LOGIC
+        Node* parent_node = nullptr;
         if (item.parent_id > 0 && node_registry.has(item.parent_id)) {
-            Node* parent_node = node_registry[item.parent_id];
+            parent_node = Object::cast_to<Node>(ObjectDB::get_instance(node_registry[item.parent_id]));
+        }
+        if (parent_node) {
             parent_node->add_child(element_node);
         }
         else {
@@ -813,18 +704,8 @@ void GDIFCManager::_process_generation_queue() {
             mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arrays);
 
             // 3. Material
-            Ref<StandardMaterial3D> mat = _get_material(item.geometry[i].color, item.geometry[i].is_transparent);
-
-            mat->set_cull_mode(BaseMaterial3D::CULL_DISABLED);
-
+            Ref<StandardMaterial3D> mat = _get_material(item.geometry[i].color, item.geometry[i].is_transparent, item.ifc_class == "IfcSpace");
             mesh->surface_set_material(i,mat);
-
-
-            if (item.ifc_class == "IfcSpace") {
-                mat->set_grow_enabled(true);
-                mat->set_grow(-0.001);
-            }
-
         }
 
         if (mesh->get_surface_count() > 0) {
@@ -871,8 +752,9 @@ void GDIFCManager::_process_generation_queue() {
         add_child(invisible_staging_root, true);
 
         // Initialise the IFCModel node with the loaded file
-        if (ifc_model_node_ && ifc_parse_file) {
-            ifc_model_node_->init(ifc_parse_file);
+        IFCModel* model = get_ifc_model();
+        if (model && ifc_parse_file) {
+            model->init(ifc_parse_file);
         }
 
         // Set ownership recursively so all nodes are selectable in the editor
@@ -898,9 +780,9 @@ void GDIFCManager::_process_generation_queue() {
 // ---------------------------------------------------------
 // MATERIAL CACHING (Optimization)
 // ---------------------------------------------------------
-Ref<StandardMaterial3D> GDIFCManager::_get_material(Color color, bool transparent) {
+Ref<StandardMaterial3D> GDIFCManager::_get_material(Color color, bool transparent, bool is_space) {
     // Create a unique key string for the map
-    String key = String(color.to_html()) + (transparent ? "_T" : "_O");
+    String key = String(color.to_html()) + (transparent ? "_T" : "_O") + (is_space ? "_S" : "");
 
     if (material_cache.has(key)) {
         return material_cache[key];
@@ -909,6 +791,13 @@ Ref<StandardMaterial3D> GDIFCManager::_get_material(Color color, bool transparen
     Ref<StandardMaterial3D> mat;
     mat.instantiate();
     mat->set_albedo(color);
+    mat->set_cull_mode(BaseMaterial3D::CULL_DISABLED);
+
+    if (is_space) {
+        // Shrink spaces slightly so they don't z-fight with the elements bounding them
+        mat->set_grow_enabled(true);
+        mat->set_grow(-0.001);
+    }
 
     if (transparent) {
         mat->set_transparency(BaseMaterial3D::TRANSPARENCY_ALPHA);
@@ -939,7 +828,7 @@ void GDIFCManager::set_gdifc_settings(Ref<GDIFCLoaderSettings> gdifc_settings) {
 }
 
 IFCModel* GDIFCManager::get_ifc_model() {
-    return ifc_model_node_;
+    return Object::cast_to<IFCModel>(ObjectDB::get_instance(ifc_model_node_id_));
 }
 
 IFCNode* GDIFCManager::get_node_by_global_id(godot::String global_id) {
@@ -950,7 +839,7 @@ IFCNode* GDIFCManager::get_node_by_global_id(godot::String global_id) {
         if (!inst) return nullptr;
         int id = static_cast<int>(inst->id());
         if (!node_registry.has(id)) return nullptr;
-        return Object::cast_to<IFCNode>(node_registry[id]);
+        return Object::cast_to<IFCNode>(ObjectDB::get_instance(node_registry[id]));
     } catch (...) {
         return nullptr;
     }
@@ -1030,7 +919,7 @@ godot::Dictionary get_ifc_property_sets(IfcParse::IfcFile& file, int expressID) 
                     // Cache the property name to avoid repeated lookups
                     // Godot Dictionaries use Variants as keys. Passing a const char* // creates a String automatically.
                     std::string prop_name_str = prop->Name();
-                    const char* prop_key = prop_name_str.c_str();
+                    godot::String prop_key = godot::String::utf8(prop_name_str.c_str());
 
                     // OPTIMIZATION: Order by probability
                     // IfcPropertySingleValue is the vast majority (90%+) of cases. Check it first.
@@ -1100,13 +989,13 @@ godot::Dictionary get_ifc_property_sets(IfcParse::IfcFile& file, int expressID) 
                         }
                         props_dict[prop_key] = list_arr;
                     } else if (auto p_ref = prop->template as<typename schema::IfcPropertyReferenceValue>()) {
-                        props_dict[prop_key] = p_ref->UsageName().value_or("[Reference]").c_str();
+                        props_dict[prop_key] = godot::String::utf8(p_ref->UsageName().value_or("[Reference]").c_str());
                     }
                     // Skip IfcPropertyTableValue and others for performance unless strictly needed
                 }
 
                 // Insert the constructed dictionary into the main psets dictionary
-                psets[pset_key.c_str()] = props_dict;
+                psets[godot::String::utf8(pset_key.c_str())] = props_dict;
             }
         }
     }
@@ -1178,7 +1067,7 @@ godot::Dictionary get_ifc_quantity_sets(IfcParse::IfcFile& file, int expressID) 
                     // Cache the property name to avoid repeated lookups
                     // Godot Dictionaries use Variants as keys. Passing a const char* // creates a String automatically.
                     std::string quant_name_str = quant->Name();
-                    const char* quant_key = quant_name_str.c_str();
+                    godot::String quant_key = godot::String::utf8(quant_name_str.c_str());
 
                     if (auto q_length = quant->template as<typename schema::IfcQuantityLength>()) {
                         // Handle Single Value
@@ -1225,7 +1114,7 @@ godot::Dictionary get_ifc_quantity_sets(IfcParse::IfcFile& file, int expressID) 
                 }
 
                 // Insert the constructed dictionary into the main psets dictionary
-                qsets[quants_key.c_str()] = quantities_dict;
+                qsets[godot::String::utf8(quants_key.c_str())] = quantities_dict;
             }
         }
     }
@@ -1289,7 +1178,7 @@ godot::Variant to_godot_variant(const AttributeValue& attr_value) {
             return Variant(arg);
         } else if constexpr (std::is_same_v<T, std::string>) {
             // Note: Godot's String type is usually a dedicated type, but here we pass the C++ string
-            return Variant(godot::String(arg.c_str()));
+            return Variant(godot::String::utf8(arg.c_str()));
         } else if constexpr (std::is_same_v<T, bool>) {
             return Variant(arg);
         }
@@ -1308,10 +1197,9 @@ godot::Variant to_godot_variant(const AttributeValue& attr_value) {
             // Enumerations are best represented as Godot Strings
             return Variant(godot::String(arg.value()));
         } else if constexpr (std::is_convertible_v<T, IfcUtil::IfcBaseClass*>) {
-            // IFC Entity Instance pointer -> Should be wrapped in a Godot Object
-            // A helper function (e.g., entity_to_godot_object) would be called here.
-            // For the mockup, we return a Variant initialized with the pointer.
-            return Variant(static_cast<IfcUtil::IfcBaseClass*>(arg));
+            // IFC entity reference -> express ID, matching AttributeToVariantVisitor
+            auto* entity = static_cast<IfcUtil::IfcBaseClass*>(arg);
+            return entity ? Variant((int64_t)entity->id()) : Variant();
         }
 
         // 3. AGGREGATE (VECTOR) TYPES
@@ -1329,7 +1217,7 @@ godot::Variant to_godot_variant(const AttributeValue& attr_value) {
             godot::Array godot_array; // <-- FIX: Use godot::Array
             for (const auto& item : arg) {
                 // <-- FIX (C2440): Convert inner string to godot::String
-                godot_array.push_back(godot::String(item.c_str()));
+                godot_array.push_back(godot::String::utf8(item.c_str()));
             }
             return Variant(godot_array); // <-- FIX: Construct Variant from godot::Array
         }
@@ -1385,15 +1273,15 @@ godot::GeorreferenceData get_georreference(IfcParse::IfcFile &file) {
                     (double)map_conversion->Eastings(),
                     (double)map_conversion->Northings(),
                     (double)map_conversion->OrthogonalHeight(),
-                    (double)map_conversion->XAxisAbscissa().value_or(0.0),
+                    (double)map_conversion->XAxisAbscissa().value_or(1.0), // IFC default: no rotation
                     (double)map_conversion->XAxisOrdinate().value_or(0.0),
-                    (double)map_conversion->Scale().value_or(0.0)
+                    (double)map_conversion->Scale().value_or(1.0)          // IFC default: no scaling
                 },
                 ProjectedCRS{
-                    crs_name.c_str(),
-                    projected_crs->Description().value_or("").c_str(),
-                    projected_crs->GeodeticDatum().value_or("").c_str(),
-                    projected_crs->VerticalDatum().value_or("").c_str()
+                    godot::String::utf8(crs_name.c_str()),
+                    godot::String::utf8(projected_crs->Description().value_or("").c_str()),
+                    godot::String::utf8(projected_crs->GeodeticDatum().value_or("").c_str()),
+                    godot::String::utf8(projected_crs->VerticalDatum().value_or("").c_str())
                 }
             );
         } catch (const std::exception& e) {
