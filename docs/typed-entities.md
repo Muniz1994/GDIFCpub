@@ -61,9 +61,10 @@ Generic methods are ideal for debug inspectors and import diagnostics.
 ## Creating IFC Objects at Runtime
 
 ```gdscript
-var wall := IfcWall.new()
+# Create entities through the loaded model so they belong to its IFC file.
+# (IfcWall.new() gives an empty wrapper: its setters do nothing.)
+var wall := ifc_manager.get_ifc_model().create("IfcWall") as IfcWall
 wall.Name = "Generated Wall"
-wall.PredefinedType = "SOLIDWALL"
 ```
 
 This is useful for tool scripts or procedural data experiments.

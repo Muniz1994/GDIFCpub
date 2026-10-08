@@ -77,6 +77,9 @@ The entry point for all IFC loading.
 | `read_ifc(path, create_collision, collision_classes)` | `Error` | Load an IFC file from disk. `path` is a Godot resource path or absolute path. `collision_classes` is an `Array[String]` of IFC class names to generate collision shapes for (pass `[]` to disable). |
 | `read_ifc_base64(data, create_collision, collision_classes)` | `Error` | Load an IFC file from a base-64 encoded string. Same parameters as `read_ifc`. |
 | `geometric_settings` | `GDIFCLoaderSettings` | Resource controlling geometry tessellation, memory limits, and tolerances. Assign before calling `read_ifc`. |
+| `ifc_read` | signal | Emitted when a load finishes and the node tree has been added. |
+| `ifc_objects_ready` | signal | Emitted when `ifc_object` references are available (after a load or a cold reload of a saved scene). |
+| `ifc_load_failed` | signal | Emitted when parsing fails. The manager can load again afterwards. |
 
 ---
 
@@ -144,10 +147,10 @@ for child in ifc_manager.get_children():
 ### Create and modify an IFC object at runtime
 
 ```gdscript
-# All generated classes exist in the ClassDB — you can instantiate them.
-var wall: IfcWall = IfcWall.new()
+# Create entities through the loaded model so they belong to its IFC file.
+# (IfcWall.new() gives an empty wrapper: its setters do nothing.)
+var wall := ifc_manager.get_ifc_model().create("IfcWall") as IfcWall
 wall.Name = "New Wall"
-wall.PredefinedType = "SOLIDWALL"
 ```
 
 ### Dynamic fallback via GDIFCEntityBase
