@@ -13,9 +13,9 @@ struct MapConversion {
     double Eastings         = 0.0;
     double Northings        = 0.0;
     double OrthogonalHeight = 0.0;
-    double XAxisAbscissa    = 0.0;
+    double XAxisAbscissa    = 1.0;
     double XAxisOrdinate    = 0.0;
-    double Scale            = 0.0;
+    double Scale            = 1.0;
 };
 
 struct ProjectedCRS {
@@ -32,7 +32,7 @@ struct GeorreferenceData {
 
     GeorreferenceData()
         : valid(false),
-          map_conversion{0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
+          map_conversion{},
           projected_crs{"NotDefined", "NotDefined", "NotDefined", "NotDefined"} {}
 
     GeorreferenceData(MapConversion mc, ProjectedCRS crs)
@@ -86,13 +86,13 @@ protected:
     static void _bind_methods();
 
 private:
-    // MapConversion fields (exposed as double; source struct uses int32/int16)
+    // MapConversion fields
     double eastings_          = 0.0;
     double northings_         = 0.0;
     double orthogonal_height_ = 0.0;
-    double x_axis_abscissa_   = 0.0;
+    double x_axis_abscissa_   = 1.0;
     double x_axis_ordinate_   = 0.0;
-    double scale_             = 0.0;
+    double scale_             = 1.0;
 
     // ProjectedCRS fields
     String crs_name_;
