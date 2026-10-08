@@ -85,7 +85,7 @@ private:
 inline godot::String gd_attr_string(const AttributeValue& av) {
     auto t = av.type();
     if (t == IfcUtil::Argument_STRING) {
-        return godot::String(((std::string)av).c_str());
+        return godot::String::utf8(((std::string)av).c_str());
     }
     if (t == IfcUtil::Argument_ENUMERATION) {
         EnumerationReference ref = av;
@@ -168,7 +168,7 @@ inline godot::PackedStringArray gd_attr_agg_string(const AttributeValue& av) {
     if (av.type() == IfcUtil::Argument_AGGREGATE_OF_STRING) {
         std::vector<std::string> v = av;
         for (const auto& s : v) {
-            result.push_back(godot::String(s.c_str()));
+            result.push_back(godot::String::utf8(s.c_str()));
         }
     }
     return result;

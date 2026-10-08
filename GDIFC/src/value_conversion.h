@@ -40,7 +40,7 @@ struct AttributeToVariantVisitor {
         return Variant(v);
     }
     Variant operator()(const std::string& v) const {
-        return Variant(String(v.c_str()));
+        return Variant(String::utf8(v.c_str()));
     }
 
     // --- 3. Logic & Binary ---
@@ -55,7 +55,7 @@ struct AttributeToVariantVisitor {
         // Godot doesn't have a BitSet, so we convert to a binary String (e.g., "01010")
         std::string s;
         boost::to_string(v, s);
-        return Variant(String(s.c_str()));
+        return Variant(String::utf8(s.c_str()));
     }
 
     // --- 4. IFC Specifics ---
@@ -97,7 +97,7 @@ struct AttributeToVariantVisitor {
         PackedStringArray arr;
         arr.resize(v.size());
         for(size_t i = 0; i < v.size(); ++i) {
-            arr[i] = String(v[i].c_str());
+            arr[i] = String::utf8(v[i].c_str());
         }
         return Variant(arr);
     }
@@ -109,7 +109,7 @@ struct AttributeToVariantVisitor {
         for(size_t i = 0; i < v.size(); ++i) {
             std::string s;
             boost::to_string(v[i], s);
-            arr[i] = String(s.c_str());
+            arr[i] = String::utf8(s.c_str());
         }
         return Variant(arr);
     }

@@ -54,7 +54,7 @@ int64_t GDIFCEntityBase::get_express_id() const {
 
 godot::String GDIFCEntityBase::get_type() const {
     if (!entity_) return godot::String();
-    return godot::String(entity_->declaration().name().c_str());
+    return godot::String::utf8(entity_->declaration().name().c_str());
 }
 
 bool GDIFCEntityBase::is_a(godot::String ifc_class) const {
@@ -98,7 +98,7 @@ static godot::Variant gdifc_av_to_variant(const AttributeValue& av,
         }
         godot::Variant operator()(double v) const { return godot::Variant(v); }
         godot::Variant operator()(const std::string& v) const {
-            return godot::String(v.c_str());
+            return godot::String::utf8(v.c_str());
         }
         godot::Variant operator()(const boost::dynamic_bitset<>& v) const {
             return godot::String(std::to_string(v.size()).c_str());
@@ -124,7 +124,7 @@ static godot::Variant gdifc_av_to_variant(const AttributeValue& av,
         }
         godot::Variant operator()(const std::vector<std::string>& v) const {
             godot::PackedStringArray arr;
-            for (const auto& s : v) arr.push_back(godot::String(s.c_str()));
+            for (const auto& s : v) arr.push_back(godot::String::utf8(s.c_str()));
             return arr;
         }
         godot::Variant operator()(const std::vector<boost::dynamic_bitset<>>&) const {
@@ -183,7 +183,7 @@ godot::PackedStringArray GDIFCEntityBase::get_attribute_names() {
     const auto* ent_decl = entity_->declaration().as_entity();
     if (!ent_decl) return result;
     for (const auto* attr : ent_decl->all_attributes()) {
-        result.push_back(godot::String(attr->name().c_str()));
+        result.push_back(godot::String::utf8(attr->name().c_str()));
     }
     return result;
 }
@@ -195,7 +195,7 @@ godot::Dictionary GDIFCEntityBase::get_all_attributes() {
     if (!ent_decl) return result;
     const auto& all_attrs = ent_decl->all_attributes();
     for (size_t i = 0; i < all_attrs.size(); ++i) {
-        auto key = godot::String(all_attrs[i]->name().c_str());
+        auto key = godot::String::utf8(all_attrs[i]->name().c_str());
         result[key] = gdifc_av_to_variant(entity_->get_attribute_value(i), file_);
     }
     return result;

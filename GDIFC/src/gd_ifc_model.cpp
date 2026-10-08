@@ -7,7 +7,7 @@
 #include <IfcSchema.h>
 #include <IfcParse.h>  // for operator<< serialisation
 
-#include <fstream>
+#include <cstring>
 #include <sstream>
 
 using namespace godot;
@@ -26,7 +26,7 @@ godot::String IFCModel::get_schema_name() const {
     if (!fs) return godot::String();
     const auto& ids = fs->schema_identifiers();
     if (ids.empty()) return godot::String();
-    return godot::String(ids.front().c_str());
+    return godot::String::utf8(ids.front().c_str());
 }
 
 godot::PackedStringArray IFCModel::get_file_description() const {
@@ -35,7 +35,7 @@ godot::PackedStringArray IFCModel::get_file_description() const {
     const auto* fd = ifc_file_->header().file_description();
     if (!fd) return result;
     for (const auto& s : fd->description()) {
-        result.push_back(godot::String(s.c_str()));
+        result.push_back(godot::String::utf8(s.c_str()));
     }
     return result;
 }
@@ -44,14 +44,14 @@ godot::String IFCModel::get_file_name() const {
     if (!ifc_file_) return godot::String();
     const auto* fn = ifc_file_->header().file_name();
     if (!fn) return godot::String();
-    return godot::String(fn->name().c_str());
+    return godot::String::utf8(fn->name().c_str());
 }
 
 godot::String IFCModel::get_timestamp() const {
     if (!ifc_file_) return godot::String();
     const auto* fn = ifc_file_->header().file_name();
     if (!fn) return godot::String();
-    return godot::String(fn->time_stamp().c_str());
+    return godot::String::utf8(fn->time_stamp().c_str());
 }
 
 godot::PackedStringArray IFCModel::get_author() const {
@@ -60,7 +60,7 @@ godot::PackedStringArray IFCModel::get_author() const {
     const auto* fn = ifc_file_->header().file_name();
     if (!fn) return result;
     for (const auto& s : fn->author()) {
-        result.push_back(godot::String(s.c_str()));
+        result.push_back(godot::String::utf8(s.c_str()));
     }
     return result;
 }
@@ -71,7 +71,7 @@ godot::PackedStringArray IFCModel::get_organization() const {
     const auto* fn = ifc_file_->header().file_name();
     if (!fn) return result;
     for (const auto& s : fn->organization()) {
-        result.push_back(godot::String(s.c_str()));
+        result.push_back(godot::String::utf8(s.c_str()));
     }
     return result;
 }
@@ -80,21 +80,21 @@ godot::String IFCModel::get_preprocessor() const {
     if (!ifc_file_) return godot::String();
     const auto* fn = ifc_file_->header().file_name();
     if (!fn) return godot::String();
-    return godot::String(fn->preprocessor_version().c_str());
+    return godot::String::utf8(fn->preprocessor_version().c_str());
 }
 
 godot::String IFCModel::get_originating_system() const {
     if (!ifc_file_) return godot::String();
     const auto* fn = ifc_file_->header().file_name();
     if (!fn) return godot::String();
-    return godot::String(fn->originating_system().c_str());
+    return godot::String::utf8(fn->originating_system().c_str());
 }
 
 godot::String IFCModel::get_authorization() const {
     if (!ifc_file_) return godot::String();
     const auto* fn = ifc_file_->header().file_name();
     if (!fn) return godot::String();
-    return godot::String(fn->authorization().c_str());
+    return godot::String::utf8(fn->authorization().c_str());
 }
 
 // ── Entity lookup ─────────────────────────────────────────────────────────
@@ -196,20 +196,23 @@ Ref<GDIFCEntityBase> IFCModel::create(godot::String ifc_class) {
 
 godot::Error IFCModel::save(godot::String path) {
     if (!ifc_file_) return FAILED;
-    std::string std_path = path.utf8().get_data();
     try {
-        std::ofstream out(std_path);
-        if (!out.is_open()) {
+        std::ostringstream oss;
+        oss << *ifc_file_;
+        const std::string data = oss.str();
+
+        // FileAccess resolves res:// and user:// paths and works on every export platform
+        Ref<FileAccess> fa = FileAccess::open(path, FileAccess::WRITE);
+        if (fa.is_null()) {
             UtilityFunctions::push_error(
                 godot::String("IFCModel::save: cannot open file: ") + path);
             return ERR_FILE_CANT_WRITE;
         }
-        out << *ifc_file_;
-        out.flush();
-        if (!out) {
-            return ERR_FILE_CANT_WRITE;
-        }
-        return OK;
+        PackedByteArray bytes;
+        bytes.resize(static_cast<int64_t>(data.size()));
+        memcpy(bytes.ptrw(), data.data(), data.size());
+        fa->store_buffer(bytes);
+        return fa->get_error() == OK ? OK : ERR_FILE_CANT_WRITE;
     } catch (const std::exception& e) {
         UtilityFunctions::push_error(
             godot::String("IFCModel::save failed: ") + godot::String(e.what()));
@@ -222,7 +225,7 @@ godot::String IFCModel::to_step_string() {
     try {
         std::ostringstream oss;
         oss << *ifc_file_;
-        return godot::String(oss.str().c_str());
+        return godot::String::utf8(oss.str().c_str());
     } catch (...) {
         return godot::String();
     }
