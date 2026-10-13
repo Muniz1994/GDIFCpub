@@ -45,11 +45,22 @@ tooltip_text = "Pick an .ifc file and load it into the edited scene using the op
 text = "Load IFC..."
 icon = SubResource("DPITexture_3o44k")
 
-[node name="LoadingLabel" type="Label" parent="MarginContainer/VBoxContainer/LoadRow" unique_id=1285165020]
+[node name="LoadStatus" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1285165020]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-text = "Loading..."
+
+[node name="LoadProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/LoadStatus" unique_id=1738204517]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[node name="LoadStatusLabel" type="Label" parent="MarginContainer/VBoxContainer/LoadStatus" unique_id=1093826741]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 1
+text_overrun_behavior = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer" unique_id=1462093817]
 layout_mode = 2

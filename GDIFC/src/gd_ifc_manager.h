@@ -128,8 +128,35 @@ class GDIFCManager : public Node3D {
     // Set by _metadata_thread_task if the IFC file is missing
     bool relink_failed_ = false;
 
+  public:
+    enum LoadStage {
+        STAGE_IDLE,
+        STAGE_PARSING,
+        STAGE_GEOMETRY,
+        STAGE_NODES,
+        STAGE_EDITOR_CACHES,
+        STAGE_REVEAL,
+        STAGE_DONE,
+        STAGE_FAILED
+    };
+
+  private:
+    // Load progress. The worker stages (parsing, geometry) report through done/total;
+    // the main-thread stages read their queue indices directly.
+    std::atomic<int> load_stage_{STAGE_IDLE};
+    std::atomic<uint32_t> progress_done_{0};
+    std::atomic<uint32_t> progress_total_{0};
+    // Start of the opaque IfcParse step and the size it parses, to estimate its progress
+    std::atomic<uint64_t> parse_step_start_usec_{0};
+    uint64_t parse_bytes_ = 0;
+    // Last reported values, main thread only. Progress never moves backwards within a load.
+    float load_progress_ = 0.0f;
+    int reported_stage_ = STAGE_IDLE;
+
     Error _start_loading(bool _create_collision, const Array &_collision_classes);
     void _wait_for_task();
+    void _set_worker_progress(LoadStage stage, uint32_t total);
+    void _update_load_progress();
 
   protected:
     static void _bind_methods();
@@ -139,6 +166,8 @@ class GDIFCManager : public Node3D {
     ~GDIFCManager() override;
 
     Error read_ifc(const String &_path, bool _create_collision, const Array &_collision_classes);
+    float get_load_progress() const { return load_progress_; }
+    String get_load_stage() const;
     Error read_ifc_base64(const String &_base64_data, bool _create_collision, const Array &_collision_classes);
     void _process(double delta) override;
     void _ready() override;

@@ -39,9 +39,13 @@ void GDIFCManager::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_ifc_object_by_global_id","global_id"), &GDIFCManager::get_ifc_object_by_global_id);
     ClassDB::bind_method(D_METHOD("get_elements_by_class","ifc_class"), &GDIFCManager::get_elements_by_class);
 
+    ClassDB::bind_method(D_METHOD("get_load_progress"), &GDIFCManager::get_load_progress);
+    ClassDB::bind_method(D_METHOD("get_load_stage"), &GDIFCManager::get_load_stage);
+
     ADD_SIGNAL(MethodInfo("ifc_read"));
     ADD_SIGNAL(MethodInfo("ifc_objects_ready"));
     ADD_SIGNAL(MethodInfo("ifc_load_failed"));
+    ADD_SIGNAL(MethodInfo("load_progress_changed", PropertyInfo(Variant::FLOAT, "progress"), PropertyInfo(Variant::STRING, "stage")));
 }
 
 GDIFCManager::GDIFCManager() {
@@ -63,6 +67,110 @@ void GDIFCManager::_wait_for_task() {
     if (task_id == -1) return;
     WorkerThreadPool::get_singleton()->wait_for_task_completion(task_id);
     task_id = -1;
+}
+
+// ---------------------------------------------------------
+// LOAD PROGRESS
+// ---------------------------------------------------------
+
+struct StageRange {
+    float start;
+    float end;
+};
+
+// Share of the whole load each stage covers, from stage durations measured in the editor.
+// The reveal range includes the editor's own work after the reveal, when nothing is redrawn.
+// Outside the editor there are no gizmo caches and the reveal is short.
+static StageRange get_stage_range(int stage, bool in_editor) {
+    if (in_editor) {
+        switch (stage) {
+            case GDIFCManager::STAGE_PARSING: return {0.0f, 0.38f};
+            case GDIFCManager::STAGE_GEOMETRY: return {0.38f, 0.53f};
+            case GDIFCManager::STAGE_NODES: return {0.53f, 0.58f};
+            case GDIFCManager::STAGE_EDITOR_CACHES: return {0.58f, 0.86f};
+            case GDIFCManager::STAGE_REVEAL: return {0.86f, 1.0f};
+            case GDIFCManager::STAGE_DONE: return {1.0f, 1.0f};
+            default: return {0.0f, 0.0f};
+        }
+    }
+    switch (stage) {
+        case GDIFCManager::STAGE_PARSING: return {0.0f, 0.65f};
+        case GDIFCManager::STAGE_GEOMETRY: return {0.65f, 0.9f};
+        case GDIFCManager::STAGE_NODES: return {0.9f, 0.99f};
+        case GDIFCManager::STAGE_REVEAL: return {0.99f, 1.0f};
+        case GDIFCManager::STAGE_DONE: return {1.0f, 1.0f};
+        default: return {0.0f, 0.0f};
+    }
+}
+
+// IfcParse's parse runs at roughly 20 MB/s (measured on two models), in bytes per microsecond
+static constexpr double PARSE_BYTES_PER_USEC = 20.0;
+
+String GDIFCManager::get_load_stage() const {
+    switch (reported_stage_) {
+        case STAGE_PARSING: return "Parsing";
+        case STAGE_GEOMETRY: return "Processing geometry";
+        case STAGE_NODES: return "Creating nodes";
+        case STAGE_EDITOR_CACHES: return "Preparing editor";
+        case STAGE_REVEAL: return "Adding to scene";
+        case STAGE_DONE: return "Done";
+        case STAGE_FAILED: return "Failed";
+        default: return "";
+    }
+}
+
+// Called by the worker when it enters a stage with `total` steps
+void GDIFCManager::_set_worker_progress(LoadStage stage, uint32_t total) {
+    progress_done_.store(0);
+    progress_total_.store(total);
+    load_stage_.store(stage);
+}
+
+// Main thread only. Emits load_progress_changed when the stage changes or progress moves by 0.5%.
+void GDIFCManager::_update_load_progress() {
+    const int stage = load_stage_.load();
+
+    float fraction = 0.0f;
+    switch (stage) {
+        case STAGE_PARSING: {
+            // web-ifc's read is quick. IfcParse and the geometry processor setup then run as one
+            // opaque stretch, estimated from the file size and capped so it never looks finished.
+            const uint32_t done = progress_done_.load();
+            if (done >= 3) {
+                fraction = 1.0f;
+            } else if (done >= 1) {
+                const double expected = MAX(1.0, (double)parse_bytes_ / PARSE_BYTES_PER_USEC);
+                const double elapsed = (double)(Time::get_singleton()->get_ticks_usec() - parse_step_start_usec_.load());
+                fraction = 0.1f + 0.9f * (float)MIN(0.95, elapsed / expected);
+            }
+        } break;
+        case STAGE_GEOMETRY: {
+            const uint32_t total = progress_total_.load();
+            fraction = total > 0 ? (float)MIN(progress_done_.load(), total) / (float)total : 0.0f;
+        } break;
+        case STAGE_NODES:
+            fraction = generation_queue.is_empty() ? 1.0f : (float)current_generation_index / (float)generation_queue.size();
+            break;
+        case STAGE_EDITOR_CACHES:
+            fraction = editor_cache_queue.is_empty() ? 1.0f : (float)current_editor_cache_index / (float)editor_cache_queue.size();
+            break;
+        default:
+            break;
+    }
+
+    float progress = load_progress_;
+    if (stage != STAGE_IDLE && stage != STAGE_FAILED) {
+        const StageRange range = get_stage_range(stage, Engine::get_singleton()->is_editor_hint());
+        // The worker can be read mid-way through switching stages, so never step backwards
+        progress = MAX(load_progress_, range.start + (range.end - range.start) * fraction);
+    }
+
+    if (stage == reported_stage_ && progress - load_progress_ < 0.005f && !(progress >= 1.0f && load_progress_ < 1.0f)) {
+        return;
+    }
+    load_progress_ = progress;
+    reported_stage_ = stage;
+    emit_signal("load_progress_changed", load_progress_, get_load_stage());
 }
 
 // ---------------------------------------------------------
@@ -91,6 +199,9 @@ void GDIFCManager::_ready() {
     relink_failed_ = false;
     thread_failed_ = false;
     current_state = LOADING_THREAD;
+    load_progress_ = 0.0f;
+    reported_stage_ = STAGE_IDLE;
+    _set_worker_progress(STAGE_PARSING, 0);
     task_id = WorkerThreadPool::get_singleton()->add_task(callable_mp(this, &GDIFCManager::_metadata_thread_task), true);
     set_process(true);
 }
@@ -231,9 +342,16 @@ Error GDIFCManager::_start_loading(bool _create_collision, const Array &_collisi
     this->relink_failed_ = false;
     this->current_state = LOADING_THREAD;
 
+    // Parsing has three steps: web-ifc, IfcParse, then the geometry processor
+    this->parse_bytes_ = this->pending_buffer.size();
+    this->load_progress_ = 0.0f;
+    this->reported_stage_ = STAGE_IDLE;
+    _set_worker_progress(STAGE_PARSING, 3);
+
     // Start Thread
     task_id = WorkerThreadPool::get_singleton()->add_task(callable_mp(this, &GDIFCManager::_thread_task), true);
     set_process(true);
+    _update_load_progress();
     return Error::OK;
 }
 
@@ -252,6 +370,8 @@ void GDIFCManager::_process(double delta) {
                 generation_queue.clear();
                 pending_buffer = PackedByteArray();
                 current_state = FAILED;
+                load_stage_.store(STAGE_FAILED);
+                _update_load_progress();
                 emit_signal("ifc_load_failed");
                 set_process(false);
                 return;
@@ -268,6 +388,8 @@ void GDIFCManager::_process(double delta) {
                     + "'. The model scene is intact but ifc_object properties are unavailable. "
                     + "Call read_ifc() with a valid path to restore them.");
                 current_state = DONE;
+                load_stage_.store(STAGE_DONE);
+                _update_load_progress();
                 emit_signal("ifc_objects_ready");
                 set_process(false);
             } else if (!generation_queue.is_empty()) {
@@ -277,6 +399,7 @@ void GDIFCManager::_process(double delta) {
                 invisible_staging_root->set_name("IFC_Staging_Area");
                 ifc_model_node_id_ = invisible_staging_root->get_instance_id();
                 current_state = GENERATING_NODES;
+                load_stage_.store(STAGE_NODES);
             } else {
                 // Metadata-only reload — move to relinking
                 current_state = RELINKING;
@@ -287,9 +410,15 @@ void GDIFCManager::_process(double delta) {
     } else if (current_state == RELINKING) {
         _relink_ifc_objects();
         current_state = DONE;
+        load_stage_.store(STAGE_DONE);
+        _update_load_progress();
         emit_signal("ifc_objects_ready");
         set_process(false);
         UtilityFunctions::print("IFC objects relinked from saved scene.");
+    }
+
+    if (current_state == LOADING_THREAD || current_state == GENERATING_NODES || current_state == RELINKING) {
+        _update_load_progress();
     }
 }
 // ---------------------------------------------------------
@@ -436,6 +565,8 @@ void GDIFCManager::_thread_task() {
         thread_failed_ = true;
         ERR_FAIL_MSG("[web-ifc] Failed to read IFC file: unknown error.");
     }
+    parse_step_start_usec_.store(Time::get_singleton()->get_ticks_usec());
+    progress_done_.store(1);
 
     // Load file [IFCParse] — from memory buffer (void*, int constructor)
     std::shared_ptr<IfcParse::IfcFile> temp_file;
@@ -453,6 +584,7 @@ void GDIFCManager::_thread_task() {
         thread_failed_ = true;
         ERR_FAIL_MSG("Failed to parse IFC file.");
     }
+    progress_done_.store(2);
 
     // Schema check [IFCParse]
     std::string current_schema = temp_file->schema()->name();
@@ -486,6 +618,7 @@ void GDIFCManager::_thread_task() {
         thread_failed_ = true;
         ERR_FAIL_MSG("[web-ifc] Failed to initialize geometry processor: unknown error.");
     }
+    progress_done_.store(3);
 
     auto& geometry_loader = *temp_ifc_manager->geometry_loader;
 
@@ -540,12 +673,24 @@ void GDIFCManager::_thread_task() {
     // PHASE A: PRIMARY STRUCTURE (Project, Site, Building, Storey)
     std::vector<std::string> spatial_types = {"IfcProject", "IfcSite", "IfcBuilding", "IfcBuildingStorey"};
 
+    // The geometry stage counts every entity the three passes below visit
+    uint32_t geometry_total = static_cast<uint32_t>(active_parents.size());
+    for (const auto& s_type : spatial_types) {
+        auto instances = temp_file->instances_by_type(s_type);
+        if (instances) geometry_total += instances->size();
+    }
+    for (auto type : temp_ifc_manager->schemaManager.GetIfcElementList()) {
+        geometry_total += static_cast<uint32_t>(temp_ifc_manager->loader->GetExpressIDsWithType(type).size());
+    }
+    _set_worker_progress(STAGE_GEOMETRY, geometry_total);
+
     for (const auto& s_type : spatial_types) {
 
         auto instances = temp_file->instances_by_type(s_type);
         if (!instances) continue;
 
         for(int i=0; i<instances->size(); i++) {
+            progress_done_.fetch_add(1, std::memory_order_relaxed);
             try {
             auto ent = instances->operator[](i);
 
@@ -584,7 +729,11 @@ void GDIFCManager::_thread_task() {
     }
     std::sort(other_parents.begin(), other_parents.end());
 
+    // Parents already handled as spatial structure were counted in the total too
+    progress_done_.fetch_add(static_cast<uint32_t>(active_parents.size() - other_parents.size()), std::memory_order_relaxed);
+
     for (int id : other_parents) {
+        progress_done_.fetch_add(1, std::memory_order_relaxed);
         try {
         auto ent = temp_file->instance_by_id(id);
         if (!ent) continue;
@@ -617,6 +766,7 @@ void GDIFCManager::_thread_task() {
     for (auto type : temp_ifc_manager->schemaManager.GetIfcElementList()) {
         auto expressIDs = temp_ifc_manager->loader->GetExpressIDsWithType(type);
         for (uint32_t expressID : expressIDs) {
+            progress_done_.fetch_add(1, std::memory_order_relaxed);
             try {
 
             if (processed_ids.find(expressID) != processed_ids.end()) continue;
@@ -852,6 +1002,9 @@ void GDIFCManager::_process_generation_queue() {
     // back from the GPU with a full stall per buffer. Building them here, inside the time budget,
     // keeps the gizmos created when the model is revealed from all stalling in that single frame.
     // It runs after every mesh is uploaded, because stalls interleaved with the uploads cost more.
+    if (!editor_cache_queue.is_empty()) {
+        load_stage_.store(STAGE_EDITOR_CACHES);
+    }
     while (current_editor_cache_index < editor_cache_queue.size()) {
         const Ref<Resource> &resource = editor_cache_queue[current_editor_cache_index];
         if (Mesh *mesh = Object::cast_to<Mesh>(resource.ptr())) {
@@ -868,6 +1021,13 @@ void GDIFCManager::_process_generation_queue() {
     }
     editor_cache_queue.clear();
     current_editor_cache_index = 0;
+
+    // Report the reveal one frame early: the editor makes the reveal frame long, and a progress
+    // display updated in that same frame would only be drawn after it
+    if (load_stage_.load() != STAGE_REVEAL) {
+        load_stage_.store(STAGE_REVEAL);
+        return;
+    }
 
     if (current_generation_index >= generation_queue.size()) {
         invisible_staging_root->set_name("IFCModel");
@@ -923,6 +1083,8 @@ void GDIFCManager::_process_generation_queue() {
 
         invisible_staging_root = nullptr;
         current_state = DONE;
+        load_stage_.store(STAGE_DONE);
+        _update_load_progress();
         emit_signal("ifc_read");
         emit_signal("ifc_objects_ready");
         set_process(false);

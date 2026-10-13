@@ -10,6 +10,11 @@ New changes go under **Unreleased**. To cut a build, run `python tools/bump_buil
 
 ## [Unreleased]
 
+### Added
+
+- A progress bar in the editor dock while a file loads. It shows the current stage (Parsing, Processing geometry, Creating nodes, Preparing editor, Adding to scene) and ends with "Loaded <file> in X s". A failed load shows the failure in the editor's error color, and no longer leaves an empty `GDIFCManager` in the scene. The **Load IFC...** button is disabled while a load runs.
+- `GDIFCManager.load_progress_changed(progress, stage)` signal, with `get_load_progress()` and `get_load_stage()`, so your own UI can follow a load. Stages are weighted by their measured share of the load time, and the long parsing step is estimated from the file size, so the progress moves roughly in step with time.
+
 ## [1.1.0-alpha]
 
 ### Build 2 — 2026-10-13

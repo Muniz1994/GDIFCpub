@@ -13,6 +13,29 @@ Main entry point for IFC loading and model access.
   - `path` can be `res://` or absolute.
 - `read_ifc_base64(data, create_collision, collision_classes) -> Error`
   - Loads an IFC from a base64 string.
+- `get_load_progress() -> float`
+  - Progress of the current or last load, from `0.0` to `1.0`. It never decreases during a load.
+- `get_load_stage() -> String`
+  - Current load stage: `"Parsing"`, `"Processing geometry"`, `"Creating nodes"`, `"Preparing editor"` (editor only), `"Adding to scene"`, `"Done"` or `"Failed"`. Empty before the first load.
+
+### Signals
+
+- `load_progress_changed(progress: float, stage: String)`
+  - Emitted while loading, when the stage changes or progress moves by at least 0.5%. `progress` and `stage` match the two getters above.
+  - The stages are weighted by their typical share of the load time, so the bar moves roughly in step with time. The parsing stage is estimated from the file size.
+- `ifc_read`
+  - The model's nodes are in the scene.
+- `ifc_objects_ready`
+  - Typed IFC objects are available on the nodes. Also emitted after a saved scene is reopened and relinked.
+- `ifc_load_failed`
+  - The file couldn't be parsed or its schema isn't supported. Details are in the Output panel.
+
+```gdscript
+ifc_manager.load_progress_changed.connect(func(progress: float, stage: String):
+    $ProgressBar.value = progress
+    $StatusLabel.text = stage)
+ifc_manager.read_ifc("res://models/building.ifc", false, [])
+```
 
 ### Properties
 
