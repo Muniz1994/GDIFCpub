@@ -1,58 +1,12 @@
 [gd_scene format=3 uid="uid://fja2j7bui5qu"]
 
-[ext_resource type="Script" uid="uid://iph5rdx8l8b7" path="res://addons/GDIFC/gdifcdock.gd" id="1_ae86c"]
-[ext_resource type="Texture2D" uid="uid://cugvxdyscp2my" path="res://addons/GDIFC/assets/icons/upload.png" id="2_2lejx"]
+[ext_resource type="Script" uid="uid://dx5a0kl13u831" path="res://addons/GDIFC/gdifcdock.gd" id="1_ae86c"]
 [ext_resource type="GDIFCLoaderSettings" uid="uid://c6nxagj6y41n4" path="res://addons/GDIFC/settings/default_gdifc_geometric_settings.tres" id="2_3o44k"]
 [ext_resource type="Texture2D" uid="uid://d4drn38d6pyx0" path="res://addons/GDIFC/assets/images/title.svg" id="3_72040"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3o44k"]
-bg_color = Color(0.25882354, 0.25882354, 0.25882354, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.25882354, 0.25882354, 0.25882354, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_72040"]
-content_margin_left = 7.0
-bg_color = Color(0.25882354, 0.25882354, 0.25882354, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.25882354, 0.25882354, 0.25882354, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bru1x"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0.25882354, 0.25882354, 0.25882354, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bh1i4"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0.3372549, 0.61960787, 1, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 5
+[sub_resource type="DPITexture" id="DPITexture_3o44k"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ff5d5d\" d=\"M2 1v8.586l1.293-1.293a1 1 0 0 1 1.414 0L7 10.587l2.293-2.293a1 1 0 0 1 1.414 0L13 10.586l1-1V6H9V1H2zm8 0v4h4zm-6 9.414-2 2V15h12v-2.586l-.293.293a1 1 0 0 1-1.414 0L10 10.414l-2.293 2.293a1 1 0 0 1-1.414 0L4 10.414z\"/></svg>
+"
 
 [node name="GDIFC" type="Control" unique_id=1888460424]
 layout_mode = 3
@@ -65,127 +19,94 @@ script = ExtResource("1_ae86c")
 settings = ExtResource("2_3o44k")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1950551479]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1286089728]
 layout_mode = 2
 
-[node name="Main" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1091372793]
+[node name="LoadRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1091372793]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Main" unique_id=542020543]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Header" type="MarginContainer" parent="MarginContainer/VBoxContainer/Main/VBoxContainer" unique_id=655670110]
-layout_mode = 2
-theme_override_constants/margin_top = 12
-theme_override_constants/margin_bottom = 24
-
-[node name="MainLabel" type="Label" parent="MarginContainer/VBoxContainer/Main/VBoxContainer/Header" unique_id=680628971]
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_3o44k")
-text = "Main"
-horizontal_alignment = 1
-text_overrun_behavior = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Main/VBoxContainer" unique_id=224879307]
-layout_mode = 2
-
-[node name="LoadIFCButton" type="Button" parent="MarginContainer/VBoxContainer/Main/VBoxContainer/HBoxContainer" unique_id=1350619054]
+[node name="LoadIFCButton" type="Button" parent="MarginContainer/VBoxContainer/LoadRow" unique_id=1350619054]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 0
-text = "Load IFC"
-icon = ExtResource("2_2lejx")
+size_flags_horizontal = 3
+tooltip_text = "Pick an .ifc file and load it into the edited scene using the options below."
+text = "Load IFC..."
+icon = SubResource("DPITexture_3o44k")
 
-[node name="LoadingLabel" type="Label" parent="MarginContainer/VBoxContainer/Main/VBoxContainer/HBoxContainer" unique_id=1285165020]
+[node name="LoadingLabel" type="Label" parent="MarginContainer/VBoxContainer/LoadRow" unique_id=1285165020]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-text = "Loading...."
+text = "Loading..."
 
-[node name="Config" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=7246154]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer" unique_id=1462093817]
 layout_mode = 2
 size_flags_vertical = 3
+horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Config" unique_id=1262357727]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 9
-
-[node name="Header2" type="MarginContainer" parent="MarginContainer/VBoxContainer/Config/VBoxContainer" unique_id=522308283]
-layout_mode = 2
-theme_override_constants/margin_top = 12
-theme_override_constants/margin_bottom = 24
-
-[node name="MainLabel" type="Label" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/Header2" unique_id=1726188717]
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_3o44k")
-text = "Config"
-horizontal_alignment = 1
-text_overrun_behavior = 1
-
-[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/Config/VBoxContainer" unique_id=637677302]
-layout_mode = 2
-columns = 2
-
-[node name="CreateCollisionLabel" type="Label" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/GridContainer" unique_id=1397557480]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Create collisions"
-autowrap_mode = 2
-
-[node name="CheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/GridContainer" unique_id=2094389688]
+[node name="Groups" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer" unique_id=1804716259]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("StyleBoxFlat_72040")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_72040")
-theme_override_styles/hover = SubResource("StyleBoxFlat_72040")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_72040")
-text = "On"
+theme_override_constants/separation = 6
 
-[node name="GenerateLodsLabel" type="Label" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/GridContainer" unique_id=1417730259]
-custom_minimum_size = Vector2(100, 0)
+[node name="Geometry" type="FoldableContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups" unique_id=522308283]
+layout_mode = 2
+title = "Geometry"
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Geometry" unique_id=637677302]
+layout_mode = 2
+columns = 2
+
+[node name="GeomSettingsLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Geometry/GridContainer" unique_id=691066124]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Geometric settings preset used to tessellate the model."
+mouse_filter = 1
+text = "Settings preset"
+text_overrun_behavior = 3
+
+[node name="GeomSettings" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Geometry/GridContainer" unique_id=448354119]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GenerateLodsLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Geometry/GridContainer" unique_id=1417730259]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Generate mesh levels of detail with Godot's ImporterMesh. Increases load time and scene size."
 mouse_filter = 1
 text = "Generate LODs"
-autowrap_mode = 2
+text_overrun_behavior = 3
 
-[node name="GenerateLodsCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/GridContainer" unique_id=902518364]
+[node name="GenerateLodsCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Geometry/GridContainer" unique_id=902518364]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("StyleBoxFlat_72040")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_72040")
-theme_override_styles/hover = SubResource("StyleBoxFlat_72040")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_72040")
 button_pressed = true
 text = "On"
 
-[node name="LodMergeAngleLabel" type="Label" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/GridContainer" unique_id=1660043871]
-custom_minimum_size = Vector2(100, 0)
+[node name="LodMergeAngleLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Geometry/GridContainer" unique_id=1660043871]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Vertices whose normals differ by less than this angle may be merged while simplifying."
 mouse_filter = 1
 text = "LOD merge angle"
-autowrap_mode = 2
+text_overrun_behavior = 3
 
-[node name="LodMergeAngleSpinBox" type="SpinBox" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/GridContainer" unique_id=275519082]
+[node name="LodMergeAngleSpinBox" type="SpinBox" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Geometry/GridContainer" unique_id=275519082]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -194,76 +115,163 @@ step = 0.1
 value = 60.0
 suffix = "°"
 
-[node name="VBoxContainer" type="HFlowContainer" parent="MarginContainer/VBoxContainer/Config/VBoxContainer" unique_id=1779069931]
-clip_contents = true
+[node name="Collisions" type="FoldableContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups" unique_id=1262357727]
 layout_mode = 2
-last_wrap_alignment = 1
+title = "Collisions"
 
-[node name="CollisionElementsLabel" type="Label" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/VBoxContainer" unique_id=78863048]
-custom_minimum_size = Vector2(100, 0)
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Collisions" unique_id=1779069931]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Collisions/VBoxContainer" unique_id=1137924582]
+layout_mode = 2
+columns = 2
+
+[node name="CreateCollisionsLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Collisions/VBoxContainer/GridContainer" unique_id=1397557480]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Collision elements"
-autowrap_mode = 2
+tooltip_text = "Create static collision bodies for the selected element types."
+mouse_filter = 1
+text = "Enabled"
+text_overrun_behavior = 3
 
-[node name="ElementsList" type="ItemList" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/VBoxContainer" unique_id=1922407344]
+[node name="CreateCollisionsCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Collisions/VBoxContainer/GridContainer" unique_id=2094389688]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_styles/panel = SubResource("StyleBoxFlat_bru1x")
-theme_override_styles/selected = SubResource("StyleBoxFlat_bh1i4")
+size_flags_horizontal = 3
+text = "On"
+
+[node name="CollisionElementsLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Collisions/VBoxContainer" unique_id=78863048]
+layout_mode = 2
+tooltip_text = "IFC building element types that receive collisions. Ctrl/Shift-click to select several. Selecting a type also includes its IFC4 StandardCase and ElementedCase variants."
+mouse_filter = 1
+text = "Elements"
+text_overrun_behavior = 3
+
+[node name="ElementsList" type="ItemList" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Collisions/VBoxContainer" unique_id=1922407344]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 2
 select_mode = 2
 allow_rmb_select = true
-auto_width = true
-auto_height = true
-item_count = 8
+item_count = 39
 max_columns = 2
 same_column_width = true
-item_0/text = "IfcSlab"
-item_1/text = "IfcRoof"
-item_2/text = "IfcStair"
-item_3/text = "IfcWall"
-item_4/text = "IfcRail"
-item_5/text = "IfcDoor"
-item_6/text = "IfcWindow"
-item_7/text = "IfcColumn"
+item_0/text = "IfcBeam"
+item_0/disabled = true
+item_1/text = "IfcBearing"
+item_1/disabled = true
+item_2/text = "IfcBuildingElementPart"
+item_2/disabled = true
+item_3/text = "IfcBuildingElementProxy"
+item_3/disabled = true
+item_4/text = "IfcCaissonFoundation"
+item_4/disabled = true
+item_5/text = "IfcChimney"
+item_5/disabled = true
+item_6/text = "IfcColumn"
+item_6/disabled = true
+item_7/text = "IfcCourse"
+item_7/disabled = true
+item_8/text = "IfcCovering"
+item_8/disabled = true
+item_9/text = "IfcCurtainWall"
+item_9/disabled = true
+item_10/text = "IfcDeepFoundation"
+item_10/disabled = true
+item_11/text = "IfcDoor"
+item_11/disabled = true
+item_12/text = "IfcEarthworksElement"
+item_12/disabled = true
+item_13/text = "IfcEarthworksFill"
+item_13/disabled = true
+item_14/text = "IfcFooting"
+item_14/disabled = true
+item_15/text = "IfcKerb"
+item_15/disabled = true
+item_16/text = "IfcMember"
+item_16/disabled = true
+item_17/text = "IfcMooringDevice"
+item_17/disabled = true
+item_18/text = "IfcNavigationElement"
+item_18/disabled = true
+item_19/text = "IfcPavement"
+item_19/disabled = true
+item_20/text = "IfcPile"
+item_20/disabled = true
+item_21/text = "IfcPlate"
+item_21/disabled = true
+item_22/text = "IfcRail"
+item_22/disabled = true
+item_23/text = "IfcRailing"
+item_23/disabled = true
+item_24/text = "IfcRamp"
+item_24/disabled = true
+item_25/text = "IfcRampFlight"
+item_25/disabled = true
+item_26/text = "IfcReinforcedSoil"
+item_26/disabled = true
+item_27/text = "IfcReinforcingBar"
+item_27/disabled = true
+item_28/text = "IfcReinforcingMesh"
+item_28/disabled = true
+item_29/text = "IfcRoof"
+item_29/disabled = true
+item_30/text = "IfcShadingDevice"
+item_30/disabled = true
+item_31/text = "IfcSlab"
+item_31/disabled = true
+item_32/text = "IfcStair"
+item_32/disabled = true
+item_33/text = "IfcStairFlight"
+item_33/disabled = true
+item_34/text = "IfcTendon"
+item_34/disabled = true
+item_35/text = "IfcTendonAnchor"
+item_35/disabled = true
+item_36/text = "IfcTrackElement"
+item_36/disabled = true
+item_37/text = "IfcWall"
+item_37/disabled = true
+item_38/text = "IfcWindow"
+item_38/disabled = true
 
-[node name="GeomSettings" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Config/VBoxContainer" unique_id=448354119]
-unique_name_in_owner = true
+[node name="Placement" type="FoldableContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups" unique_id=1603927451]
 layout_mode = 2
+title = "Placement"
 
-[node name="GeomSettings" type="Label" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/GeomSettings" unique_id=691066124]
-custom_minimum_size = Vector2(100, 0)
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Placement" unique_id=1530772946]
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Geometric settings"
-autowrap_mode = 2
+columns = 2
 
-[node name="ReferenceGeoref" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Config/VBoxContainer" unique_id=1603927451]
-layout_mode = 2
-
-[node name="ReferenceGeorefLabel" type="Label" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/ReferenceGeoref" unique_id=873409126]
-custom_minimum_size = Vector2(100, 0)
+[node name="ReferenceGeorefLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Placement/GridContainer" unique_id=873409126]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Place the loaded model relative to this georeference node. None loads it at the origin."
 mouse_filter = 1
-text = "Reference georeference"
-autowrap_mode = 2
+text = "Georeference"
+text_overrun_behavior = 3
 
-[node name="GeorefOption" type="OptionButton" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/ReferenceGeoref" unique_id=1170264383]
+[node name="ReferenceGeoref" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Placement/GridContainer" unique_id=1968213504]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GeorefOption" type="OptionButton" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Placement/GridContainer/ReferenceGeoref" unique_id=1170264383]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 clip_text = true
+selected = 0
 fit_to_longest_item = false
+item_count = 1
+popup/item_0/text = "None"
+popup/item_0/id = 0
 
-[node name="GeorefRefresh" type="Button" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/ReferenceGeoref" unique_id=391847502]
+[node name="GeorefRefresh" type="Button" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Placement/GridContainer/ReferenceGeoref" unique_id=391847502]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Refresh the georeference list"
+icon = SubResource("DPITexture_3o44k")
+flat = true
 
 [node name="Footer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1938274615]
 layout_mode = 2
@@ -272,13 +280,17 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "GDIFC 1.1.0-alpha (build 1)"
 mouse_filter = 1
-theme_override_colors/font_color = Color(1, 1, 1, 0.5)
-theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0, 0, 0, 0.6)
+theme_override_font_sizes/font_size = 13
+text = "v1.1.0-alpha · build 1"
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Footer" unique_id=1522868594]
-custom_minimum_size = Vector2(100, 15)
+[node name="Logo" type="TextureRect" parent="MarginContainer/VBoxContainer/Footer" unique_id=1522868594]
+unique_name_in_owner = true
+self_modulate = Color(0, 0, 0, 0.6)
+custom_minimum_size = Vector2(150, 22.5)
 layout_mode = 2
 size_flags_horizontal = 8
 texture = ExtResource("3_72040")

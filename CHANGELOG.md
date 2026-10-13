@@ -10,6 +10,14 @@ New changes go under **Unreleased**. To cut a build, run `python tools/bump_buil
 
 ## [Unreleased]
 
+#### Changed
+
+- Reorganized the editor dock. **Load IFC...** is at the top, and the options are in foldable **Geometry**, **Collisions** and **Placement** groups inside a scroll area. Each group remembers whether it is folded, per project.
+- The dock now follows the editor theme (light and dark presets, custom colors and editor scale). Hardcoded panel, selection and font colors were removed. The button icons come from the editor icon set, and the footer logo and build label are tinted with the theme's font color.
+- **Collision elements** are greyed out while collisions are disabled.
+- The **Elements** list in the **Collisions** group now offers every concrete `IfcBuildingElement` (IFC2X3, IFC4) and `IfcBuiltElement` (IFC4X3) subtype, 39 in all, in a fixed-height scrolling list. Selecting a type also matches its IFC4 `StandardCase` and `ElementedCase` variants, so selecting `IfcWall` also includes `IfcWallStandardCase` and `IfcWallElementedCase`.
+- The class icons (`GDIFCManager`, `IFCNode`, `IFCGeoreference`, `IFCModel`) use Godot's standard icon gray and are converted with the editor theme, so they stay visible on light themes.
+
 ## [1.1.0-alpha]
 
 ### Build 1 — 2026-10-13

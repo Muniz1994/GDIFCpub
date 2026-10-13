@@ -5,6 +5,7 @@ type="CompressedTexture2D"
 uid="uid://dscxpwknir2bk"
 path="res://.godot/imported/building.svg-53845437560c0bde313266ad413bc7e5.ctex"
 metadata={
+"has_editor_variant": true,
 "vram_texture": false
 }
 
@@ -40,4 +41,4 @@ process/size_limit=0
 detect_3d/compress_to=1
 svg/scale=1.0
 editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false
+editor/convert_colors_with_editor_theme=true
