@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://fja2j7bui5qu"]
 
-[ext_resource type="Script" uid="uid://iph5rdx8l8b7" path="res://addons/GDIFC/gdifcdock.gd" id="1_ae86c"]
+[ext_resource type="Script" uid="uid://dx5a0kl13u831" path="res://addons/GDIFC/gdifcdock.gd" id="1_ae86c"]
 [ext_resource type="Texture2D" uid="uid://cugvxdyscp2my" path="res://addons/GDIFC/assets/icons/upload.png" id="2_2lejx"]
 [ext_resource type="GDIFCLoaderSettings" uid="uid://c6nxagj6y41n4" path="res://addons/GDIFC/settings/default_gdifc_geometric_settings.tres" id="2_3o44k"]
 [ext_resource type="Texture2D" uid="uid://d4drn38d6pyx0" path="res://addons/GDIFC/assets/images/title.svg" id="3_72040"]
@@ -17,31 +17,6 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_72040"]
-content_margin_left = 7.0
-bg_color = Color(0.25882354, 0.25882354, 0.25882354, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.25882354, 0.25882354, 0.25882354, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bru1x"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0.25882354, 0.25882354, 0.25882354, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 5
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bh1i4"]
 content_margin_left = 4.0
 content_margin_top = 4.0
@@ -53,6 +28,17 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
+
+[sub_resource type="DPITexture" id="DPITexture_72040"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M5 8a4 4 0 1 1 4 4v2a6 6 0 1 0-6-6H1l3 4 3-4z\"/></svg>
+"
+base_scale = 1.5
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
+}
 
 [node name="GDIFC" type="Control" unique_id=1888460424]
 layout_mode = 3
@@ -150,11 +136,41 @@ autowrap_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("StyleBoxFlat_72040")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_72040")
-theme_override_styles/hover = SubResource("StyleBoxFlat_72040")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_72040")
 text = "On"
+
+[node name="GenerateLodsLabel" type="Label" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/GridContainer" unique_id=1417730259]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Generate mesh levels of detail with Godot's ImporterMesh. Increases load time and scene size."
+mouse_filter = 1
+text = "Generate LODs"
+autowrap_mode = 2
+
+[node name="GenerateLodsCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/GridContainer" unique_id=902518364]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+button_pressed = true
+text = "On"
+
+[node name="LodMergeAngleLabel" type="Label" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/GridContainer" unique_id=1660043871]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Vertices whose normals differ by less than this angle may be merged while simplifying."
+mouse_filter = 1
+text = "LOD merge angle"
+autowrap_mode = 2
+
+[node name="LodMergeAngleSpinBox" type="SpinBox" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/GridContainer" unique_id=275519082]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 180.0
+step = 0.1
+value = 60.0
+suffix = "°"
 
 [node name="VBoxContainer" type="HFlowContainer" parent="MarginContainer/VBoxContainer/Config/VBoxContainer" unique_id=1779069931]
 clip_contents = true
@@ -174,7 +190,6 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_styles/panel = SubResource("StyleBoxFlat_bru1x")
 theme_override_styles/selected = SubResource("StyleBoxFlat_bh1i4")
 select_mode = 2
 allow_rmb_select = true
@@ -220,14 +235,31 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 clip_text = true
+selected = 0
 fit_to_longest_item = false
+item_count = 1
+popup/item_0/text = "None"
+popup/item_0/id = 0
 
 [node name="GeorefRefresh" type="Button" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/ReferenceGeoref" unique_id=391847502]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Refresh the georeference list"
+icon = SubResource("DPITexture_72040")
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer" unique_id=1522868594]
+[node name="Footer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1938274615]
+layout_mode = 2
+
+[node name="BuildLabel" type="Label" parent="MarginContainer/VBoxContainer/Footer" unique_id=604183927]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_override_colors/font_color = Color(1, 1, 1, 0.5)
+theme_override_font_sizes/font_size = 12
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Footer" unique_id=1522868594]
 custom_minimum_size = Vector2(100, 15)
 layout_mode = 2
 size_flags_horizontal = 8

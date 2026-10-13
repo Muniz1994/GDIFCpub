@@ -71,4 +71,14 @@ void godot::GDIFCLoaderSettings::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_boolean_union_threshold", "val"), &GDIFCLoaderSettings::setBooleanUnionThreshold);
     ClassDB::bind_method(D_METHOD("get_boolean_union_threshold"), &GDIFCLoaderSettings::getBooleanUnionThreshold);
     ADD_PROPERTY(PropertyInfo(Variant::INT, "boolean_union_threshold"), "set_boolean_union_threshold", "get_boolean_union_threshold");
+
+    // --- Generate LODs ---
+    ClassDB::bind_method(D_METHOD("set_generate_lods", "val"), &GDIFCLoaderSettings::setGenerateLods);
+    ClassDB::bind_method(D_METHOD("get_generate_lods"), &GDIFCLoaderSettings::getGenerateLods);
+    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "generate_lods"), "set_generate_lods", "get_generate_lods");
+
+    // --- LOD Normal Merge Angle ---
+    ClassDB::bind_method(D_METHOD("set_lod_normal_merge_angle", "val"), &GDIFCLoaderSettings::setLodNormalMergeAngle);
+    ClassDB::bind_method(D_METHOD("get_lod_normal_merge_angle"), &GDIFCLoaderSettings::getLodNormalMergeAngle);
+    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "lod_normal_merge_angle", PROPERTY_HINT_RANGE, "0,180,0.1,degrees"), "set_lod_normal_merge_angle", "get_lod_normal_merge_angle");
 }

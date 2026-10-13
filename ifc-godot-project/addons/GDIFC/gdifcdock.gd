@@ -10,6 +10,9 @@ extends Control
 @onready var geom_settings: HBoxContainer = %GeomSettings
 @onready var georef_option: OptionButton = %GeorefOption
 @onready var georef_refresh: Button = %GeorefRefresh
+@onready var generate_lods_check: CheckBox = %GenerateLodsCheckBox
+@onready var lod_merge_angle: SpinBox = %LodMergeAngleSpinBox
+@onready var build_label: Label = %BuildLabel
 
 var file_dialog: EditorFileDialog
 var ifc_manager: GDIFCManager
@@ -29,9 +32,45 @@ func _start_interface():
 	geom_settings_picker.base_type = "GDIFCLoaderSettings"
 	geom_settings_picker.edited_resource = settings
 	geom_settings.add_child(geom_settings_picker)
-	
+
+	# LOD controls mirror the picked preset, and override it per load without editing it
+	geom_settings_picker.resource_changed.connect(_sync_lod_controls)
+	generate_lods_check.toggled.connect(func(on: bool): lod_merge_angle.editable = on)
+	_sync_lod_controls(settings)
+
 	georef_refresh.icon = EditorInterface.get_editor_theme().get_icon("Reload", "EditorIcons")
 	_refresh_georef_options()
+	_show_build_info()
+
+# Version and build come from plugin.cfg next to this script, wherever the addon is installed
+func _show_build_info():
+	var config := ConfigFile.new()
+	if config.load(get_script().resource_path.get_base_dir().path_join("plugin.cfg")) != OK:
+		build_label.text = ""
+		return
+	var version := str(config.get_value("plugin", "version", ""))
+	var build := str(config.get_value("plugin", "build", ""))
+	if build.is_empty():
+		build_label.text = "v%s" % version
+		build_label.tooltip_text = "GDIFC %s" % version
+	else:
+		build_label.text = "v%s · build %s" % [version, build]
+		build_label.tooltip_text = "GDIFC %s (build %s)" % [version, build]
+
+func _sync_lod_controls(resource: Resource):
+	var preset := resource as GDIFCLoaderSettings
+	if preset:
+		generate_lods_check.button_pressed = preset.generate_lods
+		lod_merge_angle.value = preset.lod_normal_merge_angle
+	lod_merge_angle.editable = generate_lods_check.button_pressed
+
+# Copy of the picked preset with the dock's LOD options applied, so the shared .tres is never modified
+func _build_load_settings() -> GDIFCLoaderSettings:
+	var picked = geom_settings_picker.edited_resource
+	var load_settings: GDIFCLoaderSettings = picked.duplicate() if picked else GDIFCLoaderSettings.new()
+	load_settings.generate_lods = generate_lods_check.button_pressed
+	load_settings.lod_normal_merge_angle = lod_merge_angle.value
+	return load_settings
 
 # Lists every IFCGeoreference in the edited scene, keyed by its path from the scene root
 func _refresh_georef_options():
@@ -90,7 +129,7 @@ func _on_file_selected(path: String):
 		return
 	
 	ifc_manager = GDIFCManager.new()
-	ifc_manager.set_gdifc_settings(geom_settings_picker.edited_resource)
+	ifc_manager.set_gdifc_settings(_build_load_settings())
 
 	# 1. Add the manager to the scene
 	current_scene_root.add_child(ifc_manager,true)

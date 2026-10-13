@@ -61,6 +61,8 @@ Controls geometry conversion behavior and processing limits.
 - `tolerance_scalar_equality: float` (default `1.0e-4`)
 - `plane_refit_iterations: int` (default `10`)
 - `boolean_union_threshold: int` (default `150`)
+- `generate_lods: bool` (default `true`)
+- `lod_normal_merge_angle: float` (default `60.0`, degrees)
 
 ## Practical Pattern
 

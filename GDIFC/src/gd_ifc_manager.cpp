@@ -5,6 +5,7 @@
 #include <mutex>
 
 #include "godot_cpp/classes/file_access.hpp"
+#include "godot_cpp/classes/importer_mesh.hpp"
 #include "godot_cpp/classes/scene_tree.hpp"
 
 using namespace godot;
@@ -295,11 +296,61 @@ static void fill_item_metadata(IfcParse::IfcFile& file, PrecalculatedIFCItem& it
     item.quantities = get_ifc_quantity_sets<schema>(file, item.express_id);
 }
 
+struct LodOptions {
+    bool enabled = false;
+    float normal_merge_angle = 60.0f;
+};
+
+// Items below this triangle count (boxes, plain walls, slabs) can't be simplified
+// meaningfully; skipping them avoids per-element overhead on large models.
+static constexpr int LOD_MIN_TRIANGLES = 64;
+
+// Generate LOD index arrays with Godot's ImporterMesh (the same path the glTF/scene
+// importer uses). Runs on the worker thread: the ImporterMesh is temporary and only
+// its index data is kept, so no RenderingServer resources are created here.
+static void generate_item_lods(PrecalculatedIFCItem& item, float normal_merge_angle) {
+    int64_t triangle_count = 0;
+    for (const auto& geometry : item.geometry) triangle_count += geometry.indices.size() / 3;
+    if (triangle_count < LOD_MIN_TRIANGLES) return;
+
+    Ref<ImporterMesh> importer;
+    importer.instantiate();
+
+    for (const auto& geometry : item.geometry) {
+        Array arrays;
+        arrays.resize(Mesh::ARRAY_MAX);
+        arrays[Mesh::ARRAY_VERTEX] = geometry.vertices;
+        arrays[Mesh::ARRAY_NORMAL] = geometry.normals;
+        arrays[Mesh::ARRAY_INDEX] = geometry.indices;
+        importer->add_surface(Mesh::PRIMITIVE_TRIANGLES, arrays);
+    }
+
+    // The normal split angle is ignored by the engine since 4.2.
+    importer->generate_lods(normal_merge_angle, 25.0f, Array());
+
+    for (int i = 0; i < (int)item.geometry.size(); i++) {
+        auto& geometry = item.geometry[i];
+        int lod_count = importer->get_surface_lod_count(i);
+        if (lod_count == 0) continue;
+
+        // Read the arrays back so the LOD indices always match the vertex data they reference.
+        Array arrays = importer->get_surface_arrays(i);
+        geometry.vertices = arrays[Mesh::ARRAY_VERTEX];
+        geometry.normals = arrays[Mesh::ARRAY_NORMAL];
+        geometry.indices = arrays[Mesh::ARRAY_INDEX];
+
+        for (int l = 0; l < lod_count; l++) {
+            geometry.lods[importer->get_surface_lod_size(i, l)] = importer->get_surface_lod_indices(i, l);
+        }
+    }
+}
+
 // Tessellate an entity's flat mesh into one surface per placed geometry.
 // Node transforms are currently identity, so vertices are baked in world space.
 static void fill_item_geometry(webifc::geometry::IfcGeometryProcessor& geometry_loader,
                                const webifc::geometry::IfcFlatMesh& flat_mesh,
-                               bool is_space, PrecalculatedIFCItem& item) {
+                               bool is_space, const LodOptions& lod_options,
+                               PrecalculatedIFCItem& item) {
     for (const auto& geom_data : flat_mesh.geometries) {
         auto& ifc_geometry = geometry_loader.GetGeometry(geom_data.geometryExpressID);
         if (ifc_geometry.numPoints == 0 || ifc_geometry.numFaces == 0) continue;
@@ -340,6 +391,10 @@ static void fill_item_geometry(webifc::geometry::IfcGeometryProcessor& geometry_
 
         item.geometry.push_back(std::move(item_geometry));
     }
+
+    if (lod_options.enabled && !item.geometry.empty()) {
+        generate_item_lods(item, lod_options.normal_merge_angle);
+    }
 }
 
 // Runs on a WorkerThreadPool thread. It must not touch current_state or any member the
@@ -354,6 +409,13 @@ void GDIFCManager::_thread_task() {
 
     const char* buf_ptr  = reinterpret_cast<const char*>(this->pending_buffer.ptr());
     int         buf_size = static_cast<int>(this->pending_buffer.size());
+
+    // Snapshot LOD options once so edits to the settings resource mid-load aren't picked up
+    LodOptions lod_options;
+    if (geometric_settings.is_valid()) {
+        lod_options.enabled = geometric_settings->getGenerateLods();
+        lod_options.normal_merge_angle = geometric_settings->getLodNormalMergeAngle();
+    }
 
     // Load file [web-ifc] — from memory buffer
     auto temp_ifc_manager = std::make_unique<WEBIFCManager>(geometric_settings.ptr());
@@ -492,7 +554,7 @@ void GDIFCManager::_thread_task() {
             fill_metadata(item);
 
             // Spatial elements can carry geometry (e.g. IfcSite terrain); IfcProject usually has none
-            fill_item_geometry(geometry_loader, geometry_loader.GetFlatMesh(id), false, item);
+            fill_item_geometry(geometry_loader, geometry_loader.GetFlatMesh(id), false, lod_options, item);
 
             temp_queue.push_back(item);
             processed_ids.insert(id);
@@ -530,7 +592,7 @@ void GDIFCManager::_thread_task() {
         fill_metadata(item);
 
         if (s_type != "IfcOpeningElement") {
-            fill_item_geometry(geometry_loader, geometry_loader.GetFlatMesh(id), s_type == "IfcSpace", item);
+            fill_item_geometry(geometry_loader, geometry_loader.GetFlatMesh(id), s_type == "IfcSpace", lod_options, item);
         }
 
         temp_queue.push_back(item);
@@ -563,7 +625,7 @@ void GDIFCManager::_thread_task() {
             item.node_name = String(type_str.c_str()) + "_" + String::num_int64(expressID);
             item.ifc_class = type_str.c_str();
 
-            fill_item_geometry(geometry_loader, flat_mesh, type_str == "IfcSpace", item);
+            fill_item_geometry(geometry_loader, flat_mesh, type_str == "IfcSpace", lod_options, item);
             if (item.geometry.empty()) continue;
 
             fill_metadata(item);
@@ -703,7 +765,7 @@ void GDIFCManager::_process_generation_queue() {
             arrays[Mesh::ARRAY_NORMAL] = item.geometry[i].normals;
             arrays[Mesh::ARRAY_INDEX] = item.geometry[i].indices;
 
-            mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arrays);
+            mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arrays, TypedArray<Array>(), item.geometry[i].lods);
 
             // 3. Material
             Ref<StandardMaterial3D> mat = _get_material(item.geometry[i].color, item.geometry[i].is_transparent, item.ifc_class == "IfcSpace");

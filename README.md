@@ -114,6 +114,8 @@ Attach to `GDIFCManager.geometric_settings` to control the loader.
 | `tolerance_scalar_equality` | `1.0e-4` | Tolerance for scalar equality comparisons. |
 | `plane_refit_iterations` | `10` | Maximum iterations for the plane-refit solver. |
 | `boolean_union_threshold` | `150` | Maximum number of boolean union operations per object before the operation is skipped. |
+| `generate_lods` | `true` | Generate mesh LODs with Godot's `ImporterMesh` (the same path the glTF importer uses). LOD data is saved with the scene, so `.tscn` files get larger. |
+| `lod_normal_merge_angle` | `60.0` | Angle in degrees below which vertices with different normals may be merged while simplifying. |
 
 ---
 

@@ -156,6 +156,44 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_72040")
 theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_72040")
 text = "On"
 
+[node name="GenerateLodsLabel" type="Label" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/GridContainer" unique_id=1417730259]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Generate mesh levels of detail with Godot's ImporterMesh. Increases load time and scene size."
+mouse_filter = 1
+text = "Generate LODs"
+autowrap_mode = 2
+
+[node name="GenerateLodsCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/GridContainer" unique_id=902518364]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_72040")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_72040")
+theme_override_styles/hover = SubResource("StyleBoxFlat_72040")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_72040")
+button_pressed = true
+text = "On"
+
+[node name="LodMergeAngleLabel" type="Label" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/GridContainer" unique_id=1660043871]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Vertices whose normals differ by less than this angle may be merged while simplifying."
+mouse_filter = 1
+text = "LOD merge angle"
+autowrap_mode = 2
+
+[node name="LodMergeAngleSpinBox" type="SpinBox" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/GridContainer" unique_id=275519082]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 180.0
+step = 0.1
+value = 60.0
+suffix = "°"
+
 [node name="VBoxContainer" type="HFlowContainer" parent="MarginContainer/VBoxContainer/Config/VBoxContainer" unique_id=1779069931]
 clip_contents = true
 layout_mode = 2
@@ -227,7 +265,19 @@ unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Refresh the georeference list"
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer" unique_id=1522868594]
+[node name="Footer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1938274615]
+layout_mode = 2
+
+[node name="BuildLabel" type="Label" parent="MarginContainer/VBoxContainer/Footer" unique_id=604183927]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_override_colors/font_color = Color(1, 1, 1, 0.5)
+theme_override_font_sizes/font_size = 12
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Footer" unique_id=1522868594]
 custom_minimum_size = Vector2(100, 15)
 layout_mode = 2
 size_flags_horizontal = 8

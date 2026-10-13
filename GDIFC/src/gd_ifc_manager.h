@@ -46,6 +46,7 @@ struct PrecalculatedIFCItemGeometry {
     PackedVector3Array vertices;
     PackedVector3Array normals;
     PackedInt32Array indices;
+    Dictionary lods; // LOD size (float) -> PackedInt32Array of indices; empty when no LODs
 
     // Material Data
     Color color;

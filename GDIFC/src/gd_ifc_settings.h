@@ -28,6 +28,8 @@ private:
     double m_toleranceScalarEquality { 1.0E-04 };
     uint16_t m_planeRefitIterations { 10 };
     uint16_t m_booleanUnionThreshold { 150 };
+    bool m_generateLods { true };
+    float m_lodNormalMergeAngle { 60.0f };
 
 public:
     // Default Constructor (Uses the values defined above)
@@ -46,6 +48,8 @@ public:
     double getToleranceScalarEquality() const { return m_toleranceScalarEquality; }
     uint16_t getPlaneRefitIterations() const { return m_planeRefitIterations; }
     uint16_t getBooleanUnionThreshold() const { return m_booleanUnionThreshold; }
+    bool getGenerateLods() const { return m_generateLods; }
+    float getLodNormalMergeAngle() const { return m_lodNormalMergeAngle; }
 
     // --- Setters (Mutators) ---
     // These return a reference to *this to allow chaining (Fluent Interface)
@@ -96,6 +100,14 @@ public:
 
     void setBooleanUnionThreshold(uint16_t val) {
         m_booleanUnionThreshold = val;
+    }
+
+    void setGenerateLods(bool val) {
+        m_generateLods = val;
+    }
+
+    void setLodNormalMergeAngle(float val) {
+        m_lodNormalMergeAngle = val;
     }
 };
 
