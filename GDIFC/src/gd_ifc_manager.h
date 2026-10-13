@@ -102,6 +102,9 @@ class GDIFCManager : public Node3D {
     // The Optimized Queue
     Vector<PrecalculatedIFCItem> generation_queue;
     int current_generation_index = 0;
+    // Editor only: meshes and collision shapes whose gizmo caches are built before the model is revealed
+    Vector<Ref<Resource>> editor_cache_queue;
+    int current_editor_cache_index = 0;
     ObjectID ifc_model_node_id_;
 
     // Material Cache to reduce draw calls and allocation time

@@ -4,9 +4,15 @@
 #include <stdexcept>  // Required for std::exception
 #include <mutex>
 
+#include "godot_cpp/classes/collision_shape3d.hpp"
+#include "godot_cpp/classes/concave_polygon_shape3d.hpp"
+#include "godot_cpp/classes/engine.hpp"
 #include "godot_cpp/classes/file_access.hpp"
 #include "godot_cpp/classes/importer_mesh.hpp"
+#include "godot_cpp/classes/os.hpp"
 #include "godot_cpp/classes/scene_tree.hpp"
+#include "godot_cpp/classes/static_body3d.hpp"
+#include "godot_cpp/classes/triangle_mesh.hpp"
 
 using namespace godot;
 
@@ -216,6 +222,8 @@ Error GDIFCManager::_start_loading(bool _create_collision, const Array &_collisi
     this->should_create_collisions = _create_collision;
     this->collision_classes = _collision_classes;
     this->generation_queue.clear();
+    this->editor_cache_queue.clear();
+    this->current_editor_cache_index = 0;
     this->material_cache.clear();
     this->node_registry.clear();
     this->current_generation_index = 0;
@@ -703,6 +711,38 @@ void GDIFCManager::_thread_task() {
     this->pending_buffer = PackedByteArray();
 }
 
+// Same nodes as MeshInstance3D::create_trimesh_collision(), but built from the geometry still
+// in memory: going through the mesh reads every surface buffer back from the GPU, stalling it each time.
+static Ref<Shape3D> create_trimesh_collision_from_geometry(MeshInstance3D *node, const std::vector<PrecalculatedIFCItemGeometry> &geometry) {
+    int64_t face_point_count = 0;
+    for (const auto &item_geometry : geometry) face_point_count += item_geometry.indices.size();
+    if (face_point_count == 0) return Ref<Shape3D>();
+
+    PackedVector3Array face_points;
+    face_points.resize(face_point_count);
+    Vector3 *face_points_w = face_points.ptrw();
+    int64_t k = 0;
+    for (const auto &item_geometry : geometry) {
+        const Vector3 *vertices = item_geometry.vertices.ptr();
+        const int32_t *indices = item_geometry.indices.ptr();
+        for (int64_t i = 0; i < item_geometry.indices.size(); i++) {
+            face_points_w[k++] = vertices[indices[i]];
+        }
+    }
+
+    Ref<ConcavePolygonShape3D> shape;
+    shape.instantiate();
+    shape->set_faces(face_points);
+
+    StaticBody3D *static_body = memnew(StaticBody3D);
+    CollisionShape3D *collision_shape = memnew(CollisionShape3D);
+    collision_shape->set_shape(shape);
+    static_body->add_child(collision_shape, true);
+    static_body->set_name(String(node->get_name()) + "_col");
+    node->add_child(static_body, true);
+    return shape;
+}
+
 // ---------------------------------------------------------
 // DUMB & FAST GENERATOR
 // ---------------------------------------------------------
@@ -711,6 +751,14 @@ void GDIFCManager::_process_generation_queue() {
 
     uint64_t start_time = Time::get_singleton()->get_ticks_usec();
     uint64_t time_budget = 20000;
+    const bool prebuild_editor_caches = Engine::get_singleton()->is_editor_hint();
+
+    // In low processor mode (the editor) every frame lasts at least the sleep time anyway,
+    // which is 100 ms while the editor window is unfocused. Use most of it instead of idling.
+    OS *os = OS::get_singleton();
+    if (os->is_in_low_processor_usage_mode()) {
+        time_budget = MAX(time_budget, (uint64_t)(os->get_low_processor_usage_mode_sleep_usec() * 0.8));
+    }
 
     while (current_generation_index < generation_queue.size()) {
 
@@ -775,13 +823,16 @@ void GDIFCManager::_process_generation_queue() {
         if (mesh->get_surface_count() > 0) {
 
             element_node->set_mesh(mesh);
+            if (prebuild_editor_caches) {
+                editor_cache_queue.push_back(mesh);
+            }
 
-            if (this->should_create_collisions && !this->collision_classes.is_empty()) {
-                if (this->collision_classes.has(item.ifc_class)) {
-                    element_node->create_trimesh_collision();
+            if (this->should_create_collisions &&
+                (this->collision_classes.is_empty() || this->collision_classes.has(item.ifc_class))) {
+                Ref<Shape3D> shape = create_trimesh_collision_from_geometry(element_node, item.geometry);
+                if (prebuild_editor_caches && shape.is_valid()) {
+                    editor_cache_queue.push_back(shape);
                 }
-            } else if (this->should_create_collisions && this->collision_classes.is_empty()) {
-                element_node->create_trimesh_collision();
             }
 
         }
@@ -795,6 +846,28 @@ void GDIFCManager::_process_generation_queue() {
             return;
         }
     }
+
+    // In the editor, every owned MeshInstance3D and CollisionShape3D gets a gizmo. Its first redraw
+    // builds the mesh's TriangleMesh or the shape's debug mesh, both cached and both reading data
+    // back from the GPU with a full stall per buffer. Building them here, inside the time budget,
+    // keeps the gizmos created when the model is revealed from all stalling in that single frame.
+    // It runs after every mesh is uploaded, because stalls interleaved with the uploads cost more.
+    while (current_editor_cache_index < editor_cache_queue.size()) {
+        const Ref<Resource> &resource = editor_cache_queue[current_editor_cache_index];
+        if (Mesh *mesh = Object::cast_to<Mesh>(resource.ptr())) {
+            mesh->generate_triangle_mesh();
+        } else if (Shape3D *shape = Object::cast_to<Shape3D>(resource.ptr())) {
+            shape->get_debug_mesh();
+        }
+        current_editor_cache_index++;
+
+        uint64_t current_duration = Time::get_singleton()->get_ticks_usec() - start_time;
+        if (current_duration > time_budget) {
+            return;
+        }
+    }
+    editor_cache_queue.clear();
+    current_editor_cache_index = 0;
 
     if (current_generation_index >= generation_queue.size()) {
         invisible_staging_root->set_name("IFCModel");

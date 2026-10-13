@@ -10,15 +10,23 @@ New changes go under **Unreleased**. To cut a build, run `python tools/bump_buil
 
 ## [Unreleased]
 
+## [1.1.0-alpha]
+
+### Build 2 — 2026-10-13
+
+#### Fixed
+
+- The editor no longer freezes for a second or more just before a loaded model appears. When the model was revealed, the editor built a selection gizmo for every mesh and collision shape in that single frame, and each gizmo read its mesh back from the GPU. Those gizmo caches are now built ahead of time, spread across frames within the existing time budget. On the test models, the freeze dropped from 1.3–1.8 s to about 0.5–0.6 s, and the model is visible at about the same time as before or sooner. Most of the remaining pause is the Scene dock adding storeys with around 1,000 direct children.
+
 #### Changed
 
+- Collision shapes are built from the geometry already in memory instead of being read back from the GPU, which makes loads with collisions faster, including at runtime. The node layout is unchanged: an `<element>_col` `StaticBody3D` with a `CollisionShape3D`.
+- Loading uses more of each frame while the editor window is unfocused. The editor already waits about 100 ms per frame then, so loading in the background finishes sooner without making the editor slower.
 - Reorganized the editor dock. **Load IFC...** is at the top, and the options are in foldable **Geometry**, **Collisions** and **Placement** groups inside a scroll area. Each group remembers whether it is folded, per project.
 - The dock now follows the editor theme (light and dark presets, custom colors and editor scale). Hardcoded panel, selection and font colors were removed. The button icons come from the editor icon set, and the footer logo and build label are tinted with the theme's font color.
 - **Collision elements** are greyed out while collisions are disabled.
 - The **Elements** list in the **Collisions** group now offers every concrete `IfcBuildingElement` (IFC2X3, IFC4) and `IfcBuiltElement` (IFC4X3) subtype, 39 in all, in a fixed-height scrolling list. Selecting a type also matches its IFC4 `StandardCase` and `ElementedCase` variants, so selecting `IfcWall` also includes `IfcWallStandardCase` and `IfcWallElementedCase`.
 - The class icons (`GDIFCManager`, `IFCNode`, `IFCGeoreference`, `IFCModel`) use Godot's standard icon gray and are converted with the editor theme, so they stay visible on light themes.
-
-## [1.1.0-alpha]
 
 ### Build 1 — 2026-10-13
 
