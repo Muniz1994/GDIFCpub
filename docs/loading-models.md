@@ -71,3 +71,23 @@ ifc_manager.geometric_settings = settings
 ```
 
 Tune these values for model scale and target hardware.
+
+## Loading Relative To A Georeference
+
+When several models of one project are loaded into the same scene (architecture, structure, MEP...), each one is generated in its own local frame. To line a new model up with one that is already loaded, point `reference_georeference` at the existing model's `IFCGeoreference` node before calling `read_ifc`. The path is relative to the manager, so add the manager to the tree first.
+
+```gdscript
+var reference := $ArchManager/IFCModel/Georeference
+var ifc_manager := GDIFCManager.new()
+add_child(ifc_manager)
+ifc_manager.reference_georeference = ifc_manager.get_path_to(reference)
+ifc_manager.read_ifc("res://models/structure.ifc")
+```
+
+When loading finishes, the new `IFCModel` gets a transform that maps its map conversion (eastings, northings, height, rotation and scale) onto the reference's map conversion. It also accounts for the `coordinate_to_origin` offset of both models. The math is done in double precision, so large map coordinates don't lose accuracy. Moving the reference model before loading moves the result with it.
+
+If the new model has no georeferencing data (IFC2x3, or IFC4 without `IfcMapConversion`), it is placed assuming it shares the reference model's engineering coordinate system, and a warning is printed.
+
+In the editor dock, pick the reference in **Config → Reference georeference**. The list shows every `IFCGeoreference` in the edited scene and refreshes each time it opens.
+
+The `coordinate_to_origin` offset is stored on each `IFCGeoreference` node (`coordination_offset_x/y/z`). Models loaded with an older GDIFC version don't have it. If such a model was loaded with `coordinate_to_origin` enabled, reload it before using it as a reference.

@@ -2,6 +2,7 @@
 #include <algorithm> // Required for std::sort
 #include <functional> // Required for lambdas
 #include <stdexcept>  // Required for std::exception
+#include <mutex>
 
 #include "godot_cpp/classes/file_access.hpp"
 #include "godot_cpp/classes/scene_tree.hpp"
@@ -20,6 +21,11 @@ void GDIFCManager::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_ifc_file_path","path"), &GDIFCManager::set_ifc_file_path);
     ADD_PROPERTY(PropertyInfo(Variant::STRING, "ifc_file_path", PROPERTY_HINT_GLOBAL_FILE, "*.ifc"),
         "set_ifc_file_path", "get_ifc_file_path");
+
+    ClassDB::bind_method(D_METHOD("get_reference_georeference"), &GDIFCManager::get_reference_georeference);
+    ClassDB::bind_method(D_METHOD("set_reference_georeference","path"), &GDIFCManager::set_reference_georeference);
+    ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "reference_georeference", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "IFCGeoreference"),
+        "set_reference_georeference", "get_reference_georeference");
 
     ClassDB::bind_method(D_METHOD("get_ifc_model"), &GDIFCManager::get_ifc_model);
     ClassDB::bind_method(D_METHOD("get_node_by_global_id","global_id"), &GDIFCManager::get_node_by_global_id);
@@ -281,19 +287,6 @@ void GDIFCManager::_process(double delta) {
 // BACKGROUND THREAD
 // ---------------------------------------------------------
 
-// Convert a GLM column-major 4×4 matrix to a Godot Transform3D.
-// GLM column layout: m[col][row]; columns 0-2 are the axes, column 3 is translation.
-static inline godot::Transform3D glm_to_godot_transform(const glm::dmat4& m) {
-    return godot::Transform3D(
-        godot::Basis(
-            godot::Vector3((float)m[0].x, (float)m[0].y, (float)m[0].z),  // X axis
-            godot::Vector3((float)m[1].x, (float)m[1].y, (float)m[1].z),  // Y axis
-            godot::Vector3((float)m[2].x, (float)m[2].y, (float)m[2].z)   // Z axis
-        ),
-        godot::Vector3((float)m[3].x, (float)m[3].y, (float)m[3].z)       // origin
-    );
-}
-
 // Fill attributes, property sets and quantity sets for one entity.
 template <typename schema>
 static void fill_item_metadata(IfcParse::IfcFile& file, PrecalculatedIFCItem& item) {
@@ -352,7 +345,12 @@ static void fill_item_geometry(webifc::geometry::IfcGeometryProcessor& geometry_
 // Runs on a WorkerThreadPool thread. It must not touch current_state or any member the
 // main thread reads during loading; results go into pending_* members and generation_queue,
 // which _process() commits after the task completes. Failures set thread_failed_.
+// web-ifc keeps process-wide state (e.g. a static stack in its BVH ray test,
+// global tolerances), so only one full load may run its geometry at a time.
+static std::mutex web_ifc_mutex;
+
 void GDIFCManager::_thread_task() {
+    std::lock_guard<std::mutex> web_ifc_lock(web_ifc_mutex);
 
     const char* buf_ptr  = reinterpret_cast<const char*>(this->pending_buffer.ptr());
     int         buf_size = static_cast<int>(this->pending_buffer.size());
@@ -630,6 +628,10 @@ void GDIFCManager::_thread_task() {
         default: this->pending_georreference = {}; break;
     }
 
+    // Offset web-ifc subtracted from every vertex (coordinate_to_origin), needed
+    // to place this model relative to another one even without georef data
+    this->pending_georreference.coordination_offset = glm::dvec3(geometry_loader.GetCoordinationMatrix()[3]);
+
     // Hand results to the main thread
     this->web_ifc_manager = std::move(temp_ifc_manager);
     this->pending_ifc_parse_file = std::move(temp_file);
@@ -746,6 +748,23 @@ void GDIFCManager::_process_generation_queue() {
                 invisible_staging_root->add_child(georef_node);
             } else {
                 WARN_PRINT("IFC4+ file loaded without georeferencing data (IfcProjectedCRS/IfcMapConversion not found).");
+            }
+        }
+
+        // Place the model relative to the chosen reference georeference, if any
+        if (!reference_georeference_.is_empty()) {
+            IFCGeoreference* reference = Object::cast_to<IFCGeoreference>(get_node_or_null(reference_georeference_));
+            if (reference && reference->is_inside_tree()) {
+                if (!georreference.valid) {
+                    WARN_PRINT("GDIFCManager: the loaded model has no georeferencing data. "
+                        "Placing it assuming it shares the reference model's engineering coordinate system.");
+                }
+                glm::dmat4 relative = georef_relative_matrix(reference->get_data(), georreference);
+                invisible_staging_root->set_transform(
+                    get_global_transform().affine_inverse() * reference->get_global_transform() * glm_to_godot_transform(relative));
+            } else {
+                WARN_PRINT(String("GDIFCManager: reference_georeference '") + String(reference_georeference_)
+                    + "' does not point to an IFCGeoreference node. The model is placed at the origin.");
             }
         }
 

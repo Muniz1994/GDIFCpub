@@ -203,6 +203,30 @@ size_flags_horizontal = 3
 text = "Geometric settings"
 autowrap_mode = 2
 
+[node name="ReferenceGeoref" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Config/VBoxContainer" unique_id=1603927451]
+layout_mode = 2
+
+[node name="ReferenceGeorefLabel" type="Label" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/ReferenceGeoref" unique_id=873409126]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Place the loaded model relative to this georeference node. None loads it at the origin."
+mouse_filter = 1
+text = "Reference georeference"
+autowrap_mode = 2
+
+[node name="GeorefOption" type="OptionButton" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/ReferenceGeoref" unique_id=1170264383]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+clip_text = true
+fit_to_longest_item = false
+
+[node name="GeorefRefresh" type="Button" parent="MarginContainer/VBoxContainer/Config/VBoxContainer/ReferenceGeoref" unique_id=391847502]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Refresh the georeference list"
+
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer" unique_id=1522868594]
 custom_minimum_size = Vector2(100, 15)
 layout_mode = 2
@@ -210,5 +234,3 @@ size_flags_horizontal = 8
 texture = ExtResource("3_72040")
 expand_mode = 2
 stretch_mode = 5
-
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Main/VBoxContainer/HBoxContainer/LoadIFCButton" to="." method="_on_button_pressed"]

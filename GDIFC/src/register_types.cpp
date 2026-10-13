@@ -6,6 +6,8 @@
 #include "gd_ifc_entity_base.h"
 #include "gd_ifc_model.h"
 
+#include <IfcSchema.h>
+
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/godot.hpp>
@@ -31,6 +33,12 @@ void initialize_example_module(ModuleInitializationLevel p_level)
     ClassDB::register_class<IFCNode>();
     ClassDB::register_class<GDIFCLoaderSettings>();
 
+    // IfcParse builds its schemas lazily without a lock, so two IFC files parsed
+    // on worker threads at once (e.g. a scene cold-reloading several models)
+    // would race. schema_by_name() populates every compiled schema up front.
+    try {
+        IfcParse::schema_by_name("IFC4");
+    } catch (...) {}
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level)

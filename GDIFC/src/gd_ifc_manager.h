@@ -118,6 +118,9 @@ class GDIFCManager : public Node3D {
     // Persistent IFC file path — serialized so cold-reload can re-parse
     String ifc_file_path_;
 
+    // Optional IFCGeoreference the loaded model is placed relative to
+    NodePath reference_georeference_;
+
     // Set by _metadata_thread_task if the IFC file is missing
     bool relink_failed_ = false;
 
@@ -155,6 +158,9 @@ class GDIFCManager : public Node3D {
 
     String get_ifc_file_path() const { return ifc_file_path_; }
     void set_ifc_file_path(const String &path) { ifc_file_path_ = path; }
+
+    NodePath get_reference_georeference() const { return reference_georeference_; }
+    void set_reference_georeference(const NodePath &path) { reference_georeference_ = path; }
 
     /// Return the IFCModel root node (available after loading completes).
     IFCModel* get_ifc_model();

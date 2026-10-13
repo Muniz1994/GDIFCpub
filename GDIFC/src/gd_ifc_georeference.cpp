@@ -3,6 +3,8 @@
 
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/variant.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <cmath>
 
 using namespace godot;
 
@@ -18,8 +20,8 @@ void IFCGeoreference::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_x_axis_abscissa", "v"),  &IFCGeoreference::set_x_axis_abscissa);
     ClassDB::bind_method(D_METHOD("get_x_axis_ordinate"),       &IFCGeoreference::get_x_axis_ordinate);
     ClassDB::bind_method(D_METHOD("set_x_axis_ordinate", "v"),  &IFCGeoreference::set_x_axis_ordinate);
-    ClassDB::bind_method(D_METHOD("get_scale"),                 &IFCGeoreference::get_scale);
-    ClassDB::bind_method(D_METHOD("set_scale", "v"),            &IFCGeoreference::set_scale);
+    ClassDB::bind_method(D_METHOD("get_map_scale"),             &IFCGeoreference::get_map_scale);
+    ClassDB::bind_method(D_METHOD("set_map_scale", "v"),        &IFCGeoreference::set_map_scale);
 
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "eastings"),
         "set_eastings", "get_eastings");
@@ -31,8 +33,8 @@ void IFCGeoreference::_bind_methods() {
         "set_x_axis_abscissa", "get_x_axis_abscissa");
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "x_axis_ordinate"),
         "set_x_axis_ordinate", "get_x_axis_ordinate");
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "scale"),
-        "set_scale", "get_scale");
+    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "map_scale"),
+        "set_map_scale", "get_map_scale");
 
     // ── ProjectedCRS ─────────────────────────────────────────────────────
     ClassDB::bind_method(D_METHOD("get_crs_name"),                  &IFCGeoreference::get_crs_name);
@@ -52,6 +54,31 @@ void IFCGeoreference::_bind_methods() {
         "set_geodetic_datum", "get_geodetic_datum");
     ADD_PROPERTY(PropertyInfo(Variant::STRING, "vertical_datum"),
         "set_vertical_datum", "get_vertical_datum");
+
+    // ── Coordination offset ──────────────────────────────────────────────
+    ClassDB::bind_method(D_METHOD("get_coordination_offset_x"),      &IFCGeoreference::get_coordination_offset_x);
+    ClassDB::bind_method(D_METHOD("set_coordination_offset_x", "v"), &IFCGeoreference::set_coordination_offset_x);
+    ClassDB::bind_method(D_METHOD("get_coordination_offset_y"),      &IFCGeoreference::get_coordination_offset_y);
+    ClassDB::bind_method(D_METHOD("set_coordination_offset_y", "v"), &IFCGeoreference::set_coordination_offset_y);
+    ClassDB::bind_method(D_METHOD("get_coordination_offset_z"),      &IFCGeoreference::get_coordination_offset_z);
+    ClassDB::bind_method(D_METHOD("set_coordination_offset_z", "v"), &IFCGeoreference::set_coordination_offset_z);
+
+    ADD_GROUP("Coordination", "coordination_offset_");
+    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "coordination_offset_x"),
+        "set_coordination_offset_x", "get_coordination_offset_x");
+    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "coordination_offset_y"),
+        "set_coordination_offset_y", "get_coordination_offset_y");
+    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "coordination_offset_z"),
+        "set_coordination_offset_z", "get_coordination_offset_z");
+}
+
+// Scenes saved before the rename stored the map scale as a float "scale"
+bool IFCGeoreference::_set(const StringName& p_name, const Variant& p_value) {
+    if (p_name == StringName("scale") && p_value.get_type() == Variant::FLOAT) {
+        scale_ = p_value;
+        return true;
+    }
+    return false;
 }
 
 void IFCGeoreference::init(const GeorreferenceData& data) {
@@ -66,4 +93,53 @@ void IFCGeoreference::init(const GeorreferenceData& data) {
     crs_description_ = data.projected_crs.Description;
     geodetic_datum_  = data.projected_crs.GeodeticDatum;
     vertical_datum_  = data.projected_crs.VerticalDatum;
+
+    coordination_offset_ = data.coordination_offset;
+}
+
+GeorreferenceData IFCGeoreference::get_data() const {
+    MapConversion mc;
+    mc.Eastings         = eastings_;
+    mc.Northings        = northings_;
+    mc.OrthogonalHeight = orthogonal_height_;
+    mc.XAxisAbscissa    = x_axis_abscissa_;
+    mc.XAxisOrdinate    = x_axis_ordinate_;
+    mc.Scale            = scale_;
+
+    GeorreferenceData data(mc, ProjectedCRS{crs_name_, crs_description_, geodetic_datum_, vertical_datum_});
+    data.coordination_offset = coordination_offset_;
+    return data;
+}
+
+// ── Placement helpers ─────────────────────────────────────────────────────
+
+glm::dmat4 godot::georef_map_matrix(const MapConversion& mc) {
+    // Eastings → +X, Northings → −Z, height → +Y
+    const glm::dvec3 origin(mc.Eastings, mc.OrthogonalHeight, -mc.Northings);
+    // The x-axis direction is counter-clockwise from east around IFC +Z,
+    // which is a positive rotation around Godot +Y
+    const double angle = std::atan2(mc.XAxisOrdinate, mc.XAxisAbscissa);
+    const double scale = mc.Scale > 0.0 ? mc.Scale : 1.0;
+
+    glm::dmat4 m = glm::translate(glm::dmat4(1.0), origin);
+    m = glm::rotate(m, angle, glm::dvec3(0.0, 1.0, 0.0));
+    m = glm::scale(m, glm::dvec3(scale));
+    return m;
+}
+
+glm::dmat4 godot::georef_relative_matrix(const GeorreferenceData& reference, const GeorreferenceData& target) {
+    // Model-local = C * engineering, so engineering = C⁻¹ * model-local
+    const glm::dmat4 ref_coord      = glm::translate(glm::dmat4(1.0), reference.coordination_offset);
+    const glm::dmat4 target_uncoord = glm::translate(glm::dmat4(1.0), -target.coordination_offset);
+
+    if (!reference.valid || !target.valid) {
+        // No map conversion to go through: assume both share one engineering frame
+        return ref_coord * target_uncoord;
+    }
+
+    // Both map matrices are inverted/multiplied in double, so the large
+    // eastings/northings cancel before anything is cast to float
+    const glm::dmat4 eng_to_eng = glm::inverse(georef_map_matrix(reference.map_conversion))
+                                * georef_map_matrix(target.map_conversion);
+    return ref_coord * eng_to_eng * target_uncoord;
 }
