@@ -44,20 +44,27 @@ This reduces memory pressure and load time compared to colliders for every objec
 
 ## Accessing Generated Nodes
 
-After load completion, `IFCNode` children are created under the manager.
+Loading happens in two steps, so the model appears as soon as its geometry is ready:
+
+1. `ifc_read`: the `IFCNode` tree is in the scene under `ifc_manager/IFCModel`, with geometry, `ifc_class` and `global_id`.
+2. `ifc_objects_ready`: `attributes`, `properties`, `quantities` and `ifc_object` are filled in, and georeferencing is applied.
+
+Wait for `ifc_objects_ready` before reading property data:
 
 ```gdscript
-for child in ifc_manager.get_children():
-    if child is IFCNode:
-        print(child.name, " class=", child.ifc_class)
+ifc_manager.ifc_objects_ready.connect(func():
+    for node in ifc_manager.find_children("*", "IFCNode", true, false):
+        print(node.name, " class=", node.ifc_class, " psets=", node.properties.keys()))
+ifc_manager.read_ifc("res://models/building.ifc", false, [])
 ```
 
 Each `IFCNode` provides:
 
 - `ifc_class`: IFC class name
-- `attributes`: base IFC attributes
-- `properties`: property sets
-- `quantities`: quantity sets
+- `global_id`: IFC GlobalId
+- `attributes`: base IFC attributes (after `ifc_objects_ready`)
+- `properties`: property sets (after `ifc_objects_ready`)
+- `quantities`: quantity sets (after `ifc_objects_ready`)
 
 ## Geometry Settings
 

@@ -77,8 +77,8 @@ The entry point for all IFC loading.
 | `read_ifc(path, create_collision, collision_classes)` | `Error` | Load an IFC file from disk. `path` is a Godot resource path or absolute path. `collision_classes` is an `Array[String]` of IFC class names to generate collision shapes for (pass `[]` to disable). |
 | `read_ifc_base64(data, create_collision, collision_classes)` | `Error` | Load an IFC file from a base-64 encoded string. Same parameters as `read_ifc`. |
 | `geometric_settings` | `GDIFCLoaderSettings` | Resource controlling geometry tessellation, memory limits, and tolerances. Assign before calling `read_ifc`. |
-| `ifc_read` | signal | Emitted when a load finishes and the node tree has been added. |
-| `ifc_objects_ready` | signal | Emitted when `ifc_object` references are available (after a load or a cold reload of a saved scene). |
+| `ifc_read` | signal | Emitted when the node tree with its geometry has been added. Attributes, property sets, quantities and `ifc_object` are not filled yet. |
+| `ifc_objects_ready` | signal | Emitted after `ifc_read`, when attributes, property sets, quantities, `ifc_object` references and georeferencing are on the nodes (after a load or a cold reload of a saved scene). |
 | `ifc_load_failed` | signal | Emitted when parsing fails. The manager can load again afterwards. |
 
 ---

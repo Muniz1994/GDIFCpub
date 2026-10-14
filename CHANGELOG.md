@@ -15,6 +15,16 @@ New changes go under **Unreleased**. To cut a build, run `python tools/bump_buil
 - A progress bar in the editor dock while a file loads. It shows the current stage (Parsing, Processing geometry, Creating nodes, Preparing editor, Adding to scene) and ends with "Loaded <file> in X s". A failed load shows the failure in the editor's error color, and no longer leaves an empty `GDIFCManager` in the scene. The **Load IFC...** button is disabled while a load runs.
 - `GDIFCManager.load_progress_changed(progress, stage)` signal, with `get_load_progress()` and `get_load_stage()`, so your own UI can follow a load. Stages are weighted by their measured share of the load time, and the long parsing step is estimated from the file size, so the progress moves roughly in step with time.
 
+### Changed
+
+- **Models appear much sooner.** The model is now built from web-ifc alone and shown first. Attributes, property sets, quantities, typed `ifc_object` references and georeferencing come from IfcOpenShell's parser, which used to run first and took most of the load time. It now runs in the background alongside the geometry, and its results are applied afterwards. Time until the model is shown, outside the editor: dental_clinic 1.4 → 0.45 s, schependomlaan 3.8 → 0.7 s, ARK NordicLCA 11.4 → 4.4 s. In the editor: dental_clinic 2.5 → 1.6 s, schependomlaan 5.3 → 2.4 s.
+  - **Behaviour change:** `ifc_read` now fires before that data is available. Wait for `ifc_objects_ready` before reading `attributes`, `properties`, `quantities` or `ifc_object`. A model placed relative to `reference_georeference` moves into place at `ifc_objects_ready`, and the `Georeference` node is added then too.
+  - Files whose schema IfcOpenShell can't read (for example IFC4X3_RC2) used to fail to load. They now load with geometry and without properties, with an error in the Output panel.
+  - `IfcProject` nodes now get their GlobalId.
+- LOD generation runs on all CPU cores, as its own stage after the geometry. On ARK NordicLCA it went from 4.6 s to about 1 s.
+- The editor dock shows "reading properties…" until the properties arrive, and keeps **Load IFC...** disabled until then.
+- The generated geometry is released from memory once the nodes are created.
+
 ## [1.1.0-alpha]
 
 ### Build 2 — 2026-10-13

@@ -84,6 +84,7 @@ var geom_settings_picker = EditorResourcePicker.new()
 # File name of the current or last load, when it started, and whether it failed
 var load_file_name := ""
 var load_start_msec := 0
+var model_shown_seconds := 0.0
 var load_failed := false
 
 func _ready():
@@ -280,7 +281,8 @@ func _on_file_selected(path: String):
 			push_warning("GDIFC: reference georeference '%s' no longer exists. Loading at the origin." % georef_path)
 	
 	ifc_manager.load_progress_changed.connect(_on_load_progress)
-	ifc_manager.ifc_read.connect(_on_load_finished)
+	ifc_manager.ifc_read.connect(_on_model_shown)
+	ifc_manager.ifc_objects_ready.connect(_on_load_finished)
 	ifc_manager.ifc_load_failed.connect(_on_load_failed)
 
 	# 3. Generate the geometry (This creates hidden children)
@@ -294,10 +296,19 @@ func _on_load_progress(progress: float, stage: String):
 	load_progress_bar.value = progress
 	_show_load_status("%s — %s" % [stage, load_file_name], false)
 
+# The model is in the scene; properties and typed objects follow with ifc_objects_ready
+func _on_model_shown():
+	model_shown_seconds = _load_seconds()
+	load_progress_bar.hide()
+	_show_load_status("Loaded %s in %.1f s · reading properties…" % [load_file_name, model_shown_seconds], false)
+
 func _on_load_finished():
 	button.disabled = false
 	load_progress_bar.hide()
-	_show_load_status("Loaded %s in %.1f s" % [load_file_name, (Time.get_ticks_msec() - load_start_msec) / 1000.0], false)
+	_show_load_status("Loaded %s in %.1f s · properties %.1f s" % [load_file_name, model_shown_seconds, _load_seconds()], false)
+
+func _load_seconds() -> float:
+	return (Time.get_ticks_msec() - load_start_msec) / 1000.0
 
 func _on_load_failed():
 	button.disabled = false

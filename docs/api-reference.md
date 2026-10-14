@@ -16,7 +16,7 @@ Main entry point for IFC loading and model access.
 - `get_load_progress() -> float`
   - Progress of the current or last load, from `0.0` to `1.0`. It never decreases during a load.
 - `get_load_stage() -> String`
-  - Current load stage: `"Parsing"`, `"Processing geometry"`, `"Creating nodes"`, `"Preparing editor"` (editor only), `"Adding to scene"`, `"Done"` or `"Failed"`. Empty before the first load.
+  - Current load stage: `"Parsing"`, `"Processing geometry"`, `"Generating LODs"` (when enabled), `"Creating nodes"`, `"Preparing editor"` (editor only), `"Adding to scene"`, `"Done"` or `"Failed"`. Empty before the first load. Progress reaches `1.0` at `ifc_read`; property sets load after that.
 
 ### Signals
 
@@ -24,11 +24,12 @@ Main entry point for IFC loading and model access.
   - Emitted while loading, when the stage changes or progress moves by at least 0.5%. `progress` and `stage` match the two getters above.
   - The stages are weighted by their typical share of the load time, so the bar moves roughly in step with time. The parsing stage is estimated from the file size.
 - `ifc_read`
-  - The model's nodes are in the scene.
+  - The model's nodes are in the scene, with their geometry, `ifc_class` and `global_id`. Attributes, property sets, quantities and `ifc_object` are not filled yet.
 - `ifc_objects_ready`
-  - Typed IFC objects are available on the nodes. Also emitted after a saved scene is reopened and relinked.
+  - Attributes, property sets, quantities and typed `ifc_object` references are on the nodes, and the `Georeference` node and placement relative to `reference_georeference` are applied. Emitted after `ifc_read`, since this data is read by a second parser in the background. Also emitted after a saved scene is reopened and relinked.
+  - If that parser can't read the file (for example an unsupported schema such as IFC4X3_RC2), it is still emitted, with an error in the Output panel; the model keeps its geometry without properties.
 - `ifc_load_failed`
-  - The file couldn't be parsed or its schema isn't supported. Details are in the Output panel.
+  - The file couldn't be read by the geometry engine. Details are in the Output panel.
 
 ```gdscript
 ifc_manager.load_progress_changed.connect(func(progress: float, stage: String):

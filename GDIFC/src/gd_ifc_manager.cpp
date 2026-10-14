@@ -53,8 +53,13 @@ GDIFCManager::GDIFCManager() {
 }
 
 GDIFCManager::~GDIFCManager() {
-    // A running task writes into this object, so it must finish before the members go away.
+    // Running tasks write into this object, so they must finish before the members go away.
     _wait_for_task();
+    _wait_for_metadata_task();
+    if (lod_group_id != -1) {
+        WorkerThreadPool::get_singleton()->wait_for_group_task_completion(lod_group_id);
+        lod_group_id = -1;
+    }
 
     // Freed mid-generation: the staging root and its children are not in the tree yet.
     if (invisible_staging_root) {
@@ -69,6 +74,29 @@ void GDIFCManager::_wait_for_task() {
     task_id = -1;
 }
 
+void GDIFCManager::_wait_for_metadata_task() {
+    if (metadata_task_id == -1) return;
+    WorkerThreadPool::get_singleton()->wait_for_task_completion(metadata_task_id);
+    metadata_task_id = -1;
+}
+
+bool GDIFCManager::_is_loading() const {
+    return current_state == LOADING_THREAD || current_state == GENERATING_LODS || current_state == GENERATING_NODES
+        || current_state == RELINKING || (metadata_state != META_IDLE && metadata_state != META_DONE);
+}
+
+// Per-frame time budget for main-thread work. In low processor mode (the editor) every frame
+// lasts at least the sleep time anyway, which is 100 ms while the editor window is unfocused,
+// so most of it is used instead of idling.
+static uint64_t get_frame_time_budget() {
+    uint64_t time_budget = 20000;
+    OS *os = OS::get_singleton();
+    if (os->is_in_low_processor_usage_mode()) {
+        time_budget = MAX(time_budget, (uint64_t)(os->get_low_processor_usage_mode_sleep_usec() * 0.8));
+    }
+    return time_budget;
+}
+
 // ---------------------------------------------------------
 // LOAD PROGRESS
 // ---------------------------------------------------------
@@ -78,38 +106,42 @@ struct StageRange {
     float end;
 };
 
-// Share of the whole load each stage covers, from stage durations measured in the editor.
-// The reveal range includes the editor's own work after the reveal, when nothing is redrawn.
-// Outside the editor there are no gizmo caches and the reveal is short.
+// Share of the time until the model is shown that each stage covers, from stage durations
+// measured in the editor. The reveal range includes the editor's own work after the reveal,
+// when nothing is redrawn. Outside the editor there are no gizmo caches and the reveal is short.
+// Property sets and typed objects load after the reveal and are not part of the progress.
 static StageRange get_stage_range(int stage, bool in_editor) {
     if (in_editor) {
         switch (stage) {
-            case GDIFCManager::STAGE_PARSING: return {0.0f, 0.38f};
-            case GDIFCManager::STAGE_GEOMETRY: return {0.38f, 0.53f};
-            case GDIFCManager::STAGE_NODES: return {0.53f, 0.58f};
-            case GDIFCManager::STAGE_EDITOR_CACHES: return {0.58f, 0.86f};
-            case GDIFCManager::STAGE_REVEAL: return {0.86f, 1.0f};
+            case GDIFCManager::STAGE_PARSING: return {0.0f, 0.06f};
+            case GDIFCManager::STAGE_GEOMETRY: return {0.06f, 0.23f};
+            case GDIFCManager::STAGE_LODS: return {0.23f, 0.28f};
+            case GDIFCManager::STAGE_NODES: return {0.28f, 0.36f};
+            case GDIFCManager::STAGE_EDITOR_CACHES: return {0.36f, 0.79f};
+            case GDIFCManager::STAGE_REVEAL: return {0.79f, 1.0f};
             case GDIFCManager::STAGE_DONE: return {1.0f, 1.0f};
             default: return {0.0f, 0.0f};
         }
     }
     switch (stage) {
-        case GDIFCManager::STAGE_PARSING: return {0.0f, 0.65f};
-        case GDIFCManager::STAGE_GEOMETRY: return {0.65f, 0.9f};
-        case GDIFCManager::STAGE_NODES: return {0.9f, 0.99f};
-        case GDIFCManager::STAGE_REVEAL: return {0.99f, 1.0f};
+        case GDIFCManager::STAGE_PARSING: return {0.0f, 0.19f};
+        case GDIFCManager::STAGE_GEOMETRY: return {0.19f, 0.68f};
+        case GDIFCManager::STAGE_LODS: return {0.68f, 0.79f};
+        case GDIFCManager::STAGE_NODES: return {0.79f, 0.98f};
+        case GDIFCManager::STAGE_REVEAL: return {0.98f, 1.0f};
         case GDIFCManager::STAGE_DONE: return {1.0f, 1.0f};
         default: return {0.0f, 0.0f};
     }
 }
 
-// IfcParse's parse runs at roughly 20 MB/s (measured on two models), in bytes per microsecond
-static constexpr double PARSE_BYTES_PER_USEC = 20.0;
+// web-ifc's parse runs at roughly 220 MB/s (measured on three models), in bytes per microsecond
+static constexpr double PARSE_BYTES_PER_USEC = 220.0;
 
 String GDIFCManager::get_load_stage() const {
     switch (reported_stage_) {
         case STAGE_PARSING: return "Parsing";
         case STAGE_GEOMETRY: return "Processing geometry";
+        case STAGE_LODS: return "Generating LODs";
         case STAGE_NODES: return "Creating nodes";
         case STAGE_EDITOR_CACHES: return "Preparing editor";
         case STAGE_REVEAL: return "Adding to scene";
@@ -133,18 +165,22 @@ void GDIFCManager::_update_load_progress() {
     float fraction = 0.0f;
     switch (stage) {
         case STAGE_PARSING: {
-            // web-ifc's read is quick. IfcParse and the geometry processor setup then run as one
-            // opaque stretch, estimated from the file size and capped so it never looks finished.
+            // web-ifc's read is one opaque call, estimated from the file size and capped so it
+            // never looks finished. Setting up the geometry processor after it is quick.
             const uint32_t done = progress_done_.load();
-            if (done >= 3) {
+            const uint32_t total = progress_total_.load();
+            if (total > 0 && done >= total) {
                 fraction = 1.0f;
-            } else if (done >= 1) {
+            } else if (total > 0 && done >= 1) {
+                fraction = 0.95f;
+            } else if (total > 0) {
                 const double expected = MAX(1.0, (double)parse_bytes_ / PARSE_BYTES_PER_USEC);
                 const double elapsed = (double)(Time::get_singleton()->get_ticks_usec() - parse_step_start_usec_.load());
-                fraction = 0.1f + 0.9f * (float)MIN(0.95, elapsed / expected);
+                fraction = 0.9f * (float)MIN(0.95, elapsed / expected);
             }
         } break;
-        case STAGE_GEOMETRY: {
+        case STAGE_GEOMETRY:
+        case STAGE_LODS: {
             const uint32_t total = progress_total_.load();
             fraction = total > 0 ? (float)MIN(progress_done_.load(), total) / (float)total : 0.0f;
         } break;
@@ -283,8 +319,7 @@ void GDIFCManager::_relink_ifc_objects() {
 
 Error GDIFCManager::read_ifc(const String &_path, bool _create_collision, const Array &_collision_classes) {
 
-    ERR_FAIL_COND_V_MSG(current_state == LOADING_THREAD || current_state == GENERATING_NODES || current_state == RELINKING,
-                        ERR_BUSY, "Already loading!");
+    ERR_FAIL_COND_V_MSG(_is_loading(), ERR_BUSY, "Already loading!");
 
     UtilityFunctions::print_rich("[color=blue]Started loading IFC");
 
@@ -309,8 +344,7 @@ Error GDIFCManager::read_ifc(const String &_path, bool _create_collision, const 
 
 Error GDIFCManager::read_ifc_base64(const String &_base64_data, bool _create_collision, const Array &_collision_classes) {
 
-    ERR_FAIL_COND_V_MSG(current_state == LOADING_THREAD || current_state == GENERATING_NODES || current_state == RELINKING,
-                        ERR_BUSY, "Already loading!");
+    ERR_FAIL_COND_V_MSG(_is_loading(), ERR_BUSY, "Already loading!");
     ERR_FAIL_COND_V_MSG(_base64_data.is_empty(), Error::FAILED, "Base64 data is empty.");
 
     UtilityFunctions::print_rich("[color=blue]Started loading IFC from base64");
@@ -342,14 +376,30 @@ Error GDIFCManager::_start_loading(bool _create_collision, const Array &_collisi
     this->relink_failed_ = false;
     this->current_state = LOADING_THREAD;
 
-    // Parsing has three steps: web-ifc, IfcParse, then the geometry processor
+    // Snapshot LOD options once so edits to the settings resource mid-load aren't picked up
+    this->lod_enabled_ = geometric_settings.is_valid() && geometric_settings->getGenerateLods();
+    this->lod_merge_angle_ = geometric_settings.is_valid() ? geometric_settings->getLodNormalMergeAngle() : 60.0f;
+
+    // Parsing has two steps: web-ifc's read, then the geometry processor
     this->parse_bytes_ = this->pending_buffer.size();
     this->load_progress_ = 0.0f;
     this->reported_stage_ = STAGE_IDLE;
-    _set_worker_progress(STAGE_PARSING, 3);
+    this->parse_step_start_usec_.store(Time::get_singleton()->get_ticks_usec());
+    _set_worker_progress(STAGE_PARSING, 2);
 
-    // Start Thread
+    // IfcParse gets its own reference to the file bytes and parses them alongside web-ifc
+    this->metadata_buffer_ = this->pending_buffer;
+    this->metadata_file_.reset();
+    this->metadata_schema_index_ = -1;
+    this->metadata_ids_.clear();
+    this->metadata_results_.clear();
+    this->metadata_apply_index_ = 0;
+    this->metadata_georreference_ = GeorreferenceData();
+    this->metadata_state = META_PARSING;
+
+    // Start Threads
     task_id = WorkerThreadPool::get_singleton()->add_task(callable_mp(this, &GDIFCManager::_thread_task), true);
+    metadata_task_id = WorkerThreadPool::get_singleton()->add_task(callable_mp(this, &GDIFCManager::_metadata_parse_task), true);
     set_process(true);
     _update_load_progress();
     return Error::OK;
@@ -365,45 +415,65 @@ void GDIFCManager::_process(double delta) {
             _wait_for_task();
 
             if (thread_failed_) {
-                // The task returned early and left its partial results behind
+                // The task returned early and left its partial results behind.
+                // ifc_load_failed is emitted once the metadata task has stopped too.
                 pending_ifc_parse_file.reset();
                 generation_queue.clear();
                 pending_buffer = PackedByteArray();
                 current_state = FAILED;
                 load_stage_.store(STAGE_FAILED);
                 _update_load_progress();
-                emit_signal("ifc_load_failed");
-                set_process(false);
-                return;
-            }
-
-            if (pending_ifc_parse_file) {
-                ifc_parse_file = std::move(pending_ifc_parse_file);
-            }
-
-            // If we're doing a metadata-only reload, skip node generation
-            if (relink_failed_) {
-                // File was missing — warn and finish
-                WARN_PRINT(String("GDIFCManager: IFC file not found at '") + ifc_file_path_
-                    + "'. The model scene is intact but ifc_object properties are unavailable. "
-                    + "Call read_ifc() with a valid path to restore them.");
-                current_state = DONE;
-                load_stage_.store(STAGE_DONE);
-                _update_load_progress();
-                emit_signal("ifc_objects_ready");
-                set_process(false);
-            } else if (!generation_queue.is_empty()) {
-                // Fresh load path — create staging root and generate nodes
+            } else if (metadata_state == META_IDLE) {
+                // Cold reload: metadata only, no node generation
+                if (pending_ifc_parse_file) {
+                    ifc_parse_file = std::move(pending_ifc_parse_file);
+                }
+                if (relink_failed_) {
+                    // File was missing — warn and finish
+                    WARN_PRINT(String("GDIFCManager: IFC file not found at '") + ifc_file_path_
+                        + "'. The model scene is intact but ifc_object properties are unavailable. "
+                        + "Call read_ifc() with a valid path to restore them.");
+                    current_state = DONE;
+                    load_stage_.store(STAGE_DONE);
+                    _update_load_progress();
+                    emit_signal("ifc_objects_ready");
+                } else {
+                    current_state = RELINKING;
+                }
+            } else {
+                // Fresh load — create the staging root, then LODs (if enabled) and nodes
                 georreference = pending_georreference;
+                metadata_ids_.clear();
+                metadata_ids_.reserve(generation_queue.size());
+                for (int i = 0; i < generation_queue.size(); i++) {
+                    metadata_ids_.push_back(generation_queue[i].express_id);
+                }
+
                 invisible_staging_root = memnew(IFCModel);
                 invisible_staging_root->set_name("IFC_Staging_Area");
                 ifc_model_node_id_ = invisible_staging_root->get_instance_id();
-                current_state = GENERATING_NODES;
-                load_stage_.store(STAGE_NODES);
-            } else {
-                // Metadata-only reload — move to relinking
-                current_state = RELINKING;
+
+                if (lod_enabled_ && !generation_queue.is_empty()) {
+                    // Each item is independent, so LODs are generated on every core. The queue
+                    // isn't touched on the main thread until the group completes.
+                    lod_items_ = generation_queue.ptrw();
+                    _set_worker_progress(STAGE_LODS, generation_queue.size());
+                    lod_group_id = WorkerThreadPool::get_singleton()->add_group_task(
+                        callable_mp(this, &GDIFCManager::_lod_group_task), generation_queue.size(), -1, true, "GDIFC LOD generation");
+                    current_state = GENERATING_LODS;
+                } else {
+                    current_state = GENERATING_NODES;
+                    load_stage_.store(STAGE_NODES);
+                }
             }
+        }
+    } else if (current_state == GENERATING_LODS) {
+        if (WorkerThreadPool::get_singleton()->is_group_task_completed(lod_group_id)) {
+            WorkerThreadPool::get_singleton()->wait_for_group_task_completion(lod_group_id);
+            lod_group_id = -1;
+            lod_items_ = nullptr;
+            current_state = GENERATING_NODES;
+            load_stage_.store(STAGE_NODES);
         }
     } else if (current_state == GENERATING_NODES) {
         _process_generation_queue();
@@ -413,38 +483,237 @@ void GDIFCManager::_process(double delta) {
         load_stage_.store(STAGE_DONE);
         _update_load_progress();
         emit_signal("ifc_objects_ready");
-        set_process(false);
         UtilityFunctions::print("IFC objects relinked from saved scene.");
     }
 
-    if (current_state == LOADING_THREAD || current_state == GENERATING_NODES || current_state == RELINKING) {
+    _process_metadata();
+
+    // Processing stops this frame, since nothing is loading any more, so this fires once
+    if (current_state == FAILED && metadata_state == META_IDLE) {
+        emit_signal("ifc_load_failed");
+    }
+
+    if (current_state == LOADING_THREAD || current_state == GENERATING_LODS || current_state == GENERATING_NODES || current_state == RELINKING) {
         _update_load_progress();
     }
+    if (!_is_loading()) {
+        set_process(false);
+    }
 }
+
 // ---------------------------------------------------------
-// BACKGROUND THREAD
+// DEFERRED METADATA
 // ---------------------------------------------------------
 
-// Fill attributes, property sets and quantity sets for one entity.
+// Parses the file with IfcParse alongside web-ifc. Writes only metadata_* members.
+void GDIFCManager::_metadata_parse_task() {
+    try {
+        auto file = std::make_shared<IfcParse::IfcFile>((void*)metadata_buffer_.ptr(), static_cast<int>(metadata_buffer_.size()));
+        if (!file->good()) {
+            ERR_PRINT("[IfcParse] Failed to parse IFC file. Properties and typed objects are unavailable.");
+        } else {
+            const std::string schema_name = file->schema()->name();
+            if (schema_name == Ifc4::get_schema().name()) {
+                metadata_schema_index_ = 0;
+            } else if (schema_name == Ifc2x3::get_schema().name()) {
+                metadata_schema_index_ = 2;
+            } else if (schema_name == Ifc4x3_add2::get_schema().name()) {
+                metadata_schema_index_ = 3;
+            } else {
+                ERR_PRINT(String("[IfcParse] Schema ") + schema_name.c_str()
+                    + " is not supported. Properties and typed objects are unavailable.");
+            }
+            if (metadata_schema_index_ >= 0) {
+                metadata_file_ = std::move(file);
+            }
+        }
+    } catch (const std::exception& e) {
+        ERR_PRINT(String("[IfcParse] Failed to parse IFC file: ") + e.what());
+    } catch (...) {
+        ERR_PRINT("[IfcParse] Failed to parse IFC file: unknown error.");
+    }
+
+    // Both parsers have consumed the bytes; web-ifc's task drops its own reference
+    metadata_buffer_ = PackedByteArray();
+}
+
 template <typename schema>
-static void fill_item_metadata(IfcParse::IfcFile& file, PrecalculatedIFCItem& item) {
+static void extract_item_metadata(IfcParse::IfcFile& file, PrecalculatedIFCMetadata& item) {
     item.attributes = get_ifc_object_attributes<schema>(file, item.express_id);
     item.properties = get_ifc_property_sets<schema>(file, item.express_id);
     item.quantities = get_ifc_quantity_sets<schema>(file, item.express_id);
 }
 
-struct LodOptions {
-    bool enabled = false;
-    float normal_merge_angle = 60.0f;
-};
+// Attributes, property sets and quantities of every generated node, plus georeferencing.
+// Writes only metadata_results_ and metadata_georreference_.
+void GDIFCManager::_metadata_extract_task() {
+    IfcParse::IfcFile& file = *metadata_file_;
+    metadata_results_.resize(metadata_ids_.size());
+
+    for (size_t i = 0; i < metadata_ids_.size(); i++) {
+        PrecalculatedIFCMetadata& item = metadata_results_[i];
+        item.express_id = metadata_ids_[i];
+        try {
+            switch (metadata_schema_index_) {
+                case 0: extract_item_metadata<Ifc4>(file, item); break;
+                case 2: extract_item_metadata<Ifc2x3>(file, item); break;
+                case 3: extract_item_metadata<Ifc4x3_add2>(file, item); break;
+                default: ;
+            }
+        } catch (const std::exception& e) {
+            ERR_PRINT(String("Failed to read the properties of #") + String::num_int64(item.express_id) + ": " + e.what());
+        } catch (...) {
+            ERR_PRINT(String("Failed to read the properties of #") + String::num_int64(item.express_id) + ": unknown error.");
+        }
+    }
+
+    // Georeferencing data exists in IFC4 and later
+    try {
+        switch (metadata_schema_index_) {
+            case 0: metadata_georreference_ = get_georreference<Ifc4>(file); break;
+            case 3: metadata_georreference_ = get_georreference<Ifc4x3_add2>(file); break;
+            default: ;
+        }
+    } catch (...) {
+        ERR_PRINT("[IfcParse] Failed to read georeferencing data.");
+    }
+}
+
+// Main thread. Advances the metadata pipeline: parse (alongside geometry), extract (once the
+// node ids are known), then apply to the nodes once they are revealed.
+void GDIFCManager::_process_metadata() {
+    WorkerThreadPool *pool = WorkerThreadPool::get_singleton();
+
+    switch (metadata_state) {
+        case META_PARSING: {
+            if (!pool->is_task_completed(metadata_task_id)) return;
+            if (current_state == FAILED) {
+                _wait_for_metadata_task();
+                metadata_file_.reset();
+                metadata_state = META_IDLE;
+                return;
+            }
+            // The extract task needs the ids of the generated items
+            if (current_state == LOADING_THREAD) return;
+            _wait_for_metadata_task();
+            if (!metadata_file_) {
+                metadata_state = META_APPLYING; // nothing to extract; still places the model
+                return;
+            }
+            metadata_task_id = pool->add_task(callable_mp(this, &GDIFCManager::_metadata_extract_task), false);
+            metadata_state = META_EXTRACTING;
+        } break;
+
+        case META_EXTRACTING: {
+            if (!pool->is_task_completed(metadata_task_id)) return;
+            _wait_for_metadata_task();
+            metadata_state = META_APPLYING;
+        } break;
+
+        case META_APPLYING: {
+            // Applied to the nodes after they are revealed, so they never hold up the reveal
+            if (current_state != DONE) return;
+
+            const uint64_t start_time = Time::get_singleton()->get_ticks_usec();
+            const uint64_t time_budget = get_frame_time_budget();
+            while (metadata_apply_index_ < metadata_results_.size()) {
+                PrecalculatedIFCMetadata& item = metadata_results_[metadata_apply_index_++];
+                if (node_registry.has(item.express_id)) {
+                    IFCNode* node = Object::cast_to<IFCNode>(ObjectDB::get_instance(node_registry[item.express_id]));
+                    if (node) {
+                        node->set_attributes(item.attributes);
+                        node->set_properties(item.properties);
+                        node->set_quantities(item.quantities);
+                        try {
+                            auto* inst = metadata_file_->instance_by_id(item.express_id);
+                            if (inst) {
+                                node->set_ifc_object(GDIFCEntityBase::wrap(inst, metadata_file_));
+                            }
+                        } catch (...) {}
+                    }
+                }
+                item = PrecalculatedIFCMetadata(); // release the dictionaries as they are handed over
+
+                if (Time::get_singleton()->get_ticks_usec() - start_time > time_budget) {
+                    return;
+                }
+            }
+            _finish_metadata();
+        } break;
+
+        default:
+            break;
+    }
+}
+
+// Main thread. Commits the IfcParse file, adds the Georeference node, places the model relative
+// to the reference georeference and emits ifc_objects_ready.
+void GDIFCManager::_finish_metadata() {
+    const bool is_ifc4plus = metadata_file_ && metadata_schema_index_ != 2;
+    if (metadata_file_) {
+        ifc_parse_file = metadata_file_;
+        GeorreferenceData data = metadata_georreference_;
+        data.coordination_offset = georreference.coordination_offset;
+        georreference = data;
+    }
+    metadata_file_.reset();
+    metadata_results_.clear();
+    metadata_ids_.clear();
+
+    IFCModel* model = get_ifc_model();
+    if (model) {
+        if (ifc_parse_file) {
+            model->init(ifc_parse_file);
+        }
+
+        // IFC4+: create Georeference node, or warn if georef data is absent
+        if (is_ifc4plus) {
+            if (georreference.valid) {
+                IFCGeoreference* georef_node = memnew(IFCGeoreference);
+                georef_node->set_name("Georeference");
+                georef_node->init(georreference);
+                model->add_child(georef_node);
+                georef_node->set_owner(get_owner() != nullptr ? get_owner() : this);
+            } else {
+                WARN_PRINT("IFC4+ file loaded without georeferencing data (IfcProjectedCRS/IfcMapConversion not found).");
+            }
+        }
+
+        // Place the model relative to the chosen reference georeference, if any
+        if (!reference_georeference_.is_empty()) {
+            IFCGeoreference* reference = Object::cast_to<IFCGeoreference>(get_node_or_null(reference_georeference_));
+            if (reference && reference->is_inside_tree()) {
+                if (!georreference.valid) {
+                    WARN_PRINT("GDIFCManager: the loaded model has no georeferencing data. "
+                        "Placing it assuming it shares the reference model's engineering coordinate system.");
+                }
+                glm::dmat4 relative = georef_relative_matrix(reference->get_data(), georreference);
+                model->set_transform(
+                    get_global_transform().affine_inverse() * reference->get_global_transform() * glm_to_godot_transform(relative));
+            } else {
+                WARN_PRINT(String("GDIFCManager: reference_georeference '") + String(reference_georeference_)
+                    + "' does not point to an IFCGeoreference node. The model is placed at the origin.");
+            }
+        }
+    }
+
+    metadata_state = META_DONE;
+    emit_signal("ifc_objects_ready");
+    UtilityFunctions::print(vformat("IFC properties and typed objects ready after %.2f s",
+        (Time::get_singleton()->get_ticks_usec() - start_loading_time) / 1000000.0));
+}
+
+// ---------------------------------------------------------
+// BACKGROUND THREAD
+// ---------------------------------------------------------
 
 // Items below this triangle count (boxes, plain walls, slabs) can't be simplified
 // meaningfully; skipping them avoids per-element overhead on large models.
 static constexpr int LOD_MIN_TRIANGLES = 64;
 
 // Generate LOD index arrays with Godot's ImporterMesh (the same path the glTF/scene
-// importer uses). Runs on the worker thread: the ImporterMesh is temporary and only
-// its index data is kept, so no RenderingServer resources are created here.
+// importer uses). Runs on worker threads, one item each: the ImporterMesh is temporary and
+// only its index data is kept, so no RenderingServer resources are created here.
 static void generate_item_lods(PrecalculatedIFCItem& item, float normal_merge_angle) {
     int64_t triangle_count = 0;
     for (const auto& geometry : item.geometry) triangle_count += geometry.indices.size() / 3;
@@ -486,8 +755,7 @@ static void generate_item_lods(PrecalculatedIFCItem& item, float normal_merge_an
 // Node transforms are currently identity, so vertices are baked in world space.
 static void fill_item_geometry(webifc::geometry::IfcGeometryProcessor& geometry_loader,
                                const webifc::geometry::IfcFlatMesh& flat_mesh,
-                               bool is_space, const LodOptions& lod_options,
-                               PrecalculatedIFCItem& item) {
+                               bool is_space, PrecalculatedIFCItem& item) {
     for (const auto& geom_data : flat_mesh.geometries) {
         auto& ifc_geometry = geometry_loader.GetGeometry(geom_data.geometryExpressID);
         if (ifc_geometry.numPoints == 0 || ifc_geometry.numFaces == 0) continue;
@@ -528,10 +796,65 @@ static void fill_item_geometry(webifc::geometry::IfcGeometryProcessor& geometry_
 
         item.geometry.push_back(std::move(item_geometry));
     }
+}
 
-    if (lod_options.enabled && !item.geometry.empty()) {
-        generate_item_lods(item, lod_options.normal_merge_angle);
+void GDIFCManager::_lod_group_task(uint32_t index) {
+    PrecalculatedIFCItem& item = lod_items_[index];
+    if (!item.geometry.empty()) {
+        generate_item_lods(item, lod_merge_angle_);
     }
+    progress_done_.fetch_add(1, std::memory_order_relaxed);
+}
+
+// Child -> parent express ids from the decomposition and containment relationships, read from
+// web-ifc's parsed file. Applied in this order, so a later relationship wins for the same child.
+static std::unordered_map<int, int> build_parent_map(const webifc::parsing::IfcLoader& loader, bool is_ifc4x3) {
+    using webifc::parsing::IfcTokenType;
+
+    struct Relation {
+        uint32_t type;
+        uint32_t parent_argument;
+        uint32_t children_argument;
+    };
+    std::vector<Relation> relations = {
+        {webifc::schema::IFCRELAGGREGATES, 4, 5},
+        {webifc::schema::IFCRELCONTAINEDINSPATIALSTRUCTURE, 5, 4},
+        {webifc::schema::IFCRELNESTS, 4, 5},
+    };
+    if (is_ifc4x3) {
+        relations.push_back({webifc::schema::IFCRELADHERESTOELEMENT, 4, 5});
+    }
+
+    std::unordered_map<int, int> child_to_parent;
+    for (const Relation& relation : relations) {
+        std::vector<uint32_t> relation_ids = loader.GetExpressIDsWithType(relation.type);
+        std::sort(relation_ids.begin(), relation_ids.end()); // file order
+
+        for (uint32_t relation_id : relation_ids) {
+            // Check every token type first: web-ifc's readers assume it
+            loader.MoveToArgumentOffset(relation_id, relation.parent_argument);
+            if (loader.GetTokenType() != IfcTokenType::REF) continue;
+            loader.StepBack();
+            const int parent_id = static_cast<int>(loader.GetRefArgument());
+
+            loader.MoveToArgumentOffset(relation_id, relation.children_argument);
+            if (loader.GetTokenType() != IfcTokenType::SET_BEGIN) continue;
+            loader.StepBack();
+            for (uint32_t offset : loader.GetSetArgument()) {
+                if (loader.GetTokenType(offset) != IfcTokenType::REF) continue;
+                child_to_parent[static_cast<int>(loader.GetRefArgument(offset))] = parent_id;
+            }
+        }
+    }
+    return child_to_parent;
+}
+
+// IfcRoot's GlobalId is the first argument of every rooted entity
+static String read_global_id(const webifc::parsing::IfcLoader& loader, uint32_t express_id) {
+    loader.MoveToArgumentOffset(express_id, 0);
+    if (loader.GetTokenType() != webifc::parsing::IfcTokenType::STRING) return String();
+    loader.StepBack();
+    return String::utf8(loader.GetDecodedStringArgument().c_str());
 }
 
 // Runs on a WorkerThreadPool thread. It must not touch current_state or any member the
@@ -547,13 +870,6 @@ void GDIFCManager::_thread_task() {
     const char* buf_ptr  = reinterpret_cast<const char*>(this->pending_buffer.ptr());
     int         buf_size = static_cast<int>(this->pending_buffer.size());
 
-    // Snapshot LOD options once so edits to the settings resource mid-load aren't picked up
-    LodOptions lod_options;
-    if (geometric_settings.is_valid()) {
-        lod_options.enabled = geometric_settings->getGenerateLods();
-        lod_options.normal_merge_angle = geometric_settings->getLodNormalMergeAngle();
-    }
-
     // Load file [web-ifc] — from memory buffer
     auto temp_ifc_manager = std::make_unique<WEBIFCManager>(geometric_settings.ptr());
     try {
@@ -565,48 +881,15 @@ void GDIFCManager::_thread_task() {
         thread_failed_ = true;
         ERR_FAIL_MSG("[web-ifc] Failed to read IFC file: unknown error.");
     }
-    parse_step_start_usec_.store(Time::get_singleton()->get_ticks_usec());
     progress_done_.store(1);
 
-    // Load file [IFCParse] — from memory buffer (void*, int constructor)
-    std::shared_ptr<IfcParse::IfcFile> temp_file;
+    const webifc::parsing::IfcLoader& loader = *temp_ifc_manager->loader;
+    const webifc::schema::IfcSchemaManager& schema_manager = temp_ifc_manager->schemaManager;
+
+    bool is_ifc4x3 = false;
     try {
-        temp_file = std::make_shared<IfcParse::IfcFile>((void*)buf_ptr, buf_size);
-    } catch (const std::exception& e) {
-        thread_failed_ = true;
-        ERR_FAIL_MSG(String("[IfcParse] Failed to parse IFC file: ") + e.what());
-    } catch (...) {
-        thread_failed_ = true;
-        ERR_FAIL_MSG("[IfcParse] Failed to parse IFC file: unknown error.");
-    }
-
-    if (!temp_file->good()) {
-        thread_failed_ = true;
-        ERR_FAIL_MSG("Failed to parse IFC file.");
-    }
-    progress_done_.store(2);
-
-    // Schema check [IFCParse]
-    std::string current_schema = temp_file->schema()->name();
-
-    bool is_supported_schema = (current_schema == Ifc2x3::get_schema().name()) ||
-                               (current_schema == Ifc4::get_schema().name()) ||
-                            //    (current_schema == Ifc4x3::get_schema().name()) ||
-                               (current_schema == Ifc4x3_add2::get_schema().name());
-
-    if (!is_supported_schema) {
-        thread_failed_ = true;
-        ERR_FAIL_MSG("Schema not supported.");
-    }
-
-    std::unordered_map<std::string,int> schema_map{
-        {Ifc4::get_schema().name(),0},
-        // {Ifc4x3::get_schema().name(),1},
-        {Ifc2x3::get_schema().name(),2},
-        {Ifc4x3_add2::get_schema().name(),3}
-    };
-
-    int schema_index = schema_map[current_schema];
+        is_ifc4x3 = loader.GetSchema() == IFC_SCHEMA::IFC4X3;
+    } catch (...) {}
 
     // Init Geometry [web-ifc]
     try {
@@ -618,45 +901,23 @@ void GDIFCManager::_thread_task() {
         thread_failed_ = true;
         ERR_FAIL_MSG("[web-ifc] Failed to initialize geometry processor: unknown error.");
     }
-    progress_done_.store(3);
+    progress_done_.store(2);
 
     auto& geometry_loader = *temp_ifc_manager->geometry_loader;
 
     Vector<PrecalculatedIFCItem> temp_queue;
 
     // Build hierarchy parent map (EXPRESSID, EXPRESSID), of elements based on its parent if they exist
-    std::unordered_map<int, int> parent_map;
+    std::unordered_map<int, int> parent_map = build_parent_map(loader, is_ifc4x3);
 
-    try {
-        switch (schema_index) {
-            case 0: parent_map = build_spatial_hierarchy<Ifc4>(*temp_file); break;
-            // case 1: parent_map = build_spatial_hierarchy<Ifc4x3>(*temp_file); break;
-            case 2: parent_map = build_spatial_hierarchy<Ifc2x3>(*temp_file); break;
-            case 3: parent_map = build_spatial_hierarchy<Ifc4x3_add2>(*temp_file); break;
-            default: ;
-        }
-    } catch (const std::exception& e) {
-        ERR_PRINT(String("[IfcParse] Failed to build spatial hierarchy: ") + e.what());
-    } catch (...) {
-        ERR_PRINT("[IfcParse] Failed to build spatial hierarchy: unknown error.");
-    }
-
-    // Attributes, psets, quantities, GlobalId and parent for one item.
-    auto fill_metadata = [&](PrecalculatedIFCItem& item) {
-        switch (schema_index) {
-            case 0: fill_item_metadata<Ifc4>(*temp_file, item); break;
-            // case 1: fill_item_metadata<Ifc4x3>(*temp_file, item); break;
-            case 2: fill_item_metadata<Ifc2x3>(*temp_file, item); break;
-            case 3: fill_item_metadata<Ifc4x3_add2>(*temp_file, item); break;
-            default: ;
-        }
-
-        // Extract GlobalId for scene persistence
-        if (item.attributes.has("GlobalId")) {
-            item.global_id = item.attributes["GlobalId"];
-        }
-
-        // Defines the parent of item
+    // Identity, GlobalId and parent of one item. Attributes, property sets and quantities
+    // come later from IfcParse, after the model is shown.
+    auto init_item = [&](PrecalculatedIFCItem& item, uint32_t id, const String& ifc_class) {
+        item.valid = true;
+        item.express_id = id;
+        item.node_name = vformat("%s_%d", ifc_class, (int64_t)id); // Godot demands an unique name per node at the same tree level
+        item.ifc_class = ifc_class;
+        item.global_id = read_global_id(loader, id);
         auto parent_it = parent_map.find(item.express_id);
         if (parent_it != parent_map.end()) {
             item.parent_id = parent_it->second;
@@ -671,51 +932,46 @@ void GDIFCManager::_thread_task() {
     // --- PRE-PROCESS SPATIAL STRUCTURE ---
 
     // PHASE A: PRIMARY STRUCTURE (Project, Site, Building, Storey)
-    std::vector<std::string> spatial_types = {"IfcProject", "IfcSite", "IfcBuilding", "IfcBuildingStorey"};
+    const std::vector<std::pair<const char*, uint32_t>> spatial_types = {
+        {"IfcProject", webifc::schema::IFCPROJECT},
+        {"IfcSite", webifc::schema::IFCSITE},
+        {"IfcBuilding", webifc::schema::IFCBUILDING},
+        {"IfcBuildingStorey", webifc::schema::IFCBUILDINGSTOREY},
+    };
 
     // The geometry stage counts every entity the three passes below visit
     uint32_t geometry_total = static_cast<uint32_t>(active_parents.size());
-    for (const auto& s_type : spatial_types) {
-        auto instances = temp_file->instances_by_type(s_type);
-        if (instances) geometry_total += instances->size();
+    for (const auto& spatial_type : spatial_types) {
+        geometry_total += static_cast<uint32_t>(loader.GetExpressIDsWithType(spatial_type.second).size());
     }
-    for (auto type : temp_ifc_manager->schemaManager.GetIfcElementList()) {
-        geometry_total += static_cast<uint32_t>(temp_ifc_manager->loader->GetExpressIDsWithType(type).size());
+    for (auto type : schema_manager.GetIfcElementList()) {
+        geometry_total += static_cast<uint32_t>(loader.GetExpressIDsWithType(type).size());
     }
     _set_worker_progress(STAGE_GEOMETRY, geometry_total);
 
-    for (const auto& s_type : spatial_types) {
+    for (const auto& spatial_type : spatial_types) {
+        std::vector<uint32_t> ids = loader.GetExpressIDsWithType(spatial_type.second);
+        std::sort(ids.begin(), ids.end());
 
-        auto instances = temp_file->instances_by_type(s_type);
-        if (!instances) continue;
-
-        for(int i=0; i<instances->size(); i++) {
+        for (uint32_t id : ids) {
             progress_done_.fetch_add(1, std::memory_order_relaxed);
             try {
-            auto ent = instances->operator[](i);
-
-            int id = ent->id();
 
             if (processed_ids.find(id) != processed_ids.end()) continue;
 
             PrecalculatedIFCItem item;
-            item.valid = true;
-            item.express_id = id;
-            item.node_name = String(s_type.c_str()) + "_" + String::num_int64(id); // Godot demands an unique name per node at the same tree level
-            item.ifc_class = s_type.c_str();
-
-            fill_metadata(item);
+            init_item(item, id, spatial_type.first);
 
             // Spatial elements can carry geometry (e.g. IfcSite terrain); IfcProject usually has none
-            fill_item_geometry(geometry_loader, geometry_loader.GetFlatMesh(id), false, lod_options, item);
+            fill_item_geometry(geometry_loader, geometry_loader.GetFlatMesh(id), false, item);
 
             temp_queue.push_back(item);
             processed_ids.insert(id);
 
             } catch (const std::exception& e) {
-                ERR_PRINT(String("Failed to process spatial entity ") + s_type.c_str() + " #" + String::num_int64(i) + ": " + e.what());
+                ERR_PRINT(String("Failed to process spatial entity ") + spatial_type.first + " #" + String::num_int64(id) + ": " + e.what());
             } catch (...) {
-                ERR_PRINT(String("Failed to process spatial entity ") + s_type.c_str() + " #" + String::num_int64(i) + ": unknown error.");
+                ERR_PRINT(String("Failed to process spatial entity ") + spatial_type.first + " #" + String::num_int64(id) + ": unknown error.");
             }
         }
     }
@@ -735,21 +991,16 @@ void GDIFCManager::_thread_task() {
     for (int id : other_parents) {
         progress_done_.fetch_add(1, std::memory_order_relaxed);
         try {
-        auto ent = temp_file->instance_by_id(id);
-        if (!ent) continue;
+        const uint32_t type_code = loader.GetLineType(id);
+        if (type_code == 0) continue;
 
-        std::string s_type = ent->declaration().name();
+        std::string s_type = schema_manager.IfcTypeCodeToType(type_code);
 
         PrecalculatedIFCItem item;
-        item.valid = true;
-        item.express_id = id;
-        item.node_name = String(s_type.c_str()) + "_" + String::num_int64(id);
-        item.ifc_class = s_type.c_str();
-
-        fill_metadata(item);
+        init_item(item, id, s_type.c_str());
 
         if (s_type != "IfcOpeningElement") {
-            fill_item_geometry(geometry_loader, geometry_loader.GetFlatMesh(id), s_type == "IfcSpace", lod_options, item);
+            fill_item_geometry(geometry_loader, geometry_loader.GetFlatMesh(id), s_type == "IfcSpace", item);
         }
 
         temp_queue.push_back(item);
@@ -763,30 +1014,25 @@ void GDIFCManager::_thread_task() {
     }
 
     // 3. HEAVY LOOP: Process everything else (parents were all handled above)
-    for (auto type : temp_ifc_manager->schemaManager.GetIfcElementList()) {
-        auto expressIDs = temp_ifc_manager->loader->GetExpressIDsWithType(type);
+    for (auto type : schema_manager.GetIfcElementList()) {
+        auto expressIDs = loader.GetExpressIDsWithType(type);
         for (uint32_t expressID : expressIDs) {
             progress_done_.fetch_add(1, std::memory_order_relaxed);
             try {
 
             if (processed_ids.find(expressID) != processed_ids.end()) continue;
 
-            std::string type_str = temp_ifc_manager->schemaManager.IfcTypeCodeToType(temp_ifc_manager->loader->GetLineType(expressID));
+            std::string type_str = schema_manager.IfcTypeCodeToType(loader.GetLineType(expressID));
             if (type_str == "IfcOpeningElement") continue;
 
             auto flat_mesh = geometry_loader.GetFlatMesh(expressID);
             if (flat_mesh.geometries.empty()) continue;
 
             PrecalculatedIFCItem item;
-            item.valid = true;
-            item.express_id = expressID;
-            item.node_name = String(type_str.c_str()) + "_" + String::num_int64(expressID);
-            item.ifc_class = type_str.c_str();
-
-            fill_item_geometry(geometry_loader, flat_mesh, type_str == "IfcSpace", lod_options, item);
+            fill_item_geometry(geometry_loader, flat_mesh, type_str == "IfcSpace", item);
             if (item.geometry.empty()) continue;
 
-            fill_metadata(item);
+            init_item(item, expressID, type_str.c_str());
             temp_queue.push_back(item);
 
             } catch (const std::exception& e) {
@@ -841,23 +1087,17 @@ void GDIFCManager::_thread_task() {
         return a.express_id < b.express_id;
     });
 
-    // Get georeference data for IFC4+ schemas
-    switch (schema_index) {
-        case 0: this->pending_georreference = get_georreference<Ifc4>(*temp_file); break;
-        case 3: this->pending_georreference = get_georreference<Ifc4x3_add2>(*temp_file); break;
-        default: this->pending_georreference = {}; break;
-    }
-
-    // Offset web-ifc subtracted from every vertex (coordinate_to_origin), needed
-    // to place this model relative to another one even without georef data
+    // Georeferencing data comes from IfcParse later. The offset web-ifc subtracted from every
+    // vertex (coordinate_to_origin) is needed to place this model relative to another one
+    // even without georef data.
+    this->pending_georreference = GeorreferenceData();
     this->pending_georreference.coordination_offset = glm::dvec3(geometry_loader.GetCoordinationMatrix()[3]);
 
     // Hand results to the main thread
     this->web_ifc_manager = std::move(temp_ifc_manager);
-    this->pending_ifc_parse_file = std::move(temp_file);
     this->generation_queue = temp_queue;
 
-    // Free the raw buffer — both parsers have consumed it
+    // web-ifc has consumed the bytes; the metadata task holds its own reference while it parses
     this->pending_buffer = PackedByteArray();
 }
 
@@ -900,15 +1140,8 @@ void GDIFCManager::_process_generation_queue() {
 
 
     uint64_t start_time = Time::get_singleton()->get_ticks_usec();
-    uint64_t time_budget = 20000;
+    const uint64_t time_budget = get_frame_time_budget();
     const bool prebuild_editor_caches = Engine::get_singleton()->is_editor_hint();
-
-    // In low processor mode (the editor) every frame lasts at least the sleep time anyway,
-    // which is 100 ms while the editor window is unfocused. Use most of it instead of idling.
-    OS *os = OS::get_singleton();
-    if (os->is_in_low_processor_usage_mode()) {
-        time_budget = MAX(time_budget, (uint64_t)(os->get_low_processor_usage_mode_sleep_usec() * 0.8));
-    }
 
     while (current_generation_index < generation_queue.size()) {
 
@@ -918,21 +1151,8 @@ void GDIFCManager::_process_generation_queue() {
         IFCNode* element_node = memnew(IFCNode);
         element_node->set_name(item.node_name);
         element_node->set_transform(item.node_transform);
-        element_node->set_properties(item.properties);
-        element_node->set_quantities(item.quantities);
-        element_node->set_attributes(item.attributes);
         element_node->set_ifc_class(item.ifc_class);
         element_node->set_global_id(item.global_id);
-
-        // Wrap the IFC entity with the typed GD object
-        if (ifc_parse_file) {
-            try {
-                auto* inst = ifc_parse_file->instance_by_id(item.express_id);
-                if (inst) {
-                    element_node->set_ifc_object(GDIFCEntityBase::wrap(inst, ifc_parse_file));
-                }
-            } catch (...) {}
-        }
 
         // 2. REGISTER NODE
         if (item.express_id > 0) {
@@ -1032,44 +1252,9 @@ void GDIFCManager::_process_generation_queue() {
     if (current_generation_index >= generation_queue.size()) {
         invisible_staging_root->set_name("IFCModel");
 
-        // IFC4+: create Georeference node, or warn if georef data is absent
-        bool is_ifc4plus = ifc_parse_file &&
-            ifc_parse_file->schema()->name() != Ifc2x3::get_schema().name();
-        if (is_ifc4plus) {
-            if (georreference.valid) {
-                IFCGeoreference* georef_node = memnew(IFCGeoreference);
-                georef_node->set_name("Georeference");
-                georef_node->init(georreference);
-                invisible_staging_root->add_child(georef_node);
-            } else {
-                WARN_PRINT("IFC4+ file loaded without georeferencing data (IfcProjectedCRS/IfcMapConversion not found).");
-            }
-        }
-
-        // Place the model relative to the chosen reference georeference, if any
-        if (!reference_georeference_.is_empty()) {
-            IFCGeoreference* reference = Object::cast_to<IFCGeoreference>(get_node_or_null(reference_georeference_));
-            if (reference && reference->is_inside_tree()) {
-                if (!georreference.valid) {
-                    WARN_PRINT("GDIFCManager: the loaded model has no georeferencing data. "
-                        "Placing it assuming it shares the reference model's engineering coordinate system.");
-                }
-                glm::dmat4 relative = georef_relative_matrix(reference->get_data(), georreference);
-                invisible_staging_root->set_transform(
-                    get_global_transform().affine_inverse() * reference->get_global_transform() * glm_to_godot_transform(relative));
-            } else {
-                WARN_PRINT(String("GDIFCManager: reference_georeference '") + String(reference_georeference_)
-                    + "' does not point to an IFCGeoreference node. The model is placed at the origin.");
-            }
-        }
-
+        // The Georeference node, placement relative to a reference georeference and typed
+        // objects are added by _finish_metadata() once IfcParse is done
         add_child(invisible_staging_root, true);
-
-        // Initialise the IFCModel node with the loaded file
-        IFCModel* model = get_ifc_model();
-        if (model && ifc_parse_file) {
-            model->init(ifc_parse_file);
-        }
 
         // Set ownership recursively so all nodes are selectable in the editor
         Node* scene_owner = get_owner() != nullptr ? get_owner() : this;
@@ -1082,14 +1267,13 @@ void GDIFCManager::_process_generation_queue() {
         set_owner_recursive(invisible_staging_root);
 
         invisible_staging_root = nullptr;
+        generation_queue.clear();
         current_state = DONE;
         load_stage_.store(STAGE_DONE);
         _update_load_progress();
         emit_signal("ifc_read");
-        emit_signal("ifc_objects_ready");
-        set_process(false);
-        UtilityFunctions::print("IFC Fully Loaded and Revealed!");
-        UtilityFunctions::print((Time::get_singleton()->get_ticks_usec() - start_loading_time)/1000000," secs to load");
+        UtilityFunctions::print(vformat("IFC model shown after %.2f s",
+            (Time::get_singleton()->get_ticks_usec() - start_loading_time) / 1000000.0));
     }
 }
 
@@ -1609,115 +1793,3 @@ godot::GeorreferenceData get_georreference(IfcParse::IfcFile &file) {
     }
 }
 
-template <typename schema>
-std::unordered_map<int, int> build_spatial_hierarchy(IfcParse::IfcFile &file) {
-
-    std::unordered_map<int, int> child_to_parent;
-
-    // Handle Aggregation
-    try {
-    auto rel_aggregates = file.instances_by_type("IfcRelAggregates");
-
-    if (rel_aggregates) {
-        for (int i = 0; i < rel_aggregates->size(); i++) {
-            auto rel = rel_aggregates->operator[](i)->as<typename schema::IfcRelAggregates>();
-            if (!rel) continue;
-
-            auto parent = rel->RelatingObject();
-            auto children = rel->RelatedObjects();
-
-            if (parent && children) {
-                int parent_id = parent->id();
-                for (auto child : *children) {
-                    child_to_parent[child->id()] = parent_id;
-                }
-            }
-        }
-    }
-    } catch (const std::exception& e) {
-        ERR_PRINT(godot::String("Failed to process IfcRelAggregates: ") + e.what());
-    } catch (...) {
-        ERR_PRINT("Failed to process IfcRelAggregates: unknown error.");
-    }
-
-    // Handle Spatial Containment
-    try {
-    auto rel_contained = file.instances_by_type("IfcRelContainedInSpatialStructure");
-    if (rel_contained) {
-        for (int i = 0; i < rel_contained->size(); i++) {
-            auto rel = rel_contained->operator[](i)->as<typename schema::IfcRelContainedInSpatialStructure>();
-            if (!rel) continue;
-
-            auto parent = rel->RelatingStructure(); // The Spatial Structure (e.g. Storey)
-            auto children = rel->RelatedElements(); // The Physical Elements (e.g. Wall)
-
-            if (parent && children) {
-                int parent_id = parent->id();
-                for (auto child : *children) {
-                    child_to_parent[child->id()] = parent_id;
-                }
-            }
-        }
-    }
-    } catch (const std::exception& e) {
-        ERR_PRINT(godot::String("Failed to process IfcRelContainedInSpatialStructure: ") + e.what());
-    } catch (...) {
-        ERR_PRINT("Failed to process IfcRelContainedInSpatialStructure: unknown error.");
-    }
-
-    // Handle nesting
-    try {
-    auto rel_nests = file.instances_by_type("IfcRelNests");
-    if (rel_nests) {
-        for (int i = 0; i < rel_nests->size(); i++) {
-            auto rel = rel_nests->operator[](i)->as<typename schema::IfcRelNests>();
-            if (!rel) continue;
-
-            auto parent = rel->RelatingObject();
-            auto children = rel->RelatedObjects();
-
-            if (parent && children) {
-                int parent_id = parent->id();
-                for (auto child : *children) {
-                    child_to_parent[child->id()] = parent_id;
-                }
-            }
-        }
-    }
-    } catch (const std::exception& e) {
-        ERR_PRINT(godot::String("Failed to process IfcRelNests: ") + e.what());
-    } catch (...) {
-        ERR_PRINT("Failed to process IfcRelNests: unknown error.");
-    }
-
-    try {
-    if (schema::get_schema().name() == Ifc4x3_add2::get_schema().name()) {
-        auto rel_adheres = file.instances_by_type("IfcRelAdheresToElement");
-
-        if (rel_adheres) {
-            for (int i = 0; i < rel_adheres->size(); i++) {
-                auto rel = rel_adheres->operator[](i)->as<typename Ifc4x3_add2::IfcRelAdheresToElement>();
-                if (!rel) continue;
-
-                auto parent = rel->RelatingElement();
-                auto children = rel->RelatedSurfaceFeatures();
-
-                if (parent && children) {
-                    int parent_id = parent->id();
-                    for (auto child : *children) {
-                        child_to_parent[child->id()] = parent_id;
-                    }
-                }
-            }
-        }
-
-    }
-    } catch (const std::exception& e) {
-        ERR_PRINT(godot::String("Failed to process IfcRelAdheresToElement: ") + e.what());
-    } catch (...) {
-        ERR_PRINT("Failed to process IfcRelAdheresToElement: unknown error.");
-    }
-
-
-    return child_to_parent;
-}
