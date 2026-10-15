@@ -92,3 +92,5 @@ ifc-godot-project/addons/GDIFC/gdifc*.wasm
 ifc-godot-project/addons/GDIFC/gdifc*.dylib
 ifc-godot-project/local_runcode.gd
 *.pdb
+
+*.local-test
