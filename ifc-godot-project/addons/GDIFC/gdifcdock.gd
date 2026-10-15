@@ -231,7 +231,7 @@ func _on_open_button_pressed():
 		file_dialog.file_selected.connect(_on_file_selected)
 		add_child(file_dialog)
 	
-	file_dialog.popup_centered_ratio()
+	file_dialog.popup_centered_ratio(0.5)
 
 func _on_file_selected(path: String):
 	load_file_name = path.get_file()
