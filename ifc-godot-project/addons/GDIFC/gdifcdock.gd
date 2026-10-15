@@ -143,7 +143,7 @@ func _apply_editor_theme():
 	build_label.add_theme_color_override("font_color", footer_color)
 	build_label.add_theme_font_size_override("font_size", int(get_theme_default_font_size() * 0.85))
 	logo.self_modulate = footer_color
-	logo.custom_minimum_size = Vector2(100, 15) * scale
+	logo.custom_minimum_size = Vector2(70, 9) * scale
 
 	if load_failed:
 		load_status_label.add_theme_color_override("font_color", get_theme_color("error_color", "Editor"))

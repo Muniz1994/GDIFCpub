@@ -6,11 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 Changes are grouped by version, then by build. The build number is global: it never resets when the version changes, so each build number identifies exactly one build. The current version and build are in the addon's `plugin.cfg` and are shown at the bottom of the GDIFC dock.
 
-New changes go under **Unreleased**. Builds are cut automatically: when a push to `master` builds successfully and Unreleased has entries, CI runs `tools/bump_build.py`, which moves those entries into a new build section and updates both `plugin.cfg` copies. CI then commits the result, tags it `v<version>-build.<build>`, and creates a draft GitHub release with the addon zip. To start a new version, run the **Build GDExtension** workflow manually from the Actions tab and fill in **version**. To cut a build locally instead, run `python tools/bump_build.py` (optionally with `--version <new version>`).
+New changes go under **Unreleased**. Builds are cut automatically: when a push to `master` builds successfully and Unreleased has entries, CI runs `tools/bump_build.py`, which moves those entries into a new build section and updates both `plugin.cfg` copies. CI then commits the result, tags it `v<version>-build.<build>`, and creates a draft GitHub release with the addon zip. To start a new version, run `python tools/set_version.py <new version>`, which updates both `plugin.cfg` copies, and commit it with the new entries; the next build is cut under that version. To cut a build locally instead, run `python tools/bump_build.py` (optionally with `--version <new version>`).
 
 ## [Unreleased]
 
 ## [1.1.0-alpha]
+
+### Build 4 — 2026-10-15
+
+##### Fixed
+
+- Fixed dock logo sizing, that was preventing the correct collapse of the dock in small windows.
 
 ### Build 3 — 2026-10-15
 
