@@ -9,8 +9,9 @@ Usage:
     python tools/bump_build.py --skip-if-empty --notes notes.md   # what CI runs
 
 CI runs this on every push to master (see .github/workflows/build.yml), so you
-normally only write entries under Unreleased and push. Run it by hand only to
-cut a build locally.
+normally only write entries under Unreleased and push. CI never changes the
+version: to start a new one, run `python tools/set_version.py <version>` and
+commit the result. Run this script by hand only to cut a build locally.
 
 What it does:
     1. Reads `version` and `build` from both addon plugin.cfg copies
@@ -44,6 +45,10 @@ PLUGIN_CFGS = [
 CHANGELOG = ROOT / "CHANGELOG.md"
 
 UNRELEASED_HEADING = "## [Unreleased]"
+
+# MAJOR.MINOR.PATCH with an optional pre-release (1.2.0, 1.2.0-alpha, 1.2.0-rc.1).
+# No "+metadata": the build number is kept separately.
+VERSION_PATTERN = r"\d+\.\d+\.\d+(-[0-9A-Za-z]+(\.[0-9A-Za-z]+)*)?"
 
 
 def fail(message):
@@ -154,6 +159,8 @@ def main():
         fail(f"build '{old_build}' in plugin.cfg is not a number")
 
     version = args.version or old_version
+    if not re.fullmatch(VERSION_PATTERN, version):
+        fail(f"'{version}' is not a version like 1.2.0 or 1.2.0-alpha")
     build = int(old_build) + 1
     date = datetime.date.today().isoformat()
 

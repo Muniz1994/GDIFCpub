@@ -6,11 +6,6 @@ on:
   pull_request:
     branches: [master]
   workflow_dispatch:
-    inputs:
-      version:
-        description: "New version for this build (e.g. 1.2.0-alpha). Leave empty to keep the current one."
-        required: false
-        default: ""
 
 env:
   SCONS_CACHE: ${{ github.workspace }}/.scons-cache
@@ -184,14 +179,11 @@ jobs:
 
       # Moves the Unreleased changelog entries into a new build and bumps plugin.cfg.
       # Runs before packaging so the packaged plugin.cfg and CHANGELOG.md carry the new build.
+      # The version is whatever plugin.cfg says; change it there to start a new version.
       - name: Cut build
         id: bump
         if: steps.tip.outputs.is_tip == 'true' && github.ref == 'refs/heads/master'
-        env:
-          NEW_VERSION: ${{ inputs.version }}
-        run: |
-          python3 tools/bump_build.py --skip-if-empty --notes "$RUNNER_TEMP/release-notes.md" \
-            ${NEW_VERSION:+--version "$NEW_VERSION"}
+        run: python3 tools/bump_build.py --skip-if-empty --notes "$RUNNER_TEMP/release-notes.md"
 
       - name: Download all artifacts
         uses: actions/download-artifact@v4
