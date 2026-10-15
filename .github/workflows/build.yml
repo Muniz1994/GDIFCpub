@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [master]
   workflow_dispatch:
+    inputs:
+      version:
+        description: "New version for this build (e.g. 1.2.0-alpha). Leave empty to keep the current one."
+        required: false
+        default: ""
 
 env:
   SCONS_CACHE: ${{ github.workspace }}/.scons-cache
@@ -163,6 +168,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # A newer push will run its own package job; only the tip commits and releases,
+      # so binaries and builds always match the newest source.
+      - name: Check this commit is still the branch tip
+        id: tip
+        if: github.event_name != 'pull_request'
+        run: |
+          git fetch --quiet origin "$GITHUB_REF"
+          if [ "$(git rev-parse FETCH_HEAD)" = "$GITHUB_SHA" ]; then
+            echo "is_tip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::$GITHUB_REF moved past this commit; skipping commit and release"
+            echo "is_tip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Moves the Unreleased changelog entries into a new build and bumps plugin.cfg.
+      # Runs before packaging so the packaged plugin.cfg and CHANGELOG.md carry the new build.
+      - name: Cut build
+        id: bump
+        if: steps.tip.outputs.is_tip == 'true' && github.ref == 'refs/heads/master'
+        env:
+          NEW_VERSION: ${{ inputs.version }}
+        run: |
+          python3 tools/bump_build.py --skip-if-empty --notes "$RUNNER_TEMP/release-notes.md" \
+            ${NEW_VERSION:+--version "$NEW_VERSION"}
+
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
@@ -183,8 +213,12 @@ jobs:
             cp "$dir"/libgdifc* package/addons/GDIFC/ || true
           done
           
-      - name: Commit binaries to repo
-        if: github.event_name != 'pull_request'
+      - name: Commit binaries and build to repo
+        if: steps.tip.outputs.is_tip == 'true'
+        env:
+          RELEASED: ${{ steps.bump.outputs.released }}
+          VERSION: ${{ steps.bump.outputs.version }}
+          BUILD: ${{ steps.bump.outputs.build }}
         run: |
           cp package/addons/GDIFC/libgdifc* addons/GDIFC/
           cp ./LICENCE.md addons/GDIFC/
@@ -192,8 +226,16 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -f addons/GDIFC/libgdifc*
-          git diff --cached --quiet || git commit -m "ci: update prebuilt binaries [skip ci]"
-          git push
+          if [ "$RELEASED" = "true" ]; then
+            TAG="v$VERSION-build.$BUILD"
+            git add CHANGELOG.md addons/GDIFC/plugin.cfg ifc-godot-project/addons/GDIFC/plugin.cfg
+            git commit -m "ci: release $VERSION build $BUILD [skip ci]"
+            git tag "$TAG"
+            git push --atomic origin "HEAD:$GITHUB_REF" "refs/tags/$TAG"
+          else
+            git diff --cached --quiet || git commit -m "ci: update prebuilt binaries [skip ci]"
+            git push origin "HEAD:$GITHUB_REF"
+          fi
 
       - name: Upload complete addon
         uses: actions/upload-artifact@v4
@@ -201,3 +243,21 @@ jobs:
           name: GDIFC-addon-all-platforms
           path: package/
           if-no-files-found: error
+
+      # Created as a draft: review it on the Releases page and click Publish.
+      - name: Draft GitHub release
+        if: steps.bump.outputs.released == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.bump.outputs.version }}
+          BUILD: ${{ steps.bump.outputs.build }}
+        run: |
+          TAG="v$VERSION-build.$BUILD"
+          ZIP="GDIFC-$VERSION-build.$BUILD.zip"
+          (cd package && zip -qr "../$ZIP" addons)
+          PRERELEASE=""
+          case "$VERSION" in *-*) PRERELEASE="--prerelease" ;; esac
+          gh release create "$TAG" "$ZIP" --draft \
+            --title "GDIFC $VERSION (build $BUILD)" \
+            --notes-file "$RUNNER_TEMP/release-notes.md" \
+            $PRERELEASE

@@ -6,16 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 Changes are grouped by version, then by build. The build number is global: it never resets when the version changes, so each build number identifies exactly one build. The current version and build are in the addon's `plugin.cfg` and are shown at the bottom of the GDIFC dock.
 
-New changes go under **Unreleased**. To cut a build, run `python tools/bump_build.py`, or add `--version <new version>` to start a new version. The script moves the Unreleased entries into a new build section and updates both `plugin.cfg` copies.
+New changes go under **Unreleased**. Builds are cut automatically: when a push to `master` builds successfully and Unreleased has entries, CI runs `tools/bump_build.py`, which moves those entries into a new build section and updates both `plugin.cfg` copies. CI then commits the result, tags it `v<version>-build.<build>`, and creates a draft GitHub release with the addon zip. To start a new version, run the **Build GDExtension** workflow manually from the Actions tab and fill in **version**. To cut a build locally instead, run `python tools/bump_build.py` (optionally with `--version <new version>`).
 
 ## [Unreleased]
 
-### Added
+## [1.1.0-alpha]
+
+### Build 3 — 2026-10-15
+
+#### Added
 
 - A progress bar in the editor dock while a file loads. It shows the current stage (Parsing, Processing geometry, Creating nodes, Preparing editor, Adding to scene) and ends with "Loaded <file> in X s". A failed load shows the failure in the editor's error color, and no longer leaves an empty `GDIFCManager` in the scene. The **Load IFC...** button is disabled while a load runs.
 - `GDIFCManager.load_progress_changed(progress, stage)` signal, with `get_load_progress()` and `get_load_stage()`, so your own UI can follow a load. Stages are weighted by their measured share of the load time, and the long parsing step is estimated from the file size, so the progress moves roughly in step with time.
 
-### Changed
+#### Changed
 
 - **Models appear much sooner.** The model is now built from web-ifc alone and shown first. Attributes, property sets, quantities, typed `ifc_object` references and georeferencing come from IfcOpenShell's parser, which used to run first and took most of the load time. It now runs in the background alongside the geometry, and its results are applied afterwards. Time until the model is shown, outside the editor: dental_clinic 1.4 → 0.45 s, schependomlaan 3.8 → 0.7 s, ARK NordicLCA 11.4 → 4.4 s. In the editor: dental_clinic 2.5 → 1.6 s, schependomlaan 5.3 → 2.4 s.
   - **Behaviour change:** `ifc_read` now fires before that data is available. Wait for `ifc_objects_ready` before reading `attributes`, `properties`, `quantities` or `ifc_object`. A model placed relative to `reference_georeference` moves into place at `ifc_objects_ready`, and the `Georeference` node is added then too.
@@ -24,8 +28,6 @@ New changes go under **Unreleased**. To cut a build, run `python tools/bump_buil
 - LOD generation runs on all CPU cores, as its own stage after the geometry. On ARK NordicLCA it went from 4.6 s to about 1 s.
 - The editor dock shows "reading properties…" until the properties arrive, and keeps **Load IFC...** disabled until then.
 - The generated geometry is released from memory once the nodes are created.
-
-## [1.1.0-alpha]
 
 ### Build 2 — 2026-10-13
 

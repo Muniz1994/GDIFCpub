@@ -6,6 +6,11 @@ Usage:
     python tools/bump_build.py                        # next build of the current version
     python tools/bump_build.py --version 1.2.0-alpha  # next build, under a new version
     python tools/bump_build.py --dry-run              # show what would change, write nothing
+    python tools/bump_build.py --skip-if-empty --notes notes.md   # what CI runs
+
+CI runs this on every push to master (see .github/workflows/build.yml), so you
+normally only write entries under Unreleased and push. Run it by hand only to
+cut a build locally.
 
 What it does:
     1. Reads `version` and `build` from both addon plugin.cfg copies
@@ -19,10 +24,14 @@ What it does:
     4. Writes the new `version` and `build` into both plugin.cfg files.
 
 Nothing is committed; review the result and commit it yourself.
+
+When GITHUB_OUTPUT is set (GitHub Actions), it also writes `released`
+(true/false), `version` and `build` there for later workflow steps.
 """
 
 import argparse
 import datetime
+import os
 import re
 import sys
 from pathlib import Path
@@ -73,6 +82,7 @@ def set_cfg_value(text, key, value, insert_after):
 
 
 def release_changelog(text, version, build, date):
+    """Return (new changelog, released notes), or None when Unreleased is empty."""
     newline = "\r\n" if "\r\n" in text else "\n"
     lines = text.splitlines()
 
@@ -88,7 +98,8 @@ def release_changelog(text, version, build, date):
     while body and not body[-1].strip():
         body.pop()
     if not body:
-        fail("the Unreleased section is empty, nothing to release")
+        return None
+    notes = newline.join(body) + newline
 
     # Unreleased uses ### sections; under a build they sit one level deeper
     body = [("#" + line) if re.match(r"^#{3,} ", line) else line for line in body]
@@ -106,13 +117,25 @@ def release_changelog(text, version, build, date):
 
     result = newline.join(lines)
     result = re.sub(rf"({re.escape(newline)}){{3,}}", newline * 2, result)
-    return result.rstrip() + newline
+    return result.rstrip() + newline, notes
+
+
+def write_github_output(**values):
+    path = os.environ.get("GITHUB_OUTPUT")
+    if not path:
+        return
+    with open(path, "a", encoding="utf-8") as f:
+        for key, value in values.items():
+            f.write(f"{key}={value}\n")
 
 
 def main():
     parser = argparse.ArgumentParser(description="Bump the GDIFC build number and release the changelog entry.")
     parser.add_argument("--version", help="switch to this version (the build number keeps counting)")
     parser.add_argument("--dry-run", action="store_true", help="show what would change without writing")
+    parser.add_argument("--skip-if-empty", action="store_true",
+                        help="exit successfully without changes when Unreleased is empty")
+    parser.add_argument("--notes", metavar="PATH", help="also write the released entries to this file")
     args = parser.parse_args()
 
     cfg_texts = {path: read_text(path) for path in PLUGIN_CFGS}
@@ -134,7 +157,15 @@ def main():
     build = int(old_build) + 1
     date = datetime.date.today().isoformat()
 
-    changelog = release_changelog(read_text(CHANGELOG), version, build, date)
+    released = release_changelog(read_text(CHANGELOG), version, build, date)
+    if released is None:
+        if not args.skip_if_empty:
+            fail("the Unreleased section is empty, nothing to release")
+        print("Unreleased is empty, nothing to release")
+        write_github_output(released="false")
+        return
+    changelog, notes = released
+
     new_cfgs = {
         path: set_cfg_value(set_cfg_value(text, "version", version, "name"), "build", build, "version")
         for path, text in cfg_texts.items()
@@ -152,6 +183,10 @@ def main():
     for path, text in new_cfgs.items():
         write_text(path, text)
         print(f"updated {path.relative_to(ROOT)}")
+    if args.notes:
+        write_text(args.notes, notes)
+        print(f"wrote release notes to {args.notes}")
+    write_github_output(released="true", version=version, build=build)
 
 
 if __name__ == "__main__":
