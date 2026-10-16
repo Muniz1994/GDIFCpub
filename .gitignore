@@ -94,3 +94,4 @@ ifc-godot-project/local_runcode.gd
 *.pdb
 
 *.local-test
+/ifc-godot-project/Textures
