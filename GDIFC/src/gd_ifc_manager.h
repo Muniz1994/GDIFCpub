@@ -45,6 +45,7 @@ struct PrecalculatedIFCItemGeometry {
     // Mesh Data
     PackedVector3Array vertices;
     PackedVector3Array normals;
+    PackedVector2Array uvs; // box-projected, 1 UV unit = 1 meter
     PackedInt32Array indices;
     Dictionary lods; // LOD size (float) -> PackedInt32Array of indices; empty when no LODs
 
@@ -188,6 +189,11 @@ class GDIFCManager : public Node3D {
     size_t metadata_apply_index_ = 0;
 
     Error _start_loading(bool _create_collision, const Array &_collision_classes);
+    void _reset_load_state(bool _create_collision, const Array &_collision_classes);
+    IFCNode* _create_item_node(const PrecalculatedIFCItem& item, bool collect_editor_caches);
+    void _apply_metadata_item(PrecalculatedIFCMetadata& item);
+    void _apply_reference_placement(const GeorreferenceData& model_georeference);
+    void _apply_instance_reference_placement();
     void _wait_for_task();
     void _wait_for_metadata_task();
     bool _is_loading() const;
@@ -207,6 +213,7 @@ class GDIFCManager : public Node3D {
     ~GDIFCManager() override;
 
     Error read_ifc(const String &_path, bool _create_collision, const Array &_collision_classes);
+    Error read_ifc_blocking(const String &_path, bool _create_collision, const Array &_collision_classes);
     float get_load_progress() const { return load_progress_; }
     String get_load_stage() const;
     Error read_ifc_base64(const String &_base64_data, bool _create_collision, const Array &_collision_classes);
@@ -234,7 +241,7 @@ class GDIFCManager : public Node3D {
     void set_ifc_file_path(const String &path) { ifc_file_path_ = path; }
 
     NodePath get_reference_georeference() const { return reference_georeference_; }
-    void set_reference_georeference(const NodePath &path) { reference_georeference_ = path; }
+    void set_reference_georeference(const NodePath &path);
 
     /// Return the IFCModel root node (available after loading completes).
     IFCModel* get_ifc_model();

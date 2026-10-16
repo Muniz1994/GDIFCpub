@@ -2,6 +2,14 @@
 extends Control
 
 const FOLDING_METADATA_SECTION := "gdifc_dock"
+# Name of the importer in GDIFC/src/gd_ifc_import_plugin.cpp, which turns .ifc files into scenes
+const IFC_IMPORTER := "gdifc.ifc_scene"
+const DEFAULT_IMPORT_FOLDER := "res://ifc/"
+# How long to wait for the scan that imports a file new to the project. Covers large models,
+# which are imported within the scan.
+const IMPORT_SCAN_TIMEOUT_MSEC := 600000
+
+signal overwrite_answered(replace: bool)
 
 # Concrete IfcBuildingElement (IFC2X3, IFC4) and IfcBuiltElement (IFC4X3) subtypes, matched by exact class name
 const COLLISION_ELEMENT_TYPES: PackedStringArray = [
@@ -76,8 +84,13 @@ const COLLISION_LIST_VISIBLE_ROWS := 8
 @onready var logo: TextureRect = %Logo
 @onready var margin_container: MarginContainer = %MarginContainer
 @onready var groups: VBoxContainer = %Groups
+@onready var import_as_scene_check: CheckBox = %ImportAsSceneCheckBox
+@onready var import_folder_edit: LineEdit = %ImportFolderEdit
+@onready var import_folder_browse: Button = %ImportFolderBrowse
 
 var file_dialog: EditorFileDialog
+var folder_dialog: EditorFileDialog
+var overwrite_dialog: ConfirmationDialog
 var ifc_manager: GDIFCManager
 var current_scene_root: Node
 var geom_settings_picker = EditorResourcePicker.new()
@@ -90,6 +103,7 @@ var load_failed := false
 func _ready():
 	button.pressed.connect(_on_open_button_pressed)
 	georef_refresh.pressed.connect(_refresh_georef_options)
+	import_folder_browse.pressed.connect(_on_import_folder_browse_pressed)
 	# Rebuild the list every time it opens so it matches the edited scene
 	georef_option.get_popup().about_to_popup.connect(_refresh_georef_options)
 	
@@ -111,10 +125,14 @@ func _start_interface():
 	generate_lods_check.toggled.connect(func(on: bool): lod_merge_angle.editable = on)
 	_sync_lod_controls(settings)
 
+	# The list may hold items saved with the dock scene; the constant is the source of truth
+	elements_list.clear()
 	for type_name in COLLISION_ELEMENT_TYPES:
 		elements_list.add_item(type_name)
 	create_collisions_check.toggled.connect(_set_collision_elements_enabled)
 	_set_collision_elements_enabled(create_collisions_check.button_pressed)
+
+	_restore_import_options()
 
 	_restore_group_folding()
 	_apply_editor_theme()
@@ -136,6 +154,7 @@ func _apply_editor_theme():
 
 	button.icon = get_theme_icon("Load", "EditorIcons")
 	georef_refresh.icon = get_theme_icon("Reload", "EditorIcons")
+	import_folder_browse.icon = get_theme_icon("Folder", "EditorIcons")
 
 	# The logo is white, so tinting it with the font color keeps it readable on light themes
 	var footer_color := get_theme_color("font_color", "Editor")
@@ -165,6 +184,43 @@ func _restore_group_folding():
 func _set_collision_elements_enabled(on: bool):
 	for i in elements_list.item_count:
 		elements_list.set_item_disabled(i, not on)
+
+# The import options are remembered per project, like the group folding
+func _restore_import_options():
+	var editor_settings := EditorInterface.get_editor_settings()
+	import_as_scene_check.button_pressed = editor_settings.get_project_metadata(FOLDING_METADATA_SECTION, "import_as_scene", false)
+	import_folder_edit.text = editor_settings.get_project_metadata(FOLDING_METADATA_SECTION, "import_folder", DEFAULT_IMPORT_FOLDER)
+	_set_import_folder_enabled(import_as_scene_check.button_pressed)
+
+	import_as_scene_check.toggled.connect(func(on: bool):
+		_set_import_folder_enabled(on)
+		editor_settings.set_project_metadata(FOLDING_METADATA_SECTION, "import_as_scene", on))
+	import_folder_edit.text_changed.connect(func(text: String):
+		editor_settings.set_project_metadata(FOLDING_METADATA_SECTION, "import_folder", text))
+
+func _set_import_folder_enabled(on: bool):
+	import_folder_edit.editable = on
+	import_folder_browse.disabled = not on
+
+func _on_import_folder_browse_pressed():
+	if not folder_dialog:
+		folder_dialog = EditorFileDialog.new()
+		folder_dialog.file_mode = EditorFileDialog.FILE_MODE_OPEN_DIR
+		folder_dialog.access = EditorFileDialog.ACCESS_RESOURCES
+		folder_dialog.dir_selected.connect(func(dir: String):
+			import_folder_edit.text = dir
+			import_folder_edit.text_changed.emit(dir))
+		add_child(folder_dialog)
+
+	folder_dialog.current_dir = _get_import_folder()
+	folder_dialog.popup_centered_ratio(0.5)
+
+# Falls back to the default for anything outside the project
+func _get_import_folder() -> String:
+	var folder := import_folder_edit.text.strip_edges()
+	if not folder.begins_with("res://"):
+		folder = DEFAULT_IMPORT_FOLDER
+	return folder
 
 # Version and build come from plugin.cfg next to this script, wherever the addon is installed
 func _show_build_info():
@@ -262,6 +318,10 @@ func _on_file_selected(path: String):
 	# read_ifc() reads the whole file before returning, so let the status draw first
 	await get_tree().process_frame
 
+	if import_as_scene_check.button_pressed:
+		await _import_and_instance(path, create_collision, collision_elements)
+		return
+
 	ifc_manager = GDIFCManager.new()
 	ifc_manager.set_gdifc_settings(_build_load_settings())
 
@@ -291,6 +351,143 @@ func _on_file_selected(path: String):
 		return
 
 	ifc_manager.set_display_folded(true)
+
+# Imports the file as a scene with the dock's options and instances it in the edited scene,
+# which then only stores a reference to the .ifc file. Files from outside the project are
+# copied into the import folder first.
+func _import_and_instance(path: String, create_collision: bool, collision_elements: Array):
+	ifc_manager = null
+
+	var res_path := ProjectSettings.localize_path(path)
+	if not res_path.begins_with("res://"):
+		var folder := _get_import_folder()
+		res_path = folder.path_join(path.get_file())
+		if not await _copy_into_project(path, res_path):
+			return
+
+	_write_import_options(res_path, create_collision, collision_elements)
+
+	_show_load_status("Importing %s" % load_file_name, false)
+	load_progress_bar.hide()
+	# The import blocks the editor, so let the status draw first
+	await get_tree().process_frame
+
+	var resource_filesystem := EditorInterface.get_resource_filesystem()
+	while resource_filesystem.is_scanning():
+		await get_tree().process_frame
+	if resource_filesystem.get_file_type(res_path).is_empty():
+		# reimport_files() only knows files the editor has scanned. A scan finds the new file
+		# and imports it with the options written above.
+		if not await _scan_and_wait_for_import(res_path):
+			_on_load_failed()
+			return
+	else:
+		resource_filesystem.reimport_files(PackedStringArray([res_path]))
+
+	var scene := ResourceLoader.load(res_path, "PackedScene", ResourceLoader.CACHE_MODE_REPLACE) as PackedScene
+	# The edited scene may have changed while the overwrite prompt was open
+	current_scene_root = EditorInterface.get_edited_scene_root()
+	if not scene or not current_scene_root:
+		_on_load_failed()
+		return
+
+	var root_node := scene.instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE)
+	var instance := root_node as GDIFCManager
+	if not instance:
+		root_node.free()
+		_on_load_failed()
+		return
+	instance.ifc_objects_ready.connect(_on_load_finished, CONNECT_ONE_SHOT)
+
+	var undo_redo := EditorInterface.get_editor_undo_redo()
+	undo_redo.create_action("Instance IFC scene", UndoRedo.MERGE_DISABLE, current_scene_root)
+	undo_redo.add_do_method(current_scene_root, "add_child", instance, true)
+	undo_redo.add_do_method(instance, "set_owner", current_scene_root)
+	undo_redo.add_do_reference(instance)
+	undo_redo.add_undo_method(current_scene_root, "remove_child", instance)
+	undo_redo.commit_action()
+
+	# Placed as soon as it's set, since the instance is already in the tree
+	var georef_path = _get_selected_georef_path()
+	if not georef_path.is_empty():
+		var georef = current_scene_root.get_node_or_null(georef_path)
+		if georef:
+			instance.reference_georeference = instance.get_path_to(georef)
+		else:
+			push_warning("GDIFC: reference georeference '%s' no longer exists. Placing the model at the origin." % georef_path)
+
+	var selection := EditorInterface.get_selection()
+	selection.clear()
+	selection.add_node(instance)
+
+	_on_model_shown()
+
+func _scan_and_wait_for_import(res_path: String) -> bool:
+	var resource_filesystem := EditorInterface.get_resource_filesystem()
+	var imported := [false] # lambdas capture locals by value, so the flag is held in an array
+	var on_reimported := func(paths: PackedStringArray):
+		if res_path in paths:
+			imported[0] = true
+	resource_filesystem.resources_reimported.connect(on_reimported)
+	resource_filesystem.scan()
+
+	var start_msec := Time.get_ticks_msec()
+	while not imported[0] and Time.get_ticks_msec() - start_msec < IMPORT_SCAN_TIMEOUT_MSEC:
+		await get_tree().process_frame
+	resource_filesystem.resources_reimported.disconnect(on_reimported)
+	if not imported[0]:
+		push_error("GDIFC: %s was not imported after the filesystem scan." % res_path)
+	return imported[0]
+
+# Copies a file from outside the project to res_path. A different file already there is only
+# replaced if confirmed; the same file is kept as it is. Returns false if nothing can be imported.
+func _copy_into_project(path: String, res_path: String) -> bool:
+	var exists := FileAccess.file_exists(res_path)
+	if exists and FileAccess.get_md5(res_path) == FileAccess.get_md5(path):
+		return true
+
+	if exists and not await _confirm_overwrite("%s already exists in %s.\nReplace it with the file you picked?" \
+			% [res_path.get_file(), res_path.get_base_dir()]):
+		button.disabled = false
+		_show_load_status("Did not load %s: a different file with that name is in the import folder" % load_file_name, false)
+		return false
+
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(res_path.get_base_dir()))
+	var err := DirAccess.copy_absolute(path, ProjectSettings.globalize_path(res_path))
+	if err != OK:
+		push_error("GDIFC: could not copy %s to %s (%s)." % [path, res_path, error_string(err)])
+		_on_load_failed()
+		return false
+	return true
+
+func _confirm_overwrite(text: String) -> bool:
+	if not overwrite_dialog:
+		overwrite_dialog = ConfirmationDialog.new()
+		overwrite_dialog.title = "Replace IFC file"
+		overwrite_dialog.ok_button_text = "Replace"
+		overwrite_dialog.confirmed.connect(func(): overwrite_answered.emit(true))
+		overwrite_dialog.canceled.connect(func(): overwrite_answered.emit(false))
+		add_child(overwrite_dialog)
+
+	overwrite_dialog.dialog_text = text
+	overwrite_dialog.popup_centered()
+	return await overwrite_answered
+
+# The importer reads its options from the .import file, so the dock writes them there before
+# importing. Existing keys, such as the uid, are kept.
+func _write_import_options(res_path: String, create_collision: bool, collision_elements: Array):
+	var load_settings := _build_load_settings()
+	var import_config := ConfigFile.new()
+	import_config.load(res_path + ".import") # missing on the first import
+	import_config.set_value("remap", "importer", IFC_IMPORTER)
+	import_config.set_value("remap", "type", "PackedScene")
+	import_config.set_value("params", "geometry/coordinate_to_origin", load_settings.coordinate_to_origin)
+	import_config.set_value("params", "geometry/circle_segments", load_settings.circle_segments)
+	import_config.set_value("params", "lods/generate", load_settings.generate_lods)
+	import_config.set_value("params", "lods/normal_merge_angle", load_settings.lod_normal_merge_angle)
+	import_config.set_value("params", "collision/create", create_collision)
+	import_config.set_value("params", "collision/classes", PackedStringArray(collision_elements))
+	import_config.save(res_path + ".import")
 
 func _on_load_progress(progress: float, stage: String):
 	load_progress_bar.value = progress
