@@ -6,8 +6,8 @@
 		A named and structured grouping with a corporate identity. NOTE: The relationships between IfcOrganizations , like a Department within a Company, can be expressed using IfcOrganizationRelationship . NOTE Corresponds to the following entity in ISO-10303-41: organization. HISTORY New entity in IFC Release 1.5.1. IFC 2x4 change: attribute Id renamed to Identification .
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Identification" type="String" setter="set_Identification" getter="get_Identification">
 			Identification of the organization.
@@ -31,6 +31,4 @@
 		<member name="Engages" type="Array" setter="" getter="get_Engages">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

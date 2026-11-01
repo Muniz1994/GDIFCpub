@@ -6,8 +6,8 @@
 		Definition from IAI : The element type IfcDoorType defines commonly shared information for occurrences of doors. The set of shared information may include: common properties within shared property sets common material information common operation type definitions common shape representations A door type defines the particular parameter of the lining and one (or several) panels through the IfcDoorL
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 			Identifies the predefined types of a door element from which the type required may be set.
@@ -20,6 +20,4 @@
 		<member name="UserDefinedOperationType" type="String" setter="set_UserDefinedOperationType" getter="get_UserDefinedOperationType">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

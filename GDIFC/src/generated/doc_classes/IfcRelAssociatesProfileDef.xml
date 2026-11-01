@@ -6,12 +6,10 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="RelatingProfileDef" type="GDIFCEntityBase" setter="set_RelatingProfileDef" getter="get_RelatingProfileDef">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

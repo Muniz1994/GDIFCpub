@@ -6,8 +6,8 @@
 		IfcOwnerHistory defines all history and identification related information. In order to provide fast access it is directly attached to all independent objects, relationships and properties. IfcOwnerHistory is used to identify the creating and owning application and user for the associated object, as well as capture the last modifying application and user. HISTORY New entity in IFC R1.0. Modified i
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="OwningUser" type="GDIFCEntityBase" setter="set_OwningUser" getter="get_OwningUser">
 			Direct reference to the end user who currently "owns" this object. Note that IFC includes the concept of ownership transfer from one user to another and therefore distinguishes between the Owning User and Creating User.
@@ -34,6 +34,4 @@
 			The date and time expressed in UTC (Universal Time Coordinated, formerly Greenwich Mean Time or GMT) when first created by the original OwningApplication. Once defined this value remains unchanged through the lifetime of the entity.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

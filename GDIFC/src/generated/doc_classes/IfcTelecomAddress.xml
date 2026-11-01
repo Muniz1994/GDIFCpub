@@ -6,8 +6,8 @@
 		Definition: Address to which telephone, electronic mail and other forms of telecommunications should be addressed. HISTORY New entity in IFC Release 2x. IFC 2x4 change: Added attribute MessagingIDs . Type of attribute WWWHomePageURL compatibly changed from IfcLabel to IfcURIReference .
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="TelephoneNumbers" type="PackedStringArray" setter="set_TelephoneNumbers" getter="get_TelephoneNumbers">
 			The list of telephone numbers at which telephone messages may be received.
@@ -28,6 +28,4 @@
 			IDs or addresses for any other means of telecommunication, for example instant messaging, voice-over-IP, or file transfer protocols. The communication protocol is indicated by the URI value with scheme designations such as irc:, sip:, or ftp:.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

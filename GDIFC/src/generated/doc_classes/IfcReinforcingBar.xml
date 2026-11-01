@@ -6,8 +6,8 @@
 		Definition from IAI: A steel bar, usually with manufactured deformations in the surface, used in concrete and masonry construction to provide additional strength. A single instance of this class may represent one or many of actual rebars, for example a row of rebars. HISTORY New entity in IFC Release 2x2 IFC 2x4 CHANGE All attributes removed; information now provided by IfcReinforcingBarType . Geo
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="NominalDiameter" type="float" setter="set_NominalDiameter" getter="get_NominalDiameter">
 			The predefined type is always BAR.
@@ -21,6 +21,4 @@
 		<member name="BarSurface" type="String" setter="set_BarSurface" getter="get_BarSurface">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

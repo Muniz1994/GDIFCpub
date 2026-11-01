@@ -6,10 +6,8 @@
 		The distribution flow element IfcEnergyConversionDevice defines the occurrence of a device used to perform energy conversion or heat transfer and typically participates in a flow distribution system. Its type is defined by IfcEnergyConversionDeviceType or its subtypes. HISTORY: New entity in IFC R2.0. IFC 2x4 NOTE: This entity has been deprecated for instantiation and will become ABSTRACT in a fut
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 	</members>
-	<signals/>
-	<constants/>
 </class>

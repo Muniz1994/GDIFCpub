@@ -6,8 +6,8 @@
 		IfcSectionReinforcementProperties defines the cross section properties of reinforcement for a single longitudinal piece of a cross section with a specific reinforcement usage type. HISTORY New entity in IFC2x2. Several sets of cross section reinforcement properties represented by instances of IfcReinforcementProperties may be attached to the section reinforcement properties ( IfcReinforcementDefin
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="LongitudinalStartPosition" type="float" setter="set_LongitudinalStartPosition" getter="get_LongitudinalStartPosition">
 			The start position in longitudinal direction for the section reinforcement properties.
@@ -28,6 +28,4 @@
 			The set of reinforcment properties attached to a section reinforcement properties definition.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

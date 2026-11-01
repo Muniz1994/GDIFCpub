@@ -6,8 +6,8 @@
 		The objectified relationship IfcRelAssignsToProcess handles the assignment of one or many objects to a process or activity. An object can be a product that is the item the process operates on. Processes and activities can operate on things other than products, and can operate in ways other than input and output. EXAMPLE It may be common to define processes during estimating or scheduling that desc
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="RelatingProcess" type="GDIFCEntityBase" setter="set_RelatingProcess" getter="get_RelatingProcess">
 			Reference to the process to which the objects are assigned to. IFC2x4 CHANGE Datatype expanded to include IfcProcess and IfcTypeProcess .
@@ -16,6 +16,4 @@
 			Quantity of the object specific for the operation by this process.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

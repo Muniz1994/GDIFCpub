@@ -6,8 +6,8 @@
 		An instance of the entity IfcStructuralLoadTemperature shall be used to define actions which are caused by a temperature change. As shown in Figure 332, the change of temperature is given with a constant value which is applied to the complete section and values for temperature differences between outer fibres of the section. HISTORY New entity in IFC2x2. Figure 332 — Structural load temperature
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="DeltaTConstant" type="float" setter="set_DeltaTConstant" getter="get_DeltaTConstant">
 			Temperature change which affects the complete section of the structural member, or the uniform portion of a non-uniform temperature change. A positive value describes an increase in temperature. I.e. a positive constant temperature change causes elongation of a member, or compression in the member if there are respective restraints.
@@ -19,6 +19,4 @@
 			Non-uniform temperature change, specified as the difference of the temperature change at the outer fibre of the positive z direction minus the temperature change at the outer fibre of the negative z direction of the analysis member. I.e. a positive non-uniform temperature change in z induces a positive curvature of the member about y, or a negative bending moment about y if there are respective restraints. y and z are local member axes.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

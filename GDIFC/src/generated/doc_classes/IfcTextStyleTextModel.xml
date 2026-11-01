@@ -6,8 +6,8 @@
 		Definition from CSS1 (W3C Recommendation) : The properties defined in the text model affect the visual presentation of characters, spaces, words, and paragraphs. The IfcTextStyleTextModel combines all text style properties, that affect the presentation of a text literal within a given extent. It includes the spacing between characters and words, the horizontal and vertical alignment of the text wi
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="TextIndent" type="GDIFCEntityBase" setter="set_TextIndent" getter="get_TextIndent">
 			The property specifies the indentation that appears before the first formatted line. NOTE It has been introduced for later compliance to full CSS1 support.
@@ -31,6 +31,4 @@
 			The property sets the distance between two adjacent lines' baselines. When a ratio value is specified, the line height is given by the font size of the current element multiplied with the numerical value. A value of 'normal' sets the line height to a reasonable value for the element's font. It is suggested that user agents set the 'normal' value to be a ratio number in the range of 1.0 to 1.2. NOTE The following values are allowed: IfcDescriptiveMeasure with value='normal', or IfcLengthMeasure , with non-negative values, the length unit is globally defined at IfcUnitAssignment , or IfcRatioMeasure .
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

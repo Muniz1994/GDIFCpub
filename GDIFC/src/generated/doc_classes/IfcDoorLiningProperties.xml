@@ -6,8 +6,8 @@
 		The door lining is the frame which enables the door leaf to be fixed in position. The door lining is used to hang the door leaf. The parameters of the door lining ( IfcDoorLiningProperties ) define the geometrically relevant parameter of the lining. NOTEÿ The IfcDoorLiningProperties shall only be applied to construct the 3D shape of a door, if the attribute IfcDoorStyle.ParameterTakesPrecedence is
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="LiningDepth" type="float" setter="set_LiningDepth" getter="get_LiningDepth">
 			Depth of the door lining, measured perpendicular to the plane of the door lining. If omitted (and with a given value to lining thickness) it indicates an adjustable depth (i.e. a depth that adjusts to the thickness of the wall into which the occurrence of this door style is inserted).
@@ -49,6 +49,4 @@
 			Offset between the lining and the door panel measured along the y-axis of the local placement. IFC2x4 CHANGE: New attribute added at the end of the entity definition.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

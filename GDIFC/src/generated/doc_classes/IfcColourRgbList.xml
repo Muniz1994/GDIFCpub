@@ -6,12 +6,10 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="ColourList" type="Array" setter="" getter="get_ColourList">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

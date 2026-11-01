@@ -6,8 +6,8 @@
 		Definition from ISO/CD 10303-42:1992: The swept area solid entity collects the entities which are defined procedurally by sweeping action on planar bounded surfaces. The position is space of the swept solid will be dependent upon the position of the swept area. The swept area will be a face of the resulting swept area solid, except for the case of a revolved area solid with angle equal to 2π (or 3
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="SweptArea" type="GDIFCEntityBase" setter="set_SweptArea" getter="get_SweptArea">
 			The surface defining the area to be swept. It is given as a profile definition within the xy plane of the position coordinate system.
@@ -16,6 +16,4 @@
 			Position coordinate system for the swept area, provided by a profile definition within the XY plane of the Position .
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

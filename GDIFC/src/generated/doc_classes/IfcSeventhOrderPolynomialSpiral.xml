@@ -6,8 +6,8 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="SepticTerm" type="float" setter="set_SepticTerm" getter="get_SepticTerm">
 		</member>
@@ -26,6 +26,4 @@
 		<member name="ConstantTerm" type="float" setter="set_ConstantTerm" getter="get_ConstantTerm">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

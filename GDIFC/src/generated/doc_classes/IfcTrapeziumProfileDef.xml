@@ -6,8 +6,8 @@
 		IfcTrapeziumProfileDef defines a trapezium as the profile definition used by the swept surface geometry or the swept area solid. It is given by its Top X and Bottom X extent and its Y extent as well as by the offset of the Top X extend, and placed within the 2D position coordinate system, established by the Position attribute. It is placed centric within the position coordinate system, that is, in
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="BottomXDim" type="float" setter="set_BottomXDim" getter="get_BottomXDim">
 			The extent of the bottom line measured along the implicit x-axis.
@@ -22,6 +22,4 @@
 			Offset from the beginning of the top line to the bottom line, measured along the implicit x-axis.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

@@ -6,8 +6,8 @@
 		Definition from IAI: Instances of the entity IfcStructuralLoadSingleForce shall be used to define the forces and moments of an action operating on a single point. HISTORY: New entity in Release IFC2x edition 2.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="ForceX" type="float" setter="set_ForceX" getter="get_ForceX">
 			Force value in x-direction.
@@ -28,6 +28,4 @@
 			Moment about the z-axis.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

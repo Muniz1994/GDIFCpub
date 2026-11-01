@@ -6,8 +6,8 @@
 		Definition from ISO/CD 10303-42:1992 The curve bounded surface is a parametric surface with curved boundaries defined by one or more boundary curves. One of the boundary curves may be the outer boundary; any number of inner boundaries is permissible. The region of the curve bounded surface in the basis surface is defined to be the portion of the basis surface in the direction of N x T from any poi
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="BasisSurface" type="GDIFCEntityBase" setter="set_BasisSurface" getter="get_BasisSurface">
 			The surface to be bounded.
@@ -18,6 +18,4 @@
 		<member name="ImplicitOuter" type="bool" setter="set_ImplicitOuter" getter="get_ImplicitOuter">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

@@ -6,8 +6,8 @@
 		The window lining is the outer frame which enables the window to be fixed in position. The window lining is used to hold the window panels or other casements. The parameter of the IfcWindowLiningProperties define the geometrically relevant parameter of the lining. NOTEÿ The IfcWindowLiningProperties shall only be applied to construct the 3D shape of a window, if the attribute IfcWindowStyle.Parame
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="LiningDepth" type="float" setter="set_LiningDepth" getter="get_LiningDepth">
 			Depth of the window lining (dimension measured perpendicular to window elevation plane).
@@ -46,6 +46,4 @@
 			Offset between the lining and the window panel measured along the y-axis of the local placement. Should be smaller or equal to the IfcWindowPanelProperties.PanelThickness . IFC2x4 CHANGE: New attribute added at the end of the entity definition.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

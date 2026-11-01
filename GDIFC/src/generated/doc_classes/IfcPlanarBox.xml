@@ -6,13 +6,11 @@
 		Definition from ISO/CD 10303-46:1992 : A planar box specifies an arbitrary rectangular box and its location in a two dimensional Cartesian coordinate system. NOTE Corresponding ISO 10303 name: planar_box. Please refer to ISO/IS 10303-46:1994, p. 141 for the final definition of the formal standard. HISTORY New entity in IFC2x2.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Placement" type="GDIFCEntityBase" setter="set_Placement" getter="get_Placement">
 			The IfcAxis2Placement positions a local coordinate system for the definition of the rectangle. The origin of this local coordinate system serves as the lower left corner of the rectangular box. NOTE In case of a 3D placement by IfcAxisPlacement3D the IfcPlanarBox is defined within the xy plane of the definition coordinate system.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

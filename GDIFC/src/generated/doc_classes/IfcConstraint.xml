@@ -6,8 +6,8 @@
 		An IfcConstraint is used to define a constraint or limiting value or boundary condition that may be applied to an object or to the value of a property. HISTORY: New Entity in IFC Release 2.0 Use Definition IfcConstraint may be associated with any subtype of IfcRoot (unless restricted in specific subtypes) through the IfcRelAssociatesConstraint relationship in the IfcControlExtension schema, or may
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Name" type="String" setter="set_Name" getter="get_Name">
 			A name to be used for the constraint (e.g., ChillerCoefficientOfPerformance).
@@ -35,6 +35,4 @@
 		<member name="PropertiesForConstraint" type="Array" setter="" getter="get_PropertiesForConstraint">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

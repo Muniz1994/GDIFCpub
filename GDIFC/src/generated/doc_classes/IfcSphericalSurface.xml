@@ -6,12 +6,10 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Radius" type="float" setter="set_Radius" getter="get_Radius">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

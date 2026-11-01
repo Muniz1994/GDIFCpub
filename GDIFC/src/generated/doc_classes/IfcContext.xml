@@ -6,8 +6,8 @@
 		IfcContext is the generalization of a project context in which objects, type objects, property sets, and properties are defined. The IfcProject as subtype of IfcContext provides the context for all information on a construction project, it may include one or several IfcProjectLibrary as subtype of IfcContext to register the included libraries for the project. Context definitions can be named, usin
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="ObjectType" type="String" setter="set_ObjectType" getter="get_ObjectType">
 			The type denotes a particular type that indicates the object further. The use has to be established at the level of instantiable subtypes.
@@ -29,6 +29,4 @@
 		<member name="Declares" type="Array" setter="" getter="get_Declares">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

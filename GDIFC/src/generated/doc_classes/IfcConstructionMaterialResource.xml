@@ -6,13 +6,11 @@
 		IfcConstructionMaterialResource identifies a material resource type in a construction project. HISTORY: New Entity in IFC Release 2.0. Base type and documentation extended in IFC2x4. IFC2x4 NOTE: The attribute Suppliers has been deleted; use IfcRelAssignsToResource to assign an IfcActor to fulfill the role as a supplier. The attribute UsageRatio has been deleted; use BaseQuantityConsumed and BaseQ
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 			Defines types of construction material resources. IFC2x4 New attribute
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

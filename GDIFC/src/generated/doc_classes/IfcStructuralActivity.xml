@@ -6,8 +6,8 @@
 		Definition from IAI: The abstract entity IfcStructuralActivity combines the definition of actions (such as forces, displacements, etc.) and reactions (support reactions, internal forces, deflections, etc.) which are specified by using the basic load definitions from the IfcStructuralLoadResource . The differentiation between actions and reactions is realized by instantiating objects either from su
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="AppliedLoad" type="GDIFCEntityBase" setter="set_AppliedLoad" getter="get_AppliedLoad">
 			Load or result resource object which defines the load type, direction, and load values. In case of activities which are variably distributed over curves or surfaces, IfcStructuralLoadConfiguration is used which provides a list of load samples and their locations within the load distribution, measured in local coordinates of the curve or surface on which this activity acts. The contents of this load or result distribution may be further restricted by definitions at subtypes of IfcStructuralActivity .
@@ -18,6 +18,4 @@
 		<member name="AssignedToStructuralItem" type="Array" setter="" getter="get_AssignedToStructuralItem">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

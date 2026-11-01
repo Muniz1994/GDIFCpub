@@ -6,8 +6,8 @@
 		Definition from ISO 6707-1:1989 : Area where construction works are undertaken. A site is a defined area of land, possibly covered with water, on which the project construction is to be completed. A site may be used to erect building(s) or other AEC products. A site ( IfcSite ) may include a definition of the single geographic reference point for this site (global position using WGS84 with Longitu
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="RefLatitude" type="PackedInt64Array" setter="set_RefLatitude" getter="get_RefLatitude">
 			World Latitude at reference point (most likely defined in legal description). Defined as integer values for degrees, minutes, seconds, and, optionally, millionths of seconds with respect to the world geodetic system WGS84. Latitudes are measured relative to the geodetic equator, north of the equator by positive values - from 0 till +90, south of the equator by negative values - from 0 till -90.
@@ -25,6 +25,4 @@
 			Address given to the site for postal purposes.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

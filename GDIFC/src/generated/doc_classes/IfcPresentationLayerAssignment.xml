@@ -6,8 +6,8 @@
 		The presentation layer assignment provides the layer name (and optionally a description and an identifier) for a collection of geometric representation items. The IfcPresentationLayerAssignment corresponds to the term "CAD Layer" and is used mainly for grouping and visibility control. NOTE The use of presentation layer shall be restricted to simple grouping and displaying purposes. Visibility and 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Name" type="String" setter="set_Name" getter="get_Name">
 			Name of the layer.
@@ -22,6 +22,4 @@
 			An (internal) identifier assigned to the layer.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

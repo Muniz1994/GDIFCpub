@@ -6,8 +6,8 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="TypeIdentifier" type="String" setter="set_TypeIdentifier" getter="get_TypeIdentifier">
 		</member>
@@ -20,6 +20,4 @@
 		<member name="InnerReference" type="GDIFCEntityBase" setter="set_InnerReference" getter="get_InnerReference">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

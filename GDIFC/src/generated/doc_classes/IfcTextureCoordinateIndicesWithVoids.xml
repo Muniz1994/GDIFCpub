@@ -6,12 +6,10 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="InnerTexCoordIndices" type="Array" setter="" getter="get_InnerTexCoordIndices">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

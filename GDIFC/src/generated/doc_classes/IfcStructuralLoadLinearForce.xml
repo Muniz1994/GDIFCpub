@@ -6,8 +6,8 @@
 		Definition from IAI: An instance of the entity IfcStructuralLoadLinearForce shall be used to define actions on curves. HISTORY: New entity in Release IFC2x edition 2.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="LinearForceX" type="float" setter="set_LinearForceX" getter="get_LinearForceX">
 			Linear force value in x-direction.
@@ -28,6 +28,4 @@
 			Linear moment about the z-axis.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

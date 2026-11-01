@@ -6,10 +6,8 @@
 		The pre defined text font determines those qualified names which can be used for fonts that are in scope of the current data exchange specification (in contrary to externally defined text fonts). There are two choices: IfcDraughtingPreDefinedTextFont for definitions from ISO/IS 10303-46:1994 for (old) vector based and monospace text. IfcTextStyleFontModel for definitions from Cascading Style Sheet
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 	</members>
-	<signals/>
-	<constants/>
 </class>

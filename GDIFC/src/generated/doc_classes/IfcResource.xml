@@ -6,8 +6,8 @@
 		IfcResource contains the information needed to represent the costs, schedule, and other impacts from the use of a thing in a process. It is not intended to use IfcResource to model the general properties of the things themselves, while an optional linkage from IfcResource to the things to be used can be specified (specifically, the relationship from subtypes of IfcResource to IfcProduct through th
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Identification" type="String" setter="set_Identification" getter="get_Identification">
 			An identifying designation given to a resource. It is the identifier at the occurrence level. IFC2x4 CHANGE Attribute promoted from subtype IfcConstructionResource .
@@ -18,6 +18,4 @@
 		<member name="ResourceOf" type="Array" setter="" getter="get_ResourceOf">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

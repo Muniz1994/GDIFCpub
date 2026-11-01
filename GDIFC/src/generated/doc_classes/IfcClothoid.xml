@@ -6,12 +6,10 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="ClothoidConstant" type="float" setter="set_ClothoidConstant" getter="get_ClothoidConstant">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

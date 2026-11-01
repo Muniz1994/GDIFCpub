@@ -6,8 +6,8 @@
 		An IfcResourceConstraintRelationship is a relationship entity that enables a constraint to be related to one or more resource level objects. HISTORY New Entity in Release IFC2x2. IFC2x4 CHANGE Renamed from IfcPropertyConstraintRelationship and extended to apply to all resource level entities. Subtyped from IfcResourceLevelRelationship . Use definition An IfcResourceConstraintRelationship allows fo
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="RelatingConstraint" type="GDIFCEntityBase" setter="set_RelatingConstraint" getter="get_RelatingConstraint">
 			The constraint that is to be related.
@@ -16,6 +16,4 @@
 			The properties to which a constraint is to be related.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

@@ -6,8 +6,8 @@
 		IfcSchedulingTime is the abstract supertype of entities that capture time-related information of processes. HISTORY: New entity in IFC2x4.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Name" type="String" setter="set_Name" getter="get_Name">
 			Optional name for the time definition.
@@ -19,6 +19,4 @@
 			Value of the data origin if DataOrigin attribute is USERDEFINED.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

@@ -6,8 +6,8 @@
 		An IfcClassification is used for the arrangement of objects into a class or category according to a common purpose or their possession of common characteristics. A classification in the sense of IfcClassification is taxonomy, or taxonomic scheme, arranged in a hierarchical structure. A category of objects relates to other categories in a generalization-specialization relationship. Therefore the cl
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Source" type="String" setter="set_Source" getter="get_Source">
 			Source (or publisher) for this classification. NOTE that the source of the classification means the person or organization that was the original author or the person or organization currently acting as the publisher.
@@ -35,6 +35,4 @@
 		<member name="HasReferences" type="Array" setter="" getter="get_HasReferences">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

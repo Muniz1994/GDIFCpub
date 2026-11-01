@@ -6,8 +6,8 @@
 		A property with a range value ( IfcPropertyTableValue ) defines a property object which has two lists of (numeric or descriptive) values assigned, the values specifying a table with two columns. The defining values provide the first column and establish the scope for the defined values (the second column). Interpolations are out of scope of the IfcPropertyTableValue . An optional Expression attrib
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="DefiningValues" type="Array" setter="set_DefiningValues" getter="get_DefiningValues">
 			List of defining values, which determine the defined values. This list shall have unique values only. IFC2x4 CHANGE The attribute has been made optional with upward compatibility for file based exchange.
@@ -28,6 +28,4 @@
 			Interpolation of the curve between two defining and defined values that are provided. if not provided a linear interpolation is assumed. IFC2x4 CHANGE The attribute has been added at the end of the attribute list.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

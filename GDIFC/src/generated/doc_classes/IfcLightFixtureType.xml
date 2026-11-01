@@ -6,13 +6,11 @@
 		The flow terminal type IfcLightFixtureType defines commonly shared information for occurrences of light fixtures. The set of shared information may include: common properties with shared property sets common representations of shape common materials common composition of elements common ports applicable assignment of process types It is used to define a light fixture specification (i.e. the specif
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 			Identifies the predefined types of light fixture from which the type required may be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

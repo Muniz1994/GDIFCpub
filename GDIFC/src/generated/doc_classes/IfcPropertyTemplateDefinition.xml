@@ -6,10 +6,8 @@
 		IfcPropertyTemplateDefinition is a generalization of all property and property set templates. Templates define the collection, types, names, applicable measure types and units of individual properties used in a project. The property template definition can be either: Property set template - IfcPropertySetTemplate , a collection of property templates that determine the definition of properties used
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 	</members>
-	<signals/>
-	<constants/>
 </class>

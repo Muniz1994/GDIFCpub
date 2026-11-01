@@ -6,13 +6,11 @@
 		The flow segment type IfcPipeSegmentType defines commonly shared information for occurrences of pipe segments. The set of shared information may include: common properties with shared property sets common representations of shape common materials common composition of elements common ports applicable assignment of process types It is used to define a pipe segment specification (i.e. the specific p
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 			The type of pipe segment.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

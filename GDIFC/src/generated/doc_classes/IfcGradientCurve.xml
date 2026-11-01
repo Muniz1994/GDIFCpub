@@ -6,14 +6,12 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="BaseCurve" type="GDIFCEntityBase" setter="set_BaseCurve" getter="get_BaseCurve">
 		</member>
 		<member name="EndPoint" type="GDIFCEntityBase" setter="set_EndPoint" getter="get_EndPoint">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

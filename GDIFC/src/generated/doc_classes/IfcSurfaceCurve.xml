@@ -6,8 +6,8 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Curve3D" type="GDIFCEntityBase" setter="set_Curve3D" getter="get_Curve3D">
 		</member>
@@ -16,6 +16,4 @@
 		<member name="MasterRepresentation" type="String" setter="set_MasterRepresentation" getter="get_MasterRepresentation">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

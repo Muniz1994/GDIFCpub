@@ -6,8 +6,8 @@
 		Definition from OpenGIS® Abstract Specification, Topic 2: If the relationship between any two coordinate reference systems is known, coordinates can be transformed or converted to another coordinate reference system. Coordinate operations are divided into two subtypes: Coordinate conversion – mathematical operation on coordinates that does not include any change of datum. The best-known example of
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="SourceCRS" type="GDIFCEntityBase" setter="set_SourceCRS" getter="get_SourceCRS">
 			Source coordinate reference system for the operation.
@@ -16,6 +16,4 @@
 			Target coordinate reference system for the operation.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

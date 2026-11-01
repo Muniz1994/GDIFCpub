@@ -6,8 +6,8 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Placement" type="GDIFCEntityBase" setter="set_Placement" getter="get_Placement">
 		</member>
@@ -18,6 +18,4 @@
 		<member name="ParentCurve" type="GDIFCEntityBase" setter="set_ParentCurve" getter="get_ParentCurve">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

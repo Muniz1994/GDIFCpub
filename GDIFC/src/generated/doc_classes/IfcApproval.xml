@@ -6,8 +6,8 @@
 		Definition: An IfcApproval represents information about approval processes such as for a plan, a design, a proposal, or a change order in a construction or facilities management project. IfcApproval is referenced by IfcRelAssociatesApproval in IfcControlExtension schema, and thereby can be related to all subtypes of IfcRoot . An approval may also be given to resource objects using IfcResourceAppro
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Identifier" type="String" setter="set_Identifier" getter="get_Identifier">
 			A computer interpretable identifier by which the approval is known.
@@ -47,6 +47,4 @@
 		<member name="Relates" type="Array" setter="" getter="get_Relates">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

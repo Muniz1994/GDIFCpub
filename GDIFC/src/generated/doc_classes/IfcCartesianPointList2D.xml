@@ -6,14 +6,12 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="CoordList" type="Array" setter="" getter="get_CoordList">
 		</member>
 		<member name="TagList" type="PackedStringArray" setter="set_TagList" getter="get_TagList">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

@@ -6,8 +6,8 @@
 		The objectified relationship IfcRelDeclares handles the declaration of objects (subtypes of IfcObject ) or properties (subtypes of IfcPropertyDefinition ) to a project or project library (represented by IfcProject , or IfcProjectLibrary ). The relationship handles the assignment of other objects, like IfcActor , or IfcTypeObject to the project, or project libary. The attribute RelatedDefinitions p
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="RelatingContext" type="GDIFCEntityBase" setter="set_RelatingContext" getter="get_RelatingContext">
 			Reference to the IfcProject to which additional information is assigned.
@@ -16,6 +16,4 @@
 			Set of object or property definitions that are assigned to a context and to which the unit and representation context definitions of that context apply.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

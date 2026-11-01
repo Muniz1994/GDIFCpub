@@ -6,8 +6,8 @@
 		Definition from IAI: Fasteners connecting building elements mechanically. A single instance of this class may represent one or many of actual mechanical fasteners, for example an array of bolts or a row of nails. HISTORY New entity in IFC Release 2x2 IFC 2x4 change: Supertype changed from IfcFastener to IfcElementComponent . Attribute PredefinedType added. Attributes NominalDiameter and NominalLen
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="NominalDiameter" type="float" setter="set_NominalDiameter" getter="get_NominalDiameter">
 			Subtype of mechanical fastener
@@ -17,6 +17,4 @@
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

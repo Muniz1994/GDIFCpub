@@ -6,8 +6,8 @@
 		IfcLightSourceGoniometric defines a light source for which exact lighting data is available. It specifies the type of a light emitter, defines the position and orientation of a light distribution curve and the data concerning lamp and photometric information. Figure 303 shows an example of a light emitter having two light sources (of type IfcLightSourceGoniometric ). Figure 303 — Light source goni
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Position" type="GDIFCEntityBase" setter="set_Position" getter="get_Position">
 			The position of the light source. It is used to orientate the light distribution curves.
@@ -28,6 +28,4 @@
 			The data source from which light distribution data is obtained.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

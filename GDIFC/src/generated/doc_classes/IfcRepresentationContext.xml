@@ -6,8 +6,8 @@
 		Definition from ISO/CD 10303-42:1992 : A representation context is a context in which a set of representation items are related. The IfcRepresentationContext defines the context to which the IfcRepresentation of a product is related. NOTE The definition of this class relates to the ISO 10303 entity representation_context. Please refer to ISO/IS 10303-43:1994 for the final definition of the formal 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="ContextIdentifier" type="String" setter="set_ContextIdentifier" getter="get_ContextIdentifier">
 			The optional identifier of the representation context as used within a project.
@@ -18,6 +18,4 @@
 		<member name="RepresentationsInContext" type="Array" setter="" getter="get_RepresentationsInContext">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

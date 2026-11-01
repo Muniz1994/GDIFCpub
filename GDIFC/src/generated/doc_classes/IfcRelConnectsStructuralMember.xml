@@ -6,8 +6,8 @@
 		The entity IfcRelConnectsStructuralMember defines all needed properties describing the connection between structural members and structural connection objects (nodes or supports). HISTORY New entity in IFC2x2. Use Definition Point Connection Instances of the entity IfcRelConnectsStructuralMember shall be used to describe a connection between an instance of IfcStructuralPointConnection and either a
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="RelatingStructuralMember" type="GDIFCEntityBase" setter="set_RelatingStructuralMember" getter="get_RelatingStructuralMember">
 			Reference to an instance of IfcStructuralMember (or its subclasses) which is connected to the specified structural connection.
@@ -28,6 +28,4 @@
 			Defines a coordinate system used for the description of the connection properties in ConnectionCondition relative to the local coordinate system of RelatingStructuralMember . If left unspecified, the placement IfcAxis2Placement3D ((x,y,z), ?, ?) is implied with x,y,z being the local member coordinates where the connection is made and the default axes directions being in parallel with the local axes of RelatingStructuralMember .
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

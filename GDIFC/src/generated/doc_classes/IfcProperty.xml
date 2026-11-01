@@ -6,8 +6,8 @@
 		IfcProperty is an abstract generalization for all types of properties that can be associated with IFC objects through the property set mechanism. HISTORY New entity in IFC Release 1.0.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Name" type="String" setter="set_Name" getter="get_Name">
 			Name for this property. This label is the significant name string that defines the semantic meaning for the property.
@@ -28,6 +28,4 @@
 		<member name="HasApprovals" type="Array" setter="" getter="get_HasApprovals">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

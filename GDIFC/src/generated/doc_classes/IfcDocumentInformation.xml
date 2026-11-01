@@ -6,8 +6,8 @@
 		IfcDocumentInformation captures "metadata" of an external document. The actual content of the document is not defined in IFC; instead, it can be found following the reference given to IfcDocumentReference . HISTORY: New entity in IFC 2x.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Identification" type="String" setter="set_Identification" getter="get_Identification">
 			Identifier that uniquely identifies a document.
@@ -69,6 +69,4 @@
 		<member name="IsPointer" type="Array" setter="" getter="get_IsPointer">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

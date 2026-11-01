@@ -6,8 +6,8 @@
 		IfcPropertySetTemplate defines the template for all dynamically extensible property sets represented by IfcPropertySet . The property set template is a container of property templates within a property tree. The individual property templates are interpreted according to their Name attribute and shall have no values assigned. NOTE By convention an IfcPropertySetTemplate can also be used as a templa
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="TemplateType" type="String" setter="set_TemplateType" getter="get_TemplateType">
 			Property set type defining whether the property set is applicable to a type (subtypes of IfcTypeObject ), to an occurrence (subtypes of IfcObject ), or as a special case to a performance history. The attribute ApplicableEntity may further refine the applicability to a single or multiple entity type(s).
@@ -21,6 +21,4 @@
 		<member name="Defines" type="Array" setter="" getter="get_Defines">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

@@ -6,8 +6,8 @@
 		IfcRectangleHollowProfileDef defines a section profile that provides the defining parameters of a rectangular (or square) hollow section to be used by the swept surface geometry or the swept area solid. Its parameters and orientation relative to the position coordinate system are according to the following illustration. A square hollow section can be defined by equal values for h and b. The centre
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="WallThickness" type="float" setter="set_WallThickness" getter="get_WallThickness">
 			Thickness of the material.
@@ -19,6 +19,4 @@
 			Outer corner radius.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

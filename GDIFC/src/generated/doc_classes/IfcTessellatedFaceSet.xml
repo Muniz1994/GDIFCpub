@@ -6,8 +6,8 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Coordinates" type="GDIFCEntityBase" setter="set_Coordinates" getter="get_Coordinates">
 		</member>
@@ -16,6 +16,4 @@
 		<member name="HasTextures" type="Array" setter="" getter="get_HasTextures">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

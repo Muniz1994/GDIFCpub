@@ -165,7 +165,9 @@ def emit_xml_doc(entity_name: str, parent_name: str | None,
     attr_descs: {attr_position_in_own_attrs (0-based) -> plain_description}
     """
     parent = parent_name if parent_name else "GDIFCEntityBase"
-    brief = entity_desc[:400] if entity_desc else ""
+    # Descriptions are HTML-unescaped plain text; re-escape for XML so text
+    # like "0 < u < 1" isn't parsed as a tag.
+    brief = html.escape(entity_desc[:400], quote=False) if entity_desc else ""
     lines = [
         '<?xml version="1.0" encoding="UTF-8" ?>',
         f'<class name="{entity_name}" inherits="{parent}"',
@@ -175,8 +177,11 @@ def emit_xml_doc(entity_name: str, parent_name: str | None,
         f'\t\t{brief}' if brief else '',
         '\t</brief_description>',
         '\t<description></description>',
-        '\t<tutorials/>',
-        '\t<methods/>',
+        # Godot's doc parser doesn't treat self-closing section tags (e.g.
+        # <tutorials/>) as closed and fails on the next sibling with
+        # "Invalid tag in doc file". Use open/close pairs, omit empty sections.
+        '\t<tutorials>',
+        '\t</tutorials>',
         '\t<members>',
     ]
     for i, a in enumerate(attrs):
@@ -184,7 +189,7 @@ def emit_xml_doc(entity_name: str, parent_name: str | None,
             cpp_type, variant_type, _, setter_helper, _ = a["type_info"]
             xml_type = _CPP_TO_XML_TYPE.get(cpp_type, "Variant")
             setter_attr = f'setter="set_{a["name"]}"' if setter_helper else 'setter=""'
-            desc = attr_descs.get(i, "")
+            desc = html.escape(attr_descs.get(i, ""), quote=False)
             lines.append(
                 f'\t\t<member name="{a["name"]}" type="{xml_type}"'
                 f' {setter_attr} getter="get_{a["name"]}">'
@@ -195,7 +200,7 @@ def emit_xml_doc(entity_name: str, parent_name: str | None,
     for inv_name in inverse_attrs:
         lines.append(f'\t\t<member name="{inv_name}" type="Array" setter="" getter="get_{inv_name}">')
         lines.append('\t\t</member>')
-    lines += ['\t</members>', '\t<signals/>', '\t<constants/>', '</class>']
+    lines += ['\t</members>', '</class>']
     return '\n'.join(lines) + '\n'
 
 

@@ -6,8 +6,8 @@
 		An IfcMetric is used to capture quantitative resultant metrics that can be applied to objectives. HISTORY: New Entity in IFC Release 2.0 Use Definition IfcMetric is a subtype of IfcConstraint and may be associated with any subtype of IfcRoot through the IfcRelAssociatesConstraint relationship in the IfcControlExtension schema, or may be associated with IfcProperty by IfcPropertyConstraintRelations
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Benchmark" type="String" setter="set_Benchmark" getter="get_Benchmark">
 			Enumeration that identifies the type of benchmark data.
@@ -21,6 +21,4 @@
 		<member name="ReferencePath" type="GDIFCEntityBase" setter="set_ReferencePath" getter="get_ReferencePath">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

@@ -6,12 +6,10 @@
 		The energy conversion device type IfcBurnerType defines commonly shared information for occurrences of burners. The set of shared information may include: common properties with shared property sets common representations of shape common materials common composition of elements common ports applicable assignment of process types It is used to define a burner specification (i.e. the specific produc
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

@@ -6,8 +6,8 @@
 		Definition from IAI: A series of longitudinal and transverse wires or bars of various gauges, arranged at right angles to each other and welded at all points of intersection; usually used for concrete slab reinforcement. Also known as welded wire fabric. HISTORY New entity in IFC Release 2x4 Material Use Definition : An associated material denotes the steel grade, preferrably via material classifi
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 			The overall length of the mesh measured in its longitudinal direction.
@@ -41,6 +41,4 @@
 		<member name="BendingParameters" type="Array" setter="set_BendingParameters" getter="get_BendingParameters">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

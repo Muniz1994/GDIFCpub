@@ -6,8 +6,8 @@
 		IfcProductRepresentation defines a representation of a product, including its (geometric or topological) representation. A product can have zero, one or many geometric representations, and a single geometric representation can be shared among various products using mapped representations. NOTE: The definition of this entity relates to the ISO 10303 entity property_definition. The use of the term ‘
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Name" type="String" setter="set_Name" getter="get_Name">
 			The word or group of words by which the product representation is known.
@@ -19,6 +19,4 @@
 			Contained list of representations (including shape representations). Each member defines a valid representation of a particular type within a particular representation context.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

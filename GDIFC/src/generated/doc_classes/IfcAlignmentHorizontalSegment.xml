@@ -6,8 +6,8 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="StartPoint" type="GDIFCEntityBase" setter="set_StartPoint" getter="get_StartPoint">
 		</member>
@@ -24,6 +24,4 @@
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

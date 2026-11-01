@@ -6,12 +6,10 @@
 		The distribution element IfcDistributionControlElement defines occurrence elements of a building automation control system that are used to impart control over elements of a distribution system. This class defines elements of a building automation control system. These are typically used to control distribution system elements to maintain variables such as temperature, humidity, pressure, flow, po
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="AssignedToFlowElement" type="Array" setter="" getter="get_AssignedToFlowElement">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

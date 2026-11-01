@@ -6,8 +6,8 @@
 		Definition from ISO/CD 10303-46:1992 : The fill area style hatching defines a styled pattern of curves for hatching an annotation fill area or a surface. The IfcFillAreaStyleHatching is used to define simple, vector-based hatching patterns, based on styled straight lines. The curve font, color and thickness is given by the HatchLineAppearance , the angle by the HatchLineAngle and the distance to t
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="HatchLineAppearance" type="GDIFCEntityBase" setter="set_HatchLineAppearance" getter="get_HatchLineAppearance">
 			The curve style of the hatching lines. Any curve style pattern shall start at the origin of each hatch line.
@@ -25,6 +25,4 @@
 			A plane angle measure determining the direction of the parallel hatching lines.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

@@ -6,8 +6,8 @@
 		IfcReinforcementProperties defines the set of properties for a specific combination of reinforcement bar steel grade, bar type and effective depth. HISTORY New entity in IFC2x2. The total cross section area for the specific steel grade is always provided. Additionally also general reinforcing bar configurations as a count of bars may be provided as defined in attribute BarCount . In this case the 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="TotalCrossSectionArea" type="float" setter="set_TotalCrossSectionArea" getter="get_TotalCrossSectionArea">
 			The total effective cross-section area of the reinforcement of a specific steel grade.
@@ -28,6 +28,4 @@
 			The number of bars with identical nominal diameter and steel grade included in the specific reinforcement configuration.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

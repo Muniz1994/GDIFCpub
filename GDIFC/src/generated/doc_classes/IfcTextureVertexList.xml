@@ -6,12 +6,10 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="TexCoordsList" type="Array" setter="" getter="get_TexCoordsList">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

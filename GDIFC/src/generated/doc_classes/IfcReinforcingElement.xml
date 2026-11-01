@@ -6,13 +6,11 @@
 		Definition from IAI: Bars, wires, strands, meshes, tendons, and other components embedded in concrete in such a manner that the reinforcement and the concrete act together in resisting forces. HISTORY New entity in IFC Release 2x2 IFC 2x4 CHANGE Entity made non-abstract. Subtypes IfcTendon and IfcTendonAnchor removed. Attribute SteelGrade removed. Attributes PredefinedType and Role added.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="SteelGrade" type="String" setter="set_SteelGrade" getter="get_SteelGrade">
 			Subtype of reinforcement element.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

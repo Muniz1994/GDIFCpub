@@ -6,13 +6,11 @@
 		IfcCrewResource represents a collection of internal resources used in construction processes. HISTORY: New Entity in IFC Release 2.0. Base type and documentation extended in IFC2x4 Identification of people and equipment of a crew is achieved through their specification at the level of the component. Therefore, knowing which persons are within a crew is achieved through identifying the persons assi
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 			Defines types of crew resources. IFC2x4 New attribute
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

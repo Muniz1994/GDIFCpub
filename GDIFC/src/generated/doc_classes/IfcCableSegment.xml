@@ -6,13 +6,11 @@
 		A cable segment is a flow segment used to carry electrical power, data, or telecommunications signals. A cable segment is used to typically join two sections of an electrical network or a network of components carrying the electrical service. HISTORY New entity in IFC2x4 Type Use Definition IfcCableSegment defines the occurrence of any cable segment; common information about cable segment types is
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 			Identifies the predefined types of cable segment from which the type required may be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

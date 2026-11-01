@@ -6,8 +6,8 @@
 		Definition from IAI : The IfcRelInterferesElements objectified relationship indicates that two elements interfere. Interference is a spatial overlap between the two elements. It is a 1 to 1 relationship. The concept of two elements interfering physically or logically is described independently from the elements. The interference may be related to the shape representation of the entities by providi
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="RelatingElement" type="GDIFCEntityBase" setter="set_RelatingElement" getter="get_RelatingElement">
 			Reference to a subtype of IfcElement that is the RelatingElement in the interference relationship. Depending on the value of ImpliedOrder the RelatingElement may carry the notion to be the element from which the interference geometry should be subtracted.
@@ -27,6 +27,4 @@
 		<member name="InterferenceSpace" type="GDIFCEntityBase" setter="set_InterferenceSpace" getter="get_InterferenceSpace">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

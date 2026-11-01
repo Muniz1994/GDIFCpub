@@ -6,14 +6,12 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="MappedTo" type="GDIFCEntityBase" setter="set_MappedTo" getter="get_MappedTo">
 		</member>
 		<member name="TexCoords" type="GDIFCEntityBase" setter="set_TexCoords" getter="get_TexCoords">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

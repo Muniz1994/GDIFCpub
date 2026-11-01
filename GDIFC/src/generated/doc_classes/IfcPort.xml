@@ -6,8 +6,8 @@
 		Definition from IAI : An IfcPort provides the means for an element to connect to other elements. An IfcPort is associated with an IfcElement , it belongs to, through the objectified relationship IfcRelConnectsPortToElement . Exactly two ports, belonging to two different elements, are connected with each other through the objectified relationship IfcRelConnectsPorts . An instance of IfcElement may 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="ContainedIn" type="Array" setter="" getter="get_ContainedIn">
 		</member>
@@ -16,6 +16,4 @@
 		<member name="ConnectedTo" type="Array" setter="" getter="get_ConnectedTo">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

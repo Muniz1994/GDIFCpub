@@ -6,8 +6,8 @@
 		An asset is a uniquely identifiable grouping of elements acting as a single entity that has a financial value or that can be operated on as a single unit. An asset is generally the level of granularity at which maintenance operations are undertaken. An asset is a group that can contain one or more elements. Whilst the financial value of a component or element can be defined, financial value is als
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Identification" type="String" setter="set_Identification" getter="get_Identification">
 			A unique identification assigned to an asset that enables its differentiation from other assets. NOTE: The asset identifier is unique within the asset register. It differs from the globally unique id assigned to the instance of an entity populating a database.
@@ -37,6 +37,4 @@
 			The current value of an asset within the accounting rules and procedures of an organization.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

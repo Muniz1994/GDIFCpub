@@ -6,12 +6,10 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="UsageType" type="String" setter="set_UsageType" getter="get_UsageType">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

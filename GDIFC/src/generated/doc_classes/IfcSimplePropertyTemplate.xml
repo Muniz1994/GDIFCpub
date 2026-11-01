@@ -6,8 +6,8 @@
 		The IfcSimplePropertyTemplate defines the template for all dynamically extensible properties, either the subtypes of IfcSimpleProperty , or the subtypes of IfcPhysicalSimpleQuantity . The individual property templates are interpreted according to their Name attribute and may have a predefined template type, property units, and property data types. The correct interpretation of the attributes: Prim
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="TemplateType" type="String" setter="set_TemplateType" getter="get_TemplateType">
 			Property type defining whether the property template defines a property with a single value, a bounded value, a list value, a table value, an enumerated value, or a reference value. Or the quantity type defining whether the template defines a quantity with a length, area, volume, weight or time value. NOTE the value of this property determines the correct use of the PrimaryUnit , SecondaryUnit , PrimaryDataType , SecondaryDataType , and Expression attributes.
@@ -33,6 +33,4 @@
 		<member name="AccessState" type="String" setter="set_AccessState" getter="get_AccessState">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

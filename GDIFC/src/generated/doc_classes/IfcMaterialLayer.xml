@@ -6,8 +6,8 @@
 		IfcMaterialLayer is a single and identifiable part of an element which is constructed of a number of layers (one or more). Each IfcMaterialLayer has a constant thickness and is located relative to the referencing IfcMaterialLayerSet along the MlsBase. EXAMPLE A cavity wall with brick masonry used with an air gap in between would be modeled using three IfcMaterialLayer 's: [1] Brick, [2] Air gap, [
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Material" type="GDIFCEntityBase" setter="set_Material" getter="get_Material">
 			Optional reference to the material from which the layer is constructed. Note that if this value is not given, it does not denote a layer with no material (an air gap), it only means that the material is not specified at that point.
@@ -33,6 +33,4 @@
 		<member name="ToMaterialLayerSet" type="Array" setter="" getter="get_ToMaterialLayerSet">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

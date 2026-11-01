@@ -6,12 +6,10 @@
 		The furnishing element type IfcSystemFurnitureElementType defines commonly shared information for occurrences of furniture elements. The set of shared information may include: common properties with shared property sets common representations of shape common materials common composition of elements applicable assignment of process types It is used to define a furniture element specification (i.e. 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

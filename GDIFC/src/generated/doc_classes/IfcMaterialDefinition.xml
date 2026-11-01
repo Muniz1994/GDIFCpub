@@ -6,8 +6,8 @@
 		IfcMaterialDefinition is a general supertype for all material related information items in IFC that have common material related properties that may include association of material with some shape parameters or assignments to identified parts of a component. There are three ways of assigning materials to a single component or multiple components; they are characterized as: by layer - assigning a m
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="AssociatedTo" type="Array" setter="" getter="get_AssociatedTo">
 		</member>
@@ -16,6 +16,4 @@
 		<member name="HasProperties" type="Array" setter="" getter="get_HasProperties">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

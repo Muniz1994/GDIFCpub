@@ -6,8 +6,8 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="CubicTerm" type="float" setter="set_CubicTerm" getter="get_CubicTerm">
 		</member>
@@ -18,6 +18,4 @@
 		<member name="ConstantTerm" type="float" setter="set_ConstantTerm" getter="get_ConstantTerm">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

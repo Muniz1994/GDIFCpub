@@ -6,8 +6,8 @@
 		An individual axis, IfcGridAxis , is defined in the context of a design grid. The axis definition is based on a curve of dimensionality 2. The grid axis is positioned within the XY plane of the position coordinate system defined by the IfcDesignGrid . HISTORY New entity in IFC Release 1.0 Geometry use definitions The standard geometric representation of IfcGridAxis is defined using a 2D curve enti
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="AxisTag" type="String" setter="set_AxisTag" getter="get_AxisTag">
 			The tag or name for this grid axis.
@@ -27,6 +27,4 @@
 		<member name="HasIntersections" type="Array" setter="" getter="get_HasIntersections">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

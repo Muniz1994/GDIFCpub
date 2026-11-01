@@ -6,8 +6,8 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Points" type="GDIFCEntityBase" setter="set_Points" getter="get_Points">
 		</member>
@@ -16,6 +16,4 @@
 		<member name="SelfIntersect" type="bool" setter="set_SelfIntersect" getter="get_SelfIntersect">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

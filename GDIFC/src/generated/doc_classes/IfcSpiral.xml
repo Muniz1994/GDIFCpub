@@ -6,12 +6,10 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Position" type="GDIFCEntityBase" setter="set_Position" getter="get_Position">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

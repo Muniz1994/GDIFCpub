@@ -6,8 +6,8 @@
 		Definition: The address for delivery of paper based mail. HISTORY New entity in IFC Release 2x.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="InternalLocation" type="String" setter="set_InternalLocation" getter="get_InternalLocation">
 			An organization defined address for internal mail delivery.
@@ -31,6 +31,4 @@
 			The name of a country.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

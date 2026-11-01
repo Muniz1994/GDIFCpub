@@ -6,13 +6,11 @@
 		A footing is a part of the foundation of a structure that spreads and transmits the load to the soil, either directly or via piles. HISTORY New entity in IFC2x2 Note, slab foundations are not instantiated as IfcFooting but as IfcSlab or IfcSlabStandardCase with a predefined type of IfcSlabTypeEnum .BASESLAB. Property Set Use Definition The following property set definitions are part of this IFC re
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 			The generic type of the footing. IFC 2x4 change: Attribute made optional. Type information can be provided by IfcRelDefinesByType and IfcFootingType .
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

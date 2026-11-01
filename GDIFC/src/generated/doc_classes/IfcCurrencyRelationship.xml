@@ -6,8 +6,8 @@
 		IfcCurrencyRelationship defines the rate of exchange that applies between two designated currencies at a particular time and as published by a particular source. HISTORY New Entity in IFC2x2. IFC2x4 CHANGE Subtyped from IfcResourceLevelRelationship , attribute order changed. Use definitions An IfcCurrencyRelationship is used where there may be a need to reference an IfcCostValue in one currency to
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="RelatingMonetaryUnit" type="GDIFCEntityBase" setter="set_RelatingMonetaryUnit" getter="get_RelatingMonetaryUnit">
 			The monetary unit from which an exchange is derived. For instance, in the case of a conversion from GBP to USD, the relating monetary unit is GBP.
@@ -25,6 +25,4 @@
 			The source from which an exchange rate is obtained.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

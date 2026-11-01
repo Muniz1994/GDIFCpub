@@ -6,8 +6,8 @@
 		The entity IfcRelAssociatesConstraint is used to apply constraint information defined by IfcConstraint , in the IfcConstraintResource schema, to subtypes of IfcRoot . HISTORY: New entity in IFC2x2.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Intent" type="String" setter="set_Intent" getter="get_Intent">
 			The intent of the constraint usage with regard to its related IfcConstraint and IfcObjects, IfcPropertyDefinitions or IfcRelationships. Typical values can be e.g. RATIONALE or EXPECTED PERFORMANCE.
@@ -16,6 +16,4 @@
 			Reference to constraint that is being applied using this relationship.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

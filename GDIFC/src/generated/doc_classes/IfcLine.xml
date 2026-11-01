@@ -3,11 +3,11 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
-		Definition from ISO/CD 10303-42:1992 : A line is an unbounded curve with constant tangent direction. A line is defined by a point and a direction. The positive direction of the line is in the direction of the Dir vector. The line is parameterized as follows: P = Pnt V = Dir λ( u ) = P + u V and the parametric range is: ∞ < u < ∞ NOTE Corresponding ISO 10303 entity: line. Please refer to ISO/IS 103
+		Definition from ISO/CD 10303-42:1992 : A line is an unbounded curve with constant tangent direction. A line is defined by a point and a direction. The positive direction of the line is in the direction of the Dir vector. The line is parameterized as follows: P = Pnt V = Dir λ( u ) = P + u V and the parametric range is: ∞ &lt; u &lt; ∞ NOTE Corresponding ISO 10303 entity: line. Please refer to ISO/IS 103
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Pnt" type="GDIFCEntityBase" setter="set_Pnt" getter="get_Pnt">
 			The location of the line.
@@ -16,6 +16,4 @@
 			The direction of the line, the magnitude and units of Dir affect the parameterization of the line.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

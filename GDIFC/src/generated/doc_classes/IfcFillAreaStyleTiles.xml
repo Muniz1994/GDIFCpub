@@ -6,8 +6,8 @@
 		Definition from ISO/CD 10303-46:1992 : The fill area style tiles defines a two dimensional tile to be used for the filling of annotation fill areas or other closed regions. The content of a tile is defined by the tile set, and the placement of each tile determined by the filling pattern which indicates how to place tiles next to each other. Tiles or parts of tiles outside of the annotation fill ar
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="TilingPattern" type="Array" setter="set_TilingPattern" getter="get_TilingPattern">
 			A two direction repeat factor defining the shape and relative positioning of the tiles.
@@ -19,6 +19,4 @@
 			The scale factor applied to each tile as it is placed in the annotation fill area.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

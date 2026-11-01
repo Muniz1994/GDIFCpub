@@ -6,8 +6,8 @@
 		IfcConstructionResource is an abstract generalization of the different resources used in construction projects, mainly labor, material, equipment and product resources, plus subcontracted resources and aggregations such as a crew resource. A resource represents "use of something" and does not necessarily correspond to a single item such as a person or vehicle, but represents a pool of items having
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Usage" type="GDIFCEntityBase" setter="set_Usage" getter="get_Usage">
 			Indicates how the resource is consumed or occupied during its use in a process. Production-based consumption is indicated by CONSUMED, PARTIALLYCONSUMED, or NOTCONSUMED, where QuantityProduced refers to a quantity on the IfcProduct to which the assigned IfcProcess is assigned. Duration-based occupation is indicated by OCCUPIED, PARTIALLYOCCUPIED, or NOTOCCUPIED, where QuantityProduced refers to a quantity on the IfcProcess to which the resource is assigned.
@@ -19,6 +19,4 @@
 			The basic (i.e. default, or recommended) unit that should be used for measuring the amount of the output (e.g. product volume) and the relative quantity of the output produced per input BaseQuantityConsumed . If the resource is not assigned to a task, then this value should be null. For production-based resources (e.g. carpentry labor), this value refers to a product-based spatial quantity (e.g. volume). For duration-based resources (e.g. safety inspector, fuel for equipment), this value refers to a task-based time quantity ( IfcDuration ). IFC2x4 New attribute
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

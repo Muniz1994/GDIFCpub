@@ -6,8 +6,8 @@
 		Definition from OpenGIS® Abstract Specification, Topic 2: A 2D (or with vertical coordinate axis 3D) coordinate reference system used to approximate the shape of the earth on a planar surface, but in such a way that the distortion that is inherent to the approximation is carefully controlled and known. Distortion correction is commonly applied to calculated bearings and distances to produce values
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="VerticalDatum" type="String" setter="set_VerticalDatum" getter="get_VerticalDatum">
 			Name by which the map projection is identified. UTM Gaus-Krueger
@@ -21,6 +21,4 @@
 		<member name="MapUnit" type="GDIFCEntityBase" setter="set_MapUnit" getter="get_MapUnit">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

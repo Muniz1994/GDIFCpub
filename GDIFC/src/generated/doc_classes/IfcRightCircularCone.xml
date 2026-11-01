@@ -6,8 +6,8 @@
 		The IfcRightCircularCone is a Construction Solid Geometry (CSG) 3D primitive. It is a solid with a circular base and a point called apex as the top. The tapers from the base to the top. The axis from the center of the circular base to the apex is perpendicular to the base. The inherited Position attribute defines the IfcAxisPlacement3D and provides the location and orientation of the cone: SELF\If
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Height" type="float" setter="set_Height" getter="get_Height">
 			The distance between the base of the cone and the apex.
@@ -16,6 +16,4 @@
 			The radius of the cone at the base.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>

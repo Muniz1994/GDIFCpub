@@ -6,8 +6,8 @@
 		The text literal is a geometric representation item which describes a text string using a string literal and additional position and path information. NOTE The IfcTextLiteral is an entity that had been adopted from ISO 10303, Industrial automation systems and integration—Product data representation and exchange. NOTE Corresponding ISO 10303 name: text_literal. Please refer to ISO/IS 10303-46:1994 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
 	<members>
 		<member name="Literal" type="String" setter="set_Literal" getter="get_Literal">
 			The text literal to be presented.
@@ -19,6 +19,4 @@
 			The writing direction of the text literal.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
 </class>
