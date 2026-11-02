@@ -1079,8 +1079,17 @@ void GDIFCManager::_lod_group_task(uint32_t index) {
 
 // Child -> parent express ids from the decomposition and containment relationships, read from
 // web-ifc's parsed file. Applied in this order, so a later relationship wins for the same child.
-static std::unordered_map<int, int> build_parent_map(const webifc::parsing::IfcLoader& loader, bool is_ifc4x3) {
+// Only links between products and the project are kept: the same relationships also nest tasks,
+// work schedules, cost items and type objects, which would otherwise become nodes.
+static std::unordered_map<int, int> build_parent_map(const webifc::parsing::IfcLoader& loader,
+        const webifc::schema::IfcSchemaManager& schema_manager, bool is_ifc4x3) {
     using webifc::parsing::IfcTokenType;
+
+    // web-ifc's element list holds every IfcProduct subtype, spatial elements included
+    auto is_scene_entity = [&](uint32_t express_id) {
+        const uint32_t type = loader.GetLineType(express_id);
+        return type == webifc::schema::IFCPROJECT || schema_manager.IsIfcElement(type);
+    };
 
     struct Relation {
         uint32_t type;
@@ -1107,13 +1116,16 @@ static std::unordered_map<int, int> build_parent_map(const webifc::parsing::IfcL
             if (loader.GetTokenType() != IfcTokenType::REF) continue;
             loader.StepBack();
             const int parent_id = static_cast<int>(loader.GetRefArgument());
+            if (!is_scene_entity(parent_id)) continue;
 
             loader.MoveToArgumentOffset(relation_id, relation.children_argument);
             if (loader.GetTokenType() != IfcTokenType::SET_BEGIN) continue;
             loader.StepBack();
             for (uint32_t offset : loader.GetSetArgument()) {
                 if (loader.GetTokenType(offset) != IfcTokenType::REF) continue;
-                child_to_parent[static_cast<int>(loader.GetRefArgument(offset))] = parent_id;
+                const uint32_t child_id = loader.GetRefArgument(offset);
+                if (!is_scene_entity(child_id)) continue;
+                child_to_parent[static_cast<int>(child_id)] = parent_id;
             }
         }
     }
@@ -1182,7 +1194,7 @@ void GDIFCManager::_thread_task() {
     Vector<PrecalculatedIFCItem> temp_queue;
 
     // Build hierarchy parent map (EXPRESSID, EXPRESSID), of elements based on its parent if they exist
-    std::unordered_map<int, int> parent_map = build_parent_map(loader, is_ifc4x3);
+    std::unordered_map<int, int> parent_map = build_parent_map(loader, schema_manager, is_ifc4x3);
 
     // Identity, GlobalId and parent of one item. Attributes, property sets and quantities
     // come later from IfcParse, after the model is shown.

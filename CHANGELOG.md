@@ -26,6 +26,7 @@ New changes go under **Unreleased**. Builds are cut automatically: when a push t
 
 - Vertices shared by faces facing different directions are split, so each face keeps its own flat normal.
 - The dock's collision element list no longer shows every element type twice.
+- Tasks, work plans and schedules, cost items and type objects no longer become nodes when they nest or aggregate other entities. Only products and the project are part of the node hierarchy. Before, a 4D file showed every task that had subtasks, without geometry, at the top of the model.
 
 ## [1.1.0-alpha]
 
