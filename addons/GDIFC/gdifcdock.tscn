@@ -73,6 +73,54 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 6
 
+[node name="Scene" type="FoldableContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups" unique_id=1749203381]
+layout_mode = 2
+title = "Scene"
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Scene" unique_id=860317245]
+layout_mode = 2
+columns = 2
+
+[node name="ImportAsSceneLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Scene/GridContainer" unique_id=1302958716]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Import the file into the project and add it as an instanced scene. The scene then only stores a reference to the .ifc file, so it stays small and quick to save. Change the options later in the Import dock. From the settings preset, only coordinate to origin and circle segments apply to imports."
+mouse_filter = 1
+text = "Import as scene"
+text_overrun_behavior = 3
+
+[node name="ImportAsSceneCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Scene/GridContainer" unique_id=417260938]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "On"
+
+[node name="ImportFolderLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Scene/GridContainer" unique_id=1985542107]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Project folder that files from outside the project are copied into before they are imported. Files already in the project are imported where they are."
+mouse_filter = 1
+text = "Import folder"
+text_overrun_behavior = 3
+
+[node name="ImportFolder" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Scene/GridContainer" unique_id=1137700594]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ImportFolderEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Scene/GridContainer/ImportFolder" unique_id=2061733580]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "res://ifc/"
+placeholder_text = "res://ifc/"
+
+[node name="ImportFolderBrowse" type="Button" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Scene/GridContainer/ImportFolder" unique_id=698154263]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Pick the import folder"
+icon = SubResource("DPITexture_3o44k")
+flat = true
+
 [node name="Geometry" type="FoldableContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups" unique_id=522308283]
 layout_mode = 2
 title = "Geometry"

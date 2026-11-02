@@ -10,25 +10,27 @@ New changes go under **Unreleased**. Builds are cut automatically: when a push t
 
 ## [Unreleased]
 
-#### Added
+## [1.1.0-alpha]
+
+### Build 5 — 2026-11-02
+
+##### Added
 
 - `.ifc` files are imported as scenes, like `.glb` files. Drag one into the 3D view or instance it, and the scene only stores a reference to the file instead of every mesh, collision shape and property set: a scene holding a 2.5 MB model went from a 2.2 MB `.tscn` to 230 bytes. Import options cover coordinate to origin, circle segments, LODs and collision. Instances re-link `ifc_object` from the `.ifc` file, and follow their `reference_georeference`.
 - **Import as scene** option in the dock's new Scene group. **Load IFC...** then imports the file with the dock's options and adds it to the edited scene as an instance, with undo. Files from outside the project are copied into a per-project import folder (`res://ifc/` by default). Picking a different file with the same name asks before replacing it.
 - IFC meshes have UVs, box-projected at 1 UV unit per meter, so textured materials display on them.
 
-#### Changed
+##### Changed
 
 - Updated web-ifc to 0.0.79 (`a26fae51`). It brings many geometry fixes (booleans, swept disks, sectioned and revolved solids, profile sweeps along IFC4X3 curves), support for `IfcSegmentedReferenceCurve`, the element type's material colour when an occurrence has none, and caching of mapped representations. Its bundled dependencies were moved to the versions web-ifc now pins: fast_float 8.3.2, earcut 3.2.4, CDT 2.0.1 and unordered_dense 5.3.3.
 - Malformed IFC files that web-ifc can only partially parse now fail to load with an error, instead of loading an incomplete model.
 - Loading a file whose `FILE_SCHEMA` isn't IFC2X3, IFC4 or IFC4X3_ADD2 now prints a highlighted message and a warning that name the declared schema and the supported ones. The geometry still loads, but properties, quantities, typed objects and georeferencing are unavailable. Before, the only sign was a generic "Failed to parse IFC file" error.
 
-#### Fixed
+##### Fixed
 
 - Vertices shared by faces facing different directions are split, so each face keeps its own flat normal.
 - The dock's collision element list no longer shows every element type twice.
 - Tasks, work plans and schedules, cost items and type objects no longer become nodes when they nest or aggregate other entities. Only products and the project are part of the node hierarchy. Before, a 4D file showed every task that had subtasks, without geometry, at the top of the model.
-
-## [1.1.0-alpha]
 
 ### Build 4 — 2026-10-15
 
