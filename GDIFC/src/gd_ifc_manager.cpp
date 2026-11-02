@@ -10,6 +10,7 @@
 #include "godot_cpp/classes/file_access.hpp"
 #include "godot_cpp/classes/importer_mesh.hpp"
 #include "godot_cpp/classes/os.hpp"
+#include "godot_cpp/classes/rendering_server.hpp"
 #include "godot_cpp/classes/scene_tree.hpp"
 #include "godot_cpp/classes/static_body3d.hpp"
 #include "godot_cpp/classes/triangle_mesh.hpp"
@@ -887,16 +888,39 @@ static void generate_item_lods(PrecalculatedIFCItem& item, float normal_merge_an
     }
 }
 
-// Tessellate an entity's flat mesh into one surface per placed geometry.
+// Tessellate an entity's flat mesh into one surface per material: placed geometries sharing a
+// color are appended to the same surface, since an element can have hundreds of them and a mesh
+// holds at most RenderingServer::MAX_MESH_SURFACES surfaces.
 // Node transforms are currently identity, so vertices are baked in world space.
 static void fill_item_geometry(webifc::geometry::IfcGeometryProcessor& geometry_loader,
                                const webifc::geometry::IfcFlatMesh& flat_mesh,
                                bool is_space, PrecalculatedIFCItem& item) {
+    // Same key as _get_material (RGBA8 color + transparency) -> index in item.geometry
+    std::unordered_map<uint64_t, size_t> surface_by_material;
+
     for (const auto& geom_data : flat_mesh.geometries) {
         auto& ifc_geometry = geometry_loader.GetGeometry(geom_data.geometryExpressID);
         if (ifc_geometry.numPoints == 0 || ifc_geometry.numFaces == 0) continue;
 
-        PrecalculatedIFCItemGeometry item_geometry;
+        Color color;
+        bool is_transparent;
+        if (is_space) {
+            is_transparent = true;
+            color = Color(0.025, 0.037, 0.034, 0.1);
+        } else {
+            color = Color(geom_data.color.r, geom_data.color.g, geom_data.color.b, geom_data.color.a);
+            is_transparent = (geom_data.color.a < 0.7);
+        }
+
+        const uint64_t key = ((uint64_t)color.to_rgba32() << 1) | (is_transparent ? 1 : 0);
+        auto [surface, inserted] = surface_by_material.try_emplace(key, item.geometry.size());
+        if (inserted) {
+            PrecalculatedIFCItemGeometry new_geometry;
+            new_geometry.color = color;
+            new_geometry.is_transparent = is_transparent;
+            item.geometry.push_back(std::move(new_geometry));
+        }
+        PrecalculatedIFCItemGeometry& item_geometry = item.geometry[surface->second];
 
         // Positions are kept in double until the UVs are computed, so large (georeferenced)
         // coordinates don't make the texture jitter.
@@ -934,16 +958,19 @@ static void fill_item_geometry(webifc::geometry::IfcGeometryProcessor& geometry_
             }
         }
 
+        // Append after what earlier geometries with this material already wrote
+        const int64_t vertex_base = item_geometry.vertices.size();
+        const int64_t index_base = item_geometry.indices.size();
         const int64_t vertex_count = (int64_t)out_positions.size();
-        item_geometry.vertices.resize(vertex_count);
-        item_geometry.normals.resize(vertex_count);
-        item_geometry.uvs.resize(vertex_count);
-        item_geometry.indices.resize(out_indices.size());
+        item_geometry.vertices.resize(vertex_base + vertex_count);
+        item_geometry.normals.resize(vertex_base + vertex_count);
+        item_geometry.uvs.resize(vertex_base + vertex_count);
+        item_geometry.indices.resize(index_base + (int64_t)out_indices.size());
 
-        Vector3* vertices = item_geometry.vertices.ptrw();
-        Vector3* normals = item_geometry.normals.ptrw();
-        Vector2* uvs = item_geometry.uvs.ptrw();
-        int32_t* indices = item_geometry.indices.ptrw();
+        Vector3* vertices = item_geometry.vertices.ptrw() + vertex_base;
+        Vector3* normals = item_geometry.normals.ptrw() + vertex_base;
+        Vector2* uvs = item_geometry.uvs.ptrw() + vertex_base;
+        int32_t* indices = item_geometry.indices.ptrw() + index_base;
 
         for (int64_t k = 0; k < vertex_count; k++) {
             const glm::dvec3& p = out_positions[k];
@@ -961,17 +988,9 @@ static void fill_item_geometry(webifc::geometry::IfcGeometryProcessor& geometry_
                 uvs[k] = Vector2((float)(n.z >= 0.0 ? p.x : -p.x), (float)-p.y);
             }
         }
-        memcpy(indices, out_indices.data(), out_indices.size() * sizeof(int32_t));
-
-        if (is_space) {
-            item_geometry.is_transparent = true;
-            item_geometry.color = Color(0.025, 0.037, 0.034, 0.1);
-        } else {
-            item_geometry.color = Color(geom_data.color.r, geom_data.color.g, geom_data.color.b, geom_data.color.a);
-            item_geometry.is_transparent = (geom_data.color.a < 0.7);
+        for (size_t k = 0; k < out_indices.size(); k++) {
+            indices[k] = out_indices[k] + (int32_t)vertex_base;
         }
-
-        item.geometry.push_back(std::move(item_geometry));
     }
 }
 
@@ -1342,6 +1361,13 @@ IFCNode* GDIFCManager::_create_item_node(const PrecalculatedIFCItem& item, bool 
     mesh.instantiate();
 
     for (int i = 0; i < item.geometry.size(); i++) {
+
+        // Surfaces are already merged by material; only more distinct colors than the limit get here
+        if (i == RenderingServer::MAX_MESH_SURFACES) {
+            WARN_PRINT(vformat("IFC element #%d (%s) has %d materials; only the first %d are shown.",
+                item.express_id, item.ifc_class, (int64_t)item.geometry.size(), RenderingServer::MAX_MESH_SURFACES));
+            break;
+        }
 
         Array arrays;
         arrays.resize(Mesh::ARRAY_MAX);
