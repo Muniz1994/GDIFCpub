@@ -1069,7 +1069,10 @@ void GDIFCManager::_thread_task() {
     // Load file [web-ifc] — from memory buffer
     auto temp_ifc_manager = std::make_unique<WEBIFCManager>(geometric_settings.ptr());
     try {
-        temp_ifc_manager->read_ifc_file(buf_ptr, buf_size);
+        if (!temp_ifc_manager->read_ifc_file(buf_ptr, buf_size)) {
+            thread_failed_ = true;
+            ERR_FAIL_MSG("[web-ifc] Failed to read IFC file: the file is malformed and could only be partially parsed.");
+        }
     } catch (const std::exception& e) {
         thread_failed_ = true;
         ERR_FAIL_MSG(String("[web-ifc] Failed to read IFC file: ") + e.what());

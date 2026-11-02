@@ -16,6 +16,11 @@ New changes go under **Unreleased**. Builds are cut automatically: when a push t
 - **Import as scene** option in the dock's new Scene group. **Load IFC...** then imports the file with the dock's options and adds it to the edited scene as an instance, with undo. Files from outside the project are copied into a per-project import folder (`res://ifc/` by default). Picking a different file with the same name asks before replacing it.
 - IFC meshes have UVs, box-projected at 1 UV unit per meter, so textured materials display on them.
 
+#### Changed
+
+- Updated web-ifc to 0.0.79 (`a26fae51`). It brings many geometry fixes (booleans, swept disks, sectioned and revolved solids, profile sweeps along IFC4X3 curves), support for `IfcSegmentedReferenceCurve`, the element type's material colour when an occurrence has none, and caching of mapped representations. Its bundled dependencies were moved to the versions web-ifc now pins: fast_float 8.3.2, earcut 3.2.4, CDT 2.0.1 and unordered_dense 5.3.3.
+- Malformed IFC files that web-ifc can only partially parse now fail to load with an error, instead of loading an incomplete model.
+
 #### Fixed
 
 - Vertices shared by faces facing different directions are split, so each face keeps its own flat normal.

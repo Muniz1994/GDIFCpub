@@ -2,7 +2,7 @@
 #include <stdexcept>
 
 
-void WEBIFCManager::read_ifc_file(const char* data, size_t length) const
+bool WEBIFCManager::read_ifc_file(const char* data, size_t length) const
 {
     // Wrap the in-memory buffer in a std::istringstream so it can be
     // consumed by IfcLoader::LoadFile(std::istream&).  This avoids
@@ -11,7 +11,9 @@ void WEBIFCManager::read_ifc_file(const char* data, size_t length) const
     // is done earlier via Godot's FileAccess.
     std::istringstream stream(std::string(data, length));
     try {
-        this->loader->LoadFile(stream);
+        // LoadFile returns false when the tokenizer fails and the model would
+        // only be partially loaded (malformed tokens, invalid STEP binary, ...).
+        return this->loader->LoadFile(stream);
     } catch (const std::exception& e) {
         throw std::runtime_error(std::string("[web-ifc] LoadFile failed: ") + e.what());
     } catch (...) {
@@ -25,6 +27,11 @@ godot::Variant WEBIFCManager::get_value_from_token(webifc::parsing::IfcTokenType
 
     switch (t)
     {
+    case webifc::parsing::IfcTokenType::BINARY:
+    {
+        // STEP binary is kept as its hex text (e.g. "0FF00"), as web-ifc does.
+        return std::string(this->loader->GetStringArgument()).c_str();
+    }
     case webifc::parsing::IfcTokenType::STRING:
     {
         return this->loader->GetDecodedStringArgument().c_str();
@@ -53,8 +60,8 @@ godot::Variant WEBIFCManager::get_value_from_token(webifc::parsing::IfcTokenType
     }
     case webifc::parsing::IfcTokenType::INTEGER:
     {
-        long d = this->loader->GetIntArgument();
-        return (int64_t)d;
+        int64_t d = this->loader->GetIntArgument();
+        return d;
     }
     case webifc::parsing::IfcTokenType::REF:
     {
@@ -113,6 +120,7 @@ godot::Array WEBIFCManager::get_args(bool inObject, bool inList)
             arguments.append(obj);
             break;
         }
+        case webifc::parsing::IfcTokenType::BINARY:
         case webifc::parsing::IfcTokenType::STRING:
         case webifc::parsing::IfcTokenType::ENUM:
         case webifc::parsing::IfcTokenType::REAL:
