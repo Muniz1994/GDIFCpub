@@ -41,6 +41,10 @@ Build artifacts are copied to:
 - `addons/GDIFC/` for distribution
 - `ifc-godot-project/addons/GDIFC/` for the sample project
 
+## Testing Against IFC Files
+
+`tests/ifc_corpus/run_ifc_corpus.py` loads every `.ifc` file in a folder in headless Godot and writes HTML, JSON and JUnit reports. Build with `local=1` first. See [tests/ifc_corpus/README.md](../tests/ifc_corpus/README.md).
+
 ## Regenerating IFC Typed Bindings
 
 If schema or generated class sources change, regenerate code from Express schema:

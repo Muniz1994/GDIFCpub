@@ -95,3 +95,6 @@ ifc-godot-project/local_runcode.gd
 
 *.local-test
 /ifc-godot-project/Textures
+
+# IFC corpus test reports
+/tests/reports/
