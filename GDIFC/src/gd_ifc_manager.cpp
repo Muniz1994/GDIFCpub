@@ -229,6 +229,7 @@ void GDIFCManager::_ready() {
     if (Object::cast_to<IFCModel>(model_child)) {
         ifc_model_node_id_ = model_child->get_instance_id();
     }
+    _apply_instance_reference_placement();
 
     UtilityFunctions::print_rich("[color=blue]Cold reload detected — re-parsing IFC metadata from: " + ifc_file_path_);
 
@@ -363,7 +364,18 @@ Error GDIFCManager::read_ifc_base64(const String &_base64_data, bool _create_col
 }
 
 Error GDIFCManager::_start_loading(bool _create_collision, const Array &_collision_classes) {
-    // Reset
+    _reset_load_state(_create_collision, _collision_classes);
+
+    // Start Threads
+    task_id = WorkerThreadPool::get_singleton()->add_task(callable_mp(this, &GDIFCManager::_thread_task), true);
+    metadata_task_id = WorkerThreadPool::get_singleton()->add_task(callable_mp(this, &GDIFCManager::_metadata_parse_task), true);
+    set_process(true);
+    _update_load_progress();
+    return Error::OK;
+}
+
+// Clears the previous load and prepares both pipelines for pending_buffer
+void GDIFCManager::_reset_load_state(bool _create_collision, const Array &_collision_classes) {
     this->should_create_collisions = _create_collision;
     this->collision_classes = _collision_classes;
     this->generation_queue.clear();
@@ -396,12 +408,95 @@ Error GDIFCManager::_start_loading(bool _create_collision, const Array &_collisi
     this->metadata_apply_index_ = 0;
     this->metadata_georreference_ = GeorreferenceData();
     this->metadata_state = META_PARSING;
+}
 
-    // Start Threads
-    task_id = WorkerThreadPool::get_singleton()->add_task(callable_mp(this, &GDIFCManager::_thread_task), true);
-    metadata_task_id = WorkerThreadPool::get_singleton()->add_task(callable_mp(this, &GDIFCManager::_metadata_parse_task), true);
-    set_process(true);
-    _update_load_progress();
+// Runs the same pipeline as read_ifc() to completion before returning, with the model added
+// as a child and every generated node owned by this manager, ready to be packed into a scene.
+// Used by the editor importer, which has to produce the scene within one call.
+Error GDIFCManager::read_ifc_blocking(const String &_path, bool _create_collision, const Array &_collision_classes) {
+    ERR_FAIL_COND_V_MSG(_is_loading(), ERR_BUSY, "Already loading!");
+
+    start_loading_time = Time::get_singleton()->get_ticks_usec();
+
+    Ref<FileAccess> fa = FileAccess::open(_path, FileAccess::READ);
+    if (!fa.is_valid()) {
+        ERR_FAIL_V_MSG(Error::FAILED, String("Failed to open IFC file: ") + _path
+                       + String(" (error: ") + String::num_int64((int64_t)FileAccess::get_open_error()) + String(")"));
+    }
+    this->pending_buffer = fa->get_buffer(fa->get_length());
+    fa.unref();
+    ERR_FAIL_COND_V_MSG(this->pending_buffer.is_empty(), Error::FAILED, "IFC file is empty.");
+
+    ifc_file_path_ = _path;
+    _reset_load_state(_create_collision, _collision_classes);
+
+    // web-ifc and IfcParse still parse side by side
+    WorkerThreadPool *pool = WorkerThreadPool::get_singleton();
+    task_id = pool->add_task(callable_mp(this, &GDIFCManager::_thread_task), true);
+    metadata_task_id = pool->add_task(callable_mp(this, &GDIFCManager::_metadata_parse_task), true);
+    _wait_for_task();
+    _wait_for_metadata_task();
+
+    if (thread_failed_) {
+        pending_ifc_parse_file.reset();
+        generation_queue.clear();
+        pending_buffer = PackedByteArray();
+        metadata_file_.reset();
+        current_state = FAILED;
+        metadata_state = META_IDLE;
+        load_stage_.store(STAGE_FAILED);
+        return Error::FAILED;
+    }
+    georreference = pending_georreference;
+
+    if (lod_enabled_ && !generation_queue.is_empty()) {
+        current_state = GENERATING_LODS;
+        lod_items_ = generation_queue.ptrw();
+        _set_worker_progress(STAGE_LODS, generation_queue.size());
+        lod_group_id = pool->add_group_task(
+            callable_mp(this, &GDIFCManager::_lod_group_task), generation_queue.size(), -1, true, "GDIFC LOD generation");
+        pool->wait_for_group_task_completion(lod_group_id);
+        lod_group_id = -1;
+        lod_items_ = nullptr;
+    }
+
+    current_state = GENERATING_NODES;
+    load_stage_.store(STAGE_NODES);
+    IFCModel *model = memnew(IFCModel);
+    model->set_name("IFCModel");
+    ifc_model_node_id_ = model->get_instance_id();
+    invisible_staging_root = model;
+    for (int i = 0; i < generation_queue.size(); i++) {
+        _create_item_node(generation_queue[i], false);
+    }
+    invisible_staging_root = nullptr;
+    add_child(model, true);
+
+    metadata_ids_.clear();
+    metadata_ids_.reserve(generation_queue.size());
+    for (int i = 0; i < generation_queue.size(); i++) {
+        metadata_ids_.push_back(generation_queue[i].express_id);
+    }
+    generation_queue.clear();
+    current_state = DONE;
+    load_stage_.store(STAGE_DONE);
+
+    if (metadata_file_) {
+        _metadata_extract_task();
+        for (PrecalculatedIFCMetadata &item : metadata_results_) {
+            _apply_metadata_item(item);
+        }
+    }
+    _finish_metadata();
+
+    std::function<void(Node*)> set_owner_recursive = [&](Node* n) {
+        n->set_owner(this);
+        for (int i = 0; i < n->get_child_count(); i++) {
+            set_owner_recursive(n->get_child(i));
+        }
+    };
+    set_owner_recursive(model);
+
     return Error::OK;
 }
 
@@ -617,22 +712,7 @@ void GDIFCManager::_process_metadata() {
             const uint64_t start_time = Time::get_singleton()->get_ticks_usec();
             const uint64_t time_budget = get_frame_time_budget();
             while (metadata_apply_index_ < metadata_results_.size()) {
-                PrecalculatedIFCMetadata& item = metadata_results_[metadata_apply_index_++];
-                if (node_registry.has(item.express_id)) {
-                    IFCNode* node = Object::cast_to<IFCNode>(ObjectDB::get_instance(node_registry[item.express_id]));
-                    if (node) {
-                        node->set_attributes(item.attributes);
-                        node->set_properties(item.properties);
-                        node->set_quantities(item.quantities);
-                        try {
-                            auto* inst = metadata_file_->instance_by_id(item.express_id);
-                            if (inst) {
-                                node->set_ifc_object(GDIFCEntityBase::wrap(inst, metadata_file_));
-                            }
-                        } catch (...) {}
-                    }
-                }
-                item = PrecalculatedIFCMetadata(); // release the dictionaries as they are handed over
+                _apply_metadata_item(metadata_results_[metadata_apply_index_++]);
 
                 if (Time::get_singleton()->get_ticks_usec() - start_time > time_budget) {
                     return;
@@ -643,6 +723,74 @@ void GDIFCManager::_process_metadata() {
 
         default:
             break;
+    }
+}
+
+// Main thread. Hands one item's attributes, property sets, quantities and typed object to its node,
+// then releases the dictionaries.
+void GDIFCManager::_apply_metadata_item(PrecalculatedIFCMetadata& item) {
+    if (node_registry.has(item.express_id)) {
+        IFCNode* node = Object::cast_to<IFCNode>(ObjectDB::get_instance(node_registry[item.express_id]));
+        if (node) {
+            node->set_attributes(item.attributes);
+            node->set_properties(item.properties);
+            node->set_quantities(item.quantities);
+            try {
+                auto* inst = metadata_file_->instance_by_id(item.express_id);
+                if (inst) {
+                    node->set_ifc_object(GDIFCEntityBase::wrap(inst, metadata_file_));
+                }
+            } catch (...) {}
+        }
+    }
+    item = PrecalculatedIFCMetadata();
+}
+
+// Places the IFCModel relative to reference_georeference, given the loaded model's georeferencing
+void GDIFCManager::_apply_reference_placement(const GeorreferenceData& model_georeference) {
+    IFCModel* model = get_ifc_model();
+    if (!model || reference_georeference_.is_empty()) return;
+
+    IFCGeoreference* reference = Object::cast_to<IFCGeoreference>(get_node_or_null(reference_georeference_));
+    if (reference && reference->is_inside_tree()) {
+        if (!model_georeference.valid) {
+            WARN_PRINT("GDIFCManager: the loaded model has no georeferencing data. "
+                "Placing it assuming it shares the reference model's engineering coordinate system.");
+        }
+        glm::dmat4 relative = georef_relative_matrix(reference->get_data(), model_georeference);
+        model->set_transform(
+            get_global_transform().affine_inverse() * reference->get_global_transform() * glm_to_godot_transform(relative));
+    } else {
+        WARN_PRINT(String("GDIFCManager: reference_georeference '") + String(reference_georeference_)
+            + "' does not point to an IFCGeoreference node. The model is placed at the origin.");
+    }
+}
+
+// An imported .ifc scene keeps no placement of its own: an instance follows its
+// reference_georeference whenever it enters the scene or the reference changes.
+void GDIFCManager::_apply_instance_reference_placement() {
+    if (get_scene_file_path().get_extension().to_lower() != "ifc") return; // only instances of imported .ifc scenes
+    IFCModel* model = get_ifc_model();
+    if (!model) return;
+
+    if (reference_georeference_.is_empty()) {
+        model->set_transform(Transform3D());
+        return;
+    }
+    GeorreferenceData model_georeference;
+    for (int i = 0; i < model->get_child_count(); i++) {
+        if (IFCGeoreference* georef = Object::cast_to<IFCGeoreference>(model->get_child(i))) {
+            model_georeference = georef->get_data();
+            break;
+        }
+    }
+    _apply_reference_placement(model_georeference);
+}
+
+void GDIFCManager::set_reference_georeference(const NodePath &path) {
+    reference_georeference_ = path;
+    if (is_node_ready()) {
+        _apply_instance_reference_placement();
     }
 }
 
@@ -680,21 +828,7 @@ void GDIFCManager::_finish_metadata() {
         }
 
         // Place the model relative to the chosen reference georeference, if any
-        if (!reference_georeference_.is_empty()) {
-            IFCGeoreference* reference = Object::cast_to<IFCGeoreference>(get_node_or_null(reference_georeference_));
-            if (reference && reference->is_inside_tree()) {
-                if (!georreference.valid) {
-                    WARN_PRINT("GDIFCManager: the loaded model has no georeferencing data. "
-                        "Placing it assuming it shares the reference model's engineering coordinate system.");
-                }
-                glm::dmat4 relative = georef_relative_matrix(reference->get_data(), georreference);
-                model->set_transform(
-                    get_global_transform().affine_inverse() * reference->get_global_transform() * glm_to_godot_transform(relative));
-            } else {
-                WARN_PRINT(String("GDIFCManager: reference_georeference '") + String(reference_georeference_)
-                    + "' does not point to an IFCGeoreference node. The model is placed at the origin.");
-            }
-        }
+        _apply_reference_placement(georreference);
     }
 
     metadata_state = META_DONE;
@@ -727,6 +861,7 @@ static void generate_item_lods(PrecalculatedIFCItem& item, float normal_merge_an
         arrays.resize(Mesh::ARRAY_MAX);
         arrays[Mesh::ARRAY_VERTEX] = geometry.vertices;
         arrays[Mesh::ARRAY_NORMAL] = geometry.normals;
+        arrays[Mesh::ARRAY_TEX_UV] = geometry.uvs;
         arrays[Mesh::ARRAY_INDEX] = geometry.indices;
         importer->add_surface(Mesh::PRIMITIVE_TRIANGLES, arrays);
     }
@@ -743,6 +878,7 @@ static void generate_item_lods(PrecalculatedIFCItem& item, float normal_merge_an
         Array arrays = importer->get_surface_arrays(i);
         geometry.vertices = arrays[Mesh::ARRAY_VERTEX];
         geometry.normals = arrays[Mesh::ARRAY_NORMAL];
+        geometry.uvs = arrays[Mesh::ARRAY_TEX_UV];
         geometry.indices = arrays[Mesh::ARRAY_INDEX];
 
         for (int l = 0; l < lod_count; l++) {
@@ -761,30 +897,71 @@ static void fill_item_geometry(webifc::geometry::IfcGeometryProcessor& geometry_
         if (ifc_geometry.numPoints == 0 || ifc_geometry.numFaces == 0) continue;
 
         PrecalculatedIFCItemGeometry item_geometry;
-        item_geometry.vertices.resize(ifc_geometry.numPoints);
-        item_geometry.normals.resize(ifc_geometry.numPoints);
-        item_geometry.indices.resize(ifc_geometry.numFaces * 3);
+
+        // Positions are kept in double until the UVs are computed, so large (georeferenced)
+        // coordinates don't make the texture jitter.
+        std::vector<glm::dvec3> positions(ifc_geometry.numPoints);
+        for (uint32_t k = 0; k < ifc_geometry.numPoints; k++) {
+            positions[k] = glm::dvec3(geom_data.transformation * glm::dvec4(ifc_geometry.GetPoint(k), 1.0));
+        }
+
+        // Flat normals and box-projected UVs, both per face. A vertex shared by faces facing
+        // different directions is duplicated, otherwise the last face would overwrite them.
+        std::vector<glm::dvec3> out_positions = positions;
+        std::vector<glm::dvec3> out_normals(positions.size(), glm::dvec3(0.0));
+        std::vector<bool> assigned(positions.size(), false);
+        std::vector<int32_t> out_indices(ifc_geometry.numFaces * 3);
+
+        for (uint32_t k = 0; k < ifc_geometry.numFaces; k++) {
+            bimGeometry::Face f = ifc_geometry.GetFace(k);
+            const int face[3] = { f.i2, f.i1, f.i0 };
+
+            glm::dvec3 n = glm::cross(positions[f.i1] - positions[f.i0], positions[f.i2] - positions[f.i0]);
+            const double len = glm::length(n);
+            n = len > 0.0 ? n / len : glm::dvec3(0.0, 1.0, 0.0);
+
+            for (int c = 0; c < 3; c++) {
+                uint32_t v = face[c];
+                if (!assigned[v]) {
+                    assigned[v] = true;
+                    out_normals[v] = n;
+                } else if (glm::dot(out_normals[v], n) < 0.999) {
+                    v = (uint32_t)out_positions.size();
+                    out_positions.push_back(positions[face[c]]);
+                    out_normals.push_back(n);
+                }
+                out_indices[k*3+c] = (int32_t)v;
+            }
+        }
+
+        const int64_t vertex_count = (int64_t)out_positions.size();
+        item_geometry.vertices.resize(vertex_count);
+        item_geometry.normals.resize(vertex_count);
+        item_geometry.uvs.resize(vertex_count);
+        item_geometry.indices.resize(out_indices.size());
 
         Vector3* vertices = item_geometry.vertices.ptrw();
         Vector3* normals = item_geometry.normals.ptrw();
+        Vector2* uvs = item_geometry.uvs.ptrw();
         int32_t* indices = item_geometry.indices.ptrw();
 
-        for (uint32_t k = 0; k < ifc_geometry.numPoints; k++) {
-            glm::dvec4 tv = geom_data.transformation * glm::dvec4(ifc_geometry.GetPoint(k), 1.0);
-            vertices[k] = Vector3((float)tv.x, (float)tv.y, (float)tv.z);
-        }
-        for (uint32_t k = 0; k < ifc_geometry.numFaces; k++) {
-            bimGeometry::Face f = ifc_geometry.GetFace(k);
-            indices[k*3+0] = f.i2;
-            indices[k*3+1] = f.i1;
-            indices[k*3+2] = f.i0;
+        for (int64_t k = 0; k < vertex_count; k++) {
+            const glm::dvec3& p = out_positions[k];
+            const glm::dvec3& n = out_normals[k];
+            vertices[k] = Vector3((float)p.x, (float)p.y, (float)p.z);
+            normals[k] = Vector3((float)n.x, (float)n.y, (float)n.z);
 
-            // Simple flat normals calculation
-            Vector3 n = (vertices[f.i1] - vertices[f.i0]).cross(vertices[f.i2] - vertices[f.i0]).normalized();
-            normals[f.i0] = n;
-            normals[f.i1] = n;
-            normals[f.i2] = n;
+            // Project onto the plane of the dominant normal axis
+            const glm::dvec3 a = glm::abs(n);
+            if (a.y >= a.x && a.y >= a.z) {
+                uvs[k] = Vector2((float)p.x, (float)(n.y >= 0.0 ? p.z : -p.z));
+            } else if (a.x >= a.z) {
+                uvs[k] = Vector2((float)(n.x >= 0.0 ? -p.z : p.z), (float)-p.y);
+            } else {
+                uvs[k] = Vector2((float)(n.z >= 0.0 ? p.x : -p.x), (float)-p.y);
+            }
         }
+        memcpy(indices, out_indices.data(), out_indices.size() * sizeof(int32_t));
 
         if (is_space) {
             item_geometry.is_transparent = true;
@@ -1133,6 +1310,74 @@ static Ref<Shape3D> create_trimesh_collision_from_geometry(MeshInstance3D *node,
     return shape;
 }
 
+// Creates one item's node, mesh and collision under its parent, or under the staging root.
+// With collect_editor_caches, the mesh and shape are queued for their gizmo caches.
+IFCNode* GDIFCManager::_create_item_node(const PrecalculatedIFCItem& item, bool collect_editor_caches) {
+    // 1. Create Node
+    IFCNode* element_node = memnew(IFCNode);
+    element_node->set_name(item.node_name);
+    element_node->set_transform(item.node_transform);
+    element_node->set_ifc_class(item.ifc_class);
+    element_node->set_global_id(item.global_id);
+
+    // 2. REGISTER NODE
+    if (item.express_id > 0) {
+        node_registry[item.express_id] = element_node->get_instance_id();
+    }
+
+    // 3. PARENTING LOGIC
+    Node* parent_node = nullptr;
+    if (item.parent_id > 0 && node_registry.has(item.parent_id)) {
+        parent_node = Object::cast_to<Node>(ObjectDB::get_instance(node_registry[item.parent_id]));
+    }
+    if (parent_node) {
+        parent_node->add_child(element_node);
+    }
+    else {
+        invisible_staging_root->add_child(element_node);
+    }
+
+    // 2. Create Mesh
+    Ref<ArrayMesh> mesh;
+    mesh.instantiate();
+
+    for (int i = 0; i < item.geometry.size(); i++) {
+
+        Array arrays;
+        arrays.resize(Mesh::ARRAY_MAX);
+        arrays[Mesh::ARRAY_VERTEX] = item.geometry[i].vertices;
+        arrays[Mesh::ARRAY_NORMAL] = item.geometry[i].normals;
+        arrays[Mesh::ARRAY_TEX_UV] = item.geometry[i].uvs;
+        arrays[Mesh::ARRAY_INDEX] = item.geometry[i].indices;
+
+        mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arrays, TypedArray<Array>(), item.geometry[i].lods);
+
+        // 3. Material
+        Ref<StandardMaterial3D> mat = _get_material(item.geometry[i].color, item.geometry[i].is_transparent, item.ifc_class == "IfcSpace");
+        mesh->surface_set_material(i,mat);
+    }
+
+    if (mesh->get_surface_count() > 0) {
+
+        element_node->set_mesh(mesh);
+        if (collect_editor_caches) {
+            editor_cache_queue.push_back(mesh);
+        }
+
+        if (this->should_create_collisions &&
+            (this->collision_classes.is_empty() || this->collision_classes.has(item.ifc_class))) {
+            Ref<Shape3D> shape = create_trimesh_collision_from_geometry(element_node, item.geometry);
+            if (collect_editor_caches && shape.is_valid()) {
+                editor_cache_queue.push_back(shape);
+            }
+        }
+
+    }
+
+    element_node->add_to_group(item.ifc_class,true);
+    return element_node;
+}
+
 // ---------------------------------------------------------
 // DUMB & FAST GENERATOR
 // ---------------------------------------------------------
@@ -1145,69 +1390,7 @@ void GDIFCManager::_process_generation_queue() {
 
     while (current_generation_index < generation_queue.size()) {
 
-        const PrecalculatedIFCItem& item = generation_queue[current_generation_index];
-
-        // 1. Create Node
-        IFCNode* element_node = memnew(IFCNode);
-        element_node->set_name(item.node_name);
-        element_node->set_transform(item.node_transform);
-        element_node->set_ifc_class(item.ifc_class);
-        element_node->set_global_id(item.global_id);
-
-        // 2. REGISTER NODE
-        if (item.express_id > 0) {
-            node_registry[item.express_id] = element_node->get_instance_id();
-        }
-
-        // 3. PARENTING LOGIC
-        Node* parent_node = nullptr;
-        if (item.parent_id > 0 && node_registry.has(item.parent_id)) {
-            parent_node = Object::cast_to<Node>(ObjectDB::get_instance(node_registry[item.parent_id]));
-        }
-        if (parent_node) {
-            parent_node->add_child(element_node);
-        }
-        else {
-            invisible_staging_root->add_child(element_node);
-        }
-
-        // 2. Create Mesh
-        Ref<ArrayMesh> mesh;
-        mesh.instantiate();
-
-        for (int i = 0; i < item.geometry.size(); i++) {
-
-            Array arrays;
-            arrays.resize(Mesh::ARRAY_MAX);
-            arrays[Mesh::ARRAY_VERTEX] = item.geometry[i].vertices;
-            arrays[Mesh::ARRAY_NORMAL] = item.geometry[i].normals;
-            arrays[Mesh::ARRAY_INDEX] = item.geometry[i].indices;
-
-            mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arrays, TypedArray<Array>(), item.geometry[i].lods);
-
-            // 3. Material
-            Ref<StandardMaterial3D> mat = _get_material(item.geometry[i].color, item.geometry[i].is_transparent, item.ifc_class == "IfcSpace");
-            mesh->surface_set_material(i,mat);
-        }
-
-        if (mesh->get_surface_count() > 0) {
-
-            element_node->set_mesh(mesh);
-            if (prebuild_editor_caches) {
-                editor_cache_queue.push_back(mesh);
-            }
-
-            if (this->should_create_collisions &&
-                (this->collision_classes.is_empty() || this->collision_classes.has(item.ifc_class))) {
-                Ref<Shape3D> shape = create_trimesh_collision_from_geometry(element_node, item.geometry);
-                if (prebuild_editor_caches && shape.is_valid()) {
-                    editor_cache_queue.push_back(shape);
-                }
-            }
-
-        }
-
-        element_node->add_to_group(item.ifc_class,true);
+        _create_item_node(generation_queue[current_generation_index], prebuild_editor_caches);
 
         current_generation_index++;
 

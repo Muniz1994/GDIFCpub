@@ -32,6 +32,8 @@ set(EXT_SOURCES
 		src/gd_ifc_model.cpp
 		src/gd_ifc_georeference.h
 		src/gd_ifc_georeference.cpp
+		src/gd_ifc_import_plugin.h
+		src/gd_ifc_import_plugin.cpp
 )
 
 file(GLOB GENERATED_SOURCES "src/generated/*.cpp")

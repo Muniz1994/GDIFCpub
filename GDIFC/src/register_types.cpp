@@ -5,17 +5,26 @@
 #include "gd_ifc_settings.h"
 #include "gd_ifc_entity_base.h"
 #include "gd_ifc_model.h"
+#include "gd_ifc_import_plugin.h"
 
 #include <IfcSchema.h>
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/godot.hpp>
+#include <godot_cpp/classes/editor_plugin_registration.hpp>
 
 using namespace godot;
 
 void initialize_example_module(ModuleInitializationLevel p_level)
 {
+    if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
+    {
+        GDREGISTER_INTERNAL_CLASS(GDIFCImportPlugin);
+        GDREGISTER_INTERNAL_CLASS(GDIFCEditorPlugin);
+        EditorPlugins::add_by_type<GDIFCEditorPlugin>();
+        return;
+    }
     if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE)
     {
         return;
@@ -43,6 +52,11 @@ void initialize_example_module(ModuleInitializationLevel p_level)
 
 void uninitialize_example_module(ModuleInitializationLevel p_level)
 {
+    if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
+    {
+        EditorPlugins::remove_by_type<GDIFCEditorPlugin>();
+        return;
+    }
     if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE)
     {
         return;

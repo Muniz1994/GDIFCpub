@@ -10,9 +10,24 @@ New changes go under **Unreleased**. Builds are cut automatically: when a push t
 
 ## [Unreleased]
 
+#### Added
+
+- `.ifc` files are imported as scenes, like `.glb` files. Drag one into the 3D view or instance it, and the scene only stores a reference to the file instead of every mesh, collision shape and property set: a scene holding a 2.5 MB model went from a 2.2 MB `.tscn` to 230 bytes. Import options cover coordinate to origin, circle segments, LODs and collision. Instances re-link `ifc_object` from the `.ifc` file, and follow their `reference_georeference`.
+- **Import as scene** option in the dock's new Scene group. **Load IFC...** then imports the file with the dock's options and adds it to the edited scene as an instance, with undo. Files from outside the project are copied into a per-project import folder (`res://ifc/` by default). Picking a different file with the same name asks before replacing it.
+- IFC meshes have UVs, box-projected at 1 UV unit per meter, so textured materials display on them.
+
+#### Fixed
+
+- Vertices shared by faces facing different directions are split, so each face keeps its own flat normal.
+- The dock's collision element list no longer shows every element type twice.
+
 ## [1.1.0-alpha]
 
 ### Build 4 — 2026-10-15
+
+#### Changed
+
+- Changed ration of loading File Dialog to 0.8. 
 
 ##### Fixed
 

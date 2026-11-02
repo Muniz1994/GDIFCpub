@@ -57,6 +57,16 @@ To load from a base-64 encoded string (e.g. data received over the network):
 ifc_manager.read_ifc_base64(base64_string, false, [])
 ```
 
+### Importing `.ifc` files as scenes
+
+`.ifc` files inside the project are imported like `.glb` files: drag one from the FileSystem dock into the 3D view, or instance it in a scene. The model is built once per import and stored in binary under `.godot/imported/`, so the scene that uses it only stores a reference to the `.ifc` file and stays small and quick to save. To change individual nodes, enable **Editable Children** on the instance.
+
+From the GDIFC dock, turn on **Scene → Import as scene** before clicking **Load IFC...**: the file is imported with the dock's options and instanced in the edited scene. Files from outside the project are first copied into the **Import folder** (`res://ifc/` by default); files already in the project are imported where they are. Of the settings preset, only coordinate to origin and circle segments apply to imports.
+
+Select the `.ifc` file and open the **Import** dock to set its options (coordinate to origin, circle segments, LODs, collision and the classes to create it for), then click **Reimport**. The model is reimported automatically when the `.ifc` file changes.
+
+The root of an imported scene is a `GDIFCManager`. When an instance enters the tree, it re-parses the `.ifc` file to restore `ifc_object` and the `IFCModel` queries. Set its `reference_georeference` to place the model relative to another model's `IFCGeoreference`. In exported projects, add `*.ifc` to the export preset's **Filters to export non-resource files/folders** so the file is available at runtime.
+
 ## Documentation
 
 Extended documentation is available in the [`docs/`](docs/) folder:
