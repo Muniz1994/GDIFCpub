@@ -1,5 +1,7 @@
 #include "gd_ifc_manager.h"
 #include <algorithm> // Required for std::sort
+#include <cctype>     // Required for std::toupper
+#include <cstring>    // Required for strlen
 #include <functional> // Required for lambdas
 #include <stdexcept>  // Required for std::exception
 #include <mutex>
@@ -364,6 +366,77 @@ Error GDIFCManager::read_ifc_base64(const String &_base64_data, bool _create_col
     return _start_loading(_create_collision, _collision_classes);
 }
 
+// The schemas GDIFC reads properties and typed objects from. web-ifc reads geometry from more.
+static const char *SUPPORTED_IFC_SCHEMAS[] = {"IFC2X3", "IFC4", "IFC4X3_ADD2"};
+
+// Reads the identifiers in FILE_SCHEMA from the header, without a full parse
+static std::vector<std::string> read_file_schemas(const PackedByteArray &buffer) {
+    // The header sits at the top of the file
+    const size_t head_size = std::min<size_t>(buffer.size(), 64 * 1024);
+    std::string head(reinterpret_cast<const char *>(buffer.ptr()), head_size);
+    std::transform(head.begin(), head.end(), head.begin(), [](unsigned char c) { return (char)std::toupper(c); });
+
+    std::vector<std::string> schemas;
+    size_t pos = 0;
+    while ((pos = head.find("FILE_SCHEMA", pos)) != std::string::npos) {
+        pos += strlen("FILE_SCHEMA");
+        // Skip mentions of the keyword inside strings, e.g. in FILE_DESCRIPTION
+        const size_t open_paren = head.find_first_not_of(" \t\r\n", pos);
+        if (open_paren == std::string::npos || head[open_paren] != '(') continue;
+
+        const size_t end = head.find(';', open_paren);
+        if (end == std::string::npos) break;
+        size_t cursor = open_paren;
+        while (true) {
+            const size_t open = head.find('\'', cursor);
+            if (open == std::string::npos || open > end) break;
+            const size_t close = head.find('\'', open + 1);
+            if (close == std::string::npos || close > end) break;
+            schemas.push_back(head.substr(open + 1, close - open - 1));
+            cursor = close + 1;
+        }
+        break;
+    }
+    return schemas;
+}
+
+// IfcParse can't read files with other schemas. Loading goes on, since web-ifc still reads the
+// geometry, but the user is told clearly why properties and typed objects will be missing.
+static void warn_if_schema_unsupported(const PackedByteArray &buffer) {
+    const std::vector<std::string> schemas = read_file_schemas(buffer);
+    String problem;
+    String hint = "Re-export the model with one of the supported schemas.";
+
+    if (schemas.empty()) {
+        problem = "The file header declares no schema in FILE_SCHEMA. The file is not a valid IFC-SPF file or its header is damaged.";
+        hint = "Check that the file is a .ifc (STEP) file and that its HEADER section is complete.";
+    } else if (schemas.size() > 1) {
+        String list;
+        for (const std::string &schema : schemas) {
+            list += String(list.is_empty() ? "'" : ", '") + schema.c_str() + "'";
+        }
+        problem = String("The file declares several schemas (") + list + "). Only one is allowed.";
+    } else {
+        const std::string &schema = schemas.front();
+        for (const char *supported : SUPPORTED_IFC_SCHEMAS) {
+            if (schema == supported) return;
+        }
+        problem = String("The file declares schema '") + schema.c_str() + "', which GDIFC can't read.";
+        if (schema.rfind("IFC4X3", 0) == 0) {
+            hint = "Most exporters can write IFC 4.3 as IFC4X3_ADD2 (IFC 4.3 ADD2).";
+        }
+    }
+
+    const String details = problem
+        + " Supported schemas: IFC2X3 (IFC 2x3 TC1), IFC4 (IFC 4 ADD2 TC1) and IFC4X3_ADD2 (IFC 4.3 ADD2)."
+        + " Geometry still loads, but attributes, property sets, quantities, typed objects and georeferencing won't be available. "
+        + hint;
+    // The schema name comes from the file, so its brackets are escaped for BBCode
+    UtilityFunctions::print_rich(String("[b][color=orange]Unsupported IFC file: properties and typed objects will be unavailable. Only the geometry will load.[/color][/b]\n")
+        + "[color=orange]" + details.replace("[", "[lb]") + "[/color]");
+    WARN_PRINT(details);
+}
+
 Error GDIFCManager::_start_loading(bool _create_collision, const Array &_collision_classes) {
     _reset_load_state(_create_collision, _collision_classes);
 
@@ -399,6 +472,8 @@ void GDIFCManager::_reset_load_state(bool _create_collision, const Array &_colli
     this->reported_stage_ = STAGE_IDLE;
     this->parse_step_start_usec_.store(Time::get_singleton()->get_ticks_usec());
     _set_worker_progress(STAGE_PARSING, 2);
+
+    warn_if_schema_unsupported(this->pending_buffer);
 
     // IfcParse gets its own reference to the file bytes and parses them alongside web-ifc
     this->metadata_buffer_ = this->pending_buffer;
