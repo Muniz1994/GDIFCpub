@@ -1248,8 +1248,11 @@ void GDIFCManager::_thread_task() {
             PrecalculatedIFCItem item;
             init_item(item, id, spatial_type.first);
 
-            // Spatial elements can carry geometry (e.g. IfcSite terrain); IfcProject usually has none
-            fill_item_geometry(geometry_loader, geometry_loader.GetFlatMesh(id), false, item);
+            // Spatial elements can carry geometry (e.g. IfcSite terrain). IfcProject is not a product and
+            // has no Representation, and web-ifc logs an "unexpected mesh type" error when asked for one
+            if (spatial_type.second != webifc::schema::IFCPROJECT) {
+                fill_item_geometry(geometry_loader, geometry_loader.GetFlatMesh(id), false, item);
+            }
 
             temp_queue.push_back(item);
             processed_ids.insert(id);

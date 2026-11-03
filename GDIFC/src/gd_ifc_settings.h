@@ -21,12 +21,13 @@ private:
     uint32_t m_tapeSize { 67108864 };
     uint32_t m_memoryLimit { 2147483648 };
     uint16_t m_lineWriterBuffer { 10000 };
-    double m_tolerancePlaneIntersection { 1.0E-01 };
-    double m_tolerancePlaneDeviation { 3.0E-04 };
-    double m_toleranceBackDeviationDistance { 3.0E-04 };
+    // web-ifc's own defaults (ModelManager.h LoaderSettings)
+    double m_tolerancePlaneIntersection { 1.0E-04 };
+    double m_tolerancePlaneDeviation { 1.0E-04 };
+    double m_toleranceBackDeviationDistance { 1.0E-04 };
     double m_toleranceInsideOutsidePerimeter { 1.0E-10 };
     double m_toleranceScalarEquality { 1.0E-04 };
-    uint16_t m_planeRefitIterations { 10 };
+    uint16_t m_planeRefitIterations { 1 };
     uint16_t m_booleanUnionThreshold { 150 };
     bool m_generateLods { true };
     float m_lodNormalMergeAngle { 60.0f };

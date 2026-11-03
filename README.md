@@ -119,12 +119,12 @@ Attach to `GDIFCManager.geometric_settings` to control the loader.
 | `tape_size` | `67108864` (64 MB) | Internal parser tape buffer size in bytes. |
 | `memory_limit` | `2147483648` (2 GB) | Maximum memory the geometry processor may use in bytes. |
 | `line_writer_buffer` | `10000` | Internal line-writer buffer size. |
-| `tolerance_plane_intersection` | `1.0e-1` | Tolerance for plane-intersection tests. |
-| `tolerance_plane_deviation` | `3.0e-4` | Tolerance for plane-deviation tests. |
-| `tolerance_back_deviation_distance` | `3.0e-4` | Tolerance for back-deviation distance tests. |
+| `tolerance_plane_intersection` | `1.0e-4` | Tolerance for plane-intersection tests. |
+| `tolerance_plane_deviation` | `1.0e-4` | Tolerance for plane-deviation tests. |
+| `tolerance_back_deviation_distance` | `1.0e-4` | Tolerance for back-deviation distance tests. |
 | `tolerance_inside_outside_perimeter` | `1.0e-10` | Tolerance for inside/outside perimeter tests. |
 | `tolerance_scalar_equality` | `1.0e-4` | Tolerance for scalar equality comparisons. |
-| `plane_refit_iterations` | `10` | Maximum iterations for the plane-refit solver. |
+| `plane_refit_iterations` | `1` | Maximum iterations for the plane-refit solver. |
 | `boolean_union_threshold` | `150` | Maximum number of boolean union operations per object before the operation is skipped. |
 | `generate_lods` | `true` | Generate mesh LODs with Godot's `ImporterMesh` (the same path the glTF importer uses). LOD data is saved with the scene, so `.tscn` files get larger. |
 | `lod_normal_merge_angle` | `60.0` | Angle in degrees below which vertices with different normals may be merged while simplifying. |

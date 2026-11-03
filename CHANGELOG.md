@@ -21,12 +21,15 @@ New changes go under **Unreleased**. Builds are cut automatically: when a push t
 - Updated web-ifc to 0.0.79 (`a26fae51`). It brings many geometry fixes (booleans, swept disks, sectioned and revolved solids, profile sweeps along IFC4X3 curves), support for `IfcSegmentedReferenceCurve`, the element type's material colour when an occurrence has none, and caching of mapped representations. Its bundled dependencies were moved to the versions web-ifc now pins: fast_float 8.3.2, earcut 3.2.4, CDT 2.0.1 and unordered_dense 5.3.3.
 - Malformed IFC files that web-ifc can only partially parse now fail to load with an error, instead of loading an incomplete model.
 - Loading a file whose `FILE_SCHEMA` isn't IFC2X3, IFC4 or IFC4X3_ADD2 now prints a highlighted message and a warning that name the declared schema and the supported ones. The geometry still loads, but properties, quantities, typed objects and georeferencing are unavailable. Before, the only sign was a generic "Failed to parse IFC file" error.
+- `GDIFCLoaderSettings` geometry tolerances now default to web-ifc's own defaults: `tolerance_plane_intersection` 1.0e-4 (was 1.0e-1), `tolerance_plane_deviation` and `tolerance_back_deviation_distance` 1.0e-4 (were 3.0e-4), and `plane_refit_iterations` 1 (was 10). The old values had been tuned in web-ifc's test program for one model. With them, some files never finished processing geometry (in a test, `417--buildingElementProxy` ran for over 120 s, against 0.4 s with the new defaults). Set the old values on a `GDIFCLoaderSettings` to keep the previous results.
 
 #### Fixed
 
 - Vertices shared by faces facing different directions are split, so each face keeps its own flat normal.
 - The dock's collision element list no longer shows every element type twice.
 - Tasks, work plans and schedules, cost items and type objects no longer become nodes when they nest or aggregate other entities. Only products and the project are part of the node hierarchy. Before, a 4D file showed every task that had subtasks, without geometry, at the top of the model.
+- `IFCModel` header getters (`get_originating_system`, `get_preprocessor`, `get_authorization`, ...) return an empty value when the field is `$` in `FILE_NAME`, instead of crashing Godot with an unhandled exception. Several exporters, such as Simplebim, write `$` for these fields.
+- Loading a file no longer logs a web-ifc `[GetMesh()] unexpected mesh type` error for the `IfcProject`, which has no geometry.
 
 ## [1.1.0-alpha]
 

@@ -49,8 +49,6 @@ FAILING = {"fail", "crash", "timeout"}
 # Printed for every file, so they would hide the messages that tell files apart
 IGNORED_MESSAGES = [
     re.compile(r"Invalid tag in doc file"),
-    # GDIFC asks web-ifc for the IfcProject mesh too (gd_ifc_manager.cpp, PHASE A)
-    re.compile(r"unexpected mesh type #\d+ IFCPROJECT$"),
 ]
 
 ANSI_ESCAPE = re.compile(r"\x1b\[[0-9;]*m")
@@ -60,6 +58,8 @@ GODOT_WARNING = re.compile(r"^WARNING: (.*)")
 WEBIFC_LOG = re.compile(r"^\[[\d\- :.]+\] \[(error|warning|critical)\] (.*)")
 TRAILING_ID = re.compile(r"(?<![#\w])(\d+)$")
 STEP_ENTITY = re.compile(rb"^\s*#(\d+)\s*=\s*([A-Za-z0-9_]+)")
+# Skips quoted strings whole, so only comments outside them are removed
+STEP_COMMENT = re.compile(r"('(?:[^']|'')*')|/\*.*?\*/", re.S)
 # Printed by ifc_load_test.gd, the only progress left when a file times out or crashes
 STAGE_LINE = re.compile(r"^\[ifc_load_test\] stage: (.*)$", re.M)
 
@@ -87,13 +87,41 @@ def read_header(path):
     match = re.search(r"FILE_SCHEMA\s*\(\s*\(\s*'([^']*)'", head)
     if match:
         info["schema"] = match.group(1).upper()
-    match = re.search(r"FILE_NAME\s*\((.*?)\)\s*;", head, re.S)
+    match = re.search(r"FILE_NAME\s*\(", head)
     if match:
-        fields = re.findall(r"'((?:[^']|'')*)'", match.group(1))
         # FILE_NAME(name, time_stamp, (author), (organization), preprocessor_version, originating_system, authorization)
-        if len(fields) >= 2:
-            info["originating_system"] = fields[-2]
+        fields = step_arguments(head, match.end() - 1)
+        if len(fields) >= 6 and fields[5].startswith("'"):
+            info["originating_system"] = fields[5][1:-1].replace("''", "'")
     return info
+
+
+def step_arguments(text, start):
+    """Top-level arguments, as written, of the STEP parameter list whose '(' is at text[start].
+
+    Splits on commas outside strings and nested lists, so $ and () fields keep their place."""
+    # Exporters such as Geometry Gym label each field with a /* comment */
+    text = text[:start + 1] + STEP_COMMENT.sub(lambda m: m.group(1) or " ", text[start + 1:])
+    fields, current, depth, in_string = [], [], 0, False
+    for ch in text[start + 1:]:
+        if in_string:
+            # '' inside a string toggles out and straight back in, which keeps both quotes
+            in_string = ch != "'"
+        elif ch == "'":
+            in_string = True
+        elif ch == "(":
+            depth += 1
+        elif ch == ")":
+            if depth == 0:
+                break
+            depth -= 1
+        elif ch == "," and depth == 0:
+            fields.append("".join(current).strip())
+            current = []
+            continue
+        current.append(ch)
+    fields.append("".join(current).strip())
+    return fields
 
 
 def discover(corpus, args):

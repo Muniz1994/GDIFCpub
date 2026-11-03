@@ -20,81 +20,103 @@ void IFCModel::init(std::shared_ptr<IfcParse::IfcFile> file) {
 
 // ── Header helpers ─────────────────────────────────────────────────────────
 
+namespace {
+
+// IfcParse reads header attributes on demand and throws for one it can't convert, such as $.
+// Exporters often write $ for optional FILE_NAME fields (originating_system, authorization, ...),
+// so an unreadable field comes back empty instead of escaping into Godot.
+template <typename Read>
+godot::String header_string(const IfcParse::IfcFile* file, Read read) {
+    if (!file) return godot::String();
+    try {
+        return godot::String::utf8(read(file->header()).c_str());
+    } catch (...) {
+        return godot::String();
+    }
+}
+
+template <typename Read>
+godot::PackedStringArray header_strings(const IfcParse::IfcFile* file, Read read) {
+    godot::PackedStringArray result;
+    if (!file) return result;
+    try {
+        for (const auto& s : read(file->header())) {
+            result.push_back(godot::String::utf8(s.c_str()));
+        }
+    } catch (...) {
+        result.clear();
+    }
+    return result;
+}
+
+using Header = IfcParse::IfcSpfHeader;
+using Strings = std::vector<std::string>;
+
+} // namespace
+
 godot::String IFCModel::get_schema_name() const {
-    if (!ifc_file_) return godot::String();
-    const auto* fs = ifc_file_->header().file_schema();
-    if (!fs) return godot::String();
-    const auto& ids = fs->schema_identifiers();
-    if (ids.empty()) return godot::String();
-    return godot::String::utf8(ids.front().c_str());
+    return header_string(ifc_file_.get(), [](const Header& h) {
+        const auto* fs = h.file_schema();
+        if (!fs) return std::string();
+        const Strings ids = fs->schema_identifiers();
+        return ids.empty() ? std::string() : ids.front();
+    });
 }
 
 godot::PackedStringArray IFCModel::get_file_description() const {
-    godot::PackedStringArray result;
-    if (!ifc_file_) return result;
-    const auto* fd = ifc_file_->header().file_description();
-    if (!fd) return result;
-    for (const auto& s : fd->description()) {
-        result.push_back(godot::String::utf8(s.c_str()));
-    }
-    return result;
+    return header_strings(ifc_file_.get(), [](const Header& h) {
+        const auto* fd = h.file_description();
+        return fd ? fd->description() : Strings();
+    });
 }
 
 godot::String IFCModel::get_file_name() const {
-    if (!ifc_file_) return godot::String();
-    const auto* fn = ifc_file_->header().file_name();
-    if (!fn) return godot::String();
-    return godot::String::utf8(fn->name().c_str());
+    return header_string(ifc_file_.get(), [](const Header& h) {
+        const auto* fn = h.file_name();
+        return fn ? fn->name() : std::string();
+    });
 }
 
 godot::String IFCModel::get_timestamp() const {
-    if (!ifc_file_) return godot::String();
-    const auto* fn = ifc_file_->header().file_name();
-    if (!fn) return godot::String();
-    return godot::String::utf8(fn->time_stamp().c_str());
+    return header_string(ifc_file_.get(), [](const Header& h) {
+        const auto* fn = h.file_name();
+        return fn ? fn->time_stamp() : std::string();
+    });
 }
 
 godot::PackedStringArray IFCModel::get_author() const {
-    godot::PackedStringArray result;
-    if (!ifc_file_) return result;
-    const auto* fn = ifc_file_->header().file_name();
-    if (!fn) return result;
-    for (const auto& s : fn->author()) {
-        result.push_back(godot::String::utf8(s.c_str()));
-    }
-    return result;
+    return header_strings(ifc_file_.get(), [](const Header& h) {
+        const auto* fn = h.file_name();
+        return fn ? fn->author() : Strings();
+    });
 }
 
 godot::PackedStringArray IFCModel::get_organization() const {
-    godot::PackedStringArray result;
-    if (!ifc_file_) return result;
-    const auto* fn = ifc_file_->header().file_name();
-    if (!fn) return result;
-    for (const auto& s : fn->organization()) {
-        result.push_back(godot::String::utf8(s.c_str()));
-    }
-    return result;
+    return header_strings(ifc_file_.get(), [](const Header& h) {
+        const auto* fn = h.file_name();
+        return fn ? fn->organization() : Strings();
+    });
 }
 
 godot::String IFCModel::get_preprocessor() const {
-    if (!ifc_file_) return godot::String();
-    const auto* fn = ifc_file_->header().file_name();
-    if (!fn) return godot::String();
-    return godot::String::utf8(fn->preprocessor_version().c_str());
+    return header_string(ifc_file_.get(), [](const Header& h) {
+        const auto* fn = h.file_name();
+        return fn ? fn->preprocessor_version() : std::string();
+    });
 }
 
 godot::String IFCModel::get_originating_system() const {
-    if (!ifc_file_) return godot::String();
-    const auto* fn = ifc_file_->header().file_name();
-    if (!fn) return godot::String();
-    return godot::String::utf8(fn->originating_system().c_str());
+    return header_string(ifc_file_.get(), [](const Header& h) {
+        const auto* fn = h.file_name();
+        return fn ? fn->originating_system() : std::string();
+    });
 }
 
 godot::String IFCModel::get_authorization() const {
-    if (!ifc_file_) return godot::String();
-    const auto* fn = ifc_file_->header().file_name();
-    if (!fn) return godot::String();
-    return godot::String::utf8(fn->authorization().c_str());
+    return header_string(ifc_file_.get(), [](const Header& h) {
+        const auto* fn = h.file_name();
+        return fn ? fn->authorization() : std::string();
+    });
 }
 
 // ── Entity lookup ─────────────────────────────────────────────────────────
