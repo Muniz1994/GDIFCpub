@@ -36,6 +36,8 @@ set(EXT_SOURCES
 		src/gd_ifc_import_plugin.cpp
 		src/gd_ifc_material.h
 		src/gd_ifc_material.cpp
+		src/gd_ifc_collision.h
+		src/gd_ifc_collision.cpp
 )
 
 file(GLOB GENERATED_SOURCES "src/generated/*.cpp")

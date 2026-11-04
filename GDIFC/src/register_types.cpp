@@ -7,6 +7,7 @@
 #include "gd_ifc_model.h"
 #include "gd_ifc_import_plugin.h"
 #include "gd_ifc_material.h"
+#include "gd_ifc_collision.h"
 
 #include <IfcSchema.h>
 
@@ -56,6 +57,10 @@ void initialize_example_module(ModuleInitializationLevel p_level)
     ClassDB::register_class<GDIFCMaterialConstituentSet>();
     ClassDB::register_class<GDIFCMaterialList>();
     ClassDB::register_class<GDIFCMaterialLibrary>();
+
+    ClassDB::register_class<GDIFCCollisionRule>();
+    ClassDB::register_class<GDIFCCollisionMatrix>();
+    GDREGISTER_INTERNAL_CLASS(GDIFCGeometryMesh);
 
     // IfcParse builds its schemas lazily without a lock, so two IFC files parsed
     // on worker threads at once (e.g. a scene cold-reloading several models)

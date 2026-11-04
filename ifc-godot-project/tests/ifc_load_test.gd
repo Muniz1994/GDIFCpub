@@ -45,7 +45,7 @@ func _initialize() -> void:
 	_manager.ifc_load_failed.connect(_on_ifc_load_failed)
 	_manager.load_progress_changed.connect(_on_load_progress_changed)
 
-	# An empty class list with collision on would skip collision, so list nothing and let every element through
+	# An empty class list with collision on creates collision for every element
 	var create_collision: bool = args.has("collision")
 	_start_usec = Time.get_ticks_usec()
 	var err := _manager.read_ifc(path, create_collision, [])

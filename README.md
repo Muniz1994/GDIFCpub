@@ -10,7 +10,7 @@ It creates a node tree of `IFCNode` meshes with the full geometry, properties, a
 - Asynchronous, threaded loading — the editor and game remain responsive while the model is parsed
 - IFC schema support: IFC 2.3.0.1 (IFC 2x3 TC1), IFC 4.0.2.1 (IFC 4 ADD2 TC1), 4.3.2.0 (IFC 4.3 ADD2)    
 - Per-object property sets, quantity sets, and attributes exposed as `Dictionary`
-- Optional collision shape generation per object
+- Optional collision shape generation per object, with a shape type and physics layers per IFC class
 - Georeferencing data (`MapConversion` / `ProjectedCRS`) available after load
 - Platforms: Windows, Linux, Android, Web (WASM)
 
@@ -44,8 +44,8 @@ extends Node3D
 @onready var ifc_manager: GDIFCManager = $GDIFCManager
 
 func _ready() -> void:
-    # Load an IFC file.  Pass an empty Array for collision_classes to skip
-    # collision generation, or list IFC class names to include (e.g. ["IfcWall"]).
+    # Load an IFC file. With create_collision true, list the IFC class names to
+    # create collision for (e.g. ["IfcWall"]), or pass [] for every element.
     ifc_manager.read_ifc("res://models/building.ifc", false, [])
 ```
 
@@ -63,7 +63,7 @@ ifc_manager.read_ifc_base64(base64_string, false, [])
 
 From the GDIFC dock, turn on **Scene → Import as scene** before clicking **Load IFC...**: the file is imported with the dock's options and instanced in the edited scene. Files from outside the project are first copied into the **Import folder** (`res://ifc/` by default); files already in the project are imported where they are. Of the settings preset, only coordinate to origin and circle segments apply to imports.
 
-Select the `.ifc` file and open the **Import** dock to set its options (coordinate to origin, circle segments, LODs, collision and the classes to create it for), then click **Reimport**. The model is reimported automatically when the `.ifc` file changes.
+Select the `.ifc` file and open the **Import** dock to set its options (coordinate to origin, circle segments, LODs, collision and the classes or collision matrix to create it with), then click **Reimport**. The model is reimported automatically when the `.ifc` file changes.
 
 The root of an imported scene is a `GDIFCManager`. When an instance enters the tree, it re-parses the `.ifc` file to restore `ifc_object` and the `IFCModel` queries. Set its `reference_georeference` to place the model relative to another model's `IFCGeoreference`. In exported projects, add `*.ifc` to the export preset's **Filters to export non-resource files/folders** so the file is available at runtime.
 
@@ -86,8 +86,9 @@ The entry point for all IFC loading.
 
 | Member | Type | Description |
 |---|---|---|
-| `read_ifc(path, create_collision, collision_classes)` | `Error` | Load an IFC file from disk. `path` is a Godot resource path or absolute path. `collision_classes` is an `Array[String]` of IFC class names to generate collision shapes for (pass `[]` to disable). |
+| `read_ifc(path, create_collision, collision_classes)` | `Error` | Load an IFC file from disk. `path` is a Godot resource path or absolute path. With `create_collision`, `collision_classes` is an `Array[String]` of exact IFC class names to generate collision shapes for, or `[]` for every element. |
 | `read_ifc_base64(data, create_collision, collision_classes)` | `Error` | Load an IFC file from a base-64 encoded string. Same parameters as `read_ifc`. |
+| `collision_matrix` | `GDIFCCollisionMatrix` | Collision shape type and physics layers per IFC class. Replaces `create_collision` and `collision_classes` when set. See [Collision Matrix](docs/loading-models.md#collision-matrix). |
 | `geometric_settings` | `GDIFCLoaderSettings` | Resource controlling geometry tessellation, memory limits, and tolerances. Assign before calling `read_ifc`. |
 | `ifc_read` | signal | Emitted when the node tree with its geometry has been added. Attributes, property sets, quantities and `ifc_object` are not filled yet. |
 | `ifc_objects_ready` | signal | Emitted after `ifc_read`, when attributes, property sets, quantities, `ifc_object` references and georeferencing are on the nodes (after a load or a cold reload of a saved scene). |

@@ -224,7 +224,7 @@ columns = 2
 [node name="CreateCollisionsLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Collisions/VBoxContainer/GridContainer" unique_id=1397557480]
 layout_mode = 2
 size_flags_horizontal = 3
-tooltip_text = "Create static collision bodies for the selected element types."
+tooltip_text = "Create static collision bodies for the selected element types, or for the classes of the collision matrix."
 mouse_filter = 1
 text = "Enabled"
 text_overrun_behavior = 3
@@ -235,9 +235,22 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "On"
 
+[node name="CollisionMatrixLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Collisions/VBoxContainer/GridContainer" unique_id=1587203916]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "A GDIFCCollisionMatrix choosing the shape and physics layers per IFC class. Replaces the element list while set."
+mouse_filter = 1
+text = "Matrix"
+text_overrun_behavior = 3
+
+[node name="CollisionMatrix" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Collisions/VBoxContainer/GridContainer" unique_id=902345671]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="CollisionElementsLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Collisions/VBoxContainer" unique_id=78863048]
 layout_mode = 2
-tooltip_text = "IFC building element types that receive collisions. Ctrl/Shift-click to select several. Selecting a type also includes its IFC4 StandardCase and ElementedCase variants."
+tooltip_text = "IFC building element types that receive collisions. Ctrl/Shift-click to select several. Selecting a type also includes its IFC4 StandardCase and ElementedCase variants. Not used while a collision matrix is set."
 mouse_filter = 1
 text = "Elements"
 text_overrun_behavior = 3

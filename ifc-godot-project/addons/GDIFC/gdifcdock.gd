@@ -72,6 +72,7 @@ const COLLISION_LIST_VISIBLE_ROWS := 8
 @onready var button: Button = %LoadIFCButton
 @onready var create_collisions_check: CheckBox = %CreateCollisionsCheckBox
 @onready var elements_list: ItemList = %ElementsList
+@onready var collision_matrix_box: HBoxContainer = %CollisionMatrix
 @onready var load_status: VBoxContainer = %LoadStatus
 @onready var load_progress_bar: ProgressBar = %LoadProgressBar
 @onready var load_status_label: Label = %LoadStatusLabel
@@ -96,6 +97,7 @@ var overwrite_dialog: ConfirmationDialog
 var ifc_manager: GDIFCManager
 var current_scene_root: Node
 var geom_settings_picker = EditorResourcePicker.new()
+var collision_matrix_picker = EditorResourcePicker.new()
 # File name of the current or last load, when it started, and whether it failed
 var load_file_name := ""
 var load_start_msec := 0
@@ -122,6 +124,15 @@ func _start_interface():
 	geom_settings_picker.edited_resource = settings
 	geom_settings.add_child(geom_settings_picker)
 
+	collision_matrix_picker.size_flags_horizontal = EditorResourcePicker.SIZE_EXPAND_FILL
+	collision_matrix_picker.base_type = "GDIFCCollisionMatrix"
+	collision_matrix_box.add_child(collision_matrix_picker)
+
+	# A picker outside the Inspector only reports clicks, so the dock opens the resource itself
+	for picker in [geom_settings_picker, collision_matrix_picker]:
+		picker.resource_selected.connect(func(resource: Resource, _inspect: bool):
+			EditorInterface.edit_resource(resource))
+
 	# LOD controls mirror the picked preset, and override it per load without editing it
 	geom_settings_picker.resource_changed.connect(_sync_lod_controls)
 	generate_lods_check.toggled.connect(func(on: bool): lod_merge_angle.editable = on)
@@ -137,6 +148,8 @@ func _start_interface():
 	for type_name in COLLISION_ELEMENT_TYPES:
 		elements_list.add_item(type_name)
 	create_collisions_check.toggled.connect(_set_collision_elements_enabled)
+	collision_matrix_picker.resource_changed.connect(func(_matrix: Resource):
+		_set_collision_elements_enabled(create_collisions_check.button_pressed))
 	_set_collision_elements_enabled(create_collisions_check.button_pressed)
 
 	_restore_import_options()
@@ -189,8 +202,11 @@ func _restore_group_folding():
 			editor_settings.set_project_metadata(FOLDING_METADATA_SECTION, key, is_folded))
 
 func _set_collision_elements_enabled(on: bool):
+	collision_matrix_picker.editable = on
+	# A matrix decides every class, so the list is greyed out while one is picked
+	var list_on: bool = on and collision_matrix_picker.edited_resource == null
 	for i in elements_list.item_count:
-		elements_list.set_item_disabled(i, not on)
+		elements_list.set_item_disabled(i, not list_on)
 
 # The import options are remembered per project, like the group folding
 func _restore_import_options():
@@ -325,6 +341,13 @@ func _on_file_selected(path: String):
 		var type_name := elements_list.get_item_text(i)
 		collision_elements.append(type_name)
 		collision_elements.append_array(COLLISION_ELEMENT_VARIANTS.get(type_name, []))
+	var collision_matrix: GDIFCCollisionMatrix = collision_matrix_picker.edited_resource if create_collision else null
+
+	# The .import file can only point to a matrix saved in its own file
+	if import_as_scene_check.button_pressed and collision_matrix 			and (collision_matrix.resource_path.is_empty() or "::" in collision_matrix.resource_path):
+		_show_load_status("Save the collision matrix to a .tres file to import with it", true)
+		load_status_label.tooltip_text = "Models imported as scenes read their options from the .import file, which can only reference a saved resource. Use Save in the matrix picker's menu."
+		return
 
 	button.disabled = true
 	load_start_msec = Time.get_ticks_msec()
@@ -335,11 +358,12 @@ func _on_file_selected(path: String):
 	await get_tree().process_frame
 
 	if import_as_scene_check.button_pressed:
-		await _import_and_instance(path, create_collision, collision_elements)
+		await _import_and_instance(path, create_collision, collision_elements, collision_matrix)
 		return
 
 	ifc_manager = GDIFCManager.new()
 	ifc_manager.set_gdifc_settings(_build_load_settings())
+	ifc_manager.collision_matrix = collision_matrix
 
 	# 1. Add the manager to the scene
 	current_scene_root.add_child(ifc_manager,true)
@@ -371,7 +395,7 @@ func _on_file_selected(path: String):
 # Imports the file as a scene with the dock's options and instances it in the edited scene,
 # which then only stores a reference to the .ifc file. Files from outside the project are
 # copied into the import folder first.
-func _import_and_instance(path: String, create_collision: bool, collision_elements: Array):
+func _import_and_instance(path: String, create_collision: bool, collision_elements: Array, collision_matrix: GDIFCCollisionMatrix):
 	ifc_manager = null
 
 	var res_path := ProjectSettings.localize_path(path)
@@ -381,7 +405,7 @@ func _import_and_instance(path: String, create_collision: bool, collision_elemen
 		if not await _copy_into_project(path, res_path):
 			return
 
-	_write_import_options(res_path, create_collision, collision_elements)
+	_write_import_options(res_path, create_collision, collision_elements, collision_matrix)
 
 	_show_load_status("Importing %s" % load_file_name, false)
 	load_progress_bar.hide()
@@ -491,7 +515,7 @@ func _confirm_overwrite(text: String) -> bool:
 
 # The importer reads its options from the .import file, so the dock writes them there before
 # importing. Existing keys, such as the uid, are kept.
-func _write_import_options(res_path: String, create_collision: bool, collision_elements: Array):
+func _write_import_options(res_path: String, create_collision: bool, collision_elements: Array, collision_matrix: GDIFCCollisionMatrix):
 	var load_settings := _build_load_settings()
 	var import_config := ConfigFile.new()
 	import_config.load(res_path + ".import") # missing on the first import
@@ -504,6 +528,7 @@ func _write_import_options(res_path: String, create_collision: bool, collision_e
 	import_config.set_value("params", "materials/ifc_materials", load_settings.ifc_materials)
 	import_config.set_value("params", "materials/textures", load_settings.ifc_textures)
 	import_config.set_value("params", "collision/create", create_collision)
+	import_config.set_value("params", "collision/matrix", collision_matrix.resource_path if collision_matrix else "")
 	import_config.set_value("params", "collision/classes", PackedStringArray(collision_elements))
 	import_config.save(res_path + ".import")
 

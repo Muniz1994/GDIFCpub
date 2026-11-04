@@ -43,6 +43,8 @@ class GDIFCEditorPlugin : public EditorPlugin {
 
     Ref<GDIFCImportPlugin> importer_;
 
+    void _on_resource_saved(const Ref<Resource> &resource);
+
 protected:
     static void _bind_methods() {}
 

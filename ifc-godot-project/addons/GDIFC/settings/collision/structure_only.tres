@@ -1,0 +1,94 @@
+[gd_resource type="GDIFCCollisionMatrix" format=3 uid="uid://di0rkbfkrj8wh"]
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_7tk5x"]
+ifc_class = "IfcWall"
+resource_name = "IfcWall"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_r1xuo"]
+ifc_class = "IfcCurtainWall"
+resource_name = "IfcCurtainWall"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_svxns"]
+ifc_class = "IfcSlab"
+resource_name = "IfcSlab"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_u37ng"]
+ifc_class = "IfcRoof"
+resource_name = "IfcRoof"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_kgi5e"]
+ifc_class = "IfcCovering"
+resource_name = "IfcCovering"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_nk11e"]
+ifc_class = "IfcRamp"
+resource_name = "IfcRamp"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_kx3mp"]
+ifc_class = "IfcRampFlight"
+resource_name = "IfcRampFlight"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_6adwn"]
+ifc_class = "IfcStair"
+shape_type = 2
+resource_name = "IfcStair"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_kbeaw"]
+ifc_class = "IfcStairFlight"
+shape_type = 2
+resource_name = "IfcStairFlight"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_32qmb"]
+ifc_class = "IfcRailing"
+resource_name = "IfcRailing"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_chmjg"]
+ifc_class = "IfcColumn"
+shape_type = 3
+resource_name = "IfcColumn"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_pb5c8"]
+ifc_class = "IfcBeam"
+shape_type = 3
+resource_name = "IfcBeam"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_s5noa"]
+ifc_class = "IfcFooting"
+shape_type = 3
+resource_name = "IfcFooting"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_irsaa"]
+ifc_class = "IfcBuildingElementProxy"
+resource_name = "IfcBuildingElementProxy"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_cviae"]
+ifc_class = "IfcSite"
+resource_name = "IfcSite"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_rl7dw"]
+ifc_class = "IfcGeographicElement"
+resource_name = "IfcGeographicElement"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_birwk"]
+ifc_class = "IfcSpace"
+shape_type = 0
+resource_name = "IfcSpace"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_mfvo3"]
+ifc_class = "IfcVirtualElement"
+shape_type = 0
+resource_name = "IfcVirtualElement"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_a80ox"]
+ifc_class = "IfcAnnotation"
+shape_type = 0
+resource_name = "IfcAnnotation"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_xfpac"]
+ifc_class = "IfcDoor"
+shape_type = 0
+resource_name = "IfcDoor"
+
+[resource]
+rules = Array[GDIFCCollisionRule]([SubResource("GDIFCCollisionRule_7tk5x"), SubResource("GDIFCCollisionRule_r1xuo"), SubResource("GDIFCCollisionRule_svxns"), SubResource("GDIFCCollisionRule_u37ng"), SubResource("GDIFCCollisionRule_kgi5e"), SubResource("GDIFCCollisionRule_nk11e"), SubResource("GDIFCCollisionRule_kx3mp"), SubResource("GDIFCCollisionRule_6adwn"), SubResource("GDIFCCollisionRule_kbeaw"), SubResource("GDIFCCollisionRule_32qmb"), SubResource("GDIFCCollisionRule_chmjg"), SubResource("GDIFCCollisionRule_pb5c8"), SubResource("GDIFCCollisionRule_s5noa"), SubResource("GDIFCCollisionRule_irsaa"), SubResource("GDIFCCollisionRule_cviae"), SubResource("GDIFCCollisionRule_rl7dw"), SubResource("GDIFCCollisionRule_birwk"), SubResource("GDIFCCollisionRule_mfvo3"), SubResource("GDIFCCollisionRule_a80ox"), SubResource("GDIFCCollisionRule_xfpac")])
+resource_name = "Structure only"

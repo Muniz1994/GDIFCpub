@@ -1,0 +1,24 @@
+[gd_resource type="GDIFCCollisionMatrix" format=3 uid="uid://bp6cofxtc4e0q"]
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_2dwio"]
+collision_layer = 2
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_birwk"]
+ifc_class = "IfcSpace"
+shape_type = 0
+resource_name = "IfcSpace"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_mfvo3"]
+ifc_class = "IfcVirtualElement"
+shape_type = 0
+resource_name = "IfcVirtualElement"
+
+[sub_resource type="GDIFCCollisionRule" id="GDIFCCollisionRule_a80ox"]
+ifc_class = "IfcAnnotation"
+shape_type = 0
+resource_name = "IfcAnnotation"
+
+[resource]
+rules = Array[GDIFCCollisionRule]([SubResource("GDIFCCollisionRule_birwk"), SubResource("GDIFCCollisionRule_mfvo3"), SubResource("GDIFCCollisionRule_a80ox")])
+default_rule = SubResource("GDIFCCollisionRule_2dwio")
+resource_name = "Picking"

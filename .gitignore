@@ -98,3 +98,6 @@ ifc-godot-project/local_runcode.gd
 
 # IFC corpus test reports
 /tests/reports/
+
+# Local design notes, not published
+/implementation-ideas/

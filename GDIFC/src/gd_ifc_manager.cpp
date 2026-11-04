@@ -11,7 +11,6 @@
 #include <unordered_set>
 
 #include "godot_cpp/classes/collision_shape3d.hpp"
-#include "godot_cpp/classes/concave_polygon_shape3d.hpp"
 #include "godot_cpp/classes/engine.hpp"
 #include "godot_cpp/classes/file_access.hpp"
 #include "godot_cpp/classes/image_texture.hpp"
@@ -33,6 +32,11 @@ void GDIFCManager::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_gdifc_settings","gdifc_settings"), &GDIFCManager::set_gdifc_settings);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "geometric_settings", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCLoaderSettings"),
         "set_gdifc_settings", "get_gdifc_settings");
+
+    ClassDB::bind_method(D_METHOD("get_collision_matrix"), &GDIFCManager::get_collision_matrix);
+    ClassDB::bind_method(D_METHOD("set_collision_matrix","collision_matrix"), &GDIFCManager::set_collision_matrix);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "collision_matrix", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCCollisionMatrix"),
+        "set_collision_matrix", "get_collision_matrix");
 
     ClassDB::bind_method(D_METHOD("get_material_library"), &GDIFCManager::get_material_library);
     ClassDB::bind_method(D_METHOD("set_material_library","library"), &GDIFCManager::set_material_library);
@@ -469,8 +473,14 @@ Error GDIFCManager::_start_loading(bool _create_collision, const Array &_collisi
 
 // Clears the previous load and prepares both pipelines for pending_buffer
 void GDIFCManager::_reset_load_state(bool _create_collision, const Array &_collision_classes) {
-    this->should_create_collisions = _create_collision;
-    this->collision_classes = _collision_classes;
+    if (collision_matrix_.is_valid()) {
+        this->collision_plan_.set_from_matrix(collision_matrix_);
+    } else {
+        this->collision_plan_.set_from_classes(_create_collision, _collision_classes);
+    }
+    this->collision_plan_.set_schema(nullptr); // set by the web-ifc task once it knows the file's schema
+    this->allow_decomposition_ = false;
+    this->warned_decomposition_ = false;
     this->generation_queue.clear();
     this->editor_cache_queue.clear();
     this->current_editor_cache_index = 0;
@@ -532,6 +542,7 @@ Error GDIFCManager::read_ifc_blocking(const String &_path, bool _create_collisio
 
     ifc_file_path_ = _path;
     _reset_load_state(_create_collision, _collision_classes);
+    allow_decomposition_ = true;
 
     // web-ifc and IfcParse still parse side by side
     WorkerThreadPool *pool = WorkerThreadPool::get_singleton();
@@ -2762,9 +2773,18 @@ void GDIFCManager::_thread_task() {
     const webifc::schema::IfcSchemaManager& schema_manager = temp_ifc_manager->schemaManager;
 
     bool is_ifc4x3 = false;
+    const IfcParse::schema_definition* collision_schema = nullptr;
     try {
         is_ifc4x3 = loader.GetSchema() == IFC_SCHEMA::IFC4X3;
+        switch (loader.GetSchema()) {
+            case IFC_SCHEMA::IFC2X3: collision_schema = &Ifc2x3::get_schema(); break;
+            case IFC_SCHEMA::IFC4: collision_schema = &Ifc4::get_schema(); break;
+            case IFC_SCHEMA::IFC4X3: collision_schema = &Ifc4x3_add2::get_schema(); break;
+        }
     } catch (...) {}
+    // Collision rules match subtypes with the file's schema. The plan is only read by the main
+    // thread once this task completes.
+    collision_plan_.set_schema(collision_schema);
 
     // Init Geometry [web-ifc]
     try {
@@ -3002,36 +3022,38 @@ void GDIFCManager::_thread_task() {
     this->pending_buffer = PackedByteArray();
 }
 
-// Same nodes as MeshInstance3D::create_trimesh_collision(), but built from the geometry still
-// in memory: going through the mesh reads every surface buffer back from the GPU, stalling it each time.
-static Ref<Shape3D> create_trimesh_collision_from_geometry(MeshInstance3D *node, const std::vector<PrecalculatedIFCItemGeometry> &geometry) {
-    int64_t face_point_count = 0;
-    for (const auto &item_geometry : geometry) face_point_count += item_geometry.indices.size();
-    if (face_point_count == 0) return Ref<Shape3D>();
-
-    PackedVector3Array face_points;
-    face_points.resize(face_point_count);
-    Vector3 *face_points_w = face_points.ptrw();
-    int64_t k = 0;
-    for (const auto &item_geometry : geometry) {
-        const Vector3 *vertices = item_geometry.vertices.ptr();
-        const int32_t *indices = item_geometry.indices.ptr();
-        for (int64_t i = 0; i < item_geometry.indices.size(); i++) {
-            face_points_w[k++] = vertices[indices[i]];
+// A StaticBody3D named <element>_col with the rule's shapes, built from the geometry still in memory
+void GDIFCManager::_create_item_collision(IFCNode* node, const PrecalculatedIFCItem& item, const GDIFCCollisionPlan::Rule& rule, bool collect_editor_caches) {
+    GDIFCCollisionRule::ShapeType shape_type = rule.shape_type;
+    if (shape_type == GDIFCCollisionRule::SHAPE_DECOMPOSE_CONVEX && !allow_decomposition_) {
+        if (!warned_decomposition_) {
+            WARN_PRINT("GDIFC: Decompose Convex collision is only built when the .ifc file is imported as a scene. Using Simple Convex instead.");
+            warned_decomposition_ = true;
         }
+        shape_type = GDIFCCollisionRule::SHAPE_SIMPLE_CONVEX;
     }
 
-    Ref<ConcavePolygonShape3D> shape;
-    shape.instantiate();
-    shape->set_faces(face_points);
+    std::vector<collision_shapes::Surface> surfaces;
+    surfaces.reserve(item.geometry.size());
+    for (const auto& item_geometry : item.geometry) {
+        surfaces.push_back({ item_geometry.vertices, item_geometry.indices });
+    }
+    const std::vector<collision_shapes::PlacedShape> shapes = collision_shapes::build(shape_type, surfaces, rule.decomposition_settings);
+    if (shapes.empty()) return;
 
     StaticBody3D *static_body = memnew(StaticBody3D);
-    CollisionShape3D *collision_shape = memnew(CollisionShape3D);
-    collision_shape->set_shape(shape);
-    static_body->add_child(collision_shape, true);
+    static_body->set_collision_layer(rule.collision_layer);
+    for (const auto& placed : shapes) {
+        CollisionShape3D *collision_shape = memnew(CollisionShape3D);
+        collision_shape->set_shape(placed.shape);
+        collision_shape->set_position(placed.position);
+        static_body->add_child(collision_shape, true);
+        if (collect_editor_caches) {
+            editor_cache_queue.push_back(placed.shape);
+        }
+    }
     static_body->set_name(String(node->get_name()) + "_col");
     node->add_child(static_body, true);
-    return shape;
 }
 
 // Creates one item's node, mesh and collision under its parent, or under the staging root.
@@ -3095,12 +3117,8 @@ IFCNode* GDIFCManager::_create_item_node(const PrecalculatedIFCItem& item, bool 
             editor_cache_queue.push_back(mesh);
         }
 
-        if (this->should_create_collisions &&
-            (this->collision_classes.is_empty() || this->collision_classes.has(item.ifc_class))) {
-            Ref<Shape3D> shape = create_trimesh_collision_from_geometry(element_node, item.geometry);
-            if (collect_editor_caches && shape.is_valid()) {
-                editor_cache_queue.push_back(shape);
-            }
+        if (const GDIFCCollisionPlan::Rule* rule = collision_plan_.rule_for(item.ifc_class)) {
+            _create_item_collision(element_node, item, *rule, collect_editor_caches);
         }
 
     }

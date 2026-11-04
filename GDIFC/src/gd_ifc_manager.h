@@ -41,6 +41,7 @@
 #include "gd_ifc_model.h"
 #include "gd_ifc_georeference.h"
 #include "gd_ifc_material.h"
+#include "gd_ifc_collision.h"
 
 namespace godot {
 
@@ -116,8 +117,13 @@ class GDIFCManager : public Node3D {
 
   private:
     int64_t task_id = -1;
-    bool should_create_collisions = false;
-    Array collision_classes = Array();
+    // Which elements get collision and which shape, resolved per class. Built when a load starts,
+    // from collision_matrix_ or from read_ifc()'s class list.
+    GDIFCCollisionPlan collision_plan_;
+    Ref<GDIFCCollisionMatrix> collision_matrix_;
+    // Convex decomposition only runs at import: V-HACD is too slow for loads spread across frames
+    bool allow_decomposition_ = false;
+    bool warned_decomposition_ = false;
     // Express ID -> generated node. ObjectID so lookups survive nodes freed by the user.
     HashMap<int, ObjectID> node_registry;
 
@@ -254,6 +260,7 @@ class GDIFCManager : public Node3D {
     Error _start_loading(bool _create_collision, const Array &_collision_classes);
     void _reset_load_state(bool _create_collision, const Array &_collision_classes);
     IFCNode* _create_item_node(const PrecalculatedIFCItem& item, bool collect_editor_caches);
+    void _create_item_collision(IFCNode* node, const PrecalculatedIFCItem& item, const GDIFCCollisionPlan::Rule& rule, bool collect_editor_caches);
     void _apply_metadata_item(PrecalculatedIFCMetadata& item);
     void _apply_reference_placement(const GeorreferenceData& model_georeference);
     void _apply_instance_reference_placement();
@@ -309,6 +316,11 @@ class GDIFCManager : public Node3D {
 
     String get_ifc_file_path() const { return ifc_file_path_; }
     void set_ifc_file_path(const String &path) { ifc_file_path_ = path; }
+
+    /// Per-class collision. When set, it decides collision for every element, and read_ifc()'s
+    /// create_collision and collision_classes are ignored.
+    Ref<GDIFCCollisionMatrix> get_collision_matrix() const { return collision_matrix_; }
+    void set_collision_matrix(const Ref<GDIFCCollisionMatrix> &matrix) { collision_matrix_ = matrix; }
 
     Ref<GDIFCMaterialLibrary> get_material_library() const { return material_library_; }
     void set_material_library(const Ref<GDIFCMaterialLibrary> &library);

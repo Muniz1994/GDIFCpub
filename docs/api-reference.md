@@ -48,6 +48,28 @@ ifc_manager.read_ifc("res://models/building.ifc", false, [])
   - Assign before calling load methods.
 - `material_library: GDIFCMaterialLibrary`
   - The model's IFC material definitions, after `ifc_objects_ready`. Null unless `ifc_materials` was on.
+- `collision_matrix: GDIFCCollisionMatrix`
+  - Shape and physics layers of the collision per IFC class. When set, `read_ifc`'s `create_collision` and `collision_classes` are ignored. See [Collision Matrix](loading-models.md#collision-matrix).
+
+## GDIFCCollisionMatrix (Resource)
+
+- `rules: Array[GDIFCCollisionRule]`
+- `default_rule: GDIFCCollisionRule`
+  - For classes no rule matches. Null gives them no collision.
+- `get_rule_for_class(ifc_class: String, schema := "IFC4") -> GDIFCCollisionRule`
+  - The rule an element of that class gets in a file of that schema (`IFC2X3`, `IFC4` or `IFC4X3_ADD2`), or null for no collision.
+
+## GDIFCCollisionRule (Resource)
+
+- `ifc_class: String`
+  - Also set as the resource name, so the Inspector's rule list shows it.
+- `include_subtypes: bool` (default `true`)
+- `shape_type: ShapeType` (default `SHAPE_TRIMESH`)
+  - `SHAPE_NONE`, `SHAPE_TRIMESH`, `SHAPE_SIMPLE_CONVEX`, `SHAPE_BOX` or `SHAPE_DECOMPOSE_CONVEX`.
+- `collision_layer: int` (default `1`)
+  - Layers of the `StaticBody3D`.
+- `decomposition_settings: MeshConvexDecompositionSettings`
+  - Decompose Convex only.
 
 ## IFCNode (MeshInstance3D)
 

@@ -16,9 +16,9 @@ Parameter details:
 
 - `path`: Godot resource path (`res://...`) or absolute path.
 - `create_collision`: Set `true` to create collision shapes.
-- `collision_classes`: IFC class names to include in collision generation.
+- `collision_classes`: exact IFC class names to create collision for. Subtypes are not included, so list `IfcWallStandardCase` along with `IfcWall` if you want both.
 
-If `collision_classes` is empty, collision generation is skipped even if `create_collision` is true.
+If `collision_classes` is empty and `create_collision` is true, every element with geometry gets a collision shape.
 
 ## Loading From Base64 Data
 
@@ -41,6 +41,65 @@ ifc_manager.read_ifc("res://models/site.ifc", true, classes)
 ```
 
 This reduces memory pressure and load time compared to colliders for every object.
+
+Each element gets a `StaticBody3D` child named `<element>_col` with a trimesh (`ConcavePolygonShape3D`) on collision layer 1.
+
+### Collision Matrix
+
+For a different shape or physics layer per class, assign a `GDIFCCollisionMatrix` to `collision_matrix` before loading. It holds one `GDIFCCollisionRule` per class, and replaces `create_collision` and `collision_classes`:
+
+```gdscript
+func rule(ifc_class: String, shape: GDIFCCollisionRule.ShapeType, layer: int) -> GDIFCCollisionRule:
+    var r := GDIFCCollisionRule.new()
+    r.ifc_class = ifc_class
+    r.shape_type = shape
+    r.collision_layer = layer
+    return r
+
+func load_building() -> void:
+    var matrix := GDIFCCollisionMatrix.new()
+    matrix.rules = [
+        rule("IfcWall", GDIFCCollisionRule.SHAPE_TRIMESH, 1), # openings stay open
+        rule("IfcSlab", GDIFCCollisionRule.SHAPE_BOX, 1),
+        rule("IfcStairFlight", GDIFCCollisionRule.SHAPE_SIMPLE_CONVEX, 1), # a ramp for character controllers
+        rule("IfcDoor", GDIFCCollisionRule.SHAPE_NONE, 1),
+        rule("IfcSpace", GDIFCCollisionRule.SHAPE_NONE, 1),
+    ]
+    matrix.default_rule = rule("", GDIFCCollisionRule.SHAPE_SIMPLE_CONVEX, 2) # everything else
+    ifc_manager.collision_matrix = matrix
+    ifc_manager.read_ifc("res://models/building.ifc")
+```
+
+A matrix is a resource, so it is usually made in the Inspector and saved as a `.tres` file, which can be shared between models and projects. `collision_layer` uses the layer names of **Project Settings → Layer Names → 3D Physics**.
+
+Shape types:
+
+| Shape | Godot shape | Notes |
+|---|---|---|
+| `SHAPE_NONE` | — | No collision. Overrides a more general rule or the default rule. |
+| `SHAPE_TRIMESH` | `ConcavePolygonShape3D` | Exact, the most expensive. Static bodies only. |
+| `SHAPE_SIMPLE_CONVEX` | `ConvexPolygonShape3D` | The convex hull of the element. Fills openings and concave parts. |
+| `SHAPE_BOX` | `BoxShape3D` | The bounding box in the element's own axes, the cheapest. Fills door and window openings, so not for walls you walk through. |
+| `SHAPE_DECOMPOSE_CONVEX` | Several `ConvexPolygonShape3D` | Convex decomposition (V-HACD). Only built when the `.ifc` file is imported as a scene: other loads build a Simple Convex shape and print a warning. Tune it with `decomposition_settings`; empty uses up to 16 hulls and a maximum concavity of 0.01. |
+
+Matching:
+
+- `ifc_class` is case-insensitive. With `include_subtypes` (the default), a rule also matches subtypes in the file's schema, so `IfcWall` covers `IfcWallStandardCase`, and `IfcBuildingElement` covers every building element. `IfcBuildingElement` and its IFC4X3 name `IfcBuiltElement` are interchangeable.
+- When several rules match, the one closest to the element's class wins, so an `IfcWall` rule beats an `IfcBuildingElement` rule for walls, whatever their order. On a tie, the first rule wins.
+- Classes no rule matches get `default_rule`, whose `ifc_class` is ignored, or no collision without one.
+- `matrix.get_rule_for_class("IfcWallStandardCase", "IFC2X3")` returns the rule an element gets, or null, to check a matrix from a script.
+
+#### Presets
+
+The addon ships three matrices in `res://addons/GDIFC/settings/collision/`. Use them as they are, or duplicate one (**Make Unique** in the picker, then **Save As**) as a starting point; edits to the originals are lost when the addon is updated.
+
+| Preset | For | Rules |
+|---|---|---|
+| `walkthrough.tres` | First-person navigation | Trimesh for walls, slabs, roofs, coverings, ramps, railings, proxies and terrain, so door, stair and shaft openings stay open. Simple Convex for stairs, which become ramps. Box for columns, beams, footings and windows. No collision for doors, spaces, virtual elements and annotations. Everything else (furniture, equipment, MEP, members, plates) gets Simple Convex. All on layer 1. |
+| `structure_only.tres` | Large models, where only the building has to be solid | The walkthrough rules for the building itself, and nothing else: no windows, doors, furniture, equipment or MEP. |
+| `picking.tres` | Selecting elements with a raycast | Every element gets a trimesh on layer 2 only, except spaces, virtual elements and annotations. Cast rays with a mask of layer 2: the collider is the `<element>_col` body, and its parent is the `IFCNode`. Bodies on layer 1 don't collide with them. |
+
+In the editor dock, pick a matrix in **Collisions → Matrix**. The element list is greyed out while one is set. To import a model as a scene with a matrix, save the matrix to a `.tres` file first. The importer's `collision/matrix` option points to it, and saving the matrix reimports every `.ifc` file using it.
 
 ## Accessing Generated Nodes
 
