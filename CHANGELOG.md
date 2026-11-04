@@ -10,7 +10,11 @@ New changes go under **Unreleased**. Builds are cut automatically: when a push t
 
 ## [Unreleased]
 
-#### Added
+## [1.1.0-alpha]
+
+### Build 5 — 2026-11-02
+
+##### Added
 
 - `.ifc` files are imported as scenes, like `.glb` files. Drag one into the 3D view or instance it, and the scene only stores a reference to the file instead of every mesh, collision shape and property set: a scene holding a 2.5 MB model went from a 2.2 MB `.tscn` to 230 bytes. Import options cover coordinate to origin, circle segments, LODs and collision. Instances re-link `ifc_object` from the `.ifc` file, and follow their `reference_georeference`.
 - **Import as scene** option in the dock's new Scene group. **Load IFC...** then imports the file with the dock's options and adds it to the edited scene as an instance, with undo. Files from outside the project are copied into a per-project import folder (`res://ifc/` by default). Picking a different file with the same name asks before replacing it.
@@ -26,7 +30,7 @@ New changes go under **Unreleased**. Builds are cut automatically: when a push t
 - `IFCModel.get_units()`: the project's units, such as `{"LENGTHUNIT": "mm"}`.
 - [Walking The Model](docs/walking-the-model.md): how to reach the rest of the IFC file from a node's `ifc_object`, with recipes for the element's type, classifications, groups and systems, openings and their fillings, space boundaries and entities without a node.
 
-#### Changed
+##### Changed
 
 - Updated web-ifc to 0.0.79 (`a26fae51`). It brings many geometry fixes (booleans, swept disks, sectioned and revolved solids, profile sweeps along IFC4X3 curves), support for `IfcSegmentedReferenceCurve`, the element type's material colour when an occurrence has none, and caching of mapped representations. Its bundled dependencies were moved to the versions web-ifc now pins: fast_float 8.3.2, earcut 3.2.4, CDT 2.0.1 and unordered_dense 5.3.3.
 - Malformed IFC files that web-ifc can only partially parse now fail to load with an error, instead of loading an incomplete model.
@@ -35,7 +39,7 @@ New changes go under **Unreleased**. Builds are cut automatically: when a push t
 - Property and quantity sets without a name are keyed by their class, such as `"IfcElementQuantity"`, instead of being left out.
 - Scenes that store their nodes are larger, since they also save the type's sets and the details. On a 13,000-element Revit model, the property data grew from 5.5 MB to 16.4 MB and memory use by about 11%. Scenes that instance an imported `.ifc` file are not affected.
 
-#### Fixed
+##### Fixed
 
 - Vertices shared by faces facing different directions are split, so each face keeps its own flat normal.
 - The dock's collision element list no longer shows every element type twice.
@@ -43,8 +47,6 @@ New changes go under **Unreleased**. Builds are cut automatically: when a push t
 - `IFCModel` header getters (`get_originating_system`, `get_preprocessor`, `get_authorization`, ...) return an empty value when the field is `$` in `FILE_NAME`, instead of crashing Godot with an unhandled exception. Several exporters, such as Simplebim, write `$` for these fields.
 - Loading a file no longer logs a web-ifc `[GetMesh()] unexpected mesh type` error for the `IfcProject`, which has no geometry.
 - Quantities whose value is 0 are 0 in `IFCNode.quantities`, instead of null.
-
-## [1.1.0-alpha]
 
 ### Build 4 — 2026-10-15
 
