@@ -81,6 +81,11 @@ From the file's `FILE_DESCRIPTION`, `FILE_NAME` and `FILE_SCHEMA`. A field writt
 - `get_originating_system() -> String`
 - `get_authorization() -> String`
 
+### Units
+
+- `get_units() -> Dictionary`
+  - The project's units, from its `IfcUnitAssignment`: `{unit type: symbol}`, such as `{"LENGTHUNIT": "mm", "AREAUNIT": "m²", "MONETARYUNIT": "EUR"}`.
+
 ### Queries
 
 - `get_by_id(express_id: int) -> GDIFCEntityBase`
@@ -117,9 +122,10 @@ Node generated for each IFC object.
 - `ifc_class: String`
 - `global_id: String`
 - `attributes: Dictionary` (after `ifc_objects_ready`)
-- `properties: Dictionary`: property sets, `{set name: {property: value}}` (after `ifc_objects_ready`)
+- `properties: Dictionary`: property sets, `{set name: {property: value}}`, including the sets of the element's type (after `ifc_objects_ready`)
 - `quantities: Dictionary`: quantity sets, shaped like `properties` (after `ifc_objects_ready`)
-- `ifc_object: GDIFCEntityBase` (after `ifc_objects_ready`; relinked on load, not saved)
+- `property_details: Dictionary`, `quantity_details: Dictionary`: shaped like `properties` and `quantities`, with a read-only `Dictionary` per value holding its `value_type`, `unit` and `from_type` (after `ifc_objects_ready`). See [Property And Quantity Sets](loading-models.md#property-and-quantity-sets).
+- `ifc_object: GDIFCEntityBase`: the IFC entity, to [walk the model](walking-the-model.md) from (after `ifc_objects_ready`; relinked on load, not saved)
 - `material_definition: GDIFCMaterialDefinition` (after `ifc_objects_ready`, with `ifc_materials` on)
 
 ## IFCGeoreference (Node3D)
@@ -186,7 +192,7 @@ Lengths are in the IFC file's length unit, like quantities. Subtypes such as `If
 
 ## GDIFCEntityBase (RefCounted)
 
-Base wrapper for all IFC entities. Every IFC class, such as `IfcWall`, is a subclass with its attributes as typed properties. See [Typed Entity Access](typed-entities.md).
+Base wrapper for all IFC entities. Every IFC class, such as `IfcWall`, is a subclass with its attributes as typed properties. See [Typed Entity Access](typed-entities.md), and [Walking The Model](walking-the-model.md) to follow relationships with `get_attribute` and `get_inverse`.
 
 ### Common Methods
 

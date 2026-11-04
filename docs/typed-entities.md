@@ -61,7 +61,7 @@ if e.is_a("IfcElement"):
     print("a physical element")
 ```
 
-Generic methods are ideal for debug inspectors and import diagnostics.
+Generic methods are ideal for debug inspectors and import diagnostics. With `get_attribute` and `get_inverse`, they also follow relationships to other entities: see [Walking The Model](walking-the-model.md) for the element's type, classifications, systems, openings and more.
 
 ## Creating IFC Objects at Runtime
 

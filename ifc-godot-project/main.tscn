@@ -1,3 +1,7 @@
 [gd_scene format=3 uid="uid://b8iwdw2m8bfsf"]
 
+[ext_resource type="PackedScene" uid="uid://dtlo4sahlxdih" path="res://ifc/Viadotto Acerno.ifc" id="1_ig7tw"]
+
 [node name="Node3D" type="Node3D" unique_id=889281471]
+
+[node name="Viadotto Acerno" parent="." unique_id=867451672 instance=ExtResource("1_ig7tw")]

@@ -1,4 +1,5 @@
 #include "gd_ifc_manager.h"
+#include "gd_ifc_units.h"
 #include <algorithm> // Required for std::sort
 #include <cctype>     // Required for std::toupper
 #include <cstring>    // Required for strlen
@@ -8,6 +9,7 @@
 #include <map>
 #include <mutex>
 #include <optional>
+#include <unordered_map>
 #include <unordered_set>
 
 #include "godot_cpp/classes/collision_shape3d.hpp"
@@ -750,8 +752,67 @@ void GDIFCManager::_metadata_parse_task() {
 // IFC MATERIAL DEFINITIONS
 // ---------------------------------------------------------
 
+// Shared while reading the details of a model's properties: its units, and the strings that every
+// detail repeats. Godot strings are copy-on-write, so the details share these instead of each
+// holding its own copy, which matters on models with hundreds of thousands of values.
+struct PropertyDetailContext {
+    explicit PropertyDetailContext(IfcParse::IfcFile& file) : units(file) {}
+
+    const IfcUnitTable units;
+    const String value_type_key = "value_type";
+    const String unit_key = "unit";
+    const String from_type_key = "from_type";
+
+    // An IFC type name, such as "IfcLengthMeasure"
+    String type_name(const std::string& name) {
+        auto found = type_names_.find(name);
+        if (found == type_names_.end()) found = type_names_.emplace(name, String(name.c_str())).first;
+        return found->second;
+    }
+
+    // The project's unit for a value type
+    String unit_for(const std::string& value_type) {
+        auto found = units_by_type_.find(value_type);
+        if (found == units_by_type_.end()) found = units_by_type_.emplace(value_type, units.for_measure(value_type)).first;
+        return found->second;
+    }
+
+    // A read-only detail holding a value type and unit, shared by every value with the same ones.
+    // Most details are one of a few such combinations, so sharing them saves a dictionary per value.
+    Dictionary shared_detail(const String& value_type, const String& unit, bool from_type = false) {
+        const String key = value_type + String("|") + unit + String(from_type ? "|type" : "");
+        if (const Dictionary* found = shared_details_.getptr(key)) return *found;
+
+        Dictionary detail;
+        if (!value_type.is_empty()) detail[value_type_key] = value_type;
+        if (!unit.is_empty()) detail[unit_key] = unit;
+        if (from_type) detail[from_type_key] = true;
+        detail.make_read_only();
+        shared_details_.insert(key, detail);
+        return detail;
+    }
+
+    // The same detail, marked as coming from the element's type
+    Dictionary from_type(const Dictionary& detail) {
+        if (detail.get(from_type_key, false)) return detail;
+        const bool plain = detail.size() == int64_t(detail.has(value_type_key)) + int64_t(detail.has(unit_key));
+        if (plain) return shared_detail(detail.get(value_type_key, String()), detail.get(unit_key, String()), true);
+        Dictionary marked = detail.duplicate();
+        marked[from_type_key] = true;
+        marked.make_read_only();
+        return marked;
+    }
+
+private:
+    std::unordered_map<std::string, String> type_names_;
+    std::unordered_map<std::string, String> units_by_type_;
+    HashMap<String, Dictionary> shared_details_;
+};
+
+// With `details`, also fills {property: {value type, unit...}} for each property
 template <typename schema, typename Properties>
-static godot::Dictionary convert_ifc_properties(const Properties& props);
+static godot::Dictionary convert_ifc_properties(const Properties& props, PropertyDetailContext* context = nullptr,
+                                                godot::Dictionary* details = nullptr);
 
 // IfcParse attributes read by name, so one reader covers every schema: a schema without an
 // attribute (IFC2X3 layers have no Name, for example) leaves the field at its default.
@@ -1475,11 +1536,221 @@ static void extract_material_definitions(const std::shared_ptr<IfcParse::IfcFile
     library = reader.make_library();
 }
 
+// ---------------------------------------------------------
+// PROPERTY AND QUANTITY SETS
+// ---------------------------------------------------------
+
+// Simple quantities: their value type, and the attribute holding their value
+static const char* const SIMPLE_QUANTITIES[][3] = {
+    {"IfcQuantityLength", "IfcLengthMeasure", "LengthValue"},
+    {"IfcQuantityArea", "IfcAreaMeasure", "AreaValue"},
+    {"IfcQuantityVolume", "IfcVolumeMeasure", "VolumeValue"},
+    {"IfcQuantityCount", "IfcCountMeasure", "CountValue"},
+    {"IfcQuantityWeight", "IfcMassMeasure", "WeightValue"},
+    {"IfcQuantityTime", "IfcTimeMeasure", "TimeValue"},
+    {"IfcQuantityNumber", "IfcNumericMeasure", "NumberValue"}, // IFC4X3
+};
+
+// IfcPhysicalQuantity entities -> {name: value}, with complex quantities as nested dictionaries.
+// With `details`, also fills {name: {value type, unit...}}.
+static Dictionary convert_ifc_quantities(const std::vector<IfcUtil::IfcBaseClass*>& quantities, PropertyDetailContext* context,
+                                         Dictionary* details) {
+    Dictionary values;
+    for (IfcUtil::IfcBaseClass* quantity : quantities) {
+        const String name = ifc_string(quantity, "Name");
+        const IfcParse::declaration& type = quantity->declaration();
+        Dictionary detail;
+
+        const char* const* simple = nullptr;
+        for (const auto& entry : SIMPLE_QUANTITIES) {
+            if (type.is(entry[0])) simple = entry;
+        }
+        if (simple) {
+            const ptrdiff_t index = ifc_attribute_index(quantity, simple[2]);
+            values[name] = index < 0 ? Variant() : convert_attribute_value(quantity->get_attribute_value(index));
+            if (details) {
+                String unit = IfcUnitTable::symbol(ifc_entity(quantity, "Unit"));
+                if (unit.is_empty()) unit = context->unit_for(simple[1]);
+                detail = context->shared_detail(context->type_name(simple[1]), unit);
+            }
+        } else if (type.is("IfcPhysicalComplexQuantity")) {
+            Dictionary sub_details;
+            values[name] = convert_ifc_quantities(ifc_entities(quantity, "HasQuantities"), context, details ? &sub_details : nullptr);
+            if (details) {
+                const String discrimination = ifc_string(quantity, "Discrimination");
+                if (!discrimination.is_empty()) detail["discrimination"] = discrimination;
+                const String usage = ifc_string(quantity, "Usage");
+                if (!usage.is_empty()) detail["usage"] = usage;
+                sub_details.make_read_only();
+                detail["quantities"] = sub_details;
+            }
+        } else {
+            continue;
+        }
+        if (details) {
+            detail.make_read_only(); // shared between elements
+            (*details)[name] = detail;
+        }
+    }
+    return values;
+}
+
+// The property and quantity sets of elements, with the sets of their type merged in, and the value
+// type, unit and origin of each value. A type's sets are read once for all its occurrences.
 template <typename schema>
-static void extract_item_metadata(IfcParse::IfcFile& file, PrecalculatedIFCMetadata& item) {
-    item.attributes = get_ifc_object_attributes<schema>(file, item.express_id);
-    item.properties = get_ifc_property_sets<schema>(file, item.express_id);
-    item.quantities = get_ifc_quantity_sets<schema>(file, item.express_id);
+class PropertySetReader {
+public:
+    explicit PropertySetReader(IfcParse::IfcFile& file) : file_(file), context_(file) {}
+
+    void read(PrecalculatedIFCMetadata& item) {
+        auto* instance = file_.instance_by_id(item.express_id);
+        auto* object = instance ? instance->template as<typename schema::IfcObject>() : nullptr;
+        if (!object) return;
+
+        Sets sets;
+        typename schema::IfcTypeObject* type = nullptr;
+        if (auto rels = object->IsDefinedBy()) {
+            for (auto* rel : *rels) {
+                if (auto* by_properties = rel->template as<typename schema::IfcRelDefinesByProperties>()) {
+                    add_definition(by_properties->RelatingPropertyDefinition(), sets);
+                }
+                // IFC2X3 relates types through IsDefinedBy too
+                if constexpr (std::is_same_v<schema, Ifc2x3>) {
+                    if (auto* by_type = rel->template as<Ifc2x3::IfcRelDefinesByType>()) {
+                        type = by_type->RelatingType();
+                    }
+                }
+            }
+        }
+        if constexpr (!std::is_same_v<schema, Ifc2x3>) {
+            if (auto rels = object->IsTypedBy()) {
+                for (auto* rel : *rels) {
+                    type = rel->RelatingType();
+                    break;
+                }
+            }
+        }
+        if (type) {
+            const Sets& inherited = type_sets(type);
+            merge(sets.properties, sets.property_details, inherited.properties, inherited.property_details);
+            merge(sets.quantities, sets.quantity_details, inherited.quantities, inherited.quantity_details);
+        }
+
+        item.properties = sets.properties;
+        item.property_details = sets.property_details;
+        item.quantities = sets.quantities;
+        item.quantity_details = sets.quantity_details;
+    }
+
+private:
+    struct Sets {
+        Dictionary properties;
+        Dictionary property_details;
+        Dictionary quantities;
+        Dictionary quantity_details;
+    };
+
+    // A set's name, or its class when it has none, since Name is optional
+    static String set_key(IfcUtil::IfcBaseClass* set) {
+        const String name = ifc_string(set, "Name");
+        return name.is_empty() ? String(set->declaration().name().c_str()) : name;
+    }
+
+    // Definition is an IfcPropertySetDefinition, or IFC4's IfcPropertySetDefinitionSelect
+    template <typename Definition>
+    void add_definition(Definition* definition, Sets& sets) {
+        if (!definition) return;
+        if (auto* property_set = definition->template as<typename schema::IfcPropertySet>()) {
+            auto props = property_set->HasProperties();
+            if (!props) return;
+            const String key = set_key(property_set);
+            Dictionary details;
+            sets.properties[key] = convert_ifc_properties<schema>(props, &context_, &details);
+            sets.property_details[key] = details;
+        } else if (auto* quantity_set = definition->template as<typename schema::IfcElementQuantity>()) {
+            const String key = set_key(quantity_set);
+            Dictionary details;
+            sets.quantities[key] = convert_ifc_quantities(ifc_entities(quantity_set, "Quantities"), &context_, &details);
+            sets.quantity_details[key] = details;
+        }
+    }
+
+    const Sets& type_sets(typename schema::IfcTypeObject* type) {
+        const int id = static_cast<int>(type->id());
+        auto found = types_.find(id);
+        if (found != types_.end()) return found->second;
+
+        Sets sets;
+        if (auto definitions = type->HasPropertySets()) {
+            if (*definitions) {
+                for (auto* definition : **definitions) {
+                    add_definition(definition, sets);
+                }
+            }
+        }
+        mark_from_type(sets.property_details);
+        mark_from_type(sets.quantity_details);
+        return types_.emplace(id, std::move(sets)).first->second;
+    }
+
+    void mark_from_type(const Dictionary& set_details) {
+        const Array set_names = set_details.keys();
+        for (int64_t i = 0; i < set_names.size(); i++) {
+            Dictionary details = set_details[set_names[i]];
+            const Array names = details.keys();
+            for (int64_t j = 0; j < names.size(); j++) {
+                details[names[j]] = context_.from_type(details[names[j]]);
+            }
+        }
+    }
+
+    // Adds the type's sets to the element's. A property the element sets itself keeps its own value.
+    // The type's values are copied, so editing one element's never changes another's; the details
+    // are read-only, so they are shared.
+    static void merge(Dictionary& values, Dictionary& details, const Dictionary& type_values, const Dictionary& type_details) {
+        const Array set_names = type_values.keys();
+        for (int64_t i = 0; i < set_names.size(); i++) {
+            const Variant& set_name = set_names[i];
+            if (!values.has(set_name)) {
+                values[set_name] = type_values[set_name].duplicate(true);
+                details[set_name] = type_details.get(set_name, Dictionary()).duplicate(false);
+                continue;
+            }
+            Dictionary set_values = values[set_name];
+            Dictionary set_details = details.get(set_name, Dictionary());
+            details[set_name] = set_details;
+            const Dictionary type_set_values = type_values[set_name];
+            const Dictionary type_set_details = type_details.get(set_name, Dictionary());
+            const Array names = type_set_values.keys();
+            for (int64_t j = 0; j < names.size(); j++) {
+                if (set_values.has(names[j])) continue;
+                set_values[names[j]] = type_set_values[names[j]].duplicate(true);
+                set_details[names[j]] = type_set_details.get(names[j], Dictionary());
+            }
+        }
+    }
+
+    IfcParse::IfcFile& file_;
+    PropertyDetailContext context_;
+    std::map<int, Sets> types_;
+};
+
+// Attributes, property sets and quantities of each item
+template <typename schema>
+static void extract_items_metadata(IfcParse::IfcFile& file, const std::vector<int>& ids, std::vector<PrecalculatedIFCMetadata>& items) {
+    PropertySetReader<schema> sets(file);
+    for (size_t i = 0; i < ids.size(); i++) {
+        PrecalculatedIFCMetadata& item = items[i];
+        item.express_id = ids[i];
+        try {
+            item.attributes = get_ifc_object_attributes<schema>(file, item.express_id);
+            sets.read(item);
+        } catch (const std::exception& e) {
+            ERR_PRINT(String("Failed to read the properties of #") + String::num_int64(item.express_id) + ": " + e.what());
+        } catch (...) {
+            ERR_PRINT(String("Failed to read the properties of #") + String::num_int64(item.express_id) + ": unknown error.");
+        }
+    }
 }
 
 // Attributes, property sets and quantities of every generated node, plus georeferencing.
@@ -1487,22 +1758,21 @@ static void extract_item_metadata(IfcParse::IfcFile& file, PrecalculatedIFCMetad
 void GDIFCManager::_metadata_extract_task() {
     IfcParse::IfcFile& file = *metadata_file_;
     metadata_results_.resize(metadata_ids_.size());
-
     for (size_t i = 0; i < metadata_ids_.size(); i++) {
-        PrecalculatedIFCMetadata& item = metadata_results_[i];
-        item.express_id = metadata_ids_[i];
-        try {
-            switch (metadata_schema_index_) {
-                case 0: extract_item_metadata<Ifc4>(file, item); break;
-                case 2: extract_item_metadata<Ifc2x3>(file, item); break;
-                case 3: extract_item_metadata<Ifc4x3_add2>(file, item); break;
-                default: ;
-            }
-        } catch (const std::exception& e) {
-            ERR_PRINT(String("Failed to read the properties of #") + String::num_int64(item.express_id) + ": " + e.what());
-        } catch (...) {
-            ERR_PRINT(String("Failed to read the properties of #") + String::num_int64(item.express_id) + ": unknown error.");
+        metadata_results_[i].express_id = metadata_ids_[i];
+    }
+
+    try {
+        switch (metadata_schema_index_) {
+            case 0: extract_items_metadata<Ifc4>(file, metadata_ids_, metadata_results_); break;
+            case 2: extract_items_metadata<Ifc2x3>(file, metadata_ids_, metadata_results_); break;
+            case 3: extract_items_metadata<Ifc4x3_add2>(file, metadata_ids_, metadata_results_); break;
+            default: ;
         }
+    } catch (const std::exception& e) {
+        ERR_PRINT(String("[IfcParse] Failed to read properties: ") + e.what());
+    } catch (...) {
+        ERR_PRINT("[IfcParse] Failed to read properties: unknown error.");
     }
 
     // IFC material definitions, shared by the items using them
@@ -1602,7 +1872,9 @@ void GDIFCManager::_apply_metadata_item(PrecalculatedIFCMetadata& item) {
         if (node) {
             node->set_attributes(item.attributes);
             node->set_properties(item.properties);
+            node->set_property_details(item.property_details);
             node->set_quantities(item.quantities);
+            node->set_quantity_details(item.quantity_details);
             if (item.material.is_valid()) {
                 node->set_material_definition(item.material);
             }
@@ -3303,10 +3575,37 @@ godot::Array GDIFCManager::get_elements_by_class(godot::String ifc_class) {
     return get_tree()->get_nodes_in_group(ifc_class);
 }
 
+// The value type of a property's values and their unit: the property's own unit, or the project's unit
+// for the value type. Each is empty when unknown.
+static void describe_values(IfcUtil::IfcBaseClass* value, IfcUtil::IfcBaseClass* own_unit, PropertyDetailContext* context,
+                            String& value_type, String& unit) {
+    value_type = value ? context->type_name(value->declaration().name()) : String();
+    unit = IfcUnitTable::symbol(own_unit);
+    if (unit.is_empty() && value) {
+        unit = context->unit_for(value->declaration().name());
+    }
+}
+
+// The shared detail of a value
+static Dictionary value_detail(IfcUtil::IfcBaseClass* value, IfcUtil::IfcBaseClass* own_unit, PropertyDetailContext* context) {
+    String value_type, unit;
+    describe_values(value, own_unit, context, value_type, unit);
+    return context->shared_detail(value_type, unit);
+}
+
+// IfcValue entities, such as a table's columns -> their values
+static Array ifc_values(const std::vector<IfcUtil::IfcBaseClass*>& values) {
+    Array result;
+    for (IfcUtil::IfcBaseClass* value : values) {
+        result.push_back(to_godot_variant(value->get_attribute_value(0)));
+    }
+    return result;
+}
+
 // IfcProperty values -> {property name -> value}. Shared by element property sets and IFC material
 // properties. Properties is an aggregate of schema::IfcProperty.
 template <typename schema, typename Properties>
-static godot::Dictionary convert_ifc_properties(const Properties& props) {
+static godot::Dictionary convert_ifc_properties(const Properties& props, PropertyDetailContext* context, godot::Dictionary* details) {
     godot::Dictionary props_dict;
 
     for (auto prop : *props) {
@@ -3318,30 +3617,37 @@ static godot::Dictionary convert_ifc_properties(const Properties& props) {
         // Godot Dictionaries use Variants as keys. Passing a const char* // creates a String automatically.
         std::string prop_name_str = prop->Name();
         godot::String prop_key = godot::String::utf8(prop_name_str.c_str());
+        godot::Dictionary detail;
 
         // OPTIMIZATION: Order by probability
         // IfcPropertySingleValue is the vast majority (90%+) of cases. Check it first.
 
         if (auto p_single = prop->template as<typename schema::IfcPropertySingleValue>()) {
             // Handle Single Value
+            IfcUtil::IfcBaseClass* value = nullptr;
             if (auto n_value = p_single->NominalValue()) {
                 // Determine underlying primitive via generic access
-                if (auto final_value = n_value->template as<IfcUtil::IfcBaseClass>()) {
-                    props_dict[prop_key] = to_godot_variant(final_value->get_attribute_value(0));
+                if ((value = n_value->template as<IfcUtil::IfcBaseClass>())) {
+                    props_dict[prop_key] = to_godot_variant(value->get_attribute_value(0));
                 } else {
                     props_dict[prop_key] = "[Invalid Value]";
                 }
             } else {
                 props_dict[prop_key] = godot::Variant(); // Null/Nil
             }
+            if (details) {
+                detail = value_detail(value, ifc_entity(p_single, "Unit"), context);
+            }
         } else if (auto p_bounded = prop->template as<typename schema::IfcPropertyBoundedValue>()) {
             // Handle Bounded Value
             godot::Array bounds;
+            IfcUtil::IfcBaseClass* lower = nullptr;
+            IfcUtil::IfcBaseClass* upper = nullptr;
 
             // Lower
             if (auto lb = p_bounded->LowerBoundValue()) {
-                if (auto val = lb->template as<IfcUtil::IfcBaseClass>()) {
-                    bounds.push_back(to_godot_variant(val->get_attribute_value(0)));
+                if ((lower = lb->template as<IfcUtil::IfcBaseClass>())) {
+                    bounds.push_back(to_godot_variant(lower->get_attribute_value(0)));
                 }
             } else {
                 bounds.push_back(godot::Variant());
@@ -3349,230 +3655,100 @@ static godot::Dictionary convert_ifc_properties(const Properties& props) {
 
             // Upper
             if (auto ub = p_bounded->UpperBoundValue()) {
-                if (auto val = ub->template as<IfcUtil::IfcBaseClass>()) {
-                    bounds.push_back(to_godot_variant(val->get_attribute_value(0)));
+                if ((upper = ub->template as<IfcUtil::IfcBaseClass>())) {
+                    bounds.push_back(to_godot_variant(upper->get_attribute_value(0)));
                 }
             } else {
                 bounds.push_back(godot::Variant());
             }
 
             props_dict[prop_key] = bounds;
+            if (details) {
+                detail = value_detail(lower ? lower : upper, ifc_entity(p_bounded, "Unit"), context);
+            }
         } else if (auto p_enum = prop->template as<typename schema::IfcPropertyEnumeratedValue>()) {
-            // Handle Enumerated Value
+            // Handle Enumerated Value. Without values, no value was chosen; the
+            // EnumerationReference only lists the allowed ones.
             godot::Array enum_arr;
+            IfcUtil::IfcBaseClass* first = nullptr;
 
             if (auto enum_values = p_enum->EnumerationValues()) {
                 for (auto& enum_val : *enum_values.get()) {
                     if (auto val = enum_val->template as<IfcUtil::IfcBaseClass>()) {
+                        if (!first) first = val;
                         enum_arr.push_back(to_godot_variant(val->get_attribute_value(0)));
                     }
                 }
             }
-            // IfcOpenShell usually resolves Reference automatically,
-            // but if Values are empty, check Reference:
-            else if (auto enum_ref = p_enum->EnumerationReference()) {
-                // Logic to pull defaults from the reference could go here
-                // depending on schema version, usually implies looking up IfcPropertyEnumeration
-            }
             props_dict[prop_key] = enum_arr;
+            if (details) {
+                IfcUtil::IfcBaseClass* enumeration = ifc_entity(p_enum, "EnumerationReference");
+                detail = value_detail(first, enumeration ? ifc_entity(enumeration, "Unit") : nullptr, context);
+            }
         } else if (auto p_list = prop->template as<typename schema::IfcPropertyListValue>()) {
             // Handle List Value
             godot::Array list_arr;
+            IfcUtil::IfcBaseClass* first = nullptr;
             if (auto list_values = p_list->ListValues()) {
                 for (auto& list_val : *list_values.get()) {
                     if (auto val = list_val->template as<IfcUtil::IfcBaseClass>()) {
+                        if (!first) first = val;
                         list_arr.push_back(to_godot_variant(val->get_attribute_value(0)));
                     }
                 }
             }
             props_dict[prop_key] = list_arr;
+            if (details) {
+                detail = value_detail(first, ifc_entity(p_list, "Unit"), context); // no Unit in IFC2X3
+            }
         } else if (auto p_ref = prop->template as<typename schema::IfcPropertyReferenceValue>()) {
             props_dict[prop_key] = godot::String::utf8(p_ref->UsageName().value_or("[Reference]").c_str());
+            if (details) {
+                if (IfcUtil::IfcBaseClass* referenced = ifc_entity(p_ref, "PropertyReference")) {
+                    detail[context->value_type_key] = context->type_name(referenced->declaration().name());
+                    detail["reference"] = static_cast<int64_t>(referenced->id());
+                }
+            }
+        } else if (auto p_complex = prop->template as<typename schema::IfcComplexProperty>()) {
+            // Its properties, nested
+            godot::Dictionary sub_details;
+            props_dict[prop_key] = convert_ifc_properties<schema>(p_complex->HasProperties(), context, details ? &sub_details : nullptr);
+            if (details) {
+                const String usage_name = ifc_string(p_complex, "UsageName");
+                if (!usage_name.is_empty()) detail["usage_name"] = usage_name;
+                sub_details.make_read_only();
+                detail["properties"] = sub_details;
+            }
+        } else if (auto p_table = prop->template as<typename schema::IfcPropertyTableValue>()) {
+            // Read by name: both lists are optional in IFC4 and required in IFC2X3
+            const std::vector<IfcUtil::IfcBaseClass*> defining = ifc_entities(p_table, "DefiningValues");
+            const std::vector<IfcUtil::IfcBaseClass*> defined = ifc_entities(p_table, "DefinedValues");
+            godot::Dictionary table;
+            table["defining_values"] = ifc_values(defining);
+            table["defined_values"] = ifc_values(defined);
+            props_dict[prop_key] = table;
+            if (details) {
+                String value_type, unit;
+                describe_values(defining.empty() ? nullptr : defining[0], ifc_entity(p_table, "DefiningUnit"), context, value_type, unit);
+                if (!value_type.is_empty()) detail["defining_value_type"] = value_type;
+                if (!unit.is_empty()) detail["defining_unit"] = unit;
+                describe_values(defined.empty() ? nullptr : defined[0], ifc_entity(p_table, "DefinedUnit"), context, value_type, unit);
+                if (!value_type.is_empty()) detail["defined_value_type"] = value_type;
+                if (!unit.is_empty()) detail["defined_unit"] = unit;
+                const String expression = ifc_string(p_table, "Expression");
+                if (!expression.is_empty()) detail["expression"] = expression;
+                const String interpolation = ifc_string(p_table, "CurveInterpolation"); // IFC4
+                if (!interpolation.is_empty()) detail["curve_interpolation"] = interpolation;
+            }
+        } else {
+            continue;
         }
-        // Skip IfcPropertyTableValue and others for performance unless strictly needed
+        if (details) {
+            detail.make_read_only(); // shared between elements
+            (*details)[prop_key] = detail;
+        }
     }
     return props_dict;
-}
-
-template <typename schema>
-godot::Dictionary get_ifc_property_sets(IfcParse::IfcFile& file, int expressID) {
-    godot::Dictionary psets;
-    try {
-
-    // 1. Early exit validation
-    auto instance = file.instance_by_id(expressID);
-    if (!instance) {
-        return psets;
-    }
-
-    auto object = instance->template as<typename schema::IfcObject>();
-    if (!object) {
-        return psets;
-    }
-
-    // 2. Get the list of all relationships (Generic list)
-    // IfcOpenShell: IsDefinedBy returns a aggregate/list, not a single object
-    auto rels_defines = object->IsDefinedBy();
-    if (!rels_defines) {
-        return psets;
-    }
-
-    // 3. Iterate generic relationships
-    for (auto rel_generic : *rels_defines) {
-        // OPTIMIZATION: Single dynamic_cast capture
-        // Check if this specific relationship is "DefinesByProperties"
-        if (auto rel = rel_generic->template as<typename schema::IfcRelDefinesByProperties>()) {
-            auto p_set_select = rel->RelatingPropertyDefinition();
-            if (!p_set_select) {
-                continue;
-            }
-
-            // Check if it is actually an IfcPropertySet (could be ElementQuantity, etc.)
-            if (auto p_set = p_set_select->template as<typename schema::IfcPropertySet>()) {
-                auto p_set_name_opt = p_set->Name();
-                if (!p_set_name_opt.has_value()) {
-                    continue;
-                }
-
-                std::string pset_key = p_set_name_opt.value();
-
-                auto props = p_set->HasProperties();
-                if (!props) {
-                    continue;
-                }
-
-                psets[godot::String::utf8(pset_key.c_str())] = convert_ifc_properties<schema>(props);
-            }
-        }
-    }
-
-    return psets;
-
-    } catch (const std::exception& e) {
-        ERR_PRINT(godot::String("Failed to get property sets for entity #") + godot::String::num_int64(expressID) + ": " + e.what());
-    } catch (...) {
-        ERR_PRINT(godot::String("Failed to get property sets for entity #") + godot::String::num_int64(expressID) + ": unknown error.");
-    }
-    return psets;
-}
-
-template <typename schema>
-godot::Dictionary get_ifc_quantity_sets(IfcParse::IfcFile& file, int expressID) {
-    godot::Dictionary qsets;
-    try {
-
-    // 1. Early exit validation
-    auto instance = file.instance_by_id(expressID);
-    if (!instance) {
-        return qsets;
-    }
-
-    auto object = instance->template as<typename schema::IfcObject>();
-    if (!object) {
-        return qsets;
-    }
-
-    // 2. Get the list of all relationships (Generic list)
-    // IfcOpenShell: IsDefinedBy returns a aggregate/list, not a single object
-    auto rels_defines = object->IsDefinedBy();
-    if (!rels_defines) {
-        return qsets;
-    }
-
-    // 3. Iterate generic relationships
-    for (auto rel_generic : *rels_defines) {
-        // OPTIMIZATION: Single dynamic_cast capture
-        // Check if this specific relationship is "DefinesByProperties"
-        if (auto rel = rel_generic->template as<typename schema::IfcRelDefinesByProperties>()) {
-            auto p_set_select = rel->RelatingPropertyDefinition();
-            if (!p_set_select) {
-                continue;
-            }
-
-            // Check if it is actually an IfcPropertySet (could be ElementQuantity, etc.)
-            if (auto p_set = p_set_select->template as<typename schema::IfcElementQuantity>()) {
-                auto p_set_name_opt = p_set->Name();
-                if (!p_set_name_opt.has_value()) {
-                    continue;
-                }
-
-                std::string quants_key = p_set_name_opt.value();
-
-                auto quants = p_set->Quantities();
-                if (!quants) {
-                    continue;
-                }
-
-                godot::Dictionary quantities_dict;
-
-                for (auto quant : *quants) {
-                    if (!quant) {
-                        continue;
-                    }
-
-                    // Cache the property name to avoid repeated lookups
-                    // Godot Dictionaries use Variants as keys. Passing a const char* // creates a String automatically.
-                    std::string quant_name_str = quant->Name();
-                    godot::String quant_key = godot::String::utf8(quant_name_str.c_str());
-
-                    if (auto q_length = quant->template as<typename schema::IfcQuantityLength>()) {
-                        // Handle Single Value
-                        if (auto n_value = q_length->LengthValue()) {
-                            quantities_dict[quant_key] = n_value;
-                        } else {
-                            quantities_dict[quant_key] = godot::Variant(); // Null/Nil
-                        }
-                    } else if (auto q_area = quant->template as<typename schema::IfcQuantityArea>()) {
-                        if (auto n_value = q_area->AreaValue()) {
-
-                            quantities_dict[quant_key] = n_value;
-
-                        } else {
-                            quantities_dict[quant_key] = godot::Variant(); // Null/Nil
-                        }
-                    } else if (auto q_volume = quant->template as<typename schema::IfcQuantityVolume>()) {
-                        if (auto n_value = q_volume->VolumeValue()) {
-                            quantities_dict[quant_key] = n_value;
-                        } else {
-                            quantities_dict[quant_key] = godot::Variant(); // Null/Nil
-                        }
-                    } else if (auto q_weight = quant->template as<typename schema::IfcQuantityWeight>()) {
-                        if (auto n_value = q_weight->WeightValue()) {
-                            quantities_dict[quant_key] = n_value;
-                        } else {
-                            quantities_dict[quant_key] = godot::Variant(); // Null/Nil
-                        }
-
-                    } else if (auto q_count = quant->template as<typename schema::IfcQuantityCount>()) {
-                        if (auto n_value = q_count->CountValue()) {
-                            quantities_dict[quant_key] = n_value;
-                        } else {
-                            quantities_dict[quant_key] = godot::Variant(); // Null/Nil
-                        }
-
-                    } else if (auto q_time = quant->template as<typename schema::IfcQuantityTime>()) {
-                        if (auto n_value = q_time->TimeValue()) {
-                            quantities_dict[quant_key] = n_value;
-                        } else {
-                            quantities_dict[quant_key] = godot::Variant(); // Null/Nil
-                        }
-                    }
-                }
-
-                // Insert the constructed dictionary into the main psets dictionary
-                qsets[godot::String::utf8(quants_key.c_str())] = quantities_dict;
-            }
-        }
-    }
-
-    return qsets;
-
-    } catch (const std::exception& e) {
-        ERR_PRINT(godot::String("Failed to get quantity sets for entity #") + godot::String::num_int64(expressID) + ": " + e.what());
-    } catch (...) {
-        ERR_PRINT(godot::String("Failed to get quantity sets for entity #") + godot::String::num_int64(expressID) + ": unknown error.");
-    }
-    return qsets;
 }
 
 template <typename schema>

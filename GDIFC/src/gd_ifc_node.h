@@ -30,6 +30,14 @@ public:
     godot::Dictionary get_quantities();
     void set_quantities(godot::Dictionary quants);
 
+    /// Value type, unit and origin of each property, shaped like properties
+    godot::Dictionary get_property_details() const { return property_details; }
+    void set_property_details(godot::Dictionary details) { property_details = std::move(details); }
+
+    /// Value type, unit and origin of each quantity, shaped like quantities
+    godot::Dictionary get_quantity_details() const { return quantity_details; }
+    void set_quantity_details(godot::Dictionary details) { quantity_details = std::move(details); }
+
     godot::String get_ifc_class() {return ifc_class;}
     void set_ifc_class(godot::String ifcclass) {ifc_class = ifcclass;};
 
@@ -51,7 +59,9 @@ private:
     godot::String global_id_;
     godot::Dictionary attributes;
     godot::Dictionary properties;
+    godot::Dictionary property_details;
     godot::Dictionary quantities;
+    godot::Dictionary quantity_details;
 
     /// Typed GD wrapper for the IFC entity (set after loading).
     godot::Ref<godot::GDIFCEntityBase> ifc_object_;

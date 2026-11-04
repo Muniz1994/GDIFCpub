@@ -39,6 +39,9 @@ public:
     godot::String            get_originating_system() const;
     godot::String            get_authorization() const;
 
+    /// The project's units, {unit type: symbol}, such as {"LENGTHUNIT": "mm"}
+    godot::Dictionary        get_units() const;
+
     // ── Entity lookup ─────────────────────────────────────────────────────
 
     /// Return entity with the given EXPRESS numeric id.

@@ -79,8 +79,10 @@ struct PrecalculatedIFCItemGeometry {
 struct PrecalculatedIFCMetadata {
     int express_id = -1;
     Dictionary attributes;
-    Dictionary properties;
+    Dictionary properties;         // the element's sets, with its type's merged in
+    Dictionary property_details;   // value type, unit and origin of each property
     Dictionary quantities;
+    Dictionary quantity_details;
     Ref<GDIFCMaterialDefinition> material; // with IFC materials on
 };
 
@@ -352,12 +354,6 @@ class GDIFCManager : public Node3D {
 } // namespace godot
 
 
-
-template <typename schema>
-godot::Dictionary get_ifc_property_sets(IfcParse::IfcFile& file, int expressID);
-
-template <typename schema>
-godot::Dictionary get_ifc_quantity_sets(IfcParse::IfcFile& file, int expressID);
 
 template <typename schema>
 godot::Dictionary get_ifc_object_attributes(IfcParse::IfcFile& file, int expressID);

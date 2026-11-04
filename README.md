@@ -10,7 +10,8 @@ A GDExtension for loading [buildingSMART IFC](https://www.buildingsmart.org/stan
 - Asynchronous, threaded loading — the editor and game remain responsive while the model is parsed, with progress reporting
 - IFC schema support: IFC 2.3.0.1 (IFC 2x3 TC1), IFC 4.0.2.1 (IFC 4 ADD2 TC1), 4.3.2.0 (IFC 4.3 ADD2)
 - `.ifc` files imported as scenes, like `.glb` files
-- Per-object property sets, quantity sets, and attributes exposed as `Dictionary`, and every IFC class as a typed Godot class (`IfcWall`, `IfcSlab`, …)
+- Per-object attributes, property sets and quantity sets exposed as `Dictionary`, with the element type's sets merged in and the value type and unit of each value
+- The whole IFC model can be walked from any element: every IFC class is a typed Godot class (`IfcWall`, `IfcSlab`, …) whose attributes and inverse relationships lead to its type, classifications, systems, zones, openings and every other entity, including those without geometry
 - Optional IFC materials and textures, with one Godot material per IFC material that can be replaced from scripts or the Inspector
 - Automatic mesh LODs
 - Optional collision shape generation per object, with a shape type and physics layers per IFC class
@@ -70,6 +71,7 @@ The model appears at `ifc_read`, as an `IFCModel` node under the manager holding
 - [Getting Started](docs/getting-started.md)
 - [Loading Models](docs/loading-models.md): collision, importing as scenes, LODs, IFC materials, georeferencing
 - [Typed Entity Access](docs/typed-entities.md)
+- [Walking The Model](docs/walking-the-model.md): types, classifications, systems, openings and entities without a node
 - [API Reference](docs/api-reference.md)
 - [Building From Source](docs/building-from-source.md)
 - [Changelog](CHANGELOG.md)

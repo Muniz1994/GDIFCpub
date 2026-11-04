@@ -1,4 +1,5 @@
 #include "gd_ifc_model.h"
+#include "gd_ifc_units.h"
 
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/file_access.hpp>
@@ -117,6 +118,11 @@ godot::String IFCModel::get_authorization() const {
         const auto* fn = h.file_name();
         return fn ? fn->authorization() : std::string();
     });
+}
+
+godot::Dictionary IFCModel::get_units() const {
+    if (!ifc_file_) return {};
+    return IfcUnitTable(*ifc_file_).to_dictionary();
 }
 
 // ── Entity lookup ─────────────────────────────────────────────────────────
@@ -266,6 +272,7 @@ void IFCModel::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_preprocessor"),      &IFCModel::get_preprocessor);
     ClassDB::bind_method(D_METHOD("get_originating_system"),&IFCModel::get_originating_system);
     ClassDB::bind_method(D_METHOD("get_authorization"),     &IFCModel::get_authorization);
+    ClassDB::bind_method(D_METHOD("get_units"),             &IFCModel::get_units);
 
     // Lookup
     ClassDB::bind_method(D_METHOD("get_by_id", "express_id"),      &IFCModel::get_by_id);

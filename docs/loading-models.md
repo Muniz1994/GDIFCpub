@@ -134,8 +134,54 @@ Each `IFCNode` provides:
 - `ifc_class`: IFC class name
 - `global_id`: IFC GlobalId
 - `attributes`: base IFC attributes (after `ifc_objects_ready`)
-- `properties`: property sets (after `ifc_objects_ready`)
-- `quantities`: quantity sets (after `ifc_objects_ready`)
+- `properties`: property sets, including its type's (after `ifc_objects_ready`)
+- `quantities`: quantity sets, including its type's (after `ifc_objects_ready`)
+- `property_details` and `quantity_details`: the value type, unit and origin of each value (after `ifc_objects_ready`)
+- `ifc_object`: the IFC entity, to [walk the rest of the model](walking-the-model.md) from (after `ifc_objects_ready`)
+
+### Property And Quantity Sets
+
+`properties` holds `{set name: {property name: value}}` and `quantities` `{set name: {quantity name: value}}`. Both include the sets of the element's type (`IfcTypeObject.HasPropertySets`). When the element and its type both set a property, the element's value is kept. A set without a name is keyed by its class, such as `"IfcElementQuantity"`.
+
+The value depends on the kind of property:
+
+| IFC property | Value |
+|---|---|
+| `IfcPropertySingleValue` | The value |
+| `IfcPropertyBoundedValue` | `[lower, upper]` |
+| `IfcPropertyEnumeratedValue`, `IfcPropertyListValue` | An `Array` of values |
+| `IfcPropertyReferenceValue` | Its `UsageName` |
+| `IfcComplexProperty` | Its properties, nested: `{property name: value}` |
+| `IfcPropertyTableValue` | `{"defining_values": Array, "defined_values": Array}` |
+| Simple quantities (length, area, volume, count, weight, time, number) | The value, in the unit given by its details |
+| `IfcPhysicalComplexQuantity` | Its quantities, nested |
+
+`property_details` and `quantity_details` have the same shape, with a `Dictionary` of details for each value. Only the keys that apply are present:
+
+| Key | Meaning |
+|---|---|
+| `value_type` | The IFC type of the value, such as `"IfcLengthMeasure"`, `"IfcLabel"` or `"IfcBoolean"`; for a reference, the class of the referenced entity |
+| `unit` | Its unit, such as `"mm"`, `"m²"` or `"W/(m²·K)"`: the property's own unit, or else the project's unit for the value type |
+| `from_type` | `true` when the value comes from the element's type |
+| `reference` | For a reference, the express id of the referenced entity (see `IFCModel.get_by_id`) |
+| `usage_name`, `properties` | For a complex property: its `UsageName`, and the details of its properties |
+| `defining_value_type`, `defining_unit`, `defined_value_type`, `defined_unit`, `expression`, `curve_interpolation` | For a table |
+| `discrimination`, `usage`, `quantities` | For a complex quantity: its `Discrimination`, its `Usage`, and the details of its quantities |
+
+```gdscript
+var area = node.quantities["Qto_WallBaseQuantities"]["NetSideArea"]
+var detail: Dictionary = node.quantity_details["Qto_WallBaseQuantities"]["NetSideArea"]
+print(area, " ", detail.get("unit", "")) # 12.5 m²
+
+for set_name in node.property_details:
+    for name in node.property_details[set_name]:
+        if node.property_details[set_name][name].get("from_type", false):
+            print(set_name, ".", name, " comes from the type")
+```
+
+The details are read-only and shared between the values that have the same ones. Units are given as symbols for the common SI and imperial units, and by their IFC name otherwise. Values are never converted: they are in the units the details give.
+
+The type's sets and the details are saved with the scene, so they make scenes that store their nodes larger. A scene that instances an [imported `.ifc` file](#importing-ifc-files-as-scenes) is not affected.
 
 ## Geometry Settings
 
