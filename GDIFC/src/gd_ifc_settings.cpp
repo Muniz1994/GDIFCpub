@@ -81,4 +81,14 @@ void godot::GDIFCLoaderSettings::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_lod_normal_merge_angle", "val"), &GDIFCLoaderSettings::setLodNormalMergeAngle);
     ClassDB::bind_method(D_METHOD("get_lod_normal_merge_angle"), &GDIFCLoaderSettings::getLodNormalMergeAngle);
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "lod_normal_merge_angle", PROPERTY_HINT_RANGE, "0,180,0.1,degrees"), "set_lod_normal_merge_angle", "get_lod_normal_merge_angle");
+
+    // --- IFC Materials ---
+    ClassDB::bind_method(D_METHOD("set_ifc_materials", "val"), &GDIFCLoaderSettings::setIfcMaterials);
+    ClassDB::bind_method(D_METHOD("get_ifc_materials"), &GDIFCLoaderSettings::getIfcMaterials);
+    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "ifc_materials"), "set_ifc_materials", "get_ifc_materials");
+
+    // --- IFC Textures ---
+    ClassDB::bind_method(D_METHOD("set_ifc_textures", "val"), &GDIFCLoaderSettings::setIfcTextures);
+    ClassDB::bind_method(D_METHOD("get_ifc_textures"), &GDIFCLoaderSettings::getIfcTextures);
+    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "ifc_textures"), "set_ifc_textures", "get_ifc_textures");
 }

@@ -17,6 +17,10 @@ Main entry point for IFC loading and model access.
   - Progress of the current or last load, from `0.0` to `1.0`. It never decreases during a load.
 - `get_load_stage() -> String`
   - Current load stage: `"Parsing"`, `"Processing geometry"`, `"Generating LODs"` (when enabled), `"Creating nodes"`, `"Preparing editor"` (editor only), `"Adding to scene"`, `"Done"` or `"Failed"`. Empty before the first load. Progress reaches `1.0` at `ifc_read`; property sets load after that.
+- `find_material_definitions(name: String) -> Array`
+  - Every material definition in `material_library` with that IFC Name, whatever its class.
+- `set_material_visual(material_name: String, visual: Material) -> int`
+  - Sets `visual` on every `GDIFCMaterialSingle` with that IFC Name, and returns how many there were.
 
 ### Signals
 
@@ -42,6 +46,8 @@ ifc_manager.read_ifc("res://models/building.ifc", false, [])
 
 - `geometric_settings: GDIFCLoaderSettings`
   - Assign before calling load methods.
+- `material_library: GDIFCMaterialLibrary`
+  - The model's IFC material definitions, after `ifc_objects_ready`. Null unless `ifc_materials` was on.
 
 ## IFCNode (MeshInstance3D)
 
@@ -54,6 +60,37 @@ Node generated for each IFC object.
 - `properties: Dictionary`
 - `quantities: Dictionary`
 - `ifc_object: GDIFCEntityBase`
+- `material_definition: GDIFCMaterialDefinition` (after `ifc_objects_ready`, with `ifc_materials` on)
+
+## IFC Material Definitions (Resource)
+
+Read with `ifc_materials` on. One resource per IFC material definition, shared by every element and set that uses it. See [IFC Materials](loading-models.md#ifc-materials).
+
+`GDIFCMaterialDefinition` is the base class:
+
+- `resource_name`: the IFC Name (`LayerSetName` for a layer set; a usage takes its set's name)
+- `description: String`, `category: String`
+- `express_id: int`: IFC materials have no GlobalId
+- `properties: Dictionary`: material property sets, `{set name: {property: value}}`
+- `classifications: Array`: classification and library references, one Dictionary each (`type`, and whichever of `identification`, `item_reference`, `name`, `location`, `description`, `notation`, `source` the reference has)
+- `ifc_object: GDIFCEntityBase`: relinked on load, not saved
+
+| Class | IFC entity | Properties |
+| --- | --- | --- |
+| `GDIFCMaterialSingle` | `IfcMaterial` | `visual: Material` (assigning it replaces it on every surface showing the old one), `relationships: Array` (IFC4 `IfcMaterialRelationship`: `name`, `description`, `expression`, `materials`) |
+| `GDIFCMaterialLayer` | `IfcMaterialLayer` | `material` (null for an air gap), `thickness`, `is_ventilated`, `priority` (-1 when not given) |
+| `GDIFCMaterialLayerSet` | `IfcMaterialLayerSet` | `layers` (in IFC order), `total_thickness` (read-only) |
+| `GDIFCMaterialLayerSetUsage` | `IfcMaterialLayerSetUsage` | `layer_set`, `direction` (`AXIS1`..`AXIS3`), `sense` (`POSITIVE`, `NEGATIVE`), `offset`, `reference_extent` (0 when not given) |
+| `GDIFCMaterialProfile` | `IfcMaterialProfile` | `material`, `priority` |
+| `GDIFCMaterialProfileSet` | `IfcMaterialProfileSet` | `profiles` |
+| `GDIFCMaterialProfileSetUsage` | `IfcMaterialProfileSetUsage` | `profile_set`, `cardinal_point` (0 when not given), `reference_extent` |
+| `GDIFCMaterialConstituent` | `IfcMaterialConstituent` | `material`, `fraction` (-1 when not given) |
+| `GDIFCMaterialConstituentSet` | `IfcMaterialConstituentSet` | `constituents` |
+| `GDIFCMaterialList` | `IfcMaterialList` | `materials` |
+
+Lengths are in the IFC file's length unit, like quantities. Subtypes such as `IfcMaterialLayerWithOffsets` use their supertype's class; their extra attributes are on `ifc_object`.
+
+`GDIFCMaterialLibrary` holds `definitions` (those elements are associated with) and `materials` (every `GDIFCMaterialSingle`, including those inside sets), both by express id.
 
 ## GDIFCEntityBase (RefCounted)
 
@@ -87,6 +124,8 @@ Controls geometry conversion behavior and processing limits.
 - `boolean_union_threshold: int` (default `150`)
 - `generate_lods: bool` (default `true`)
 - `lod_normal_merge_angle: float` (default `60.0`, degrees)
+- `ifc_materials: bool` (default `false`): read IFC material definitions, and use one material per IFC material instead of per colour. See [IFC Materials](loading-models.md#ifc-materials).
+- `ifc_textures: bool` (default `false`): load the textures of IFC surface styles onto the generated materials. Used only with `ifc_materials`. See [Surface Styles And Textures](loading-models.md#surface-styles-and-textures).
 
 ## Practical Pattern
 

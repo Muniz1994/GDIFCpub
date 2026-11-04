@@ -1,7 +1,8 @@
 # Loads one IFC file with GDIFCManager and writes what was built to a JSON file.
 # Run by tests/ifc_corpus/run_ifc_corpus.py, one Godot process per file, so a crash only fails that file:
 #   godot --headless --path ifc-godot-project --script res://tests/ifc_load_test.gd -- --file <ifc> --out <json>
-# Options: --collision (create collision for every element), --no-lods
+# Options: --collision (create collision for every element), --no-lods, --materials (read IFC materials),
+# --textures (also read IFC textures, needs --materials)
 extends SceneTree
 
 var _manager: GDIFCManager
@@ -18,7 +19,7 @@ func _initialize() -> void:
 	_out_path = args.get("out", "")
 	var path: String = args.get("file", "")
 	if path.is_empty() or _out_path.is_empty():
-		printerr("Usage: --script res://tests/ifc_load_test.gd -- --file <ifc> --out <json> [--collision] [--no-lods]")
+		printerr("Usage: --script res://tests/ifc_load_test.gd -- --file <ifc> --out <json> [--collision] [--no-lods] [--materials] [--textures]")
 		quit(2)
 		return
 
@@ -34,6 +35,8 @@ func _initialize() -> void:
 
 	var settings := GDIFCLoaderSettings.new()
 	settings.generate_lods = not args.has("no-lods")
+	settings.ifc_materials = args.has("materials")
+	settings.ifc_textures = args.has("textures")
 	_manager = GDIFCManager.new()
 	_manager.geometric_settings = settings
 	root.add_child(_manager)
@@ -148,6 +151,7 @@ func _collect_metrics() -> Dictionary:
 		"ifc_nodes": 0,
 		"mesh_nodes": 0,
 		"surfaces": 0,
+		"materials": 0,
 		"vertices": 0,
 		"triangles": 0,
 		"collision_bodies": 0,
@@ -156,6 +160,8 @@ func _collect_metrics() -> Dictionary:
 		"nodes_with_properties": 0,
 		"nodes_with_quantities": 0,
 		"nodes_with_ifc_object": 0,
+		"nodes_with_material_definition": 0,
+		"ifc_materials": 0,
 		"nodes_without_global_id": 0,
 		"duplicate_global_ids": 0,
 		"classes": {},
@@ -173,6 +179,8 @@ func _collect_metrics() -> Dictionary:
 
 	var classes: Dictionary = metrics["classes"]
 	var global_ids := {}
+	# Distinct surface materials, keyed by instance id
+	var materials := {}
 	var bounds := AABB()
 	var has_bounds := false
 	for node in _manager.find_children("*", "IFCNode", true, false):
@@ -193,6 +201,8 @@ func _collect_metrics() -> Dictionary:
 			metrics["nodes_with_quantities"] += 1
 		if ifc_node.ifc_object != null:
 			metrics["nodes_with_ifc_object"] += 1
+		if ifc_node.material_definition != null:
+			metrics["nodes_with_material_definition"] += 1
 		for child in ifc_node.get_children():
 			if child is StaticBody3D:
 				metrics["collision_bodies"] += 1
@@ -203,6 +213,9 @@ func _collect_metrics() -> Dictionary:
 		metrics["mesh_nodes"] += 1
 		for surface in mesh.get_surface_count():
 			metrics["surfaces"] += 1
+			var material := mesh.surface_get_material(surface)
+			if material:
+				materials[material.get_instance_id()] = true
 			var vertex_count: int = mesh.surface_get_array_len(surface)
 			var index_count: int = mesh.surface_get_array_index_len(surface)
 			metrics["vertices"] += vertex_count
@@ -216,6 +229,10 @@ func _collect_metrics() -> Dictionary:
 			bounds = node_bounds
 			has_bounds = true
 
+	metrics["materials"] = materials.size()
+	# IfcMaterials read into the material library, with ifc_materials on
+	if _manager.material_library:
+		metrics["ifc_materials"] = _manager.material_library.materials.size()
 	if has_bounds:
 		metrics["bounds_min"] = [bounds.position.x, bounds.position.y, bounds.position.z]
 		metrics["bounds_size"] = [bounds.size.x, bounds.size.y, bounds.size.z]

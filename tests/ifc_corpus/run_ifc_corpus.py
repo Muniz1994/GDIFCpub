@@ -254,6 +254,10 @@ def run_file(entry, args, out_dir, active):
         cmd.append("--collision")
     if args.no_lods:
         cmd.append("--no-lods")
+    if args.materials:
+        cmd.append("--materials")
+    if args.textures:
+        cmd.append("--textures")
 
     popen_kwargs = {}
     if os.name != "nt":
@@ -424,7 +428,7 @@ def compare(results, baseline_path):
 
         old_metrics = (old.get("data") or {}).get("metrics") or {}
         new_metrics = (result.get("data") or {}).get("metrics") or {}
-        for key in ("triangles", "mesh_nodes", "ifc_nodes"):
+        for key in ("triangles", "mesh_nodes", "ifc_nodes", "surfaces", "materials"):
             if key in old_metrics and key in new_metrics and old_metrics[key] != new_metrics[key]:
                 changes["geometry_changes"].append({"file": result["file"], "metric": key,
                                                     "from": old_metrics[key], "to": new_metrics[key]})
@@ -526,6 +530,8 @@ def main():
     parser.add_argument("--timeout-per-mb", type=float, default=6, help="Extra seconds per MB of file (default: %(default)s)")
     parser.add_argument("--collision", action="store_true", help="Create collision shapes for every element")
     parser.add_argument("--no-lods", action="store_true", help="Don't generate mesh LODs")
+    parser.add_argument("--materials", action="store_true", help="Read IFC materials")
+    parser.add_argument("--textures", action="store_true", help="Also read IFC textures (needs --materials)")
     parser.add_argument("--baseline", help="report.json to compare with (default: latest earlier run of the same corpus)")
     parser.add_argument("--no-baseline", action="store_true", help="Don't compare with an earlier run")
     parser.add_argument("--list", action="store_true", help="List the files that would be loaded, then exit")
@@ -612,6 +618,7 @@ def main():
             "git": git_info(),
             "machine": {"system": platform.platform(), "cpu_count": os.cpu_count()},
             "options": {"jobs": args.jobs, "collision": args.collision, "lods": not args.no_lods,
+                        "materials": args.materials, "textures": args.textures,
                         "timeout": args.timeout, "timeout_per_mb": args.timeout_per_mb,
                         "filter": args.filter, "exclude": args.exclude, "max_size_mb": args.max_size_mb},
         },

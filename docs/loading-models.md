@@ -87,6 +87,82 @@ LOD data is saved inside the scene, so `.tscn` files grow. Set `generate_lods = 
 
 In the editor dock, **Config → Generate LODs** and **Config → LOD merge angle** start from the selected settings preset and override it for that load only. The preset itself is not modified.
 
+### IFC Materials
+
+By default, elements of the same colour share one `StandardMaterial3D`, whatever their IFC material. Set `ifc_materials = true` to read the IFC material definitions, and give each IFC material its own `StandardMaterial3D` instead, named after the `IfcMaterial`. Every surface coloured by that material shares it, so editing it changes every element made of that material:
+
+```gdscript
+var settings := GDIFCLoaderSettings.new()
+settings.ifc_materials = true
+ifc_manager.geometric_settings = settings
+```
+
+Once `ifc_objects_ready` is emitted, each `IFCNode.material_definition` holds the element's IFC material: a `GDIFCMaterialSingle`, or a layer, profile or constituent set, usage or list made of them (see the [API reference](api-reference.md#ifc-material-definitions-resource)). Every definition is one resource shared by every element and set using it, so a material used by two hundred walls is one `GDIFCMaterialSingle`. Its `visual` is the material its surfaces use; a material none of whose surfaces are shown, such as a hidden layer, gets one of its own in its colour. `GDIFCManager.material_library` lists every definition of the model.
+
+```gdscript
+var definition: GDIFCMaterialDefinition = node.material_definition
+if definition is GDIFCMaterialLayerSetUsage:
+    for layer in definition.layer_set.layers:
+        print(layer.material.resource_name if layer.material else "air gap", " ", layer.thickness)
+
+for material in ifc_manager.material_library.materials:
+    if material.resource_name == "Concrete":
+        material.visual.albedo_color = Color.DIM_GRAY # every concrete surface changes
+```
+
+To give an IFC material a different look, such as a downloaded `StandardMaterial3D`, `ShaderMaterial` or `ORMMaterial3D`, assign it to `visual`. Every surface showing the old visual gets the new one, so the change reaches every element made of that material:
+
+```gdscript
+var concrete := load("res://materials/concrete_pbr.tres") as Material
+
+# One material
+for definition in ifc_manager.find_material_definitions("Concrete C30/37"):
+    if definition is GDIFCMaterialSingle:
+        definition.visual = concrete
+
+# Or every IfcMaterial with that name, since exporters often write one material several times
+ifc_manager.set_material_visual("Concrete C30/37", concrete)
+```
+
+Assigning it in the inspector goes through the same setter. `find_material_definitions` returns every definition with that name, and layers and constituents are often named after their material, so check the class. The new visual replaces the material of each mesh surface; a node's surface material override is never changed, so one set by hand keeps showing. Assign the previous material again to go back. Materials replaced this way are saved with the scene. In a scene instanced from an imported `.ifc` file, replacements made in the editor are lost when the scene reloads, since the meshes belong to the imported file; replacements made at runtime work.
+
+Definitions also hold their material property sets (`properties`, shaped like `IFCNode.properties`) and classification references (`classifications`). In IFC2X3, typed material properties such as `IfcThermalMaterialProperties` become a set named after the entity, with its attributes as properties. Material definitions are saved in the scene, and their `ifc_object` is relinked from the `.ifc` file when the scene is opened again.
+
+An element uses its own material association, or its type's when it has none. For a layer, profile or constituent set, a surface is matched to the set's material that has its colour. Geometry with no colour at all is matched to the first material without one. Apart from layered elements, below, every surface keeps its colour; the surface styles further down only add roughness, metallic and textures.
+
+A layered wall or slab is one solid in its IFC file, which web-ifc gives the colour of a single layer. When the element has an `IfcMaterialLayerSetUsage` with two layers or more, and its geometry is coloured by its layer set, GDIFC cuts that geometry into the layers: one surface per layer material, in the layer's own colour, stacked along the usage's direction (`AXIS2` for walls, `AXIS3` for slabs) in the order its sense gives. Each layer takes its share of the element's extent in that direction, in proportion to its thickness, so the cut follows the body even when its `OffsetFromReferenceLine` doesn't. An air gap keeps the element's colour. Total surface area is unchanged.
+
+Some surfaces keep a material per colour even with `ifc_materials` on:
+
+- Surfaces coloured by a style on the geometry itself (`IfcStyledItem`) that doesn't match any of the element's materials. They aren't cut into layers either, since the style overrides the material's look. Revit, for example, often gives a layered wall's whole body one grey style.
+- `IfcSpace` surfaces, which always use the transparent space material.
+
+Constituent and profile sets need no cutting: their parts are separate representation items. An `IfcShapeAspect` names the items that make one part, after the `IfcMaterialConstituent` or `IfcMaterialProfile` it is made of, and GDIFC links those items to that part's material, whatever their colour. An occurrence's aspects usually sit on its type's geometry and follow the type's part names, which an occurrence with a material set of its own may name differently, so the type's parts are matched too, and its materials are in `material_library`. Without aspects, a part is only found by its colour.
+
+A material's surfaces share one Godot material, so they have one colour. A material without a colour of its own takes the first colour it is shown in; a surface showing it in another colour keeps a material per colour, so no surface changes colour. A linked material without a style of its own takes the look of the style its colour comes from (see below).
+
+`IfcMaterialList` has no names to match, so a list's materials are only found by colour. An element whose parts are one item, such as a stair flight modelled as a single solid with two constituents, keeps one surface.
+
+In the editor dock, **Materials → IFC materials** and **Materials → Textures** start from the selected settings preset and override it for that load only. The **.ifc** importer has the same options as `materials/ifc_materials` and `materials/textures`.
+
+#### Surface Styles And Textures
+
+With `ifc_materials` on, the generated materials also take the rest of their IFC surface style once `ifc_objects_ready` is emitted. The model first appears in flat colours, then changes. Each material shared by an IFC material uses that material's style. A material shared per colour uses the style with its colour, when every style of that colour looks the same; opaque white is skipped, since it is also the colour of geometry without any style. Albedo colours stay as they are.
+
+From `IfcSurfaceStyleRendering`:
+
+- `SpecularHighlight`: an `IfcSpecularRoughness` sets `roughness`; an `IfcSpecularExponent` n sets it to (2 / (n + 2))^¼, its Blinn-Phong equivalent, so Revit's usual 64 gives 0.42.
+- `ReflectanceMethod`: `METAL` sets `metallic` to 1, `MIRROR` sets it to 1 with roughness 0, and `GLASS` sets roughness 0.05 when no highlight is given.
+
+Other fields, such as `SpecularColour`, are not used.
+
+Set `ifc_textures = true` to also load the textures of `IfcSurfaceStyleWithTextures`:
+
+- `IfcImageTexture` refers to a file. It is looked for at its path, then at that path and at its file name next to the `.ifc` file, so a texture shipped beside the model is found even when the exporter wrote the author's own absolute path. A texture inside the project is used as imported; one outside it is read and embedded in the scene when it is saved. Web addresses are not downloaded. Textures that can't be found are listed in one warning.
+- `IfcBlobTexture` (PNG, JPG, BMP, TGA or WebP) and `IfcPixelTexture` are embedded in the IFC file.
+
+The texture's purpose picks the slot: IFC2X3 `TextureType` or IFC4 `Mode`. Normal maps go to `normal`, bump and height maps to `heightmap`, self-illumination to `emission`, and anything else that is a colour (`TEXTURE`, `MODULATE`, no purpose...) to `albedo`, which then turns white so the texture shows its own colours. Purposes `StandardMaterial3D` has no texture for, such as opacity, reflection or specular, are skipped. `RepeatS` and `RepeatT` set texture repeat, and the scale and origin of `TextureTransform` set `uv1_scale` and `uv1_offset`; its rotation is not applied. IFC texture coordinates (`IfcIndexedTriangleTextureMap` and the like) are not used: textures follow GDIFC's own UVs, 1 UV unit per meter, so they tile by world size.
+
 ## Loading Relative To A Georeference
 
 When several models of one project are loaded into the same scene (architecture, structure, MEP...), each one is generated in its own local frame. To line a new model up with one that is already loaded, point `reference_georeference` at the existing model's `IFCGeoreference` node before calling `read_ifc`. The path is relative to the manager, so add the manager to the tree first.

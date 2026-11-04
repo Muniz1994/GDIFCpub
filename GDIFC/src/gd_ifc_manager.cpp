@@ -4,14 +4,21 @@
 #include <cstring>    // Required for strlen
 #include <functional> // Required for lambdas
 #include <stdexcept>  // Required for std::exception
+#include <limits>
+#include <map>
 #include <mutex>
+#include <optional>
+#include <unordered_set>
 
 #include "godot_cpp/classes/collision_shape3d.hpp"
 #include "godot_cpp/classes/concave_polygon_shape3d.hpp"
 #include "godot_cpp/classes/engine.hpp"
 #include "godot_cpp/classes/file_access.hpp"
+#include "godot_cpp/classes/image_texture.hpp"
 #include "godot_cpp/classes/importer_mesh.hpp"
 #include "godot_cpp/classes/os.hpp"
+#include "godot_cpp/classes/project_settings.hpp"
+#include "godot_cpp/classes/resource_loader.hpp"
 #include "godot_cpp/classes/rendering_server.hpp"
 #include "godot_cpp/classes/scene_tree.hpp"
 #include "godot_cpp/classes/static_body3d.hpp"
@@ -26,6 +33,13 @@ void GDIFCManager::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_gdifc_settings","gdifc_settings"), &GDIFCManager::set_gdifc_settings);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "geometric_settings", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCLoaderSettings"),
         "set_gdifc_settings", "get_gdifc_settings");
+
+    ClassDB::bind_method(D_METHOD("get_material_library"), &GDIFCManager::get_material_library);
+    ClassDB::bind_method(D_METHOD("set_material_library","library"), &GDIFCManager::set_material_library);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "material_library", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCMaterialLibrary"),
+        "set_material_library", "get_material_library");
+    ClassDB::bind_method(D_METHOD("find_material_definitions", "name"), &GDIFCManager::find_material_definitions);
+    ClassDB::bind_method(D_METHOD("set_material_visual", "material_name", "visual"), &GDIFCManager::set_material_visual);
 
     ClassDB::bind_method(D_METHOD("get_ifc_file_path"), &GDIFCManager::get_ifc_file_path);
     ClassDB::bind_method(D_METHOD("set_ifc_file_path","path"), &GDIFCManager::set_ifc_file_path);
@@ -216,6 +230,9 @@ void GDIFCManager::_update_load_progress() {
 // COLD RELOAD: detect saved IFC tree and re-parse metadata
 // ---------------------------------------------------------
 void GDIFCManager::_ready() {
+    // A saved model's materials can be replaced even when its .ifc file can't be found
+    _watch_material_library();
+
     if (ifc_file_path_.is_empty()) return;
 
     // If "IFCModel" child already exists, this is a cold reload
@@ -319,6 +336,8 @@ void GDIFCManager::_relink_ifc_objects() {
         }
     };
     walk(model_root);
+
+    _relink_material_library();
 }
 
 Error GDIFCManager::read_ifc(const String &_path, bool _create_collision, const Array &_collision_classes) {
@@ -456,6 +475,12 @@ void GDIFCManager::_reset_load_state(bool _create_collision, const Array &_colli
     this->editor_cache_queue.clear();
     this->current_editor_cache_index = 0;
     this->material_cache.clear();
+    this->ifc_materials_.clear();
+    this->_unwatch_material_library();
+    this->material_library_.unref();
+    this->metadata_material_library_.unref();
+    this->metadata_material_styles_.clear();
+    this->metadata_colour_styles_.clear();
     this->node_registry.clear();
     this->current_generation_index = 0;
     this->thread_failed_ = false;
@@ -465,6 +490,8 @@ void GDIFCManager::_reset_load_state(bool _create_collision, const Array &_colli
     // Snapshot LOD options once so edits to the settings resource mid-load aren't picked up
     this->lod_enabled_ = geometric_settings.is_valid() && geometric_settings->getGenerateLods();
     this->lod_merge_angle_ = geometric_settings.is_valid() ? geometric_settings->getLodNormalMergeAngle() : 60.0f;
+    this->ifc_materials_enabled_ = geometric_settings.is_valid() && geometric_settings->getIfcMaterials();
+    this->ifc_textures_enabled_ = this->ifc_materials_enabled_ && geometric_settings->getIfcTextures();
 
     // Parsing has two steps: web-ifc's read, then the geometry processor
     this->parse_bytes_ = this->pending_buffer.size();
@@ -708,6 +735,735 @@ void GDIFCManager::_metadata_parse_task() {
     metadata_buffer_ = PackedByteArray();
 }
 
+// ---------------------------------------------------------
+// IFC MATERIAL DEFINITIONS
+// ---------------------------------------------------------
+
+template <typename schema, typename Properties>
+static godot::Dictionary convert_ifc_properties(const Properties& props);
+
+// IfcParse attributes read by name, so one reader covers every schema: a schema without an
+// attribute (IFC2X3 layers have no Name, for example) leaves the field at its default.
+static ptrdiff_t ifc_attribute_index(IfcUtil::IfcBaseClass* entity, const char* name) {
+    const IfcParse::entity* declaration = entity->declaration().as_entity();
+    return declaration ? declaration->attribute_index(name) : -1;
+}
+
+static String ifc_string(IfcUtil::IfcBaseClass* entity, const char* name) {
+    const ptrdiff_t index = ifc_attribute_index(entity, name);
+    return index < 0 ? String() : gd_attr_string(entity->get_attribute_value(index));
+}
+
+static double ifc_double(IfcUtil::IfcBaseClass* entity, const char* name, double fallback) {
+    const ptrdiff_t index = ifc_attribute_index(entity, name);
+    if (index < 0) return fallback;
+    const AttributeValue value = entity->get_attribute_value(index);
+    return value.type() == IfcUtil::Argument_DOUBLE ? (double)value : fallback;
+}
+
+static int64_t ifc_int(IfcUtil::IfcBaseClass* entity, const char* name, int64_t fallback) {
+    const ptrdiff_t index = ifc_attribute_index(entity, name);
+    if (index < 0) return fallback;
+    const AttributeValue value = entity->get_attribute_value(index);
+    return value.type() == IfcUtil::Argument_INT ? (int64_t)(int)value : fallback;
+}
+
+static bool ifc_bool(IfcUtil::IfcBaseClass* entity, const char* name) {
+    const ptrdiff_t index = ifc_attribute_index(entity, name);
+    return index >= 0 && gd_attr_bool(entity->get_attribute_value(index));
+}
+
+static IfcUtil::IfcBaseClass* ifc_entity(IfcUtil::IfcBaseClass* entity, const char* name) {
+    const ptrdiff_t index = ifc_attribute_index(entity, name);
+    if (index < 0) return nullptr;
+    const AttributeValue value = entity->get_attribute_value(index);
+    return value.type() == IfcUtil::Argument_ENTITY_INSTANCE ? (IfcUtil::IfcBaseClass*)value : nullptr;
+}
+
+static std::vector<IfcUtil::IfcBaseClass*> ifc_entities(IfcUtil::IfcBaseClass* entity, const char* name) {
+    std::vector<IfcUtil::IfcBaseClass*> result;
+    const ptrdiff_t index = ifc_attribute_index(entity, name);
+    if (index < 0) return result;
+    const AttributeValue value = entity->get_attribute_value(index);
+    if (value.type() != IfcUtil::Argument_AGGREGATE_OF_ENTITY_INSTANCE) return result;
+    boost::shared_ptr<aggregate_of_instance> aggregate = value;
+    if (aggregate) {
+        for (IfcUtil::IfcBaseClass* item : *aggregate) {
+            if (item) result.push_back(item);
+        }
+    }
+    return result;
+}
+
+// Every attribute but `skip`, for IFC2X3 material properties, which are entities with fixed attributes
+static Dictionary ifc_attributes(IfcUtil::IfcBaseClass* entity, const char* skip) {
+    Dictionary result;
+    const IfcParse::entity* declaration = entity->declaration().as_entity();
+    if (!declaration) return result;
+    const auto attributes = declaration->all_attributes();
+    for (size_t i = 0; i < attributes.size(); i++) {
+        if (attributes[i]->name() == skip) continue;
+        result[String::utf8(attributes[i]->name().c_str())] = convert_attribute_value(entity->get_attribute_value(i));
+    }
+    return result;
+}
+
+// Instances of an IFC class and its subtypes in file order. Empty when the schema has no such class.
+static std::vector<IfcUtil::IfcBaseClass*> ifc_instances(IfcParse::IfcFile& file, const char* ifc_class) {
+    std::vector<IfcUtil::IfcBaseClass*> result;
+    try {
+        if (aggregate_of_instance::ptr instances = file.instances_by_type(ifc_class)) {
+            result.assign(instances->begin(), instances->end());
+        }
+    } catch (...) {
+        return result;
+    }
+    std::sort(result.begin(), result.end(), [](IfcUtil::IfcBaseClass* a, IfcUtil::IfcBaseClass* b) { return a->id() < b->id(); });
+    return result;
+}
+
+template <typename T>
+static Ref<T> material_as(const Ref<GDIFCMaterialDefinition>& definition) {
+    return Ref<T>(Object::cast_to<T>(definition.ptr()));
+}
+
+// Builds one GDIFCMaterialDefinition per IFC material definition, shared by every element using it.
+// Runs on the metadata task. The relationships it follows are each collected in one pass, and an
+// element associated more than once keeps its first material, as in the web-ifc task.
+template <typename schema>
+class MaterialReader {
+public:
+    explicit MaterialReader(const std::shared_ptr<IfcParse::IfcFile>& file) : file_(file) {
+        IfcParse::IfcFile& f = *file_;
+        for (IfcUtil::IfcBaseClass* rel : ifc_instances(f, "IfcRelAssociatesMaterial")) {
+            IfcUtil::IfcBaseClass* material = ifc_entity(rel, "RelatingMaterial");
+            if (!material) continue;
+            for (IfcUtil::IfcBaseClass* object : ifc_entities(rel, "RelatedObjects")) {
+                element_material_.try_emplace((int)object->id(), material);
+            }
+        }
+        // Occurrences without a material of their own use their type's
+        for (IfcUtil::IfcBaseClass* rel : ifc_instances(f, "IfcRelDefinesByType")) {
+            IfcUtil::IfcBaseClass* type = ifc_entity(rel, "RelatingType");
+            if (!type) continue;
+            const std::vector<IfcUtil::IfcBaseClass*> objects = ifc_entities(rel, "RelatedObjects");
+            for (IfcUtil::IfcBaseClass* object : objects) {
+                element_type_.try_emplace((int)object->id(), (int)type->id());
+            }
+            auto type_material = element_material_.find((int)type->id());
+            if (type_material == element_material_.end()) continue;
+            IfcUtil::IfcBaseClass* material = type_material->second; // emplacing below may rehash
+            for (IfcUtil::IfcBaseClass* object : objects) {
+                element_material_.try_emplace((int)object->id(), material);
+            }
+        }
+        for (IfcUtil::IfcBaseClass* properties : ifc_instances(f, "IfcMaterialProperties")) {
+            if (IfcUtil::IfcBaseClass* material = ifc_entity(properties, "Material")) {
+                properties_[(int)material->id()].push_back(properties);
+            }
+        }
+        for (IfcUtil::IfcBaseClass* rel : ifc_instances(f, "IfcMaterialClassificationRelationship")) {
+            if (IfcUtil::IfcBaseClass* material = ifc_entity(rel, "ClassifiedMaterial")) {
+                for (IfcUtil::IfcBaseClass* classification : ifc_entities(rel, "MaterialClassifications")) {
+                    references_[(int)material->id()].push_back(classification);
+                }
+            }
+        }
+        // IFC4: classification and library references of any resource, materials included
+        for (IfcUtil::IfcBaseClass* rel : ifc_instances(f, "IfcExternalReferenceRelationship")) {
+            IfcUtil::IfcBaseClass* reference = ifc_entity(rel, "RelatingReference");
+            if (!reference) continue;
+            for (IfcUtil::IfcBaseClass* object : ifc_entities(rel, "RelatedResourceObjects")) {
+                references_[(int)object->id()].push_back(reference);
+            }
+        }
+        for (IfcUtil::IfcBaseClass* rel : ifc_instances(f, "IfcMaterialRelationship")) {
+            if (IfcUtil::IfcBaseClass* material = ifc_entity(rel, "RelatingMaterial")) {
+                relationships_[(int)material->id()].push_back(rel);
+            }
+        }
+    }
+
+    // The element's material definition: its own association, else its type's. Null if it has none.
+    Ref<GDIFCMaterialDefinition> for_element(int express_id) {
+        // The type's materials are in the library too: shape aspects on the type's geometry can show
+        // them on an occurrence with a material set of its own
+        if (auto type = element_type_.find(express_id); type != element_type_.end()) {
+            if (auto type_material = element_material_.find(type->second); type_material != element_material_.end()) {
+                read(type_material->second);
+            }
+        }
+        auto material = element_material_.find(express_id);
+        if (material == element_material_.end()) return {};
+        Ref<GDIFCMaterialDefinition> definition = read(material->second);
+        if (definition.is_valid()) associated_.insert((int)definition->get_express_id());
+        return definition;
+    }
+
+    // The definitions elements were associated with, and every IfcMaterial read
+    Ref<GDIFCMaterialLibrary> make_library() const {
+        TypedArray<GDIFCMaterialDefinition> definitions;
+        TypedArray<GDIFCMaterialSingle> materials;
+        for (const auto& [id, definition] : definitions_) {
+            if (associated_.count(id)) definitions.push_back(definition);
+            if (Ref<GDIFCMaterialSingle> material = material_as<GDIFCMaterialSingle>(definition); material.is_valid()) {
+                materials.push_back(material);
+            }
+        }
+        Ref<GDIFCMaterialLibrary> library;
+        library.instantiate();
+        library->set_definitions(definitions);
+        library->set_materials(materials);
+        return library;
+    }
+
+private:
+    std::shared_ptr<IfcParse::IfcFile> file_;
+    std::unordered_map<int, IfcUtil::IfcBaseClass*> element_material_;
+    std::unordered_map<int, int> element_type_; // occurrence -> its type
+    std::unordered_map<int, std::vector<IfcUtil::IfcBaseClass*>> properties_;
+    std::unordered_map<int, std::vector<IfcUtil::IfcBaseClass*>> references_;
+    std::unordered_map<int, std::vector<IfcUtil::IfcBaseClass*>> relationships_;
+    // Ordered by express id, so the library is in file order
+    std::map<int, Ref<GDIFCMaterialDefinition>> definitions_;
+    std::unordered_set<int> associated_;
+
+    // An empty definition of the class matching the IFC entity, or null for anything else
+    static Ref<GDIFCMaterialDefinition> create(const IfcParse::declaration& type) {
+        // is() matches subtypes, e.g. IfcMaterialLayerWithOffsets is an IfcMaterialLayer
+        if (type.is("IfcMaterial")) return Ref<GDIFCMaterialDefinition>(memnew(GDIFCMaterialSingle));
+        if (type.is("IfcMaterialLayer")) return Ref<GDIFCMaterialDefinition>(memnew(GDIFCMaterialLayer));
+        if (type.is("IfcMaterialLayerSet")) return Ref<GDIFCMaterialDefinition>(memnew(GDIFCMaterialLayerSet));
+        if (type.is("IfcMaterialLayerSetUsage")) return Ref<GDIFCMaterialDefinition>(memnew(GDIFCMaterialLayerSetUsage));
+        if (type.is("IfcMaterialProfile")) return Ref<GDIFCMaterialDefinition>(memnew(GDIFCMaterialProfile));
+        if (type.is("IfcMaterialProfileSet")) return Ref<GDIFCMaterialDefinition>(memnew(GDIFCMaterialProfileSet));
+        if (type.is("IfcMaterialProfileSetUsage")) return Ref<GDIFCMaterialDefinition>(memnew(GDIFCMaterialProfileSetUsage));
+        if (type.is("IfcMaterialConstituent")) return Ref<GDIFCMaterialDefinition>(memnew(GDIFCMaterialConstituent));
+        if (type.is("IfcMaterialConstituentSet")) return Ref<GDIFCMaterialDefinition>(memnew(GDIFCMaterialConstituentSet));
+        if (type.is("IfcMaterialList")) return Ref<GDIFCMaterialDefinition>(memnew(GDIFCMaterialList));
+        return {};
+    }
+
+    Ref<GDIFCMaterialDefinition> read(IfcUtil::IfcBaseClass* entity) {
+        if (!entity) return {};
+        const int id = (int)entity->id();
+        auto cached = definitions_.find(id);
+        if (cached != definitions_.end()) return cached->second;
+
+        const IfcParse::declaration& type = entity->declaration();
+        Ref<GDIFCMaterialDefinition> definition = create(type);
+        if (definition.is_null()) return {};
+        // Cached before its members are read, so each is read once
+        definitions_[id] = definition;
+
+        definition->set_express_id(id);
+        definition->set_name(ifc_string(entity, type.is("IfcMaterialLayerSet") ? "LayerSetName" : "Name"));
+        definition->set_description(ifc_string(entity, "Description"));
+        definition->set_category(ifc_string(entity, "Category"));
+        definition->set_properties(read_properties(id));
+        definition->set_classifications(read_references(id));
+        definition->set_ifc_object(GDIFCEntityBase::wrap(entity, file_));
+        read_members(entity, definition.ptr());
+        return definition;
+    }
+
+    Ref<GDIFCMaterialSingle> read_material(IfcUtil::IfcBaseClass* entity) {
+        return material_as<GDIFCMaterialSingle>(read(entity));
+    }
+
+    template <typename T>
+    TypedArray<T> read_all(IfcUtil::IfcBaseClass* entity, const char* name) {
+        TypedArray<T> result;
+        for (IfcUtil::IfcBaseClass* member : ifc_entities(entity, name)) {
+            if (Ref<T> definition = material_as<T>(read(member)); definition.is_valid()) {
+                result.push_back(definition);
+            }
+        }
+        return result;
+    }
+
+    void read_members(IfcUtil::IfcBaseClass* entity, GDIFCMaterialDefinition* definition) {
+        if (auto* material = Object::cast_to<GDIFCMaterialSingle>(definition)) {
+            material->set_relationships(read_relationships((int)entity->id()));
+        } else if (auto* layer = Object::cast_to<GDIFCMaterialLayer>(definition)) {
+            layer->set_material(read_material(ifc_entity(entity, "Material")));
+            layer->set_thickness(ifc_double(entity, "LayerThickness", 0.0));
+            layer->set_is_ventilated(ifc_bool(entity, "IsVentilated"));
+            layer->set_priority(ifc_int(entity, "Priority", -1));
+        } else if (auto* layer_set = Object::cast_to<GDIFCMaterialLayerSet>(definition)) {
+            layer_set->set_layers(read_all<GDIFCMaterialLayer>(entity, "MaterialLayers"));
+        } else if (auto* layer_usage = Object::cast_to<GDIFCMaterialLayerSetUsage>(definition)) {
+            Ref<GDIFCMaterialLayerSet> used = material_as<GDIFCMaterialLayerSet>(read(ifc_entity(entity, "ForLayerSet")));
+            layer_usage->set_layer_set(used);
+            const String direction = ifc_string(entity, "LayerSetDirection");
+            layer_usage->set_direction(direction == "AXIS1" ? GDIFCMaterialLayerSetUsage::AXIS1
+                : direction == "AXIS3" ? GDIFCMaterialLayerSetUsage::AXIS3 : GDIFCMaterialLayerSetUsage::AXIS2);
+            layer_usage->set_sense(ifc_string(entity, "DirectionSense") == "NEGATIVE"
+                ? GDIFCMaterialLayerSetUsage::NEGATIVE : GDIFCMaterialLayerSetUsage::POSITIVE);
+            layer_usage->set_offset(ifc_double(entity, "OffsetFromReferenceLine", 0.0));
+            layer_usage->set_reference_extent(ifc_double(entity, "ReferenceExtent", 0.0));
+            // A usage has no name of its own
+            if (used.is_valid()) layer_usage->set_name(used->get_name());
+        } else if (auto* profile = Object::cast_to<GDIFCMaterialProfile>(definition)) {
+            profile->set_material(read_material(ifc_entity(entity, "Material")));
+            profile->set_priority(ifc_int(entity, "Priority", -1));
+        } else if (auto* profile_set = Object::cast_to<GDIFCMaterialProfileSet>(definition)) {
+            profile_set->set_profiles(read_all<GDIFCMaterialProfile>(entity, "MaterialProfiles"));
+        } else if (auto* profile_usage = Object::cast_to<GDIFCMaterialProfileSetUsage>(definition)) {
+            Ref<GDIFCMaterialProfileSet> used = material_as<GDIFCMaterialProfileSet>(read(ifc_entity(entity, "ForProfileSet")));
+            profile_usage->set_profile_set(used);
+            profile_usage->set_cardinal_point(ifc_int(entity, "CardinalPoint", 0));
+            profile_usage->set_reference_extent(ifc_double(entity, "ReferenceExtent", 0.0));
+            if (used.is_valid()) profile_usage->set_name(used->get_name());
+        } else if (auto* constituent = Object::cast_to<GDIFCMaterialConstituent>(definition)) {
+            constituent->set_material(read_material(ifc_entity(entity, "Material")));
+            constituent->set_fraction(ifc_double(entity, "Fraction", -1.0));
+        } else if (auto* constituent_set = Object::cast_to<GDIFCMaterialConstituentSet>(definition)) {
+            constituent_set->set_constituents(read_all<GDIFCMaterialConstituent>(entity, "MaterialConstituents"));
+        } else if (auto* list = Object::cast_to<GDIFCMaterialList>(definition)) {
+            list->set_materials(read_all<GDIFCMaterialSingle>(entity, "Materials"));
+        }
+    }
+
+    // Material property sets, by name. IFC4 and later hold IfcProperty lists like property sets;
+    // IFC2X3 also has typed entities (thermal, mechanical, ...) whose attributes are the properties.
+    Dictionary read_properties(int id) {
+        Dictionary sets;
+        auto found = properties_.find(id);
+        if (found == properties_.end()) return sets;
+        for (IfcUtil::IfcBaseClass* entity : found->second) {
+            String name = ifc_string(entity, "Name");
+            if (name.is_empty()) name = String(entity->declaration().name().c_str());
+            if constexpr (std::is_same_v<schema, Ifc2x3>) {
+                if (auto* extended = entity->template as<Ifc2x3::IfcExtendedMaterialProperties>()) {
+                    sets[name] = convert_ifc_properties<schema>(extended->ExtendedProperties());
+                } else {
+                    sets[name] = ifc_attributes(entity, "Material");
+                }
+            } else {
+                if (auto* extended = entity->template as<typename schema::IfcMaterialProperties>()) {
+                    sets[name] = convert_ifc_properties<schema>(extended->Properties());
+                }
+            }
+        }
+        return sets;
+    }
+
+    // Classification and library references: their type and whichever identifying fields they have
+    Array read_references(int id) {
+        Array result;
+        auto found = references_.find(id);
+        if (found == references_.end()) return result;
+        static const char* const FIELDS[][2] = {
+            {"Identification", "identification"}, // IFC4
+            {"ItemReference", "item_reference"},  // IFC2X3
+            {"Name", "name"},
+            {"Location", "location"},
+            {"Description", "description"},
+        };
+        for (IfcUtil::IfcBaseClass* reference : found->second) {
+            Dictionary entry;
+            entry["type"] = String(reference->declaration().name().c_str());
+            for (const auto& field : FIELDS) {
+                const String value = ifc_string(reference, field[0]);
+                if (!value.is_empty()) entry[field[1]] = value;
+            }
+            // IFC2X3 classification notations hold their codes as facets
+            PackedStringArray facets;
+            for (IfcUtil::IfcBaseClass* facet : ifc_entities(reference, "NotationFacets")) {
+                facets.push_back(ifc_string(facet, "NotationValue"));
+            }
+            if (!facets.is_empty()) entry["notation"] = String(".").join(facets);
+            if (IfcUtil::IfcBaseClass* source = ifc_entity(reference, "ReferencedSource")) {
+                const String source_name = ifc_string(source, "Name");
+                if (!source_name.is_empty()) entry["source"] = source_name;
+            }
+            result.push_back(entry);
+        }
+        return result;
+    }
+
+    // IFC4 IfcMaterialRelationship, where this material is the whole made of the related materials
+    Array read_relationships(int id) {
+        Array result;
+        auto found = relationships_.find(id);
+        if (found == relationships_.end()) return result;
+        for (IfcUtil::IfcBaseClass* rel : found->second) {
+            Dictionary entry;
+            entry["name"] = ifc_string(rel, "Name");
+            entry["description"] = ifc_string(rel, "Description");
+            entry["expression"] = ifc_string(rel, "Expression");
+            entry["materials"] = read_all<GDIFCMaterialSingle>(rel, "RelatedMaterials");
+            result.push_back(entry);
+        }
+        return result;
+    }
+};
+
+static std::vector<double> ifc_doubles(IfcUtil::IfcBaseClass* entity, const char* name) {
+    const ptrdiff_t index = ifc_attribute_index(entity, name);
+    if (index < 0) return {};
+    const AttributeValue value = entity->get_attribute_value(index);
+    if (value.type() != IfcUtil::Argument_AGGREGATE_OF_DOUBLE) return {};
+    return (std::vector<double>)value;
+}
+
+// A STEP binary as bytes, in file order. IfcParse stores its first bit at the highest index.
+static PackedByteArray binary_to_bytes(const boost::dynamic_bitset<>& bits) {
+    PackedByteArray bytes;
+    bytes.resize((int64_t)((bits.size() + 7) / 8));
+    bytes.fill(0);
+    uint8_t* out = bytes.ptrw();
+    for (size_t p = 0; p < bits.size(); p++) {
+        if (bits[bits.size() - 1 - p]) out[p / 8] |= (uint8_t)(0x80 >> (p % 8));
+    }
+    return bytes;
+}
+
+static PackedByteArray ifc_binary(IfcUtil::IfcBaseClass* entity, const char* name) {
+    const ptrdiff_t index = ifc_attribute_index(entity, name);
+    if (index < 0) return {};
+    const AttributeValue value = entity->get_attribute_value(index);
+    if (value.type() != IfcUtil::Argument_BINARY) return {};
+    return binary_to_bytes((boost::dynamic_bitset<>)value);
+}
+
+static std::vector<PackedByteArray> ifc_binaries(IfcUtil::IfcBaseClass* entity, const char* name) {
+    std::vector<PackedByteArray> result;
+    const ptrdiff_t index = ifc_attribute_index(entity, name);
+    if (index < 0) return result;
+    const AttributeValue value = entity->get_attribute_value(index);
+    if (value.type() != IfcUtil::Argument_AGGREGATE_OF_BINARY) return result;
+    for (const boost::dynamic_bitset<>& bits : (std::vector<boost::dynamic_bitset<>>)value) {
+        result.push_back(binary_to_bytes(bits));
+    }
+    return result;
+}
+
+bool PrecalculatedIFCStyle::same_look(const PrecalculatedIFCStyle& other) const {
+    if (roughness != other.roughness || metallic != other.metallic || textures.size() != other.textures.size()) return false;
+    for (size_t i = 0; i < textures.size(); i++) {
+        const Texture& a = textures[i];
+        const Texture& b = other.textures[i];
+        if (a.slot != b.slot || a.key != b.key || a.repeat != b.repeat || a.uv_scale != b.uv_scale || a.uv_offset != b.uv_offset) return false;
+    }
+    return true;
+}
+
+// web-ifc's colour for geometry without any style. Materials shared by it are never given a style,
+// since a white style can't be told apart from no style.
+static const char* const UNSTYLED_COLOUR_KEY = "ffffffff_O";
+
+// Reads the looks of surface styles for the generated materials: the style of each IfcMaterial,
+// and the style behind each colour of the materials shared per colour, when every style of that
+// colour looks the same. Runs on the metadata task.
+class StyleReader {
+public:
+    StyleReader(IfcParse::IfcFile& file, bool with_textures, const String& ifc_path)
+        : file_(file), with_textures_(with_textures), ifc_dir_(ifc_path.get_base_dir()) {}
+
+    void read(std::unordered_map<uint32_t, PrecalculatedIFCStyle>& material_styles,
+              std::vector<std::pair<String, PrecalculatedIFCStyle>>& colour_styles) {
+        // The style an IfcMaterial is presented with
+        for (IfcUtil::IfcBaseClass* representation : ifc_instances(file_, "IfcMaterialDefinitionRepresentation")) {
+            IfcUtil::IfcBaseClass* material = ifc_entity(representation, "RepresentedMaterial");
+            if (!material || !material->declaration().is("IfcMaterial") || material_styles.count((uint32_t)material->id())) continue;
+            if (IfcUtil::IfcBaseClass* style = first_surface_style(representation)) {
+                PrecalculatedIFCStyle look = read_style(style);
+                if (!look.is_empty()) material_styles[(uint32_t)material->id()] = std::move(look);
+            }
+        }
+
+        // The style behind each colour, keyed like _get_material's colour materials
+        struct ColourGroup {
+            String key;
+            PrecalculatedIFCStyle look;
+            bool ambiguous = false;
+        };
+        std::vector<ColourGroup> groups;
+        std::unordered_map<std::string, size_t> group_by_key;
+        for (IfcUtil::IfcBaseClass* style : ifc_instances(file_, "IfcSurfaceStyle")) {
+            const String key = colour_key(style);
+            if (key.is_empty() || key == UNSTYLED_COLOUR_KEY) continue;
+            PrecalculatedIFCStyle look = read_style(style);
+            auto [found, inserted] = group_by_key.try_emplace(std::string(key.utf8().get_data()), groups.size());
+            if (inserted) {
+                groups.push_back({ key, std::move(look), false });
+            } else if (!groups[found->second].look.same_look(look)) {
+                groups[found->second].ambiguous = true;
+            }
+        }
+        for (ColourGroup& group : groups) {
+            if (!group.ambiguous && !group.look.is_empty()) colour_styles.emplace_back(group.key, std::move(group.look));
+        }
+
+        if (!missing_.empty()) {
+            WARN_PRINT(vformat("%d IFC texture(s) could not be found, such as '%s'. Textures are looked for at their path and next to the IFC file; web addresses are not downloaded.",
+                (int64_t)missing_.size(), missing_.front()));
+        }
+    }
+
+private:
+    struct LoadedTexture {
+        String key;
+        Ref<Texture2D> texture;
+        Ref<Image> image;
+    };
+
+    IfcParse::IfcFile& file_;
+    bool with_textures_;
+    String ifc_dir_;
+    std::unordered_map<int, PrecalculatedIFCStyle> looks_;          // by IfcSurfaceStyle
+    std::unordered_map<std::string, LoadedTexture> textures_;      // by path or embedding entity
+    std::vector<String> missing_;
+
+    // The first IfcSurfaceStyle of an IfcMaterialDefinitionRepresentation
+    static IfcUtil::IfcBaseClass* first_surface_style(IfcUtil::IfcBaseClass* representation) {
+        for (IfcUtil::IfcBaseClass* styled_representation : ifc_entities(representation, "Representations")) {
+            for (IfcUtil::IfcBaseClass* item : ifc_entities(styled_representation, "Items")) {
+                for (IfcUtil::IfcBaseClass* style : ifc_entities(item, "Styles")) {
+                    if (style->declaration().is("IfcSurfaceStyle")) return style;
+                    // IFC2X3 wraps styles in an IfcPresentationStyleAssignment
+                    for (IfcUtil::IfcBaseClass* assigned : ifc_entities(style, "Styles")) {
+                        if (assigned->declaration().is("IfcSurfaceStyle")) return assigned;
+                    }
+                }
+            }
+        }
+        return nullptr;
+    }
+
+    // The colour key web-ifc's colour for this style gives in _get_material: its first shading's
+    // SurfaceColour, with alpha 1 - Transparency. Empty when it has none.
+    static String colour_key(IfcUtil::IfcBaseClass* style) {
+        for (IfcUtil::IfcBaseClass* element : ifc_entities(style, "Styles")) {
+            if (!element->declaration().is("IfcSurfaceStyleShading")) continue;
+            IfcUtil::IfcBaseClass* colour = ifc_entity(element, "SurfaceColour");
+            if (!colour || !colour->declaration().is("IfcColourRgb")) continue;
+            const double transparency = ifc_double(element, "Transparency", -1.0);
+            const Color color(ifc_double(colour, "Red", 0.0), ifc_double(colour, "Green", 0.0), ifc_double(colour, "Blue", 0.0),
+                transparency >= 0.0 ? 1.0 - transparency : 1.0);
+            return color.to_html() + (color.a < 0.7 ? "_T" : "_O");
+        }
+        return String();
+    }
+
+    const PrecalculatedIFCStyle& read_style(IfcUtil::IfcBaseClass* style) {
+        auto [cached, inserted] = looks_.try_emplace((int)style->id());
+        if (!inserted) return cached->second;
+        PrecalculatedIFCStyle& look = cached->second;
+        bool rendering_read = false;
+        for (IfcUtil::IfcBaseClass* element : ifc_entities(style, "Styles")) {
+            if (!rendering_read && element->declaration().is("IfcSurfaceStyleRendering")) {
+                read_rendering(element, look);
+                rendering_read = true;
+            } else if (with_textures_ && element->declaration().is("IfcSurfaceStyleWithTextures")) {
+                for (IfcUtil::IfcBaseClass* texture : ifc_entities(element, "Textures")) {
+                    read_texture(texture, look);
+                }
+            }
+        }
+        return look;
+    }
+
+    // Roughness and metallic from IfcSurfaceStyleRendering. The albedo stays web-ifc's colour.
+    static void read_rendering(IfcUtil::IfcBaseClass* rendering, PrecalculatedIFCStyle& look) {
+        // IfcSpecularExponent or IfcSpecularRoughness, a value wrapped in its type
+        if (IfcUtil::IfcBaseClass* highlight = ifc_entity(rendering, "SpecularHighlight")) {
+            const AttributeValue value = highlight->get_attribute_value(0);
+            if (value.type() == IfcUtil::Argument_DOUBLE) {
+                const double number = value;
+                const std::string& type = highlight->declaration().name();
+                if (type == "IfcSpecularRoughness") {
+                    look.roughness = (float)CLAMP(number, 0.0, 1.0);
+                } else if (type == "IfcSpecularExponent" && number >= 0.0) {
+                    // Blinn-Phong exponent n to a GGX alpha of sqrt(2 / (n + 2)); roughness is sqrt(alpha)
+                    look.roughness = (float)std::pow(2.0 / (number + 2.0), 0.25);
+                }
+            }
+        }
+        const String method = ifc_string(rendering, "ReflectanceMethod");
+        if (method == "METAL") {
+            look.metallic = 1.0f;
+        } else if (method == "MIRROR") {
+            look.metallic = 1.0f;
+            if (look.roughness < 0.0f) look.roughness = 0.0f;
+        } else if (method == "GLASS") {
+            if (look.roughness < 0.0f) look.roughness = 0.05f;
+        }
+    }
+
+    // The material slot of an IfcSurfaceTexture: IFC2X3 TextureType or IFC4 Mode. False for
+    // purposes StandardMaterial3D has no texture for.
+    static bool texture_slot(IfcUtil::IfcBaseClass* texture, PrecalculatedIFCStyle::Slot& slot) {
+        String purpose = ifc_string(texture, "TextureType");
+        if (purpose.is_empty()) purpose = ifc_string(texture, "Mode");
+        purpose = purpose.to_upper();
+        if (purpose.contains("NORMAL")) {
+            slot = PrecalculatedIFCStyle::NORMAL;
+        } else if (purpose.contains("BUMP") || purpose.contains("HEIGHT") || purpose.contains("DISPLACEMENT")) {
+            slot = PrecalculatedIFCStyle::HEIGHT;
+        } else if (purpose.contains("SELFILLUMINATION") || purpose.contains("EMISSI")) {
+            slot = PrecalculatedIFCStyle::EMISSION;
+        } else if (purpose.contains("OPACITY") || purpose.contains("TRANSPARENT") || purpose.contains("REFLECTION")
+                || purpose.contains("SHININESS") || purpose.contains("SPECULAR") || purpose.contains("ROUGH") || purpose.contains("METAL")) {
+            return false;
+        } else {
+            // TEXTURE, NOTDEFINED, no purpose, or an X3D blend mode such as MODULATE
+            slot = PrecalculatedIFCStyle::ALBEDO;
+        }
+        return true;
+    }
+
+    void read_texture(IfcUtil::IfcBaseClass* entity, PrecalculatedIFCStyle& look) {
+        PrecalculatedIFCStyle::Slot slot;
+        if (!texture_slot(entity, slot)) return;
+        for (const PrecalculatedIFCStyle::Texture& existing : look.textures) {
+            if (existing.slot == slot) return; // the first texture of a slot wins
+        }
+        const LoadedTexture* loaded = load(entity);
+        if (!loaded) return;
+
+        PrecalculatedIFCStyle::Texture texture;
+        texture.slot = slot;
+        texture.key = loaded->key;
+        texture.texture = loaded->texture;
+        texture.image = loaded->image;
+        texture.repeat = ifc_bool(entity, "RepeatS") && ifc_bool(entity, "RepeatT");
+        // IfcCartesianTransformationOperator2D: scale and origin. Rotation is not applied.
+        if (IfcUtil::IfcBaseClass* transform = ifc_entity(entity, "TextureTransform")) {
+            const double scale = ifc_double(transform, "Scale", 1.0);
+            texture.uv_scale = Vector2((real_t)scale, (real_t)ifc_double(transform, "Scale2", scale));
+            if (IfcUtil::IfcBaseClass* origin = ifc_entity(transform, "LocalOrigin")) {
+                const std::vector<double> coordinates = ifc_doubles(origin, "Coordinates");
+                if (coordinates.size() >= 2) texture.uv_offset = Vector2((real_t)coordinates[0], (real_t)coordinates[1]);
+            }
+        }
+        look.textures.push_back(texture);
+    }
+
+    // The file an IfcImageTexture refers to: its path, else the same path or file name next to the
+    // IFC file. Inside the project the path is a res:// path. Empty when it can't be found.
+    String resolve(const String& url) const {
+        String path = url.strip_edges().replace("\\", "/");
+        if (path.is_empty() || path.begins_with("http://") || path.begins_with("https://")) return String();
+        if (path.begins_with("file://")) {
+            path = path.substr(7);
+            // file:///C:/... on Windows
+            if (path.length() > 3 && path[0] == '/' && path[2] == ':') path = path.substr(1);
+        }
+        std::vector<String> candidates;
+        if (path.is_absolute_path()) candidates.push_back(path);
+        if (!ifc_dir_.is_empty()) {
+            if (path.is_relative_path()) candidates.push_back(ifc_dir_.path_join(path));
+            candidates.push_back(ifc_dir_.path_join(path.get_file()));
+        }
+        for (const String& candidate : candidates) {
+            if (FileAccess::file_exists(candidate)) return ProjectSettings::get_singleton()->localize_path(candidate);
+        }
+        return String();
+    }
+
+    // A texture's image, decoded once per file or embedding entity. Null when it can't be read.
+    const LoadedTexture* load(IfcUtil::IfcBaseClass* entity) {
+        LoadedTexture loaded;
+        const IfcParse::declaration& type = entity->declaration();
+        if (type.is("IfcImageTexture")) {
+            String url = ifc_string(entity, "URLReference"); // IFC4
+            if (url.is_empty()) url = ifc_string(entity, "UrlReference"); // IFC2X3
+            const String path = resolve(url);
+            if (path.is_empty()) {
+                if (std::find(missing_.begin(), missing_.end(), url) == missing_.end()) missing_.push_back(url);
+                return nullptr;
+            }
+            loaded.key = path;
+        } else if (type.is("IfcBlobTexture") || type.is("IfcPixelTexture")) {
+            loaded.key = String("#") + String::num_int64(entity->id());
+        } else {
+            return nullptr;
+        }
+
+        const std::string cache_key = loaded.key.utf8().get_data();
+        auto cached = textures_.find(cache_key);
+        if (cached != textures_.end()) return cached->second.key.is_empty() ? nullptr : &cached->second;
+
+        if (type.is("IfcImageTexture")) {
+            // A texture imported in the project keeps its import settings
+            if (loaded.key.begins_with("res://") && ResourceLoader::get_singleton()->exists(loaded.key, "Texture2D")) {
+                loaded.texture = ResourceLoader::get_singleton()->load(loaded.key, "Texture2D");
+            } else {
+                loaded.image = Image::load_from_file(loaded.key);
+            }
+        } else if (type.is("IfcBlobTexture")) {
+            loaded.image = decode_blob(entity);
+        } else {
+            loaded.image = decode_pixels(entity);
+        }
+        if (loaded.image.is_valid() && !loaded.image->is_empty()) {
+            loaded.image->generate_mipmaps();
+        } else if (loaded.texture.is_null()) {
+            ERR_PRINT(String("Failed to read IFC texture ") + loaded.key + ".");
+            textures_[cache_key] = LoadedTexture(); // tried once
+            return nullptr;
+        }
+        return &(textures_[cache_key] = loaded);
+    }
+
+    // IFC4 IfcBlobTexture: an image file in RasterFormat (PNG, JPG, ...) held in RasterCode
+    static Ref<Image> decode_blob(IfcUtil::IfcBaseClass* entity) {
+        const String format = ifc_string(entity, "RasterFormat").to_upper();
+        const PackedByteArray bytes = ifc_binary(entity, "RasterCode");
+        if (bytes.is_empty()) return {};
+        Ref<Image> image;
+        image.instantiate();
+        Error err = ERR_FILE_UNRECOGNIZED;
+        if (format == "PNG") err = image->load_png_from_buffer(bytes);
+        else if (format == "JPG" || format == "JPEG") err = image->load_jpg_from_buffer(bytes);
+        else if (format == "BMP") err = image->load_bmp_from_buffer(bytes);
+        else if (format == "TGA") err = image->load_tga_from_buffer(bytes);
+        else if (format == "WEBP") err = image->load_webp_from_buffer(bytes);
+        return err == OK ? image : Ref<Image>();
+    }
+
+    // IfcPixelTexture: Width x Height pixels of 1 to 4 components, from the lower left corner
+    static Ref<Image> decode_pixels(IfcUtil::IfcBaseClass* entity) {
+        const int64_t width = ifc_int(entity, "Width", 0);
+        const int64_t height = ifc_int(entity, "Height", 0);
+        const int64_t components = ifc_int(entity, "ColourComponents", 0);
+        const std::vector<PackedByteArray> pixels = ifc_binaries(entity, "Pixel");
+        static const Image::Format FORMATS[] = { Image::FORMAT_L8, Image::FORMAT_LA8, Image::FORMAT_RGB8, Image::FORMAT_RGBA8 };
+        if (width <= 0 || height <= 0 || components < 1 || components > 4 || (int64_t)pixels.size() != width * height) return {};
+
+        PackedByteArray data;
+        data.resize(width * height * components);
+        uint8_t* out = data.ptrw();
+        for (size_t i = 0; i < pixels.size(); i++) {
+            if (pixels[i].size() < components) return {};
+            memcpy(out + i * components, pixels[i].ptr(), (size_t)components);
+        }
+        Ref<Image> image = Image::create_from_data((int32_t)width, (int32_t)height, false, FORMATS[components - 1], data);
+        if (image.is_valid()) image->flip_y(); // Godot images start at the top left
+        return image;
+    }
+};
+
+// Material definition of every item, and the library holding them. Writes only `items` and `library`.
+template <typename schema>
+static void extract_material_definitions(const std::shared_ptr<IfcParse::IfcFile>& file,
+                                         std::vector<PrecalculatedIFCMetadata>& items, Ref<GDIFCMaterialLibrary>& library) {
+    MaterialReader<schema> reader(file);
+    for (PrecalculatedIFCMetadata& item : items) {
+        try {
+            item.material = reader.for_element(item.express_id);
+        } catch (const std::exception& e) {
+            ERR_PRINT(String("Failed to read the IFC material of #") + String::num_int64(item.express_id) + ": " + e.what());
+        } catch (...) {
+            ERR_PRINT(String("Failed to read the IFC material of #") + String::num_int64(item.express_id) + ": unknown error.");
+        }
+    }
+    library = reader.make_library();
+}
+
 template <typename schema>
 static void extract_item_metadata(IfcParse::IfcFile& file, PrecalculatedIFCMetadata& item) {
     item.attributes = get_ifc_object_attributes<schema>(file, item.express_id);
@@ -735,6 +1491,31 @@ void GDIFCManager::_metadata_extract_task() {
             ERR_PRINT(String("Failed to read the properties of #") + String::num_int64(item.express_id) + ": " + e.what());
         } catch (...) {
             ERR_PRINT(String("Failed to read the properties of #") + String::num_int64(item.express_id) + ": unknown error.");
+        }
+    }
+
+    // IFC material definitions, shared by the items using them
+    if (ifc_materials_enabled_) {
+        try {
+            switch (metadata_schema_index_) {
+                case 0: extract_material_definitions<Ifc4>(metadata_file_, metadata_results_, metadata_material_library_); break;
+                case 2: extract_material_definitions<Ifc2x3>(metadata_file_, metadata_results_, metadata_material_library_); break;
+                case 3: extract_material_definitions<Ifc4x3_add2>(metadata_file_, metadata_results_, metadata_material_library_); break;
+                default: ;
+            }
+        } catch (const std::exception& e) {
+            ERR_PRINT(String("[IfcParse] Failed to read IFC material definitions: ") + e.what());
+        } catch (...) {
+            ERR_PRINT("[IfcParse] Failed to read IFC material definitions: unknown error.");
+        }
+
+        // Roughness, metallic and textures of the surface styles, for the generated materials
+        try {
+            StyleReader(*metadata_file_, ifc_textures_enabled_, ifc_file_path_).read(metadata_material_styles_, metadata_colour_styles_);
+        } catch (const std::exception& e) {
+            ERR_PRINT(String("[IfcParse] Failed to read IFC surface styles: ") + e.what());
+        } catch (...) {
+            ERR_PRINT("[IfcParse] Failed to read IFC surface styles: unknown error.");
         }
     }
 
@@ -811,6 +1592,9 @@ void GDIFCManager::_apply_metadata_item(PrecalculatedIFCMetadata& item) {
             node->set_attributes(item.attributes);
             node->set_properties(item.properties);
             node->set_quantities(item.quantities);
+            if (item.material.is_valid()) {
+                node->set_material_definition(item.material);
+            }
             try {
                 auto* inst = metadata_file_->instance_by_id(item.express_id);
                 if (inst) {
@@ -884,6 +1668,14 @@ void GDIFCManager::_finish_metadata() {
     metadata_results_.clear();
     metadata_ids_.clear();
 
+    if (metadata_material_library_.is_valid()) {
+        material_library_ = metadata_material_library_;
+        metadata_material_library_.unref();
+        _bind_material_visuals();
+        _apply_material_styles();
+        _watch_material_library();
+    }
+
     IFCModel* model = get_ifc_model();
     if (model) {
         if (ifc_parse_file) {
@@ -911,6 +1703,249 @@ void GDIFCManager::_finish_metadata() {
     emit_signal("ifc_objects_ready");
     UtilityFunctions::print(vformat("IFC properties and typed objects ready after %.2f s",
         (Time::get_singleton()->get_ticks_usec() - start_loading_time) / 1000000.0));
+}
+
+// Main thread. Gives every IfcMaterial its Godot material: the one its surfaces already share, or
+// a new one in its colour when none of its surfaces are shown (a hidden layer, for example).
+void GDIFCManager::_bind_material_visuals() {
+    const TypedArray<GDIFCMaterialSingle> materials = material_library_->get_materials();
+    for (int64_t i = 0; i < materials.size(); i++) {
+        Ref<GDIFCMaterialSingle> material = materials[i];
+        if (material.is_null() || material->get_visual().is_valid()) continue;
+
+        const uint32_t id = (uint32_t)material->get_express_id();
+        Color color(1, 1, 1, 1);
+        auto found = ifc_materials_.find(id);
+        if (found != ifc_materials_.end()) {
+            color = found->second.color;
+        }
+        Ref<StandardMaterial3D> visual = _get_material(color, color.a < 0.7, false, id);
+        if (visual->get_name().is_empty()) {
+            visual->set_name(material->get_name());
+        }
+        material->set_visual(visual);
+    }
+}
+
+// Main thread. Gives the generated materials the look of their surface style beyond its colour.
+// They are shared, so every surface using one changes with it.
+void GDIFCManager::_apply_material_styles() {
+    // An image becomes one ImageTexture, however many materials use it
+    HashMap<String, Ref<Texture2D>> textures;
+    auto texture_of = [&](const PrecalculatedIFCStyle::Texture& texture) -> Ref<Texture2D> {
+        if (texture.texture.is_valid()) return texture.texture;
+        if (texture.image.is_null()) return {};
+        if (const Ref<Texture2D>* created = textures.getptr(texture.key)) return *created;
+        Ref<Texture2D> created = ImageTexture::create_from_image(texture.image);
+        textures[texture.key] = created;
+        return created;
+    };
+
+    auto apply = [&](const Ref<StandardMaterial3D>& material, const PrecalculatedIFCStyle& style) {
+        if (style.roughness >= 0.0f) material->set_roughness(style.roughness);
+        if (style.metallic >= 0.0f) material->set_metallic(style.metallic);
+        bool textured = false;
+        for (const PrecalculatedIFCStyle::Texture& texture : style.textures) {
+            Ref<Texture2D> image = texture_of(texture);
+            if (image.is_null()) continue;
+            switch (texture.slot) {
+                case PrecalculatedIFCStyle::ALBEDO: {
+                    // As in X3D, which IFC textures follow, a colour texture replaces the surface colour
+                    material->set_texture(BaseMaterial3D::TEXTURE_ALBEDO, image);
+                    material->set_albedo(Color(1, 1, 1, material->get_albedo().a));
+                } break;
+                case PrecalculatedIFCStyle::NORMAL:
+                    material->set_feature(BaseMaterial3D::FEATURE_NORMAL_MAPPING, true);
+                    material->set_texture(BaseMaterial3D::TEXTURE_NORMAL, image);
+                    break;
+                case PrecalculatedIFCStyle::HEIGHT:
+                    material->set_feature(BaseMaterial3D::FEATURE_HEIGHT_MAPPING, true);
+                    material->set_texture(BaseMaterial3D::TEXTURE_HEIGHTMAP, image);
+                    break;
+                case PrecalculatedIFCStyle::EMISSION:
+                    material->set_feature(BaseMaterial3D::FEATURE_EMISSION, true);
+                    material->set_emission(Color(1, 1, 1));
+                    material->set_texture(BaseMaterial3D::TEXTURE_EMISSION, image);
+                    break;
+            }
+            // A material has one UV transform; the first texture's is used
+            if (!textured) {
+                textured = true;
+                material->set_uv1_scale(Vector3(texture.uv_scale.x, texture.uv_scale.y, 1));
+                material->set_uv1_offset(Vector3(texture.uv_offset.x, texture.uv_offset.y, 0));
+                material->set_flag(BaseMaterial3D::FLAG_USE_TEXTURE_REPEAT, texture.repeat);
+            }
+        }
+    };
+
+    // A material without a style of its own, shown through a shape aspect in a styled colour, takes
+    // the look of that colour's style, as its surfaces would have without IFC materials
+    HashMap<String, const PrecalculatedIFCStyle*> colour_styles;
+    for (const auto& [key, style] : metadata_colour_styles_) {
+        colour_styles[key] = &style;
+    }
+    std::vector<std::pair<Ref<StandardMaterial3D>, const PrecalculatedIFCStyle*>> styled;
+    for (const KeyValue<String, Ref<StandardMaterial3D>>& cached : material_cache) {
+        if (!cached.key.begins_with("M")) continue;
+        auto own = metadata_material_styles_.find((uint32_t)cached.key.substr(1).to_int());
+        if (own != metadata_material_styles_.end()) {
+            styled.emplace_back(cached.value, &own->second);
+            continue;
+        }
+        const Ref<StandardMaterial3D>& material = cached.value;
+        const String colour_key = material->get_albedo().to_html()
+            + (material->get_transparency() != BaseMaterial3D::TRANSPARENCY_DISABLED ? "_T" : "_O");
+        if (const PrecalculatedIFCStyle* const* style = colour_styles.getptr(colour_key)) {
+            styled.emplace_back(material, *style);
+        }
+    }
+    // Applied once every material's key is read, since a texture turns the albedo white
+    for (const auto& [material, style] : styled) {
+        apply(material, *style);
+    }
+    for (const auto& [key, style] : metadata_colour_styles_) {
+        if (const Ref<StandardMaterial3D>* material = material_cache.getptr(key)) {
+            apply(*material, style);
+        }
+    }
+    metadata_material_styles_.clear();
+    metadata_colour_styles_.clear();
+}
+
+// Main thread. Watches every IfcMaterial of the library, so replacing its visual reaches its surfaces.
+// Each surface's mesh material is its IfcMaterial's visual, before and after the scene is saved.
+void GDIFCManager::_watch_material_library() {
+    _unwatch_material_library();
+    if (material_library_.is_null()) return;
+
+    const TypedArray<GDIFCMaterialSingle> materials = material_library_->get_materials();
+    for (int64_t i = 0; i < materials.size(); i++) {
+        Ref<GDIFCMaterialSingle> material = materials[i];
+        if (material.is_null()) continue;
+        const uint64_t id = material->get_instance_id();
+        if (material_watchers_.has(id)) continue;
+        applied_visuals_[id] = material->get_visual();
+        Callable watcher = callable_mp(this, &GDIFCManager::_on_ifc_material_changed).bind(id);
+        material->connect("changed", watcher);
+        material_watchers_[id] = watcher;
+    }
+}
+
+void GDIFCManager::_unwatch_material_library() {
+    for (const KeyValue<uint64_t, Callable> &watcher : material_watchers_) {
+        Object *material = ObjectDB::get_instance(ObjectID(watcher.key));
+        if (material && material->is_connected("changed", watcher.value)) {
+            material->disconnect("changed", watcher.value);
+        }
+    }
+    material_watchers_.clear();
+    applied_visuals_.clear();
+    material_surfaces_.clear();
+    material_surfaces_found_ = false;
+}
+
+// Finds every surface showing a watched material's visual. Done once, on the first replacement,
+// while every visual is still the one its surfaces have.
+void GDIFCManager::_find_material_surfaces() {
+    material_surfaces_found_ = true;
+    HashMap<uint64_t, uint64_t> material_by_visual;
+    for (const KeyValue<uint64_t, Ref<Material>> &applied : applied_visuals_) {
+        if (applied.value.is_valid()) {
+            material_by_visual[applied.value->get_instance_id()] = applied.key;
+        }
+    }
+    if (material_by_visual.is_empty()) return;
+
+    IFCModel *model = get_ifc_model();
+    if (!model) return;
+    TypedArray<Node> nodes = model->find_children("*", "IFCNode", true, false);
+    for (int64_t i = 0; i < nodes.size(); i++) {
+        IFCNode *node = Object::cast_to<IFCNode>(nodes[i]);
+        Ref<Mesh> mesh = node ? node->get_mesh() : Ref<Mesh>();
+        if (mesh.is_null()) continue;
+        for (int surface = 0; surface < mesh->get_surface_count(); surface++) {
+            Ref<Material> visual = mesh->surface_get_material(surface);
+            if (visual.is_null()) continue;
+            const uint64_t *material = material_by_visual.getptr(visual->get_instance_id());
+            if (material) {
+                MaterialSurface found;
+                found.node = ObjectID(node->get_instance_id());
+                found.surface = surface;
+                material_surfaces_[*material].push_back(found);
+            }
+        }
+    }
+}
+
+// A GDIFCMaterialSingle emitted changed: gives its new visual to the surfaces still showing its old one.
+// A surface the user gave another material, on the mesh, is left as it is; a node's surface
+// override is never touched, so one set by hand keeps showing.
+void GDIFCManager::_on_ifc_material_changed(uint64_t material_id) {
+    GDIFCMaterialSingle *material = Object::cast_to<GDIFCMaterialSingle>(ObjectDB::get_instance(ObjectID(material_id)));
+    Ref<Material> *applied = applied_visuals_.getptr(material_id);
+    if (!material || !applied) return;
+    const Ref<Material> visual = material->get_visual();
+    if (*applied == visual) return; // changed for another reason, such as its name
+
+    if (!material_surfaces_found_) {
+        _find_material_surfaces();
+    }
+    const Ref<Material> previous = *applied;
+    if (const Vector<MaterialSurface> *surfaces = material_surfaces_.getptr(material_id)) {
+        for (const MaterialSurface &surface : *surfaces) {
+            IFCNode *node = Object::cast_to<IFCNode>(ObjectDB::get_instance(surface.node));
+            Ref<Mesh> mesh = node ? node->get_mesh() : Ref<Mesh>();
+            if (mesh.is_null() || surface.surface >= mesh->get_surface_count()) continue;
+            if (mesh->surface_get_material(surface.surface) != previous) continue;
+            mesh->surface_set_material(surface.surface, visual);
+        }
+    }
+    *applied = visual;
+}
+
+void GDIFCManager::set_material_library(const Ref<GDIFCMaterialLibrary> &library) {
+    material_library_ = library;
+    if (is_node_ready()) {
+        _watch_material_library();
+    }
+}
+
+godot::Array GDIFCManager::find_material_definitions(const String &name) const {
+    godot::Array result;
+    if (material_library_.is_null()) return result;
+    material_library_->for_each_definition([&](const Ref<GDIFCMaterialDefinition> &definition) {
+        if (definition->get_name() == name) {
+            result.push_back(definition);
+        }
+    });
+    return result;
+}
+
+// By name, since exporters often write one material several times under the same name
+int GDIFCManager::set_material_visual(const String &material_name, const Ref<Material> &visual) {
+    int changed = 0;
+    if (material_library_.is_null()) return changed;
+    const TypedArray<GDIFCMaterialSingle> materials = material_library_->get_materials();
+    for (int64_t i = 0; i < materials.size(); i++) {
+        Ref<GDIFCMaterialSingle> material = materials[i];
+        if (material.is_valid() && material->get_name() == material_name) {
+            material->set_visual(visual);
+            changed++;
+        }
+    }
+    return changed;
+}
+
+// Restores ifc_object on every saved material definition, by express id
+void GDIFCManager::_relink_material_library() {
+    if (material_library_.is_null() || !ifc_parse_file) return;
+    material_library_->for_each_definition([&](const Ref<GDIFCMaterialDefinition>& definition) {
+        try {
+            if (auto* inst = ifc_parse_file->instance_by_id((int)definition->get_express_id())) {
+                definition->set_ifc_object(GDIFCEntityBase::wrap(inst, ifc_parse_file));
+            }
+        } catch (...) {}
+    });
 }
 
 // ---------------------------------------------------------
@@ -963,15 +1998,488 @@ static void generate_item_lods(PrecalculatedIFCItem& item, float normal_merge_an
     }
 }
 
+// A string argument of an entity, or empty when it isn't a string (e.g. $)
+static String read_string_argument(const webifc::parsing::IfcLoader& loader, uint32_t express_id, uint32_t argument) {
+    loader.MoveToArgumentOffset(express_id, argument);
+    if (loader.GetTokenType() != webifc::parsing::IfcTokenType::STRING) return String();
+    loader.StepBack();
+    return String::utf8(loader.GetDecodedStringArgument().c_str());
+}
+
+// An IfcMaterial that can colour an element's surfaces
+struct MaterialLeaf {
+    uint32_t express_id = 0;
+    bool has_color = false;
+    uint32_t rgba32 = 0; // converted like the surface colours in fill_item_geometry
+};
+
+// web-ifc's colour for geometry with no colour at all
+static constexpr uint32_t UNCOLORED_RGBA32 = 0xFFFFFFFF;
+
+// The layers of an element's IfcMaterialLayerSetUsage, to cut its geometry into. web-ifc gives a
+// layered wall or slab one solid in the colour of a single layer.
+struct LayerSplit {
+    glm::dvec3 direction;            // across the layers in world space, from the first layer to the last
+    std::vector<double> boundaries;  // each boundary between layers, as a fraction of the total thickness
+    std::vector<uint32_t> materials; // IfcMaterial of each layer from the first, 0 for an air gap
+};
+
+// Finds the IfcMaterial behind each surface colour, following web-ifc's colour rules: an element
+// uses its own material association, else its type's, and a set resolves to its materials.
+// Runs on the web-ifc task, and only when IFC materials are read.
+class MaterialResolver {
+public:
+    // Every material returned by leaves_for(), by express id
+    std::unordered_map<uint32_t, PrecalculatedIFCMaterial> materials;
+
+    MaterialResolver(const webifc::parsing::IfcLoader& loader, const webifc::geometry::IfcGeometryLoader& geometry_loader)
+        : loader_(loader), geometry_loader_(geometry_loader) {
+        // IfcRelAssociatesMaterial: RelatedObjects (4), RelatingMaterial (5). In file order, so an
+        // object associated more than once keeps its first material.
+        std::vector<uint32_t> associations = loader_.GetExpressIDsWithType(webifc::schema::IFCRELASSOCIATESMATERIAL);
+        std::sort(associations.begin(), associations.end());
+        for (uint32_t rel : associations) {
+            const uint32_t material = read_ref(rel, 5);
+            if (material == 0) continue;
+            for (uint32_t object : read_refs(rel, 4)) {
+                element_material_.try_emplace(object, material);
+            }
+        }
+
+        // IfcRelDefinesByType: RelatedObjects (4), RelatingType (5). Occurrences without a material
+        // of their own use their type's.
+        std::vector<uint32_t> type_rels = loader_.GetExpressIDsWithType(webifc::schema::IFCRELDEFINESBYTYPE);
+        std::sort(type_rels.begin(), type_rels.end());
+        for (uint32_t rel : type_rels) {
+            const uint32_t type = read_ref(rel, 5);
+            const std::vector<uint32_t> objects = read_refs(rel, 4);
+            for (uint32_t object : objects) {
+                element_type_.try_emplace(object, type);
+            }
+            auto type_material = element_material_.find(type);
+            if (type_material == element_material_.end()) continue;
+            const uint32_t material = type_material->second; // emplacing below may rehash
+            for (uint32_t object : objects) {
+                element_material_.try_emplace(object, material);
+            }
+        }
+
+        // IfcShapeAspect: ShapeRepresentations (0), Name (1). It names the representation items
+        // making one part of a product or type; a constituent or profile of the same name is that
+        // part's material.
+        std::vector<uint32_t> aspects = loader_.GetExpressIDsWithType(webifc::schema::IFCSHAPEASPECT);
+        std::sort(aspects.begin(), aspects.end());
+        for (uint32_t aspect : aspects) {
+            const std::string name = read_text(aspect, 1);
+            if (name.empty()) continue;
+            for (uint32_t representation : read_refs(aspect, 0)) {
+                // IfcShapeRepresentation: Items (3)
+                for (uint32_t item : read_refs(representation, 3)) {
+                    aspect_names_.try_emplace(item, name);
+                }
+            }
+        }
+    }
+
+    // The element's materials in the order web-ifc picks their colour, or nullptr if it has none.
+    // Elements sharing a material or set share one cached list.
+    const std::vector<MaterialLeaf>* leaves_for(uint32_t element_id) {
+        auto material = element_material_.find(element_id);
+        if (material == element_material_.end()) return nullptr;
+
+        auto [cached, inserted] = leaves_by_material_.try_emplace(material->second);
+        if (inserted) {
+            std::vector<uint32_t> ids;
+            collect(material->second, ids, 0);
+            for (uint32_t id : ids) {
+                cached->second.push_back(make_leaf(id));
+            }
+        }
+        return cached->second.empty() ? nullptr : &cached->second;
+    }
+
+    // The layers to cut the element's geometry into: those of its own IfcMaterialLayerSetUsage,
+    // when it has two or more. A layer set without a usage isn't placed on the element.
+    std::optional<LayerSplit> layer_split_for(uint32_t element_id) {
+        auto material = element_material_.find(element_id);
+        if (material == element_material_.end()
+                || loader_.GetLineType(material->second) != webifc::schema::IFCMATERIALLAYERSETUSAGE) return {};
+        auto [cached, inserted] = layers_by_usage_.try_emplace(material->second);
+        if (inserted) cached->second = read_usage_layers(material->second);
+        const UsageLayers& layers = cached->second;
+        if (layers.split.materials.size() < 2) return {};
+
+        // The usage's axis is in the element's coordinate system: its placement, turned Z-up to
+        // Y-up like its geometry. The scale and the coordinate_to_origin offset don't change a direction.
+        glm::dmat4 frame = webifc::geometry::NormalizeIFC;
+        if (const uint32_t placement = read_ref(element_id, 5)) {
+            frame = frame * geometry_loader_.GetLocalPlacement(placement);
+        }
+        glm::dvec3 axis(0.0);
+        axis[layers.axis] = layers.positive ? 1.0 : -1.0;
+        const glm::dvec3 direction = glm::dvec3(frame * glm::dvec4(axis, 0.0));
+        if (glm::length(direction) < 1e-9) return {};
+
+        LayerSplit split = layers.split;
+        split.direction = glm::normalize(direction);
+        return split;
+    }
+
+    // Constituent and profile names of the element's material set and its type's -> their
+    // IfcMaterial, for its shape aspects. The aspects of a type's geometry are named after the
+    // type's parts, which an occurrence with a set of its own can name differently; its own
+    // names come first. Null when neither material is a constituent or profile set.
+    const std::unordered_map<std::string, uint32_t>* parts_for(uint32_t element_id) {
+        uint32_t own = 0;
+        uint32_t of_type = 0;
+        if (auto material = element_material_.find(element_id); material != element_material_.end()) own = material->second;
+        if (auto type = element_type_.find(element_id); type != element_type_.end()) {
+            if (auto material = element_material_.find(type->second); material != element_material_.end()) of_type = material->second;
+        }
+        if (own == 0 && of_type == 0) return nullptr;
+
+        auto [cached, inserted] = parts_by_materials_.try_emplace(((uint64_t)own << 32) | of_type);
+        if (inserted) {
+            if (own != 0) read_parts(own, cached->second);
+            if (of_type != 0 && of_type != own) read_parts(of_type, cached->second);
+        }
+        return cached->second.empty() ? nullptr : &cached->second;
+    }
+
+    // Whether a surface of this colour can use the material's Godot material; see shows()
+    bool shows_material(uint32_t material, uint32_t rgba32) {
+        if (!materials.count(material)) make_leaf(material);
+        const PrecalculatedIFCMaterial& known = materials[material];
+        MaterialLeaf leaf;
+        leaf.express_id = material;
+        leaf.has_color = known.has_color;
+        leaf.rgba32 = known.color.to_rgba32();
+        return shows(leaf, rgba32);
+    }
+
+    // The IfcMaterial a shape aspect names for a representation item, or 0
+    uint32_t aspect_material(const std::unordered_map<std::string, uint32_t>& parts, uint32_t item) const {
+        auto aspect = aspect_names_.find(item);
+        if (aspect == aspect_names_.end()) return 0;
+        auto part = parts.find(aspect->second);
+        return part == parts.end() ? 0 : part->second;
+    }
+
+    // Whether a surface of this colour can use the material's Godot material, which has one colour.
+    // A material without a colour of its own takes the first colour it is shown in.
+    bool shows(const MaterialLeaf& leaf, uint32_t rgba32) {
+        if (leaf.has_color) return leaf.rgba32 == rgba32;
+        auto [adopted, inserted] = adopted_colours_.try_emplace(leaf.express_id, rgba32);
+        return adopted->second == rgba32;
+    }
+
+    // The colour every surface of the material has: its own, else the one it took, else white
+    Color surface_colour(uint32_t material) {
+        auto found = materials.find(material);
+        if (found != materials.end() && found->second.has_color) return found->second.color;
+        auto [adopted, inserted] = adopted_colours_.try_emplace(material, UNCOLORED_RGBA32);
+        return adopted->second == UNCOLORED_RGBA32 ? Color(1, 1, 1, 1) : Color::hex(adopted->second);
+    }
+
+private:
+    // A layer set usage's layers, the same for every element using it
+    struct UsageLayers {
+        int axis = 1; // AXIS1..AXIS3 -> 0..2
+        bool positive = true;
+        LayerSplit split; // without its direction
+    };
+
+    const webifc::parsing::IfcLoader& loader_;
+    const webifc::geometry::IfcGeometryLoader& geometry_loader_;
+    // Element or type express id -> its IfcMaterialSelect
+    std::unordered_map<uint32_t, uint32_t> element_material_;
+    // IfcMaterialSelect -> its materials
+    std::unordered_map<uint32_t, std::vector<MaterialLeaf>> leaves_by_material_;
+    std::unordered_map<uint32_t, UsageLayers> layers_by_usage_;
+    // Representation item -> the name of the shape aspect it belongs to
+    std::unordered_map<uint32_t, std::string> aspect_names_;
+    // Occurrence -> its type
+    std::unordered_map<uint32_t, uint32_t> element_type_;
+    // An element's own and its type's IfcMaterialSelect -> their constituents' and profiles' materials by name
+    std::unordered_map<uint64_t, std::unordered_map<std::string, uint32_t>> parts_by_materials_;
+    // IfcMaterial without a colour of its own -> the colour (RGBA8) its surfaces have
+    std::unordered_map<uint32_t, uint32_t> adopted_colours_;
+
+    std::string read_text(uint32_t express_id, uint32_t argument) const {
+        loader_.MoveToArgumentOffset(express_id, argument);
+        if (loader_.GetTokenType() != webifc::parsing::IfcTokenType::STRING) return std::string();
+        loader_.StepBack();
+        return loader_.GetDecodedStringArgument();
+    }
+
+    // IfcMaterialConstituentSet / IfcMaterialProfileSet: their parts (2), each with Name (0) and
+    // Material (2). A profile set usage refers to its set (0).
+    void read_parts(uint32_t select, std::unordered_map<std::string, uint32_t>& parts) const {
+        using namespace webifc::schema;
+        uint32_t type = loader_.GetLineType(select);
+        if (type == IFCMATERIALPROFILESETUSAGE || type == IFCMATERIALPROFILESETUSAGETAPERING) {
+            select = read_ref(select, 0);
+            if (select == 0) return;
+            type = loader_.GetLineType(select);
+        }
+        if (type != IFCMATERIALCONSTITUENTSET && type != IFCMATERIALPROFILESET) return;
+        for (uint32_t part : read_refs(select, 2)) {
+            const std::string name = read_text(part, 0);
+            const uint32_t material = read_ref(part, 2);
+            if (!name.empty() && material != 0 && loader_.GetLineType(material) == IFCMATERIAL) {
+                parts.try_emplace(name, material);
+            }
+        }
+    }
+
+    std::string read_enum(uint32_t express_id, uint32_t argument) const {
+        loader_.MoveToArgumentOffset(express_id, argument);
+        if (loader_.GetTokenType() != webifc::parsing::IfcTokenType::ENUM) return std::string();
+        loader_.StepBack();
+        return std::string(loader_.GetStringArgument());
+    }
+
+    double read_real(uint32_t express_id, uint32_t argument) const {
+        loader_.MoveToArgumentOffset(express_id, argument);
+        if (loader_.GetTokenType() != webifc::parsing::IfcTokenType::REAL) return 0.0;
+        loader_.StepBack();
+        return loader_.GetDoubleArgument();
+    }
+
+    // IfcMaterialLayerSetUsage: ForLayerSet (0), LayerSetDirection (1), DirectionSense (2).
+    // IfcMaterialLayer: Material (0, $ for an air gap), LayerThickness (1).
+    UsageLayers read_usage_layers(uint32_t usage) {
+        using namespace webifc::schema;
+        UsageLayers result;
+        const std::string direction = read_enum(usage, 1);
+        result.axis = direction == "AXIS1" ? 0 : direction == "AXIS3" ? 2 : 1;
+        result.positive = read_enum(usage, 2) != "NEGATIVE";
+
+        std::vector<double> thicknesses;
+        for (uint32_t layer : read_refs(read_ref(usage, 0), 0)) {
+            const uint32_t type = loader_.GetLineType(layer);
+            if (type != IFCMATERIALLAYER && type != IFCMATERIALLAYERWITHOFFSETS) continue;
+            const double thickness = read_real(layer, 1);
+            if (!(thickness > 0.0)) continue;
+            uint32_t material = read_ref(layer, 0);
+            if (material != 0 && loader_.GetLineType(material) != IFCMATERIAL) material = 0;
+            // Known to the main thread by name and colour, like the materials of leaves_for()
+            if (material != 0 && !materials.count(material)) make_leaf(material);
+            thicknesses.push_back(thickness);
+            result.split.materials.push_back(material);
+        }
+
+        double total = 0.0;
+        for (double thickness : thicknesses) total += thickness;
+        if (thicknesses.size() < 2 || !(total > 0.0)) {
+            result.split = LayerSplit();
+            return result;
+        }
+        double cumulative = 0.0;
+        for (size_t i = 0; i + 1 < thicknesses.size(); i++) {
+            cumulative += thicknesses[i];
+            result.split.boundaries.push_back(cumulative / total);
+        }
+        return result;
+    }
+
+    uint32_t read_ref(uint32_t express_id, uint32_t argument) const {
+        loader_.MoveToArgumentOffset(express_id, argument);
+        if (loader_.GetTokenType() != webifc::parsing::IfcTokenType::REF) return 0;
+        loader_.StepBack();
+        return loader_.GetRefArgument();
+    }
+
+    std::vector<uint32_t> read_refs(uint32_t express_id, uint32_t argument) const {
+        std::vector<uint32_t> refs;
+        loader_.MoveToArgumentOffset(express_id, argument);
+        if (loader_.GetTokenType() != webifc::parsing::IfcTokenType::SET_BEGIN) return refs;
+        loader_.StepBack();
+        for (uint32_t offset : loader_.GetSetArgument()) {
+            if (loader_.GetTokenType(offset) == webifc::parsing::IfcTokenType::REF) {
+                refs.push_back(loader_.GetRefArgument(offset));
+            }
+        }
+        return refs;
+    }
+
+    // Appends the IfcMaterials of a material select, in the order web-ifc tries them for a colour.
+    // Layers and profiles with offsets and tapered profile usages are followed too, although
+    // web-ifc takes no colour from them, so their materials can still match a styled colour.
+    void collect(uint32_t express_id, std::vector<uint32_t>& out, int depth) const {
+        using namespace webifc::schema;
+        if (express_id == 0 || depth > 4) return;
+
+        switch (loader_.GetLineType(express_id)) {
+            case IFCMATERIAL:
+                if (std::find(out.begin(), out.end(), express_id) == out.end()) out.push_back(express_id);
+                break;
+            case IFCMATERIALLAYERSETUSAGE:
+            case IFCMATERIALPROFILESETUSAGE:
+            case IFCMATERIALPROFILESETUSAGETAPERING:
+            case IFCMATERIALLAYER:
+            case IFCMATERIALLAYERWITHOFFSETS:
+                collect(read_ref(express_id, 0), out, depth + 1);
+                break;
+            case IFCMATERIALLAYERSET:
+                for (uint32_t layer : read_refs(express_id, 0)) collect(layer, out, depth + 1);
+                break;
+            case IFCMATERIALLIST: {
+                // web-ifc shows the last listed material that has a colour
+                const std::vector<uint32_t> materials = read_refs(express_id, 0);
+                for (auto it = materials.rbegin(); it != materials.rend(); ++it) collect(*it, out, depth + 1);
+            } break;
+            case IFCMATERIALCONSTITUENTSET:
+            case IFCMATERIALPROFILESET:
+                for (uint32_t member : read_refs(express_id, 2)) collect(member, out, depth + 1);
+                break;
+            case IFCMATERIALCONSTITUENT:
+            case IFCMATERIALPROFILE:
+            case IFCMATERIALPROFILEWITHOFFSETS:
+                collect(read_ref(express_id, 2), out, depth + 1);
+                break;
+            default:
+                break;
+        }
+    }
+
+    MaterialLeaf make_leaf(uint32_t express_id) {
+        MaterialLeaf leaf;
+        leaf.express_id = express_id;
+        PrecalculatedIFCMaterial material;
+        material.name = read_string_argument(loader_, express_id, 0);
+        // The same colour web-ifc gives geometry coloured by this material
+        if (std::optional<glm::dvec4> color = geometry_loader_.GetColor(express_id)) {
+            material.color = Color(color->r, color->g, color->b, color->a);
+            material.has_color = true;
+            leaf.has_color = true;
+            leaf.rgba32 = material.color.to_rgba32();
+        }
+        materials.try_emplace(express_id, material);
+        return leaf;
+    }
+};
+
+// The IfcMaterial a surface colour shows, or null for none. Uncoloured geometry shows the first
+// material that has no colour of its own.
+static const MaterialLeaf* match_material(const std::vector<MaterialLeaf>& leaves, uint32_t rgba32) {
+    for (const MaterialLeaf& leaf : leaves) {
+        if (leaf.has_color && leaf.rgba32 == rgba32) return &leaf;
+    }
+    if (rgba32 == UNCOLORED_RGBA32) {
+        for (const MaterialLeaf& leaf : leaves) {
+            if (!leaf.has_color) return &leaf;
+        }
+    }
+    return nullptr;
+}
+
+// What an element's IFC materials tell fill_item_geometry, with IFC materials on
+struct ElementMaterials {
+    MaterialResolver* resolver = nullptr;
+    const std::vector<MaterialLeaf>* leaves = nullptr;                    // its materials, if any
+    const std::unordered_map<std::string, uint32_t>* parts = nullptr;     // constituent or profile names
+    std::optional<LayerSplit> layer_split;                                // layers to cut its geometry into
+};
+
+// An element's materials. A lookup that can't be read is left out, so the element keeps one
+// material per colour for it.
+static ElementMaterials element_materials(MaterialResolver& resolver, uint32_t express_id) {
+    ElementMaterials result;
+    result.resolver = &resolver;
+    try { result.leaves = resolver.leaves_for(express_id); } catch (...) {}
+    try { result.parts = resolver.parts_for(express_id); } catch (...) {}
+    try { result.layer_split = resolver.layer_split_for(express_id); } catch (...) {}
+    return result;
+}
+
+// The IfcMaterial a placed geometry shows: the part a shape aspect names for its item, else the
+// material with its colour. A material is only used when it keeps the surface's colour.
+static uint32_t surface_material(const ElementMaterials& materials, uint32_t item, uint32_t rgba32) {
+    if (materials.parts) {
+        // The part may be one of the type's, which the element's own materials don't list
+        const uint32_t part = materials.resolver->aspect_material(*materials.parts, item);
+        if (part != 0 && materials.resolver->shows_material(part, rgba32)) return part;
+    }
+    if (!materials.leaves) return 0;
+    const MaterialLeaf* leaf = match_material(*materials.leaves, rgba32);
+    return leaf && materials.resolver->shows(*leaf, rgba32) ? leaf->express_id : 0;
+}
+
+// Box-projected UV of a vertex: projected onto the plane of the dominant normal axis, 1 UV unit per meter
+static Vector2 box_uv(const glm::dvec3& p, const glm::dvec3& n) {
+    const glm::dvec3 a = glm::abs(n);
+    if (a.y >= a.x && a.y >= a.z) {
+        return Vector2((float)p.x, (float)(n.y >= 0.0 ? p.z : -p.z));
+    } else if (a.x >= a.z) {
+        return Vector2((float)(n.x >= 0.0 ? -p.z : p.z), (float)-p.y);
+    }
+    return Vector2((float)(n.z >= 0.0 ? p.x : -p.x), (float)-p.y);
+}
+
+// Appends one triangle with its own three vertices
+static void append_triangle(PrecalculatedIFCItemGeometry& geometry, const glm::dvec3 (&corners)[3], const glm::dvec3& n) {
+    const int64_t base = geometry.vertices.size();
+    geometry.vertices.resize(base + 3);
+    geometry.normals.resize(base + 3);
+    geometry.uvs.resize(base + 3);
+    const int64_t index_base = geometry.indices.size();
+    geometry.indices.resize(index_base + 3);
+    for (int c = 0; c < 3; c++) {
+        const glm::dvec3& p = corners[c];
+        geometry.vertices.set(base + c, Vector3((float)p.x, (float)p.y, (float)p.z));
+        geometry.normals.set(base + c, Vector3((float)n.x, (float)n.y, (float)n.z));
+        geometry.uvs.set(base + c, box_uv(p, n));
+        geometry.indices.set(index_base + c, (int32_t)(base + c));
+    }
+}
+
+// The part of a convex polygon where side * (dot(p, direction) - limit) >= 0
+static std::vector<glm::dvec3> clip_polygon(const std::vector<glm::dvec3>& polygon, const glm::dvec3& direction, double limit, double side) {
+    std::vector<glm::dvec3> clipped;
+    for (size_t i = 0; i < polygon.size(); i++) {
+        const glm::dvec3& a = polygon[i];
+        const glm::dvec3& b = polygon[(i + 1) % polygon.size()];
+        const double da = side * (glm::dot(a, direction) - limit);
+        const double db = side * (glm::dot(b, direction) - limit);
+        if (da >= 0.0) clipped.push_back(a);
+        if ((da >= 0.0) != (db >= 0.0)) clipped.push_back(a + (b - a) * (da / (da - db)));
+    }
+    return clipped;
+}
+
 // Tessellate an entity's flat mesh into one surface per material: placed geometries sharing a
 // color are appended to the same surface, since an element can have hundreds of them and a mesh
-// holds at most RenderingServer::MAX_MESH_SURFACES surfaces.
+// holds at most RenderingServer::MAX_MESH_SURFACES surfaces. With materials (IFC materials on),
+// geometries showing one of the element's IfcMaterials get a surface per material instead, and
+// those coloured by its layer set are cut into one surface per layer.
 // Node transforms are currently identity, so vertices are baked in world space.
 static void fill_item_geometry(webifc::geometry::IfcGeometryProcessor& geometry_loader,
                                const webifc::geometry::IfcFlatMesh& flat_mesh,
-                               bool is_space, PrecalculatedIFCItem& item) {
-    // Same key as _get_material (RGBA8 color + transparency) -> index in item.geometry
+                               bool is_space, const ElementMaterials* materials, PrecalculatedIFCItem& item) {
+    const LayerSplit* layer_split = materials && materials->layer_split ? &*materials->layer_split : nullptr;
+    // Same key as _get_material -> index in item.geometry. A material surface has the top bit
+    // set and the IfcMaterial id; a colour surface has the RGBA8 color and transparency.
     std::unordered_map<uint64_t, size_t> surface_by_material;
+    // The surface of a material or colour, created on first use. The reference is only valid
+    // until the next call.
+    auto surface_for = [&](uint32_t material_id, const Color& color, bool is_transparent) -> PrecalculatedIFCItemGeometry& {
+        const uint64_t key = material_id != 0
+            ? ((uint64_t)1 << 63) | material_id
+            : ((uint64_t)color.to_rgba32() << 1) | (is_transparent ? 1 : 0);
+        auto [surface, inserted] = surface_by_material.try_emplace(key, item.geometry.size());
+        if (inserted) {
+            PrecalculatedIFCItemGeometry new_geometry;
+            new_geometry.color = color;
+            new_geometry.is_transparent = is_transparent;
+            new_geometry.material_id = material_id;
+            item.geometry.push_back(std::move(new_geometry));
+        }
+        return item.geometry[surface->second];
+    };
+
+    // Geometries coloured by the layer set, cut into layers once all of them are known
+    std::vector<const webifc::geometry::IfcPlacedGeometry*> layered;
 
     for (const auto& geom_data : flat_mesh.geometries) {
         auto& ifc_geometry = geometry_loader.GetGeometry(geom_data.geometryExpressID);
@@ -979,23 +2487,25 @@ static void fill_item_geometry(webifc::geometry::IfcGeometryProcessor& geometry_
 
         Color color;
         bool is_transparent;
+        uint32_t material_id = 0;
         if (is_space) {
             is_transparent = true;
             color = Color(0.025, 0.037, 0.034, 0.1);
         } else {
             color = Color(geom_data.color.r, geom_data.color.g, geom_data.color.b, geom_data.color.a);
             is_transparent = (geom_data.color.a < 0.7);
+            if (materials) {
+                material_id = surface_material(*materials, geom_data.geometryExpressID, color.to_rgba32());
+            }
         }
 
-        const uint64_t key = ((uint64_t)color.to_rgba32() << 1) | (is_transparent ? 1 : 0);
-        auto [surface, inserted] = surface_by_material.try_emplace(key, item.geometry.size());
-        if (inserted) {
-            PrecalculatedIFCItemGeometry new_geometry;
-            new_geometry.color = color;
-            new_geometry.is_transparent = is_transparent;
-            item.geometry.push_back(std::move(new_geometry));
+        if (layer_split && material_id != 0
+                && std::find(layer_split->materials.begin(), layer_split->materials.end(), material_id) != layer_split->materials.end()) {
+            layered.push_back(&geom_data);
+            continue;
         }
-        PrecalculatedIFCItemGeometry& item_geometry = item.geometry[surface->second];
+
+        PrecalculatedIFCItemGeometry& item_geometry = surface_for(material_id, color, is_transparent);
 
         // Positions are kept in double until the UVs are computed, so large (georeferenced)
         // coordinates don't make the texture jitter.
@@ -1052,19 +2562,101 @@ static void fill_item_geometry(webifc::geometry::IfcGeometryProcessor& geometry_
             const glm::dvec3& n = out_normals[k];
             vertices[k] = Vector3((float)p.x, (float)p.y, (float)p.z);
             normals[k] = Vector3((float)n.x, (float)n.y, (float)n.z);
-
-            // Project onto the plane of the dominant normal axis
-            const glm::dvec3 a = glm::abs(n);
-            if (a.y >= a.x && a.y >= a.z) {
-                uvs[k] = Vector2((float)p.x, (float)(n.y >= 0.0 ? p.z : -p.z));
-            } else if (a.x >= a.z) {
-                uvs[k] = Vector2((float)(n.x >= 0.0 ? -p.z : p.z), (float)-p.y);
-            } else {
-                uvs[k] = Vector2((float)(n.z >= 0.0 ? p.x : -p.x), (float)-p.y);
-            }
+            uvs[k] = box_uv(p, n);
         }
         for (size_t k = 0; k < out_indices.size(); k++) {
             indices[k] = out_indices[k] + (int32_t)vertex_base;
+        }
+    }
+
+    if (layered.empty()) return;
+
+    // Triangles of the layered geometries, in world space, with their flat normals
+    struct Triangle {
+        glm::dvec3 corners[3];
+        glm::dvec3 normal;
+        Color color;
+        bool is_transparent;
+    };
+    std::vector<Triangle> triangles;
+    const glm::dvec3& direction = layer_split->direction;
+    double u_min = std::numeric_limits<double>::max();
+    double u_max = std::numeric_limits<double>::lowest();
+    for (const webifc::geometry::IfcPlacedGeometry* geom_data : layered) {
+        auto& ifc_geometry = geometry_loader.GetGeometry(geom_data->geometryExpressID);
+        const Color color(geom_data->color.r, geom_data->color.g, geom_data->color.b, geom_data->color.a);
+        std::vector<glm::dvec3> positions(ifc_geometry.numPoints);
+        for (uint32_t k = 0; k < ifc_geometry.numPoints; k++) {
+            positions[k] = glm::dvec3(geom_data->transformation * glm::dvec4(ifc_geometry.GetPoint(k), 1.0));
+            const double u = glm::dot(positions[k], direction);
+            u_min = MIN(u_min, u);
+            u_max = MAX(u_max, u);
+        }
+        for (uint32_t k = 0; k < ifc_geometry.numFaces; k++) {
+            bimGeometry::Face f = ifc_geometry.GetFace(k);
+            Triangle triangle;
+            // Same winding and normal as the unsplit path
+            triangle.corners[0] = positions[f.i2];
+            triangle.corners[1] = positions[f.i1];
+            triangle.corners[2] = positions[f.i0];
+            glm::dvec3 n = glm::cross(positions[f.i1] - positions[f.i0], positions[f.i2] - positions[f.i0]);
+            const double len = glm::length(n);
+            triangle.normal = len > 0.0 ? n / len : glm::dvec3(0.0, 1.0, 0.0);
+            triangle.color = color;
+            triangle.is_transparent = geom_data->color.a < 0.7;
+            triangles.push_back(triangle);
+        }
+    }
+
+    // Each layer covers its share of the element's extent across the layers, from the first layer
+    // at u_min. The outer layers reach past it, so nothing is left out.
+    const size_t layer_count = layer_split->materials.size();
+    const double span = u_max - u_min;
+    std::vector<double> lows(layer_count, std::numeric_limits<double>::lowest());
+    std::vector<double> highs(layer_count, std::numeric_limits<double>::max());
+    if (span > 1e-9) {
+        for (size_t i = 0; i + 1 < layer_count; i++) {
+            const double boundary = u_min + layer_split->boundaries[i] * span;
+            highs[i] = boundary;
+            lows[i + 1] = boundary;
+        }
+    } else {
+        // No extent across the layers: all of it goes to the first one
+        for (size_t i = 1; i < layer_count; i++) lows[i] = std::numeric_limits<double>::max();
+    }
+
+    for (const Triangle& triangle : triangles) {
+        double t_min = std::numeric_limits<double>::max();
+        double t_max = std::numeric_limits<double>::lowest();
+        for (const glm::dvec3& corner : triangle.corners) {
+            const double u = glm::dot(corner, direction);
+            t_min = MIN(t_min, u);
+            t_max = MAX(t_max, u);
+        }
+        // A triangle across the layers' direction (a wall's face) lies in one layer; one that only
+        // touches a boundary isn't part of the layer on the other side
+        const bool flat = t_max - t_min <= 1e-9;
+        for (size_t layer = 0; layer < layer_count; layer++) {
+            const bool overlaps = flat ? (t_min >= lows[layer] && t_min < highs[layer]) : (t_max > lows[layer] && t_min < highs[layer]);
+            if (!overlaps) continue;
+            const uint32_t material_id = layer_split->materials[layer];
+            // An air gap keeps the geometry's own colour
+            const Color color = material_id != 0 ? materials->resolver->surface_colour(material_id) : triangle.color;
+            const bool is_transparent = material_id != 0 ? color.a < 0.7 : triangle.is_transparent;
+            PrecalculatedIFCItemGeometry& surface = surface_for(material_id, color, is_transparent);
+
+            if (flat || (t_min >= lows[layer] && t_max <= highs[layer])) {
+                append_triangle(surface, triangle.corners, triangle.normal);
+                continue;
+            }
+            std::vector<glm::dvec3> piece(std::begin(triangle.corners), std::end(triangle.corners));
+            if (lows[layer] > std::numeric_limits<double>::lowest()) piece = clip_polygon(piece, direction, lows[layer], 1.0);
+            if (highs[layer] < std::numeric_limits<double>::max()) piece = clip_polygon(piece, direction, highs[layer], -1.0);
+            for (size_t k = 1; k + 1 < piece.size(); k++) {
+                const glm::dvec3 corners[3] = { piece[0], piece[k], piece[k + 1] };
+                if (glm::length(glm::cross(corners[1] - corners[0], corners[2] - corners[0])) < 1e-12) continue; // sliver
+                append_triangle(surface, corners, triangle.normal);
+            }
         }
     }
 }
@@ -1134,10 +2726,7 @@ static std::unordered_map<int, int> build_parent_map(const webifc::parsing::IfcL
 
 // IfcRoot's GlobalId is the first argument of every rooted entity
 static String read_global_id(const webifc::parsing::IfcLoader& loader, uint32_t express_id) {
-    loader.MoveToArgumentOffset(express_id, 0);
-    if (loader.GetTokenType() != webifc::parsing::IfcTokenType::STRING) return String();
-    loader.StepBack();
-    return String::utf8(loader.GetDecodedStringArgument().c_str());
+    return read_string_argument(loader, express_id, 0);
 }
 
 // Runs on a WorkerThreadPool thread. It must not touch current_state or any member the
@@ -1190,6 +2779,23 @@ void GDIFCManager::_thread_task() {
     progress_done_.store(2);
 
     auto& geometry_loader = *temp_ifc_manager->geometry_loader;
+
+    // Which IfcMaterial coloured each surface, read only with IFC materials on
+    std::unique_ptr<MaterialResolver> material_resolver;
+    if (ifc_materials_enabled_) {
+        try {
+            material_resolver = std::make_unique<MaterialResolver>(loader, geometry_loader.GetLoader());
+        } catch (const std::exception& e) {
+            ERR_PRINT(String("Failed to read IFC material associations, using one material per colour: ") + e.what());
+        } catch (...) {
+            ERR_PRINT("Failed to read IFC material associations, using one material per colour: unknown error.");
+        }
+    }
+    // A material that can't be read leaves the element with one material per colour
+    auto element_materials_for = [&](uint32_t id) -> std::optional<ElementMaterials> {
+        if (!material_resolver) return {};
+        return element_materials(*material_resolver, id);
+    };
 
     Vector<PrecalculatedIFCItem> temp_queue;
 
@@ -1251,7 +2857,8 @@ void GDIFCManager::_thread_task() {
             // Spatial elements can carry geometry (e.g. IfcSite terrain). IfcProject is not a product and
             // has no Representation, and web-ifc logs an "unexpected mesh type" error when asked for one
             if (spatial_type.second != webifc::schema::IFCPROJECT) {
-                fill_item_geometry(geometry_loader, geometry_loader.GetFlatMesh(id), false, item);
+                const std::optional<ElementMaterials> item_materials = element_materials_for(id);
+                fill_item_geometry(geometry_loader, geometry_loader.GetFlatMesh(id), false, item_materials ? &*item_materials : nullptr, item);
             }
 
             temp_queue.push_back(item);
@@ -1289,7 +2896,8 @@ void GDIFCManager::_thread_task() {
         init_item(item, id, s_type.c_str());
 
         if (s_type != "IfcOpeningElement") {
-            fill_item_geometry(geometry_loader, geometry_loader.GetFlatMesh(id), s_type == "IfcSpace", item);
+            const std::optional<ElementMaterials> item_materials = element_materials_for(id);
+            fill_item_geometry(geometry_loader, geometry_loader.GetFlatMesh(id), s_type == "IfcSpace", item_materials ? &*item_materials : nullptr, item);
         }
 
         temp_queue.push_back(item);
@@ -1318,7 +2926,8 @@ void GDIFCManager::_thread_task() {
             if (flat_mesh.geometries.empty()) continue;
 
             PrecalculatedIFCItem item;
-            fill_item_geometry(geometry_loader, flat_mesh, type_str == "IfcSpace", item);
+            const std::optional<ElementMaterials> item_materials = element_materials_for(expressID);
+            fill_item_geometry(geometry_loader, flat_mesh, type_str == "IfcSpace", item_materials ? &*item_materials : nullptr, item);
             if (item.geometry.empty()) continue;
 
             init_item(item, expressID, type_str.c_str());
@@ -1383,6 +2992,9 @@ void GDIFCManager::_thread_task() {
     this->pending_georreference.coordination_offset = glm::dvec3(geometry_loader.GetCoordinationMatrix()[3]);
 
     // Hand results to the main thread
+    if (material_resolver) {
+        this->ifc_materials_ = std::move(material_resolver->materials);
+    }
     this->web_ifc_manager = std::move(temp_ifc_manager);
     this->generation_queue = temp_queue;
 
@@ -1472,7 +3084,7 @@ IFCNode* GDIFCManager::_create_item_node(const PrecalculatedIFCItem& item, bool 
         mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arrays, TypedArray<Array>(), item.geometry[i].lods);
 
         // 3. Material
-        Ref<StandardMaterial3D> mat = _get_material(item.geometry[i].color, item.geometry[i].is_transparent, item.ifc_class == "IfcSpace");
+        Ref<StandardMaterial3D> mat = _get_material(item.geometry[i].color, item.geometry[i].is_transparent, item.ifc_class == "IfcSpace", item.geometry[i].material_id);
         mesh->surface_set_material(i,mat);
     }
 
@@ -1582,9 +3194,12 @@ void GDIFCManager::_process_generation_queue() {
 // ---------------------------------------------------------
 // MATERIAL CACHING (Optimization)
 // ---------------------------------------------------------
-Ref<StandardMaterial3D> GDIFCManager::_get_material(Color color, bool transparent, bool is_space) {
-    // Create a unique key string for the map
-    String key = String(color.to_html()) + (transparent ? "_T" : "_O") + (is_space ? "_S" : "");
+Ref<StandardMaterial3D> GDIFCManager::_get_material(Color color, bool transparent, bool is_space, uint32_t material_id) {
+    // Surfaces coloured by the same IfcMaterial share one material, named after it, so editing it
+    // changes every element made of that material. The rest share one material per colour.
+    String key = material_id != 0
+        ? String("M") + String::num_uint64(material_id)
+        : String(color.to_html()) + (transparent ? "_T" : "_O") + (is_space ? "_S" : "");
 
     if (material_cache.has(key)) {
         return material_cache[key];
@@ -1593,6 +3208,12 @@ Ref<StandardMaterial3D> GDIFCManager::_get_material(Color color, bool transparen
     Ref<StandardMaterial3D> mat;
     mat.instantiate();
     mat->set_albedo(color);
+    if (material_id != 0) {
+        auto material = ifc_materials_.find(material_id);
+        if (material != ifc_materials_.end()) {
+            mat->set_name(material->second.name);
+        }
+    }
     mat->set_cull_mode(BaseMaterial3D::CULL_DISABLED);
 
     if (is_space) {
@@ -1664,6 +3285,97 @@ godot::Array GDIFCManager::get_elements_by_class(godot::String ifc_class) {
     return get_tree()->get_nodes_in_group(ifc_class);
 }
 
+// IfcProperty values -> {property name -> value}. Shared by element property sets and IFC material
+// properties. Properties is an aggregate of schema::IfcProperty.
+template <typename schema, typename Properties>
+static godot::Dictionary convert_ifc_properties(const Properties& props) {
+    godot::Dictionary props_dict;
+
+    for (auto prop : *props) {
+        if (!prop) {
+            continue;
+        }
+
+        // Cache the property name to avoid repeated lookups
+        // Godot Dictionaries use Variants as keys. Passing a const char* // creates a String automatically.
+        std::string prop_name_str = prop->Name();
+        godot::String prop_key = godot::String::utf8(prop_name_str.c_str());
+
+        // OPTIMIZATION: Order by probability
+        // IfcPropertySingleValue is the vast majority (90%+) of cases. Check it first.
+
+        if (auto p_single = prop->template as<typename schema::IfcPropertySingleValue>()) {
+            // Handle Single Value
+            if (auto n_value = p_single->NominalValue()) {
+                // Determine underlying primitive via generic access
+                if (auto final_value = n_value->template as<IfcUtil::IfcBaseClass>()) {
+                    props_dict[prop_key] = to_godot_variant(final_value->get_attribute_value(0));
+                } else {
+                    props_dict[prop_key] = "[Invalid Value]";
+                }
+            } else {
+                props_dict[prop_key] = godot::Variant(); // Null/Nil
+            }
+        } else if (auto p_bounded = prop->template as<typename schema::IfcPropertyBoundedValue>()) {
+            // Handle Bounded Value
+            godot::Array bounds;
+
+            // Lower
+            if (auto lb = p_bounded->LowerBoundValue()) {
+                if (auto val = lb->template as<IfcUtil::IfcBaseClass>()) {
+                    bounds.push_back(to_godot_variant(val->get_attribute_value(0)));
+                }
+            } else {
+                bounds.push_back(godot::Variant());
+            }
+
+            // Upper
+            if (auto ub = p_bounded->UpperBoundValue()) {
+                if (auto val = ub->template as<IfcUtil::IfcBaseClass>()) {
+                    bounds.push_back(to_godot_variant(val->get_attribute_value(0)));
+                }
+            } else {
+                bounds.push_back(godot::Variant());
+            }
+
+            props_dict[prop_key] = bounds;
+        } else if (auto p_enum = prop->template as<typename schema::IfcPropertyEnumeratedValue>()) {
+            // Handle Enumerated Value
+            godot::Array enum_arr;
+
+            if (auto enum_values = p_enum->EnumerationValues()) {
+                for (auto& enum_val : *enum_values.get()) {
+                    if (auto val = enum_val->template as<IfcUtil::IfcBaseClass>()) {
+                        enum_arr.push_back(to_godot_variant(val->get_attribute_value(0)));
+                    }
+                }
+            }
+            // IfcOpenShell usually resolves Reference automatically,
+            // but if Values are empty, check Reference:
+            else if (auto enum_ref = p_enum->EnumerationReference()) {
+                // Logic to pull defaults from the reference could go here
+                // depending on schema version, usually implies looking up IfcPropertyEnumeration
+            }
+            props_dict[prop_key] = enum_arr;
+        } else if (auto p_list = prop->template as<typename schema::IfcPropertyListValue>()) {
+            // Handle List Value
+            godot::Array list_arr;
+            if (auto list_values = p_list->ListValues()) {
+                for (auto& list_val : *list_values.get()) {
+                    if (auto val = list_val->template as<IfcUtil::IfcBaseClass>()) {
+                        list_arr.push_back(to_godot_variant(val->get_attribute_value(0)));
+                    }
+                }
+            }
+            props_dict[prop_key] = list_arr;
+        } else if (auto p_ref = prop->template as<typename schema::IfcPropertyReferenceValue>()) {
+            props_dict[prop_key] = godot::String::utf8(p_ref->UsageName().value_or("[Reference]").c_str());
+        }
+        // Skip IfcPropertyTableValue and others for performance unless strictly needed
+    }
+    return props_dict;
+}
+
 template <typename schema>
 godot::Dictionary get_ifc_property_sets(IfcParse::IfcFile& file, int expressID) {
     godot::Dictionary psets;
@@ -1711,93 +3423,7 @@ godot::Dictionary get_ifc_property_sets(IfcParse::IfcFile& file, int expressID) 
                     continue;
                 }
 
-                godot::Dictionary props_dict;
-
-                for (auto prop : *props) {
-                    if (!prop) {
-                        continue;
-                    }
-
-                    // Cache the property name to avoid repeated lookups
-                    // Godot Dictionaries use Variants as keys. Passing a const char* // creates a String automatically.
-                    std::string prop_name_str = prop->Name();
-                    godot::String prop_key = godot::String::utf8(prop_name_str.c_str());
-
-                    // OPTIMIZATION: Order by probability
-                    // IfcPropertySingleValue is the vast majority (90%+) of cases. Check it first.
-
-                    if (auto p_single = prop->template as<typename schema::IfcPropertySingleValue>()) {
-                        // Handle Single Value
-                        if (auto n_value = p_single->NominalValue()) {
-                            // Determine underlying primitive via generic access
-                            if (auto final_value = n_value->template as<IfcUtil::IfcBaseClass>()) {
-                                props_dict[prop_key] = to_godot_variant(final_value->get_attribute_value(0));
-                            } else {
-                                props_dict[prop_key] = "[Invalid Value]";
-                            }
-                        } else {
-                            props_dict[prop_key] = godot::Variant(); // Null/Nil
-                        }
-                    } else if (auto p_bounded = prop->template as<typename schema::IfcPropertyBoundedValue>()) {
-                        // Handle Bounded Value
-                        godot::Array bounds;
-
-                        // Lower
-                        if (auto lb = p_bounded->LowerBoundValue()) {
-                            if (auto val = lb->template as<IfcUtil::IfcBaseClass>()) {
-                                bounds.push_back(to_godot_variant(val->get_attribute_value(0)));
-                            }
-                        } else {
-                            bounds.push_back(godot::Variant());
-                        }
-
-                        // Upper
-                        if (auto ub = p_bounded->UpperBoundValue()) {
-                            if (auto val = ub->template as<IfcUtil::IfcBaseClass>()) {
-                                bounds.push_back(to_godot_variant(val->get_attribute_value(0)));
-                            }
-                        } else {
-                            bounds.push_back(godot::Variant());
-                        }
-
-                        props_dict[prop_key] = bounds;
-                    } else if (auto p_enum = prop->template as<typename schema::IfcPropertyEnumeratedValue>()) {
-                        // Handle Enumerated Value
-                        godot::Array enum_arr;
-
-                        if (auto enum_values = p_enum->EnumerationValues()) {
-                            for (auto& enum_val : *enum_values.get()) {
-                                if (auto val = enum_val->template as<IfcUtil::IfcBaseClass>()) {
-                                    enum_arr.push_back(to_godot_variant(val->get_attribute_value(0)));
-                                }
-                            }
-                        }
-                        // IfcOpenShell usually resolves Reference automatically,
-                        // but if Values are empty, check Reference:
-                        else if (auto enum_ref = p_enum->EnumerationReference()) {
-                            // Logic to pull defaults from the reference could go here
-                            // depending on schema version, usually implies looking up IfcPropertyEnumeration
-                        }
-                        props_dict[prop_key] = enum_arr;
-                    } else if (auto p_list = prop->template as<typename schema::IfcPropertyListValue>()) {
-                        // Handle List Value
-                        godot::Array list_arr;
-                        if (auto list_values = p_list->ListValues()) {
-                            for (auto& list_val : *list_values.get()) {
-                                if (auto val = list_val->template as<IfcUtil::IfcBaseClass>()) {
-                                    list_arr.push_back(to_godot_variant(val->get_attribute_value(0)));
-                                }
-                            }
-                        }
-                        props_dict[prop_key] = list_arr;
-                    } else if (auto p_ref = prop->template as<typename schema::IfcPropertyReferenceValue>()) {
-                        props_dict[prop_key] = godot::String::utf8(p_ref->UsageName().value_or("[Reference]").c_str());
-                    }
-                    // Skip IfcPropertyTableValue and others for performance unless strictly needed
-                }
-
-                // Insert the constructed dictionary into the main psets dictionary
-                psets[godot::String::utf8(pset_key.c_str())] = props_dict;
+                psets[godot::String::utf8(pset_key.c_str())] = convert_ifc_properties<schema>(props);
             }
         }
     }

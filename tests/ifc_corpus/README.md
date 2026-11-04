@@ -31,6 +31,7 @@ Useful options:
 | `--timeout S` / `--timeout-per-mb S` | Time allowed per file: S seconds plus S per MB (defaults 120 and 6) |
 | `--collision` | Also create collision shapes for every element |
 | `--no-lods` | Don't generate mesh LODs |
+| `--materials` / `--textures` | Read IFC materials, and also their textures |
 | `--list` | Print the files that would be loaded, then exit |
 
 Ctrl+C stops the run and still writes the report for the files done so far. The exit code is 1 when a file failed, crashed or timed out, so the runner can gate CI.

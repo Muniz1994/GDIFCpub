@@ -5,6 +5,7 @@
 #include "godot_cpp/classes/node3d.hpp"
 #include "godot_cpp/classes/mesh_instance3d.hpp"
 #include "gd_ifc_entity_base.h"
+#include "gd_ifc_material.h"
 
 
 // Your existing class definition
@@ -40,6 +41,10 @@ public:
     godot::Ref<godot::GDIFCEntityBase> get_ifc_object() const { return ifc_object_; }
     void set_ifc_object(godot::Ref<godot::GDIFCEntityBase> obj) { ifc_object_ = obj; }
 
+    /// IFC material of the element, shared with every element using it. Set with IFC materials on.
+    godot::Ref<godot::GDIFCMaterialDefinition> get_material_definition() const { return material_definition_; }
+    void set_material_definition(godot::Ref<godot::GDIFCMaterialDefinition> definition) { material_definition_ = definition; }
+
 private:
 
     godot::String ifc_class;
@@ -50,6 +55,8 @@ private:
 
     /// Typed GD wrapper for the IFC entity (set after loading).
     godot::Ref<godot::GDIFCEntityBase> ifc_object_;
+
+    godot::Ref<godot::GDIFCMaterialDefinition> material_definition_;
 
 };
 

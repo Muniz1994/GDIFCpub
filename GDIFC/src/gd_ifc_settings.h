@@ -31,6 +31,10 @@ private:
     uint16_t m_booleanUnionThreshold { 150 };
     bool m_generateLods { true };
     float m_lodNormalMergeAngle { 60.0f };
+    // Off keeps one Godot material per colour, as before IFC materials were read
+    bool m_ifcMaterials { false };
+    // Only read when m_ifcMaterials is on
+    bool m_ifcTextures { false };
 
 public:
     // Default Constructor (Uses the values defined above)
@@ -51,6 +55,8 @@ public:
     uint16_t getBooleanUnionThreshold() const { return m_booleanUnionThreshold; }
     bool getGenerateLods() const { return m_generateLods; }
     float getLodNormalMergeAngle() const { return m_lodNormalMergeAngle; }
+    bool getIfcMaterials() const { return m_ifcMaterials; }
+    bool getIfcTextures() const { return m_ifcTextures; }
 
     // --- Setters (Mutators) ---
     // These return a reference to *this to allow chaining (Fluent Interface)
@@ -109,6 +115,14 @@ public:
 
     void setLodNormalMergeAngle(float val) {
         m_lodNormalMergeAngle = val;
+    }
+
+    void setIfcMaterials(bool val) {
+        m_ifcMaterials = val;
+    }
+
+    void setIfcTextures(bool val) {
+        m_ifcTextures = val;
     }
 };
 

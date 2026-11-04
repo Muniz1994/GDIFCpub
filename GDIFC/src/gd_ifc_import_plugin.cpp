@@ -39,6 +39,8 @@ TypedArray<Dictionary> GDIFCImportPlugin::_get_import_options(const String &p_pa
     options.push_back(make_option("geometry/circle_segments", 12, PROPERTY_HINT_RANGE, "3,128,1"));
     options.push_back(make_option("lods/generate", true));
     options.push_back(make_option("lods/normal_merge_angle", 60.0, PROPERTY_HINT_RANGE, "0,180,0.1,degrees"));
+    options.push_back(make_option("materials/ifc_materials", false));
+    options.push_back(make_option("materials/textures", false));
     options.push_back(make_option("collision/create", false));
     // Exact IFC class names, e.g. IfcWall, IfcSlab. Empty creates collision for every element.
     options.push_back(make_option("collision/classes", PackedStringArray()));
@@ -48,6 +50,9 @@ TypedArray<Dictionary> GDIFCImportPlugin::_get_import_options(const String &p_pa
 bool GDIFCImportPlugin::_get_option_visibility(const String &p_path, const StringName &p_option_name, const Dictionary &p_options) const {
     if (p_option_name == StringName("lods/normal_merge_angle")) {
         return p_options.get("lods/generate", true);
+    }
+    if (p_option_name == StringName("materials/textures")) {
+        return p_options.get("materials/ifc_materials", false);
     }
     if (p_option_name == StringName("collision/classes")) {
         return p_options.get("collision/create", false);
@@ -63,6 +68,8 @@ Error GDIFCImportPlugin::_import(const String &p_source_file, const String &p_sa
     settings->setCircleSegments((uint16_t)(int)p_options.get("geometry/circle_segments", 12));
     settings->setGenerateLods(p_options.get("lods/generate", true));
     settings->setLodNormalMergeAngle((float)(double)p_options.get("lods/normal_merge_angle", 60.0));
+    settings->setIfcMaterials(p_options.get("materials/ifc_materials", false));
+    settings->setIfcTextures(p_options.get("materials/textures", false));
 
     const bool create_collision = p_options.get("collision/create", false);
     const PackedStringArray class_names = p_options.get("collision/classes", PackedStringArray());
