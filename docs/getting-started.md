@@ -13,6 +13,10 @@ GDIFC is a Godot GDExtension plugin that imports IFC models and creates scene no
 
 The central runtime node is `GDIFCManager`.
 
+## Requirements
+
+Godot 4.5 or later, on Windows, Linux, Android or Web.
+
 ## Installation Paths
 
 ### Option A: Godot Asset Library (recommended)
@@ -41,16 +45,21 @@ extends Node3D
 @onready var ifc_manager: GDIFCManager = $GDIFCManager
 
 func _ready() -> void:
-    var err := ifc_manager.read_ifc("res://models/building.ifc", false, [])
+    var err := ifc_manager.read_ifc("res://models/building.ifc")
     if err != OK:
         push_error("Failed to start IFC load. Error code: %s" % err)
 ```
+
+In the editor, you can also load a file from the GDIFC dock with **Load IFC...**, or drag an `.ifc` file from the FileSystem dock into the 3D view to [import it as a scene](loading-models.md#importing-ifc-files-as-scenes).
 
 ## How Loading Behaves
 
 The load pipeline is asynchronous and threaded. This means your game or editor stays responsive while parsing and mesh generation are running.
 
-When loading completes, GDIFC creates `IFCNode` children under `GDIFCManager`.
+Loading finishes in two steps:
+
+1. `ifc_read`: the model is visible. GDIFC has added an `IFCModel` node under the `GDIFCManager`, holding the `IFCNode` tree nested by spatial structure (project, site, building, storey).
+2. `ifc_objects_ready`: each node's attributes, property sets, quantities and typed `ifc_object` are filled in. Wait for this signal before reading IFC data.
 
 ## Next Steps
 

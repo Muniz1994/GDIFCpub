@@ -15,10 +15,22 @@ if err != OK:
 Parameter details:
 
 - `path`: Godot resource path (`res://...`) or absolute path.
-- `create_collision`: Set `true` to create collision shapes.
+- `create_collision`: Set `true` to create collision shapes. Optional, `false` by default.
 - `collision_classes`: exact IFC class names to create collision for. Subtypes are not included, so list `IfcWallStandardCase` along with `IfcWall` if you want both.
 
 If `collision_classes` is empty and `create_collision` is true, every element with geometry gets a collision shape.
+
+Both collision parameters are optional, so `read_ifc("res://models/bridge.ifc")` loads without collision.
+
+## Importing `.ifc` Files As Scenes
+
+`.ifc` files inside the project are imported like `.glb` files: drag one from the FileSystem dock into the 3D view, or instance it in a scene. The model is built once per import and stored in binary under `.godot/imported/`, so the scene that uses it only stores a reference to the `.ifc` file and stays small and quick to save. To change individual nodes, enable **Editable Children** on the instance.
+
+From the GDIFC dock, turn on **Scene → Import as scene** before clicking **Load IFC...**: the file is imported with the dock's options and instanced in the edited scene. Files from outside the project are first copied into the **Import folder** (`res://ifc/` by default); files already in the project are imported where they are. Of the settings preset, only coordinate to origin and circle segments apply to imports.
+
+Select the `.ifc` file and open the **Import** dock to set its options (coordinate to origin, circle segments, LODs, IFC materials and textures, collision, and the classes or collision matrix to create it with), then click **Reimport**. The model is reimported automatically when the `.ifc` file changes.
+
+The root of an imported scene is a `GDIFCManager`. When an instance enters the tree, it re-parses the `.ifc` file to restore `ifc_object` and the `IFCModel` queries, then emits `ifc_objects_ready`. Set its `reference_georeference` to place the model relative to another model's `IFCGeoreference`. In exported projects, add `*.ifc` to the export preset's **Filters to export non-resource files/folders** so the file is available at runtime.
 
 ## Loading From Base64 Data
 
@@ -144,7 +156,7 @@ With `generate_lods` enabled (the default), every element with enough triangles 
 
 LOD data is saved inside the scene, so `.tscn` files grow. Set `generate_lods = false` for faster loads and smaller scenes. `lod_normal_merge_angle` controls how aggressively vertices with different normals are merged while simplifying.
 
-In the editor dock, **Config → Generate LODs** and **Config → LOD merge angle** start from the selected settings preset and override it for that load only. The preset itself is not modified.
+In the editor dock, **Geometry → Generate LODs** and **Geometry → LOD merge angle** start from the selected settings preset and override it for that load only. The preset itself is not modified.
 
 ### IFC Materials
 
@@ -238,6 +250,6 @@ When loading finishes, the new `IFCModel` gets a transform that maps its map con
 
 If the new model has no georeferencing data (IFC2x3, or IFC4 without `IfcMapConversion`), it is placed assuming it shares the reference model's engineering coordinate system, and a warning is printed.
 
-In the editor dock, pick the reference in **Config → Reference georeference**. The list shows every `IFCGeoreference` in the edited scene and refreshes each time it opens.
+In the editor dock, pick the reference in **Placement → Reference georeference**. The list shows every `IFCGeoreference` in the edited scene and refreshes each time it opens.
 
 The `coordinate_to_origin` offset is stored on each `IFCGeoreference` node (`coordination_offset_x/y/z`). Models loaded with an older GDIFC version don't have it. If such a model was loaded with `coordinate_to_origin` enabled, reload it before using it as a reference.

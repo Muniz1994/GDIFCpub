@@ -1,6 +1,6 @@
 # API Reference
 
-This page centralizes the most-used GDIFC runtime API.
+This page lists the GDIFC runtime API.
 
 ## GDIFCManager (Node3D)
 
@@ -8,11 +8,19 @@ Main entry point for IFC loading and model access.
 
 ### Methods
 
-- `read_ifc(path, create_collision, collision_classes) -> Error`
-  - Loads an IFC from disk.
-  - `path` can be `res://` or absolute.
-- `read_ifc_base64(data, create_collision, collision_classes) -> Error`
-  - Loads an IFC from a base64 string.
+- `read_ifc(path: String, create_collision := false, collision_classes := []) -> Error`
+  - Loads an IFC from disk. `path` can be `res://` or absolute.
+  - With `create_collision`, `collision_classes` lists the exact IFC class names to create collision for, or `[]` for every element. Ignored when `collision_matrix` is set. See [Collision Strategy](loading-models.md#collision-strategy).
+- `read_ifc_base64(base64_data: String, create_collision := false, collision_classes := []) -> Error`
+  - Loads an IFC from a base64 string. Same collision parameters as `read_ifc`.
+- `get_ifc_model() -> IFCModel`
+  - The `IFCModel` root node of the loaded model, or null before the first load. Its queries work after `ifc_objects_ready`.
+- `get_node_by_global_id(global_id: String) -> IFCNode`
+  - The node of the element with that GlobalId, or null. Available after `ifc_objects_ready`.
+- `get_ifc_object_by_global_id(global_id: String) -> GDIFCEntityBase`
+  - The typed entity with that GlobalId, whether or not it has a node. Available after `ifc_objects_ready`.
+- `get_elements_by_class(ifc_class: String) -> Array`
+  - Every `IFCNode` whose `ifc_class` is exactly `ifc_class`, such as `"IfcWall"`. Subtypes are not included. Nodes are found through a scene group named after their class, so the result includes the nodes of every model in the scene tree, not only this manager's.
 - `get_load_progress() -> float`
   - Progress of the current or last load, from `0.0` to `1.0`. It never decreases during a load.
 - `get_load_stage() -> String`
@@ -33,23 +41,98 @@ Main entry point for IFC loading and model access.
   - Attributes, property sets, quantities and typed `ifc_object` references are on the nodes, and the `Georeference` node and placement relative to `reference_georeference` are applied. Emitted after `ifc_read`, since this data is read by a second parser in the background. Also emitted after a saved scene is reopened and relinked.
   - If that parser can't read the file (for example an unsupported schema such as IFC4X3_RC2), it is still emitted, with an error in the Output panel; the model keeps its geometry without properties.
 - `ifc_load_failed`
-  - The file couldn't be read by the geometry engine. Details are in the Output panel.
+  - The file couldn't be read by the geometry engine. Details are in the Output panel. The manager can load again afterwards.
 
 ```gdscript
 ifc_manager.load_progress_changed.connect(func(progress: float, stage: String):
     $ProgressBar.value = progress
     $StatusLabel.text = stage)
-ifc_manager.read_ifc("res://models/building.ifc", false, [])
+ifc_manager.read_ifc("res://models/building.ifc")
 ```
 
 ### Properties
 
 - `geometric_settings: GDIFCLoaderSettings`
   - Assign before calling load methods.
-- `material_library: GDIFCMaterialLibrary`
-  - The model's IFC material definitions, after `ifc_objects_ready`. Null unless `ifc_materials` was on.
 - `collision_matrix: GDIFCCollisionMatrix`
   - Shape and physics layers of the collision per IFC class. When set, `read_ifc`'s `create_collision` and `collision_classes` are ignored. See [Collision Matrix](loading-models.md#collision-matrix).
+- `reference_georeference: NodePath`
+  - An `IFCGeoreference` to place the model relative to, as a path from the manager. Set it before loading. See [Loading Relative To A Georeference](loading-models.md#loading-relative-to-a-georeference).
+- `material_library: GDIFCMaterialLibrary`
+  - The model's IFC material definitions, after `ifc_objects_ready`. Null unless `ifc_materials` was on.
+- `ifc_file_path: String`
+  - The file the model was loaded from. Set by `read_ifc` and cleared by `read_ifc_base64`. It is saved with the scene, and the file is parsed again from it to relink `ifc_object` when the scene is reopened.
+
+## IFCModel (Node3D)
+
+The root node of a loaded model, under the manager, and the parent of its `IFCNode` tree and its `Georeference` node. Get it with `GDIFCManager.get_ifc_model()`. Its methods work after `ifc_objects_ready`.
+
+### Header
+
+From the file's `FILE_DESCRIPTION`, `FILE_NAME` and `FILE_SCHEMA`. A field written as `$` returns an empty value.
+
+- `get_schema_name() -> String`
+- `get_file_description() -> PackedStringArray`
+- `get_file_name() -> String`
+- `get_timestamp() -> String`
+- `get_author() -> PackedStringArray`
+- `get_organization() -> PackedStringArray`
+- `get_preprocessor() -> String`
+- `get_originating_system() -> String`
+- `get_authorization() -> String`
+
+### Queries
+
+- `get_by_id(express_id: int) -> GDIFCEntityBase`
+- `get_by_global_id(global_id: String) -> GDIFCEntityBase`
+- `instances_by_type(ifc_class: String) -> Array`
+  - Every entity of that class, subtypes included.
+- `instances_by_type_exact(ifc_class: String) -> Array`
+  - Every entity of exactly that class.
+- `get_project() -> GDIFCEntityBase`
+  - The `IfcProject`.
+
+### Editing
+
+- `create(ifc_class: String) -> GDIFCEntityBase`
+  - Adds a new entity of that class to the file and returns its typed wrapper. Its attributes start unset.
+- `save(path: String) -> Error`
+  - Writes the file, including entities created or changed from scripts, as STEP.
+- `to_step_string() -> String`
+  - The same STEP text, as a string.
+
+```gdscript
+await ifc_manager.ifc_objects_ready
+var model := ifc_manager.get_ifc_model()
+print(model.get_schema_name(), " from ", model.get_originating_system())
+print(model.instances_by_type("IfcWall").size(), " walls")
+```
+
+## IFCNode (MeshInstance3D)
+
+Node generated for each IFC object.
+
+### Properties
+
+- `ifc_class: String`
+- `global_id: String`
+- `attributes: Dictionary` (after `ifc_objects_ready`)
+- `properties: Dictionary`: property sets, `{set name: {property: value}}` (after `ifc_objects_ready`)
+- `quantities: Dictionary`: quantity sets, shaped like `properties` (after `ifc_objects_ready`)
+- `ifc_object: GDIFCEntityBase` (after `ifc_objects_ready`; relinked on load, not saved)
+- `material_definition: GDIFCMaterialDefinition` (after `ifc_objects_ready`, with `ifc_materials` on)
+
+## IFCGeoreference (Node3D)
+
+Created as `IFCModel/Georeference` at `ifc_objects_ready`, for IFC4 and later files that have an `IfcMapConversion` and `IfcProjectedCRS`. Point another manager's `reference_georeference` at it to load a model in place.
+
+### Properties
+
+- `eastings: float`, `northings: float`, `orthogonal_height: float`: the map coordinates of the project origin
+- `x_axis_abscissa: float`, `x_axis_ordinate: float`: the rotation of the project's X axis on the map
+- `map_scale: float`
+- `crs_name: String`, `crs_description: String`, `geodetic_datum: String`, `vertical_datum: String`: from `IfcProjectedCRS`
+- `coordination_offset_x: float`, `coordination_offset_y: float`, `coordination_offset_z: float`: the translation applied to the model by `coordinate_to_origin`, in Godot axes; zero without it
 
 ## GDIFCCollisionMatrix (Resource)
 
@@ -57,7 +140,7 @@ ifc_manager.read_ifc("res://models/building.ifc", false, [])
 - `default_rule: GDIFCCollisionRule`
   - For classes no rule matches. Null gives them no collision.
 - `get_rule_for_class(ifc_class: String, schema := "IFC4") -> GDIFCCollisionRule`
-  - The rule an element of that class gets in a file of that schema (`IFC2X3`, `IFC4` or `IFC4X3_ADD2`), or null for no collision.
+  - The rule an element of that class gets in a file of that schema (`IFC2X3`, `IFC4` or `IFC4X3_ADD2`, also accepted as `IFC4X3`), or null for no collision.
 
 ## GDIFCCollisionRule (Resource)
 
@@ -70,19 +153,6 @@ ifc_manager.read_ifc("res://models/building.ifc", false, [])
   - Layers of the `StaticBody3D`.
 - `decomposition_settings: MeshConvexDecompositionSettings`
   - Decompose Convex only.
-
-## IFCNode (MeshInstance3D)
-
-Node generated for each IFC object.
-
-### Properties
-
-- `ifc_class: String`
-- `attributes: Dictionary`
-- `properties: Dictionary`
-- `quantities: Dictionary`
-- `ifc_object: GDIFCEntityBase`
-- `material_definition: GDIFCMaterialDefinition` (after `ifc_objects_ready`, with `ifc_materials` on)
 
 ## IFC Material Definitions (Resource)
 
@@ -116,21 +186,29 @@ Lengths are in the IFC file's length unit, like quantities. Subtypes such as `If
 
 ## GDIFCEntityBase (RefCounted)
 
-Base wrapper for all IFC entities.
+Base wrapper for all IFC entities. Every IFC class, such as `IfcWall`, is a subclass with its attributes as typed properties. See [Typed Entity Access](typed-entities.md).
 
 ### Common Methods
 
 - `get_type() -> String`
-- `get_attribute(name: String) -> Variant`
+  - The entity's IFC class, such as `"IfcWall"`.
+- `get_express_id() -> int`
+  - Its `#id` in the file.
+- `is_a(ifc_class: String) -> bool`
+  - Whether it is of that class or a subtype of it. The class name is case-sensitive: `"IfcWall"`, not `"IFCWALL"`.
+- `get_attribute(attr_name: String) -> Variant`
+- `get_attribute_names() -> PackedStringArray`
 - `get_all_attributes() -> Dictionary`
+- `get_inverse(inverse_attr_name: String) -> Array`
+  - The entities that refer to this one through that inverse attribute, such as `"IsDefinedBy"` or `"ContainedInStructure"`.
 
-Use this when your code must work across many IFC classes dynamically.
+Use these when your code must work across many IFC classes dynamically.
 
 ## GDIFCLoaderSettings (Resource)
 
 Controls geometry conversion behavior and processing limits.
 
-### Selected Properties
+### Properties
 
 - `coordinate_to_origin: bool` (default `false`)
 - `circle_segments: int` (default `12`)
@@ -157,7 +235,7 @@ settings.circle_segments = 16
 settings.coordinate_to_origin = true
 ifc_manager.geometric_settings = settings
 
-var err := ifc_manager.read_ifc("res://models/project.ifc", false, [])
+var err := ifc_manager.read_ifc("res://models/project.ifc")
 if err != OK:
     push_error("IFC load failed")
 ```

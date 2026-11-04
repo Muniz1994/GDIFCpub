@@ -10,6 +10,7 @@ Use this guide when you need to compile GDIFC yourself.
   - Windows: MSVC 2022
   - Linux: GCC 12+ or Clang 14+
 - Boost headers (downloaded by setup script)
+- Godot 4.5 or later to run the result. The test project in `ifc-godot-project/` is saved with Godot 4.8.
 
 Platform-specific:
 
@@ -19,8 +20,8 @@ Platform-specific:
 ## Standard Build Flow
 
 ```bash
-git clone --recurse-submodules https://github.com/Muniz1994/GDIFC.git
-cd GDIFC
+git clone --recurse-submodules https://github.com/Muniz1994/GDIFCpub.git
+cd GDIFCpub
 python tools/setup_boost.py
 scons
 ```
@@ -36,10 +37,16 @@ scons platform=web     target=template_release
 
 ## Output Location
 
-Build artifacts are copied to:
+The library is written to one of two places:
 
-- `addons/GDIFC/` for distribution
-- `ifc-godot-project/addons/GDIFC/` for the sample project
+- `addons/GDIFC/`, the distributed addon, by default
+- `ifc-godot-project/addons/GDIFC/`, the test project, with `local=1`
+
+```bash
+scons platform=windows target=template_debug local=1
+```
+
+The dock scripts and scenes are edited in `ifc-godot-project/addons/GDIFC/`. CI copies them to `addons/GDIFC/` when it publishes the addon.
 
 ## Testing Against IFC Files
 
