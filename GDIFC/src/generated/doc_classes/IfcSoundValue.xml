@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSoundValue" inherits="IfcPropertySetDefinition"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="SoundLevelTimeSeries" type="GDIFCEntityBase" setter="set_SoundLevelTimeSeries" getter="get_SoundLevelTimeSeries">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="Frequency" type="float" setter="set_Frequency" getter="get_Frequency">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="SoundLevelSingleValue" type="GDIFCEntityBase" setter="set_SoundLevelSingleValue" getter="get_SoundLevelSingleValue">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

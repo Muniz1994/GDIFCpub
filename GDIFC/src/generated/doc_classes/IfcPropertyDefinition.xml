@@ -10,6 +10,7 @@
 	<methods/>
 	<members>
 		<member name="HasContext" type="Array" setter="" getter="get_HasContext">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="HasAssociations" type="Array" setter="" getter="get_HasAssociations">
 		</member>

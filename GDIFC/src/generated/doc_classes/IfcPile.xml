@@ -15,6 +15,9 @@
 		<member name="ConstructionType" type="String" setter="set_ConstructionType" getter="get_ConstructionType">
 			General designator for how the pile is constructed. IFC 2x4 change: Material profile association capability by means of IfcRelAssociatesMaterial has been added. The attribute ConstructionType should not be used whenever its information can be provided by a material profile set, either associated with the IfcPile object or, if present, with a corresponding instance of IfcPileType .
 		</member>
+		<member name="HasPorts" type="Array" setter="" getter="get_HasPorts">
+			Only in IFC2X3 files: in others it is empty.
+		</member>
 	</members>
 	<signals/>
 	<constants/>

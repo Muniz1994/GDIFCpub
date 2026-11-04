@@ -9,6 +9,12 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="SubsequentThickness" type="PackedFloat64Array" setter="set_SubsequentThickness" getter="get_SubsequentThickness">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="VaryingThicknessLocation" type="GDIFCEntityBase" setter="set_VaryingThicknessLocation" getter="get_VaryingThicknessLocation">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
 	</members>
 	<signals/>
 	<constants/>

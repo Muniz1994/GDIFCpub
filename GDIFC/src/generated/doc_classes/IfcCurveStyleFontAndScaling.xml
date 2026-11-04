@@ -13,7 +13,7 @@
 			Name that may be assigned with the scaling of a curve font.
 		</member>
 		<member name="CurveStyleFont" type="GDIFCEntityBase" setter="set_CurveStyleFont" getter="get_CurveStyleFont">
-			The curve font to be scaled.
+			In IFC2X3 and IFC4 files, this is the [code]CurveFont[/code] attribute.
 		</member>
 		<member name="CurveFontScaling" type="float" setter="set_CurveFontScaling" getter="get_CurveFontScaling">
 			The scale factor.

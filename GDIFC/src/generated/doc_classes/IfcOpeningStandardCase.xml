@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcOpeningStandardCase" inherits="IfcOpeningElement"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The standard opening, IfcOpeningStandardCase , defines an opening with certain constraints for the dimension parameters, position within the voided element, and with certain constraints for the geometric representation. The IfcOpeningStandardCase handles all cases of openings, that: are true openings by cutting through the body of the voided element, i.e. where the opening depth is &gt;= to the thick
+	</brief_description>
+	<description>Only in IFC4 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

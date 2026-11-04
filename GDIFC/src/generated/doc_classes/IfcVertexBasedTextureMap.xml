@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcVertexBasedTextureMap" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="TextureVertices" type="Array" setter="set_TextureVertices" getter="get_TextureVertices">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="TexturePoints" type="Array" setter="set_TexturePoints" getter="get_TexturePoints">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

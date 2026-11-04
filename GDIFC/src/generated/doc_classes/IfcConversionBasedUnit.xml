@@ -16,6 +16,7 @@
 			The physical quantity from which the converted unit is derived.
 		</member>
 		<member name="HasExternalReference" type="Array" setter="" getter="get_HasExternalReference">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

@@ -10,7 +10,13 @@
 	<methods/>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Defines types of construction material resources. IFC2x4 New attribute
+			Defines types of construction material resources. IFC2x4 New attribute Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="Suppliers" type="Array" setter="set_Suppliers" getter="get_Suppliers">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="UsageRatio" type="float" setter="set_UsageRatio" getter="get_UsageRatio">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

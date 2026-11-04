@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelaxation" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="RelaxationValue" type="float" setter="set_RelaxationValue" getter="get_RelaxationValue">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="InitialStress" type="float" setter="set_InitialStress" getter="get_InitialStress">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

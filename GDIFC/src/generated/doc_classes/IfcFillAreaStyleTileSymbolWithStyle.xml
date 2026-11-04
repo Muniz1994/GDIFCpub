@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFillAreaStyleTileSymbolWithStyle" inherits="IfcGeometricRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The fill area style tile symbol with style is a symbol that is used as a tile within an annotated tiling. NOTE: The IfcFillAreaStyleTileSymbolWithStyle is an entity that had been adopted from ISO 10303, Industrial automation systems and integration—Product data representation and exchange, Part 46: Integrated generic resources: Visual presentation. NOTE: Corresponding ISO 10303 name: fill_area_sty
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Symbol" type="GDIFCEntityBase" setter="set_Symbol" getter="get_Symbol">
+			A styled item that is used as the annotation symbol for tiling the filled area. IFC2x4 CHANGE The data type has been changed to IfcStyleItem . NOTE Only IfcStyleItem 's that refer to a compatible geometric representation item and presentation style shall be used. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

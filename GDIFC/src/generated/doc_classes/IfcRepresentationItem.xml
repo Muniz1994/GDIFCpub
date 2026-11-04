@@ -10,8 +10,12 @@
 	<methods/>
 	<members>
 		<member name="LayerAssignment" type="Array" setter="" getter="get_LayerAssignment">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="StyledByItem" type="Array" setter="" getter="get_StyledByItem">
+		</member>
+		<member name="LayerAssignments" type="Array" setter="" getter="get_LayerAssignments">
+			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

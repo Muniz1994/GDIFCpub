@@ -5,19 +5,24 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="HorizontalWidths" type="bool" setter="set_HorizontalWidths" getter="get_HorizontalWidths">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="Widths" type="PackedFloat64Array" setter="set_Widths" getter="get_Widths">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="Slopes" type="PackedFloat64Array" setter="set_Slopes" getter="get_Slopes">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="Tags" type="PackedStringArray" setter="set_Tags" getter="get_Tags">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="OffsetPoint" type="GDIFCEntityBase" setter="set_OffsetPoint" getter="get_OffsetPoint">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

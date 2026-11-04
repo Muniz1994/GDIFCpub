@@ -5,16 +5,18 @@
 	<brief_description>
 		The IfcComplexPropertyTemplate defines the template for all complex properties, either the IfcComplexProperty 's, or the IfcPhysicalComplexQuantity 's. The individual complex property templates are interpreted according to their Name attribute and and optional UsageName attribute. HISTORY New entity in IFC2x4.
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="UsageName" type="String" setter="set_UsageName" getter="get_UsageName">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="TemplateType" type="String" setter="set_TemplateType" getter="get_TemplateType">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="HasPropertyTemplates" type="Array" setter="set_HasPropertyTemplates" getter="get_HasPropertyTemplates">
-			Reference to a set of property templates. It should only be provided, if the PropertyType is set to COMPLEX .
+			Reference to a set of property templates. It should only be provided, if the PropertyType is set to COMPLEX . Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

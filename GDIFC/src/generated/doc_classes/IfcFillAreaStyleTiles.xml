@@ -9,8 +9,8 @@
 	<tutorials/>
 	<methods/>
 	<members>
-		<member name="TilingPattern" type="Array" setter="set_TilingPattern" getter="get_TilingPattern">
-			A two direction repeat factor defining the shape and relative positioning of the tiles.
+		<member name="TilingPattern" type="Variant" setter="set_TilingPattern" getter="get_TilingPattern">
+			A two direction repeat factor defining the shape and relative positioning of the tiles. Its type depends on the file's schema: Array in IFC4 and IFC4X3_ADD2, GDIFCEntityBase in IFC2X3.
 		</member>
 		<member name="Tiles" type="Array" setter="set_Tiles" getter="get_Tiles">
 			A set of constituents of the tile.

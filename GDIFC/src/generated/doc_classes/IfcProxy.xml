@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcProxy" inherits="IfcProduct"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcProxy is intended to be a kind of a container for wrapping objects which are defined by associated properties, which may or may not have a geometric representation and placement in space. A proxy may have a semantic meaning, defined by the Name attribute, and property definitions, attached through the property assignment relationship, which definition may be outside of the definitions given by 
+	</brief_description>
+	<description>Only in IFC2X3 and IFC4 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ProxyType" type="String" setter="set_ProxyType" getter="get_ProxyType">
+			High level (and only) semantic meaning attached to the IfcProxy, defining the basic construct type behind the Proxy, e.g. Product or Process. Only in IFC2X3 and IFC4 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="Tag" type="String" setter="set_Tag" getter="get_Tag">
+			The tag (or label) identifier at the particular instance of a product, e.g. the serial number, or the position number. It is the identifier at the occurrence level. Only in IFC2X3 and IFC4 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

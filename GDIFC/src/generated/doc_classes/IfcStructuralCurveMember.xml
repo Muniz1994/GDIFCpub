@@ -13,7 +13,7 @@
 			Type of member with respect to its load carrying behavior in this analysis idealization.
 		</member>
 		<member name="Axis" type="GDIFCEntityBase" setter="set_Axis" getter="get_Axis">
-			Direction which is used in the definition of the local z axis. Axis is specified relative to the so-called global coordinate system, i.e. the SELF\IfcProduct.ObjectPlacement . NOTE It is desirable and usually possible that many instances of IfcStructuralCurveConnection and IfcStructuralCurveMember share a common instance of IfcDirection as their Axis attribute.
+			Direction which is used in the definition of the local z axis. Axis is specified relative to the so-called global coordinate system, i.e. the SELF\IfcProduct.ObjectPlacement . NOTE It is desirable and usually possible that many instances of IfcStructuralCurveConnection and IfcStructuralCurveMember share a common instance of IfcDirection as their Axis attribute. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

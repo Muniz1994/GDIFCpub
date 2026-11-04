@@ -12,6 +12,9 @@
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 			Predefined generic types for a railing that are specified in an enumeration. There may be a property set given for the predefined types. NOTE: The use of the predefined type directly at the occurrence object level of IfcRailing is only permitted, if no type object IfcRailingType is assigned. IFC2x PLATFORM CHANGE: The attribute has been changed into an OPTIONAL attribute.
 		</member>
+		<member name="HasPorts" type="Array" setter="" getter="get_HasPorts">
+			Only in IFC2X3 files: in others it is empty.
+		</member>
 	</members>
 	<signals/>
 	<constants/>

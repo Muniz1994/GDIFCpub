@@ -5,7 +5,7 @@
 	<brief_description>
 		Definition from IAI: Types of bars, wires, strands, meshes, tendons, and other components embedded in concrete in such a manner that the reinforcement and the concrete act together in resisting forces. HISTORY New entity in IFC Release 2x4
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>

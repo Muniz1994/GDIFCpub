@@ -9,8 +9,8 @@
 	<tutorials/>
 	<methods/>
 	<members>
-		<member name="TimeStamp" type="String" setter="set_TimeStamp" getter="get_TimeStamp">
-			The specification of the time point.
+		<member name="TimeStamp" type="Variant" setter="set_TimeStamp" getter="get_TimeStamp">
+			The specification of the time point. Its type depends on the file's schema: String in IFC4 and IFC4X3_ADD2, GDIFCEntityBase in IFC2X3.
 		</member>
 		<member name="ListValues" type="Array" setter="set_ListValues" getter="get_ListValues">
 			A list of time-series values. At least one value is required.

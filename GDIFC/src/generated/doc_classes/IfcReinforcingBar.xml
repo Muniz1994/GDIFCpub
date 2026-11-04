@@ -10,15 +10,18 @@
 	<methods/>
 	<members>
 		<member name="NominalDiameter" type="float" setter="set_NominalDiameter" getter="get_NominalDiameter">
-			The predefined type is always BAR.
 		</member>
 		<member name="CrossSectionArea" type="float" setter="set_CrossSectionArea" getter="get_CrossSectionArea">
 		</member>
 		<member name="BarLength" type="float" setter="set_BarLength" getter="get_BarLength">
 		</member>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			The predefined type is always BAR. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="BarSurface" type="String" setter="set_BarSurface" getter="get_BarSurface">
+		</member>
+		<member name="BarRole" type="String" setter="set_BarRole" getter="get_BarRole">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

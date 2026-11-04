@@ -5,7 +5,7 @@
 	<brief_description>
 		Definition from IAI : The IfcSpatialElementType defines a list of commonly shared property set definitions of a spatial structure element and an optional set of product representations. It is used to define a spatial element specification (i.e. the specific element information, that is common to all occurrences of that element type). NOTE ÿThe product representations are defined as representation 
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>

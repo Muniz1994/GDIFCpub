@@ -5,15 +5,18 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="Curve3D" type="GDIFCEntityBase" setter="set_Curve3D" getter="get_Curve3D">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="AssociatedGeometry" type="Array" setter="set_AssociatedGeometry" getter="get_AssociatedGeometry">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="MasterRepresentation" type="String" setter="set_MasterRepresentation" getter="get_MasterRepresentation">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

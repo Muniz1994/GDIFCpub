@@ -5,11 +5,12 @@
 	<brief_description>
 		Furniture defines complete furnishings such as a table, desk, chair, or cabinet, which may or may not be permanently attached to a building structure. Occurrences of furniture that are built in (where the property Pset_FurnitureTypeCommon.IsBuiltIn is asserted to be TRUE) should have their connection relationship with a building element occurrence defined through the IfcRelConnectsElements relatio
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

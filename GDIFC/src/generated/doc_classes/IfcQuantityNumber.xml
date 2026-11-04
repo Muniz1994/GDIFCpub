@@ -5,13 +5,15 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="NumberValue" type="float" setter="set_NumberValue" getter="get_NumberValue">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="Formula" type="String" setter="set_Formula" getter="get_Formula">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

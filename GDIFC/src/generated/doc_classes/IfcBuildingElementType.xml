@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcBuildingElementType" inherits="IfcElementType"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from IAI : The element type ( IfcBuildingElementType ) defines a list of commonly shared property set definitions of a building element and an optional set of product representations. It is used to define an element specification (i.e. the specific product information, that is common to all occurrences of that product type). NOTE: The product representations are defined as representatio
+	</brief_description>
+	<description>Only in IFC2X3 and IFC4 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

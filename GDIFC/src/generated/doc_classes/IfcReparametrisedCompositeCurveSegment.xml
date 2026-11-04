@@ -5,11 +5,12 @@
 	<brief_description>
 		Definition from ISO/CD 10303-42:1992 : The reparametrised composite curve segment is a special type of composite curve segment which provides the capability to re-define its parametric length without changing its geometry. Let l = ParamLength . If t 0 ≤ t ≤ t 1 is the parameter range of ParentCurve , the new parameter . for the reparametrised composite curve segment is given by the equation: if Sa
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="ParamLength" type="float" setter="set_ParamLength" getter="get_ParamLength">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

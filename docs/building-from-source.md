@@ -54,14 +54,20 @@ The dock scripts and scenes are edited in `ifc-godot-project/addons/GDIFC/`. CI 
 
 ## Regenerating IFC Typed Bindings
 
-If schema or generated class sources change, regenerate code from Express schema:
+If schema or generated class sources change, regenerate code from the Express schemas. The generator needs `pyparsing` (`pip install pyparsing`):
 
 ```bash
 cd ifcopenshell-express
-python godot_codegen.py schemas/IFC4X3_ADD2.exp ../GDIFC/src/generated/
+python godot_codegen.py schemas/IFC4X3_ADD2.exp schemas/IFC4.exp schemas/IFC2X3_TC1.exp ../GDIFC/src/generated/
 ```
 
-After regeneration, run your usual build command again.
+One class is generated per entity name across the schemas, so the same classes serve files of every supported schema. The first schema decides the class hierarchy, attribute names and types; entities and attributes only found in the others are added. Parsing a schema the first time takes a few minutes and leaves a `.cache.dat` next to it, which later runs read in seconds.
+
+After regeneration, run your usual build command again, and check the classes against files of each schema with `tests/entities_test.gd`:
+
+```bash
+godot --headless --path ifc-godot-project --script res://tests/entities_test.gd -- --file <ifc>
+```
 
 ## Common Build Notes
 

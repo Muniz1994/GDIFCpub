@@ -25,8 +25,10 @@
 			The fillet between the web and the flange.
 		</member>
 		<member name="FlangeEdgeRadius" type="float" setter="set_FlangeEdgeRadius" getter="get_FlangeEdgeRadius">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="FlangeSlope" type="float" setter="set_FlangeSlope" getter="get_FlangeSlope">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

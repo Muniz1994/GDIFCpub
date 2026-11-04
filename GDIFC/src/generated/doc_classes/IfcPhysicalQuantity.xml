@@ -16,6 +16,7 @@
 			Further explanation that might be given to the quantity.
 		</member>
 		<member name="HasExternalReferences" type="Array" setter="" getter="get_HasExternalReferences">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="PartOfComplex" type="Array" setter="" getter="get_PartOfComplex">
 		</member>

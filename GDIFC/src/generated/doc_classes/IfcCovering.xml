@@ -15,6 +15,13 @@
 		<member name="CoversSpaces" type="Array" setter="" getter="get_CoversSpaces">
 		</member>
 		<member name="CoversElements" type="Array" setter="" getter="get_CoversElements">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
+		</member>
+		<member name="HasPorts" type="Array" setter="" getter="get_HasPorts">
+			Only in IFC2X3 files: in others it is empty.
+		</member>
+		<member name="Covers" type="Array" setter="" getter="get_Covers">
+			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

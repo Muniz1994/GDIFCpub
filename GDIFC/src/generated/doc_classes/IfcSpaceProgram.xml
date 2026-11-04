@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSpaceProgram" inherits="IfcControl"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="SpaceProgramIdentifier" type="String" setter="set_SpaceProgramIdentifier" getter="get_SpaceProgramIdentifier">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="MaxRequiredArea" type="float" setter="set_MaxRequiredArea" getter="get_MaxRequiredArea">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="MinRequiredArea" type="float" setter="set_MinRequiredArea" getter="get_MinRequiredArea">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="RequestedLocation" type="GDIFCEntityBase" setter="set_RequestedLocation" getter="get_RequestedLocation">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="StandardRequiredArea" type="float" setter="set_StandardRequiredArea" getter="get_StandardRequiredArea">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="HasInteractionReqsFrom" type="Array" setter="" getter="get_HasInteractionReqsFrom">
+			Only in IFC2X3 files: in others it is empty.
+		</member>
+		<member name="HasInteractionReqsTo" type="Array" setter="" getter="get_HasInteractionReqsTo">
+			Only in IFC2X3 files: in others it is empty.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

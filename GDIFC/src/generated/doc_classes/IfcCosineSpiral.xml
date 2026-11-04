@@ -5,13 +5,15 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="CosineTerm" type="float" setter="set_CosineTerm" getter="get_CosineTerm">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="ConstantTerm" type="float" setter="set_ConstantTerm" getter="get_ConstantTerm">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

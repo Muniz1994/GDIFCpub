@@ -5,11 +5,12 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
-		<member name="TexCoordsList" type="Array" setter="" getter="get_TexCoordsList">
+		<member name="TexCoordsList" type="Array" setter="set_TexCoordsList" getter="get_TexCoordsList">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

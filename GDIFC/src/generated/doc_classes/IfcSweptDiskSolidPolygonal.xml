@@ -5,12 +5,12 @@
 	<brief_description>
 		The IfcSweptDiskSolidPolygonal is a IfcSweptDiskSolid where the Directrix is restricted to be provided by an IfcPolyline only. An optional FilletRadius attribute can be asserted, it is then applied as a fillet to all transitions between the segments of the IfcPolyline . HISTORY New entity in IFC2x4. Informal proposition The FilletRadius , if provided, has to be smaller then or equal to the length 
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="FilletRadius" type="float" setter="set_FilletRadius" getter="get_FilletRadius">
-			The fillet that is equally applied to all transitions between the segments of the IfcPolyline , providing the geometric representation for the Directrix . If omited, no fillet is applied to the segments.
+			The fillet that is equally applied to all transitions between the segments of the IfcPolyline , providing the geometric representation for the Directrix . If omited, no fillet is applied to the segments. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

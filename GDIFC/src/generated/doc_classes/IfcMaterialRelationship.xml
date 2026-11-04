@@ -5,18 +5,18 @@
 	<brief_description>
 		IfcMaterialRelationship defines a relationship between part and whole in material definitions (as in composite materials). The parts, expressed by the set of RelatedMaterials , are material constituents of which a single material aggregate is composed. HISTORYÿNew Entity in IFC2x4
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="RelatingMaterial" type="GDIFCEntityBase" setter="set_RelatingMaterial" getter="get_RelatingMaterial">
-			Reference to the relating material (the composite).
+			Reference to the relating material (the composite). Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="RelatedMaterials" type="Array" setter="set_RelatedMaterials" getter="get_RelatedMaterials">
-			Reference to related materials (as constituents of composite material).
+			Reference to related materials (as constituents of composite material). Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="MaterialExpression" type="String" setter="set_MaterialExpression" getter="get_MaterialExpression">
-			The amount of related material in the whole (composite material or material set). Expressed as proportion (percentage) of weight or volume, or as any other appropriate value.
+			In IFC4 files, this is the [code]Expression[/code] attribute. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

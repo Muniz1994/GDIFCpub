@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcHygroscopicMaterialProperties" inherits="IfcMaterialProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="UpperVaporResistanceFactor" type="float" setter="set_UpperVaporResistanceFactor" getter="get_UpperVaporResistanceFactor">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="LowerVaporResistanceFactor" type="float" setter="set_LowerVaporResistanceFactor" getter="get_LowerVaporResistanceFactor">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="IsothermalMoistureCapacity" type="float" setter="set_IsothermalMoistureCapacity" getter="get_IsothermalMoistureCapacity">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="VaporPermeability" type="float" setter="set_VaporPermeability" getter="get_VaporPermeability">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="MoistureDiffusivity" type="float" setter="set_MoistureDiffusivity" getter="get_MoistureDiffusivity">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

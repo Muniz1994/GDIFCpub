@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMove" inherits="IfcTask"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="MoveFrom" type="GDIFCEntityBase" setter="set_MoveFrom" getter="get_MoveFrom">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="MoveTo" type="GDIFCEntityBase" setter="set_MoveTo" getter="get_MoveTo">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="PunchList" type="PackedStringArray" setter="set_PunchList" getter="get_PunchList">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

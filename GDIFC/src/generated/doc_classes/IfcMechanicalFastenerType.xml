@@ -10,13 +10,13 @@
 	<methods/>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Subtype of mechanical fastener
+			Subtype of mechanical fastener Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="NominalDiameter" type="float" setter="set_NominalDiameter" getter="get_NominalDiameter">
-			The nominal diameter describing the cross-section size of the fastener type.
+			The nominal diameter describing the cross-section size of the fastener type. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="NominalLength" type="float" setter="set_NominalLength" getter="get_NominalLength">
-			The nominal length describing the longitudinal dimensions of the fastener type.
+			The nominal length describing the longitudinal dimensions of the fastener type. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

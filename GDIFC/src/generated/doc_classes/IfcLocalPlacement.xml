@@ -10,7 +10,7 @@
 	<methods/>
 	<members>
 		<member name="RelativePlacement" type="GDIFCEntityBase" setter="set_RelativePlacement" getter="get_RelativePlacement">
-			Reference to Object that provides the relative placement by its local coordinate system. If it is omitted, then the local placement is given to the WCS, established by the geometric representation context.
+			Geometric placement that defines the transformation from the related coordinate system into the relating. The placement can be either 2D or 3D, depending on the dimension count of the coordinate system.
 		</member>
 	</members>
 	<signals/>

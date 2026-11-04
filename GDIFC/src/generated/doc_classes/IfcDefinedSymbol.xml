@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDefinedSymbol" inherits="IfcGeometricRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A defined symbol is a symbolic representation that gets its shape information by an established convention, either through a predefined symbol, or an externally defined symbol. NOTE: The IfcDefinedSymbol is an entity that had been adopted from ISO 10303, Industrial automation systems and integration—Product data representation and exchange, Part 46: Integrated generic resources: Visual presentatio
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Definition" type="GDIFCEntityBase" setter="set_Definition" getter="get_Definition">
+			An implicit description of the symbol, either predefined or externally defined. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="Target" type="GDIFCEntityBase" setter="set_Target" getter="get_Target">
+			A description of the placement, orientation and (uniform or non-uniform) scaling of the defined symbol. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

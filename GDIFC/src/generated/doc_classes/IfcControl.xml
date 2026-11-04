@@ -10,7 +10,7 @@
 	<methods/>
 	<members>
 		<member name="Identification" type="String" setter="set_Identification" getter="get_Identification">
-			An identifying designation given to a control It is the identifier at the occurrence level. IFC2x4 CHANGE Attribute unified by promoting from various subtypes of IfcControl .
+			An identifying designation given to a control It is the identifier at the occurrence level. IFC2x4 CHANGE Attribute unified by promoting from various subtypes of IfcControl . In IFC2X3 files, this is the [code]RequestID[/code] attribute. In IFC2X3 files, this is the [code]PermitID[/code] attribute. In IFC2X3 files, this is the [code]ID[/code] attribute. In IFC2X3 files, this is the [code]Identifier[/code] attribute.
 		</member>
 		<member name="Controls" type="Array" setter="" getter="get_Controls">
 		</member>

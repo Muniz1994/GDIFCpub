@@ -5,13 +5,15 @@
 	<brief_description>
 		The IfcPropertyTemplate is an abstract supertype comprising the templates for all dynamically extensible properties, either as an IfcComplexPropertyTemplate , or an IfcSimplePropertyTemplate . These templates determine the structure of: in case of IfcComplexPropertyTemplate an IfcComplexProperty an IfcPhysicalComplexQuantity in case of IfcSimplePropertyTemplate a subtype of IfcSimpleProperty a sub
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="PartOfComplexTemplate" type="Array" setter="" getter="get_PartOfComplexTemplate">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="PartOfPsetTemplate" type="Array" setter="" getter="get_PartOfPsetTemplate">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

@@ -16,6 +16,7 @@
 			The tag (or label) identifier at the particular type of a product, e.g. the article number (like the EAN). It is the identifier at the specific level.
 		</member>
 		<member name="ReferencedBy" type="Array" setter="" getter="get_ReferencedBy">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

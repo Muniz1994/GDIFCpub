@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMechanicalMaterialProperties" inherits="IfcMaterialProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="DynamicViscosity" type="float" setter="set_DynamicViscosity" getter="get_DynamicViscosity">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="YoungModulus" type="float" setter="set_YoungModulus" getter="get_YoungModulus">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="ShearModulus" type="float" setter="set_ShearModulus" getter="get_ShearModulus">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="PoissonRatio" type="float" setter="set_PoissonRatio" getter="get_PoissonRatio">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="ThermalExpansionCoefficient" type="float" setter="set_ThermalExpansionCoefficient" getter="get_ThermalExpansionCoefficient">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

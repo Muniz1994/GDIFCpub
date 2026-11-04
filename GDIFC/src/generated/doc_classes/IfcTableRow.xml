@@ -15,6 +15,9 @@
 		<member name="IsHeading" type="bool" setter="set_IsHeading" getter="get_IsHeading">
 			Flag which identifies if the row is a heading row or a row which contains row values. NOTE - If the row is a heading, the flag takes the value = TRUE.
 		</member>
+		<member name="OfTable" type="Array" setter="" getter="get_OfTable">
+			Only in IFC2X3 files: in others it is empty.
+		</member>
 	</members>
 	<signals/>
 	<constants/>

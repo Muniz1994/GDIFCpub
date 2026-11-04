@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcGeneralProfileProperties" inherits="IfcProfileProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PhysicalWeight" type="float" setter="set_PhysicalWeight" getter="get_PhysicalWeight">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="Perimeter" type="float" setter="set_Perimeter" getter="get_Perimeter">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="MinimumPlateThickness" type="float" setter="set_MinimumPlateThickness" getter="get_MinimumPlateThickness">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="MaximumPlateThickness" type="float" setter="set_MaximumPlateThickness" getter="get_MaximumPlateThickness">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="CrossSectionArea" type="float" setter="set_CrossSectionArea" getter="get_CrossSectionArea">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

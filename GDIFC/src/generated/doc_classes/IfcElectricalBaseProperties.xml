@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcElectricalBaseProperties" inherits="IfcEnergyProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ElectricCurrentType" type="String" setter="set_ElectricCurrentType" getter="get_ElectricCurrentType">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="InputVoltage" type="float" setter="set_InputVoltage" getter="get_InputVoltage">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="InputFrequency" type="float" setter="set_InputFrequency" getter="get_InputFrequency">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="FullLoadCurrent" type="float" setter="set_FullLoadCurrent" getter="get_FullLoadCurrent">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="MinimumCircuitCurrent" type="float" setter="set_MinimumCircuitCurrent" getter="get_MinimumCircuitCurrent">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="MaximumPowerInput" type="float" setter="set_MaximumPowerInput" getter="get_MaximumPowerInput">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="RatedPowerInput" type="float" setter="set_RatedPowerInput" getter="get_RatedPowerInput">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="InputPhase" type="int" setter="set_InputPhase" getter="get_InputPhase">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -24,6 +24,7 @@
 		<member name="HasSubContexts" type="Array" setter="" getter="get_HasSubContexts">
 		</member>
 		<member name="HasCoordinateOperation" type="Array" setter="" getter="get_HasCoordinateOperation">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

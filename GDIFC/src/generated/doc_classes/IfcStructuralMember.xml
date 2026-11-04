@@ -11,6 +11,9 @@
 	<members>
 		<member name="ConnectedBy" type="Array" setter="" getter="get_ConnectedBy">
 		</member>
+		<member name="ReferencesElement" type="Array" setter="" getter="get_ReferencesElement">
+			Only in IFC2X3 files: in others it is empty.
+		</member>
 	</members>
 	<signals/>
 	<constants/>

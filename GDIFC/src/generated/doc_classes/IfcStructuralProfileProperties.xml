@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralProfileProperties" inherits="IfcGeneralProfileProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="TorsionalConstantX" type="float" setter="set_TorsionalConstantX" getter="get_TorsionalConstantX">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="MomentOfInertiaYZ" type="float" setter="set_MomentOfInertiaYZ" getter="get_MomentOfInertiaYZ">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="MomentOfInertiaY" type="float" setter="set_MomentOfInertiaY" getter="get_MomentOfInertiaY">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="MomentOfInertiaZ" type="float" setter="set_MomentOfInertiaZ" getter="get_MomentOfInertiaZ">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="WarpingConstant" type="float" setter="set_WarpingConstant" getter="get_WarpingConstant">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="ShearCentreZ" type="float" setter="set_ShearCentreZ" getter="get_ShearCentreZ">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="ShearCentreY" type="float" setter="set_ShearCentreY" getter="get_ShearCentreY">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="ShearDeformationAreaZ" type="float" setter="set_ShearDeformationAreaZ" getter="get_ShearDeformationAreaZ">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="ShearDeformationAreaY" type="float" setter="set_ShearDeformationAreaY" getter="get_ShearDeformationAreaY">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="MaximumSectionModulusY" type="float" setter="set_MaximumSectionModulusY" getter="get_MaximumSectionModulusY">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="MinimumSectionModulusY" type="float" setter="set_MinimumSectionModulusY" getter="get_MinimumSectionModulusY">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="MaximumSectionModulusZ" type="float" setter="set_MaximumSectionModulusZ" getter="get_MaximumSectionModulusZ">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="MinimumSectionModulusZ" type="float" setter="set_MinimumSectionModulusZ" getter="get_MinimumSectionModulusZ">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="TorsionalSectionModulus" type="float" setter="set_TorsionalSectionModulus" getter="get_TorsionalSectionModulus">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="CentreOfGravityInX" type="float" setter="set_CentreOfGravityInX" getter="get_CentreOfGravityInX">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="CentreOfGravityInY" type="float" setter="set_CentreOfGravityInY" getter="get_CentreOfGravityInY">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

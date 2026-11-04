@@ -10,7 +10,13 @@
 	<methods/>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Identifies the predefined types of a procedure from which the type required may be set.
+			Identifies the predefined types of a procedure from which the type required may be set. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="ProcedureType" type="String" setter="set_ProcedureType" getter="get_ProcedureType">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="UserDefinedProcedureType" type="String" setter="set_UserDefinedProcedureType" getter="get_UserDefinedProcedureType">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

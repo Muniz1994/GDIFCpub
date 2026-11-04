@@ -5,7 +5,7 @@
 	<brief_description>
 		IfcContext is the generalization of a project context in which objects, type objects, property sets, and properties are defined. The IfcProject as subtype of IfcContext provides the context for all information on a construction project, it may include one or several IfcProjectLibrary as subtype of IfcContext to register the included libraries for the project. Context definitions can be named, usin
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
@@ -27,6 +27,7 @@
 		<member name="IsDefinedBy" type="Array" setter="" getter="get_IsDefinedBy">
 		</member>
 		<member name="Declares" type="Array" setter="" getter="get_Declares">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

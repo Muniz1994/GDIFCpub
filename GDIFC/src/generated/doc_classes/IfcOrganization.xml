@@ -10,7 +10,7 @@
 	<methods/>
 	<members>
 		<member name="Identification" type="String" setter="set_Identification" getter="get_Identification">
-			Identification of the organization.
+			Identification of the organization. In IFC2X3 files, this is the [code]Id[/code] attribute.
 		</member>
 		<member name="Name" type="String" setter="set_Name" getter="get_Name">
 			The word, or group of words, by which the organization is referred to.

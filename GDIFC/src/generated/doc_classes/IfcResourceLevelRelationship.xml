@@ -5,7 +5,7 @@
 	<brief_description>
 		IfcResourceLevelRelationship is an abstract base class for relationships between resource-level entities. HISTORY New Entity in IFC 2x4
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>

@@ -5,23 +5,30 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="StartDistAlong" type="float" setter="set_StartDistAlong" getter="get_StartDistAlong">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="HorizontalLength" type="float" setter="set_HorizontalLength" getter="get_HorizontalLength">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="StartHeight" type="float" setter="set_StartHeight" getter="get_StartHeight">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="StartGradient" type="float" setter="set_StartGradient" getter="get_StartGradient">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="EndGradient" type="float" setter="set_EndGradient" getter="get_EndGradient">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="RadiusOfCurvature" type="float" setter="set_RadiusOfCurvature" getter="get_RadiusOfCurvature">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

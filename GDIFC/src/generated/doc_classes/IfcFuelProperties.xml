@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFuelProperties" inherits="IfcMaterialProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="CombustionTemperature" type="float" setter="set_CombustionTemperature" getter="get_CombustionTemperature">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="CarbonContent" type="float" setter="set_CarbonContent" getter="get_CarbonContent">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="LowerHeatingValue" type="float" setter="set_LowerHeatingValue" getter="get_LowerHeatingValue">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="HigherHeatingValue" type="float" setter="set_HigherHeatingValue" getter="get_HigherHeatingValue">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

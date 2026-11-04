@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTwoDirectionRepeatFactor" inherits="IfcOneDirectionRepeatFactor"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-46:1992 : A two direction repeat factor combines two vectors which are used in the fill area style tiles entity for determining the shape and relative location of tiles. Given the initial position of any tile, the two direction repeat factor determines eight new positions according to the equation: k 1 * R 1 + k 2 * R 2 k X {-1,1} NOTE Corresponding ISO 10303 name: two
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="SecondRepeatFactor" type="GDIFCEntityBase" setter="set_SecondRepeatFactor" getter="get_SecondRepeatFactor">
+			A vector which specifies the relative positioning of tiles in the second direction. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

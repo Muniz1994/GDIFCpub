@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcServiceLife" inherits="IfcControl"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ServiceLifeType" type="String" setter="set_ServiceLifeType" getter="get_ServiceLifeType">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="ServiceLifeDuration" type="float" setter="set_ServiceLifeDuration" getter="get_ServiceLifeDuration">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

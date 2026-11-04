@@ -5,18 +5,18 @@
 	<brief_description>
 		Definition from IAI: Describes required or provided reinforcement area of surface members. NOTE Member design parameters like concrete cover, effective depth, orientation of meshes or rebars (two, optionally three directions) etc. are not specified in IfcStructuralLoadResource schema. They shall be specified at the level of structural members. HISTORY: New entity in IFC 2x4.
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="SurfaceReinforcement1" type="PackedFloat64Array" setter="set_SurfaceReinforcement1" getter="get_SurfaceReinforcement1">
-			Reinforcement at the face of the member which is located at the side of the positive local z direction of the surface member. Specified as area per length, e.g. square metre per metre (hence length measure, e.g. metre). The reinforcement area may be specified for two or three directions of reinforcement bars.
+			Reinforcement at the face of the member which is located at the side of the positive local z direction of the surface member. Specified as area per length, e.g. square metre per metre (hence length measure, e.g. metre). The reinforcement area may be specified for two or three directions of reinforcement bars. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="SurfaceReinforcement2" type="PackedFloat64Array" setter="set_SurfaceReinforcement2" getter="get_SurfaceReinforcement2">
-			Reinforcement at the face of the member which is located at the side of the negative local z direction of the surface member. Specified as area per length, e.g. square metre per metre (hence length measure, e.g. metre). The reinforcement area may be specified for two or three directions of reinforcement bars.
+			Reinforcement at the face of the member which is located at the side of the negative local z direction of the surface member. Specified as area per length, e.g. square metre per metre (hence length measure, e.g. metre). The reinforcement area may be specified for two or three directions of reinforcement bars. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="ShearReinforcement" type="float" setter="set_ShearReinforcement" getter="get_ShearReinforcement">
-			Shear reinforcement. Specified as area per area, e.g. square metre per square metre (hence ratio measure, i.e. unitless).
+			Shear reinforcement. Specified as area per area, e.g. square metre per square metre (hence ratio measure, i.e. unitless). Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

@@ -5,20 +5,21 @@
 	<brief_description>
 		IfcTypeProcess defines a specific (or type) definition of a process or activity without being assigned to a schedule or a time.ÿIt is used to define a process or activity specification, that is, the specific process or activity information that is common to all occurrences that are defined for that process or activity type. An IfcTypeProcess may have a list of property set attached. Values of thes
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="Identification" type="String" setter="set_Identification" getter="get_Identification">
-			An identifying designation given to a process type.
+			An identifying designation given to a process type. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="LongDescription" type="String" setter="set_LongDescription" getter="get_LongDescription">
-			An long description, or text, describing the activity in detail. NOTE The inherited SELF\IfcRoot.Description attribute is used as the short description.
+			An long description, or text, describing the activity in detail. NOTE The inherited SELF\IfcRoot.Description attribute is used as the short description. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="ProcessType" type="String" setter="set_ProcessType" getter="get_ProcessType">
-			The type denotes a particular type that indicates the process further. The use has to be established at the level of instantiable subtypes. In particular it holds the user defined type, if the enumeration of the attribute 'PredefinedType' is set to USERDEFINED.
+			The type denotes a particular type that indicates the process further. The use has to be established at the level of instantiable subtypes. In particular it holds the user defined type, if the enumeration of the attribute 'PredefinedType' is set to USERDEFINED. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="OperatesOn" type="Array" setter="" getter="get_OperatesOn">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

@@ -19,6 +19,7 @@
 			The style applied to the text font for its visual appearance. It defines the font family, font style, weight and size. IFC2x Edition 2 Addendum 2 CHANGE The attribute TextFontStyle is a new attribute attached to IfcTextStyle .
 		</member>
 		<member name="ModelOrDraughting" type="bool" setter="set_ModelOrDraughting" getter="get_ModelOrDraughting">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

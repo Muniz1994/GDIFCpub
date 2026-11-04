@@ -5,17 +5,21 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="Position" type="GDIFCEntityBase" setter="set_Position" getter="get_Position">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="CoefficientsX" type="PackedFloat64Array" setter="set_CoefficientsX" getter="get_CoefficientsX">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="CoefficientsY" type="PackedFloat64Array" setter="set_CoefficientsY" getter="get_CoefficientsY">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="CoefficientsZ" type="PackedFloat64Array" setter="set_CoefficientsZ" getter="get_CoefficientsZ">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

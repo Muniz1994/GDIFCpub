@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPresentationStyleAssignment" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition from ISO/CD 10303-46:1992 : The presentation style assignment is a set of styles which are assigned to styled items for the purpose of presenting these styled items. NOTE Corresponding ISO 10303 name: presentation_style_assignment. Please refer to ISO/IS 10303-46:1994 for the final definition of the formal standard. HISTORY New entity in Release IFC2x2.
+	</brief_description>
+	<description>Only in IFC2X3 and IFC4 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Styles" type="Array" setter="set_Styles" getter="get_Styles">
+			A set of presentation styles that are assigned to styled items. Only in IFC2X3 and IFC4 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

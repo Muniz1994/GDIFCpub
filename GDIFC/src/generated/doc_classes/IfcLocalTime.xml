@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcLocalTime" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="HourComponent" type="int" setter="set_HourComponent" getter="get_HourComponent">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="MinuteComponent" type="int" setter="set_MinuteComponent" getter="get_MinuteComponent">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="SecondComponent" type="float" setter="set_SecondComponent" getter="get_SecondComponent">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="Zone" type="GDIFCEntityBase" setter="set_Zone" getter="get_Zone">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="DaylightSavingOffset" type="int" setter="set_DaylightSavingOffset" getter="get_DaylightSavingOffset">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

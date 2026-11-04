@@ -13,9 +13,10 @@
 			Enumeration that identifies if this port is a Sink (inlet), a Source (outlet) or both a SinkAndSource.
 		</member>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Enumeration that identifies the system type. If a system type is defined, the port may only be connected to other ports having the same system type.
+			Enumeration that identifies the system type. If a system type is defined, the port may only be connected to other ports having the same system type. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="SystemType" type="String" setter="set_SystemType" getter="get_SystemType">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

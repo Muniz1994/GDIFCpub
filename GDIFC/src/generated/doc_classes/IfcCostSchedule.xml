@@ -15,11 +15,23 @@
 		<member name="Status" type="String" setter="set_Status" getter="get_Status">
 			The current status of a cost schedule. Examples of status values that might be used for a cost schedule status include: PLANNED APPROVED AGREED ISSUED STARTED
 		</member>
-		<member name="SubmittedOn" type="String" setter="set_SubmittedOn" getter="get_SubmittedOn">
-			The date and time on which the cost schedule was submitted. IFC2x4 CHANGE Type changed from IfcDateTimeSelect.
+		<member name="SubmittedOn" type="Variant" setter="set_SubmittedOn" getter="get_SubmittedOn">
+			The date and time on which the cost schedule was submitted. IFC2x4 CHANGE Type changed from IfcDateTimeSelect. Its type depends on the file's schema: String in IFC4 and IFC4X3_ADD2, GDIFCEntityBase in IFC2X3.
 		</member>
-		<member name="UpdateDate" type="String" setter="set_UpdateDate" getter="get_UpdateDate">
-			The date and time that this cost schedule is updated; this allows tracking the schedule history. IFC2x4 CHANGE Type changed from IfcDateTimeSelect.
+		<member name="UpdateDate" type="Variant" setter="set_UpdateDate" getter="get_UpdateDate">
+			The date and time that this cost schedule is updated; this allows tracking the schedule history. IFC2x4 CHANGE Type changed from IfcDateTimeSelect. Its type depends on the file's schema: String in IFC4 and IFC4X3_ADD2, GDIFCEntityBase in IFC2X3.
+		</member>
+		<member name="SubmittedBy" type="GDIFCEntityBase" setter="set_SubmittedBy" getter="get_SubmittedBy">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="PreparedBy" type="GDIFCEntityBase" setter="set_PreparedBy" getter="get_PreparedBy">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="TargetUsers" type="Array" setter="set_TargetUsers" getter="get_TargetUsers">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="ID" type="String" setter="set_ID" getter="get_ID">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

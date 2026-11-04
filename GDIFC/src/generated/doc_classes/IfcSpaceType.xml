@@ -13,6 +13,7 @@
 			Predefined types to define the particular type of space. There may be property set definitions available for each predefined type.
 		</member>
 		<member name="LongName" type="String" setter="set_LongName" getter="get_LongName">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

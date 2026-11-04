@@ -12,6 +12,7 @@
 		<member name="IsGroupedBy" type="Array" setter="" getter="get_IsGroupedBy">
 		</member>
 		<member name="ReferencedInStructures" type="Array" setter="" getter="get_ReferencedInStructures">
+			Only in IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

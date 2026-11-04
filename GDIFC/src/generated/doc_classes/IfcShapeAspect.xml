@@ -25,6 +25,7 @@
 			Reference to the product definition shape of which this class is an aspect.
 		</member>
 		<member name="HasExternalReferences" type="Array" setter="" getter="get_HasExternalReferences">
+			Only in IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelInteractionRequirements" inherits="IfcRelConnects"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="DailyInteraction" type="float" setter="set_DailyInteraction" getter="get_DailyInteraction">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="ImportanceRating" type="float" setter="set_ImportanceRating" getter="get_ImportanceRating">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="LocationOfInteraction" type="GDIFCEntityBase" setter="set_LocationOfInteraction" getter="get_LocationOfInteraction">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="RelatedSpaceProgram" type="GDIFCEntityBase" setter="set_RelatedSpaceProgram" getter="get_RelatedSpaceProgram">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="RelatingSpaceProgram" type="GDIFCEntityBase" setter="set_RelatingSpaceProgram" getter="get_RelatingSpaceProgram">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

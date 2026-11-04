@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCalendarDate" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="DayComponent" type="int" setter="set_DayComponent" getter="get_DayComponent">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="MonthComponent" type="int" setter="set_MonthComponent" getter="get_MonthComponent">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="YearComponent" type="int" setter="set_YearComponent" getter="get_YearComponent">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

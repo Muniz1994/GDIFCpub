@@ -5,11 +5,12 @@
 	<brief_description>
 		An electric flow storage device is a device in which electrical energy is stored and from which energy may be progressively released. HISTORY New entity in IFC2x4 Type Use Definition IfcElectricFlowStorageDevice defines the occurrence of any electric flow storage device; common information about electric flow storage device types is handled by IfcElectricFlowStorageDeviceType . The IfcElectricFlow
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

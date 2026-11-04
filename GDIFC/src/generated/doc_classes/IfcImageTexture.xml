@@ -10,7 +10,10 @@
 	<methods/>
 	<members>
 		<member name="URLReference" type="String" setter="set_URLReference" getter="get_URLReference">
-			Location, provided as an URI, at which the image texture is electronically published.
+			Location, provided as an URI, at which the image texture is electronically published. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="UrlReference" type="String" setter="set_UrlReference" getter="get_UrlReference">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

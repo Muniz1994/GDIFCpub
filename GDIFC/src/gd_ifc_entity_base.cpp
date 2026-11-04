@@ -3,7 +3,11 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 
+#include <ArgumentType.h>
 #include <IfcSchema.h>
+
+#include <algorithm>
+#include <cmath>
 
 using namespace godot;
 
@@ -101,7 +105,12 @@ static godot::Variant gdifc_av_to_variant(const AttributeValue& av,
             return godot::String::utf8(v.c_str());
         }
         godot::Variant operator()(const boost::dynamic_bitset<>& v) const {
-            return godot::String(std::to_string(v.size()).c_str());
+            return bits(v);
+        }
+        static godot::String bits(const boost::dynamic_bitset<>& v) {
+            std::string s;
+            boost::to_string(v, s);
+            return godot::String(s.c_str());
         }
         godot::Variant operator()(EnumerationReference v) const {
             return godot::String(v.value());
@@ -127,8 +136,10 @@ static godot::Variant gdifc_av_to_variant(const AttributeValue& av,
             for (const auto& s : v) arr.push_back(godot::String::utf8(s.c_str()));
             return arr;
         }
-        godot::Variant operator()(const std::vector<boost::dynamic_bitset<>>&) const {
-            return godot::Array();
+        godot::Variant operator()(const std::vector<boost::dynamic_bitset<>>& v) const {
+            godot::PackedStringArray arr;
+            for (const auto& b : v) arr.push_back(bits(b));
+            return arr;
         }
         godot::Variant operator()(const aggregate_of_instance::ptr& agg) const {
             godot::Array arr;
@@ -139,11 +150,15 @@ static godot::Variant gdifc_av_to_variant(const AttributeValue& av,
             }
             return arr;
         }
-        godot::Variant operator()(const std::vector<std::vector<int>>&) const {
-            return godot::Array();
+        godot::Variant operator()(const std::vector<std::vector<int>>& v) const {
+            godot::Array outer;
+            for (const auto& inner : v) outer.push_back((*this)(inner));
+            return outer;
         }
-        godot::Variant operator()(const std::vector<std::vector<double>>&) const {
-            return godot::Array();
+        godot::Variant operator()(const std::vector<std::vector<double>>& v) const {
+            godot::Array outer;
+            for (const auto& inner : v) outer.push_back((*this)(inner));
+            return outer;
         }
         godot::Variant operator()(const aggregate_of_aggregate_of_instance::ptr& v) const {
             godot::Array outer;
@@ -160,6 +175,322 @@ static godot::Variant gdifc_av_to_variant(const AttributeValue& av,
         }
     };
     return av.apply_visitor(Visitor(std::move(file)));
+}
+
+godot::Variant gd_attr_to_variant(const AttributeValue& av, std::shared_ptr<IfcParse::IfcFile> file) {
+    return gdifc_av_to_variant(av, std::move(file));
+}
+
+// ── Lookup and checked setting, for the generated classes ─────────────────
+
+ptrdiff_t gd_attr_index(const IfcUtil::IfcBaseClass* e, const char* name,
+                        const GDIFCAttributeAlias* aliases) {
+    if (e == nullptr) return -1;
+    const IfcParse::entity* decl = e->declaration().as_entity();
+    if (decl == nullptr) return -1;
+    const ptrdiff_t index = decl->attribute_index(name);
+    if (index >= 0 || aliases == nullptr || decl->schema() == nullptr) return index;
+    const std::string& schema = decl->schema()->name();
+    for (; aliases->name != nullptr; ++aliases) {
+        // Upper case, so is() doesn't go through its shared temporary string
+        if (schema == aliases->schema && decl->is(std::string(aliases->entity_uc))) {
+            const ptrdiff_t alias_index = decl->attribute_index(aliases->name);
+            if (alias_index >= 0) return alias_index;
+        }
+    }
+    return -1;
+}
+
+namespace {
+
+// Whether an entity of `actual` fits where `declared` is expected: the entity type itself, or a
+// select that includes it
+bool accepts(const IfcParse::declaration* declared, const IfcParse::declaration& actual) {
+    if (declared == nullptr) return false;
+    if (declared == &actual) return true;
+    if (declared->as_entity() != nullptr) return actual.is(*declared);
+    if (const auto* select = declared->as_select_type()) {
+        for (const auto* option : select->select_list()) {
+            if (accepts(option, actual)) return true;
+        }
+    }
+    return false;
+}
+
+const IfcParse::declaration* declared_type(const IfcParse::parameter_type* type) {
+    const auto* named = type != nullptr ? type->as_named_type() : nullptr;
+    return named != nullptr ? named->declared_type() : nullptr;
+}
+
+const IfcParse::parameter_type* element_type(const IfcParse::parameter_type* type) {
+    const auto* aggregate = type != nullptr ? type->as_aggregation_type() : nullptr;
+    return aggregate != nullptr ? aggregate->type_of_element() : nullptr;
+}
+
+// The IFC entity a Variant holds, if any
+IfcUtil::IfcBaseClass* entity_of(const godot::Variant& v) {
+    if (v.get_type() != godot::Variant::OBJECT) return nullptr;
+    auto* obj = godot::Object::cast_to<godot::GDIFCEntityBase>(v.operator godot::Object*());
+    return obj != nullptr ? obj->entity_ : nullptr;
+}
+
+bool is_number(const godot::Variant& v) {
+    return v.get_type() == godot::Variant::INT || v.get_type() == godot::Variant::FLOAT;
+}
+
+// A whole number, from an int or a float without a fractional part
+bool to_int(const godot::Variant& v, int& out) {
+    if (v.get_type() == godot::Variant::INT) {
+        out = static_cast<int>(static_cast<int64_t>(v));
+        return true;
+    }
+    if (v.get_type() == godot::Variant::FLOAT) {
+        const double d = v;
+        if (d != std::floor(d)) return false;
+        out = static_cast<int>(d);
+        return true;
+    }
+    return false;
+}
+
+bool is_string(const godot::Variant& v) {
+    return v.get_type() == godot::Variant::STRING || v.get_type() == godot::Variant::STRING_NAME;
+}
+
+// A String or StringName. A Variant only converts to the type it holds.
+godot::String as_string(const godot::Variant& v) {
+    return v.get_type() == godot::Variant::STRING_NAME ? godot::String(godot::StringName(v)) : godot::String(v);
+}
+
+std::string utf8(const godot::Variant& v) {
+    return std::string(as_string(v).utf8().get_data());
+}
+
+// Strings of 0s and 1s, as gd_attr_string returns them
+bool to_bits(const godot::Variant& v, boost::dynamic_bitset<>& out) {
+    if (!is_string(v)) return false;
+    const std::string s = utf8(v);
+    if (s.find_first_not_of("01") != std::string::npos) return false;
+    out = boost::dynamic_bitset<>(s);
+    return true;
+}
+
+// The elements of an Array or packed array, as an Array
+bool elements(const godot::Variant& v, godot::Array& out) {
+    switch (v.get_type()) {
+        case godot::Variant::ARRAY: out = godot::Array(v); return true;
+        case godot::Variant::PACKED_INT32_ARRAY: out = godot::Array(godot::PackedInt32Array(v)); return true;
+        case godot::Variant::PACKED_INT64_ARRAY: out = godot::Array(godot::PackedInt64Array(v)); return true;
+        case godot::Variant::PACKED_FLOAT32_ARRAY: out = godot::Array(godot::PackedFloat32Array(v)); return true;
+        case godot::Variant::PACKED_FLOAT64_ARRAY: out = godot::Array(godot::PackedFloat64Array(v)); return true;
+        case godot::Variant::PACKED_STRING_ARRAY: out = godot::Array(godot::PackedStringArray(v)); return true;
+        default: return false;
+    }
+}
+
+template <typename T, typename Convert>
+bool to_vector(const godot::Variant& v, std::vector<T>& out, Convert convert) {
+    godot::Array items;
+    if (!elements(v, items)) return false;
+    out.clear();
+    out.reserve(static_cast<size_t>(items.size()));
+    for (int64_t i = 0; i < items.size(); ++i) {
+        T item;
+        if (!convert(items[i], item)) return false;
+        out.push_back(std::move(item));
+    }
+    return true;
+}
+
+bool to_double(const godot::Variant& v, double& out) {
+    if (!is_number(v)) return false;
+    out = v;
+    return true;
+}
+
+bool to_std_string(const godot::Variant& v, std::string& out) {
+    if (!is_string(v)) return false;
+    out = utf8(v);
+    return true;
+}
+
+// Entities of the same file that fit the declared type, for an aggregate
+bool to_instances(const godot::Variant& v, const IfcParse::parameter_type* type, const IfcParse::IfcFile* file,
+                  aggregate_of_instance::ptr& out) {
+    godot::Array items;
+    if (!elements(v, items)) return false;
+    out = boost::make_shared<aggregate_of_instance>();
+    const IfcParse::declaration* declared = declared_type(type);
+    for (int64_t i = 0; i < items.size(); ++i) {
+        IfcUtil::IfcBaseClass* item = entity_of(items[i]);
+        if (item == nullptr || item->file_ != file || !accepts(declared, item->declaration())) return false;
+        out->push(item);
+    }
+    return true;
+}
+
+// Converts `value` to the type the attribute declares and sets it. False when it doesn't fit.
+bool set_converted(IfcUtil::IfcBaseClass* e, size_t index, const IfcParse::parameter_type* type,
+                   const godot::Variant& value) {
+    switch (IfcUtil::from_parameter_type(type)) {
+        case IfcUtil::Argument_INT: {
+            int v;
+            if (!to_int(value, v)) return false;
+            e->set_attribute_value(index, v);
+            return true;
+        }
+        case IfcUtil::Argument_DOUBLE: {
+            double v;
+            if (!to_double(value, v)) return false;
+            e->set_attribute_value(index, v);
+            return true;
+        }
+        case IfcUtil::Argument_BOOL:
+            if (value.get_type() != godot::Variant::BOOL) return false;
+            e->set_attribute_value(index, static_cast<bool>(value));
+            return true;
+        case IfcUtil::Argument_LOGICAL: {
+            boost::logic::tribool v;
+            if (value.get_type() == godot::Variant::BOOL) {
+                v = static_cast<bool>(value);
+            } else if (is_string(value)) {
+                const godot::String s = as_string(value).to_upper();
+                if (s == "TRUE" || s == "T") v = true;
+                else if (s == "FALSE" || s == "F") v = false;
+                else if (s == "UNKNOWN" || s == "U") v = boost::logic::indeterminate;
+                else return false;
+            } else {
+                return false;
+            }
+            e->set_attribute_value(index, v);
+            return true;
+        }
+        case IfcUtil::Argument_STRING: {
+            std::string v;
+            if (!to_std_string(value, v)) return false;
+            e->set_attribute_value(index, v);
+            return true;
+        }
+        case IfcUtil::Argument_BINARY: {
+            boost::dynamic_bitset<> v;
+            if (!to_bits(value, v)) return false;
+            e->set_attribute_value(index, v);
+            return true;
+        }
+        case IfcUtil::Argument_ENUMERATION: {
+            const IfcParse::declaration* declared = declared_type(type);
+            const auto* enumeration = declared != nullptr ? declared->as_enumeration_type() : nullptr;
+            if (enumeration == nullptr || !is_string(value)) return false;
+            const std::string item = utf8(as_string(value).to_upper());
+            const auto& items = enumeration->enumeration_items();
+            const auto it = std::find(items.begin(), items.end(), item);
+            if (it == items.end()) return false;
+            e->set_attribute_value(index, EnumerationReference(enumeration, std::distance(items.begin(), it)));
+            return true;
+        }
+        case IfcUtil::Argument_ENTITY_INSTANCE: {
+            IfcUtil::IfcBaseClass* v = entity_of(value);
+            if (v == nullptr || v->file_ != e->file_ || !accepts(declared_type(type), v->declaration())) return false;
+            e->set_attribute_value(index, v);
+            return true;
+        }
+        case IfcUtil::Argument_AGGREGATE_OF_INT: {
+            std::vector<int> v;
+            if (!to_vector(value, v, to_int)) return false;
+            e->set_attribute_value(index, v);
+            return true;
+        }
+        case IfcUtil::Argument_AGGREGATE_OF_DOUBLE: {
+            std::vector<double> v;
+            if (!to_vector(value, v, to_double)) return false;
+            e->set_attribute_value(index, v);
+            return true;
+        }
+        case IfcUtil::Argument_AGGREGATE_OF_STRING: {
+            std::vector<std::string> v;
+            if (!to_vector(value, v, to_std_string)) return false;
+            e->set_attribute_value(index, v);
+            return true;
+        }
+        case IfcUtil::Argument_AGGREGATE_OF_BINARY: {
+            std::vector<boost::dynamic_bitset<>> v;
+            if (!to_vector(value, v, to_bits)) return false;
+            e->set_attribute_value(index, v);
+            return true;
+        }
+        case IfcUtil::Argument_AGGREGATE_OF_ENTITY_INSTANCE: {
+            aggregate_of_instance::ptr v;
+            if (!to_instances(value, element_type(type), e->file_, v)) return false;
+            e->set_attribute_value(index, v);
+            return true;
+        }
+        case IfcUtil::Argument_AGGREGATE_OF_AGGREGATE_OF_INT: {
+            std::vector<std::vector<int>> v;
+            auto inner = [](const godot::Variant& item, std::vector<int>& out) { return to_vector(item, out, to_int); };
+            if (!to_vector(value, v, inner)) return false;
+            e->set_attribute_value(index, v);
+            return true;
+        }
+        case IfcUtil::Argument_AGGREGATE_OF_AGGREGATE_OF_DOUBLE: {
+            std::vector<std::vector<double>> v;
+            auto inner = [](const godot::Variant& item, std::vector<double>& out) { return to_vector(item, out, to_double); };
+            if (!to_vector(value, v, inner)) return false;
+            e->set_attribute_value(index, v);
+            return true;
+        }
+        case IfcUtil::Argument_AGGREGATE_OF_AGGREGATE_OF_ENTITY_INSTANCE: {
+            const IfcParse::parameter_type* inner_type = element_type(element_type(type));
+            godot::Array rows;
+            if (!elements(value, rows)) return false;
+            auto v = boost::make_shared<aggregate_of_aggregate_of_instance>();
+            for (int64_t i = 0; i < rows.size(); ++i) {
+                aggregate_of_instance::ptr row;
+                if (!to_instances(rows[i], inner_type, e->file_, row)) return false;
+                v->push(row);
+            }
+            e->set_attribute_value(index, v);
+            return true;
+        }
+        default:
+            return false;
+    }
+}
+
+godot::String schema_name(const IfcParse::entity& decl) {
+    return decl.schema() != nullptr ? godot::String(decl.schema()->name().c_str()) : godot::String("its schema");
+}
+
+} // namespace
+
+void gd_set_attribute(IfcUtil::IfcBaseClass* e, const char* name, const godot::Variant& value,
+                      const GDIFCAttributeAlias* aliases) {
+    if (e == nullptr) return;
+    const IfcParse::entity* decl = e->declaration().as_entity();
+    if (decl == nullptr) return;
+    const godot::String type = decl->name().c_str();
+
+    const ptrdiff_t index = gd_attr_index(e, name, aliases);
+    if (index < 0) {
+        godot::UtilityFunctions::push_error(godot::vformat("%s has no attribute %s in %s.", type, name, schema_name(*decl)));
+        return;
+    }
+    if (decl->derived()[index]) {
+        godot::UtilityFunctions::push_error(godot::vformat("%s.%s is derived in %s, so it can't be set.", type, name, schema_name(*decl)));
+        return;
+    }
+    try {
+        if (value.get_type() == godot::Variant::NIL ||
+            (value.get_type() == godot::Variant::OBJECT && value.operator godot::Object*() == nullptr)) {
+            e->set_attribute_value(index, Blank{});
+            return;
+        }
+        if (!set_converted(e, index, decl->attribute_by_index(index)->type_of_attribute(), value)) {
+            godot::UtilityFunctions::push_error(godot::vformat("Can't set %s.%s to %s: it doesn't fit the attribute's type in %s.",
+                                                               type, name, value.stringify(), schema_name(*decl)));
+        }
+    } catch (const std::exception& ex) {
+        godot::UtilityFunctions::push_error(godot::vformat("Can't set %s.%s: %s", type, name, ex.what()));
+    }
 }
 
 godot::Variant GDIFCEntityBase::get_attribute(godot::String attr_name) {

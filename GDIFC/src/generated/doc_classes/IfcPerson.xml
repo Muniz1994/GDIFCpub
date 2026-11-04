@@ -10,7 +10,7 @@
 	<methods/>
 	<members>
 		<member name="Identification" type="String" setter="set_Identification" getter="get_Identification">
-			Identification of the person.
+			Identification of the person. In IFC2X3 files, this is the [code]Id[/code] attribute.
 		</member>
 		<member name="FamilyName" type="String" setter="set_FamilyName" getter="get_FamilyName">
 			The name by which the family identity of the person may be recognized. NOTE: Depending on geographical location and culture, family name may appear either as the first or last component of a name.

@@ -43,10 +43,10 @@
 			Pointer to the shape aspect, if given. The shape aspect reflects the part of the door shape, which represents the door lining. IFC2x4 CHANGE The attribute is deprecated and shall no longer be used, i.e. the value shall be NIL ($).
 		</member>
 		<member name="LiningToPanelOffsetX" type="float" setter="set_LiningToPanelOffsetX" getter="get_LiningToPanelOffsetX">
-			Offset between the lining and the window panel measured along the x-axis of the local placement. IFC2x4 CHANGE: New attribute added at the end of the entity definition.
+			Offset between the lining and the window panel measured along the x-axis of the local placement. IFC2x4 CHANGE: New attribute added at the end of the entity definition. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="LiningToPanelOffsetY" type="float" setter="set_LiningToPanelOffsetY" getter="get_LiningToPanelOffsetY">
-			Offset between the lining and the door panel measured along the y-axis of the local placement. IFC2x4 CHANGE: New attribute added at the end of the entity definition.
+			Offset between the lining and the door panel measured along the y-axis of the local placement. IFC2x4 CHANGE: New attribute added at the end of the entity definition. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

@@ -9,6 +9,9 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="ControlElementId" type="String" setter="set_ControlElementId" getter="get_ControlElementId">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
 		<member name="AssignedToFlowElement" type="Array" setter="" getter="get_AssignedToFlowElement">
 		</member>
 	</members>

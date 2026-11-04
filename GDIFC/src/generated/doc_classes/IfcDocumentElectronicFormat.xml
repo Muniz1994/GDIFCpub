@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDocumentElectronicFormat" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		IfcDocumentElectronicFormat captures the type of document being referenced as an external source, and for which metadata is specified by IfcDocumentInformation . HISTORY: New entity in IFC 2x
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="FileExtension" type="String" setter="set_FileExtension" getter="get_FileExtension">
+			File extension of electronic document used by computer operating system. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="MimeContentType" type="String" setter="set_MimeContentType" getter="get_MimeContentType">
+			Main Mime type (as published by W3C or as user defined application type). Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="MimeSubtype" type="String" setter="set_MimeSubtype" getter="get_MimeSubtype">
+			Mime subtype information. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

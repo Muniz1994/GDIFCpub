@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFluidFlowProperties" inherits="IfcPropertySetDefinition"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="PropertySource" type="String" setter="set_PropertySource" getter="get_PropertySource">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="FlowConditionTimeSeries" type="GDIFCEntityBase" setter="set_FlowConditionTimeSeries" getter="get_FlowConditionTimeSeries">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="VelocityTimeSeries" type="GDIFCEntityBase" setter="set_VelocityTimeSeries" getter="get_VelocityTimeSeries">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="FlowrateTimeSeries" type="GDIFCEntityBase" setter="set_FlowrateTimeSeries" getter="get_FlowrateTimeSeries">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="Fluid" type="GDIFCEntityBase" setter="set_Fluid" getter="get_Fluid">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="PressureTimeSeries" type="GDIFCEntityBase" setter="set_PressureTimeSeries" getter="get_PressureTimeSeries">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="UserDefinedPropertySource" type="String" setter="set_UserDefinedPropertySource" getter="get_UserDefinedPropertySource">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="TemperatureSingleValue" type="float" setter="set_TemperatureSingleValue" getter="get_TemperatureSingleValue">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="WetBulbTemperatureSingleValue" type="float" setter="set_WetBulbTemperatureSingleValue" getter="get_WetBulbTemperatureSingleValue">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="WetBulbTemperatureTimeSeries" type="GDIFCEntityBase" setter="set_WetBulbTemperatureTimeSeries" getter="get_WetBulbTemperatureTimeSeries">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="TemperatureTimeSeries" type="GDIFCEntityBase" setter="set_TemperatureTimeSeries" getter="get_TemperatureTimeSeries">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="FlowrateSingleValue" type="GDIFCEntityBase" setter="set_FlowrateSingleValue" getter="get_FlowrateSingleValue">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="FlowConditionSingleValue" type="float" setter="set_FlowConditionSingleValue" getter="get_FlowConditionSingleValue">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="VelocitySingleValue" type="float" setter="set_VelocitySingleValue" getter="get_VelocitySingleValue">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="PressureSingleValue" type="float" setter="set_PressureSingleValue" getter="get_PressureSingleValue">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

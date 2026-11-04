@@ -12,10 +12,13 @@
 		<member name="HasAssignments" type="Array" setter="" getter="get_HasAssignments">
 		</member>
 		<member name="Nests" type="Array" setter="" getter="get_Nests">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="IsNestedBy" type="Array" setter="" getter="get_IsNestedBy">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="HasContext" type="Array" setter="" getter="get_HasContext">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="IsDecomposedBy" type="Array" setter="" getter="get_IsDecomposedBy">
 		</member>

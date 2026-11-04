@@ -10,7 +10,6 @@
 	<methods/>
 	<members>
 		<member name="SteelGrade" type="String" setter="set_SteelGrade" getter="get_SteelGrade">
-			Subtype of reinforcement element.
 		</member>
 	</members>
 	<signals/>

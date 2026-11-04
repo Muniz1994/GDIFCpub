@@ -13,7 +13,7 @@
 			Describes the applicable building life-cycle phase. Typical values should be DESIGNDEVELOPMENT, SCHEMATICDEVELOPMENT, CONSTRUCTIONDOCUMENT, CONSTRUCTION, ASBUILT, COMMISSIONING, OPERATION, etc.
 		</member>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Predefined generic type for a performace history that is specified in an enumeration. IFC2x4 CHANGE The attribute has been added at the end of the entity definition.
+			Predefined generic type for a performace history that is specified in an enumeration. IFC2x4 CHANGE The attribute has been added at the end of the entity definition. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

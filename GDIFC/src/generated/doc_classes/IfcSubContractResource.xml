@@ -10,7 +10,13 @@
 	<methods/>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Defines types of subcontract resources. IFC2x4 New attribute
+			Defines types of subcontract resources. IFC2x4 New attribute Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="SubContractor" type="GDIFCEntityBase" setter="set_SubContractor" getter="get_SubContractor">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="JobDescription" type="String" setter="set_JobDescription" getter="get_JobDescription">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcPlateStandardCase" inherits="IfcPlate"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The standard plate, IfcPlateStandardCase , defines a plate with certain constraints for the provision of material usage, parameters and with certain constraints for the geometric representation. The IfcPlateStandardCase handles all cases of plates, that: have a reference to the IfcMaterialLayerSetUsage defining the material layers of the plate with thicknesses are based on an extrusion of a planar
+	</brief_description>
+	<description>Only in IFC4 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

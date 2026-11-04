@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDraughtingCallout" inherits="IfcGeometricRepresentationItem"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Contents" type="Array" setter="set_Contents" getter="get_Contents">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="IsRelatedFromCallout" type="Array" setter="" getter="get_IsRelatedFromCallout">
+			Only in IFC2X3 files: in others it is empty.
+		</member>
+		<member name="IsRelatedToCallout" type="Array" setter="" getter="get_IsRelatedToCallout">
+			Only in IFC2X3 files: in others it is empty.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -17,8 +17,10 @@
 		<member name="ConnectedTo" type="Array" setter="" getter="get_ConnectedTo">
 		</member>
 		<member name="IsInterferedByElements" type="Array" setter="" getter="get_IsInterferedByElements">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="InterferesElements" type="Array" setter="" getter="get_InterferesElements">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="HasProjections" type="Array" setter="" getter="get_HasProjections">
 		</member>
@@ -35,6 +37,10 @@
 		<member name="HasCoverings" type="Array" setter="" getter="get_HasCoverings">
 		</member>
 		<member name="HasSurfaceFeatures" type="Array" setter="" getter="get_HasSurfaceFeatures">
+			Only in IFC4X3_ADD2 files: in others it is empty.
+		</member>
+		<member name="HasStructuralMember" type="Array" setter="" getter="get_HasStructuralMember">
+			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

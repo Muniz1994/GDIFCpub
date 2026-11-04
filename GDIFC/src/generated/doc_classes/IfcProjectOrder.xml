@@ -16,7 +16,7 @@
 			The current status of a project order.Examples of status values that might be used for a project order status include: PLANNED REQUESTED APPROVED ISSUED STARTED DELAYED DONE
 		</member>
 		<member name="LongDescription" type="String" setter="set_LongDescription" getter="get_LongDescription">
-			A detailed description of the project order describing the work to be completed.
+			A detailed description of the project order describing the work to be completed. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

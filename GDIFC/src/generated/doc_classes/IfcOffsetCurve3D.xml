@@ -10,13 +10,13 @@
 	<methods/>
 	<members>
 		<member name="Distance" type="float" setter="set_Distance" getter="get_Distance">
-			The curve that is being offset.
-		</member>
-		<member name="SelfIntersect" type="String" setter="set_SelfIntersect" getter="get_SelfIntersect">
 			The distance of the offset curve from the basis curve. The distance may be positive, negative or zero.
 		</member>
-		<member name="RefDirection" type="GDIFCEntityBase" setter="set_RefDirection" getter="get_RefDirection">
+		<member name="SelfIntersect" type="String" setter="set_SelfIntersect" getter="get_SelfIntersect">
 			An indication of whether the offset curve self-intersects, this is for information only.
+		</member>
+		<member name="RefDirection" type="GDIFCEntityBase" setter="set_RefDirection" getter="get_RefDirection">
+			The direction used to define the direction of the offset curve 3d from the basis curve.
 		</member>
 	</members>
 	<signals/>

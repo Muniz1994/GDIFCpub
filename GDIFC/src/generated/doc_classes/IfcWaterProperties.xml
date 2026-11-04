@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcWaterProperties" inherits="IfcMaterialProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="IsPotable" type="bool" setter="set_IsPotable" getter="get_IsPotable">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="Hardness" type="float" setter="set_Hardness" getter="get_Hardness">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="AlkalinityConcentration" type="float" setter="set_AlkalinityConcentration" getter="get_AlkalinityConcentration">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="AcidityConcentration" type="float" setter="set_AcidityConcentration" getter="get_AcidityConcentration">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="ImpuritiesContent" type="float" setter="set_ImpuritiesContent" getter="get_ImpuritiesContent">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="PHLevel" type="float" setter="set_PHLevel" getter="get_PHLevel">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="DissolvedSolidsContent" type="float" setter="set_DissolvedSolidsContent" getter="get_DissolvedSolidsContent">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

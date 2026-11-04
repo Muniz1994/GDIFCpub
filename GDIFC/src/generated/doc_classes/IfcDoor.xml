@@ -16,12 +16,16 @@
 			Overall measure of the width, it reflects the X Dimension of a bounding box, enclosing the body of the door opening. If omitted, the OverallWidth should be taken from the geometric representation of the IfcOpening in which the door is inserted. NOTE The body of the door might be wider then the door opening (e.g. in cases where the door lining includes a casing). In these cases the OverallWidth shall still be given as the door opening width, and not as the total width of the door lining.
 		</member>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Predefined generic type for a door that is specified in an enumeration. There may be a property set given specificly for the predefined types. NOTE The PredefinedType shall only be used, if no type object IfcDoorType is assigned, providing its own IfcDoorType.PredefinedType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition.
+			Predefined generic type for a door that is specified in an enumeration. There may be a property set given specificly for the predefined types. NOTE The PredefinedType shall only be used, if no type object IfcDoorType is assigned, providing its own IfcDoorType.PredefinedType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="OperationType" type="String" setter="set_OperationType" getter="get_OperationType">
-			Type defining the general layout and operation of the door type in terms of the partitioning of panels and panel operations. NOTE The OperationType shall only be used, if no type object IfcDoorType is assigned, providing its own IfcDoorType.OperationType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition.
+			Type defining the general layout and operation of the door type in terms of the partitioning of panels and panel operations. NOTE The OperationType shall only be used, if no type object IfcDoorType is assigned, providing its own IfcDoorType.OperationType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="UserDefinedOperationType" type="String" setter="set_UserDefinedOperationType" getter="get_UserDefinedOperationType">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="HasPorts" type="Array" setter="" getter="get_HasPorts">
+			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

@@ -12,8 +12,8 @@
 		<member name="RasterFormat" type="String" setter="set_RasterFormat" getter="get_RasterFormat">
 			The format of the RasterCode often using a compression.
 		</member>
-		<member name="RasterCode" type="String" setter="set_RasterCode" getter="get_RasterCode">
-			Blob, given as a single binary, to capture the texture within one popular file (compression) format. The file format is provided by the RasterFormat attribute.
+		<member name="RasterCode" type="Variant" setter="set_RasterCode" getter="get_RasterCode">
+			Blob, given as a single binary, to capture the texture within one popular file (compression) format. The file format is provided by the RasterFormat attribute. Its type depends on the file's schema: String in IFC4 and IFC4X3_ADD2, bool in IFC2X3.
 		</member>
 	</members>
 	<signals/>

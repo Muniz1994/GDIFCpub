@@ -5,12 +5,12 @@
 	<brief_description>
 		The objectified relationship IfcRelAssignsToGroupByFactor is a specialization of the general grouping mechanism. It allows to add a factor to define the ratio that applies to the assignment of object definitions (individual object occurrences as subtypes of IfcObject and object types as subtypes of IfcTypeObject ) to a group (subtypes of IfcGroup ). The ratio can be used to define a percentage ass
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="Factor" type="float" setter="set_Factor" getter="get_Factor">
-			Factor provided as a ratio measure that identifies the fraction or weighted factor that applies to the group assignment.
+			Factor provided as a ratio measure that identifies the fraction or weighted factor that applies to the group assignment. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

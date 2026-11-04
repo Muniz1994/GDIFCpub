@@ -10,13 +10,22 @@
 	<methods/>
 	<members>
 		<member name="TranslationalStiffnessByAreaX" type="GDIFCEntityBase" setter="set_TranslationalStiffnessByAreaX" getter="get_TranslationalStiffnessByAreaX">
-			Translational stiffness value in x-direction of the coordinate system defined by the instance which uses this resource object.
+			Translational stiffness value in x-direction of the coordinate system defined by the instance which uses this resource object. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="TranslationalStiffnessByAreaY" type="GDIFCEntityBase" setter="set_TranslationalStiffnessByAreaY" getter="get_TranslationalStiffnessByAreaY">
-			Translational stiffness value in y-direction of the coordinate system defined by the instance which uses this resource object.
+			Translational stiffness value in y-direction of the coordinate system defined by the instance which uses this resource object. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="TranslationalStiffnessByAreaZ" type="GDIFCEntityBase" setter="set_TranslationalStiffnessByAreaZ" getter="get_TranslationalStiffnessByAreaZ">
-			Translational stiffness value in z-direction of the coordinate system defined by the instance which uses this resource object.
+			Translational stiffness value in z-direction of the coordinate system defined by the instance which uses this resource object. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="LinearStiffnessByAreaX" type="float" setter="set_LinearStiffnessByAreaX" getter="get_LinearStiffnessByAreaX">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="LinearStiffnessByAreaY" type="float" setter="set_LinearStiffnessByAreaY" getter="get_LinearStiffnessByAreaY">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="LinearStiffnessByAreaZ" type="float" setter="set_LinearStiffnessByAreaZ" getter="get_LinearStiffnessByAreaZ">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

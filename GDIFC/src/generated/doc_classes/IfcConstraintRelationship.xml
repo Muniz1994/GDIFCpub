@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcConstraintRelationship" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcConstraintRelationship is an objectified relationship that enables instances of IfcConstraint and its subtypes to be associated to each other. Logical aggregation of instances of IfcConstraint and its subtypes is handled by the subtype IfcConstraintAggregationRelationship . EXAMPLE: Certain constraints related to an IfcWall may be derived from a constraint related to an IfcSpace . HISTORY Ne
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="RelatingConstraint" type="GDIFCEntityBase" setter="set_RelatingConstraint" getter="get_RelatingConstraint">
+			Constraint with which the other Constraints referenced by attribute RelatedConstraints are related. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="RelatedConstraints" type="Array" setter="set_RelatedConstraints" getter="get_RelatedConstraints">
+			Constraints that are related with the one referenced as RelatingConstraint. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

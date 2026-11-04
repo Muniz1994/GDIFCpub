@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCraneRailFShapeProfileDef" inherits="IfcParameterizedProfileDef"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="OverallHeight" type="float" setter="set_OverallHeight" getter="get_OverallHeight">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="HeadWidth" type="float" setter="set_HeadWidth" getter="get_HeadWidth">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="Radius" type="float" setter="set_Radius" getter="get_Radius">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="HeadDepth2" type="float" setter="set_HeadDepth2" getter="get_HeadDepth2">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="HeadDepth3" type="float" setter="set_HeadDepth3" getter="get_HeadDepth3">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="WebThickness" type="float" setter="set_WebThickness" getter="get_WebThickness">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="BaseDepth1" type="float" setter="set_BaseDepth1" getter="get_BaseDepth1">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="BaseDepth2" type="float" setter="set_BaseDepth2" getter="get_BaseDepth2">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="CentreOfGravityInY" type="float" setter="set_CentreOfGravityInY" getter="get_CentreOfGravityInY">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

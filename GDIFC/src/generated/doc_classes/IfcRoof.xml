@@ -10,7 +10,10 @@
 	<methods/>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Predefined shape types for a roof that are specified in an enumeration. IFC2x4 CHANGE The attribute has been renamed from ShapeType and changed to be OPTIONAL with upward compatibility for file based exchange.
+			Predefined shape types for a roof that are specified in an enumeration. IFC2x4 CHANGE The attribute has been renamed from ShapeType and changed to be OPTIONAL with upward compatibility for file based exchange. In IFC2X3 files, this is the [code]ShapeType[/code] attribute.
+		</member>
+		<member name="HasPorts" type="Array" setter="" getter="get_HasPorts">
+			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

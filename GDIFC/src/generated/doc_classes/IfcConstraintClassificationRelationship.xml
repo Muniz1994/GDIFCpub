@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcConstraintClassificationRelationship" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ClassifiedConstraint" type="GDIFCEntityBase" setter="set_ClassifiedConstraint" getter="get_ClassifiedConstraint">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="RelatedClassifications" type="Array" setter="set_RelatedClassifications" getter="get_RelatedClassifications">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

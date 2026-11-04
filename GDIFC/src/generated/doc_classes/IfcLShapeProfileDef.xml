@@ -27,6 +27,12 @@
 		<member name="LegSlope" type="float" setter="set_LegSlope" getter="get_LegSlope">
 			Slope of the inner face of each leg of the profile.
 		</member>
+		<member name="CentreOfGravityInX" type="float" setter="set_CentreOfGravityInX" getter="get_CentreOfGravityInX">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="CentreOfGravityInY" type="float" setter="set_CentreOfGravityInY" getter="get_CentreOfGravityInY">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
 	</members>
 	<signals/>
 	<constants/>

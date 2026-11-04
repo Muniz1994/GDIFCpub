@@ -5,13 +5,15 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="MappedTo" type="GDIFCEntityBase" setter="set_MappedTo" getter="get_MappedTo">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="TexCoords" type="GDIFCEntityBase" setter="set_TexCoords" getter="get_TexCoords">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

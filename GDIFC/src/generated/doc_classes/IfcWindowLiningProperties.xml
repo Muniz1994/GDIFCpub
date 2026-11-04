@@ -37,13 +37,13 @@
 			Optional link to a shape aspect definition, which points to the part of the geometric representation of the window style, which is used to represent the lining. IFC2x4 CHANGE The attribute is deprecated and shall no longer be used, i.e. the value shall be NIL ($).
 		</member>
 		<member name="LiningOffset" type="float" setter="set_LiningOffset" getter="get_LiningOffset">
-			Offset of the window lining. The offset is given as distance along the y axis of the local placement (perpendicular to the window plane). IFC2x4 CHANGE: New attribute added at the end of the entity definition.
+			Offset of the window lining. The offset is given as distance along the y axis of the local placement (perpendicular to the window plane). IFC2x4 CHANGE: New attribute added at the end of the entity definition. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="LiningToPanelOffsetX" type="float" setter="set_LiningToPanelOffsetX" getter="get_LiningToPanelOffsetX">
-			Offset between the lining and the window panel measured along the x-axis of the local placement. Should be smaller or equal to the LiningThickness . IFC2x4 CHANGE: New attribute added at the end of the entity definition.
+			Offset between the lining and the window panel measured along the x-axis of the local placement. Should be smaller or equal to the LiningThickness . IFC2x4 CHANGE: New attribute added at the end of the entity definition. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="LiningToPanelOffsetY" type="float" setter="set_LiningToPanelOffsetY" getter="get_LiningToPanelOffsetY">
-			Offset between the lining and the window panel measured along the y-axis of the local placement. Should be smaller or equal to the IfcWindowPanelProperties.PanelThickness . IFC2x4 CHANGE: New attribute added at the end of the entity definition.
+			Offset between the lining and the window panel measured along the y-axis of the local placement. Should be smaller or equal to the IfcWindowPanelProperties.PanelThickness . IFC2x4 CHANGE: New attribute added at the end of the entity definition. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

@@ -13,6 +13,7 @@
 			Boundaries of the face.
 		</member>
 		<member name="HasTextureMaps" type="Array" setter="" getter="get_HasTextureMaps">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

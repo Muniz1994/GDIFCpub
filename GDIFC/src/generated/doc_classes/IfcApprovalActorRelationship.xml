@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcApprovalActorRelationship" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Actor" type="GDIFCEntityBase" setter="set_Actor" getter="get_Actor">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="Approval" type="GDIFCEntityBase" setter="set_Approval" getter="get_Approval">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="Role" type="GDIFCEntityBase" setter="set_Role" getter="get_Role">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

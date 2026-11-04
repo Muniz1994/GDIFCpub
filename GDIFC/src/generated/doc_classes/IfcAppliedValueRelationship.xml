@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcAppliedValueRelationship" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcAppliedValueRelationship is a relationship class that enables cost values to be aggregated together as components of another cost value. HISTORY New Entity in Release IFC2.0. IFC2x4 CHANGE Subtyped from IfcResourceLevelRelationship , attribute order changed. Use definitions Dependency relationships can exist between applied values on the basis that one particular value may be determined by o
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="ComponentOfTotal" type="GDIFCEntityBase" setter="set_ComponentOfTotal" getter="get_ComponentOfTotal">
+			The applied value (total or subtotal) of which the value being considered is a component. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="Components" type="Array" setter="set_Components" getter="get_Components">
+			Applied values that are components of another applied value and from which that applied value may be deduced. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="ArithmeticOperator" type="String" setter="set_ArithmeticOperator" getter="get_ArithmeticOperator">
+			The arithmetic operator applied in an applied value relationship. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -5,30 +5,30 @@
 	<brief_description>
 		Definition from ISO/CD 10303-42:1992 : A b_spline_surface is a general form of rational or polynomial parametric surface which is represented by control points, basis functions, and possibly, weights. As with the corresponding curve entity it has some special subtypes where some of the data can be derived. The symbology used here is: K 1 = upper_index_on_u_control_points K 2 = upper_index_on_v_con
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="UDegree" type="int" setter="set_UDegree" getter="get_UDegree">
-			Algebraic degree of basis functions in u .
+			Algebraic degree of basis functions in u . Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="VDegree" type="int" setter="set_VDegree" getter="get_VDegree">
-			Algebraic degree of basis functions in v .
+			Algebraic degree of basis functions in v . Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
-		<member name="ControlPointsList" type="Array" setter="" getter="get_ControlPointsList">
-			This is a list of lists of control points.
+		<member name="ControlPointsList" type="Array" setter="set_ControlPointsList" getter="get_ControlPointsList">
+			This is a list of lists of control points. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="SurfaceForm" type="String" setter="set_SurfaceForm" getter="get_SurfaceForm">
-			Indicator of special surface types.
+			Indicator of special surface types. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="UClosed" type="String" setter="set_UClosed" getter="get_UClosed">
-			Indication of whether the surface is closed in the u direction; this is for information only.
+			Indication of whether the surface is closed in the u direction; this is for information only. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="VClosed" type="String" setter="set_VClosed" getter="get_VClosed">
-			Indication of whether the surface is closed in the v direction; this is for information only.
+			Indication of whether the surface is closed in the v direction; this is for information only. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="SelfIntersect" type="String" setter="set_SelfIntersect" getter="get_SelfIntersect">
-			Flag to indicate whether, or not, surface is self-intersecting; this is for information only.
+			Flag to indicate whether, or not, surface is self-intersecting; this is for information only. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

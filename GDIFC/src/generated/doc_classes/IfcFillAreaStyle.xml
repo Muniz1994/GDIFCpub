@@ -13,6 +13,7 @@
 			The set of fill area styles to use in presenting visible curve segments, annotation fill areas or surfaces.
 		</member>
 		<member name="ModelOrDraughting" type="bool" setter="set_ModelOrDraughting" getter="get_ModelOrDraughting">
+			In IFC4 files, this is the [code]ModelorDraughting[/code] attribute. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

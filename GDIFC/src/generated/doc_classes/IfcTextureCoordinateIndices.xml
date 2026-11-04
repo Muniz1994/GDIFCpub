@@ -5,15 +5,18 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="TexCoordIndex" type="PackedInt64Array" setter="set_TexCoordIndex" getter="get_TexCoordIndex">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="TexCoordsOf" type="GDIFCEntityBase" setter="set_TexCoordsOf" getter="get_TexCoordsOf">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="ToTexMap" type="Array" setter="" getter="get_ToTexMap">
+			Only in IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

@@ -12,6 +12,7 @@
 		<member name="ServicesBuildings" type="Array" setter="" getter="get_ServicesBuildings">
 		</member>
 		<member name="ServicesFacilities" type="Array" setter="" getter="get_ServicesFacilities">
+			Only in IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

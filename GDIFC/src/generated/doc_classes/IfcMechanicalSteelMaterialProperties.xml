@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMechanicalSteelMaterialProperties" inherits="IfcMechanicalMaterialProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="YieldStress" type="float" setter="set_YieldStress" getter="get_YieldStress">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="UltimateStress" type="float" setter="set_UltimateStress" getter="get_UltimateStress">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="UltimateStrain" type="float" setter="set_UltimateStrain" getter="get_UltimateStrain">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="HardeningModule" type="float" setter="set_HardeningModule" getter="get_HardeningModule">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="ProportionalStress" type="float" setter="set_ProportionalStress" getter="get_ProportionalStress">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="PlasticStrain" type="float" setter="set_PlasticStrain" getter="get_PlasticStrain">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="Relaxations" type="Array" setter="set_Relaxations" getter="get_Relaxations">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

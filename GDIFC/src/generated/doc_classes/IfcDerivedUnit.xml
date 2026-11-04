@@ -18,7 +18,7 @@
 		<member name="UserDefinedType" type="String" setter="set_UserDefinedType" getter="get_UserDefinedType">
 		</member>
 		<member name="Name" type="String" setter="set_Name" getter="get_Name">
-			Dimensional exponents derived using the function IfcDerivedDimensionalExponents using (SELF) as the input value.
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

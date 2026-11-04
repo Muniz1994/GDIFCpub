@@ -16,6 +16,10 @@
 			Set list of unique property sets, that are associated with the object type and are common to all object occurrences referring to this object type. IFC2x3 CHANGE The attribute aggregate type has been changed from LIST to SET.
 		</member>
 		<member name="Types" type="Array" setter="" getter="get_Types">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
+		</member>
+		<member name="ObjectTypeOf" type="Array" setter="" getter="get_ObjectTypeOf">
+			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

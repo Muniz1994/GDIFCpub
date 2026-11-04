@@ -19,32 +19,50 @@
 			A general textual description of a design, work task, plan, etc. that is being approved for.
 		</member>
 		<member name="TimeOfApproval" type="String" setter="set_TimeOfApproval" getter="get_TimeOfApproval">
-			Date and time when the result of the approval process is produced. IFC2x4 CHANGE Attribute data type changed to IfcDateTime using ISO 8601 representation, renamed from ApprovalDateTime and made OPTIONAL.
+			Date and time when the result of the approval process is produced. IFC2x4 CHANGE Attribute data type changed to IfcDateTime using ISO 8601 representation, renamed from ApprovalDateTime and made OPTIONAL. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="Status" type="String" setter="set_Status" getter="get_Status">
-			The result or current status of the approval, e.g. Requested, Processed, Approved, Not Approved.
+			The result or current status of the approval, e.g. Requested, Processed, Approved, Not Approved. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="Level" type="String" setter="set_Level" getter="get_Level">
-			Level of the approval e.g. Draft v.s. Completed design.
+			Level of the approval e.g. Draft v.s. Completed design. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="Qualifier" type="String" setter="set_Qualifier" getter="get_Qualifier">
-			Textual description of special constraints or conditions for the approval.
+			Textual description of special constraints or conditions for the approval. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="RequestingApproval" type="GDIFCEntityBase" setter="set_RequestingApproval" getter="get_RequestingApproval">
-			The actor that is acting in the role specified at IfcOrganization or individually at IfcPerson and requesting an approval. IFC2x4 CHANGE New attribute for approval request replacing IfcApprovalActorRelationship (being deleted).
+			The actor that is acting in the role specified at IfcOrganization or individually at IfcPerson and requesting an approval. IFC2x4 CHANGE New attribute for approval request replacing IfcApprovalActorRelationship (being deleted). Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="GivingApproval" type="GDIFCEntityBase" setter="set_GivingApproval" getter="get_GivingApproval">
-			The actor that is acting in the role specified at IfcOrganization or individually at IfcPerson and giving an approval. IFC2x4 CHANGE New attribute for approval provision replacing IfcApprovalActorRelationship (being deleted).
+			The actor that is acting in the role specified at IfcOrganization or individually at IfcPerson and giving an approval. IFC2x4 CHANGE New attribute for approval provision replacing IfcApprovalActorRelationship (being deleted). Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="ApprovalDateTime" type="GDIFCEntityBase" setter="set_ApprovalDateTime" getter="get_ApprovalDateTime">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="ApprovalStatus" type="String" setter="set_ApprovalStatus" getter="get_ApprovalStatus">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="ApprovalLevel" type="String" setter="set_ApprovalLevel" getter="get_ApprovalLevel">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="ApprovalQualifier" type="String" setter="set_ApprovalQualifier" getter="get_ApprovalQualifier">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="HasExternalReferences" type="Array" setter="" getter="get_HasExternalReferences">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="ApprovedObjects" type="Array" setter="" getter="get_ApprovedObjects">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="ApprovedResources" type="Array" setter="" getter="get_ApprovedResources">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="IsRelatedWith" type="Array" setter="" getter="get_IsRelatedWith">
 		</member>
 		<member name="Relates" type="Array" setter="" getter="get_Relates">
+		</member>
+		<member name="Actors" type="Array" setter="" getter="get_Actors">
+			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

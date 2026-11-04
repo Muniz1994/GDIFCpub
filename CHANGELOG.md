@@ -10,6 +10,23 @@ New changes go under **Unreleased**. Builds are cut automatically: when a push t
 
 ## [Unreleased]
 
+##### Added
+
+- The typed IFC classes now cover IFC2X3 and IFC4 as well as IFC4X3. The 130 entities only found in older schemas have classes of their own, such as `IfcDoorStyle`, `IfcWindowStyle` and `IfcBuildingElement`, and classes have the attributes their entity has in any schema, such as IFC2X3's `IfcSpace.InteriorOrExteriorSpace`. Attributes IFC4X3 renamed are read under their new name in older files: `IfcProperty.Specification` is an IFC2X3 or IFC4 property's `Description`. The class reference says which schemas a class or attribute is in. See [Typed Entity Access](docs/typed-entities.md#files-of-every-schema).
+- Setters of typed attributes check the value against the file's schema. An enumeration takes its value in any case, and is refused when the enumeration lacks it. An entity reference must be an entity of the same file and of the declared type. A value that doesn't fit is refused with an error and leaves the entity unchanged.
+- Nested lists, such as `IfcCartesianPointList3D.CoordList`, return their values, as an `Array` of packed arrays, and can be set.
+
+##### Changed
+
+- About 40 attributes whose type differs between schemas are now `Variant`, holding the type of the file's schema. Among them are `IfcQuantityCount.CountValue` and `IfcReinforcementBarProperties.BarCount` (an `int` in IFC4X3, a `float` in IFC4), and dates that IFC2X3 holds as entities and IFC4 as strings, such as `IfcClassification.EditionDate`.
+- Logical attributes read as `"TRUE"`, `"FALSE"` or `"UNKNOWN"`, and binary ones as a string of 0s and 1s. Typed properties used to return an empty string for both, and `get_attribute()` returned the number of bits of a binary.
+
+##### Fixed
+
+- Typed attributes of entities in IFC2X3 and IFC4 files read the attribute of that name. They read a fixed position from IFC4X3, so on an IFC2X3 file `IfcSpace.PredefinedType` returned `InteriorOrExteriorSpace`, and attributes past the end of the entity, such as an IFC2X3 `IfcDoor.PredefinedType` or an IFC4 `IfcAnnotation.PredefinedType`, crashed Godot. Setters wrote to the same wrong positions.
+- Setting an enumeration attribute wrote its value as a string, which isn't valid in the IFC file.
+- Typed number attributes read numbers written as the other kind. A real written without a decimal point, such as coordinates written as `0` or `1`, read as `0.0` or as an empty array, and an integer written as a real, such as `IfcOwnerHistory.CreationDate` in some files, read as `0`. Integers written as reals are truncated.
+
 ## [1.1.0-alpha]
 
 ### Build 5 — 2026-11-02

@@ -16,12 +16,16 @@
 			Overall measure of the width, it reflects the X Dimension of a bounding box, enclosing the body of the window opening. If omitted, the OverallWidth should be taken from the geometric representation of the IfcOpening in which the window is inserted. NOTE The body of the window might be wider then the window opening (e.g. in cases where the window lining includes a casing). In these cases the OverallWidth shall still be given as the window opening width, and not as the total width of the window lining.
 		</member>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Predefined generic type for a window that is specified in an enumeration. There may be a property set given specificly for the predefined types. NOTE The PredefinedType shall only be used, if no type object IfcWindowType is assigned, providing its own IfcWindowType.PredefinedType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition.
+			Predefined generic type for a window that is specified in an enumeration. There may be a property set given specificly for the predefined types. NOTE The PredefinedType shall only be used, if no type object IfcWindowType is assigned, providing its own IfcWindowType.PredefinedType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="PartitioningType" type="String" setter="set_PartitioningType" getter="get_PartitioningType">
-			Type defining the general layout of the window in terms of the partitioning of panels. NOTE The PartitioningType shall only be used, if no type object IfcWindowType is assigned, providing its own IfcWindowType.PartitioningType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition.
+			Type defining the general layout of the window in terms of the partitioning of panels. NOTE The PartitioningType shall only be used, if no type object IfcWindowType is assigned, providing its own IfcWindowType.PartitioningType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="UserDefinedPartitioningType" type="String" setter="set_UserDefinedPartitioningType" getter="get_UserDefinedPartitioningType">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="HasPorts" type="Array" setter="" getter="get_HasPorts">
+			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

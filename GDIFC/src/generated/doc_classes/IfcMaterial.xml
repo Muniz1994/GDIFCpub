@@ -13,16 +13,21 @@
 			Name of the material. EXAMPLE A view definition may require Material.Name to uniquely specify e.g. concrete or steel grade, in which case the attribute Material.Category could take the value 'Concrete' or 'Steel'. NOTE Material grade may have diffenrent meaning in different view definitions, e.g. strength grade for structural design and analysis, or visible appearance grade in architectural application. Also, more elaborate material grade definition may be associated as classification via inverse attribute HasExternalReferences .
 		</member>
 		<member name="Description" type="String" setter="set_Description" getter="get_Description">
-			Definition of the material in more descriptive terms than given by attributes Name or Category . IFC2x4 CHANGE The attribute has been added at the end of attribute list.
+			Definition of the material in more descriptive terms than given by attributes Name or Category . IFC2x4 CHANGE The attribute has been added at the end of attribute list. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="Category" type="String" setter="set_Category" getter="get_Category">
-			Definition of the category (group or type) of material, in more general terms than given by attribute Name . EXAMPLE A view definition may require each Material.Name to be unique, e.g. for each concrete or steel grade used in a project, in which case Material.Category could take the values 'Concrete' or 'Steel'. IFC2x4 CHANGE The attribute has been added at the end of attribute list.
+			Definition of the category (group or type) of material, in more general terms than given by attribute Name . EXAMPLE A view definition may require each Material.Name to be unique, e.g. for each concrete or steel grade used in a project, in which case Material.Category could take the values 'Concrete' or 'Steel'. IFC2x4 CHANGE The attribute has been added at the end of attribute list. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="HasRepresentation" type="Array" setter="" getter="get_HasRepresentation">
 		</member>
 		<member name="IsRelatedWith" type="Array" setter="" getter="get_IsRelatedWith">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="RelatesTo" type="Array" setter="" getter="get_RelatesTo">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
+		</member>
+		<member name="ClassifiedAs" type="Array" setter="" getter="get_ClassifiedAs">
+			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

@@ -9,6 +9,9 @@
 	<tutorials/>
 	<methods/>
 	<members>
+		<member name="HasPorts" type="Array" setter="" getter="get_HasPorts">
+			Only in IFC2X3 files: in others it is empty.
+		</member>
 	</members>
 	<signals/>
 	<constants/>

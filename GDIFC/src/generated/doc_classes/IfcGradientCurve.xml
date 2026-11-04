@@ -5,13 +5,15 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="BaseCurve" type="GDIFCEntityBase" setter="set_BaseCurve" getter="get_BaseCurve">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="EndPoint" type="GDIFCEntityBase" setter="set_EndPoint" getter="get_EndPoint">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

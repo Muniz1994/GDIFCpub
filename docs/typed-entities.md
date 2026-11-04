@@ -33,6 +33,19 @@ if wall:
 
 If the cast returns `null`, the object is a different IFC class. A cast also succeeds for subtypes, so an `IfcWallStandardCase` casts to `IfcWall`.
 
+## Files of Every Schema
+
+The same classes serve IFC2X3, IFC4 and IFC4X3 files. Each class has the attributes its entity has in any of them, and reads them from the file's own schema:
+
+- An attribute the file's schema doesn't have reads as empty (`""`, `0`, `null` or an empty array), and setting it reports an error. `IfcSpace.PredefinedType` is empty in an IFC2X3 file, which has `InteriorOrExteriorSpace` instead.
+- Attributes IFC4X3 renamed are read under their new name. `IfcProperty.Specification` is the `Description` of an IFC2X3 or IFC4 property, and `IfcOrganization.Identification` the `Id` of an IFC2X3 organization.
+- About 40 attributes whose type changed between schemas are `Variant`, such as `IfcQuantityCount.CountValue` (an `int` in IFC4X3, a `float` before) and the dates that IFC2X3 holds as entities.
+- Entities only found in older schemas, such as `IfcDoorStyle` or `IfcBuildingElement`, have classes too.
+
+The class reference in the editor says which schemas a class or attribute is in, and the old name of a renamed attribute. The hierarchy is IFC4X3's: an IFC4 wall is an `IfcBuiltElement` for a cast, although IFC4 calls that class `IfcBuildingElement`. `is_a()` follows the file's own schema, so `is_a("IfcBuildingElement")` is true for it.
+
+Setters convert the value to the type the file's schema declares: an enumeration takes its value in any case, and an entity reference must be an entity of the same file of the right type. A value that doesn't fit is refused with an error, and the entity is left unchanged.
+
 ## Runtime Class Filtering
 
 The `IFCNode` tree sits under the manager's `IFCModel` node, nested by spatial structure (project, site, building, storey), so search it recursively:

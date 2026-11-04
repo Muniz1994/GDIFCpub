@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMechanicalConcreteMaterialProperties" inherits="IfcMechanicalMaterialProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="CompressiveStrength" type="float" setter="set_CompressiveStrength" getter="get_CompressiveStrength">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="MaxAggregateSize" type="float" setter="set_MaxAggregateSize" getter="get_MaxAggregateSize">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="AdmixturesDescription" type="String" setter="set_AdmixturesDescription" getter="get_AdmixturesDescription">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="Workability" type="String" setter="set_Workability" getter="get_Workability">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="ProtectivePoreRatio" type="float" setter="set_ProtectivePoreRatio" getter="get_ProtectivePoreRatio">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="WaterImpermeability" type="String" setter="set_WaterImpermeability" getter="get_WaterImpermeability">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

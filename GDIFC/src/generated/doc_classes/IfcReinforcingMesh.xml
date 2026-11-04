@@ -10,7 +10,6 @@
 	<methods/>
 	<members>
 		<member name="MeshLength" type="float" setter="set_MeshLength" getter="get_MeshLength">
-			The predefined type is always MESH.
 		</member>
 		<member name="MeshWidth" type="float" setter="set_MeshWidth" getter="get_MeshWidth">
 		</member>
@@ -27,6 +26,7 @@
 		<member name="TransverseBarSpacing" type="float" setter="set_TransverseBarSpacing" getter="get_TransverseBarSpacing">
 		</member>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+			The predefined type is always MESH. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

@@ -10,7 +10,10 @@
 	<methods/>
 	<members>
 		<member name="Maps" type="Array" setter="set_Maps" getter="get_Maps">
-			Reference to the one (or in case of multi textures with identity transformation to geometric surfaces) subtype of IfcSurfaceTexture that is applied to a geometric surface by the texture coordinate transformation.
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="AnnotatedSurface" type="Array" setter="" getter="get_AnnotatedSurface">
+			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

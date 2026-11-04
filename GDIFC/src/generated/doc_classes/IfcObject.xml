@@ -13,10 +13,13 @@
 			The type denotes a particular type that indicates the object further. The use has to be established at the level of instantiable subtypes. In particular it holds the user defined type, if the enumeration of the attribute PredefinedType is set to USERDEFINED.
 		</member>
 		<member name="IsDeclaredBy" type="Array" setter="" getter="get_IsDeclaredBy">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="Declares" type="Array" setter="" getter="get_Declares">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="IsTypedBy" type="Array" setter="" getter="get_IsTypedBy">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="IsDefinedBy" type="Array" setter="" getter="get_IsDefinedBy">
 		</member>

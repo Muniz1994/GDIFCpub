@@ -10,22 +10,31 @@
 	<methods/>
 	<members>
 		<member name="TranslationalStiffnessByLengthX" type="GDIFCEntityBase" setter="set_TranslationalStiffnessByLengthX" getter="get_TranslationalStiffnessByLengthX">
-			Translational stiffness value in x-direction of the coordinate system defined by the instance which uses this resource object.
+			Translational stiffness value in x-direction of the coordinate system defined by the instance which uses this resource object. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="TranslationalStiffnessByLengthY" type="GDIFCEntityBase" setter="set_TranslationalStiffnessByLengthY" getter="get_TranslationalStiffnessByLengthY">
-			Translational stiffness value in y-direction of the coordinate system defined by the instance which uses this resource object.
+			Translational stiffness value in y-direction of the coordinate system defined by the instance which uses this resource object. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="TranslationalStiffnessByLengthZ" type="GDIFCEntityBase" setter="set_TranslationalStiffnessByLengthZ" getter="get_TranslationalStiffnessByLengthZ">
-			Translational stiffness value in z-direction of the coordinate system defined by the instance which uses this resource object.
+			Translational stiffness value in z-direction of the coordinate system defined by the instance which uses this resource object. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
-		<member name="RotationalStiffnessByLengthX" type="GDIFCEntityBase" setter="set_RotationalStiffnessByLengthX" getter="get_RotationalStiffnessByLengthX">
-			Rotational stiffness value about the x-axis of the coordinate system defined by the instance which uses this resource object.
+		<member name="RotationalStiffnessByLengthX" type="Variant" setter="set_RotationalStiffnessByLengthX" getter="get_RotationalStiffnessByLengthX">
+			Rotational stiffness value about the x-axis of the coordinate system defined by the instance which uses this resource object. Its type depends on the file's schema: GDIFCEntityBase in IFC4 and IFC4X3_ADD2, float in IFC2X3.
 		</member>
-		<member name="RotationalStiffnessByLengthY" type="GDIFCEntityBase" setter="set_RotationalStiffnessByLengthY" getter="get_RotationalStiffnessByLengthY">
-			Rotational stiffness value about the y-axis of the coordinate system defined by the instance which uses this resource object.
+		<member name="RotationalStiffnessByLengthY" type="Variant" setter="set_RotationalStiffnessByLengthY" getter="get_RotationalStiffnessByLengthY">
+			Rotational stiffness value about the y-axis of the coordinate system defined by the instance which uses this resource object. Its type depends on the file's schema: GDIFCEntityBase in IFC4 and IFC4X3_ADD2, float in IFC2X3.
 		</member>
-		<member name="RotationalStiffnessByLengthZ" type="GDIFCEntityBase" setter="set_RotationalStiffnessByLengthZ" getter="get_RotationalStiffnessByLengthZ">
-			Rotational stiffness value about the z-axis of the coordinate system defined by the instance which uses this resource object.
+		<member name="RotationalStiffnessByLengthZ" type="Variant" setter="set_RotationalStiffnessByLengthZ" getter="get_RotationalStiffnessByLengthZ">
+			Rotational stiffness value about the z-axis of the coordinate system defined by the instance which uses this resource object. Its type depends on the file's schema: GDIFCEntityBase in IFC4 and IFC4X3_ADD2, float in IFC2X3.
+		</member>
+		<member name="LinearStiffnessByLengthX" type="float" setter="set_LinearStiffnessByLengthX" getter="get_LinearStiffnessByLengthX">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="LinearStiffnessByLengthY" type="float" setter="set_LinearStiffnessByLengthY" getter="get_LinearStiffnessByLengthY">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="LinearStiffnessByLengthZ" type="float" setter="set_LinearStiffnessByLengthZ" getter="get_LinearStiffnessByLengthZ">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

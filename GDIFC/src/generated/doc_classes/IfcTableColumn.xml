@@ -5,23 +5,24 @@
 	<brief_description>
 		An IfcTableColumn is a data structure that captures column information for use in an IfcTable . Each instance defines the name, description, identifier, and units of measure that are applicable to the columnar data associated with the IfcTableRow objects. The use of IfcTableColumn supercedes the IsHeading flag associated with IfcTableRow . HISTORY New entity in IFC2x4.
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="Identifier" type="String" setter="set_Identifier" getter="get_Identifier">
-			The table column display name.
+			Table column identifier. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="Name" type="String" setter="set_Name" getter="get_Name">
-			Descriptive text for the table column.
+			The table column display name. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="Description" type="String" setter="set_Description" getter="get_Description">
-			Table column identifier.
+			Descriptive text for the table column. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="Unit" type="GDIFCEntityBase" setter="set_Unit" getter="get_Unit">
-			The unit of measure to be used for this column's data.
+			The unit of measure to be used for this column's data. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="ReferencePath" type="GDIFCEntityBase" setter="set_ReferencePath" getter="get_ReferencePath">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

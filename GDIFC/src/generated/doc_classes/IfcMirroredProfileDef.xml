@@ -5,7 +5,7 @@
 	<brief_description>
 		The IfcMirroredProfileDef defines the profile by mirroring the parent profile about the y axis of the parent profile coordinate system. That is, left and right of the parent profile are swapped. Notes: IfcMirroredProfileDef is primarily useful together with IfcCShapeProfileDef , IfcLShapeProfileDef , IfcUShapeProfileDef , or IfcZShapeProfileDef as parent profile but can be used with other parent p
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>

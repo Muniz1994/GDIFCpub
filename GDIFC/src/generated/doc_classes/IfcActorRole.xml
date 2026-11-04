@@ -19,6 +19,7 @@
 			A textual description relating the nature of the role played by an actor.
 		</member>
 		<member name="HasExternalReference" type="Array" setter="" getter="get_HasExternalReference">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

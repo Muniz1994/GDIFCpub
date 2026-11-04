@@ -5,13 +5,15 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="RelativePlacement" type="GDIFCEntityBase" setter="set_RelativePlacement" getter="get_RelativePlacement">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="CartesianPosition" type="GDIFCEntityBase" setter="set_CartesianPosition" getter="get_CartesianPosition">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

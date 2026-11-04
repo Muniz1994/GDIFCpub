@@ -5,7 +5,7 @@
 	<brief_description>
 		Definition from IAI : A spatial element is the generalization of all spatial elements that might be used to define a spatial structure or to define spatial zones. a hierarchical spatial structure element as IfcSpatialStructureElement a spatial structure is a hiearchical decomposition of the project. That spatial structure is often used to provide a project structure to organize a building project.
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
@@ -19,8 +19,10 @@
 		<member name="ReferencesElements" type="Array" setter="" getter="get_ReferencesElements">
 		</member>
 		<member name="IsInterferedByElements" type="Array" setter="" getter="get_IsInterferedByElements">
+			Only in IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="InterferesElements" type="Array" setter="" getter="get_InterferesElements">
+			Only in IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

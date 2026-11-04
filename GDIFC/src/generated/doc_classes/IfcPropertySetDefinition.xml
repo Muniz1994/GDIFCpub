@@ -12,8 +12,13 @@
 		<member name="DefinesType" type="Array" setter="" getter="get_DefinesType">
 		</member>
 		<member name="IsDefinedBy" type="Array" setter="" getter="get_IsDefinedBy">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="DefinesOccurrence" type="Array" setter="" getter="get_DefinesOccurrence">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
+		</member>
+		<member name="PropertyDefinitionOf" type="Array" setter="" getter="get_PropertyDefinitionOf">
+			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

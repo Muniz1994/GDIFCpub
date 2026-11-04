@@ -3,13 +3,21 @@
 Godot GDExtension C++ code generator for IFC Express schemas.
 
 Generates per-entity C++ GDExtension classes that expose all IFC entity
-attributes as typed Godot getters/setters, mirroring the full IFC inheritance
+attributes as typed Godot getters/setters, mirroring the IFC inheritance
 hierarchy inside Godot's class system.
 
+Several schemas can be given: one class is generated per entity name across all of them, so a
+script using IfcWall works with files of every schema. The first schema is the primary one: its
+hierarchy, attribute names and types win. Entities and attributes only found in the others are
+added, attributes the primary schema renamed are read under their old name in files of the older
+schemas, and attributes whose type differs between schemas are exposed as Variant. Accessors look
+attributes up by name in the entity's own schema, so an attribute missing from a file's schema
+reads as empty.
+
 Usage:
-    python3 godot_codegen.py <schema.exp> <output_dir>
+    python3 godot_codegen.py <primary.exp> [<other.exp> ...] <output_dir>
     e.g.:
-    python3 godot_codegen.py schemas/IFC4X3_ADD2.exp ../GDIFC/src/generated/
+    python3 godot_codegen.py schemas/IFC4X3_ADD2.exp schemas/IFC4.exp schemas/IFC2X3_TC1.exp ../GDIFC/src/generated/
 
 Requirements:
     - pyparsing  (pip install pyparsing)
@@ -22,6 +30,7 @@ Outputs in <output_dir>:
     gd_ifc_entities_impl_C.cpp         - Implementations for M-R
     gd_ifc_entities_impl_D.cpp         - Implementations for S-Z
     gd_ifc_entities_register.cpp       - ClassDB + factory registrations
+    doc_classes/*.xml                  - Class reference, compiled into gd_ifc_doc_data.gen.cpp
 """
 
 import csv
@@ -34,47 +43,58 @@ import sys
 _here = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, _here)
 
-import express_parser
-from schema import Schema
-from mapping import Mapping
-import nodes as _nodes
-
 # ─────────────────────────────────────────────────────────────────────────────
 # Type-mapping tables  (Express argument type → Godot C++ side)
 # ─────────────────────────────────────────────────────────────────────────────
-# Each entry: (cpp_type, variant_type_enum, getter_helper, setter_helper, default_val)
+# Each entry: (cpp_type, variant_type_enum, getter_helper, default_val)
 ARGTYPE_MAP = {
-    "IfcUtil::Argument_INT":     ("int64_t",                   "Variant::INT",                "gd_attr_int",        "gd_set_int",        "0"),
-    "IfcUtil::Argument_DOUBLE":  ("double",                    "Variant::FLOAT",              "gd_attr_double",     "gd_set_double",     "0.0"),
-    "IfcUtil::Argument_STRING":  ("godot::String",             "Variant::STRING",             "gd_attr_string",     "gd_set_string",     "godot::String()"),
-    "IfcUtil::Argument_BOOL":    ("bool",                      "Variant::BOOL",               "gd_attr_bool",       "gd_set_bool",       "false"),
-    "IfcUtil::Argument_LOGICAL": ("godot::String",             "Variant::STRING",             "gd_attr_string",     "gd_set_string",     "godot::String()"),
-    "IfcUtil::Argument_BINARY":  ("godot::String",             "Variant::STRING",             "gd_attr_string",     "gd_set_string",     "godot::String()"),
+    "IfcUtil::Argument_INT":     ("int64_t",                   "Variant::INT",                "gd_attr_int",        "0"),
+    "IfcUtil::Argument_DOUBLE":  ("double",                    "Variant::FLOAT",              "gd_attr_double",     "0.0"),
+    "IfcUtil::Argument_STRING":  ("godot::String",             "Variant::STRING",             "gd_attr_string",     "godot::String()"),
+    "IfcUtil::Argument_BOOL":    ("bool",                      "Variant::BOOL",               "gd_attr_bool",       "false"),
+    "IfcUtil::Argument_LOGICAL": ("godot::String",             "Variant::STRING",             "gd_attr_string",     "godot::String()"),
+    "IfcUtil::Argument_BINARY":  ("godot::String",             "Variant::STRING",             "gd_attr_string",     "godot::String()"),
     "IfcUtil::Argument_ENUMERATION": (
-        "godot::String", "Variant::STRING", "gd_attr_string", "gd_set_string", "godot::String()"),
+        "godot::String", "Variant::STRING", "gd_attr_string", "godot::String()"),
     "IfcUtil::Argument_ENTITY_INSTANCE": (
-        "Ref<GDIFCEntityBase>", "Variant::OBJECT", "gd_attr_entity", "gd_set_entity", "Ref<GDIFCEntityBase>()"),
+        "Ref<GDIFCEntityBase>", "Variant::OBJECT", "gd_attr_entity", "Ref<GDIFCEntityBase>()"),
     "IfcUtil::Argument_AGGREGATE_OF_INT": (
-        "godot::PackedInt64Array",   "Variant::PACKED_INT64_ARRAY",   "gd_attr_agg_int",    "gd_set_agg_int",    "godot::PackedInt64Array()"),
+        "godot::PackedInt64Array",   "Variant::PACKED_INT64_ARRAY",   "gd_attr_agg_int",    "godot::PackedInt64Array()"),
     "IfcUtil::Argument_AGGREGATE_OF_DOUBLE": (
-        "godot::PackedFloat64Array", "Variant::PACKED_FLOAT64_ARRAY", "gd_attr_agg_double", "gd_set_agg_double", "godot::PackedFloat64Array()"),
+        "godot::PackedFloat64Array", "Variant::PACKED_FLOAT64_ARRAY", "gd_attr_agg_double", "godot::PackedFloat64Array()"),
     "IfcUtil::Argument_AGGREGATE_OF_STRING": (
-        "godot::PackedStringArray",  "Variant::PACKED_STRING_ARRAY",  "gd_attr_agg_string", "gd_set_agg_string", "godot::PackedStringArray()"),
+        "godot::PackedStringArray",  "Variant::PACKED_STRING_ARRAY",  "gd_attr_agg_string", "godot::PackedStringArray()"),
     "IfcUtil::Argument_AGGREGATE_OF_BINARY": (
-        "godot::PackedStringArray",  "Variant::PACKED_STRING_ARRAY",  "gd_attr_agg_string", "gd_set_agg_string", "godot::PackedStringArray()"),
+        "godot::PackedStringArray",  "Variant::PACKED_STRING_ARRAY",  "gd_attr_agg_string", "godot::PackedStringArray()"),
     "IfcUtil::Argument_AGGREGATE_OF_ENTITY_INSTANCE": (
-        "godot::Array", "Variant::ARRAY", "gd_attr_agg_entity", "gd_set_agg_entity", "godot::Array()"),
+        "godot::Array", "Variant::ARRAY", "gd_attr_agg_entity", "godot::Array()"),
     "IfcUtil::Argument_AGGREGATE_OF_AGGREGATE_OF_INT": (
-        "godot::Array", "Variant::ARRAY", "gd_attr_variant", None, "godot::Array()"),
+        "godot::Array", "Variant::ARRAY", "gd_attr_array", "godot::Array()"),
     "IfcUtil::Argument_AGGREGATE_OF_AGGREGATE_OF_DOUBLE": (
-        "godot::Array", "Variant::ARRAY", "gd_attr_variant", None, "godot::Array()"),
+        "godot::Array", "Variant::ARRAY", "gd_attr_array", "godot::Array()"),
     "IfcUtil::Argument_AGGREGATE_OF_AGGREGATE_OF_STRING": (
-        "godot::Array", "Variant::ARRAY", "gd_attr_variant", None, "godot::Array()"),
+        "godot::Array", "Variant::ARRAY", "gd_attr_array", "godot::Array()"),
     "IfcUtil::Argument_AGGREGATE_OF_AGGREGATE_OF_ENTITY_INSTANCE": (
-        "godot::Array", "Variant::ARRAY", "gd_attr_variant", None, "godot::Array()"),
+        "godot::Array", "Variant::ARRAY", "gd_attr_array", "godot::Array()"),
+}
+
+# Attributes whose type differs between schemas
+VARIANT_TYPE = ("godot::Variant", "Variant::NIL", "gd_attr_to_variant", "godot::Variant()")
+
+# Getters that wrap entities, which need the file to keep alive
+FILE_GETTERS = ("gd_attr_entity", "gd_attr_agg_entity", "gd_attr_array", "gd_attr_to_variant")
+
+# Argument types holding a plain value, whose declared type may change when the attribute is
+# renamed (see same_value). Enumerations, entities and selects must keep their declared type.
+PLAIN_ARGTYPES = {
+    "IfcUtil::Argument_INT", "IfcUtil::Argument_DOUBLE", "IfcUtil::Argument_STRING",
+    "IfcUtil::Argument_BOOL", "IfcUtil::Argument_LOGICAL", "IfcUtil::Argument_BINARY",
+    "IfcUtil::Argument_AGGREGATE_OF_INT", "IfcUtil::Argument_AGGREGATE_OF_DOUBLE",
+    "IfcUtil::Argument_AGGREGATE_OF_STRING",
 }
 
 ENTITY_HINT = 'PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"'
+VARIANT_PROPERTY = 'PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT'
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Helpers
@@ -90,6 +110,11 @@ def gd_class_name(ifc_name: str) -> str:
     """IFC entity name → Godot GDClass name (e.g. IfcWall → IfcWall)."""
     return ifc_name
 
+def join_names(names: list) -> str:
+    """["IFC4", "IFC2X3"] → "IFC2X3 and IFC4". Sorting puts IFC schemas oldest first."""
+    names = sorted(names)
+    return names[0] if len(names) == 1 else ", ".join(names[:-1]) + " and " + names[-1]
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Documentation helpers  (CSV → Godot XML)
 # ─────────────────────────────────────────────────────────────────────────────
@@ -99,6 +124,10 @@ def _strip_html(text: str) -> str:
     text = re.sub(r'<[^>]+>', ' ', text)
     text = html.unescape(text)
     return ' '.join(text.split())
+
+
+def _xml(text: str) -> str:
+    return html.escape(text, quote=False)
 
 
 def _load_entity_docs(csv_path: str) -> dict:
@@ -115,13 +144,13 @@ def _load_entity_docs(csv_path: str) -> dict:
 
 
 def _load_attr_docs(csv_path: str) -> dict:
-    """Returns {doc_line_int: plain_description}."""
+    """Returns {doc_line_int: (attr_name, plain_description)}."""
     result = {}
     with open(csv_path, newline='', encoding='cp1252', errors='replace') as f:
         for row in csv.reader(f, delimiter=';'):
             if len(row) >= 3:
                 try:
-                    result[int(row[0])] = _strip_html(row[2])
+                    result[int(row[0])] = (row[1].strip(), _strip_html(row[2]))
                 except ValueError:
                     pass
     return result
@@ -143,6 +172,28 @@ def _load_entity_attr_docs(csv_path: str) -> dict:
     return result
 
 
+def load_docs() -> tuple:
+    """Returns ({entity_lower: description}, {entity_lower: {attr_name: description}})."""
+    entity_doc_csv = os.path.join(_here, "DocEntity.csv")
+    attr_doc_csv = os.path.join(_here, "DocAttribute.csv")
+    entity_attr_csv = os.path.join(_here, "DocEntityAttributes.csv")
+
+    entity_docs = _load_entity_docs(entity_doc_csv) if os.path.exists(entity_doc_csv) else {}
+    attr_docs = _load_attr_docs(attr_doc_csv) if os.path.exists(attr_doc_csv) else {}
+    links = _load_entity_attr_docs(entity_attr_csv) if os.path.exists(entity_attr_csv) else {}
+
+    entity_desc = {}
+    entity_attr_desc = {}
+    for line, (name, desc) in entity_docs.items():
+        entity_desc[name.lower()] = desc
+        by_name = entity_attr_desc.setdefault(name.lower(), {})
+        for _, a_line in sorted(links.get(line, {}).items()):
+            if a_line in attr_docs:
+                a_name, a_desc = attr_docs[a_line]
+                by_name.setdefault(a_name, a_desc)
+    return entity_desc, entity_attr_desc
+
+
 # Map C++ type → Godot XML type name for doc generation
 _CPP_TO_XML_TYPE = {
     "godot::String":             "String",
@@ -154,166 +205,383 @@ _CPP_TO_XML_TYPE = {
     "godot::PackedInt64Array":   "PackedInt64Array",
     "godot::PackedFloat64Array": "PackedFloat64Array",
     "Ref<GDIFCEntityBase>":      "GDIFCEntityBase",
+    "godot::Variant":            "Variant",
 }
 
 
-def emit_xml_doc(entity_name: str, parent_name: str | None,
-                 attrs: list, entity_desc: str, attr_descs: dict,
-                 inverse_attrs: list) -> str:
-    """
-    Emit a Godot XML doc file for one IFC entity class.
-    attr_descs: {attr_position_in_own_attrs (0-based) -> plain_description}
-    """
-    parent = parent_name if parent_name else "GDIFCEntityBase"
+def emit_xml_doc(cls, entity_desc: str, attr_desc: dict, all_schemas: list) -> str:
+    """Emit a Godot XML doc file for one generated class."""
+    parent = cls.parent if cls.parent else "GDIFCEntityBase"
     brief = entity_desc[:400] if entity_desc else ""
+    description = ""
+    if cls.schemas != all_schemas:
+        description = f"Only in {join_names(cls.schemas)} files."
     lines = [
         '<?xml version="1.0" encoding="UTF-8" ?>',
-        f'<class name="{entity_name}" inherits="{parent}"',
+        f'<class name="{cls.name}" inherits="{parent}"',
         '    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
         '    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">',
         '\t<brief_description>',
-        f'\t\t{brief}' if brief else '',
+        f'\t\t{_xml(brief)}' if brief else '',
         '\t</brief_description>',
-        '\t<description></description>',
+        f'\t<description>{_xml(description)}</description>',
         '\t<tutorials/>',
         '\t<methods/>',
         '\t<members>',
     ]
-    for i, a in enumerate(attrs):
-        if a["type_info"] is not None:
-            cpp_type, variant_type, _, setter_helper, _ = a["type_info"]
-            xml_type = _CPP_TO_XML_TYPE.get(cpp_type, "Variant")
-            setter_attr = f'setter="set_{a["name"]}"' if setter_helper else 'setter=""'
-            desc = attr_descs.get(i, "")
-            lines.append(
-                f'\t\t<member name="{a["name"]}" type="{xml_type}"'
-                f' {setter_attr} getter="get_{a["name"]}">'
-            )
-            if desc:
-                lines.append(f'\t\t\t{desc}')
-            lines.append('\t\t</member>')
-    for inv_name in inverse_attrs:
-        lines.append(f'\t\t<member name="{inv_name}" type="Array" setter="" getter="get_{inv_name}">')
+    for a in cls.attrs:
+        if a.type_info is None:
+            continue
+        xml_type = _CPP_TO_XML_TYPE.get(a.type_info[0], "Variant")
+        notes = [attr_desc.get(a.name, "")]
+        for old_name, schemas in a.renamed_in():
+            notes.append(f"In {join_names(schemas)} files, this is the [code]{old_name}[/code] attribute.")
+        if a.type_info is VARIANT_TYPE:
+            notes.append("Its type depends on the file's schema: " + ", ".join(
+                f"{_CPP_TO_XML_TYPE.get(cpp, 'Variant')} in {join_names(schemas)}" for cpp, schemas in a.types_by_schema()) + ".")
+        if a.schemas != all_schemas:
+            notes.append(f"Only in {join_names(a.schemas)} files: in others it reads as empty and can't be set.")
+        lines.append(f'\t\t<member name="{a.name}" type="{xml_type}" setter="set_{a.name}" getter="get_{a.name}">')
+        text = " ".join(n for n in notes if n)
+        if text:
+            lines.append(f'\t\t\t{_xml(text)}')
+        lines.append('\t\t</member>')
+    for inv in cls.inverses:
+        lines.append(f'\t\t<member name="{inv.name}" type="Array" setter="" getter="get_{inv.name}">')
+        if inv.schemas != all_schemas:
+            lines.append(f'\t\t\t{_xml(f"Only in {join_names(inv.schemas)} files: in others it is empty.")}')
         lines.append('\t\t</member>')
     lines += ['\t</members>', '\t<signals/>', '\t<constants/>', '</class>']
     return '\n'.join(lines) + '\n'
 
 
-def topological_sort(entities: dict) -> list:
-    """Return entity names in parent-before-child order."""
+# ─────────────────────────────────────────────────────────────────────────────
+# Schema model
+# ─────────────────────────────────────────────────────────────────────────────
+
+class SchemaAttr:
+    """An explicit attribute as one schema declares it."""
+    def __init__(self, name, arg_type, declared):
+        self.name = name
+        self.arg_type = arg_type    # IfcUtil::Argument_*, or SKIP when it can't be mapped
+        self.declared = declared    # declared type, e.g. IfcLabel or set[1:?] of IfcRepresentationItem
+
+    @property
+    def type_info(self):
+        if self.arg_type == "SKIP" or "UNKNOWN" in self.arg_type:
+            return None
+        return ARGTYPE_MAP.get(self.arg_type)
+
+
+class Schema:
+    """One parsed EXPRESS schema."""
+    def __init__(self, exp_path: str):
+        import express_parser
+        print(f"[godot_codegen] Parsing: {exp_path}")
+        m = express_parser.parse(exp_path)
+        self.mapping = m
+        self.name = str(getattr(m.schema, 'name', os.path.basename(exp_path)))
+        self.entities = {str(k): v for k, v in m.schema.entities.items()}
+        self._full = {}
+        self._full_inverses = {}
+        print(f"[godot_codegen] Schema: {self.name}, {len(self.entities)} entities")
+
+    def __contains__(self, name):
+        return name in self.entities
+
+    def parent(self, name):
+        supertypes = list(self.entities[name].supertypes or [])
+        return str(supertypes[0]) if supertypes else None
+
+    def is_abstract(self, name):
+        return bool(self.entities[name].abstract)
+
+    def ancestors(self, name):
+        """The entity and its supertypes, nearest first."""
+        while name is not None:
+            yield name
+            name = self.parent(name)
+
+    def own_attrs(self, name):
+        attrs = []
+        for attr in (self.entities[name].attributes or []):
+            try:
+                arg_type = self.mapping.make_argument_type(attr)
+            except Exception:
+                # Derived attributes, expressions, or unsupported types
+                arg_type = "SKIP"
+            attrs.append(SchemaAttr(str(attr.name), arg_type, str(attr.type)))
+        return attrs
+
+    def full_attrs(self, name):
+        """Every explicit attribute of the entity, inherited first, in STEP order."""
+        if name not in self._full:
+            parent = self.parent(name)
+            self._full[name] = (self.full_attrs(parent) if parent else []) + self.own_attrs(name)
+        return self._full[name]
+
+    def full_inverses(self, name):
+        if name not in self._full_inverses:
+            parent = self.parent(name)
+            own = []
+            for inv in (self.entities[name].inverse or []):
+                try:
+                    own.append(str(inv.name))
+                except Exception:
+                    pass
+            self._full_inverses[name] = (self.full_inverses(parent) if parent else []) + own
+        return self._full_inverses[name]
+
+
+class GenAttr:
+    """An attribute property of a generated class."""
+    def __init__(self, name):
+        self.name = name
+        self.found = []     # (schema name, SchemaAttr) wherever the attribute is read
+        self.aliases = []   # (schema name, entity name, old name)
+        self.schemas = []
+        self.type_info = None
+
+    def renamed_in(self):
+        """[(old name, [schema names])]"""
+        by_name = {}
+        for schema, _, old_name in self.aliases:
+            schemas = by_name.setdefault(old_name, [])
+            if schema not in schemas:
+                schemas.append(schema)
+        return list(by_name.items())
+
+    def types_by_schema(self):
+        by_type = {}
+        for schema, attr in self.found:
+            if attr.type_info is not None:
+                schemas = by_type.setdefault(attr.type_info[0], [])
+                if schema not in schemas:
+                    schemas.append(schema)
+        return list(by_type.items())
+
+
+class GenInverse:
+    def __init__(self, name):
+        self.name = name
+        self.schemas = []
+
+
+class GenClass:
+    def __init__(self, name, parent, schemas):
+        self.name = name
+        self.parent = parent
+        self.schemas = schemas
+        self.attrs = []     # GenAttr declared by this class
+        self.inverses = []  # GenInverse declared by this class
+
+
+def related_names(a: str, b: str) -> bool:
+    """NumberOfRiser / NumberOfRisers, DeltaT_Constant / DeltaTConstant."""
+    a, b = a.lower().replace("_", ""), b.lower().replace("_", "")
+    return a in b or b in a
+
+
+def same_value(new, old) -> bool:
+    """Whether a renamed attribute still holds the same value."""
+    if new.arg_type != old.arg_type:
+        return False
+    if new.declared == old.declared:
+        return True
+    # Plain values whose declared type changed, such as INTEGER to IfcInteger. The names must be
+    # related too, since reordered attributes often line up with one of the same kind.
+    return new.arg_type in PLAIN_ARGTYPES and related_names(new.name, old.name)
+
+
+def find_aliases(schemas: list) -> list:
+    """Attributes the primary schema renamed: (schema, entity, new name, old name).
+
+    An entity in both schemas has a renamed attribute where, at the same position, the primary
+    schema has a name the other lacks and the other a name the primary lacks, and both hold the
+    same value. Only the topmost entity of each rename is kept: its subtypes inherit it.
+    """
+    primary = schemas[0]
+    found = []
+    for older in schemas[1:]:
+        for name in older.entities:
+            if name not in primary:
+                continue
+            new_attrs, old_attrs = primary.full_attrs(name), older.full_attrs(name)
+            new_names = {a.name for a in new_attrs}
+            old_names = {a.name for a in old_attrs}
+            for new, old in zip(new_attrs, old_attrs):
+                if new.name == old.name or new.name in old_names or old.name in new_names:
+                    continue
+                if same_value(new, old):
+                    found.append((older, name, new.name, old.name))
+    keys = {(older.name, name, new, old) for older, name, new, old in found}
     result = []
-    visited = set()
-
-    def visit(name: str):
-        key = name.lower()
-        if key in visited:
-            return
-        visited.add(key)
-        ent = entities.get(name)
-        if ent is None:
-            return
-        supertypes = list(ent.supertypes or [])
-        if supertypes:
-            visit(str(supertypes[0]))
-        result.append(name)
-
-    for name in entities:
-        visit(str(name))
+    for older, name, new, old in found:
+        parent = older.parent(name)
+        if parent is not None and any((older.name, p, new, old) in keys for p in older.ancestors(parent)):
+            continue
+        result.append((older, name, new, old))
     return result
 
 
-def build_attr_index_cache(sorted_names: list, entities: dict) -> dict:
-    """
-    For each entity, compute how many attributes appear in the full
-    all_attributes() result BEFORE its own attributes begin.
-    Returns dict: entity_name → start_index_of_own_attrs
-    """
-    cache = {}  # entity_name → total attribute count (own + inherited)
+def build_classes(schemas: list) -> list:
+    """One class per entity name of every schema, parents before children."""
+    primary = schemas[0]
+    all_schema_names = [s.name for s in schemas]
 
-    def total_count(name: str) -> int:
-        if name in cache:
-            return cache[name]
-        ent = entities.get(name)
-        if ent is None:
-            cache[name] = 0
-            return 0
-        supertypes = list(ent.supertypes or [])
-        parent_count = total_count(str(supertypes[0])) if supertypes else 0
-        own_count = len(list(ent.attributes or []))
-        result = parent_count + own_count
-        cache[name] = result
-        return result
+    # Hierarchy: the first schema with the entity decides its parent
+    names, parent_of, schemas_of = [], {}, {}
+    for schema in schemas:
+        for name in schema.entities:
+            if name not in parent_of:
+                names.append(name)
+                parent_of[name] = schema.parent(name)
+            schemas_of.setdefault(name, []).append(schema.name)
 
-    for name in sorted_names:
-        total_count(name)
+    ordered, visited = [], set()
+    def visit(name):
+        if name in visited:
+            return
+        visited.add(name)
+        if parent_of[name]:
+            visit(parent_of[name])
+        ordered.append(name)
+    for name in names:
+        visit(name)
 
-    # Now compute start index for each entity
-    start_index = {}
-    for name in sorted_names:
-        ent = entities.get(name)
-        supertypes = list(ent.supertypes or []) if ent else []
-        start_index[name] = total_count(str(supertypes[0])) if supertypes else 0
+    classes = {name: GenClass(name, parent_of[name], [s for s in all_schema_names if s in schemas_of[name]])
+               for name in ordered}
 
-    return start_index, cache
+    def godot_ancestors(name):
+        while name is not None:
+            yield name
+            name = parent_of[name]
 
+    # Renames, and the old names they cover for an entity of a schema
+    aliases = find_aliases(schemas)
+    renamed = {}  # (schema name, entity) -> {old name: new name}, including inherited renames
+    for older, name, new, old in aliases:
+        for entity in older.entities:
+            if name in older.ancestors(entity):
+                renamed.setdefault((older.name, entity), {})[old] = new
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Per-entity attribute info extraction
-# ─────────────────────────────────────────────────────────────────────────────
+    # Names the primary schema declares on a class's descendants. An older schema declaring one
+    # higher up leaves it there, so it doesn't appear on the primary's other subtypes.
+    below_attrs = {name: set() for name in ordered}
+    below_inverses = {name: set() for name in ordered}
+    for name in reversed(ordered):
+        parent = parent_of[name]
+        if parent is None:
+            continue
+        below_attrs[parent] |= below_attrs[name]
+        below_inverses[parent] |= below_inverses[name]
+        if name in primary:
+            below_attrs[parent] |= {a.name for a in primary.own_attrs(name)}
+            parent_inverses = set(primary.full_inverses(primary.parent(name))) if primary.parent(name) else set()
+            below_inverses[parent] |= set(primary.full_inverses(name)) - parent_inverses
 
-def get_entity_attrs(entity_name: str, entity, mapping: Mapping) -> list:
-    """
-    Returns list of dicts:
-      { 'name': str, 'snake': str, 'arg_type': str, 'type_info': tuple|None }
-    Only EXPLICIT (non-derived) attributes are included; derived ones produce
-    None type_info so they are counted in the index but skipped for code gen.
-    """
-    attrs = []
-    for attr in (entity.attributes or []):
-        attr_name = str(attr.name)
-        try:
-            arg_type = mapping.make_argument_type(attr)
-        except Exception:
-            # Derived attributes, expressions, or unsupported types
-            arg_type = "SKIP"
+    # Attributes: a class declares the names its entity has in any schema, unless an ancestor
+    # declares them. Old names of renamed attributes are read through the new name.
+    declared_by = {}  # class -> {attribute name: GenAttr}, including inherited ones
+    inverse_names = {}  # class -> set of inverse names, including inherited ones
+    for name in ordered:
+        cls = classes[name]
+        inherited = dict(declared_by.get(cls.parent, {}))
+        inherited_inverses = set(inverse_names.get(cls.parent, set()))
+        for schema in schemas:
+            if name not in schema:
+                continue
+            covered = renamed.get((schema.name, name), {})
+            for attr in schema.full_attrs(name):
+                if attr.name in inherited or attr.name in inherited_inverses:
+                    continue
+                # A renamed attribute, read through its new name
+                if covered.get(attr.name) in inherited:
+                    continue
+                if schema is not primary and attr.name in below_attrs[name] and schema.is_abstract(name):
+                    continue
+                gen = GenAttr(attr.name)
+                cls.attrs.append(gen)
+                inherited[attr.name] = gen
+        for schema in schemas:
+            if name not in schema:
+                continue
+            for inv in schema.full_inverses(name):
+                if inv in inherited_inverses:
+                    continue
+                if schema is not primary and inv in below_inverses[name] and schema.is_abstract(name):
+                    continue
+                if inv in inherited:
+                    print(f"[godot_codegen] WARNING: {name}.{inv} is both an attribute and an inverse; the inverse is left out")
+                    continue
+                cls.inverses.append(GenInverse(inv))
+                inherited_inverses.add(inv)
+        declared_by[name] = inherited
+        inverse_names[name] = inherited_inverses
 
-        if arg_type == "SKIP" or "UNKNOWN" in arg_type:
-            type_info = None  # count in index but generate nothing
-        else:
-            type_info = ARGTYPE_MAP.get(arg_type)
-            if type_info is None:
-                type_info = None  # unrecognised – skip codegen
+    # Where each attribute is read, through its own name or a rename
+    for schema in schemas:
+        for name in schema.entities:
+            covered = renamed.get((schema.name, name), {})
+            attrs = declared_by[name]
+            for attr in schema.full_attrs(name):
+                gen = attrs.get(attr.name)
+                if gen is None and attr.name in covered:
+                    gen = attrs.get(covered[attr.name])
+                if gen is None:
+                    # Fine for abstract entities: their subtypes declare the attribute
+                    if not schema.is_abstract(name):
+                        print(f"[godot_codegen] WARNING: {schema.name} {name}.{attr.name} has no property")
+                    continue
+                gen.found.append((schema.name, attr))
+                if schema.name not in gen.schemas:
+                    gen.schemas.append(schema.name)
+            inverse_classes = {}
+            for ancestor in godot_ancestors(name):
+                for inv in classes[ancestor].inverses:
+                    inverse_classes.setdefault(inv.name, inv)
+            for inv in schema.full_inverses(name):
+                gen = inverse_classes.get(inv)
+                if gen is not None and schema.name not in gen.schemas:
+                    gen.schemas.append(schema.name)
 
-        attrs.append({
-            "name": attr_name,
-            "arg_type": arg_type,
-            "type_info": type_info,
-        })
-    return attrs
+    for older, name, new, old in aliases:
+        gen = declared_by[name].get(new)
+        if gen is not None:
+            gen.aliases.append((older.name, name, old))
 
+    # Types: the primary schema's when every schema reads the attribute the same way, else Variant
+    for cls in classes.values():
+        for gen in cls.attrs:
+            gen.schemas = [s for s in all_schema_names if s in gen.schemas]
+            infos = [attr.type_info for _, attr in gen.found if attr.type_info is not None]
+            if not infos:
+                continue
+            gen.type_info = infos[0] if len(set(infos)) == 1 else VARIANT_TYPE
+        for inv in cls.inverses:
+            inv.schemas = [s for s in all_schema_names if s in inv.schemas]
 
-def get_entity_inverse_attrs(entity) -> list:
-    """Return list of own inverse attribute names for this entity."""
-    result = []
-    if not entity.inverse:
-        return result
-    for ia in entity.inverse:
-        try:
-            result.append(str(ia.name))
-        except Exception:
-            pass
-    return result
+    return [classes[name] for name in ordered]
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Code emission helpers
 # ─────────────────────────────────────────────────────────────────────────────
 
-def emit_class_decl(entity_name: str, parent_name: str | None, attrs: list,
-                    inverse_attrs: list) -> str:
+def alias_table_name(cls, attr) -> str:
+    return f"{cls.name}_{attr.name}_aliases"
+
+
+def emit_alias_table(cls, attr) -> str:
+    entries = [f'    {{"{schema}", "{entity.upper()}", "{old}"}},' for schema, entity, old in attr.aliases]
+    return "\n".join([f"static const GDIFCAttributeAlias {alias_table_name(cls, attr)}[] = {{"]
+                     + entries + ["    {nullptr, nullptr, nullptr},", "};"])
+
+
+def emit_class_decl(cls) -> str:
     """Emit a single class declaration block for the header."""
-    gd_class = gd_class_name(entity_name)
-    gd_parent = gd_class_name(parent_name) if parent_name else "GDIFCEntityBase"
+    gd_class = gd_class_name(cls.name)
+    gd_parent = gd_class_name(cls.parent) if cls.parent else "GDIFCEntityBase"
 
     lines = [
         f"class {gd_class} : public {gd_parent} {{",
@@ -322,82 +590,79 @@ def emit_class_decl(entity_name: str, parent_name: str | None, attrs: list,
         "    static void _bind_methods();",
     ]
 
-    bindable = [a for a in attrs if a["type_info"] is not None]
-    if bindable or inverse_attrs:
+    bindable = [a for a in cls.attrs if a.type_info is not None]
+    if bindable or cls.inverses:
         lines.append("public:")
         for a in bindable:
-            cpp_type, _, _, setter_helper, _ = a["type_info"]
-            lines.append(f"    {cpp_type} get_{a['name']}();")
-            if setter_helper is not None:
-                lines.append(f"    void set_{a['name']}({cpp_type} v);")
-        for inv_name in inverse_attrs:
-            lines.append(f"    godot::Array get_{inv_name}();")
+            cpp_type = a.type_info[0]
+            lines.append(f"    {cpp_type} get_{a.name}();")
+            lines.append(f"    void set_{a.name}({cpp_type} v);")
+        for inv in cls.inverses:
+            lines.append(f"    godot::Array get_{inv.name}();")
     lines.append("};")
     return "\n".join(lines)
 
 
-def emit_bind_methods(entity_name: str, attrs: list, start_idx: int,
-                      inverse_attrs: list) -> str:
+def emit_bind_methods(cls) -> str:
     """Emit the _bind_methods() body for one entity."""
-    gd_class = gd_class_name(entity_name)
+    gd_class = gd_class_name(cls.name)
     lines = [f"void {gd_class}::_bind_methods() {{"]
 
-    idx = start_idx
-    for a in attrs:
-        if a["type_info"] is not None:
-            cpp_type, variant_type, _, setter_helper, _ = a["type_info"]
-            attr_name = a["name"]
-            hint_part = f", {ENTITY_HINT}" if "OBJECT" in variant_type else ""
-            lines.append(
-                f'    ClassDB::bind_method(D_METHOD("get_{attr_name}"), &{gd_class}::get_{attr_name});')
-            if setter_helper is not None:
-                lines.append(
-                    f'    ClassDB::bind_method(D_METHOD("set_{attr_name}","v"), &{gd_class}::set_{attr_name});')
-                lines.append(
-                    f'    ADD_PROPERTY(PropertyInfo({variant_type}, "{attr_name}"{hint_part}), "set_{attr_name}", "get_{attr_name}");')
-            else:
-                lines.append(
-                    f'    ADD_PROPERTY(PropertyInfo({variant_type}, "{attr_name}"{hint_part}), "", "get_{attr_name}");')
-        idx += 1
+    for a in cls.attrs:
+        if a.type_info is None:
+            continue
+        variant_type = a.type_info[1]
+        if a.type_info is VARIANT_TYPE:
+            hint_part = f", {VARIANT_PROPERTY}"
+        elif "OBJECT" in variant_type:
+            hint_part = f", {ENTITY_HINT}"
+        else:
+            hint_part = ""
+        lines.append(
+            f'    ClassDB::bind_method(D_METHOD("get_{a.name}"), &{gd_class}::get_{a.name});')
+        lines.append(
+            f'    ClassDB::bind_method(D_METHOD("set_{a.name}","v"), &{gd_class}::set_{a.name});')
+        lines.append(
+            f'    ADD_PROPERTY(PropertyInfo({variant_type}, "{a.name}"{hint_part}), "set_{a.name}", "get_{a.name}");')
 
-    for inv_name in inverse_attrs:
+    for inv in cls.inverses:
         lines.append(
-            f'    ClassDB::bind_method(D_METHOD("get_{inv_name}"), &{gd_class}::get_{inv_name});')
+            f'    ClassDB::bind_method(D_METHOD("get_{inv.name}"), &{gd_class}::get_{inv.name});')
         lines.append(
-            f'    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "{inv_name}"), "", "get_{inv_name}");')
+            f'    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "{inv.name}"), "", "get_{inv.name}");')
 
     lines.append("}")
     return "\n".join(lines)
 
 
-def emit_getter(entity_name: str, attr_name: str, cpp_type: str, getter_helper: str,
-                default_val: str, idx: int, needs_file: bool) -> str:
-    gd_class = gd_class_name(entity_name)
-    file_arg = ", file_" if needs_file else ""
+def emit_getter(cls, a) -> str:
+    gd_class = gd_class_name(cls.name)
+    cpp_type, _, getter_helper, default_val = a.type_info
+    file_arg = ", file_" if getter_helper in FILE_GETTERS else ""
+    alias_arg = f", {alias_table_name(cls, a)}" if a.aliases else ""
     return (
-        f"{cpp_type} {gd_class}::get_{attr_name}() {{\n"
-        f"    if (!entity_) return {default_val};\n"
-        f"    return {getter_helper}(entity_->get_attribute_value({idx}){file_arg});\n"
+        f"{cpp_type} {gd_class}::get_{a.name}() {{\n"
+        f'    const ptrdiff_t i = gd_attr_index(entity_, "{a.name}"{alias_arg});\n'
+        f"    return i < 0 ? {default_val} : {getter_helper}(entity_->get_attribute_value(i){file_arg});\n"
         f"}}"
     )
 
 
-def emit_setter(entity_name: str, attr_name: str, cpp_type: str,
-                setter_helper: str, idx: int) -> str:
-    gd_class = gd_class_name(entity_name)
+def emit_setter(cls, a) -> str:
+    gd_class = gd_class_name(cls.name)
+    alias_arg = f", {alias_table_name(cls, a)}" if a.aliases else ""
     return (
-        f"void {gd_class}::set_{attr_name}({cpp_type} v) {{\n"
-        f"    if (!entity_) return;\n"
-        f"    {setter_helper}(entity_, {idx}, v);\n"
+        f"void {gd_class}::set_{a.name}({a.type_info[0]} v) {{\n"
+        f'    gd_set_attribute(entity_, "{a.name}", v{alias_arg});\n'
         f"}}"
     )
 
-def emit_inverse_getter(entity_name: str, inv_name: str) -> str:
+def emit_inverse_getter(cls, inv) -> str:
     """Emit a getter that delegates to get_inverse() for one inverse attr."""
-    gd_class = gd_class_name(entity_name)
+    gd_class = gd_class_name(cls.name)
     return (
-        f"godot::Array {gd_class}::get_{inv_name}() {{\n"
-        f'    return get_inverse(godot::String("{inv_name}"));\n'
+        f"godot::Array {gd_class}::get_{inv.name}() {{\n"
+        f'    return get_inverse(godot::String("{inv.name}"));\n'
         f"}}"
     )
 
@@ -408,7 +673,7 @@ def emit_inverse_getter(entity_name: str, inv_name: str) -> str:
 _HEADER_PREAMBLE = """\
 // ============================================================
 // AUTO-GENERATED by godot_codegen.py — do not edit manually.
-// Generated from: {schema_name}
+// Generated from: {schema_names}
 // ============================================================
 #pragma once
 #include "../gd_ifc_entity_base.h"
@@ -455,8 +720,13 @@ def _shard_letter(entity_name: str) -> str:
         return 'D'
 
 
-def generate(exp_path: str, output_dir: str):
-    print(f"[godot_codegen] Parsing: {exp_path}")
+def _write(path: str, text: str):
+    # LF on every platform, like the rest of the repository
+    with open(path, "w", encoding="utf-8", newline="\n") as f:
+        f.write(text)
+
+
+def generate(exp_paths: list, output_dir: str):
     os.makedirs(output_dir, exist_ok=True)
 
     # ── Bootstrap parser if express_parser.py is missing ─────────────────────
@@ -472,103 +742,63 @@ def generate(exp_path: str, output_dir: str):
             f.write(result.stdout)
         print("[godot_codegen] Done bootstrapping.")
 
-    # ── Parse ─────────────────────────────────────────────────────────────────
-    # express_parser.parse() returns a Mapping; Schema lives at m.schema
-    m = express_parser.parse(exp_path)
-    s = m.schema
+    # ── Parse and merge ───────────────────────────────────────────────────────
+    schemas = [Schema(path) for path in exp_paths]
+    all_schema_names = [s.name for s in schemas]
+    classes = build_classes(schemas)
+    print(f"[godot_codegen] Classes: {len(classes)}")
 
-    schema_name = getattr(s, 'name', os.path.basename(exp_path))
-    print(f"[godot_codegen] Schema: {schema_name}")
-
-    entities = s.entities  # OrderedCaseInsensitiveDict
-
-    # ── Topological sort ──────────────────────────────────────────────────────
-    sorted_names = topological_sort({str(k): v for k, v in entities.items()})
-    print(f"[godot_codegen] Entities: {len(sorted_names)}")
-
-    ent_dict = {str(k): v for k, v in entities.items()}
-
-    # ── Build attribute-index cache ───────────────────────────────────────────
-    start_index_map, _ = build_attr_index_cache(sorted_names, ent_dict)
-
-    # ── Collect per-entity information ───────────────────────────────────────
-    entity_info = []  # list of (name, parent_name, attrs, start_idx, inv_attrs)
-    for name in sorted_names:
-        ent = ent_dict.get(name)
-        if ent is None:
-            continue
-        supertypes = list(ent.supertypes or [])
-        parent_name = str(supertypes[0]) if supertypes else None
-        attrs = get_entity_attrs(name, ent, m)
-        start_idx = start_index_map.get(name, 0)
-        inv_attrs = get_entity_inverse_attrs(ent)
-        entity_info.append((name, parent_name, attrs, start_idx, inv_attrs))
-
-    # ── Load documentation from CSVs ─────────────────────────────────────────
-    entity_doc_csv = os.path.join(_here, "DocEntity.csv")
-    attr_doc_csv   = os.path.join(_here, "DocAttribute.csv")
-    entity_attr_csv = os.path.join(_here, "DocEntityAttributes.csv")
-
-    entity_docs_by_line  = _load_entity_docs(entity_doc_csv)  if os.path.exists(entity_doc_csv)  else {}
-    attr_docs_by_line    = _load_attr_docs(attr_doc_csv)      if os.path.exists(attr_doc_csv)    else {}
-    entity_attr_links    = _load_entity_attr_docs(entity_attr_csv) if os.path.exists(entity_attr_csv) else {}
-
-    # Build reverse lookup: entity_name (lowercased) → (doc_line, description)
-    entity_name_to_doc = {}
-    for doc_line, (ename, edesc) in entity_docs_by_line.items():
-        entity_name_to_doc[ename.lower()] = (doc_line, edesc)
-
-    print(f"[godot_codegen] Loaded docs for {len(entity_name_to_doc)} entities.")
+    entity_desc, entity_attr_desc = load_docs()
+    print(f"[godot_codegen] Loaded docs for {len(entity_desc)} entities.")
 
     # ── Open output files ─────────────────────────────────────────────────────
-    header_lines = [_HEADER_PREAMBLE.format(schema_name=schema_name)]
+    header_lines = [_HEADER_PREAMBLE.format(schema_names=", ".join(all_schema_names))]
     impl_shards = {k: [_IMPL_PREAMBLE] for k in ('A', 'B', 'C', 'D')}
     reg_lines = [_REGISTER_PREAMBLE]
 
     # ── Forward declarations ──────────────────────────────────────────────────
     header_lines.append("// Forward declarations\n")
-    for name, _, _, _, _ in entity_info:
-        header_lines.append(f"class {gd_class_name(name)};")
+    for cls in classes:
+        header_lines.append(f"class {gd_class_name(cls.name)};")
     header_lines.append("\n")
 
     # ── Class definitions + implementations ───────────────────────────────────
-    for name, parent_name, attrs, start_idx, inv_attrs in entity_info:
+    for cls in classes:
         # Header declaration
-        header_lines.append(emit_class_decl(name, parent_name, attrs, inv_attrs))
+        header_lines.append(emit_class_decl(cls))
         header_lines.append("")
 
         # Shard key
-        shard = _shard_letter(name)
-        impl = impl_shards[shard]
+        impl = impl_shards[_shard_letter(cls.name)]
+
+        # Renamed attributes
+        for a in cls.attrs:
+            if a.type_info is not None and a.aliases:
+                impl.append(emit_alias_table(cls, a))
+                impl.append("")
 
         # _bind_methods
-        impl.append(emit_bind_methods(name, attrs, start_idx, inv_attrs))
+        impl.append(emit_bind_methods(cls))
         impl.append("")
 
         # Getters and setters
-        idx = start_idx
-        for a in attrs:
-            if a["type_info"] is not None:
-                cpp_type, _, getter_helper, setter_helper, default_val = a["type_info"]
-                needs_file = getter_helper in ("gd_attr_entity", "gd_attr_agg_entity")
-                impl.append(emit_getter(name, a["name"], cpp_type, getter_helper,
-                                        default_val, idx, needs_file))
+        for a in cls.attrs:
+            if a.type_info is not None:
+                impl.append(emit_getter(cls, a))
                 impl.append("")
-                if setter_helper is not None:
-                    impl.append(emit_setter(name, a["name"], cpp_type, setter_helper, idx))
-                    impl.append("")
-            idx += 1
+                impl.append(emit_setter(cls, a))
+                impl.append("")
 
         # Inverse getters
-        for inv_name in inv_attrs:
-            impl.append(emit_inverse_getter(name, inv_name))
+        for inv in cls.inverses:
+            impl.append(emit_inverse_getter(cls, inv))
             impl.append("")
 
         # Registration: ClassDB + factory
-        gd = gd_class_name(name)
+        gd = gd_class_name(cls.name)
         reg_lines.append(f"    ClassDB::register_class<{gd}>();")
         reg_lines.append(
-            f"    GDIFCEntityBase::register_factory(\"{name}\",\n"
+            f"    GDIFCEntityBase::register_factory(\"{cls.name}\",\n"
             f"        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f)"
             f" -> Ref<GDIFCEntityBase> {{\n"
             f"            Ref<{gd}> obj;\n"
@@ -582,42 +812,35 @@ def generate(exp_path: str, output_dir: str):
 
     # ── Write files ───────────────────────────────────────────────────────────
     header_path = os.path.join(output_dir, "gd_ifc_entities.h")
-    with open(header_path, "w", encoding="utf-8") as f:
-        f.write("\n".join(header_lines))
+    _write(header_path, "\n".join(header_lines))
     print(f"[godot_codegen] Wrote {header_path}")
 
     for shard, lines in impl_shards.items():
         impl_path = os.path.join(output_dir, f"gd_ifc_entities_impl_{shard}.cpp")
-        with open(impl_path, "w", encoding="utf-8") as f:
-            f.write("\n".join(lines))
+        _write(impl_path, "\n".join(lines))
         print(f"[godot_codegen] Wrote {impl_path}")
 
     reg_path = os.path.join(output_dir, "gd_ifc_entities_register.cpp")
-    with open(reg_path, "w", encoding="utf-8") as f:
-        f.write("\n".join(reg_lines))
+    _write(reg_path, "\n".join(reg_lines))
     print(f"[godot_codegen] Wrote {reg_path}")
 
-    total_attrs = sum(len([a for a in attrs if a["type_info"]]) for _, _, attrs, _, _ in entity_info)
-    total_inv = sum(len(inv) for _, _, _, _, inv in entity_info)
-    print(f"[godot_codegen] Inverse attribute getters: {total_inv}")
-    print(f"[godot_codegen] Generated {len(entity_info)} entity classes, "
-          f"{total_attrs} typed accessors.")
+    typed = [a for cls in classes for a in cls.attrs if a.type_info is not None]
+    print(f"[godot_codegen] Inverse attribute getters: {sum(len(cls.inverses) for cls in classes)}")
+    print(f"[godot_codegen] Generated {len(classes)} entity classes, {len(typed)} typed accessors "
+          f"({sum(a.type_info is VARIANT_TYPE for a in typed)} Variant, "
+          f"{sum(bool(a.aliases) for a in typed)} with renames, "
+          f"{sum(a.schemas != all_schema_names for a in typed)} not in every schema).")
 
     # ── Write Godot XML doc files ─────────────────────────────────────────────
     doc_dir = os.path.join(output_dir, "doc_classes")
     os.makedirs(doc_dir, exist_ok=True)
 
-    for name, parent_name, attrs, _, inv_attrs in entity_info:
-        e_line, e_desc = entity_name_to_doc.get(name.lower(), (None, ""))
-        attr_descs = {}
-        if e_line is not None and e_line in entity_attr_links:
-            for pos, a_line in entity_attr_links[e_line].items():
-                attr_descs[pos] = attr_docs_by_line.get(a_line, "")
-        xml_path = os.path.join(doc_dir, f"{name}.xml")
-        with open(xml_path, "w", encoding="utf-8") as fxml:
-            fxml.write(emit_xml_doc(name, parent_name, attrs, e_desc, attr_descs, inv_attrs))
+    for cls in classes:
+        xml_path = os.path.join(doc_dir, f"{cls.name}.xml")
+        _write(xml_path, emit_xml_doc(cls, entity_desc.get(cls.name.lower(), ""),
+                                      entity_attr_desc.get(cls.name.lower(), {}), all_schema_names))
 
-    print(f"[godot_codegen] Wrote {len(entity_info)} XML doc files to {doc_dir}")
+    print(f"[godot_codegen] Wrote {len(classes)} XML doc files to {doc_dir}")
 
     # ── Generate compressed doc data .cpp ────────────────────────────────────
     sys.path.insert(0, os.path.join(_here, "..", "godot-cpp"))
@@ -625,6 +848,8 @@ def generate(exp_path: str, output_dir: str):
         from doc_source_generator import generate_doc_source_from_directory
         gen_cpp_path = os.path.join(output_dir, "gd_ifc_doc_data.gen.cpp")
         generate_doc_source_from_directory(gen_cpp_path, doc_dir)
+        with open(gen_cpp_path, encoding="utf-8") as f:
+            _write(gen_cpp_path, f.read())
         print(f"[godot_codegen] Wrote {gen_cpp_path}")
     except ImportError as e:
         print(f"[godot_codegen] WARNING: could not import doc_source_generator: {e}")
@@ -635,4 +860,4 @@ if __name__ == "__main__":
     if len(sys.argv) < 3:
         print(__doc__)
         sys.exit(1)
-    generate(sys.argv[1], sys.argv[2])
+    generate(sys.argv[1:-1], sys.argv[-1])

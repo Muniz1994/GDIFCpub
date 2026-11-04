@@ -24,6 +24,9 @@
 		<member name="InternalFilletRadius" type="float" setter="set_InternalFilletRadius" getter="get_InternalFilletRadius">
 			Internal fillet radius according the above illustration (= r1).
 		</member>
+		<member name="CentreOfGravityInX" type="float" setter="set_CentreOfGravityInX" getter="get_CentreOfGravityInX">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
 	</members>
 	<signals/>
 	<constants/>

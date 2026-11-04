@@ -5,17 +5,21 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="Placement" type="GDIFCEntityBase" setter="set_Placement" getter="get_Placement">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="SegmentStart" type="GDIFCEntityBase" setter="set_SegmentStart" getter="get_SegmentStart">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="SegmentLength" type="GDIFCEntityBase" setter="set_SegmentLength" getter="get_SegmentLength">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="ParentCurve" type="GDIFCEntityBase" setter="set_ParentCurve" getter="get_ParentCurve">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

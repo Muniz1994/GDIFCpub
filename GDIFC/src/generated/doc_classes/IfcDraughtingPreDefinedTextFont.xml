@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDraughtingPreDefinedTextFont" inherits="IfcPreDefinedTextFont"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The draughting pre defined text font is a pre defined text font for the purpose to identify a font by name. Allowable names are: 'ISO 3098-1 font A', 'ISO 3098-1 font B', The ISO 3098-1 font A is the text font as denoted as Letterng A in clause 3 of ISO 3098-1, the ISO 3098-1 font B is the text font as denoted as Letterng B in clause 3 of ISO 3098-1. NOTE The IfcDraughtingPreDefinedTextFont is an 
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

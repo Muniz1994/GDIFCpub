@@ -10,15 +10,19 @@
 	<methods/>
 	<members>
 		<member name="Description" type="String" setter="set_Description" getter="get_Description">
-			Additional description provided for the library reference. IFC2x4 CHANGE New attribute added at the end of the attribute list.
+			Additional description provided for the library reference. IFC2x4 CHANGE New attribute added at the end of the attribute list. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="Language" type="String" setter="set_Language" getter="get_Language">
-			The language in which a library reference is expressed. IFC2x4 CHANGE New attribute added at the end of the attribute list.
+			The language in which a library reference is expressed. IFC2x4 CHANGE New attribute added at the end of the attribute list. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="ReferencedLibrary" type="GDIFCEntityBase" setter="set_ReferencedLibrary" getter="get_ReferencedLibrary">
-			The library information that is being referenced.
+			The library information that is being referenced. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="LibraryRefForObjects" type="Array" setter="" getter="get_LibraryRefForObjects">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
+		</member>
+		<member name="ReferenceIntoLibrary" type="Array" setter="" getter="get_ReferenceIntoLibrary">
+			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

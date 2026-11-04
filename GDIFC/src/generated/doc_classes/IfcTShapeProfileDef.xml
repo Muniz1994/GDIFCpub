@@ -36,6 +36,9 @@
 		<member name="FlangeSlope" type="float" setter="set_FlangeSlope" getter="get_FlangeSlope">
 			Slope of web of the profile.
 		</member>
+		<member name="CentreOfGravityInY" type="float" setter="set_CentreOfGravityInY" getter="get_CentreOfGravityInY">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
 	</members>
 	<signals/>
 	<constants/>

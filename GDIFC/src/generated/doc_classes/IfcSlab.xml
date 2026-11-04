@@ -12,6 +12,9 @@
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 			Predefined generic type for a slab that is specified in an enumeration. There may be a property set given specifically for the predefined types. NOTE The PredefinedType shall only be used, if no type object IfcSlabType is assigned, providing its own IfcSlabType.PredefinedType . FC2x PLATFORM CHANGE: The attribute has been changed into an OPTIONAL attribute.
 		</member>
+		<member name="HasPorts" type="Array" setter="" getter="get_HasPorts">
+			Only in IFC2X3 files: in others it is empty.
+		</member>
 	</members>
 	<signals/>
 	<constants/>

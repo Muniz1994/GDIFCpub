@@ -24,15 +24,31 @@
 		<member name="CreatingActor" type="GDIFCEntityBase" setter="set_CreatingActor" getter="get_CreatingActor">
 			Person and/or organization that has created the constraint.
 		</member>
-		<member name="CreationTime" type="String" setter="set_CreationTime" getter="get_CreationTime">
-			Time when information specifying the constraint instance was created. Note IFC2x4 CHANGE: Attribute data type changed to IfcDateTime using ISO 8601 representation
+		<member name="CreationTime" type="Variant" setter="set_CreationTime" getter="get_CreationTime">
+			Time when information specifying the constraint instance was created. Note IFC2x4 CHANGE: Attribute data type changed to IfcDateTime using ISO 8601 representation Its type depends on the file's schema: String in IFC4 and IFC4X3_ADD2, GDIFCEntityBase in IFC2X3.
 		</member>
 		<member name="UserDefinedGrade" type="String" setter="set_UserDefinedGrade" getter="get_UserDefinedGrade">
 			Allows for specification of user defined grade of the constraint beyond the enumeration values (hard, soft, advisory) provided by ConstraintGrade attribute of type IfcConstraintEnum . When a value is provided for attribute UserDefinedGrade in parallel the attribute ConstraintGrade shall have enumeration value USERDEFINED.
 		</member>
 		<member name="HasExternalReferences" type="Array" setter="" getter="get_HasExternalReferences">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="PropertiesForConstraint" type="Array" setter="" getter="get_PropertiesForConstraint">
+		</member>
+		<member name="ClassifiedAs" type="Array" setter="" getter="get_ClassifiedAs">
+			Only in IFC2X3 files: in others it is empty.
+		</member>
+		<member name="RelatesConstraints" type="Array" setter="" getter="get_RelatesConstraints">
+			Only in IFC2X3 files: in others it is empty.
+		</member>
+		<member name="IsRelatedWith" type="Array" setter="" getter="get_IsRelatedWith">
+			Only in IFC2X3 files: in others it is empty.
+		</member>
+		<member name="Aggregates" type="Array" setter="" getter="get_Aggregates">
+			Only in IFC2X3 files: in others it is empty.
+		</member>
+		<member name="IsAggregatedIn" type="Array" setter="" getter="get_IsAggregatedIn">
+			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

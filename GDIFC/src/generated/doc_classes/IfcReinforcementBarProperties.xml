@@ -24,8 +24,8 @@
 		<member name="NominalBarDiameter" type="float" setter="set_NominalBarDiameter" getter="get_NominalBarDiameter">
 			The nominal diameter defining the cross-section size of the reinforcing bar. The bar diameter should be identical for all bars included in the specific reinforcement configuration.
 		</member>
-		<member name="BarCount" type="int" setter="set_BarCount" getter="get_BarCount">
-			The number of bars with identical nominal diameter and steel grade included in the specific reinforcement configuration.
+		<member name="BarCount" type="Variant" setter="set_BarCount" getter="get_BarCount">
+			The number of bars with identical nominal diameter and steel grade included in the specific reinforcement configuration. Its type depends on the file's schema: int in IFC4X3_ADD2, float in IFC2X3 and IFC4.
 		</member>
 	</members>
 	<signals/>

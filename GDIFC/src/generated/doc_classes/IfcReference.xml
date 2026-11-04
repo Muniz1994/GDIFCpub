@@ -5,19 +5,24 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="TypeIdentifier" type="String" setter="set_TypeIdentifier" getter="get_TypeIdentifier">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="AttributeIdentifier" type="String" setter="set_AttributeIdentifier" getter="get_AttributeIdentifier">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="InstanceName" type="String" setter="set_InstanceName" getter="get_InstanceName">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="ListPositions" type="PackedInt64Array" setter="set_ListPositions" getter="get_ListPositions">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="InnerReference" type="GDIFCEntityBase" setter="set_InnerReference" getter="get_InnerReference">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

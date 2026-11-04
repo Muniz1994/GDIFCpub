@@ -10,10 +10,10 @@
 	<methods/>
 	<members>
 		<member name="SameSense" type="bool" setter="set_SameSense" getter="get_SameSense">
-			The state of transition (i.e., geometric continuity from the last point of this segment to the first point of the next segment) in a composite curve.
+			An indicator of whether or not the sense of the segment agrees with, or opposes, that of the parent curve. If SameSense is false, the point with highest parameter value is taken as the first point of the segment. NOTE If the datatype of ParentCurve is IfcTrimmedCurve , the value of SameSense overrides the value of IfcTrimmedCurve.SenseAgreement
 		</member>
 		<member name="ParentCurve" type="GDIFCEntityBase" setter="set_ParentCurve" getter="get_ParentCurve">
-			An indicator of whether or not the sense of the segment agrees with, or opposes, that of the parent curve. If SameSense is false, the point with highest parameter value is taken as the first point of the segment. NOTE If the datatype of ParentCurve is IfcTrimmedCurve , the value of SameSense overrides the value of IfcTrimmedCurve.SenseAgreement
+			The bounded curve which defines the geometry of the segment.
 		</member>
 	</members>
 	<signals/>

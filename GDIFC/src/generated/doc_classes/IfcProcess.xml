@@ -10,10 +10,10 @@
 	<methods/>
 	<members>
 		<member name="Identification" type="String" setter="set_Identification" getter="get_Identification">
-			An identifying designation given to a process or activity. It is the identifier at the occurrence level. IFC2x4 CHANGE Attribute promoted from subtypes.
+			An identifying designation given to a process or activity. It is the identifier at the occurrence level. IFC2x4 CHANGE Attribute promoted from subtypes. In IFC2X3 files, this is the [code]ProcedureID[/code] attribute. In IFC2X3 files, this is the [code]TaskId[/code] attribute.
 		</member>
 		<member name="LongDescription" type="String" setter="set_LongDescription" getter="get_LongDescription">
-			An extended description or narrative that may be provided. IFC2x4 CHANGE New attribute.
+			An extended description or narrative that may be provided. IFC2x4 CHANGE New attribute. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="IsPredecessorTo" type="Array" setter="" getter="get_IsPredecessorTo">
 		</member>

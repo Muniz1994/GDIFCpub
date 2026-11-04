@@ -13,7 +13,10 @@
 			The approval that other approval is related to.
 		</member>
 		<member name="RelatedApprovals" type="Array" setter="set_RelatedApprovals" getter="get_RelatedApprovals">
-			The approvals that are related to another (relating) approval. IFC2x Edition 4 CHANGE The cardinality of this attribute has been changed to SET.
+			The approvals that are related to another (relating) approval. IFC2x Edition 4 CHANGE The cardinality of this attribute has been changed to SET. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="RelatedApproval" type="GDIFCEntityBase" setter="set_RelatedApproval" getter="get_RelatedApproval">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

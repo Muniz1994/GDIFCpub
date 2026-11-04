@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcColumnStandardCase" inherits="IfcColumn"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The standard column, IfcColumnStandardCase , defines a column with certain constraints for the provision of material usage, parameters and with certain constraints for the geometric representation. The IfcColumnStandardCase handles all cases of columns, that: have a reference to the IfcMaterialProfileSetUsage defining the material profile association of the column with the cardinal point of its in
+	</brief_description>
+	<description>Only in IFC4 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+	</members>
+	<signals/>
+	<constants/>
+</class>

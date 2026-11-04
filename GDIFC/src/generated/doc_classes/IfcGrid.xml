@@ -19,7 +19,7 @@
 			List of grid axes defining the third row of grid lines. It may be given in the case of a triangular grid.
 		</member>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Relationship to a spatial structure element, to which the grid is primarily associated. IFC2x PLATFORM CHANGE The inverse relationship has been added to IfcGrid with upward compatibility
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

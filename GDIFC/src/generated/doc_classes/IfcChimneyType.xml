@@ -5,12 +5,12 @@
 	<brief_description>
 		Definition from IAI : The IfcChimneyType defines a list of commonly shared property set definitions of a chimney element and an optional set of product representations. It is used to define a chimney specification (i.e. the specific product information, that is common to all occurrences of that product type). NOTE: The product representations are defined as representation maps (at the level of the
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Identifies the predefined types of a chimney element from which the type required may be set.
+			Identifies the predefined types of a chimney element from which the type required may be set. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

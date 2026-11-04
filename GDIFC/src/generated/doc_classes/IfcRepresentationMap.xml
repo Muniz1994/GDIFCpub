@@ -16,6 +16,7 @@
 			A representation that is mapped to at least one mapped item.
 		</member>
 		<member name="HasShapeAspects" type="Array" setter="" getter="get_HasShapeAspects">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="MapUsage" type="Array" setter="" getter="get_MapUsage">
 		</member>

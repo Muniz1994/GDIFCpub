@@ -12,6 +12,9 @@
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 			The generic type of the footing. IFC 2x4 change: Attribute made optional. Type information can be provided by IfcRelDefinesByType and IfcFootingType .
 		</member>
+		<member name="HasPorts" type="Array" setter="" getter="get_HasPorts">
+			Only in IFC2X3 files: in others it is empty.
+		</member>
 	</members>
 	<signals/>
 	<constants/>

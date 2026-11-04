@@ -9,8 +9,8 @@
 	<tutorials/>
 	<methods/>
 	<members>
-		<member name="WarpingStiffness" type="GDIFCEntityBase" setter="set_WarpingStiffness" getter="get_WarpingStiffness">
-			Defines the warping stiffness value.
+		<member name="WarpingStiffness" type="Variant" setter="set_WarpingStiffness" getter="get_WarpingStiffness">
+			Defines the warping stiffness value. Its type depends on the file's schema: GDIFCEntityBase in IFC4 and IFC4X3_ADD2, float in IFC2X3.
 		</member>
 	</members>
 	<signals/>

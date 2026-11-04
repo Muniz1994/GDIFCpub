@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcTextStyleWithBoxCharacteristics" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The text style with box characteristics allows the presentation of annotated text by specifying the characteristics of the character boxes of the text and the spacing between the character boxes. NOTE The IfcTextStyleWithBoxCharacteristics is an entity that had been adopted from ISO 10303, Industrial automation systems and integration—Product data representation and exchange, Part 46: Integrated g
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="BoxHeight" type="float" setter="set_BoxHeight" getter="get_BoxHeight">
+			It is the height scaling factor in the definition of a character glyph. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="BoxWidth" type="float" setter="set_BoxWidth" getter="get_BoxWidth">
+			It is the width scaling factor in the definition of a character glyph. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="BoxSlantAngle" type="float" setter="set_BoxSlantAngle" getter="get_BoxSlantAngle">
+			It indicated that the box of a character glyph shall be represented as a parallelogram, with the angle being between the character up line and an axis perpendicular to the character base line. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="BoxRotateAngle" type="float" setter="set_BoxRotateAngle" getter="get_BoxRotateAngle">
+			It indicated that the box of a character glyph shall be presented at an angle to the base line of a text string within which the glyph occurs, the angle being that between the base line of the glyph and an axis perpendicular to the baseline of the text string. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="CharacterSpacing" type="GDIFCEntityBase" setter="set_CharacterSpacing" getter="get_CharacterSpacing">
+			The distance between the character boxes of adjacent characters. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

@@ -13,9 +13,10 @@
 			Name for this property. This label is the significant name string that defines the semantic meaning for the property.
 		</member>
 		<member name="Specification" type="String" setter="set_Specification" getter="get_Specification">
-			Informative text to explain the property.
+			In IFC2X3 and IFC4 files, this is the [code]Description[/code] attribute.
 		</member>
 		<member name="PartOfPset" type="Array" setter="" getter="get_PartOfPset">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="PropertyForDependance" type="Array" setter="" getter="get_PropertyForDependance">
 		</member>
@@ -24,8 +25,10 @@
 		<member name="PartOfComplex" type="Array" setter="" getter="get_PartOfComplex">
 		</member>
 		<member name="HasConstraints" type="Array" setter="" getter="get_HasConstraints">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="HasApprovals" type="Array" setter="" getter="get_HasApprovals">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

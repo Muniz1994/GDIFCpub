@@ -16,7 +16,7 @@
 			Reference to information content of rows.
 		</member>
 		<member name="Columns" type="Array" setter="set_Columns" getter="get_Columns">
-			The column information associated with this table.
+			The column information associated with this table. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

@@ -5,13 +5,15 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="WellKnownText" type="String" setter="set_WellKnownText" getter="get_WellKnownText">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="CoordinateReferenceSystem" type="GDIFCEntityBase" setter="set_CoordinateReferenceSystem" getter="get_CoordinateReferenceSystem">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

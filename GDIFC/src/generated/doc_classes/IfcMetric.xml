@@ -19,6 +19,7 @@
 			The value with data type defined by the underlying type accesses via IfcMetricValueSelect .
 		</member>
 		<member name="ReferencePath" type="GDIFCEntityBase" setter="set_ReferencePath" getter="get_ReferencePath">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

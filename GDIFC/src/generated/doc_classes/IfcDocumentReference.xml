@@ -10,12 +10,16 @@
 	<methods/>
 	<members>
 		<member name="Description" type="String" setter="set_Description" getter="get_Description">
-			Description of the document reference for informational purposes. IFC2x4 CHANGE New attribute added at the end of the attribute list.
+			Description of the document reference for informational purposes. IFC2x4 CHANGE New attribute added at the end of the attribute list. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="ReferencedDocument" type="GDIFCEntityBase" setter="set_ReferencedDocument" getter="get_ReferencedDocument">
-			The document that is referenced.
+			The document that is referenced. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="DocumentRefForObjects" type="Array" setter="" getter="get_DocumentRefForObjects">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
+		</member>
+		<member name="ReferenceToDocument" type="Array" setter="" getter="get_ReferenceToDocument">
+			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
 	<signals/>

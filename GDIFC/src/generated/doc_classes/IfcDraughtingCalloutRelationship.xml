@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDraughtingCalloutRelationship" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials/>
+	<methods/>
+	<members>
+		<member name="Name" type="String" setter="set_Name" getter="get_Name">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="RelatingDraughtingCallout" type="GDIFCEntityBase" setter="set_RelatingDraughtingCallout" getter="get_RelatingDraughtingCallout">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+		<member name="RelatedDraughtingCallout" type="GDIFCEntityBase" setter="set_RelatedDraughtingCallout" getter="get_RelatedDraughtingCallout">
+			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		</member>
+	</members>
+	<signals/>
+	<constants/>
+</class>

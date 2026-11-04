@@ -5,15 +5,18 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
+	<description>Only in IFC4X3_ADD2 files.</description>
 	<tutorials/>
 	<methods/>
 	<members>
 		<member name="PrimeMeridian" type="String" setter="set_PrimeMeridian" getter="get_PrimeMeridian">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="AngleUnit" type="GDIFCEntityBase" setter="set_AngleUnit" getter="get_AngleUnit">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="HeightUnit" type="GDIFCEntityBase" setter="set_HeightUnit" getter="get_HeightUnit">
+			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>

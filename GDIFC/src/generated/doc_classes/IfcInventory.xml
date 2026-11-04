@@ -10,7 +10,7 @@
 	<methods/>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			A list of the types of inventories from which that required may be selected. IFC2x4 CHANGE Attribute made optional.
+			A list of the types of inventories from which that required may be selected. IFC2x4 CHANGE Attribute made optional. In IFC2X3 files, this is the [code]InventoryType[/code] attribute.
 		</member>
 		<member name="Jurisdiction" type="GDIFCEntityBase" setter="set_Jurisdiction" getter="get_Jurisdiction">
 			The organizational unit to which the inventory is applicable.
@@ -18,8 +18,8 @@
 		<member name="ResponsiblePersons" type="Array" setter="set_ResponsiblePersons" getter="get_ResponsiblePersons">
 			Persons who are responsible for the inventory.
 		</member>
-		<member name="LastUpdateDate" type="String" setter="set_LastUpdateDate" getter="get_LastUpdateDate">
-			The date on which the last update of the inventory was carried out. IFC2x4 CHANGE Type changed from IfcDateTimeSelect.
+		<member name="LastUpdateDate" type="Variant" setter="set_LastUpdateDate" getter="get_LastUpdateDate">
+			The date on which the last update of the inventory was carried out. IFC2x4 CHANGE Type changed from IfcDateTimeSelect. Its type depends on the file's schema: String in IFC4 and IFC4X3_ADD2, GDIFCEntityBase in IFC2X3.
 		</member>
 		<member name="CurrentValue" type="GDIFCEntityBase" setter="set_CurrentValue" getter="get_CurrentValue">
 			An estimate of the current cost value of the inventory.

@@ -22,10 +22,10 @@
 			A value that indicates the relative priority of the task (in comparison to the priorities of other tasks).
 		</member>
 		<member name="TaskTime" type="GDIFCEntityBase" setter="set_TaskTime" getter="get_TaskTime">
-			Time related information for the task. Added in IFC 2x4
+			Time related information for the task. Added in IFC 2x4 Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Identifies the predefined types of a task from which the type required may be set. Added in IFC 2x4
+			Identifies the predefined types of a task from which the type required may be set. Added in IFC 2x4 Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
 		</member>
 	</members>
 	<signals/>
