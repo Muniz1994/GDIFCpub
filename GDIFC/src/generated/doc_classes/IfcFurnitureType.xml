@@ -6,16 +6,20 @@
 		The furnishing element type IfcFurnitureType defines commonly shared information for occurrences of furnitures. The set of shared information may include: common properties with shared property sets common representations of shape common materials common composition of elements applicable assignment of process types It is used to define a furniture specification (i.e. the specific product informat
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="AssemblyPlace" type="String" setter="set_AssemblyPlace" getter="get_AssemblyPlace">
-			A designation of where the assembly is intended to take place. A selection of alternatives s provided in an enumerated list.
+		<member name="AssemblyPlace" type="Variant" setter="set_AssemblyPlace" getter="get_AssemblyPlace">
+			A designation of where the assembly is intended to take place. A selection of alternatives s provided in an enumerated list. A String, one of the enumeration's values, or null when unset.
 		</member>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

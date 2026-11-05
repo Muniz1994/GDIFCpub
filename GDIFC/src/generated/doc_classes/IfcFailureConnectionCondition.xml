@@ -6,28 +6,32 @@
 		Definition from IAI: Defines forces at which a support or connection fails. Applicability: Point supports and connections. HISTORY: New entity in IFC 2x2.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="TensionFailureX" type="float" setter="set_TensionFailureX" getter="get_TensionFailureX">
-			Tension force in x-direction leading to failure of the connection.
+		<member name="TensionFailureX" type="Variant" setter="set_TensionFailureX" getter="get_TensionFailureX">
+			Tension force in x-direction leading to failure of the connection. A float, or null when unset.
 		</member>
-		<member name="TensionFailureY" type="float" setter="set_TensionFailureY" getter="get_TensionFailureY">
-			Tension force in y-direction leading to failure of the connection.
+		<member name="TensionFailureY" type="Variant" setter="set_TensionFailureY" getter="get_TensionFailureY">
+			Tension force in y-direction leading to failure of the connection. A float, or null when unset.
 		</member>
-		<member name="TensionFailureZ" type="float" setter="set_TensionFailureZ" getter="get_TensionFailureZ">
-			Tension force in z-direction leading to failure of the connection.
+		<member name="TensionFailureZ" type="Variant" setter="set_TensionFailureZ" getter="get_TensionFailureZ">
+			Tension force in z-direction leading to failure of the connection. A float, or null when unset.
 		</member>
-		<member name="CompressionFailureX" type="float" setter="set_CompressionFailureX" getter="get_CompressionFailureX">
-			Compression force in x-direction leading to failure of the connection.
+		<member name="CompressionFailureX" type="Variant" setter="set_CompressionFailureX" getter="get_CompressionFailureX">
+			Compression force in x-direction leading to failure of the connection. A float, or null when unset.
 		</member>
-		<member name="CompressionFailureY" type="float" setter="set_CompressionFailureY" getter="get_CompressionFailureY">
-			Compression force in y-direction leading to failure of the connection.
+		<member name="CompressionFailureY" type="Variant" setter="set_CompressionFailureY" getter="get_CompressionFailureY">
+			Compression force in y-direction leading to failure of the connection. A float, or null when unset.
 		</member>
-		<member name="CompressionFailureZ" type="float" setter="set_CompressionFailureZ" getter="get_CompressionFailureZ">
-			Compression force in z-direction leading to failure of the connection.
+		<member name="CompressionFailureZ" type="Variant" setter="set_CompressionFailureZ" getter="get_CompressionFailureZ">
+			Compression force in z-direction leading to failure of the connection. A float, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -6,25 +6,29 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="UpperVaporResistanceFactor" type="float" setter="set_UpperVaporResistanceFactor" getter="get_UpperVaporResistanceFactor">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="UpperVaporResistanceFactor" type="Variant" setter="set_UpperVaporResistanceFactor" getter="get_UpperVaporResistanceFactor">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="LowerVaporResistanceFactor" type="float" setter="set_LowerVaporResistanceFactor" getter="get_LowerVaporResistanceFactor">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="LowerVaporResistanceFactor" type="Variant" setter="set_LowerVaporResistanceFactor" getter="get_LowerVaporResistanceFactor">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="IsothermalMoistureCapacity" type="float" setter="set_IsothermalMoistureCapacity" getter="get_IsothermalMoistureCapacity">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="IsothermalMoistureCapacity" type="Variant" setter="set_IsothermalMoistureCapacity" getter="get_IsothermalMoistureCapacity">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="VaporPermeability" type="float" setter="set_VaporPermeability" getter="get_VaporPermeability">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="VaporPermeability" type="Variant" setter="set_VaporPermeability" getter="get_VaporPermeability">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MoistureDiffusivity" type="float" setter="set_MoistureDiffusivity" getter="get_MoistureDiffusivity">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="MoistureDiffusivity" type="Variant" setter="set_MoistureDiffusivity" getter="get_MoistureDiffusivity">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

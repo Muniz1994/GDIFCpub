@@ -6,19 +6,23 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="DayComponent" type="int" setter="set_DayComponent" getter="get_DayComponent">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="DayComponent" type="Variant" setter="set_DayComponent" getter="get_DayComponent">
+			An int, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MonthComponent" type="int" setter="set_MonthComponent" getter="get_MonthComponent">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="MonthComponent" type="Variant" setter="set_MonthComponent" getter="get_MonthComponent">
+			An int, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="YearComponent" type="int" setter="set_YearComponent" getter="get_YearComponent">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="YearComponent" type="Variant" setter="set_YearComponent" getter="get_YearComponent">
+			An int, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

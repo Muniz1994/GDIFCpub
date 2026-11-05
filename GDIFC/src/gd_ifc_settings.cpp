@@ -9,7 +9,6 @@
 
 void godot::GDIFCLoaderSettings::_bind_methods() {
     using namespace godot;
-
     // --- Coordinate To Origin ---
     ClassDB::bind_method(D_METHOD("set_coordinate_to_origin", "val"), &GDIFCLoaderSettings::setCoordinateToOrigin);
     ClassDB::bind_method(D_METHOD("get_coordinate_to_origin"), &GDIFCLoaderSettings::getCoordinateToOrigin);
@@ -20,6 +19,29 @@ void godot::GDIFCLoaderSettings::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_circle_segments"), &GDIFCLoaderSettings::getCircleSegments);
     // Added a Range hint so it appears as a slider in the inspector (min 3, max 128)
     ADD_PROPERTY(PropertyInfo(Variant::INT, "circle_segments", PROPERTY_HINT_RANGE, "3,128,1"), "set_circle_segments", "get_circle_segments");
+
+    // --- Generate LODs ---
+    ClassDB::bind_method(D_METHOD("set_generate_lods", "val"), &GDIFCLoaderSettings::setGenerateLods);
+    ClassDB::bind_method(D_METHOD("get_generate_lods"), &GDIFCLoaderSettings::getGenerateLods);
+    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "generate_lods"), "set_generate_lods", "get_generate_lods");
+
+    // --- LOD Normal Merge Angle ---
+    ClassDB::bind_method(D_METHOD("set_lod_normal_merge_angle", "val"), &GDIFCLoaderSettings::setLodNormalMergeAngle);
+    ClassDB::bind_method(D_METHOD("get_lod_normal_merge_angle"), &GDIFCLoaderSettings::getLodNormalMergeAngle);
+    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "lod_normal_merge_angle", PROPERTY_HINT_RANGE, "0,180,0.1,degrees"), "set_lod_normal_merge_angle", "get_lod_normal_merge_angle");
+
+    // --- IFC Materials ---
+    ClassDB::bind_method(D_METHOD("set_ifc_materials", "val"), &GDIFCLoaderSettings::setIfcMaterials);
+    ClassDB::bind_method(D_METHOD("get_ifc_materials"), &GDIFCLoaderSettings::getIfcMaterials);
+    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "ifc_materials"), "set_ifc_materials", "get_ifc_materials");
+
+    // --- IFC Textures ---
+    ClassDB::bind_method(D_METHOD("set_ifc_textures", "val"), &GDIFCLoaderSettings::setIfcTextures);
+    ClassDB::bind_method(D_METHOD("get_ifc_textures"), &GDIFCLoaderSettings::getIfcTextures);
+    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "ifc_textures"), "set_ifc_textures", "get_ifc_textures");
+
+    // Passed to web-ifc unchanged, so they follow its releases: they may change or go away with a web-ifc update
+    ADD_GROUP("Advanced (web-ifc)", "");
 
     // --- Tape Size ---
     ClassDB::bind_method(D_METHOD("set_tape_size", "val"), &GDIFCLoaderSettings::setTapeSize);
@@ -71,24 +93,4 @@ void godot::GDIFCLoaderSettings::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_boolean_union_threshold", "val"), &GDIFCLoaderSettings::setBooleanUnionThreshold);
     ClassDB::bind_method(D_METHOD("get_boolean_union_threshold"), &GDIFCLoaderSettings::getBooleanUnionThreshold);
     ADD_PROPERTY(PropertyInfo(Variant::INT, "boolean_union_threshold"), "set_boolean_union_threshold", "get_boolean_union_threshold");
-
-    // --- Generate LODs ---
-    ClassDB::bind_method(D_METHOD("set_generate_lods", "val"), &GDIFCLoaderSettings::setGenerateLods);
-    ClassDB::bind_method(D_METHOD("get_generate_lods"), &GDIFCLoaderSettings::getGenerateLods);
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "generate_lods"), "set_generate_lods", "get_generate_lods");
-
-    // --- LOD Normal Merge Angle ---
-    ClassDB::bind_method(D_METHOD("set_lod_normal_merge_angle", "val"), &GDIFCLoaderSettings::setLodNormalMergeAngle);
-    ClassDB::bind_method(D_METHOD("get_lod_normal_merge_angle"), &GDIFCLoaderSettings::getLodNormalMergeAngle);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "lod_normal_merge_angle", PROPERTY_HINT_RANGE, "0,180,0.1,degrees"), "set_lod_normal_merge_angle", "get_lod_normal_merge_angle");
-
-    // --- IFC Materials ---
-    ClassDB::bind_method(D_METHOD("set_ifc_materials", "val"), &GDIFCLoaderSettings::setIfcMaterials);
-    ClassDB::bind_method(D_METHOD("get_ifc_materials"), &GDIFCLoaderSettings::getIfcMaterials);
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "ifc_materials"), "set_ifc_materials", "get_ifc_materials");
-
-    // --- IFC Textures ---
-    ClassDB::bind_method(D_METHOD("set_ifc_textures", "val"), &GDIFCLoaderSettings::setIfcTextures);
-    ClassDB::bind_method(D_METHOD("get_ifc_textures"), &GDIFCLoaderSettings::getIfcTextures);
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "ifc_textures"), "set_ifc_textures", "get_ifc_textures");
 }

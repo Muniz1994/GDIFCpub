@@ -46,7 +46,7 @@ struct AttributeToVariantVisitor {
     // --- 3. Logic & Binary ---
     Variant operator()(boost::logic::tribool v) const {
         if (boost::logic::indeterminate(v)) {
-            return Variant(); // NIL represents the 'U' (Unknown) state
+            return Variant(String("UNKNOWN")); // as GDIFCEntityBase.get_attribute() reads it
         }
         return Variant((bool)v);
     }
@@ -67,6 +67,11 @@ struct AttributeToVariantVisitor {
 
     Variant operator()(const IfcUtil::IfcBaseClass* v) const {
         if (!v) return Variant();
+
+        // An instance of a defined type, such as the IfcLabel in an IfcValue select, is a value
+        if (v->declaration().as_type_declaration()) {
+            return v->get_attribute_value(0).apply_visitor(*this);
+        }
 
         // Returning the ID (int64) is the safest way to handle references
         // without a complex Godot Object wrapper system.

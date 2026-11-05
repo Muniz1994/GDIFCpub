@@ -6,19 +6,23 @@
 
 	</brief_description>
 	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="Curve3D" type="GDIFCEntityBase" setter="set_Curve3D" getter="get_Curve3D">
-			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="AssociatedGeometry" type="Array" setter="set_AssociatedGeometry" getter="get_AssociatedGeometry">
-			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="AssociatedGeometry" type="Variant" setter="set_AssociatedGeometry" getter="get_AssociatedGeometry">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MasterRepresentation" type="String" setter="set_MasterRepresentation" getter="get_MasterRepresentation">
-			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="MasterRepresentation" type="Variant" setter="set_MasterRepresentation" getter="get_MasterRepresentation">
+			A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -6,18 +6,23 @@
 
 	</brief_description>
 	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Name" type="String" setter="set_Name" getter="get_Name">
-			In IFC2X3 files, this is the [code]ProfileName[/code] attribute.
+		<member name="Name" type="Variant" setter="set_Name" getter="get_Name">
+			In IFC2X3 files, this is the [code]ProfileName[/code] attribute. A String, or null when unset.
 		</member>
-		<member name="Description" type="String" setter="set_Description" getter="get_Description">
+		<member name="Description" type="Variant" setter="set_Description" getter="get_Description">
+			A String, or null when unset.
 		</member>
-		<member name="Properties" type="Array" setter="set_Properties" getter="get_Properties">
-			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="Properties" type="Variant" setter="set_Properties" getter="get_Properties">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

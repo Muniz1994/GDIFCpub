@@ -6,25 +6,29 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="HourComponent" type="int" setter="set_HourComponent" getter="get_HourComponent">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="HourComponent" type="Variant" setter="set_HourComponent" getter="get_HourComponent">
+			An int, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MinuteComponent" type="int" setter="set_MinuteComponent" getter="get_MinuteComponent">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="MinuteComponent" type="Variant" setter="set_MinuteComponent" getter="get_MinuteComponent">
+			An int, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="SecondComponent" type="float" setter="set_SecondComponent" getter="get_SecondComponent">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="SecondComponent" type="Variant" setter="set_SecondComponent" getter="get_SecondComponent">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 		<member name="Zone" type="GDIFCEntityBase" setter="set_Zone" getter="get_Zone">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="DaylightSavingOffset" type="int" setter="set_DaylightSavingOffset" getter="get_DaylightSavingOffset">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="DaylightSavingOffset" type="Variant" setter="set_DaylightSavingOffset" getter="get_DaylightSavingOffset">
+			An int, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -6,16 +6,20 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Width" type="float" setter="set_Width" getter="get_Width">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="Width" type="Variant" setter="set_Width" getter="get_Width">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Height" type="float" setter="set_Height" getter="get_Height">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="Height" type="Variant" setter="set_Height" getter="get_Height">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

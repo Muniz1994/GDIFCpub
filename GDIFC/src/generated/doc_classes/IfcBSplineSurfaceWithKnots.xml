@@ -6,25 +6,29 @@
 		Definition from ISO 10303:42:1994 : This is a B-spline surface in which the knot values are explicitly given. This subtype shall be used to represent non-uniform B-spline surfaces, and may also be used for other knot types. All knot multiplicities except the first and the last shall be in the range 1,...., d ; the first and last may have a maximum value of d + 1. In evaluating the basis functions,
 	</brief_description>
 	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="UMultiplicities" type="PackedInt64Array" setter="set_UMultiplicities" getter="get_UMultiplicities">
-			The multiplicities of the knots in the u parameter direction. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="UMultiplicities" type="Variant" setter="set_UMultiplicities" getter="get_UMultiplicities">
+			The multiplicities of the knots in the u parameter direction. A PackedInt64Array, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="VMultiplicities" type="PackedInt64Array" setter="set_VMultiplicities" getter="get_VMultiplicities">
-			The multiplicities of the knots in the v parameter direction. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="VMultiplicities" type="Variant" setter="set_VMultiplicities" getter="get_VMultiplicities">
+			The multiplicities of the knots in the v parameter direction. A PackedInt64Array, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="UKnots" type="PackedFloat64Array" setter="set_UKnots" getter="get_UKnots">
-			The list of the distinct knots in the u parameter direction. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="UKnots" type="Variant" setter="set_UKnots" getter="get_UKnots">
+			The list of the distinct knots in the u parameter direction. A PackedFloat64Array, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="VKnots" type="PackedFloat64Array" setter="set_VKnots" getter="get_VKnots">
-			The list of the distinct knots in the v parameter direction. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="VKnots" type="Variant" setter="set_VKnots" getter="get_VKnots">
+			The list of the distinct knots in the v parameter direction. A PackedFloat64Array, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="KnotSpec" type="String" setter="set_KnotSpec" getter="get_KnotSpec">
-			The description of the knot type. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="KnotSpec" type="Variant" setter="set_KnotSpec" getter="get_KnotSpec">
+			The description of the knot type. A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

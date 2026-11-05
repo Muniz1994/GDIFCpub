@@ -6,19 +6,23 @@
 
 	</brief_description>
 	<description>Only in IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="PrimeMeridian" type="String" setter="set_PrimeMeridian" getter="get_PrimeMeridian">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="PrimeMeridian" type="Variant" setter="set_PrimeMeridian" getter="get_PrimeMeridian">
+			A String, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="AngleUnit" type="GDIFCEntityBase" setter="set_AngleUnit" getter="get_AngleUnit">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+			Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="HeightUnit" type="GDIFCEntityBase" setter="set_HeightUnit" getter="get_HeightUnit">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+			Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -6,12 +6,17 @@
 		Definition from ISO/CD 10303-42:1992 : A shell based surface model is described by a set of open or closed shells of dimensionality 2. The shells shall not intersect except at edges and vertices. In particular, distinct faces may not intersect. A complete face of one shell may be shared with another shell. Coincident portions of shells shall both reference the same faces, edges and vertices defini
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="SbsmBoundary" type="Array" setter="set_SbsmBoundary" getter="get_SbsmBoundary">
+		<member name="SbsmBoundary" type="Variant" setter="set_SbsmBoundary" getter="get_SbsmBoundary">
+			An Array of GDIFCEntityBase entities, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

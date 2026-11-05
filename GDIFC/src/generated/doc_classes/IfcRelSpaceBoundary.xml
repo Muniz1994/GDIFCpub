@@ -6,8 +6,10 @@
 		The space boundary defines the physical or virtual delimiter of a space by the relationship IfcRelSpaceBoundary to the surrounding elements. In the case of a physical space boundary, the placement and shape of the boundary may be given, and the building element, providing the boundary, is referenced, In the case of a virtual space boundary, the placement and shape of the boundary may be given, but
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="RelatingSpace" type="GDIFCEntityBase" setter="set_RelatingSpace" getter="get_RelatingSpace">
 			Reference to one spaces that is delimited by this boundary.
@@ -18,13 +20,15 @@
 		<member name="ConnectionGeometry" type="GDIFCEntityBase" setter="set_ConnectionGeometry" getter="get_ConnectionGeometry">
 			Physical representation of the space boundary. Provided as a curve or surface given within the LCS of the space. IFC2x PLATFORM CHANGE The data type has been changed from IfcConnectionSurfaceGeometry to IfcConnectionGeometry with upward compatibility for file based exchange.
 		</member>
-		<member name="PhysicalOrVirtualBoundary" type="String" setter="set_PhysicalOrVirtualBoundary" getter="get_PhysicalOrVirtualBoundary">
-			Defines, whether the Space Boundary is physical (Physical) or virtual (Virtual).
+		<member name="PhysicalOrVirtualBoundary" type="Variant" setter="set_PhysicalOrVirtualBoundary" getter="get_PhysicalOrVirtualBoundary">
+			Defines, whether the Space Boundary is physical (Physical) or virtual (Virtual). A String, one of the enumeration's values, or null when unset.
 		</member>
-		<member name="InternalOrExternalBoundary" type="String" setter="set_InternalOrExternalBoundary" getter="get_InternalOrExternalBoundary">
-			Defines, whether the Space Boundary is internal (Internal), or external, i.e. adjacent to open space (that can be an partially enclosed space, such as terrace (External).
+		<member name="InternalOrExternalBoundary" type="Variant" setter="set_InternalOrExternalBoundary" getter="get_InternalOrExternalBoundary">
+			Defines, whether the Space Boundary is internal (Internal), or external, i.e. adjacent to open space (that can be an partially enclosed space, such as terrace (External). A String, one of the enumeration's values, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

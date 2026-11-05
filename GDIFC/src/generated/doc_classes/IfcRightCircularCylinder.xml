@@ -6,16 +6,20 @@
 		The IfcRightCircularCylinder is a Construction Solid Geometry (CSG) 3D primitive. It is a solid with a circular base and top. The cylindrical surface between if formed by points at a fixed distance from the axis of the cylinder. The inherited Position attribute defines the IfcAxisPlacement3D and provides: SELF\IfcCsgPrimitive3D.Position : The location and orientation of the axis system for the pri
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Height" type="float" setter="set_Height" getter="get_Height">
-			The distance between the planar circular faces of the cylinder.
+		<member name="Height" type="Variant" setter="set_Height" getter="get_Height">
+			The distance between the planar circular faces of the cylinder. A float, or null when unset.
 		</member>
-		<member name="Radius" type="float" setter="set_Radius" getter="get_Radius">
-			The radius of the cylinder.
+		<member name="Radius" type="Variant" setter="set_Radius" getter="get_Radius">
+			The radius of the cylinder. A float, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -6,13 +6,17 @@
 
 	</brief_description>
 	<description>Only in IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="CrossSectionPositions" type="Array" setter="set_CrossSectionPositions" getter="get_CrossSectionPositions">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="CrossSectionPositions" type="Variant" setter="set_CrossSectionPositions" getter="get_CrossSectionPositions">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

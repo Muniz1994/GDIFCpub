@@ -6,28 +6,32 @@
 		Definition from IAI: An instance of the entity IfcStructuralLoadLinearForce shall be used to define actions on curves. HISTORY: New entity in Release IFC2x edition 2.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="LinearForceX" type="float" setter="set_LinearForceX" getter="get_LinearForceX">
-			Linear force value in x-direction.
+		<member name="LinearForceX" type="Variant" setter="set_LinearForceX" getter="get_LinearForceX">
+			Linear force value in x-direction. A float, or null when unset.
 		</member>
-		<member name="LinearForceY" type="float" setter="set_LinearForceY" getter="get_LinearForceY">
-			Linear force value in y-direction.
+		<member name="LinearForceY" type="Variant" setter="set_LinearForceY" getter="get_LinearForceY">
+			Linear force value in y-direction. A float, or null when unset.
 		</member>
-		<member name="LinearForceZ" type="float" setter="set_LinearForceZ" getter="get_LinearForceZ">
-			Linear force value in z-direction.
+		<member name="LinearForceZ" type="Variant" setter="set_LinearForceZ" getter="get_LinearForceZ">
+			Linear force value in z-direction. A float, or null when unset.
 		</member>
-		<member name="LinearMomentX" type="float" setter="set_LinearMomentX" getter="get_LinearMomentX">
-			Linear moment about the x-axis.
+		<member name="LinearMomentX" type="Variant" setter="set_LinearMomentX" getter="get_LinearMomentX">
+			Linear moment about the x-axis. A float, or null when unset.
 		</member>
-		<member name="LinearMomentY" type="float" setter="set_LinearMomentY" getter="get_LinearMomentY">
-			Linear moment about the y-axis.
+		<member name="LinearMomentY" type="Variant" setter="set_LinearMomentY" getter="get_LinearMomentY">
+			Linear moment about the y-axis. A float, or null when unset.
 		</member>
-		<member name="LinearMomentZ" type="float" setter="set_LinearMomentZ" getter="get_LinearMomentZ">
-			Linear moment about the z-axis.
+		<member name="LinearMomentZ" type="Variant" setter="set_LinearMomentZ" getter="get_LinearMomentZ">
+			Linear moment about the z-axis. A float, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

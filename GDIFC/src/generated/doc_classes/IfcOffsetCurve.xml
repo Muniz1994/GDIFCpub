@@ -6,12 +6,16 @@
 
 	</brief_description>
 	<description>Only in IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="BasisCurve" type="GDIFCEntityBase" setter="set_BasisCurve" getter="get_BasisCurve">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

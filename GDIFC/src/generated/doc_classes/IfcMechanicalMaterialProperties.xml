@@ -6,25 +6,29 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="DynamicViscosity" type="float" setter="set_DynamicViscosity" getter="get_DynamicViscosity">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="DynamicViscosity" type="Variant" setter="set_DynamicViscosity" getter="get_DynamicViscosity">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="YoungModulus" type="float" setter="set_YoungModulus" getter="get_YoungModulus">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="YoungModulus" type="Variant" setter="set_YoungModulus" getter="get_YoungModulus">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="ShearModulus" type="float" setter="set_ShearModulus" getter="get_ShearModulus">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="ShearModulus" type="Variant" setter="set_ShearModulus" getter="get_ShearModulus">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="PoissonRatio" type="float" setter="set_PoissonRatio" getter="get_PoissonRatio">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="PoissonRatio" type="Variant" setter="set_PoissonRatio" getter="get_PoissonRatio">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="ThermalExpansionCoefficient" type="float" setter="set_ThermalExpansionCoefficient" getter="get_ThermalExpansionCoefficient">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="ThermalExpansionCoefficient" type="Variant" setter="set_ThermalExpansionCoefficient" getter="get_ThermalExpansionCoefficient">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -6,19 +6,23 @@
 		IfcRectangleHollowProfileDef defines a section profile that provides the defining parameters of a rectangular (or square) hollow section to be used by the swept surface geometry or the swept area solid. Its parameters and orientation relative to the position coordinate system are according to the following illustration. A square hollow section can be defined by equal values for h and b. The centre
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="WallThickness" type="float" setter="set_WallThickness" getter="get_WallThickness">
-			Thickness of the material.
+		<member name="WallThickness" type="Variant" setter="set_WallThickness" getter="get_WallThickness">
+			Thickness of the material. A float, or null when unset.
 		</member>
-		<member name="InnerFilletRadius" type="float" setter="set_InnerFilletRadius" getter="get_InnerFilletRadius">
-			Inner corner radius.
+		<member name="InnerFilletRadius" type="Variant" setter="set_InnerFilletRadius" getter="get_InnerFilletRadius">
+			Inner corner radius. A float, or null when unset.
 		</member>
-		<member name="OuterFilletRadius" type="float" setter="set_OuterFilletRadius" getter="get_OuterFilletRadius">
-			Outer corner radius.
+		<member name="OuterFilletRadius" type="Variant" setter="set_OuterFilletRadius" getter="get_OuterFilletRadius">
+			Outer corner radius. A float, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

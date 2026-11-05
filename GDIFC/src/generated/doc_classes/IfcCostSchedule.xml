@@ -6,34 +6,38 @@
 		An IfcCostSchedule brings together instances of IfcCostItem either for the purpose of identifying purely cost information as in an estimate for constructions costs or for including cost information within another presentation form such as a work order. HISTORY New Entity in IFC Release 2.0. Modified in IFC 2x2 IFC2x4 CHANGE Attribute 'ID' changed to Identification and promoted to supertype IfcCont
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Predefined generic type for a cost schedule that is specified in an enumeration. There may be a property set given specifically for the predefined types. IFC2x4 CHANGE The attribute has been made optional.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic type for a cost schedule that is specified in an enumeration. There may be a property set given specifically for the predefined types. IFC2x4 CHANGE The attribute has been made optional. A String, one of the enumeration's values, or null when unset.
 		</member>
-		<member name="Status" type="String" setter="set_Status" getter="get_Status">
-			The current status of a cost schedule. Examples of status values that might be used for a cost schedule status include: PLANNED APPROVED AGREED ISSUED STARTED
+		<member name="Status" type="Variant" setter="set_Status" getter="get_Status">
+			The current status of a cost schedule. Examples of status values that might be used for a cost schedule status include: PLANNED APPROVED AGREED ISSUED STARTED A String, or null when unset.
 		</member>
 		<member name="SubmittedOn" type="Variant" setter="set_SubmittedOn" getter="get_SubmittedOn">
-			The date and time on which the cost schedule was submitted. IFC2x4 CHANGE Type changed from IfcDateTimeSelect. Its type depends on the file's schema: String in IFC4 and IFC4X3_ADD2, GDIFCEntityBase in IFC2X3.
+			The date and time on which the cost schedule was submitted. IFC2x4 CHANGE Type changed from IfcDateTimeSelect. A String in IFC4 and IFC4X3_ADD2 files, a GDIFCEntityBase in IFC2X3 files, or null when unset.
 		</member>
 		<member name="UpdateDate" type="Variant" setter="set_UpdateDate" getter="get_UpdateDate">
-			The date and time that this cost schedule is updated; this allows tracking the schedule history. IFC2x4 CHANGE Type changed from IfcDateTimeSelect. Its type depends on the file's schema: String in IFC4 and IFC4X3_ADD2, GDIFCEntityBase in IFC2X3.
+			The date and time that this cost schedule is updated; this allows tracking the schedule history. IFC2x4 CHANGE Type changed from IfcDateTimeSelect. A String in IFC4 and IFC4X3_ADD2 files, a GDIFCEntityBase in IFC2X3 files, or null when unset.
 		</member>
 		<member name="SubmittedBy" type="GDIFCEntityBase" setter="set_SubmittedBy" getter="get_SubmittedBy">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 		<member name="PreparedBy" type="GDIFCEntityBase" setter="set_PreparedBy" getter="get_PreparedBy">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="TargetUsers" type="Array" setter="set_TargetUsers" getter="get_TargetUsers">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="TargetUsers" type="Variant" setter="set_TargetUsers" getter="get_TargetUsers">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="ID" type="String" setter="set_ID" getter="get_ID">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="ID" type="Variant" setter="set_ID" getter="get_ID">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

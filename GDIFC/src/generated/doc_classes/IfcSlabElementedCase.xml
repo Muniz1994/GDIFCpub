@@ -6,10 +6,14 @@
 		The IfcSlabElementedCase defines a slab with certain constraints for the provision of its components. The IfcSlabElementedCase handles all cases of slabs, that are decomposed into parts:ÿ having components being assigned to the IfcSlabElementedCase using the IfcRelAggregates relationship accessible by the inverse relationship IsDecomposedBy . applying the constraint that the parts within the decom
 	</brief_description>
 	<description>Only in IFC4 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

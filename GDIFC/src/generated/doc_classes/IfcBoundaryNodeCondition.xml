@@ -6,37 +6,41 @@
 		Definition from IAI: Describes linearly elastic support conditions or connection conditions. Applicability: Point supports and connections. HISTORY: New entity in IFC 2x2. IFC 2x4 change: Attributes LinearStiffnessX/Y/Z renamed to TranslationalStiffnessX/Y/Z . IFC 2x4 change: All attribute data types changed from numeric to SELECT between Boolean and numeric. Stiffnesses may now also be negative, 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="TranslationalStiffnessX" type="GDIFCEntityBase" setter="set_TranslationalStiffnessX" getter="get_TranslationalStiffnessX">
-			Translational stiffness value in x-direction of the coordinate system defined by the instance which uses this resource object. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="TranslationalStiffnessX" type="Variant" setter="set_TranslationalStiffnessX" getter="get_TranslationalStiffnessX">
+			Translational stiffness value in x-direction of the coordinate system defined by the instance which uses this resource object. A value (String, float, int or bool), or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="TranslationalStiffnessY" type="GDIFCEntityBase" setter="set_TranslationalStiffnessY" getter="get_TranslationalStiffnessY">
-			Translational stiffness value in y-direction of the coordinate system defined by the instance which uses this resource object. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="TranslationalStiffnessY" type="Variant" setter="set_TranslationalStiffnessY" getter="get_TranslationalStiffnessY">
+			Translational stiffness value in y-direction of the coordinate system defined by the instance which uses this resource object. A value (String, float, int or bool), or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="TranslationalStiffnessZ" type="GDIFCEntityBase" setter="set_TranslationalStiffnessZ" getter="get_TranslationalStiffnessZ">
-			Translational stiffness value in z-direction of the coordinate system defined by the instance which uses this resource object. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="TranslationalStiffnessZ" type="Variant" setter="set_TranslationalStiffnessZ" getter="get_TranslationalStiffnessZ">
+			Translational stiffness value in z-direction of the coordinate system defined by the instance which uses this resource object. A value (String, float, int or bool), or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="RotationalStiffnessX" type="Variant" setter="set_RotationalStiffnessX" getter="get_RotationalStiffnessX">
-			Rotational stiffness value about the x-axis of the coordinate system defined by the instance which uses this resource object. Its type depends on the file's schema: GDIFCEntityBase in IFC4 and IFC4X3_ADD2, float in IFC2X3.
+			Rotational stiffness value about the x-axis of the coordinate system defined by the instance which uses this resource object. A value (String, float, int or bool) in IFC4 and IFC4X3_ADD2 files, a float in IFC2X3 files, or null when unset.
 		</member>
 		<member name="RotationalStiffnessY" type="Variant" setter="set_RotationalStiffnessY" getter="get_RotationalStiffnessY">
-			Rotational stiffness value about the y-axis of the coordinate system defined by the instance which uses this resource object. Its type depends on the file's schema: GDIFCEntityBase in IFC4 and IFC4X3_ADD2, float in IFC2X3.
+			Rotational stiffness value about the y-axis of the coordinate system defined by the instance which uses this resource object. A value (String, float, int or bool) in IFC4 and IFC4X3_ADD2 files, a float in IFC2X3 files, or null when unset.
 		</member>
 		<member name="RotationalStiffnessZ" type="Variant" setter="set_RotationalStiffnessZ" getter="get_RotationalStiffnessZ">
-			Rotational stiffness value about the z-axis of the coordinate system defined by the instance which uses this resource object. Its type depends on the file's schema: GDIFCEntityBase in IFC4 and IFC4X3_ADD2, float in IFC2X3.
+			Rotational stiffness value about the z-axis of the coordinate system defined by the instance which uses this resource object. A value (String, float, int or bool) in IFC4 and IFC4X3_ADD2 files, a float in IFC2X3 files, or null when unset.
 		</member>
-		<member name="LinearStiffnessX" type="float" setter="set_LinearStiffnessX" getter="get_LinearStiffnessX">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="LinearStiffnessX" type="Variant" setter="set_LinearStiffnessX" getter="get_LinearStiffnessX">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="LinearStiffnessY" type="float" setter="set_LinearStiffnessY" getter="get_LinearStiffnessY">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="LinearStiffnessY" type="Variant" setter="set_LinearStiffnessY" getter="get_LinearStiffnessY">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="LinearStiffnessZ" type="float" setter="set_LinearStiffnessZ" getter="get_LinearStiffnessZ">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="LinearStiffnessZ" type="Variant" setter="set_LinearStiffnessZ" getter="get_LinearStiffnessZ">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

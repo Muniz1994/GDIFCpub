@@ -2,22 +2,24 @@
 #   godot --headless --path ifc-godot-project --script res://tests/properties_test.gd -- --file <ifc> [--expect <kinds>]
 # Every value in properties and quantities must have its details, every property of an element's type
 # must be on the element, and only those may be marked from_type. The type's sets are found by walking
-# ifc_object, as the documentation shows. --expect is a comma-separated list of what the file must
-# contain: from_type, complex, table, complex_quantity, units. Exits with 1 when a check fails.
+# ifc_object, as the documentation shows. Material definitions must have the details of their
+# properties too, and attributes must hold values, not references. --expect is a comma-separated list
+# of what the file must contain: from_type, complex, table, complex_quantity, units,
+# material_properties. Exits with 1 when a check fails.
 extends SceneTree
 
 var _failures := 0
 var _checks := 0
 var _manager: GDIFCManager
 var _expect := PackedStringArray()
-var _found := {"from_type": 0, "complex": 0, "table": 0, "complex_quantity": 0, "units": 0}
+var _found := {"from_type": 0, "complex": 0, "table": 0, "complex_quantity": 0, "units": 0, "material_properties": 0}
 
 
 func _initialize() -> void:
 	var args := _parse_args(OS.get_cmdline_user_args())
 	var path: String = args.get("file", "")
 	if path.is_empty():
-		printerr("Usage: --script res://tests/properties_test.gd -- --file <ifc> [--expect from_type,complex,table,complex_quantity,units]")
+		printerr("Usage: --script res://tests/properties_test.gd -- --file <ifc> [--expect from_type,complex,table,complex_quantity,units,material_properties]")
 		quit(2)
 		return
 	if args.has("expect"):
@@ -26,6 +28,7 @@ func _initialize() -> void:
 	_manager = GDIFCManager.new()
 	var settings := GDIFCLoaderSettings.new()
 	settings.generate_lods = false
+	settings.ifc_materials = true
 	_manager.geometric_settings = settings
 	root.add_child(_manager)
 	_manager.ifc_objects_ready.connect(_on_ifc_objects_ready)
@@ -67,6 +70,14 @@ func _on_ifc_objects_ready() -> void:
 		_check_details(node.name, node.properties, node.property_details, "properties")
 		_check_details(node.name, node.quantities, node.quantity_details, "quantities")
 		_check_type_sets(node)
+		_check_attributes(node)
+
+	var library := _manager.material_library
+	if library:
+		for definition: GDIFCMaterialDefinition in library.definitions + library.materials:
+			if not definition.properties.is_empty():
+				_found["material_properties"] += 1
+			_check_details(definition.resource_name, definition.properties, definition.property_details, "properties")
 
 	print("nodes: ", nodes.size(), " found: ", _found)
 	for kind in _expect:
@@ -139,6 +150,15 @@ func _check_type_sets(node: IFCNode) -> void:
 			if all_details[set_name][name].get("from_type", false):
 				_check(type_sets.has(set_name) and type_sets[set_name].has(name),
 					"%s: %s.%s marked from_type is in the type's sets" % [node.name, set_name, name])
+
+
+# Attributes hold values: references to other entities are on ifc_object
+func _check_attributes(node: IFCNode) -> void:
+	if node.attributes.is_empty():
+		return
+	_check(node.attributes.has("GlobalId"), "%s: attributes has GlobalId" % node.name)
+	for reference in ["OwnerHistory", "ObjectPlacement", "Representation"]:
+		_check(not node.attributes.has(reference), "%s: attributes leaves out the reference %s" % [node.name, reference])
 
 
 func _finish() -> void:

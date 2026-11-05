@@ -6,16 +6,20 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="DistributionPointFunction" type="String" setter="set_DistributionPointFunction" getter="get_DistributionPointFunction">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="DistributionPointFunction" type="Variant" setter="set_DistributionPointFunction" getter="get_DistributionPointFunction">
+			A String, one of the enumeration's values, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="UserDefinedFunction" type="String" setter="set_UserDefinedFunction" getter="get_UserDefinedFunction">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="UserDefinedFunction" type="Variant" setter="set_UserDefinedFunction" getter="get_UserDefinedFunction">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

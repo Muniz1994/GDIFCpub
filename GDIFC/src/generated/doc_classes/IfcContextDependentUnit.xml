@@ -6,16 +6,20 @@
 		Definition from ISO/CD 10303-41:1992 : A context dependent unit is a unit which is not related to the SI system. NOTE The number of parts in an assembly is a physical quantity measured in units that may be called "parts" but which cannot be related to an SI unit. NOTE Corresponding ISO 10303 name: context_dependent_unit, please refer to ISO/IS 10303-41 for the final definition of the formal standa
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Name" type="String" setter="set_Name" getter="get_Name">
-			The word, or group of words, by which the context dependent unit is referred to.
+		<member name="Name" type="Variant" setter="set_Name" getter="get_Name">
+			The word, or group of words, by which the context dependent unit is referred to. A String, or null when unset.
 		</member>
 		<member name="HasExternalReference" type="Array" setter="" getter="get_HasExternalReference">
 			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

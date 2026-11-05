@@ -6,13 +6,17 @@
 		The IfcExtendedMaterialProperties assign a set of defined material properties to associated material definitions. This provides a mechanism to assign any material properties to material. Those material properties that are defined as part of the IFC specification are provided within the use definitions below. NOTE The usage of this entity has changed in IFC2x4, it is now used to express all materia
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="ExtendedProperties" type="Array" setter="set_ExtendedProperties" getter="get_ExtendedProperties">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="ExtendedProperties" type="Variant" setter="set_ExtendedProperties" getter="get_ExtendedProperties">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

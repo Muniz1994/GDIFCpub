@@ -6,19 +6,23 @@
 		Definition from ISO/CD 10303-42:1992 The curve bounded surface is a parametric surface with curved boundaries defined by one or more boundary curves. One of the boundary curves may be the outer boundary; any number of inner boundaries is permissible. The region of the curve bounded surface in the basis surface is defined to be the portion of the basis surface in the direction of N x T from any poi
 	</brief_description>
 	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="BasisSurface" type="GDIFCEntityBase" setter="set_BasisSurface" getter="get_BasisSurface">
-			The surface to be bounded. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+			The surface to be bounded. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Boundaries" type="Array" setter="set_Boundaries" getter="get_Boundaries">
-			The outer boundary of the surface. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="Boundaries" type="Variant" setter="set_Boundaries" getter="get_Boundaries">
+			The outer boundary of the surface. An Array of GDIFCEntityBase entities, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="ImplicitOuter" type="bool" setter="set_ImplicitOuter" getter="get_ImplicitOuter">
-			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="ImplicitOuter" type="Variant" setter="set_ImplicitOuter" getter="get_ImplicitOuter">
+			A bool, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

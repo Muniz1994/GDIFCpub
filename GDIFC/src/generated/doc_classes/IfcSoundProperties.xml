@@ -6,19 +6,23 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="IsAttenuating" type="bool" setter="set_IsAttenuating" getter="get_IsAttenuating">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="IsAttenuating" type="Variant" setter="set_IsAttenuating" getter="get_IsAttenuating">
+			A bool, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="SoundScale" type="String" setter="set_SoundScale" getter="get_SoundScale">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="SoundScale" type="Variant" setter="set_SoundScale" getter="get_SoundScale">
+			A String, one of the enumeration's values, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="SoundValues" type="Array" setter="set_SoundValues" getter="get_SoundValues">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="SoundValues" type="Variant" setter="set_SoundValues" getter="get_SoundValues">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

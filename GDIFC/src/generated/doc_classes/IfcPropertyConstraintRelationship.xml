@@ -6,22 +6,26 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="RelatingConstraint" type="GDIFCEntityBase" setter="set_RelatingConstraint" getter="get_RelatingConstraint">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="RelatedProperties" type="Array" setter="set_RelatedProperties" getter="get_RelatedProperties">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="RelatedProperties" type="Variant" setter="set_RelatedProperties" getter="get_RelatedProperties">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Name" type="String" setter="set_Name" getter="get_Name">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="Name" type="Variant" setter="set_Name" getter="get_Name">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Description" type="String" setter="set_Description" getter="get_Description">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="Description" type="Variant" setter="set_Description" getter="get_Description">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -6,13 +6,17 @@
 		Definition from IAI : Objectified relationship between a material definition and elements or element types to which this material definition applies. The material definition can be: assigned to an element occurrence as a specific usage of a layer set or profile set assigned to an element occurrence or element type as a layer set, profile set, constituent set or a single material Materials can be a
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="RelatingMaterial" type="GDIFCEntityBase" setter="set_RelatingMaterial" getter="get_RelatingMaterial">
 			Material definition assigned to the elements or element types.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

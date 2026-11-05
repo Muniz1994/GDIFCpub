@@ -6,16 +6,20 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="RelatingElement" type="GDIFCEntityBase" setter="set_RelatingElement" getter="get_RelatingElement">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 		<member name="RelatedStructuralMember" type="GDIFCEntityBase" setter="set_RelatedStructuralMember" getter="get_RelatedStructuralMember">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

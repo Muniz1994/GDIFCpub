@@ -6,28 +6,32 @@
 		An IfcTask is an identifiable unit of work to be carried out in a construction project. A task is typically used to describe an activity for the construction or installation of products, but is not limited to these types. For example it might be used to describe design processes, move operations and other design, construction and operation related activities as well. HISTORY New entity in IFC 1.0.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Status" type="String" setter="set_Status" getter="get_Status">
-			Current status of the task. NOTE: Particular values for status are not specified, these should be determined and agreed by local usage. Examples of possible status values include 'Not Yet Started', 'Started', 'Completed'.
+		<member name="Status" type="Variant" setter="set_Status" getter="get_Status">
+			Current status of the task. NOTE: Particular values for status are not specified, these should be determined and agreed by local usage. Examples of possible status values include 'Not Yet Started', 'Started', 'Completed'. A String, or null when unset.
 		</member>
-		<member name="WorkMethod" type="String" setter="set_WorkMethod" getter="get_WorkMethod">
-			The method of work used in carrying out a task. NOTE: This attribute should not be used if the work method is specified for the IfcTaskType
+		<member name="WorkMethod" type="Variant" setter="set_WorkMethod" getter="get_WorkMethod">
+			The method of work used in carrying out a task. NOTE: This attribute should not be used if the work method is specified for the IfcTaskType A String, or null when unset.
 		</member>
-		<member name="IsMilestone" type="bool" setter="set_IsMilestone" getter="get_IsMilestone">
-			Identifies whether a task is a milestone task (=TRUE) or not (= FALSE). NOTE: In small project planning applications, a milestone task may be understood to be a task having no duration. As such, it represents a singular point in time.
+		<member name="IsMilestone" type="Variant" setter="set_IsMilestone" getter="get_IsMilestone">
+			Identifies whether a task is a milestone task (=TRUE) or not (= FALSE). NOTE: In small project planning applications, a milestone task may be understood to be a task having no duration. As such, it represents a singular point in time. A bool, or null when unset.
 		</member>
-		<member name="Priority" type="int" setter="set_Priority" getter="get_Priority">
-			A value that indicates the relative priority of the task (in comparison to the priorities of other tasks).
+		<member name="Priority" type="Variant" setter="set_Priority" getter="get_Priority">
+			A value that indicates the relative priority of the task (in comparison to the priorities of other tasks). An int, or null when unset.
 		</member>
 		<member name="TaskTime" type="GDIFCEntityBase" setter="set_TaskTime" getter="get_TaskTime">
-			Time related information for the task. Added in IFC 2x4 Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+			Time related information for the task. Added in IFC 2x4 Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Identifies the predefined types of a task from which the type required may be set. Added in IFC 2x4 Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			Identifies the predefined types of a task from which the type required may be set. Added in IFC 2x4 A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

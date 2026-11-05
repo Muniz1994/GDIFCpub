@@ -6,22 +6,26 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			A String, one of the enumeration's values, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="UpperValue" type="GDIFCEntityBase" setter="set_UpperValue" getter="get_UpperValue">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="UpperValue" type="Variant" setter="set_UpperValue" getter="get_UpperValue">
+			A value (String, float, int or bool), or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MostUsedValue" type="GDIFCEntityBase" setter="set_MostUsedValue" getter="get_MostUsedValue">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="MostUsedValue" type="Variant" setter="set_MostUsedValue" getter="get_MostUsedValue">
+			A value (String, float, int or bool), or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="LowerValue" type="GDIFCEntityBase" setter="set_LowerValue" getter="get_LowerValue">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="LowerValue" type="Variant" setter="set_LowerValue" getter="get_LowerValue">
+			A value (String, float, int or bool), or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

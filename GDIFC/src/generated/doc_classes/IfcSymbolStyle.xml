@@ -6,13 +6,17 @@
 		Definition from ISO/CD 10303-46:1992 : The symbol style is the presentation style that indicates the presentation of annotation symbols. NOTE: Corresponding ISO 10303 name: symbol_style. Please refer to ISO/IS 10303-46:1994, p. 124 for the final definition of the formal standard. HISTORY: New entity in Release IFC2x2.
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="StyleOfSymbol" type="GDIFCEntityBase" setter="set_StyleOfSymbol" getter="get_StyleOfSymbol">
-			The style applied to the symbol for its visual appearance. Only in IFC2X3 files: in others it reads as empty and can't be set.
+			The style applied to the symbol for its visual appearance. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

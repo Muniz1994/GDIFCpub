@@ -6,19 +6,23 @@
 		IfcMaterialRelationship defines a relationship between part and whole in material definitions (as in composite materials). The parts, expressed by the set of RelatedMaterials , are material constituents of which a single material aggregate is composed. HISTORYÿNew Entity in IFC2x4
 	</brief_description>
 	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="RelatingMaterial" type="GDIFCEntityBase" setter="set_RelatingMaterial" getter="get_RelatingMaterial">
-			Reference to the relating material (the composite). Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+			Reference to the relating material (the composite). Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="RelatedMaterials" type="Array" setter="set_RelatedMaterials" getter="get_RelatedMaterials">
-			Reference to related materials (as constituents of composite material). Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="RelatedMaterials" type="Variant" setter="set_RelatedMaterials" getter="get_RelatedMaterials">
+			Reference to related materials (as constituents of composite material). An Array of GDIFCEntityBase entities, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MaterialExpression" type="String" setter="set_MaterialExpression" getter="get_MaterialExpression">
-			In IFC4 files, this is the [code]Expression[/code] attribute. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="MaterialExpression" type="Variant" setter="set_MaterialExpression" getter="get_MaterialExpression">
+			In IFC4 files, this is the [code]Expression[/code] attribute. A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

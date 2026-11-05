@@ -6,13 +6,17 @@
 		The entity IfcRelAssociatesApproval is used to apply approval information defined by IfcApproval , in IfcApprovalResource schema, to subtypes of IfcRoot . HISTORY: New entity in IFC2x2.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="RelatingApproval" type="GDIFCEntityBase" setter="set_RelatingApproval" getter="get_RelatingApproval">
 			Reference to approval that is being applied using this relationship.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

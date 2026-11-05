@@ -6,19 +6,23 @@
 
 	</brief_description>
 	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Closed" type="bool" setter="set_Closed" getter="get_Closed">
-			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="Closed" type="Variant" setter="set_Closed" getter="get_Closed">
+			A bool, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Faces" type="Array" setter="set_Faces" getter="get_Faces">
-			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="Faces" type="Variant" setter="set_Faces" getter="get_Faces">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="PnIndex" type="PackedInt64Array" setter="set_PnIndex" getter="get_PnIndex">
-			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="PnIndex" type="Variant" setter="set_PnIndex" getter="get_PnIndex">
+			A PackedInt64Array, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

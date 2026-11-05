@@ -6,37 +6,41 @@
 		An IfcWorkControl is an abstract supertype which captures information that is common to both IfcWorkPlan and IfcWorkSchedule . HISTORY New class in IFC 2x CHANGE IFC2x4 Corrected assignment of resources to work control in documentation. Assignment of tasks to work control updated based on changes of task time definitions and the introduction of a summary task. Identifier has been renamed (now Iden
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="CreationDate" type="Variant" setter="set_CreationDate" getter="get_CreationDate">
-			The date that the plan is created. Its type depends on the file's schema: String in IFC4 and IFC4X3_ADD2, GDIFCEntityBase in IFC2X3.
+			The date that the plan is created. A String in IFC4 and IFC4X3_ADD2 files, a GDIFCEntityBase in IFC2X3 files, or null when unset.
 		</member>
-		<member name="Creators" type="Array" setter="set_Creators" getter="get_Creators">
-			The authors of the work plan.
+		<member name="Creators" type="Variant" setter="set_Creators" getter="get_Creators">
+			The authors of the work plan. An Array of GDIFCEntityBase entities, or null when unset.
 		</member>
-		<member name="Purpose" type="String" setter="set_Purpose" getter="get_Purpose">
-			A description of the purpose of the work schedule.
+		<member name="Purpose" type="Variant" setter="set_Purpose" getter="get_Purpose">
+			A description of the purpose of the work schedule. A String, or null when unset.
 		</member>
 		<member name="Duration" type="Variant" setter="set_Duration" getter="get_Duration">
-			The total duration of the entire work schedule. Its type depends on the file's schema: String in IFC4 and IFC4X3_ADD2, float in IFC2X3.
+			The total duration of the entire work schedule. A String in IFC4 and IFC4X3_ADD2 files, a float in IFC2X3 files, or null when unset.
 		</member>
 		<member name="TotalFloat" type="Variant" setter="set_TotalFloat" getter="get_TotalFloat">
-			The total time float of the entire work schedule. Its type depends on the file's schema: String in IFC4 and IFC4X3_ADD2, float in IFC2X3.
+			The total time float of the entire work schedule. A String in IFC4 and IFC4X3_ADD2 files, a float in IFC2X3 files, or null when unset.
 		</member>
 		<member name="StartTime" type="Variant" setter="set_StartTime" getter="get_StartTime">
-			The start time of the schedule. Its type depends on the file's schema: String in IFC4 and IFC4X3_ADD2, GDIFCEntityBase in IFC2X3.
+			The start time of the schedule. A String in IFC4 and IFC4X3_ADD2 files, a GDIFCEntityBase in IFC2X3 files, or null when unset.
 		</member>
 		<member name="FinishTime" type="Variant" setter="set_FinishTime" getter="get_FinishTime">
-			The finish time of the schedule. Its type depends on the file's schema: String in IFC4 and IFC4X3_ADD2, GDIFCEntityBase in IFC2X3.
+			The finish time of the schedule. A String in IFC4 and IFC4X3_ADD2 files, a GDIFCEntityBase in IFC2X3 files, or null when unset.
 		</member>
-		<member name="WorkControlType" type="String" setter="set_WorkControlType" getter="get_WorkControlType">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="WorkControlType" type="Variant" setter="set_WorkControlType" getter="get_WorkControlType">
+			A String, one of the enumeration's values, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="UserDefinedControlType" type="String" setter="set_UserDefinedControlType" getter="get_UserDefinedControlType">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="UserDefinedControlType" type="Variant" setter="set_UserDefinedControlType" getter="get_UserDefinedControlType">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

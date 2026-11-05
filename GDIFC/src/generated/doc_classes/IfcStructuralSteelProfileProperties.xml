@@ -6,22 +6,26 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="ShearAreaZ" type="float" setter="set_ShearAreaZ" getter="get_ShearAreaZ">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="ShearAreaZ" type="Variant" setter="set_ShearAreaZ" getter="get_ShearAreaZ">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="ShearAreaY" type="float" setter="set_ShearAreaY" getter="get_ShearAreaY">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="ShearAreaY" type="Variant" setter="set_ShearAreaY" getter="get_ShearAreaY">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="PlasticShapeFactorY" type="float" setter="set_PlasticShapeFactorY" getter="get_PlasticShapeFactorY">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="PlasticShapeFactorY" type="Variant" setter="set_PlasticShapeFactorY" getter="get_PlasticShapeFactorY">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="PlasticShapeFactorZ" type="float" setter="set_PlasticShapeFactorZ" getter="get_PlasticShapeFactorZ">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="PlasticShapeFactorZ" type="Variant" setter="set_PlasticShapeFactorZ" getter="get_PlasticShapeFactorZ">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -6,10 +6,14 @@
 		An externally defined symbol is a symbol that gets its shape information by an agreed reference to an external source. NOTE: The allowable symbol names and sources have to be established by implementers agreements. NOTE: The IfcExternallyDefinedSymbol is an entity that had been adopted from ISO 10303, Industrial automation systems and integration—Product data representation and exchange, Part 46: 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -6,13 +6,17 @@
 
 	</brief_description>
 	<description>Only in IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="UsageType" type="String" setter="set_UsageType" getter="get_UsageType">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="UsageType" type="Variant" setter="set_UsageType" getter="get_UsageType">
+			A String, one of the enumeration's values, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

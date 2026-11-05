@@ -6,25 +6,29 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="PhysicalWeight" type="float" setter="set_PhysicalWeight" getter="get_PhysicalWeight">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="PhysicalWeight" type="Variant" setter="set_PhysicalWeight" getter="get_PhysicalWeight">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Perimeter" type="float" setter="set_Perimeter" getter="get_Perimeter">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="Perimeter" type="Variant" setter="set_Perimeter" getter="get_Perimeter">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MinimumPlateThickness" type="float" setter="set_MinimumPlateThickness" getter="get_MinimumPlateThickness">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="MinimumPlateThickness" type="Variant" setter="set_MinimumPlateThickness" getter="get_MinimumPlateThickness">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MaximumPlateThickness" type="float" setter="set_MaximumPlateThickness" getter="get_MaximumPlateThickness">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="MaximumPlateThickness" type="Variant" setter="set_MaximumPlateThickness" getter="get_MaximumPlateThickness">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="CrossSectionArea" type="float" setter="set_CrossSectionArea" getter="get_CrossSectionArea">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="CrossSectionArea" type="Variant" setter="set_CrossSectionArea" getter="get_CrossSectionArea">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

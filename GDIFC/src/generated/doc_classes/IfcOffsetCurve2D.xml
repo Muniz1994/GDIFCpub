@@ -6,16 +6,20 @@
 		Definition from ISO/CD 10303-42:1992 : An offset curve 2d ( IfcOffsetCurve2d ) is a curve at a constant distance from a basis curve in two-dimensional space. This entity defines a simple plane-offset curve by offsetting by distance along the normal to basis curve in the plane of basis curve. The underlying curve shall have a well-defined tangent direction at every point. In the case of a composite
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Distance" type="float" setter="set_Distance" getter="get_Distance">
-			The distance of the offset curve from the basis curve. distance may be positive, negative or zero. A positive value of distance defines an offset in the direction which is normal to the curve in the sense of an anti-clockwise rotation through 90 degrees from the tangent vector T at the given point. (This is in the direction of orthogonal complement(T).)
+		<member name="Distance" type="Variant" setter="set_Distance" getter="get_Distance">
+			The distance of the offset curve from the basis curve. distance may be positive, negative or zero. A positive value of distance defines an offset in the direction which is normal to the curve in the sense of an anti-clockwise rotation through 90 degrees from the tangent vector T at the given point. (This is in the direction of orthogonal complement(T).) A float, or null when unset.
 		</member>
-		<member name="SelfIntersect" type="String" setter="set_SelfIntersect" getter="get_SelfIntersect">
-			An indication of whether the offset curve self-intersects; this is for information only.
+		<member name="SelfIntersect" type="Variant" setter="set_SelfIntersect" getter="get_SelfIntersect">
+			An indication of whether the offset curve self-intersects; this is for information only. A String ("TRUE", "FALSE" or "UNKNOWN"), or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

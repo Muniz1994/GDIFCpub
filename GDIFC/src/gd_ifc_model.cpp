@@ -180,6 +180,43 @@ godot::Array IFCModel::instances_by_type_exact(godot::String ifc_class) {
     return result;
 }
 
+godot::Dictionary IFCModel::get_site_location() const {
+    godot::Dictionary result;
+    if (!ifc_file_) return result;
+    try {
+        auto sites = ifc_file_->instances_by_type("IfcSite");
+        if (!sites || sites->size() == 0) return result;
+        const IfcUtil::IfcBaseClass* site = (*sites)[0];
+        const IfcParse::entity* decl = site->declaration().as_entity();
+        if (!decl) return result;
+
+        // IfcCompoundPlaneAngleMeasure: degrees, minutes, seconds and millionths of a second, all
+        // with the same sign
+        auto angle = [&](const char* name, const char* key) {
+            const ptrdiff_t index = decl->attribute_index(name);
+            if (index < 0) return;
+            const AttributeValue value = site->get_attribute_value(static_cast<size_t>(index));
+            if (value.type() != IfcUtil::Argument_AGGREGATE_OF_INT) return;
+            const std::vector<int> parts = value;
+            static const double DIVISORS[] = {1.0, 60.0, 3600.0, 3600.0e6};
+            double degrees = 0.0;
+            for (size_t i = 0; i < parts.size() && i < 4; ++i) degrees += parts[i] / DIVISORS[i];
+            result[key] = degrees;
+        };
+        angle("RefLatitude", "latitude");
+        angle("RefLongitude", "longitude");
+
+        const ptrdiff_t elevation = decl->attribute_index("RefElevation");
+        if (elevation >= 0) {
+            const AttributeValue value = site->get_attribute_value(static_cast<size_t>(elevation));
+            if (value.type() == IfcUtil::Argument_DOUBLE || value.type() == IfcUtil::Argument_INT) {
+                result["elevation"] = gd_attr_double(value);
+            }
+        }
+    } catch (...) {}
+    return result;
+}
+
 Ref<GDIFCEntityBase> IFCModel::get_project() {
     if (!ifc_file_) return {};
     try {
@@ -273,6 +310,7 @@ void IFCModel::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_originating_system"),&IFCModel::get_originating_system);
     ClassDB::bind_method(D_METHOD("get_authorization"),     &IFCModel::get_authorization);
     ClassDB::bind_method(D_METHOD("get_units"),             &IFCModel::get_units);
+    ClassDB::bind_method(D_METHOD("get_site_location"),     &IFCModel::get_site_location);
 
     // Lookup
     ClassDB::bind_method(D_METHOD("get_by_id", "express_id"),      &IFCModel::get_by_id);

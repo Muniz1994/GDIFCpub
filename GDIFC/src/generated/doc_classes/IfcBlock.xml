@@ -6,19 +6,23 @@
 		The IfcBlock is a Construction Solid Geometry (CSG) 3D primitive. It is defined by a position and a positve distance along the three orthogonal axes. The inherited Position attribute has the IfcAxisPlacement3D type and provides: SELF\IfcCsgPrimitive3D.Position : The location and orientation of the axis system for the primitive. SELF\IfcCsgPrimitive3D.Position.Location : The block has one vertex at
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="XLength" type="float" setter="set_XLength" getter="get_XLength">
-			The size of the block along the placement X axis. It is provided by the inherited axis placement through SELF\IfcCsgPrimitive3D.Position.P[1] .
+		<member name="XLength" type="Variant" setter="set_XLength" getter="get_XLength">
+			The size of the block along the placement X axis. It is provided by the inherited axis placement through SELF\IfcCsgPrimitive3D.Position.P[1] . A float, or null when unset.
 		</member>
-		<member name="YLength" type="float" setter="set_YLength" getter="get_YLength">
-			The size of the block along the placement Y axis. It is provided by the inherited axis placement through SELF\IfcCsgPrimitive3D.Position.P[2] .
+		<member name="YLength" type="Variant" setter="set_YLength" getter="get_YLength">
+			The size of the block along the placement Y axis. It is provided by the inherited axis placement through SELF\IfcCsgPrimitive3D.Position.P[2] . A float, or null when unset.
 		</member>
-		<member name="ZLength" type="float" setter="set_ZLength" getter="get_ZLength">
-			The size of the block along the placement Z axis. It is provided by the inherited axis placement through SELF\IfcCsgPrimitive3D.Position.P[3] .
+		<member name="ZLength" type="Variant" setter="set_ZLength" getter="get_ZLength">
+			The size of the block along the placement Z axis. It is provided by the inherited axis placement through SELF\IfcCsgPrimitive3D.Position.P[3] . A float, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

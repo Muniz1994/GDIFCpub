@@ -6,22 +6,26 @@
 
 	</brief_description>
 	<description>Only in IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="CubicTerm" type="float" setter="set_CubicTerm" getter="get_CubicTerm">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="CubicTerm" type="Variant" setter="set_CubicTerm" getter="get_CubicTerm">
+			A float, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="QuadraticTerm" type="float" setter="set_QuadraticTerm" getter="get_QuadraticTerm">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="QuadraticTerm" type="Variant" setter="set_QuadraticTerm" getter="get_QuadraticTerm">
+			A float, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="LinearTerm" type="float" setter="set_LinearTerm" getter="get_LinearTerm">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="LinearTerm" type="Variant" setter="set_LinearTerm" getter="get_LinearTerm">
+			A float, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="ConstantTerm" type="float" setter="set_ConstantTerm" getter="get_ConstantTerm">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="ConstantTerm" type="Variant" setter="set_ConstantTerm" getter="get_ConstantTerm">
+			A float, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

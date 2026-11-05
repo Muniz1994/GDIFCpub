@@ -6,26 +6,38 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			A String, one of the enumeration's values, or null when unset.
 		</member>
-		<member name="NominalDiameter" type="float" setter="set_NominalDiameter" getter="get_NominalDiameter">
+		<member name="NominalDiameter" type="Variant" setter="set_NominalDiameter" getter="get_NominalDiameter">
+			A float, or null when unset.
 		</member>
-		<member name="CrossSectionArea" type="float" setter="set_CrossSectionArea" getter="get_CrossSectionArea">
+		<member name="CrossSectionArea" type="Variant" setter="set_CrossSectionArea" getter="get_CrossSectionArea">
+			A float, or null when unset.
 		</member>
-		<member name="TensionForce" type="float" setter="set_TensionForce" getter="get_TensionForce">
+		<member name="TensionForce" type="Variant" setter="set_TensionForce" getter="get_TensionForce">
+			A float, or null when unset.
 		</member>
-		<member name="PreStress" type="float" setter="set_PreStress" getter="get_PreStress">
+		<member name="PreStress" type="Variant" setter="set_PreStress" getter="get_PreStress">
+			A float, or null when unset.
 		</member>
-		<member name="FrictionCoefficient" type="float" setter="set_FrictionCoefficient" getter="get_FrictionCoefficient">
+		<member name="FrictionCoefficient" type="Variant" setter="set_FrictionCoefficient" getter="get_FrictionCoefficient">
+			A float, or null when unset.
 		</member>
-		<member name="AnchorageSlip" type="float" setter="set_AnchorageSlip" getter="get_AnchorageSlip">
+		<member name="AnchorageSlip" type="Variant" setter="set_AnchorageSlip" getter="get_AnchorageSlip">
+			A float, or null when unset.
 		</member>
-		<member name="MinCurvatureRadius" type="float" setter="set_MinCurvatureRadius" getter="get_MinCurvatureRadius">
+		<member name="MinCurvatureRadius" type="Variant" setter="set_MinCurvatureRadius" getter="get_MinCurvatureRadius">
+			A float, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

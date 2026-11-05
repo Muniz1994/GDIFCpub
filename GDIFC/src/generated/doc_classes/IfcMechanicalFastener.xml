@@ -6,17 +6,23 @@
 		Definition from IAI: Fasteners connecting building elements mechanically. A single instance of this class may represent one or many of actual mechanical fasteners, for example an array of bolts or a row of nails. HISTORY New entity in IFC Release 2x2 IFC 2x4 change: Supertype changed from IfcFastener to IfcElementComponent . Attribute PredefinedType added. Attributes NominalDiameter and NominalLen
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="NominalDiameter" type="float" setter="set_NominalDiameter" getter="get_NominalDiameter">
+		<member name="NominalDiameter" type="Variant" setter="set_NominalDiameter" getter="get_NominalDiameter">
+			A float, or null when unset.
 		</member>
-		<member name="NominalLength" type="float" setter="set_NominalLength" getter="get_NominalLength">
+		<member name="NominalLength" type="Variant" setter="set_NominalLength" getter="get_NominalLength">
+			A float, or null when unset.
 		</member>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Subtype of mechanical fastener Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			Subtype of mechanical fastener A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

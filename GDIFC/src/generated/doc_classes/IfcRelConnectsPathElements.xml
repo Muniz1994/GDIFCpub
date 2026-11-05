@@ -6,22 +6,26 @@
 		The IfcRelConnectsPathElements relationship provides the connectivity information between two elements, which have path information. The objectified relationship provides the additional information required to describe the connection between two path based elements that might have single or multiple layers of material. The connection type specifies where at the path based element a connection is g
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="RelatingPriorities" type="PackedInt64Array" setter="set_RelatingPriorities" getter="get_RelatingPriorities">
-			Priorities for connection. It refers to the layers of the RelatingObject.
+		<member name="RelatingPriorities" type="Variant" setter="set_RelatingPriorities" getter="get_RelatingPriorities">
+			Priorities for connection. It refers to the layers of the RelatingObject. A PackedInt64Array, or null when unset.
 		</member>
-		<member name="RelatedPriorities" type="PackedInt64Array" setter="set_RelatedPriorities" getter="get_RelatedPriorities">
-			Priorities for connection. It refers to the layers of the RelatedObject.
+		<member name="RelatedPriorities" type="Variant" setter="set_RelatedPriorities" getter="get_RelatedPriorities">
+			Priorities for connection. It refers to the layers of the RelatedObject. A PackedInt64Array, or null when unset.
 		</member>
-		<member name="RelatedConnectionType" type="String" setter="set_RelatedConnectionType" getter="get_RelatedConnectionType">
-			Indication of the connection type in relation to the path of the RelatingObject.
+		<member name="RelatedConnectionType" type="Variant" setter="set_RelatedConnectionType" getter="get_RelatedConnectionType">
+			Indication of the connection type in relation to the path of the RelatingObject. A String, one of the enumeration's values, or null when unset.
 		</member>
-		<member name="RelatingConnectionType" type="String" setter="set_RelatingConnectionType" getter="get_RelatingConnectionType">
-			Indication of the connection type in relation to the path of the RelatingObject.
+		<member name="RelatingConnectionType" type="Variant" setter="set_RelatingConnectionType" getter="get_RelatingConnectionType">
+			Indication of the connection type in relation to the path of the RelatingObject. A String, one of the enumeration's values, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

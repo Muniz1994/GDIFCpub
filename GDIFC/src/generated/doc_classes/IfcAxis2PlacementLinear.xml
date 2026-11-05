@@ -6,16 +6,20 @@
 
 	</brief_description>
 	<description>Only in IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="Axis" type="GDIFCEntityBase" setter="set_Axis" getter="get_Axis">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+			Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="RefDirection" type="GDIFCEntityBase" setter="set_RefDirection" getter="get_RefDirection">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+			Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

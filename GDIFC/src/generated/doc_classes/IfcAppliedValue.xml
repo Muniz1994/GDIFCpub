@@ -6,37 +6,40 @@
 		IfcAppliedValue is an abstract supertype that specifies the common attributes for cost values. HISTORY: New Entity in IFC2x2. Modifed in IFC2x4 to use IfcDate for date values. Use definitions The extent of the IfcAppliedValue is determined by the AppliedValue attribute which may be defined either as an IfcMeasureWithUnit or as an IfcMonetaryMeasure or as an IfcRatioMeasure via the IfcAppliedValueS
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Name" type="String" setter="set_Name" getter="get_Name">
-			A name or additional clarification given to a cost value.
+		<member name="Name" type="Variant" setter="set_Name" getter="get_Name">
+			A name or additional clarification given to a cost value. A String, or null when unset.
 		</member>
-		<member name="Description" type="String" setter="set_Description" getter="get_Description">
-			The description that may apply additional information about a cost value.
+		<member name="Description" type="Variant" setter="set_Description" getter="get_Description">
+			The description that may apply additional information about a cost value. A String, or null when unset.
 		</member>
-		<member name="AppliedValue" type="GDIFCEntityBase" setter="set_AppliedValue" getter="get_AppliedValue">
-			The extent or quantity or amount of an applied value.
+		<member name="AppliedValue" type="Variant" setter="set_AppliedValue" getter="get_AppliedValue">
+			The extent or quantity or amount of an applied value. A value or a GDIFCEntityBase, or null when unset.
 		</member>
 		<member name="UnitBasis" type="GDIFCEntityBase" setter="set_UnitBasis" getter="get_UnitBasis">
 			The number and unit of measure on which the unit cost is based. Note: As well as the normally expected units of measure such as length, area, volume etc., costs may be based on units of measure which need to be defined e.g. sack, drum, pallet, item etc. Unit costs may be based on quantities greater (or lesser) than a unitary value of the basis measure. For instance, timber may have a unit cost rate per X meters where X &gt; 1; similarly for cable, piping and many other items. The basis number may be either an integer or a real value. Note: This attribute should be asserted for all circumstances where the cost to be applied is per unit quantity. It may be asserted even for circumstances where an item price is used, in which case the unit cost basis should be by item (or equivalent definition).
 		</member>
 		<member name="ApplicableDate" type="Variant" setter="set_ApplicableDate" getter="get_ApplicableDate">
-			The date on or from which an applied value is applicable. IFC2x4 CHANGE Type changed from IfcDateTimeSelect. Its type depends on the file's schema: String in IFC4 and IFC4X3_ADD2, GDIFCEntityBase in IFC2X3.
+			The date on or from which an applied value is applicable. IFC2x4 CHANGE Type changed from IfcDateTimeSelect. A String in IFC4 and IFC4X3_ADD2 files, a GDIFCEntityBase in IFC2X3 files, or null when unset.
 		</member>
 		<member name="FixedUntilDate" type="Variant" setter="set_FixedUntilDate" getter="get_FixedUntilDate">
-			The date until which applied value is applicable. IFC2x4 CHANGE Type changed from IfcDateTimeSelect. Its type depends on the file's schema: String in IFC4 and IFC4X3_ADD2, GDIFCEntityBase in IFC2X3.
+			The date until which applied value is applicable. IFC2x4 CHANGE Type changed from IfcDateTimeSelect. A String in IFC4 and IFC4X3_ADD2 files, a GDIFCEntityBase in IFC2X3 files, or null when unset.
 		</member>
-		<member name="Category" type="String" setter="set_Category" getter="get_Category">
-			In IFC2X3 files, this is the [code]CostType[/code] attribute.
+		<member name="Category" type="Variant" setter="set_Category" getter="get_Category">
+			In IFC2X3 files, this is the [code]CostType[/code] attribute. A String in IFC2X3, IFC4 and IFC4X3_ADD2 files, a String, one of the enumeration's values in IFC2X3 files, or null when unset.
 		</member>
-		<member name="Condition" type="String" setter="set_Condition" getter="get_Condition">
+		<member name="Condition" type="Variant" setter="set_Condition" getter="get_Condition">
+			A String, or null when unset.
 		</member>
-		<member name="ArithmeticOperator" type="String" setter="set_ArithmeticOperator" getter="get_ArithmeticOperator">
-			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="ArithmeticOperator" type="Variant" setter="set_ArithmeticOperator" getter="get_ArithmeticOperator">
+			A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Components" type="Array" setter="set_Components" getter="get_Components">
-			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="Components" type="Variant" setter="set_Components" getter="get_Components">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="HasExternalReference" type="Array" setter="" getter="get_HasExternalReference">
 			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
@@ -51,6 +54,8 @@
 			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

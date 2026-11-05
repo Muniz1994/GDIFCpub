@@ -127,6 +127,11 @@ func _test_matching() -> void:
 	properties = wall.get_property_list().filter(func(p): return p.name == "decomposition_settings")
 	_check(not properties.is_empty() and not (properties[0].usage & PROPERTY_USAGE_EDITOR), "decomposition settings are hidden for other shapes")
 
+	# Saved matrices store shape types as numbers
+	var shape_values := [GDIFCCollisionRule.SHAPE_NONE, GDIFCCollisionRule.SHAPE_TRIMESH, GDIFCCollisionRule.SHAPE_SIMPLE_CONVEX,
+		GDIFCCollisionRule.SHAPE_BOX, GDIFCCollisionRule.SHAPE_DECOMPOSE_CONVEX]
+	_check(shape_values == [0, 1, 2, 3, 4], "shape types keep their saved values (new ones go at the end)")
+
 
 func _model_matrix() -> GDIFCCollisionMatrix:
 	var matrix := GDIFCCollisionMatrix.new()

@@ -6,10 +6,14 @@
 		An IfcExternalInformation is the identification of an information source that is not explicitly represented in the current model or in the project database (as an implementation of the current model). The IfcExternalInformation identifies the external source (classification, document, or library), but not the particular items such as a dictionary entry, a classification notation, or a document ref
 	</brief_description>
 	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

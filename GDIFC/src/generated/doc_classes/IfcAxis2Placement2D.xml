@@ -6,13 +6,17 @@
 		Definition from ISO/CD 10303-42:1992 : The location and orientation in two dimensional space of two mutually perpendicular axes. An axis2_placement_2d is defined in terms of a point, (inherited from the placement supertype), and an axis. It can be used to locate and originate an object in two dimensional space and to define a placement coordinate system. The class includes a point which forms the 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="RefDirection" type="GDIFCEntityBase" setter="set_RefDirection" getter="get_RefDirection">
 			The direction used to determine the direction of the local X axis. If a value is omited that it defaults to [1.0, 0.0.].
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

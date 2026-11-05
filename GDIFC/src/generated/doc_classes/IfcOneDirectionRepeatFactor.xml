@@ -6,13 +6,17 @@
 		Definition from ISO/CD 10303-46:1992 : A one time repeat factor is a vector used in the fill area style hatching and fill area style tiles entities for determining the origin of the repeated hatch line relative to the origin of the previous hatch line, Given the initial position of any hatch line, the one direction repeat factor determines two new positions according to the equation: I + k * R k X
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="RepeatFactor" type="GDIFCEntityBase" setter="set_RepeatFactor" getter="get_RepeatFactor">
-			A vector which specifies the relative positioning of hatch lines. Only in IFC2X3 files: in others it reads as empty and can't be set.
+			A vector which specifies the relative positioning of hatch lines. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

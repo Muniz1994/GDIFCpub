@@ -6,16 +6,20 @@
 		The planar extent defines the extent along the two axes of the two-dimensional coordinate system, independently of its position. NOTE Corresponding ISO 10303 name: planar_extent. Please refer to ISO/IS 10303-46:1994, p. 141 for the final definition of the formal standard. HISTORY New entity in IFC2x2.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="SizeInX" type="float" setter="set_SizeInX" getter="get_SizeInX">
-			The extent in the direction of the x-axis.
+		<member name="SizeInX" type="Variant" setter="set_SizeInX" getter="get_SizeInX">
+			The extent in the direction of the x-axis. A float, or null when unset.
 		</member>
-		<member name="SizeInY" type="float" setter="set_SizeInY" getter="get_SizeInY">
-			The extent in the direction of the y-axis.
+		<member name="SizeInY" type="Variant" setter="set_SizeInY" getter="get_SizeInY">
+			The extent in the direction of the y-axis. A float, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

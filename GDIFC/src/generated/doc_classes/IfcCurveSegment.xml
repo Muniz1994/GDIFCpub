@@ -6,22 +6,26 @@
 
 	</brief_description>
 	<description>Only in IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="Placement" type="GDIFCEntityBase" setter="set_Placement" getter="get_Placement">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+			Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="SegmentStart" type="GDIFCEntityBase" setter="set_SegmentStart" getter="get_SegmentStart">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="SegmentStart" type="Variant" setter="set_SegmentStart" getter="get_SegmentStart">
+			A value (String, float, int or bool), or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="SegmentLength" type="GDIFCEntityBase" setter="set_SegmentLength" getter="get_SegmentLength">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="SegmentLength" type="Variant" setter="set_SegmentLength" getter="get_SegmentLength">
+			A value (String, float, int or bool), or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="ParentCurve" type="GDIFCEntityBase" setter="set_ParentCurve" getter="get_ParentCurve">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+			Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

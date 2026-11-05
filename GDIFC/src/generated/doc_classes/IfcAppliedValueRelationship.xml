@@ -6,25 +6,29 @@
 		An IfcAppliedValueRelationship is a relationship class that enables cost values to be aggregated together as components of another cost value. HISTORY New Entity in Release IFC2.0. IFC2x4 CHANGE Subtyped from IfcResourceLevelRelationship , attribute order changed. Use definitions Dependency relationships can exist between applied values on the basis that one particular value may be determined by o
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="ComponentOfTotal" type="GDIFCEntityBase" setter="set_ComponentOfTotal" getter="get_ComponentOfTotal">
-			The applied value (total or subtotal) of which the value being considered is a component. Only in IFC2X3 files: in others it reads as empty and can't be set.
+			The applied value (total or subtotal) of which the value being considered is a component. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Components" type="Array" setter="set_Components" getter="get_Components">
-			Applied values that are components of another applied value and from which that applied value may be deduced. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="Components" type="Variant" setter="set_Components" getter="get_Components">
+			Applied values that are components of another applied value and from which that applied value may be deduced. An Array of GDIFCEntityBase entities, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="ArithmeticOperator" type="String" setter="set_ArithmeticOperator" getter="get_ArithmeticOperator">
-			The arithmetic operator applied in an applied value relationship. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="ArithmeticOperator" type="Variant" setter="set_ArithmeticOperator" getter="get_ArithmeticOperator">
+			The arithmetic operator applied in an applied value relationship. A String, one of the enumeration's values, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Name" type="String" setter="set_Name" getter="get_Name">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="Name" type="Variant" setter="set_Name" getter="get_Name">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Description" type="String" setter="set_Description" getter="get_Description">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="Description" type="Variant" setter="set_Description" getter="get_Description">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

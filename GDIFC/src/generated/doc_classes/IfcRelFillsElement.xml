@@ -6,8 +6,10 @@
 		IfcRelFillsElement is an objectified relationship between an opening element and an element that fills (or partially fills) the opening element. It is an one-to-one relationship. NOTE view definitions or implementer agreements may restrict an opening to be filled by one filling element only. HISTORY New entity in IFC Release 1.0 As shown in Figure 40, the insertion of a door into a wall is represe
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="RelatingOpeningElement" type="GDIFCEntityBase" setter="set_RelatingOpeningElement" getter="get_RelatingOpeningElement">
 			Opening Element being filled by virtue of this relationship.
@@ -16,6 +18,8 @@
 			Reference to building element that occupies fully or partially the associated opening. IFC2x PLATFORM CHANGE: The data type has been changed from IfcBuildingElement to IfcElement with upward compatibility for file based exchange.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

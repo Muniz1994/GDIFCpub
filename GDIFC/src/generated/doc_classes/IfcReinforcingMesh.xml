@@ -6,29 +6,41 @@
 		Definition from IAI: A series of longitudinal and transverse wires or bars of various gauges, arranged at right angles to each other and welded at all points of intersection; usually used for concrete slab reinforcement. Also known as welded wire fabric. HISTORY New entity in IFC Release 2x2 IFC 2x4 CHANGE All attributes removed; information now provided by IfcReinforcingMeshType . Geometry Use De
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="MeshLength" type="float" setter="set_MeshLength" getter="get_MeshLength">
+		<member name="MeshLength" type="Variant" setter="set_MeshLength" getter="get_MeshLength">
+			A float, or null when unset.
 		</member>
-		<member name="MeshWidth" type="float" setter="set_MeshWidth" getter="get_MeshWidth">
+		<member name="MeshWidth" type="Variant" setter="set_MeshWidth" getter="get_MeshWidth">
+			A float, or null when unset.
 		</member>
-		<member name="LongitudinalBarNominalDiameter" type="float" setter="set_LongitudinalBarNominalDiameter" getter="get_LongitudinalBarNominalDiameter">
+		<member name="LongitudinalBarNominalDiameter" type="Variant" setter="set_LongitudinalBarNominalDiameter" getter="get_LongitudinalBarNominalDiameter">
+			A float, or null when unset.
 		</member>
-		<member name="TransverseBarNominalDiameter" type="float" setter="set_TransverseBarNominalDiameter" getter="get_TransverseBarNominalDiameter">
+		<member name="TransverseBarNominalDiameter" type="Variant" setter="set_TransverseBarNominalDiameter" getter="get_TransverseBarNominalDiameter">
+			A float, or null when unset.
 		</member>
-		<member name="LongitudinalBarCrossSectionArea" type="float" setter="set_LongitudinalBarCrossSectionArea" getter="get_LongitudinalBarCrossSectionArea">
+		<member name="LongitudinalBarCrossSectionArea" type="Variant" setter="set_LongitudinalBarCrossSectionArea" getter="get_LongitudinalBarCrossSectionArea">
+			A float, or null when unset.
 		</member>
-		<member name="TransverseBarCrossSectionArea" type="float" setter="set_TransverseBarCrossSectionArea" getter="get_TransverseBarCrossSectionArea">
+		<member name="TransverseBarCrossSectionArea" type="Variant" setter="set_TransverseBarCrossSectionArea" getter="get_TransverseBarCrossSectionArea">
+			A float, or null when unset.
 		</member>
-		<member name="LongitudinalBarSpacing" type="float" setter="set_LongitudinalBarSpacing" getter="get_LongitudinalBarSpacing">
+		<member name="LongitudinalBarSpacing" type="Variant" setter="set_LongitudinalBarSpacing" getter="get_LongitudinalBarSpacing">
+			A float, or null when unset.
 		</member>
-		<member name="TransverseBarSpacing" type="float" setter="set_TransverseBarSpacing" getter="get_TransverseBarSpacing">
+		<member name="TransverseBarSpacing" type="Variant" setter="set_TransverseBarSpacing" getter="get_TransverseBarSpacing">
+			A float, or null when unset.
 		</member>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			The predefined type is always MESH. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			The predefined type is always MESH. A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

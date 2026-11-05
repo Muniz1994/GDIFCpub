@@ -6,31 +6,35 @@
 
 	</brief_description>
 	<description>Only in IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="StartPoint" type="GDIFCEntityBase" setter="set_StartPoint" getter="get_StartPoint">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+			Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="StartDirection" type="float" setter="set_StartDirection" getter="get_StartDirection">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="StartDirection" type="Variant" setter="set_StartDirection" getter="get_StartDirection">
+			A float, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="StartRadiusOfCurvature" type="float" setter="set_StartRadiusOfCurvature" getter="get_StartRadiusOfCurvature">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="StartRadiusOfCurvature" type="Variant" setter="set_StartRadiusOfCurvature" getter="get_StartRadiusOfCurvature">
+			A float, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="EndRadiusOfCurvature" type="float" setter="set_EndRadiusOfCurvature" getter="get_EndRadiusOfCurvature">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="EndRadiusOfCurvature" type="Variant" setter="set_EndRadiusOfCurvature" getter="get_EndRadiusOfCurvature">
+			A float, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="SegmentLength" type="float" setter="set_SegmentLength" getter="get_SegmentLength">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="SegmentLength" type="Variant" setter="set_SegmentLength" getter="get_SegmentLength">
+			A float, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="GravityCenterLineHeight" type="float" setter="set_GravityCenterLineHeight" getter="get_GravityCenterLineHeight">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="GravityCenterLineHeight" type="Variant" setter="set_GravityCenterLineHeight" getter="get_GravityCenterLineHeight">
+			A float, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			A String, one of the enumeration's values, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

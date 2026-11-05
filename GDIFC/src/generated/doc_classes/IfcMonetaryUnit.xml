@@ -6,13 +6,17 @@
 		IfcMonetaryUnit is a unit to define currency for money. HISTORY: New entity in IFC Release 2x. IFC2x4 CHANGE: Type of the attribute Currency changed.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Currency" type="String" setter="set_Currency" getter="get_Currency">
-			Code or name of the currency. Permissible values are the three-letter alphabetic currency codes as per ISO 4217 , for example CNY, EUR, GBP, JPY, USD.
+		<member name="Currency" type="Variant" setter="set_Currency" getter="get_Currency">
+			Code or name of the currency. Permissible values are the three-letter alphabetic currency codes as per ISO 4217 , for example CNY, EUR, GBP, JPY, USD. A String in IFC4 and IFC4X3_ADD2 files, a String, one of the enumeration's values in IFC2X3 files, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

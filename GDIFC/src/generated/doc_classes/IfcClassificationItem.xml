@@ -6,17 +6,19 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="Notation" type="GDIFCEntityBase" setter="set_Notation" getter="get_Notation">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 		<member name="ItemOf" type="GDIFCEntityBase" setter="set_ItemOf" getter="get_ItemOf">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Title" type="String" setter="set_Title" getter="get_Title">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="Title" type="Variant" setter="set_Title" getter="get_Title">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 		<member name="IsClassifiedItemIn" type="Array" setter="" getter="get_IsClassifiedItemIn">
 			Only in IFC2X3 files: in others it is empty.
@@ -25,6 +27,8 @@
 			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

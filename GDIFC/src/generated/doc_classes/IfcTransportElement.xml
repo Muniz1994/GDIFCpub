@@ -6,22 +6,26 @@
 		Definition from IAI : Generalization of all transport related objects that move people, animals or goods within a building or building complex. The IfcTransportElement defines the occurrence of a transport element, that (if given), is expressed by the IfcTransportElementType . EXAMPLE Transportation elements include elevator (lift), escalator, moving walkway, etc. NOTE More detailed equipment that
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Predefined generic types for a transportation element that are specified in an enumeration. There might be property sets defined specifically for each predefined type. IFC2x4 CHANGE The attribute has been changed to be optional. In IFC2X3 files, this is the [code]OperationType[/code] attribute.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic types for a transportation element that are specified in an enumeration. There might be property sets defined specifically for each predefined type. IFC2x4 CHANGE The attribute has been changed to be optional. In IFC2X3 files, this is the [code]OperationType[/code] attribute. A String, one of the enumeration's values, or null when unset.
 		</member>
-		<member name="CapacityByWeight" type="float" setter="set_CapacityByWeight" getter="get_CapacityByWeight">
-			Capacity of the transport element measured by weight. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="CapacityByWeight" type="Variant" setter="set_CapacityByWeight" getter="get_CapacityByWeight">
+			Capacity of the transport element measured by weight. A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="CapacityByNumber" type="float" setter="set_CapacityByNumber" getter="get_CapacityByNumber">
-			Capacity of the transportation element measured in numbers of person. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="CapacityByNumber" type="Variant" setter="set_CapacityByNumber" getter="get_CapacityByNumber">
+			Capacity of the transportation element measured in numbers of person. A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 		<member name="HasPorts" type="Array" setter="" getter="get_HasPorts">
 			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

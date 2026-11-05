@@ -6,16 +6,20 @@
 		IfcRectangleProfileDef defines a rectangle as the profile definition used by the swept surface geometry or the swept area solid. It is given by its X extent and its Y extent, and placed within the 2D position coordinate system, established by the Position attribute. It is placed centric within the position coordinate system. HISTORY: New class in IFC 1.5. The use definition has changed in IFC Rele
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="XDim" type="float" setter="set_XDim" getter="get_XDim">
-			The extent of the rectangle in the direction of the x-axis.
+		<member name="XDim" type="Variant" setter="set_XDim" getter="get_XDim">
+			The extent of the rectangle in the direction of the x-axis. A float, or null when unset.
 		</member>
-		<member name="YDim" type="float" setter="set_YDim" getter="get_YDim">
-			The extent of the rectangle in the direction of the y-axis.
+		<member name="YDim" type="Variant" setter="set_YDim" getter="get_YDim">
+			The extent of the rectangle in the direction of the y-axis. A float, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

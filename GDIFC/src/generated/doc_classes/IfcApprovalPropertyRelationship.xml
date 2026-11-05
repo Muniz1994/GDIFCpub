@@ -6,16 +6,20 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="ApprovedProperties" type="Array" setter="set_ApprovedProperties" getter="get_ApprovedProperties">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="ApprovedProperties" type="Variant" setter="set_ApprovedProperties" getter="get_ApprovedProperties">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 		<member name="Approval" type="GDIFCEntityBase" setter="set_Approval" getter="get_Approval">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

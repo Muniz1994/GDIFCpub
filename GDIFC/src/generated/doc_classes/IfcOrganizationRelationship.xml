@@ -6,16 +6,20 @@
 		Definition: establishes an association between one relating organization and one or more related organizations. NOTE Corresponds to the following entity in ISO-10303-41: organization_relationship. HISTORY New entity in IFC Release 2x. IFC 2x4 change: attribute Name made optional.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="RelatingOrganization" type="GDIFCEntityBase" setter="set_RelatingOrganization" getter="get_RelatingOrganization">
 			Organization which is the relating part of the relationship between organizations.
 		</member>
-		<member name="RelatedOrganizations" type="Array" setter="set_RelatedOrganizations" getter="get_RelatedOrganizations">
-			The other, possibly dependent, organizations which are the related parts of the relationship between organizations.
+		<member name="RelatedOrganizations" type="Variant" setter="set_RelatedOrganizations" getter="get_RelatedOrganizations">
+			The other, possibly dependent, organizations which are the related parts of the relationship between organizations. An Array of GDIFCEntityBase entities, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

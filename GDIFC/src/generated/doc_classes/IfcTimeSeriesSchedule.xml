@@ -6,19 +6,23 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="ApplicableDates" type="Array" setter="set_ApplicableDates" getter="get_ApplicableDates">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="ApplicableDates" type="Variant" setter="set_ApplicableDates" getter="get_ApplicableDates">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="TimeSeriesScheduleType" type="String" setter="set_TimeSeriesScheduleType" getter="get_TimeSeriesScheduleType">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="TimeSeriesScheduleType" type="Variant" setter="set_TimeSeriesScheduleType" getter="get_TimeSeriesScheduleType">
+			A String, one of the enumeration's values, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 		<member name="TimeSeries" type="GDIFCEntityBase" setter="set_TimeSeries" getter="get_TimeSeries">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

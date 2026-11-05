@@ -6,13 +6,17 @@
 		IfcConstructionProductResource defines the role of a product that is consumed (wholly or partially), or occupied in the performance of construction. HISTORY: New Entity in IFC Release 2.0. Renamed from IfcProductResource in IFC 2x. Base type and documentation extended in IFC2x4. Occurrences of IfcConstructionProductResource are usage of products to assist the process of construction. More specific
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Defines types of construction product resources. IFC2x4 New attribute Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			Defines types of construction product resources. IFC2x4 New attribute A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

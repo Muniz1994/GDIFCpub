@@ -6,16 +6,20 @@
 		The assignment relationship, IfcRelAssigns , is a generalization of "link" relationships among instances of IfcObject and its various 1 st level subtypes. A link denotes the specific association through which one object (the client) applies the services of other objects (the suppliers), or through which one object may navigate to other objects. The client is denoted as the relating object and is e
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="RelatedObjects" type="Array" setter="set_RelatedObjects" getter="get_RelatedObjects">
-			Related objects, which are assigned to a single object. The type of the single (or relating) object is defined in the subtypes of IfcRelAssigns.
+		<member name="RelatedObjects" type="Variant" setter="set_RelatedObjects" getter="get_RelatedObjects">
+			Related objects, which are assigned to a single object. The type of the single (or relating) object is defined in the subtypes of IfcRelAssigns. An Array of GDIFCEntityBase entities, or null when unset.
 		</member>
 		<member name="RelatedObjectsType" type="Variant" setter="set_RelatedObjectsType" getter="get_RelatedObjectsType">
-			Particular type of the assignment relationship. It can constrain the applicable object types, used within the role of RelatedObjects . IFC2x4 CHANGE The attribute is deprecated and shall no longer be used. A NIL value should always be assigned. Its type depends on the file's schema: bool in IFC4X3_ADD2, String in IFC2X3 and IFC4.
+			Particular type of the assignment relationship. It can constrain the applicable object types, used within the role of RelatedObjects . IFC2x4 CHANGE The attribute is deprecated and shall no longer be used. A NIL value should always be assigned. A bool in IFC4X3_ADD2 files, a String, one of the enumeration's values in IFC2X3 and IFC4 files, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

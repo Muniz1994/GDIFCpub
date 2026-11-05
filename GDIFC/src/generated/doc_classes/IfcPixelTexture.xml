@@ -6,22 +6,26 @@
 		An IfcPixelTexture provides a 2D image-based texture map as an explicit array of pixel values (list of Pixel binary attributes). In contrary to the IfcImageTexture the IfcPixelTexture holds a 2 dimensional list of pixel color (and opacity) directly, instead of referencing to an URL. The following definitions from ISO/IEC 19775-1 X3D Architecture and base components ( X3D Specification ) apply: The
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Width" type="int" setter="set_Width" getter="get_Width">
-			The number of pixels in width (S) direction.
+		<member name="Width" type="Variant" setter="set_Width" getter="get_Width">
+			The number of pixels in width (S) direction. An int, or null when unset.
 		</member>
-		<member name="Height" type="int" setter="set_Height" getter="get_Height">
-			The number of pixels in height (T) direction.
+		<member name="Height" type="Variant" setter="set_Height" getter="get_Height">
+			The number of pixels in height (T) direction. An int, or null when unset.
 		</member>
-		<member name="ColourComponents" type="int" setter="set_ColourComponents" getter="get_ColourComponents">
-			Indication whether the pixel values contain a 1, 2, 3, or 4 colour component.
+		<member name="ColourComponents" type="Variant" setter="set_ColourComponents" getter="get_ColourComponents">
+			Indication whether the pixel values contain a 1, 2, 3, or 4 colour component. An int, or null when unset.
 		</member>
-		<member name="Pixel" type="PackedStringArray" setter="set_Pixel" getter="get_Pixel">
-			Flat list of hexadecimal values, each describing one pixel by 1, 2, 3, or 4 components. IFC2x Edition 3 CHANGE The data type has been changed from STRING to BINARY.
+		<member name="Pixel" type="Variant" setter="set_Pixel" getter="get_Pixel">
+			Flat list of hexadecimal values, each describing one pixel by 1, 2, 3, or 4 components. IFC2x Edition 3 CHANGE The data type has been changed from STRING to BINARY. A PackedStringArray, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

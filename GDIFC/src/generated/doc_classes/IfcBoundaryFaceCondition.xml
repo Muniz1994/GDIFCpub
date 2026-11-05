@@ -6,28 +6,32 @@
 		Definition from IAI: Describes linearly elastic support conditions or connection conditions. Applicability: Surface supports and connections. HISTORY: New entity in IFC 2x2. IFC 2x4 change: Attributes LinearStiffnessX/Y/Z renamed to TranslationalStiffnessX/Y/Z . IFC 2x4 change: All attribute data types changed from numeric to SELECT between Boolean and numeric. Stiffnesses may now also be negative
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="TranslationalStiffnessByAreaX" type="GDIFCEntityBase" setter="set_TranslationalStiffnessByAreaX" getter="get_TranslationalStiffnessByAreaX">
-			Translational stiffness value in x-direction of the coordinate system defined by the instance which uses this resource object. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="TranslationalStiffnessByAreaX" type="Variant" setter="set_TranslationalStiffnessByAreaX" getter="get_TranslationalStiffnessByAreaX">
+			Translational stiffness value in x-direction of the coordinate system defined by the instance which uses this resource object. A value (String, float, int or bool), or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="TranslationalStiffnessByAreaY" type="GDIFCEntityBase" setter="set_TranslationalStiffnessByAreaY" getter="get_TranslationalStiffnessByAreaY">
-			Translational stiffness value in y-direction of the coordinate system defined by the instance which uses this resource object. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="TranslationalStiffnessByAreaY" type="Variant" setter="set_TranslationalStiffnessByAreaY" getter="get_TranslationalStiffnessByAreaY">
+			Translational stiffness value in y-direction of the coordinate system defined by the instance which uses this resource object. A value (String, float, int or bool), or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="TranslationalStiffnessByAreaZ" type="GDIFCEntityBase" setter="set_TranslationalStiffnessByAreaZ" getter="get_TranslationalStiffnessByAreaZ">
-			Translational stiffness value in z-direction of the coordinate system defined by the instance which uses this resource object. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="TranslationalStiffnessByAreaZ" type="Variant" setter="set_TranslationalStiffnessByAreaZ" getter="get_TranslationalStiffnessByAreaZ">
+			Translational stiffness value in z-direction of the coordinate system defined by the instance which uses this resource object. A value (String, float, int or bool), or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="LinearStiffnessByAreaX" type="float" setter="set_LinearStiffnessByAreaX" getter="get_LinearStiffnessByAreaX">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="LinearStiffnessByAreaX" type="Variant" setter="set_LinearStiffnessByAreaX" getter="get_LinearStiffnessByAreaX">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="LinearStiffnessByAreaY" type="float" setter="set_LinearStiffnessByAreaY" getter="get_LinearStiffnessByAreaY">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="LinearStiffnessByAreaY" type="Variant" setter="set_LinearStiffnessByAreaY" getter="get_LinearStiffnessByAreaY">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="LinearStiffnessByAreaZ" type="float" setter="set_LinearStiffnessByAreaZ" getter="get_LinearStiffnessByAreaZ">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="LinearStiffnessByAreaZ" type="Variant" setter="set_LinearStiffnessByAreaZ" getter="get_LinearStiffnessByAreaZ">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

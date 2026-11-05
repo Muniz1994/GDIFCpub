@@ -6,22 +6,26 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="SpecificHeatCapacity" type="float" setter="set_SpecificHeatCapacity" getter="get_SpecificHeatCapacity">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="SpecificHeatCapacity" type="Variant" setter="set_SpecificHeatCapacity" getter="get_SpecificHeatCapacity">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="BoilingPoint" type="float" setter="set_BoilingPoint" getter="get_BoilingPoint">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="BoilingPoint" type="Variant" setter="set_BoilingPoint" getter="get_BoilingPoint">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="FreezingPoint" type="float" setter="set_FreezingPoint" getter="get_FreezingPoint">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="FreezingPoint" type="Variant" setter="set_FreezingPoint" getter="get_FreezingPoint">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="ThermalConductivity" type="float" setter="set_ThermalConductivity" getter="get_ThermalConductivity">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="ThermalConductivity" type="Variant" setter="set_ThermalConductivity" getter="get_ThermalConductivity">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

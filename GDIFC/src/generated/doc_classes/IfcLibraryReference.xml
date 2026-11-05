@@ -6,17 +6,19 @@
 		An IfcLibraryReference is a reference into a library of information by Location (provided as a URI). It also provides an optional inherited Identification key to allow more specific references to library sections or tables. The inherited Name attribute allows for a human interpretable identification of the library item. Also, general information on the library from which the reference is taken, is
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Description" type="String" setter="set_Description" getter="get_Description">
-			Additional description provided for the library reference. IFC2x4 CHANGE New attribute added at the end of the attribute list. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="Description" type="Variant" setter="set_Description" getter="get_Description">
+			Additional description provided for the library reference. IFC2x4 CHANGE New attribute added at the end of the attribute list. A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Language" type="String" setter="set_Language" getter="get_Language">
-			The language in which a library reference is expressed. IFC2x4 CHANGE New attribute added at the end of the attribute list. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="Language" type="Variant" setter="set_Language" getter="get_Language">
+			The language in which a library reference is expressed. IFC2x4 CHANGE New attribute added at the end of the attribute list. A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="ReferencedLibrary" type="GDIFCEntityBase" setter="set_ReferencedLibrary" getter="get_ReferencedLibrary">
-			The library information that is being referenced. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+			The library information that is being referenced. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="LibraryRefForObjects" type="Array" setter="" getter="get_LibraryRefForObjects">
 			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
@@ -25,6 +27,8 @@
 			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

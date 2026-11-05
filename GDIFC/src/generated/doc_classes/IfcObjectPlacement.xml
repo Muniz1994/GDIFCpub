@@ -6,8 +6,10 @@
 		IfcObjectPlacement is an abstract supertype for the special types defining the object coordinate system. The IfcObjectPlacement has to be provided for each product that has a shape representation. The object placement can be given: absolute: by an axis2 placement, relative to the world coordinate system, relative: by an axis2 placement, relative to the object placement of another product, by grid 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="PlacementRelTo" type="GDIFCEntityBase" setter="set_PlacementRelTo" getter="get_PlacementRelTo">
 		</member>
@@ -16,6 +18,8 @@
 		<member name="ReferencedByPlacements" type="Array" setter="" getter="get_ReferencedByPlacements">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

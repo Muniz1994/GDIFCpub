@@ -6,19 +6,23 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="RelatingProfileProperties" type="GDIFCEntityBase" setter="set_RelatingProfileProperties" getter="get_RelatingProfileProperties">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 		<member name="ProfileSectionLocation" type="GDIFCEntityBase" setter="set_ProfileSectionLocation" getter="get_ProfileSectionLocation">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="ProfileOrientation" type="GDIFCEntityBase" setter="set_ProfileOrientation" getter="get_ProfileOrientation">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="ProfileOrientation" type="Variant" setter="set_ProfileOrientation" getter="get_ProfileOrientation">
+			A value or a GDIFCEntityBase, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

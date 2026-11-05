@@ -2,9 +2,10 @@
 #   godot --headless --path ifc-godot-project --script res://tests/entities_test.gd -- --file <ifc> [--limit <n>]
 # Every entity must get a class of its own type. Every attribute property of that class must read
 # what get_attribute() reads: under its own name, under the old name of an attribute IFC4X3
-# renamed, or as empty when the file's schema doesn't have it. Setters must write through the same
-# lookup, convert enumerations, and refuse attributes the schema lacks and values that don't fit,
-# without changing the entity. Exits with 1 when a check fails.
+# renamed, or as null when the file's schema doesn't have it. Unset attributes read as null.
+# Setters must write through the same lookup, convert enumerations and plain property values, and
+# refuse attributes the schema lacks and values that don't fit, without changing the entity. Exits
+# with 1 when a check fails.
 extends SceneTree
 
 var _failures := 0
@@ -74,7 +75,7 @@ func _on_ifc_objects_ready() -> void:
 		_check_entity(e, stats)
 
 	_check(untyped.is_empty(), "every entity gets a class of its own type (missing: %s)" % ", ".join(untyped.keys()))
-	print("%s: %d entities; properties read by their own name %d, by an old name %d, empty as not in the schema %d"
+	print("%s: %d entities; properties read by their own name %d, by an old name %d, null as not in the schema %d"
 		% [schema, entities, stats["own name"], stats["old name"], stats["not in schema"]])
 
 	_check_renames(model, schema)
@@ -108,7 +109,7 @@ func _check_entity(e: GDIFCEntityBase, stats: Dictionary) -> void:
 			if not _same(typed, expected):
 				_fail("%s #%d %s reads %s, as get_attribute() does (got %s)"
 					% [e.get_type(), e.get_express_id(), p, _show(expected), _show(typed)])
-		elif _is_empty(typed):
+		elif typed == null:
 			stats["not in schema"] += 1
 		else:
 			# A renamed attribute: it must be one the class has no property for
@@ -119,7 +120,7 @@ func _check_entity(e: GDIFCEntityBase, stats: Dictionary) -> void:
 					break
 			stats["old name"] += 1
 			if source.is_empty():
-				_fail("%s #%d %s isn't in %s, so it reads as empty or as a renamed attribute (got %s)"
+				_fail("%s #%d %s isn't in %s, so it reads as null or as a renamed attribute (got %s)"
 					% [e.get_type(), e.get_express_id(), p, names, _show(typed)])
 
 
@@ -178,12 +179,17 @@ func _check_setters(model: IFCModel, schema: String) -> void:
 			var before = e.get_attribute("InteriorOrExteriorSpace")
 			e.PredefinedType = "INTERNAL"
 			_check(_same(e.get_attribute("InteriorOrExteriorSpace"), before), "IFC2X3 IfcSpace.PredefinedType is refused")
-			_check(e.PredefinedType == "", "IFC2X3 IfcSpace.PredefinedType reads as empty")
+			_check(e.PredefinedType == null, "IFC2X3 IfcSpace.PredefinedType reads as null")
 			break
 		for e in model.instances_by_type("IfcDoor"):
 			e.PredefinedType = "DOOR"
-			_check(e.PredefinedType == "", "IFC2X3 IfcDoor.PredefinedType is refused without crashing")
+			_check(e.PredefinedType == null, "IFC2X3 IfcDoor.PredefinedType is refused without crashing")
 			break
+
+	project.Description = null
+	_check(project.Description == null and project.get_attribute("Description") == null, "an unset attribute reads as null")
+
+	_check_property_values(model)
 
 	# Attributes whose type differs between schemas take the type of the file's schema
 	for q in model.instances_by_type("IfcQuantityCount"):
@@ -194,9 +200,55 @@ func _check_setters(model: IFCModel, schema: String) -> void:
 		break
 
 
+# Property values are instances of defined types (IfcLabel, IfcReal...) in an IfcValue select, read
+# and set as plain values
+func _check_property_values(model: IFCModel) -> void:
+	var label: GDIFCEntityBase = null
+	for prop in model.instances_by_type("IfcPropertySingleValue"):
+		var value = prop.NominalValue
+		if value == null:
+			continue
+		_check(typeof(value) != TYPE_OBJECT and _same(value, prop.get_attribute("NominalValue")),
+			"IfcPropertySingleValue #%d NominalValue reads as a plain value (got %s)" % [prop.get_express_id(), _show(value)])
+		# An unknown IfcLogical reads as "UNKNOWN" too
+		if label == null and typeof(value) == TYPE_STRING and value != "UNKNOWN":
+			label = prop
+	if label == null:
+		return
+
+	var wrapper := _step_value(model, label)
+	label.NominalValue = "GDIFC"
+	_check(label.NominalValue == "GDIFC", "NominalValue takes a plain value")
+	_check(_step_value(model, label) == "%s('GDIFC')" % wrapper.get_slice("(", 0),
+		"NominalValue keeps its type, %s (written %s)" % [wrapper, _step_value(model, label)])
+	label.NominalValue = null
+	_check(label.NominalValue == null, "NominalValue is unset by null")
+	label.NominalValue = 2.5
+	_check(label.NominalValue == 2.5 and _step_value(model, label).begins_with("IFCREAL(2.5"),
+		"an unset NominalValue takes a float as an IfcReal (written %s)" % _step_value(model, label))
+	label.NominalValue = [1]
+	_check(label.NominalValue == 2.5, "NominalValue refuses an array")
+
+	for list in model.instances_by_type("IfcPropertyListValue"):
+		list.ListValues = ["a", 1.5]
+		_check(_same(list.ListValues, ["a", 1.5]), "ListValues takes plain values (got %s)" % _show(list.ListValues))
+		break
+
+
+# The NominalValue of a property as written to the file, such as IFCLABEL('Wall')
+func _step_value(model: IFCModel, prop: GDIFCEntityBase) -> String:
+	var step := model.to_step_string()
+	var start := step.find("#%d=" % prop.get_express_id())
+	var line := step.substr(start, step.find(";", start) - start)
+	# Name, Description, NominalValue, Unit
+	var regex := RegEx.create_from_string("^#\\d+=IFCPROPERTYSINGLEVALUE\\((?:'(?:[^']|'')*'|\\$),(?:'(?:[^']|'')*'|\\$),(\\$|[A-Z0-9]+\\((?:'(?:[^']|'')*'|[^)]*)\\))")
+	var found := regex.search(line)
+	return found.get_string(1) if found else line
+
+
 func _same(a, b) -> bool:
 	if a == null or b == null:
-		return _is_empty(a) and _is_empty(b)
+		return a == null and b == null
 	if typeof(a) == TYPE_OBJECT and typeof(b) == TYPE_OBJECT:
 		return a.get_type() == b.get_type() and a.get_express_id() == b.get_express_id()
 	if typeof(a) == TYPE_STRING and typeof(b) == TYPE_BOOL:
@@ -219,15 +271,6 @@ func _same(a, b) -> bool:
 func _is_array(v) -> bool:
 	return typeof(v) >= TYPE_ARRAY and typeof(v) <= TYPE_PACKED_VECTOR4_ARRAY
 
-
-func _is_empty(v) -> bool:
-	if v == null:
-		return true
-	match typeof(v):
-		TYPE_STRING: return v.is_empty()
-		TYPE_INT, TYPE_FLOAT: return v == 0
-		TYPE_BOOL: return not v
-	return _is_array(v) and v.is_empty()
 
 
 func _show(v) -> String:

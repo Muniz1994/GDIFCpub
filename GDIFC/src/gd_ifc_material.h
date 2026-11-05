@@ -39,6 +39,10 @@ public:
     Dictionary get_properties() const { return properties_; }
     void set_properties(const Dictionary &v) { properties_ = v; }
 
+    /// Value type and unit of each property: set name -> {property name -> detail}, like IFCNode.property_details
+    Dictionary get_property_details() const { return property_details_; }
+    void set_property_details(const Dictionary &v) { property_details_ = v; }
+
     /// Classification and library references, one Dictionary each
     Array get_classifications() const { return classifications_; }
     void set_classifications(const Array &v) { classifications_ = v; }
@@ -58,6 +62,7 @@ private:
     String category_;
     int64_t express_id_ = 0;
     Dictionary properties_;
+    Dictionary property_details_;
     Array classifications_;
     Ref<GDIFCEntityBase> ifc_object_;
 };

@@ -6,19 +6,23 @@
 		Definition from ISO/CD 10303-46:1992 : The fill area style tiles defines a two dimensional tile to be used for the filling of annotation fill areas or other closed regions. The content of a tile is defined by the tile set, and the placement of each tile determined by the filling pattern which indicates how to place tiles next to each other. Tiles or parts of tiles outside of the annotation fill ar
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="TilingPattern" type="Variant" setter="set_TilingPattern" getter="get_TilingPattern">
-			A two direction repeat factor defining the shape and relative positioning of the tiles. Its type depends on the file's schema: Array in IFC4 and IFC4X3_ADD2, GDIFCEntityBase in IFC2X3.
+			A two direction repeat factor defining the shape and relative positioning of the tiles. An Array of GDIFCEntityBase entities in IFC4 and IFC4X3_ADD2 files, a GDIFCEntityBase in IFC2X3 files, or null when unset.
 		</member>
-		<member name="Tiles" type="Array" setter="set_Tiles" getter="get_Tiles">
-			A set of constituents of the tile.
+		<member name="Tiles" type="Variant" setter="set_Tiles" getter="get_Tiles">
+			A set of constituents of the tile. An Array of GDIFCEntityBase entities, or null when unset.
 		</member>
-		<member name="TilingScale" type="float" setter="set_TilingScale" getter="get_TilingScale">
-			The scale factor applied to each tile as it is placed in the annotation fill area.
+		<member name="TilingScale" type="Variant" setter="set_TilingScale" getter="get_TilingScale">
+			The scale factor applied to each tile as it is placed in the annotation fill area. A float, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

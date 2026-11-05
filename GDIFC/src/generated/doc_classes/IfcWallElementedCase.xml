@@ -6,10 +6,14 @@
 		The IfcWallElementedCase defines a wall with certain constraints for the provision of its components. The IfcWallElementedCase handles all cases of walls, that are decomposed into parts:ÿ having components being assigned to the IfcWallElementedCase using the IfcRelAggregates relationship accessible by the inverse relationship IsDecomposedBy . applying the constraint that the parts within the decom
 	</brief_description>
 	<description>Only in IFC4 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

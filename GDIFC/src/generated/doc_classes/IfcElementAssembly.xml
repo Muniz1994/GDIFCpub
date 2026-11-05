@@ -6,19 +6,23 @@
 		The IfcElementAssembly represents complex element assemblies aggregated from several elements, such as discrete elements, building elements, or other elements. EXAMPLE Steel construction assemblies, such as trusses and different kinds of frames, can be represented by the IfcElementAssembly entity. Other examples include slab fields aggregated from a number of precast concrete slabs or reinforcemen
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="AssemblyPlace" type="String" setter="set_AssemblyPlace" getter="get_AssemblyPlace">
-			A designation of where the assembly is intended to take place defined by an Enum.
+		<member name="AssemblyPlace" type="Variant" setter="set_AssemblyPlace" getter="get_AssemblyPlace">
+			A designation of where the assembly is intended to take place defined by an Enum. A String, one of the enumeration's values, or null when unset.
 		</member>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Predefined generic types for a element assembly that are specified in an enumeration. There might be property sets defined specifically for each predefined type. IFC2x4 CHANGE The attribute has been changed to be optional.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic types for a element assembly that are specified in an enumeration. There might be property sets defined specifically for each predefined type. IFC2x4 CHANGE The attribute has been changed to be optional. A String, one of the enumeration's values, or null when unset.
 		</member>
 		<member name="HasPorts" type="Array" setter="" getter="get_HasPorts">
 			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

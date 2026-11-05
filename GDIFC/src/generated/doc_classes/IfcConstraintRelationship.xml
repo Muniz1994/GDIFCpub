@@ -6,22 +6,26 @@
 		An IfcConstraintRelationship is an objectified relationship that enables instances of IfcConstraint and its subtypes to be associated to each other. Logical aggregation of instances of IfcConstraint and its subtypes is handled by the subtype IfcConstraintAggregationRelationship . EXAMPLE: Certain constraints related to an IfcWall may be derived from a constraint related to an IfcSpace . HISTORY Ne
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Name" type="String" setter="set_Name" getter="get_Name">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="Name" type="Variant" setter="set_Name" getter="get_Name">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Description" type="String" setter="set_Description" getter="get_Description">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="Description" type="Variant" setter="set_Description" getter="get_Description">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 		<member name="RelatingConstraint" type="GDIFCEntityBase" setter="set_RelatingConstraint" getter="get_RelatingConstraint">
-			Constraint with which the other Constraints referenced by attribute RelatedConstraints are related. Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Constraint with which the other Constraints referenced by attribute RelatedConstraints are related. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="RelatedConstraints" type="Array" setter="set_RelatedConstraints" getter="get_RelatedConstraints">
-			Constraints that are related with the one referenced as RelatingConstraint. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="RelatedConstraints" type="Variant" setter="set_RelatedConstraints" getter="get_RelatedConstraints">
+			Constraints that are related with the one referenced as RelatingConstraint. An Array of GDIFCEntityBase entities, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

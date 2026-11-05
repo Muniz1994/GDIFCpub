@@ -133,7 +133,7 @@ Each `IFCNode` provides:
 
 - `ifc_class`: IFC class name
 - `global_id`: IFC GlobalId
-- `attributes`: base IFC attributes (after `ifc_objects_ready`)
+- `attributes`: the IFC attribute values, without references to other entities, which are on `ifc_object` (after `ifc_objects_ready`)
 - `properties`: property sets, including its type's (after `ifc_objects_ready`)
 - `quantities`: quantity sets, including its type's (after `ifc_objects_ready`)
 - `property_details` and `quantity_details`: the value type, unit and origin of each value (after `ifc_objects_ready`)
@@ -194,7 +194,7 @@ settings.memory_limit = 3221225472
 ifc_manager.geometric_settings = settings
 ```
 
-Tune these values for model scale and target hardware.
+Tune these values for model scale and target hardware. The settings under **Advanced (web-ifc)**, such as `memory_limit` and the tolerances, are passed unchanged to the web-ifc geometry engine and may change or go away with a web-ifc update.
 
 ### Mesh LODs
 
@@ -243,7 +243,7 @@ ifc_manager.set_material_visual("Concrete C30/37", concrete)
 
 Assigning it in the inspector goes through the same setter. `find_material_definitions` returns every definition with that name, and layers and constituents are often named after their material, so check the class. The new visual replaces the material of each mesh surface; a node's surface material override is never changed, so one set by hand keeps showing. Assign the previous material again to go back. Materials replaced this way are saved with the scene. In a scene instanced from an imported `.ifc` file, replacements made in the editor are lost when the scene reloads, since the meshes belong to the imported file; replacements made at runtime work.
 
-Definitions also hold their material property sets (`properties`, shaped like `IFCNode.properties`) and classification references (`classifications`). In IFC2X3, typed material properties such as `IfcThermalMaterialProperties` become a set named after the entity, with its attributes as properties. Material definitions are saved in the scene, and their `ifc_object` is relinked from the `.ifc` file when the scene is opened again.
+Definitions also hold their material property sets (`properties`, shaped like `IFCNode.properties`, with the value type and unit of each value in `property_details`) and classification references (`classifications`). In IFC2X3, typed material properties such as `IfcThermalMaterialProperties` become a set named after the entity, with its attributes as properties. Material definitions are saved in the scene, and their `ifc_object` is relinked from the `.ifc` file when the scene is opened again.
 
 An element uses its own material association, or its type's when it has none. For a layer, profile or constituent set, a surface is matched to the set's material that has its colour. Geometry with no colour at all is matched to the first material without one. Apart from layered elements, below, every surface keeps its colour; the surface styles further down only add roughness, metallic and textures.
 
@@ -292,9 +292,11 @@ ifc_manager.reference_georeference = ifc_manager.get_path_to(reference)
 ifc_manager.read_ifc("res://models/structure.ifc")
 ```
 
-When loading finishes, the new `IFCModel` gets a transform that maps its map conversion (eastings, northings, height, rotation and scale) onto the reference's map conversion. It also accounts for the `coordinate_to_origin` offset of both models. The math is done in double precision, so large map coordinates don't lose accuracy. Moving the reference model before loading moves the result with it.
+When loading finishes, the new `IFCModel` gets a transform that maps its map conversion (eastings, northings, height, rotation and scale, including the per-axis scale of an IFC4X3 `IfcMapConversionScaled`) onto the reference's map conversion. It also accounts for the `coordinate_to_origin` offset of both models. The math is done in double precision, so large map coordinates don't lose accuracy. Moving the reference model before loading moves the result with it.
 
-If the new model has no georeferencing data (IFC2x3, or IFC4 without `IfcMapConversion`), it is placed assuming it shares the reference model's engineering coordinate system, and a warning is printed.
+IFC4 and later files hold georeferencing in `IfcMapConversion` and `IfcProjectedCRS`. IFC2X3 has no such entities, but some exporters write the same values in the `ePSet_MapConversion` and `ePSet_ProjectedCRS` property sets of the project or site, as the buildingSMART georeferencing guide describes, and GDIFC reads those. If the new model has no georeferencing data, it is placed assuming it shares the reference model's engineering coordinate system, and a warning is printed.
+
+A site's latitude, longitude and elevation are not used for placement, since they would need a map projection. `ifc_manager.get_ifc_model().get_site_location()` returns them.
 
 In the editor dock, pick the reference in **Placement → Reference georeference**. The list shows every `IFCGeoreference` in the edited scene and refreshes each time it opens.
 

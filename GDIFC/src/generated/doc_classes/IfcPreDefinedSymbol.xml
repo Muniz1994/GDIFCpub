@@ -6,10 +6,14 @@
 		A predefined symbol is a symbol that gets its shape information by a conforming name that is specified within subtypes of the entity. NOTE: The IfcPreDefinedSymbol is an entity that had been adopted from ISO 10303, Industrial automation systems and integration—Product data representation and exchange, Part 46: Integrated generic resources: Visual presentation. NOTE Corresponding ISO 10303 name: pr
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

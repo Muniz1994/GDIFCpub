@@ -6,15 +6,19 @@
 		The distribution element IfcDistributionControlElement defines occurrence elements of a building automation control system that are used to impart control over elements of a distribution system. This class defines elements of a building automation control system. These are typically used to control distribution system elements to maintain variables such as temperature, humidity, pressure, flow, po
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="ControlElementId" type="String" setter="set_ControlElementId" getter="get_ControlElementId">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="ControlElementId" type="Variant" setter="set_ControlElementId" getter="get_ControlElementId">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 		<member name="AssignedToFlowElement" type="Array" setter="" getter="get_AssignedToFlowElement">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

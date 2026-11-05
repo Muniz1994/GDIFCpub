@@ -6,34 +6,38 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="ElectricCurrentType" type="String" setter="set_ElectricCurrentType" getter="get_ElectricCurrentType">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="ElectricCurrentType" type="Variant" setter="set_ElectricCurrentType" getter="get_ElectricCurrentType">
+			A String, one of the enumeration's values, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="InputVoltage" type="float" setter="set_InputVoltage" getter="get_InputVoltage">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="InputVoltage" type="Variant" setter="set_InputVoltage" getter="get_InputVoltage">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="InputFrequency" type="float" setter="set_InputFrequency" getter="get_InputFrequency">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="InputFrequency" type="Variant" setter="set_InputFrequency" getter="get_InputFrequency">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="FullLoadCurrent" type="float" setter="set_FullLoadCurrent" getter="get_FullLoadCurrent">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="FullLoadCurrent" type="Variant" setter="set_FullLoadCurrent" getter="get_FullLoadCurrent">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MinimumCircuitCurrent" type="float" setter="set_MinimumCircuitCurrent" getter="get_MinimumCircuitCurrent">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="MinimumCircuitCurrent" type="Variant" setter="set_MinimumCircuitCurrent" getter="get_MinimumCircuitCurrent">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MaximumPowerInput" type="float" setter="set_MaximumPowerInput" getter="get_MaximumPowerInput">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="MaximumPowerInput" type="Variant" setter="set_MaximumPowerInput" getter="get_MaximumPowerInput">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="RatedPowerInput" type="float" setter="set_RatedPowerInput" getter="get_RatedPowerInput">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="RatedPowerInput" type="Variant" setter="set_RatedPowerInput" getter="get_RatedPowerInput">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="InputPhase" type="int" setter="set_InputPhase" getter="get_InputPhase">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="InputPhase" type="Variant" setter="set_InputPhase" getter="get_InputPhase">
+			An int, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

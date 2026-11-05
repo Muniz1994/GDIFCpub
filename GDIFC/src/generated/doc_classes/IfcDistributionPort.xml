@@ -6,19 +6,23 @@
 		A distribution port is an inlet or outlet of a product through which a particular substance may flow. Distribution ports are used for passage of solid, liquid, or gas substances, as well as electricity for power or communications. Flow segments (pipes, ducts, cables) may be used to connect ports across products. Distribution ports are defined by system type and flow direction such that for two por
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="FlowDirection" type="String" setter="set_FlowDirection" getter="get_FlowDirection">
-			Enumeration that identifies if this port is a Sink (inlet), a Source (outlet) or both a SinkAndSource.
+		<member name="FlowDirection" type="Variant" setter="set_FlowDirection" getter="get_FlowDirection">
+			Enumeration that identifies if this port is a Sink (inlet), a Source (outlet) or both a SinkAndSource. A String, one of the enumeration's values, or null when unset.
 		</member>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Enumeration that identifies the system type. If a system type is defined, the port may only be connected to other ports having the same system type. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			Enumeration that identifies the system type. If a system type is defined, the port may only be connected to other ports having the same system type. A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="SystemType" type="String" setter="set_SystemType" getter="get_SystemType">
-			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="SystemType" type="Variant" setter="set_SystemType" getter="get_SystemType">
+			A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

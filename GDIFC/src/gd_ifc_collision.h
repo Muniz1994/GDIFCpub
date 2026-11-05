@@ -26,7 +26,9 @@ class GDIFCCollisionRule : public Resource {
     GDCLASS(GDIFCCollisionRule, Resource)
 
 public:
-    // The shape types of Godot's scene importer, in its order where they overlap
+    // The shape types of Godot's scene importer, in its order where they overlap. Collision
+    // matrices save them as numbers, so new types go at the end. Likewise, a body type option
+    // added later must default to StaticBody3D, so saved matrices keep their meaning.
     enum ShapeType {
         SHAPE_NONE,
         SHAPE_TRIMESH,

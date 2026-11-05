@@ -115,14 +115,28 @@ for task in model.instances_by_type("IfcTask"):
     print(task.get_attribute("Name"))
 ```
 
-### References In `attributes`
+### References
 
-In a node's `attributes` dictionary, an attribute that refers to another entity holds that entity's express id, such as `ObjectPlacement` or `OwnerHistory`. Resolve it with `get_by_id`, or read it from `ifc_object`, which returns the entity itself:
+A node's `attributes` dictionary only holds values, such as `Name` or `Tag`. Attributes that refer to another entity, such as `ObjectPlacement` or `OwnerHistory`, are read from `ifc_object`, which returns the entity itself:
 
 ```gdscript
-var placement := ifc_manager.get_ifc_model().get_by_id(node.attributes["ObjectPlacement"])
-var same_placement: GDIFCEntityBase = node.ifc_object.get_attribute("ObjectPlacement")
+var placement: GDIFCEntityBase = node.ifc_object.ObjectPlacement
 ```
+
+### Property Values
+
+Property values are read as plain values, whether from `IFCNode.properties` or from the entities:
+
+```gdscript
+for rel in node.ifc_object.get_inverse("IsDefinedBy"):
+    var pset = rel.get_attribute("RelatingPropertyDefinition")
+    if pset is IfcPropertySet:
+        for property in pset.HasProperties:
+            if property is IfcPropertySingleValue:
+                print(property.Name, " = ", property.NominalValue) # "Reference" or 3.5, not an IfcLabel entity
+```
+
+Setting one keeps the value's IFC type when it fits, such as `IfcLabel` or `IfcLengthMeasure`. An unset value becomes an `IfcLabel`, `IfcInteger`, `IfcReal` or `IfcBoolean`, after the Godot type given.
 
 ### Units
 

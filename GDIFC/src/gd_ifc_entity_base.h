@@ -246,9 +246,21 @@ struct GDIFCAttributeAlias {
 ptrdiff_t gd_attr_index(const IfcUtil::IfcBaseClass* e, const char* name,
                         const GDIFCAttributeAlias* aliases = nullptr);
 
+/// The attribute as the typed classes read it, converted to the type the entity's schema declares:
+/// null when it's unset or that schema doesn't have it. Instances of defined types, such as the
+/// IfcLabel in an IfcValue select, read as their value.
+godot::Variant gd_get_attribute(const IfcUtil::IfcBaseClass* e, const char* name,
+                                std::shared_ptr<IfcParse::IfcFile> file,
+                                const GDIFCAttributeAlias* aliases = nullptr);
+
+/// Whether an attribute of this type can hold a value rather than only references: anything but
+/// an entity, a select of entities, or aggregates of them
+bool gd_holds_values(const IfcParse::parameter_type* type);
+
 /// Sets the attribute, converted to the type its schema declares. Reports an error and leaves the
 /// entity unchanged when its schema lacks the attribute, the attribute is derived, or the value
-/// doesn't fit. Null unsets it.
+/// doesn't fit. Null unsets it. A select of defined types, such as IfcValue, takes a plain value:
+/// it keeps the type of the value it replaces when that fits.
 void gd_set_attribute(IfcUtil::IfcBaseClass* e, const char* name, const godot::Variant& value,
                       const GDIFCAttributeAlias* aliases = nullptr);
 

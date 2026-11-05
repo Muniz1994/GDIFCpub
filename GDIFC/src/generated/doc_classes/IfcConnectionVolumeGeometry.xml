@@ -6,16 +6,20 @@
 		IfcConnectionVolumeGeometry is used to describe the geometric constraints that facilitate the physical connection (or overlap) of two objects at a volume defined by a solid or closed shell. It is envisioned as a control that applies to the element connection or interference relationships. HISTORYÿ New entity in IFC2x4. Geometry use definitions The IfcSolidModel (or the IfcClosedShell ) at the Volu
 	</brief_description>
 	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="VolumeOnRelatingElement" type="GDIFCEntityBase" setter="set_VolumeOnRelatingElement" getter="get_VolumeOnRelatingElement">
-			Volume at which related object overlaps with the relating element, given in the LCS of the relating element. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+			Volume at which related object overlaps with the relating element, given in the LCS of the relating element. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="VolumeOnRelatedElement" type="GDIFCEntityBase" setter="set_VolumeOnRelatedElement" getter="get_VolumeOnRelatedElement">
-			Volume at which related object overlaps with the relating element, given in the LCS of the related element. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+			Volume at which related object overlaps with the relating element, given in the LCS of the related element. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

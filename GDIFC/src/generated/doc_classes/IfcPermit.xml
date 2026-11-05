@@ -6,19 +6,23 @@
 		A permit is a permission to perform work in places and on artifacts where regulatory, security or other access restrictions apply. HISTORY New entity in IFC2x2 IFC2x4 CHANGE PermitID renamed to Identification and promoted to supertype IfcControl, Attributes PredefinedType , Status , and LongDescription added. Property Set Use Definition The property sets relating to this entity are defined by IfcP
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Identifies the predefined types of permit that can be granted. IFC2x4 CHANGE The attribute has been added. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			Identifies the predefined types of permit that can be granted. IFC2x4 CHANGE The attribute has been added. A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Status" type="String" setter="set_Status" getter="get_Status">
-			The status currently assigned to the permit. IFC2x4 CHANGE The attribute has been added. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="Status" type="Variant" setter="set_Status" getter="get_Status">
+			The status currently assigned to the permit. IFC2x4 CHANGE The attribute has been added. A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="LongDescription" type="String" setter="set_LongDescription" getter="get_LongDescription">
-			Detailed description of the request. IFC2x4 CHANGE The attribute has been added. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="LongDescription" type="Variant" setter="set_LongDescription" getter="get_LongDescription">
+			Detailed description of the request. IFC2x4 CHANGE The attribute has been added. A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

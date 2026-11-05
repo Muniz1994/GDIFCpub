@@ -42,6 +42,10 @@ public:
     /// The project's units, {unit type: symbol}, such as {"LENGTHUNIT": "mm"}
     godot::Dictionary        get_units() const;
 
+    /// The first IfcSite's location: {latitude, longitude} in decimal degrees and {elevation} in
+    /// the file's length unit, each when the site gives it. Not used to place the model.
+    godot::Dictionary        get_site_location() const;
+
     // ── Entity lookup ─────────────────────────────────────────────────────
 
     /// Return entity with the given EXPRESS numeric id.

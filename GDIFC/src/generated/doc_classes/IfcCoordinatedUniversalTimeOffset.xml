@@ -6,19 +6,23 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="HourOffset" type="int" setter="set_HourOffset" getter="get_HourOffset">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="HourOffset" type="Variant" setter="set_HourOffset" getter="get_HourOffset">
+			An int, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MinuteOffset" type="int" setter="set_MinuteOffset" getter="get_MinuteOffset">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="MinuteOffset" type="Variant" setter="set_MinuteOffset" getter="get_MinuteOffset">
+			An int, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Sense" type="String" setter="set_Sense" getter="get_Sense">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="Sense" type="Variant" setter="set_Sense" getter="get_Sense">
+			A String, one of the enumeration's values, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -6,19 +6,23 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="LocationAtRelatingElement" type="GDIFCEntityBase" setter="set_LocationAtRelatingElement" getter="get_LocationAtRelatingElement">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 		<member name="LocationAtRelatedElement" type="GDIFCEntityBase" setter="set_LocationAtRelatedElement" getter="get_LocationAtRelatedElement">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 		<member name="ProfileOfPort" type="GDIFCEntityBase" setter="set_ProfileOfPort" getter="get_ProfileOfPort">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -6,13 +6,17 @@
 		Definition from IAI: Instances of the entity IfcStructuralLoadSingleForceWarping , as a subtype of IfcStructuralLoadSingleForce , shall be used to define an action operation on a single point. In addition to forces and moments defined by its supertype a warping moment can be defined. HISTORY: New entity in Release IFC2x edition 2.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="WarpingMoment" type="float" setter="set_WarpingMoment" getter="get_WarpingMoment">
-			The warping moment at the point load.
+		<member name="WarpingMoment" type="Variant" setter="set_WarpingMoment" getter="get_WarpingMoment">
+			The warping moment at the point load. A float, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

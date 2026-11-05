@@ -148,6 +148,10 @@ class GDIFCManager : public Node3D {
     std::shared_ptr<IfcParse::IfcFile> pending_ifc_parse_file;
     GeorreferenceData pending_georreference;
     std::atomic<bool> thread_failed_{false};
+    // Why the worker failed, written before thread_failed_ is set
+    String pending_load_error_;
+    // Why the last load failed, for get_load_error(). Main thread only.
+    String load_error_;
 
     // The Optimized Queue
     Vector<PrecalculatedIFCItem> generation_queue;
@@ -282,6 +286,7 @@ class GDIFCManager : public Node3D {
     void _find_material_surfaces();
     void _on_ifc_material_changed(uint64_t material_id);
     void _set_worker_progress(LoadStage stage, uint32_t total);
+    Error _fail_read(const String &message);
     void _update_load_progress();
 
   protected:
@@ -295,6 +300,8 @@ class GDIFCManager : public Node3D {
     Error read_ifc_blocking(const String &_path, bool _create_collision, const Array &_collision_classes);
     float get_load_progress() const { return load_progress_; }
     String get_load_stage() const;
+    LoadStage get_load_stage_id() const { return static_cast<LoadStage>(reported_stage_); }
+    String get_load_error() const { return load_error_; }
     Error read_ifc_base64(const String &_base64_data, bool _create_collision, const Array &_collision_classes);
     void _process(double delta) override;
     void _ready() override;
@@ -352,6 +359,8 @@ class GDIFCManager : public Node3D {
 
 
 } // namespace godot
+
+VARIANT_ENUM_CAST(godot::GDIFCManager::LoadStage);
 
 
 

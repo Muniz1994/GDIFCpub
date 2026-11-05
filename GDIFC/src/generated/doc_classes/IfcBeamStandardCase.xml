@@ -6,10 +6,14 @@
 		The standard beam, IfcBeamStandardCase , defines a beam with certain constraints for the provision of material usage, parameters and with certain constraints for the geometric representation. The IfcBeamStandardCase handles all cases of beams, that: have a reference to the IfcMaterialProfileSetUsage defining the material profile association of the beam with the cardinal point of its insertion rela
 	</brief_description>
 	<description>Only in IFC4 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

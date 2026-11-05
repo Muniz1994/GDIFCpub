@@ -6,19 +6,23 @@
 		IfcMaterialConstituentSet is a collection of individual material constituents, each assigning a material to a part of an element. The parts are only identified by a keyword (as opposed to an IfcMaterialLayerSet or IfcMaterialProfileSet where each part has an individual shape parameter (layer thickness or layer profile). EXAMPLE The different materials of a window construction shall be provided for
 	</brief_description>
 	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Name" type="String" setter="set_Name" getter="get_Name">
-			The name by which the constituent set is known. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="Name" type="Variant" setter="set_Name" getter="get_Name">
+			The name by which the constituent set is known. A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Description" type="String" setter="set_Description" getter="get_Description">
-			Definition of the material constituent set in descriptive terms. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="Description" type="Variant" setter="set_Description" getter="get_Description">
+			Definition of the material constituent set in descriptive terms. A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MaterialConstituents" type="Array" setter="set_MaterialConstituents" getter="get_MaterialConstituents">
-			Identification of the constituents from which the material constituent set is composed. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="MaterialConstituents" type="Variant" setter="set_MaterialConstituents" getter="get_MaterialConstituents">
+			Identification of the constituents from which the material constituent set is composed. An Array of GDIFCEntityBase entities, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -6,16 +6,20 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="ImpactType" type="String" setter="set_ImpactType" getter="get_ImpactType">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="ImpactType" type="Variant" setter="set_ImpactType" getter="get_ImpactType">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="UserDefinedCategory" type="String" setter="set_UserDefinedCategory" getter="get_UserDefinedCategory">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="UserDefinedCategory" type="Variant" setter="set_UserDefinedCategory" getter="get_UserDefinedCategory">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -6,11 +6,13 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Contents" type="Array" setter="set_Contents" getter="get_Contents">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="Contents" type="Variant" setter="set_Contents" getter="get_Contents">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 		<member name="IsRelatedFromCallout" type="Array" setter="" getter="get_IsRelatedFromCallout">
 			Only in IFC2X3 files: in others it is empty.
@@ -19,6 +21,8 @@
 			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

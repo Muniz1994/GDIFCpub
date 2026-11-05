@@ -6,40 +6,44 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="ApplicableValueRatio" type="float" setter="set_ApplicableValueRatio" getter="get_ApplicableValueRatio">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="ApplicableValueRatio" type="Variant" setter="set_ApplicableValueRatio" getter="get_ApplicableValueRatio">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="ThermalLoadSource" type="String" setter="set_ThermalLoadSource" getter="get_ThermalLoadSource">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="ThermalLoadSource" type="Variant" setter="set_ThermalLoadSource" getter="get_ThermalLoadSource">
+			A String, one of the enumeration's values, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="PropertySource" type="String" setter="set_PropertySource" getter="get_PropertySource">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="PropertySource" type="Variant" setter="set_PropertySource" getter="get_PropertySource">
+			A String, one of the enumeration's values, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="SourceDescription" type="String" setter="set_SourceDescription" getter="get_SourceDescription">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="SourceDescription" type="Variant" setter="set_SourceDescription" getter="get_SourceDescription">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MaximumValue" type="float" setter="set_MaximumValue" getter="get_MaximumValue">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="MaximumValue" type="Variant" setter="set_MaximumValue" getter="get_MaximumValue">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MinimumValue" type="float" setter="set_MinimumValue" getter="get_MinimumValue">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="MinimumValue" type="Variant" setter="set_MinimumValue" getter="get_MinimumValue">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 		<member name="ThermalLoadTimeSeriesValues" type="GDIFCEntityBase" setter="set_ThermalLoadTimeSeriesValues" getter="get_ThermalLoadTimeSeriesValues">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="UserDefinedThermalLoadSource" type="String" setter="set_UserDefinedThermalLoadSource" getter="get_UserDefinedThermalLoadSource">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="UserDefinedThermalLoadSource" type="Variant" setter="set_UserDefinedThermalLoadSource" getter="get_UserDefinedThermalLoadSource">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="UserDefinedPropertySource" type="String" setter="set_UserDefinedPropertySource" getter="get_UserDefinedPropertySource">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="UserDefinedPropertySource" type="Variant" setter="set_UserDefinedPropertySource" getter="get_UserDefinedPropertySource">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="ThermalLoadType" type="String" setter="set_ThermalLoadType" getter="get_ThermalLoadType">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="ThermalLoadType" type="Variant" setter="set_ThermalLoadType" getter="get_ThermalLoadType">
+			A String, one of the enumeration's values, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

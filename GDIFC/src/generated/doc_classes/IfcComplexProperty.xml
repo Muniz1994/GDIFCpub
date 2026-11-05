@@ -6,16 +6,20 @@
 		IfcComplexProperty is used to define complex properties to be handled completely within a property set. The included set of properties may be a mixed or consistent collection of IfcProperty subtypes. This enables the definition of a set of properties to be included as a single 'property' entry in an IfcPropertySet . The definition of such an IfcComplexProperty can be reused in many different IfcPr
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="UsageName" type="String" setter="set_UsageName" getter="get_UsageName">
-			Usage description of the IfcComplexProperty within the property set which references the IfcComplexProperty . NOTE: Consider a complex property for glazing properties. The Name attribute of the IfcComplexProperty could be Pset_GlazingProperties , and the UsageName attribute could be OuterGlazingPane .
+		<member name="UsageName" type="Variant" setter="set_UsageName" getter="get_UsageName">
+			Usage description of the IfcComplexProperty within the property set which references the IfcComplexProperty . NOTE: Consider a complex property for glazing properties. The Name attribute of the IfcComplexProperty could be Pset_GlazingProperties , and the UsageName attribute could be OuterGlazingPane . A String, or null when unset.
 		</member>
-		<member name="HasProperties" type="Array" setter="set_HasProperties" getter="get_HasProperties">
-			Set of properties that can be used within this complex property (may include other complex properties).
+		<member name="HasProperties" type="Variant" setter="set_HasProperties" getter="get_HasProperties">
+			Set of properties that can be used within this complex property (may include other complex properties). An Array of GDIFCEntityBase entities, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

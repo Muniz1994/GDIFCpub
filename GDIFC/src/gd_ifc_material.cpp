@@ -38,6 +38,7 @@ void GDIFCMaterialDefinition::_bind_methods() {
     GDIFC_BIND_PROPERTY(GDIFCMaterialDefinition, category, PropertyInfo(Variant::STRING, "category"));
     GDIFC_BIND_PROPERTY(GDIFCMaterialDefinition, express_id, PropertyInfo(Variant::INT, "express_id"));
     GDIFC_BIND_PROPERTY(GDIFCMaterialDefinition, properties, PropertyInfo(Variant::DICTIONARY, "properties"));
+    GDIFC_BIND_PROPERTY(GDIFCMaterialDefinition, property_details, PropertyInfo(Variant::DICTIONARY, "property_details"));
     GDIFC_BIND_PROPERTY(GDIFCMaterialDefinition, classifications, PropertyInfo(Variant::ARRAY, "classifications"));
     GDIFC_BIND_PROPERTY(GDIFCMaterialDefinition, ifc_object,
         PropertyInfo(Variant::OBJECT, "ifc_object", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase", PROPERTY_USAGE_NONE));

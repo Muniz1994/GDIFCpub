@@ -6,13 +6,17 @@
 		IfcLocalPlacement defines the relative placement of a product in relation to the placement of another product or the absolute placement of a product within the geometric representation context of the project. IfcLocalPlacement allows that an IfcProduct can be placed by this IfcLocalPlacement (through the attribute ObjectPlacement ) within the local coordinate system of the object placement of anot
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="RelativePlacement" type="GDIFCEntityBase" setter="set_RelativePlacement" getter="get_RelativePlacement">
 			Geometric placement that defines the transformation from the related coordinate system into the relating. The placement can be either 2D or 3D, depending on the dimension count of the coordinate system.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

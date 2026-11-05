@@ -6,19 +6,23 @@
 		Definition from ISO 10303:42:1994 : This is the type of b-spline curve for which the knot values are explicitly given. This subtype shall be used to represent non-uniform B-spline curves and may be used for other knot types. Let L denote the number of distinct values amongst the d + k +2 knots in the knot list; L will be referred to as the ‘upper index on knots’. Let m j denote the multiplicity (i
 	</brief_description>
 	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="KnotMultiplicities" type="PackedInt64Array" setter="set_KnotMultiplicities" getter="get_KnotMultiplicities">
-			The multiplicities of the knots. This list defines the number of times each knot in the knots list is to be repeated in constructing the knot array. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="KnotMultiplicities" type="Variant" setter="set_KnotMultiplicities" getter="get_KnotMultiplicities">
+			The multiplicities of the knots. This list defines the number of times each knot in the knots list is to be repeated in constructing the knot array. A PackedInt64Array, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Knots" type="PackedFloat64Array" setter="set_Knots" getter="get_Knots">
-			The list of distinct knots used to define the B-spline basis functions. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="Knots" type="Variant" setter="set_Knots" getter="get_Knots">
+			The list of distinct knots used to define the B-spline basis functions. A PackedFloat64Array, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="KnotSpec" type="String" setter="set_KnotSpec" getter="get_KnotSpec">
-			The description of the knot type. This is for information only. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="KnotSpec" type="Variant" setter="set_KnotSpec" getter="get_KnotSpec">
+			The description of the knot type. This is for information only. A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

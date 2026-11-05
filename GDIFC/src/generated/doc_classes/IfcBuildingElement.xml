@@ -6,13 +6,17 @@
 		Definition from ISO 6707-1:1989 : Major functional part of a building, examples are foundation, floor, roof, wall. The building element comprises all elements that are primarily part of the construction of a building, i.e., its structural and space separating system. EXAMPLEs of building elements are walls, beams, or doors, they are all physically existent and tangible things. The IfcBuildingEleme
 	</brief_description>
 	<description>Only in IFC2X3 and IFC4 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="HasPorts" type="Array" setter="" getter="get_HasPorts">
 			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

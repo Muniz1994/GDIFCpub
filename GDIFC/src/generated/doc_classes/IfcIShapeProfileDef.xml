@@ -6,31 +6,35 @@
 		IfcIShapeProfileDef defines a section profile that provides the defining parameters of a symmetrical 'I' section to be used by the swept surface geometry or the swept area solid. The I-shape profile has values for its overall depth, width and its web and flange thickness. Additionally a fillet radius may be given. It represents a I-section that is symmetrical about its major and minor axes; and th
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="OverallWidth" type="float" setter="set_OverallWidth" getter="get_OverallWidth">
-			Total extent of the width, defined parallel to the x axis of the position coordinate system.
+		<member name="OverallWidth" type="Variant" setter="set_OverallWidth" getter="get_OverallWidth">
+			Total extent of the width, defined parallel to the x axis of the position coordinate system. A float, or null when unset.
 		</member>
-		<member name="OverallDepth" type="float" setter="set_OverallDepth" getter="get_OverallDepth">
-			Total extent of the depth, defined parallel to the y axis of the position coordinate system.
+		<member name="OverallDepth" type="Variant" setter="set_OverallDepth" getter="get_OverallDepth">
+			Total extent of the depth, defined parallel to the y axis of the position coordinate system. A float, or null when unset.
 		</member>
-		<member name="WebThickness" type="float" setter="set_WebThickness" getter="get_WebThickness">
-			Thickness of the web of the I-shape. The web is centred on the x-axis and the y-axis of the position coordinate system.
+		<member name="WebThickness" type="Variant" setter="set_WebThickness" getter="get_WebThickness">
+			Thickness of the web of the I-shape. The web is centred on the x-axis and the y-axis of the position coordinate system. A float, or null when unset.
 		</member>
-		<member name="FlangeThickness" type="float" setter="set_FlangeThickness" getter="get_FlangeThickness">
-			Flange thickness of the I-shape. Both, the upper and the lower flanges have the same thickness and they are centred on the y-axis of the position coordinate system.
+		<member name="FlangeThickness" type="Variant" setter="set_FlangeThickness" getter="get_FlangeThickness">
+			Flange thickness of the I-shape. Both, the upper and the lower flanges have the same thickness and they are centred on the y-axis of the position coordinate system. A float, or null when unset.
 		</member>
-		<member name="FilletRadius" type="float" setter="set_FilletRadius" getter="get_FilletRadius">
-			The fillet between the web and the flange.
+		<member name="FilletRadius" type="Variant" setter="set_FilletRadius" getter="get_FilletRadius">
+			The fillet between the web and the flange. A float, or null when unset.
 		</member>
-		<member name="FlangeEdgeRadius" type="float" setter="set_FlangeEdgeRadius" getter="get_FlangeEdgeRadius">
-			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="FlangeEdgeRadius" type="Variant" setter="set_FlangeEdgeRadius" getter="get_FlangeEdgeRadius">
+			A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="FlangeSlope" type="float" setter="set_FlangeSlope" getter="get_FlangeSlope">
-			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="FlangeSlope" type="Variant" setter="set_FlangeSlope" getter="get_FlangeSlope">
+			A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

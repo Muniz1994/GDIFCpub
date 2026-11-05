@@ -6,28 +6,32 @@
 		The map conversion deals with transforming the local engineering coordinate system, often called world coordinate system, into the coordinate reference system of the underlying map. NOTE The IfcMapConversion does not handle the projection of a map from the geodetic coordinate reference system. The map conversion allows to convert the local origin of the local engineering coordinate system to its p
 	</brief_description>
 	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Eastings" type="float" setter="set_Eastings" getter="get_Eastings">
-			Specifies the location along the easting of the coordinate system of the target map coordinate reference system. NOTE for right-handed Cartesian coordinate systems this would establish the location along the x axis Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="Eastings" type="Variant" setter="set_Eastings" getter="get_Eastings">
+			Specifies the location along the easting of the coordinate system of the target map coordinate reference system. NOTE for right-handed Cartesian coordinate systems this would establish the location along the x axis A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Northings" type="float" setter="set_Northings" getter="get_Northings">
-			Specifies the location along the northing of the coordinate system of the target map coordinate reference system. NOTE for right-handed Cartesian coordinate systems this would establish the location along the y axis Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="Northings" type="Variant" setter="set_Northings" getter="get_Northings">
+			Specifies the location along the northing of the coordinate system of the target map coordinate reference system. NOTE for right-handed Cartesian coordinate systems this would establish the location along the y axis A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="OrthogonalHeight" type="float" setter="set_OrthogonalHeight" getter="get_OrthogonalHeight">
-			Orthogonal height relativ to the vertical datum specified. NOTE for right-handed Cartesian coordinate systems this would establish the location along the z axis Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="OrthogonalHeight" type="Variant" setter="set_OrthogonalHeight" getter="get_OrthogonalHeight">
+			Orthogonal height relativ to the vertical datum specified. NOTE for right-handed Cartesian coordinate systems this would establish the location along the z axis A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="XAxisAbscissa" type="float" setter="set_XAxisAbscissa" getter="get_XAxisAbscissa">
-			Specifies the value along the easing axis of the end point of a vector indicating the position of the local x axis of the engineering coordinate reference system. NOTE for right-handed Cartesian coordinate systems this would establish the location along the x axis NOTE together with the XAxisOrdinate it provides the direction of the local x axis within the horizontal plane of the map coordinate system Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="XAxisAbscissa" type="Variant" setter="set_XAxisAbscissa" getter="get_XAxisAbscissa">
+			Specifies the value along the easing axis of the end point of a vector indicating the position of the local x axis of the engineering coordinate reference system. NOTE for right-handed Cartesian coordinate systems this would establish the location along the x axis NOTE together with the XAxisOrdinate it provides the direction of the local x axis within the horizontal plane of the map coordinate system A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="XAxisOrdinate" type="float" setter="set_XAxisOrdinate" getter="get_XAxisOrdinate">
-			Specifies the value along the northing axis of the end point of a vector indicating the position of the local x axis of the engineering coordinate reference system. NOTE for right-handed Cartesian coordinate systems this would establish the location along the y axis NOTE together with the XAxisAbscissa it provides the direction of the local x axis within the horizontal plane of the map coordinate system Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="XAxisOrdinate" type="Variant" setter="set_XAxisOrdinate" getter="get_XAxisOrdinate">
+			Specifies the value along the northing axis of the end point of a vector indicating the position of the local x axis of the engineering coordinate reference system. NOTE for right-handed Cartesian coordinate systems this would establish the location along the y axis NOTE together with the XAxisAbscissa it provides the direction of the local x axis within the horizontal plane of the map coordinate system A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Scale" type="float" setter="set_Scale" getter="get_Scale">
-			Scale to be used, when the units of the CRS are not identical to the units of the engineering coordinate system. If omited, the value of 1.0 is assumed. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="Scale" type="Variant" setter="set_Scale" getter="get_Scale">
+			Scale to be used, when the units of the CRS are not identical to the units of the engineering coordinate system. If omited, the value of 1.0 is assumed. A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

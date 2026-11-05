@@ -6,8 +6,10 @@
 		An IfcPropertyDependencyRelationship describes an identified dependency between the value of one property and that of another. HISTORY New entity in IFC2x2 IFC2x4 CHANGE Made subtype of IfcResourceLevelRelationship (attribute order changed). Use Definition Whilst the IfcPropertyDependencyRelationship may be used to describe the dependency, and it may do so in terms of the expression of how the dep
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="DependingProperty" type="GDIFCEntityBase" setter="set_DependingProperty" getter="get_DependingProperty">
 			The property on which the relationship depends.
@@ -15,10 +17,12 @@
 		<member name="DependantProperty" type="GDIFCEntityBase" setter="set_DependantProperty" getter="get_DependantProperty">
 			The dependant property.
 		</member>
-		<member name="Expression" type="String" setter="set_Expression" getter="get_Expression">
-			Expression that further describes the nature of the dependency relation.
+		<member name="Expression" type="Variant" setter="set_Expression" getter="get_Expression">
+			Expression that further describes the nature of the dependency relation. A String, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

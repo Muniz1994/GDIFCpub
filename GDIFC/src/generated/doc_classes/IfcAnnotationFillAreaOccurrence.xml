@@ -6,16 +6,20 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="FillStyleTarget" type="GDIFCEntityBase" setter="set_FillStyleTarget" getter="get_FillStyleTarget">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="GlobalOrLocal" type="String" setter="set_GlobalOrLocal" getter="get_GlobalOrLocal">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="GlobalOrLocal" type="Variant" setter="set_GlobalOrLocal" getter="get_GlobalOrLocal">
+			A String, one of the enumeration's values, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -6,16 +6,20 @@
 
 	</brief_description>
 	<description>Only in IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="WellKnownText" type="String" setter="set_WellKnownText" getter="get_WellKnownText">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="WellKnownText" type="Variant" setter="set_WellKnownText" getter="get_WellKnownText">
+			A String, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="CoordinateReferenceSystem" type="GDIFCEntityBase" setter="set_CoordinateReferenceSystem" getter="get_CoordinateReferenceSystem">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+			Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

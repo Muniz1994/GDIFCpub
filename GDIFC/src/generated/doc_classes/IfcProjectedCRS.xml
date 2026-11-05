@@ -6,22 +6,26 @@
 		Definition from OpenGIS® Abstract Specification, Topic 2: A 2D (or with vertical coordinate axis 3D) coordinate reference system used to approximate the shape of the earth on a planar surface, but in such a way that the distortion that is inherent to the approximation is carefully controlled and known. Distortion correction is commonly applied to calculated bearings and distances to produce values
 	</brief_description>
 	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="VerticalDatum" type="String" setter="set_VerticalDatum" getter="get_VerticalDatum">
-			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="VerticalDatum" type="Variant" setter="set_VerticalDatum" getter="get_VerticalDatum">
+			A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MapProjection" type="String" setter="set_MapProjection" getter="get_MapProjection">
-			Name by which the map projection is identified. UTM Gaus-Krueger Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="MapProjection" type="Variant" setter="set_MapProjection" getter="get_MapProjection">
+			Name by which the map projection is identified. UTM Gaus-Krueger A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MapZone" type="String" setter="set_MapZone" getter="get_MapZone">
-			Name by which the map zone, relating to the MapProjection , is identified. Examples are for UTM, the zone number, like 32 for UTM32 for Gaus-Krueger, the zones of longitudinal width, like 3' Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="MapZone" type="Variant" setter="set_MapZone" getter="get_MapZone">
+			Name by which the map zone, relating to the MapProjection , is identified. Examples are for UTM, the zone number, like 32 for UTM32 for Gaus-Krueger, the zones of longitudinal width, like 3' A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="MapUnit" type="GDIFCEntityBase" setter="set_MapUnit" getter="get_MapUnit">
-			Unit of the coordinate axes composing the map coordinate system. NOTE Only length measures are in scope and all two or three axes of the map coordinate system shall have the same length unit. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+			Unit of the coordinate axes composing the map coordinate system. NOTE Only length measures are in scope and all two or three axes of the map coordinate system shall have the same length unit. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

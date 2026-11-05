@@ -78,9 +78,21 @@ bool GDIFCEntityBase::is_a(godot::String ifc_class) const {
 
 // ── Attribute access ──────────────────────────────────────────────────────
 
+static godot::Variant gdifc_av_to_variant(const AttributeValue& av, std::shared_ptr<IfcParse::IfcFile> file);
+
+// An entity as its wrapper, and an instance of a defined type, such as an IfcLabel in an IfcValue
+// select, as its plain value
+static godot::Variant instance_to_variant(IfcUtil::IfcBaseClass* inst, const std::shared_ptr<IfcParse::IfcFile>& file) {
+    if (inst == nullptr) return godot::Variant();
+    if (inst->declaration().as_type_declaration() != nullptr) {
+        return gdifc_av_to_variant(inst->get_attribute_value(0), file);
+    }
+    return godot::GDIFCEntityBase::wrap(inst, file);
+}
+
 /// Convert an AttributeValue to a Variant.  Entity references are returned as
-/// Ref<GDIFCEntityBase> objects (wrapping the underlying IfcBaseClass*).
-/// For aggregate-of-entity, returns an Array of GDIFCEntityBase.
+/// Ref<GDIFCEntityBase> objects (wrapping the underlying IfcBaseClass*), and instances of
+/// defined types as their value. For aggregate-of-entity, returns an Array of them.
 /// Falls back to simpler scalar conversions for plain types.
 static godot::Variant gdifc_av_to_variant(const AttributeValue& av,
                                            std::shared_ptr<IfcParse::IfcFile> file) {
@@ -116,8 +128,7 @@ static godot::Variant gdifc_av_to_variant(const AttributeValue& av,
             return godot::String(v.value());
         }
         godot::Variant operator()(IfcUtil::IfcBaseClass* v) const {
-            if (v == nullptr) return godot::Variant();
-            return godot::GDIFCEntityBase::wrap(v, file);
+            return instance_to_variant(v, file);
         }
         godot::Variant operator()(const std::vector<int>& v) const {
             godot::PackedInt64Array arr;
@@ -145,7 +156,7 @@ static godot::Variant gdifc_av_to_variant(const AttributeValue& av,
             godot::Array arr;
             if (agg) {
                 for (auto* inst : *agg) {
-                    arr.push_back(godot::GDIFCEntityBase::wrap(inst, file));
+                    arr.push_back(instance_to_variant(inst, file));
                 }
             }
             return arr;
@@ -166,7 +177,7 @@ static godot::Variant gdifc_av_to_variant(const AttributeValue& av,
                 for (const auto& inner_vec : *v) {
                     godot::Array inner;
                     for (auto* inst : inner_vec) {
-                        inner.push_back(godot::GDIFCEntityBase::wrap(inst, file));
+                        inner.push_back(instance_to_variant(inst, file));
                     }
                     outer.push_back(inner);
                 }
@@ -314,7 +325,68 @@ bool to_std_string(const godot::Variant& v, std::string& out) {
     return true;
 }
 
-// Entities of the same file that fit the declared type, for an aggregate
+bool set_converted(IfcUtil::IfcBaseClass* e, size_t index, const IfcParse::parameter_type* type,
+                   const godot::Variant& value);
+
+// The defined types a select includes, directly or through the selects it includes
+void value_types(const IfcParse::declaration* declared, std::vector<const IfcParse::type_declaration*>& out) {
+    if (declared == nullptr) return;
+    if (const auto* type = declared->as_type_declaration()) {
+        out.push_back(type);
+    } else if (const auto* select = declared->as_select_type()) {
+        for (const auto* option : select->select_list()) value_types(option, out);
+    }
+}
+
+// An instance of a defined type, such as an IfcLabel, holding `value`. Null when it doesn't fit.
+IfcUtil::IfcBaseClass* make_value(const IfcParse::type_declaration* type, const godot::Variant& value) {
+    const IfcParse::schema_definition* schema = type->schema();
+    if (schema == nullptr) return nullptr;
+    IfcUtil::IfcBaseClass* instance = schema->instantiate(type, IfcEntityInstanceData(in_memory_attribute_storage(1)));
+    if (instance == nullptr) return nullptr;
+    bool fits = false;
+    try {
+        fits = set_converted(instance, 0, type->declared_type(), value);
+    } catch (const std::exception&) {
+    }
+    if (!fits) {
+        delete instance;
+        return nullptr;
+    }
+    return instance;
+}
+
+// A plain value for a select of defined types, such as IfcValue: of the type of the value it
+// replaces when it fits, otherwise IfcLabel, IfcInteger, IfcReal or IfcBoolean after its Variant
+// type, when the select includes it
+IfcUtil::IfcBaseClass* value_for(const IfcParse::declaration* declared, const IfcUtil::IfcBaseClass* current,
+                                 const godot::Variant& value) {
+    std::vector<const IfcParse::type_declaration*> types;
+    value_types(declared, types);
+    if (types.empty()) return nullptr;
+    if (current != nullptr) {
+        const auto* type = current->declaration().as_type_declaration();
+        if (type != nullptr && std::find(types.begin(), types.end(), type) != types.end()) {
+            if (IfcUtil::IfcBaseClass* instance = make_value(type, value)) return instance;
+        }
+    }
+    const char* preferred = nullptr;
+    switch (value.get_type()) {
+        case godot::Variant::STRING:
+        case godot::Variant::STRING_NAME: preferred = "IfcLabel"; break;
+        case godot::Variant::INT: preferred = "IfcInteger"; break;
+        case godot::Variant::FLOAT: preferred = "IfcReal"; break;
+        case godot::Variant::BOOL: preferred = "IfcBoolean"; break;
+        default: return nullptr;
+    }
+    for (const auto* type : types) {
+        if (type->name() == preferred) return make_value(type, value);
+    }
+    return nullptr;
+}
+
+// Entities of the same file that fit the declared type, for an aggregate. Plain values become
+// instances of defined types when the declared type is a select of them.
 bool to_instances(const godot::Variant& v, const IfcParse::parameter_type* type, const IfcParse::IfcFile* file,
                   aggregate_of_instance::ptr& out) {
     godot::Array items;
@@ -323,7 +395,13 @@ bool to_instances(const godot::Variant& v, const IfcParse::parameter_type* type,
     const IfcParse::declaration* declared = declared_type(type);
     for (int64_t i = 0; i < items.size(); ++i) {
         IfcUtil::IfcBaseClass* item = entity_of(items[i]);
-        if (item == nullptr || item->file_ != file || !accepts(declared, item->declaration())) return false;
+        if (item == nullptr) {
+            if (items[i].get_type() == godot::Variant::OBJECT) return false;
+            item = value_for(declared, nullptr, items[i]);
+            if (item == nullptr) return false;
+        } else if (item->file_ != file || !accepts(declared, item->declaration())) {
+            return false;
+        }
         out->push(item);
     }
     return true;
@@ -390,7 +468,16 @@ bool set_converted(IfcUtil::IfcBaseClass* e, size_t index, const IfcParse::param
         }
         case IfcUtil::Argument_ENTITY_INSTANCE: {
             IfcUtil::IfcBaseClass* v = entity_of(value);
-            if (v == nullptr || v->file_ != e->file_ || !accepts(declared_type(type), v->declaration())) return false;
+            if (v == nullptr) {
+                // A plain value, for a select of defined types such as IfcValue
+                if (value.get_type() == godot::Variant::OBJECT) return false;
+                const AttributeValue current = e->get_attribute_value(index);
+                v = value_for(declared_type(type), current.type() == IfcUtil::Argument_ENTITY_INSTANCE
+                    ? static_cast<IfcUtil::IfcBaseClass*>(current) : nullptr, value);
+                if (v == nullptr) return false;
+            } else if (v->file_ != e->file_ || !accepts(declared_type(type), v->declaration())) {
+                return false;
+            }
             e->set_attribute_value(index, v);
             return true;
         }
@@ -460,7 +547,48 @@ godot::String schema_name(const IfcParse::entity& decl) {
     return decl.schema() != nullptr ? godot::String(decl.schema()->name().c_str()) : godot::String("its schema");
 }
 
+// Whether a select includes anything but entities
+bool select_holds_values(const IfcParse::declaration* declared) {
+    if (declared->as_entity() != nullptr) return false;
+    if (const auto* select = declared->as_select_type()) {
+        return std::any_of(select->select_list().begin(), select->select_list().end(), select_holds_values);
+    }
+    return true;
+}
+
 } // namespace
+
+bool gd_holds_values(const IfcParse::parameter_type* type) {
+    if (type == nullptr) return false;
+    if (const auto* aggregate = type->as_aggregation_type()) return gd_holds_values(aggregate->type_of_element());
+    const IfcParse::declaration* declared = declared_type(type);
+    return declared == nullptr || select_holds_values(declared);
+}
+
+godot::Variant gd_get_attribute(const IfcUtil::IfcBaseClass* e, const char* name,
+                                std::shared_ptr<IfcParse::IfcFile> file, const GDIFCAttributeAlias* aliases) {
+    const ptrdiff_t index = gd_attr_index(e, name, aliases);
+    if (index < 0) return godot::Variant();
+    const AttributeValue av = e->get_attribute_value(static_cast<size_t>(index));
+    const IfcUtil::ArgumentType held = av.type();
+    if (held == IfcUtil::Argument_NULL || held == IfcUtil::Argument_DERIVED) return godot::Variant();
+
+    // The type the entity's own schema declares, which may differ from the class's
+    const IfcParse::entity* decl = e->declaration().as_entity();
+    switch (IfcUtil::from_parameter_type(decl->attribute_by_index(static_cast<size_t>(index))->type_of_attribute())) {
+        case IfcUtil::Argument_INT: return gd_attr_int(av);
+        case IfcUtil::Argument_DOUBLE: return gd_attr_double(av);
+        case IfcUtil::Argument_BOOL: return gd_attr_bool(av);
+        case IfcUtil::Argument_LOGICAL:
+        case IfcUtil::Argument_BINARY:
+        case IfcUtil::Argument_STRING:
+        case IfcUtil::Argument_ENUMERATION: return gd_attr_string(av);
+        case IfcUtil::Argument_AGGREGATE_OF_INT: return gd_attr_agg_int(av);
+        case IfcUtil::Argument_AGGREGATE_OF_DOUBLE: return gd_attr_agg_double(av);
+        case IfcUtil::Argument_AGGREGATE_OF_STRING: return gd_attr_agg_string(av);
+        default: return gdifc_av_to_variant(av, std::move(file));
+    }
+}
 
 void gd_set_attribute(IfcUtil::IfcBaseClass* e, const char* name, const godot::Variant& value,
                       const GDIFCAttributeAlias* aliases) {

@@ -24,7 +24,11 @@ Main entry point for IFC loading and model access.
 - `get_load_progress() -> float`
   - Progress of the current or last load, from `0.0` to `1.0`. It never decreases during a load.
 - `get_load_stage() -> String`
-  - Current load stage: `"Parsing"`, `"Processing geometry"`, `"Generating LODs"` (when enabled), `"Creating nodes"`, `"Preparing editor"` (editor only), `"Adding to scene"`, `"Done"` or `"Failed"`. Empty before the first load. Progress reaches `1.0` at `ifc_read`; property sets load after that.
+  - Current load stage: `"Parsing"`, `"Processing geometry"`, `"Generating LODs"` (when enabled), `"Creating nodes"`, `"Preparing editor"` (editor only), `"Adding to scene"`, `"Done"` or `"Failed"`. Empty before the first load. Progress reaches `1.0` at `ifc_read`; property sets load after that. The text is for display and may be reworded; compare `get_load_stage_id()` instead.
+- `get_load_stage_id() -> LoadStage`
+  - The same stage as a constant: `STAGE_IDLE`, `STAGE_PARSING`, `STAGE_GEOMETRY`, `STAGE_LODS`, `STAGE_NODES`, `STAGE_EDITOR_CACHES`, `STAGE_REVEAL`, `STAGE_DONE` or `STAGE_FAILED`, in load order. New stages may be added at the end.
+- `get_load_error() -> String`
+  - Why the last load failed: the file couldn't be opened, was empty, or the geometry engine couldn't read it. Empty while loading and after a load that succeeded. Read it after `ifc_load_failed`, or after a load method returns an error.
 - `find_material_definitions(name: String) -> Array`
   - Every material definition in `material_library` with that IFC Name, whatever its class.
 - `set_material_visual(material_name: String, visual: Material) -> int`
@@ -41,12 +45,14 @@ Main entry point for IFC loading and model access.
   - Attributes, property sets, quantities and typed `ifc_object` references are on the nodes, and the `Georeference` node and placement relative to `reference_georeference` are applied. Emitted after `ifc_read`, since this data is read by a second parser in the background. Also emitted after a saved scene is reopened and relinked.
   - If that parser can't read the file (for example an unsupported schema such as IFC4X3_RC2), it is still emitted, with an error in the Output panel; the model keeps its geometry without properties.
 - `ifc_load_failed`
-  - The file couldn't be read by the geometry engine. Details are in the Output panel. The manager can load again afterwards.
+  - The file couldn't be read by the geometry engine. `get_load_error()` says why, and the Output panel has the details. The manager can load again afterwards.
 
 ```gdscript
 ifc_manager.load_progress_changed.connect(func(progress: float, stage: String):
     $ProgressBar.value = progress
-    $StatusLabel.text = stage)
+    $StatusLabel.text = stage
+    $Spinner.visible = ifc_manager.get_load_stage_id() == GDIFCManager.STAGE_GEOMETRY)
+ifc_manager.ifc_load_failed.connect(func(): $StatusLabel.text = ifc_manager.get_load_error())
 ifc_manager.read_ifc("res://models/building.ifc")
 ```
 
@@ -85,6 +91,8 @@ From the file's `FILE_DESCRIPTION`, `FILE_NAME` and `FILE_SCHEMA`. A field writt
 
 - `get_units() -> Dictionary`
   - The project's units, from its `IfcUnitAssignment`: `{unit type: symbol}`, such as `{"LENGTHUNIT": "mm", "AREAUNIT": "m²", "MONETARYUNIT": "EUR"}`.
+- `get_site_location() -> Dictionary`
+  - The first `IfcSite`'s `latitude` and `longitude`, in decimal degrees, and `elevation`, in the file's length unit, each when the site gives it. Only informational: models are placed by their `IFCGeoreference`.
 
 ### Queries
 
@@ -121,7 +129,7 @@ Node generated for each IFC object.
 
 - `ifc_class: String`
 - `global_id: String`
-- `attributes: Dictionary` (after `ifc_objects_ready`)
+- `attributes: Dictionary`: the entity's attribute values, such as `Name` or `Tag`. Attributes that refer to other entities, such as `ObjectPlacement`, are left out: read them from `ifc_object` (after `ifc_objects_ready`)
 - `properties: Dictionary`: property sets, `{set name: {property: value}}`, including the sets of the element's type (after `ifc_objects_ready`)
 - `quantities: Dictionary`: quantity sets, shaped like `properties` (after `ifc_objects_ready`)
 - `property_details: Dictionary`, `quantity_details: Dictionary`: shaped like `properties` and `quantities`, with a read-only `Dictionary` per value holding its `value_type`, `unit` and `from_type` (after `ifc_objects_ready`). See [Property And Quantity Sets](loading-models.md#property-and-quantity-sets).
@@ -130,14 +138,15 @@ Node generated for each IFC object.
 
 ## IFCGeoreference (Node3D)
 
-Created as `IFCModel/Georeference` at `ifc_objects_ready`, for IFC4 and later files that have an `IfcMapConversion` and `IfcProjectedCRS`. Point another manager's `reference_georeference` at it to load a model in place.
+Created as `IFCModel/Georeference` at `ifc_objects_ready`, for IFC4 and later files that have an `IfcMapConversion` and `IfcProjectedCRS`, and IFC2X3 files that have the `ePSet_MapConversion` property set. Point another manager's `reference_georeference` at it to load a model in place.
 
 ### Properties
 
 - `eastings: float`, `northings: float`, `orthogonal_height: float`: the map coordinates of the project origin
 - `x_axis_abscissa: float`, `x_axis_ordinate: float`: the rotation of the project's X axis on the map
 - `map_scale: float`
-- `crs_name: String`, `crs_description: String`, `geodetic_datum: String`, `vertical_datum: String`: from `IfcProjectedCRS`
+- `map_scale_x: float`, `map_scale_y: float`, `map_scale_z: float`: the per-axis factors of an IFC4X3 `IfcMapConversionScaled`, along the IFC x, y and z axes, applied on top of `map_scale`; 1 otherwise
+- `crs_name: String`, `crs_description: String`, `geodetic_datum: String`, `vertical_datum: String`: from `IfcProjectedCRS`, or IFC2X3's `ePSet_ProjectedCRS`
 - `coordination_offset_x: float`, `coordination_offset_y: float`, `coordination_offset_z: float`: the translation applied to the model by `coordinate_to_origin`, in Godot axes; zero without it
 
 ## GDIFCCollisionMatrix (Resource)
@@ -170,6 +179,7 @@ Read with `ifc_materials` on. One resource per IFC material definition, shared b
 - `description: String`, `category: String`
 - `express_id: int`: IFC materials have no GlobalId
 - `properties: Dictionary`: material property sets, `{set name: {property: value}}`
+- `property_details: Dictionary`: shaped like `properties`, with the `value_type` and `unit` of each value, like `IFCNode.property_details`
 - `classifications: Array`: classification and library references, one Dictionary each (`type`, and whichever of `identification`, `item_reference`, `name`, `location`, `description`, `notation`, `source` the reference has)
 - `ifc_object: GDIFCEntityBase`: relinked on load, not saved
 
@@ -179,7 +189,7 @@ Read with `ifc_materials` on. One resource per IFC material definition, shared b
 | `GDIFCMaterialLayer` | `IfcMaterialLayer` | `material` (null for an air gap), `thickness`, `is_ventilated`, `priority` (-1 when not given) |
 | `GDIFCMaterialLayerSet` | `IfcMaterialLayerSet` | `layers` (in IFC order), `total_thickness` (read-only) |
 | `GDIFCMaterialLayerSetUsage` | `IfcMaterialLayerSetUsage` | `layer_set`, `direction` (`AXIS1`..`AXIS3`), `sense` (`POSITIVE`, `NEGATIVE`), `offset`, `reference_extent` (0 when not given) |
-| `GDIFCMaterialProfile` | `IfcMaterialProfile` | `material`, `priority` |
+| `GDIFCMaterialProfile` | `IfcMaterialProfile` | `material`, `priority` (-1 when not given) |
 | `GDIFCMaterialProfileSet` | `IfcMaterialProfileSet` | `profiles` |
 | `GDIFCMaterialProfileSetUsage` | `IfcMaterialProfileSetUsage` | `profile_set`, `cardinal_point` (0 when not given), `reference_extent` |
 | `GDIFCMaterialConstituent` | `IfcMaterialConstituent` | `material`, `fraction` (-1 when not given) |
@@ -192,7 +202,7 @@ Lengths are in the IFC file's length unit, like quantities. Subtypes such as `If
 
 ## GDIFCEntityBase (RefCounted)
 
-Base wrapper for all IFC entities. Every IFC class, such as `IfcWall`, is a subclass with its attributes as typed properties. See [Typed Entity Access](typed-entities.md), and [Walking The Model](walking-the-model.md) to follow relationships with `get_attribute` and `get_inverse`.
+Base wrapper for all IFC entities. Every IFC class, such as `IfcWall`, is a subclass with its attributes as properties: references to entities are `GDIFCEntityBase`, and every other attribute is a `Variant` that is null when unset. See [Typed Entity Access](typed-entities.md), and [Walking The Model](walking-the-model.md) to follow relationships with `get_attribute` and `get_inverse`.
 
 ### Common Methods
 
@@ -203,6 +213,7 @@ Base wrapper for all IFC entities. Every IFC class, such as `IfcWall`, is a subc
 - `is_a(ifc_class: String) -> bool`
   - Whether it is of that class or a subtype of it. The class name is case-sensitive: `"IfcWall"`, not `"IFCWALL"`.
 - `get_attribute(attr_name: String) -> Variant`
+  - The attribute's value, null when unset. A property value such as an `IfcLabel` or `IfcLengthMeasure` reads as its plain value.
 - `get_attribute_names() -> PackedStringArray`
 - `get_all_attributes() -> Dictionary`
 - `get_inverse(inverse_attr_name: String) -> Array`
@@ -218,6 +229,15 @@ Controls geometry conversion behavior and processing limits.
 
 - `coordinate_to_origin: bool` (default `false`)
 - `circle_segments: int` (default `12`)
+- `generate_lods: bool` (default `true`)
+- `lod_normal_merge_angle: float` (default `60.0`, degrees)
+- `ifc_materials: bool` (default `false`): read IFC material definitions, and use one material per IFC material instead of per colour. See [IFC Materials](loading-models.md#ifc-materials).
+- `ifc_textures: bool` (default `false`): load the textures of IFC surface styles onto the generated materials. Used only with `ifc_materials`. See [Surface Styles And Textures](loading-models.md#surface-styles-and-textures).
+
+### Advanced (web-ifc)
+
+Passed unchanged to the web-ifc geometry engine, so they follow its releases: a web-ifc update may change what they do, or remove them. They are grouped under **Advanced (web-ifc)** in the Inspector.
+
 - `tape_size: int` (default `67108864`)
 - `memory_limit: int` (default `2147483648`)
 - `line_writer_buffer: int` (default `10000`)
@@ -228,10 +248,6 @@ Controls geometry conversion behavior and processing limits.
 - `tolerance_scalar_equality: float` (default `1.0e-4`)
 - `plane_refit_iterations: int` (default `1`)
 - `boolean_union_threshold: int` (default `150`)
-- `generate_lods: bool` (default `true`)
-- `lod_normal_merge_angle: float` (default `60.0`, degrees)
-- `ifc_materials: bool` (default `false`): read IFC material definitions, and use one material per IFC material instead of per colour. See [IFC Materials](loading-models.md#ifc-materials).
-- `ifc_textures: bool` (default `false`): load the textures of IFC surface styles onto the generated materials. Used only with `ifc_materials`. See [Surface Styles And Textures](loading-models.md#surface-styles-and-textures).
 
 ## Practical Pattern
 

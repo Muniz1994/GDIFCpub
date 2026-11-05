@@ -6,10 +6,14 @@
 		The standard window, IfcWindowStandardCase , defines a window with certain constraints for the provision of operation types, opening directions, frame and lining parameters, construction types and with certain constraints for the geometric representation. The IfcWindowStandardCase handles all cases of windows, that: are inserted into an opening, represented by IfcOpeningElement , using the IfcRelF
 	</brief_description>
 	<description>Only in IFC4 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

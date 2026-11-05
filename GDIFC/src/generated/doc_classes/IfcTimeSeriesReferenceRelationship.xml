@@ -6,16 +6,20 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="ReferencedTimeSeries" type="GDIFCEntityBase" setter="set_ReferencedTimeSeries" getter="get_ReferencedTimeSeries">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="TimeSeriesReferences" type="Array" setter="set_TimeSeriesReferences" getter="get_TimeSeriesReferences">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="TimeSeriesReferences" type="Variant" setter="set_TimeSeriesReferences" getter="get_TimeSeriesReferences">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

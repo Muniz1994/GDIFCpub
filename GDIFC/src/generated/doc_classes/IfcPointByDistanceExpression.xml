@@ -6,25 +6,29 @@
 
 	</brief_description>
 	<description>Only in IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="DistanceAlong" type="GDIFCEntityBase" setter="set_DistanceAlong" getter="get_DistanceAlong">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="DistanceAlong" type="Variant" setter="set_DistanceAlong" getter="get_DistanceAlong">
+			A value (String, float, int or bool), or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="OffsetLateral" type="float" setter="set_OffsetLateral" getter="get_OffsetLateral">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="OffsetLateral" type="Variant" setter="set_OffsetLateral" getter="get_OffsetLateral">
+			A float, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="OffsetVertical" type="float" setter="set_OffsetVertical" getter="get_OffsetVertical">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="OffsetVertical" type="Variant" setter="set_OffsetVertical" getter="get_OffsetVertical">
+			A float, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="OffsetLongitudinal" type="float" setter="set_OffsetLongitudinal" getter="get_OffsetLongitudinal">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="OffsetLongitudinal" type="Variant" setter="set_OffsetLongitudinal" getter="get_OffsetLongitudinal">
+			A float, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="BasisCurve" type="GDIFCEntityBase" setter="set_BasisCurve" getter="get_BasisCurve">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+			Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -6,16 +6,20 @@
 		IfcEllipseProfileDef defines an ellipse as the profile definition used by the swept surface geometry or the swept area solid. It is given by its semi axis attributes and placed within the 2D position coordinate system, established by the Position attribute. HISTORY New entity in IFC2x Figure 317 illustrates parameters for the ellipse profile definition. The parameterized profile defines its own po
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="SemiAxis1" type="float" setter="set_SemiAxis1" getter="get_SemiAxis1">
-			The first radius of the ellipse. It is measured along the direction of Position.P[1].
+		<member name="SemiAxis1" type="Variant" setter="set_SemiAxis1" getter="get_SemiAxis1">
+			The first radius of the ellipse. It is measured along the direction of Position.P[1]. A float, or null when unset.
 		</member>
-		<member name="SemiAxis2" type="float" setter="set_SemiAxis2" getter="get_SemiAxis2">
-			The second radius of the ellipse. It is measured along the direction of Position.P[2].
+		<member name="SemiAxis2" type="Variant" setter="set_SemiAxis2" getter="get_SemiAxis2">
+			The second radius of the ellipse. It is measured along the direction of Position.P[2]. A float, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

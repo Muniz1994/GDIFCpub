@@ -6,22 +6,26 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="SpecificHeatCapacity" type="float" setter="set_SpecificHeatCapacity" getter="get_SpecificHeatCapacity">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="SpecificHeatCapacity" type="Variant" setter="set_SpecificHeatCapacity" getter="get_SpecificHeatCapacity">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="N20Content" type="float" setter="set_N20Content" getter="get_N20Content">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="N20Content" type="Variant" setter="set_N20Content" getter="get_N20Content">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="COContent" type="float" setter="set_COContent" getter="get_COContent">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="COContent" type="Variant" setter="set_COContent" getter="get_COContent">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="CO2Content" type="float" setter="set_CO2Content" getter="get_CO2Content">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="CO2Content" type="Variant" setter="set_CO2Content" getter="get_CO2Content">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

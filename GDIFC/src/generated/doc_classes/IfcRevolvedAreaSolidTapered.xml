@@ -6,13 +6,17 @@
 		IfcRevolvedAreaSolidTapered is defined by revolving a cross section along a circular arc. The cross section may change along the revolving sweep from the shape of the start cross section into the shape of the end cross section. Corresponding vertices of the start and end cross sections are then connected. The bounded surface may have holes which will sweep into holes in the solid. The rotation axi
 	</brief_description>
 	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="EndSweptArea" type="GDIFCEntityBase" setter="set_EndSweptArea" getter="get_EndSweptArea">
-			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

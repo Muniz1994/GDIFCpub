@@ -15,7 +15,7 @@ A GDExtension for loading [buildingSMART IFC](https://www.buildingsmart.org/stan
 - Optional IFC materials and textures, with one Godot material per IFC material that can be replaced from scripts or the Inspector
 - Automatic mesh LODs
 - Optional collision shape generation per object, with a shape type and physics layers per IFC class
-- Georeferencing data (`MapConversion` / `ProjectedCRS`), and placing models relative to each other's georeference
+- Georeferencing data (`MapConversion` / `ProjectedCRS`, and IFC2X3's `ePSet_MapConversion`), and placing models relative to each other's georeference
 - Platforms: Windows, Linux, Android, Web (WASM)
 
 <p align="center">

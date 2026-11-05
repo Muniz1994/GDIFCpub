@@ -6,23 +6,25 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="SpaceProgramIdentifier" type="String" setter="set_SpaceProgramIdentifier" getter="get_SpaceProgramIdentifier">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="SpaceProgramIdentifier" type="Variant" setter="set_SpaceProgramIdentifier" getter="get_SpaceProgramIdentifier">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MaxRequiredArea" type="float" setter="set_MaxRequiredArea" getter="get_MaxRequiredArea">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="MaxRequiredArea" type="Variant" setter="set_MaxRequiredArea" getter="get_MaxRequiredArea">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MinRequiredArea" type="float" setter="set_MinRequiredArea" getter="get_MinRequiredArea">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="MinRequiredArea" type="Variant" setter="set_MinRequiredArea" getter="get_MinRequiredArea">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 		<member name="RequestedLocation" type="GDIFCEntityBase" setter="set_RequestedLocation" getter="get_RequestedLocation">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="StandardRequiredArea" type="float" setter="set_StandardRequiredArea" getter="get_StandardRequiredArea">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="StandardRequiredArea" type="Variant" setter="set_StandardRequiredArea" getter="get_StandardRequiredArea">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 		<member name="HasInteractionReqsFrom" type="Array" setter="" getter="get_HasInteractionReqsFrom">
 			Only in IFC2X3 files: in others it is empty.
@@ -31,6 +33,8 @@
 			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

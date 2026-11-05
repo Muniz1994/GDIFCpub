@@ -6,16 +6,20 @@
 		IfcLagTime describes the time parameters that may exist within a sequence relationship between two processes. HISTORY: New entity in IFC Release 2x4. Use Definitions An IfcLagTime provides information about the time lag that exists between the predecessor and successor process in a sequence. The assertion of the time lag is optional for a sequence but for work schedules that specifically deal with
 	</brief_description>
 	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="LagValue" type="GDIFCEntityBase" setter="set_LagValue" getter="get_LagValue">
-			Value of the time lag selected as being either a ratio or a time measure. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="LagValue" type="Variant" setter="set_LagValue" getter="get_LagValue">
+			Value of the time lag selected as being either a ratio or a time measure. A value (String, float, int or bool), or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="DurationType" type="String" setter="set_DurationType" getter="get_DurationType">
-			The allowed types of task duration that specify the lag time measurement (work time or elapsed time). Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="DurationType" type="Variant" setter="set_DurationType" getter="get_DurationType">
+			The allowed types of task duration that specify the lag time measurement (work time or elapsed time). A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

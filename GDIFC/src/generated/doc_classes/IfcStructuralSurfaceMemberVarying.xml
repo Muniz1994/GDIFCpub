@@ -6,16 +6,20 @@
 		Definition from IAI: Describes surface members with varying section properties. The properties are provided by means of a property set and IfcRelDefinesByProperties or by means of aggregation: An instance of IfcStructuralSurfaceMemberVarying may be composed of two or more instances of IfcStructuralSurfaceMember with differing section properties. These subordinate members relate to the instance of 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="SubsequentThickness" type="PackedFloat64Array" setter="set_SubsequentThickness" getter="get_SubsequentThickness">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="SubsequentThickness" type="Variant" setter="set_SubsequentThickness" getter="get_SubsequentThickness">
+			A PackedFloat64Array, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 		<member name="VaryingThicknessLocation" type="GDIFCEntityBase" setter="set_VaryingThicknessLocation" getter="get_VaryingThicknessLocation">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

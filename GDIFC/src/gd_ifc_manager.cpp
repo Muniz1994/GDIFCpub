@@ -64,6 +64,19 @@ void GDIFCManager::_bind_methods() {
 
     ClassDB::bind_method(D_METHOD("get_load_progress"), &GDIFCManager::get_load_progress);
     ClassDB::bind_method(D_METHOD("get_load_stage"), &GDIFCManager::get_load_stage);
+    ClassDB::bind_method(D_METHOD("get_load_stage_id"), &GDIFCManager::get_load_stage_id);
+    ClassDB::bind_method(D_METHOD("get_load_error"), &GDIFCManager::get_load_error);
+
+    // Stages in load order. Scripts compare against these, so new ones go at the end.
+    BIND_ENUM_CONSTANT(STAGE_IDLE);
+    BIND_ENUM_CONSTANT(STAGE_PARSING);
+    BIND_ENUM_CONSTANT(STAGE_GEOMETRY);
+    BIND_ENUM_CONSTANT(STAGE_LODS);
+    BIND_ENUM_CONSTANT(STAGE_NODES);
+    BIND_ENUM_CONSTANT(STAGE_EDITOR_CACHES);
+    BIND_ENUM_CONSTANT(STAGE_REVEAL);
+    BIND_ENUM_CONSTANT(STAGE_DONE);
+    BIND_ENUM_CONSTANT(STAGE_FAILED);
 
     ADD_SIGNAL(MethodInfo("ifc_read"));
     ADD_SIGNAL(MethodInfo("ifc_objects_ready"));
@@ -172,6 +185,12 @@ String GDIFCManager::get_load_stage() const {
         case STAGE_FAILED: return "Failed";
         default: return "";
     }
+}
+
+// A read_ifc*() failure before loading starts, kept for get_load_error()
+Error GDIFCManager::_fail_read(const String &message) {
+    load_error_ = message;
+    ERR_FAIL_V_MSG(Error::FAILED, message);
 }
 
 // Called by the worker when it enters a stage with `total` steps
@@ -349,6 +368,7 @@ void GDIFCManager::_relink_ifc_objects() {
 Error GDIFCManager::read_ifc(const String &_path, bool _create_collision, const Array &_collision_classes) {
 
     ERR_FAIL_COND_V_MSG(_is_loading(), ERR_BUSY, "Already loading!");
+    load_error_ = String();
 
     UtilityFunctions::print_rich("[color=blue]Started loading IFC");
 
@@ -357,13 +377,13 @@ Error GDIFCManager::read_ifc(const String &_path, bool _create_collision, const 
     // Read the file into the shared buffer
     Ref<FileAccess> fa = FileAccess::open(_path, FileAccess::READ);
     if (!fa.is_valid()) {
-        ERR_FAIL_V_MSG(Error::FAILED, String("Failed to open IFC file: ") + _path
-                       + String(" (error: ") + String::num_int64((int64_t)FileAccess::get_open_error()) + String(")"));
+        return _fail_read(String("Failed to open IFC file: ") + _path
+                          + String(" (error: ") + String::num_int64((int64_t)FileAccess::get_open_error()) + String(")"));
     }
     this->pending_buffer = fa->get_buffer(fa->get_length());
     fa.unref();
 
-    ERR_FAIL_COND_V_MSG(this->pending_buffer.is_empty(), Error::FAILED, "IFC file is empty.");
+    if (this->pending_buffer.is_empty()) return _fail_read("IFC file is empty.");
 
     // Store path for cold-reload persistence
     ifc_file_path_ = _path;
@@ -374,7 +394,8 @@ Error GDIFCManager::read_ifc(const String &_path, bool _create_collision, const 
 Error GDIFCManager::read_ifc_base64(const String &_base64_data, bool _create_collision, const Array &_collision_classes) {
 
     ERR_FAIL_COND_V_MSG(_is_loading(), ERR_BUSY, "Already loading!");
-    ERR_FAIL_COND_V_MSG(_base64_data.is_empty(), Error::FAILED, "Base64 data is empty.");
+    load_error_ = String();
+    if (_base64_data.is_empty()) return _fail_read("Base64 data is empty.");
 
     UtilityFunctions::print_rich("[color=blue]Started loading IFC from base64");
 
@@ -383,7 +404,7 @@ Error GDIFCManager::read_ifc_base64(const String &_base64_data, bool _create_col
     // Decode base64 into the shared buffer
     this->pending_buffer = Marshalls::get_singleton()->base64_to_raw(_base64_data);
 
-    ERR_FAIL_COND_V_MSG(this->pending_buffer.is_empty(), Error::FAILED, "Failed to decode base64 data.");
+    if (this->pending_buffer.is_empty()) return _fail_read("Failed to decode base64 data.");
 
     // No file on disk to re-parse on cold reload
     ifc_file_path_ = String();
@@ -530,17 +551,18 @@ void GDIFCManager::_reset_load_state(bool _create_collision, const Array &_colli
 // Used by the editor importer, which has to produce the scene within one call.
 Error GDIFCManager::read_ifc_blocking(const String &_path, bool _create_collision, const Array &_collision_classes) {
     ERR_FAIL_COND_V_MSG(_is_loading(), ERR_BUSY, "Already loading!");
+    load_error_ = String();
 
     start_loading_time = Time::get_singleton()->get_ticks_usec();
 
     Ref<FileAccess> fa = FileAccess::open(_path, FileAccess::READ);
     if (!fa.is_valid()) {
-        ERR_FAIL_V_MSG(Error::FAILED, String("Failed to open IFC file: ") + _path
-                       + String(" (error: ") + String::num_int64((int64_t)FileAccess::get_open_error()) + String(")"));
+        return _fail_read(String("Failed to open IFC file: ") + _path
+                          + String(" (error: ") + String::num_int64((int64_t)FileAccess::get_open_error()) + String(")"));
     }
     this->pending_buffer = fa->get_buffer(fa->get_length());
     fa.unref();
-    ERR_FAIL_COND_V_MSG(this->pending_buffer.is_empty(), Error::FAILED, "IFC file is empty.");
+    if (this->pending_buffer.is_empty()) return _fail_read("IFC file is empty.");
 
     ifc_file_path_ = _path;
     _reset_load_state(_create_collision, _collision_classes);
@@ -554,6 +576,7 @@ Error GDIFCManager::read_ifc_blocking(const String &_path, bool _create_collisio
     _wait_for_metadata_task();
 
     if (thread_failed_) {
+        load_error_ = pending_load_error_;
         pending_ifc_parse_file.reset();
         generation_queue.clear();
         pending_buffer = PackedByteArray();
@@ -628,6 +651,7 @@ void GDIFCManager::_process(double delta) {
             if (thread_failed_) {
                 // The task returned early and left its partial results behind.
                 // ifc_load_failed is emitted once the metadata task has stopped too.
+                load_error_ = pending_load_error_;
                 pending_ifc_parse_file.reset();
                 generation_queue.clear();
                 pending_buffer = PackedByteArray();
@@ -905,7 +929,7 @@ static Ref<T> material_as(const Ref<GDIFCMaterialDefinition>& definition) {
 template <typename schema>
 class MaterialReader {
 public:
-    explicit MaterialReader(const std::shared_ptr<IfcParse::IfcFile>& file) : file_(file) {
+    explicit MaterialReader(const std::shared_ptr<IfcParse::IfcFile>& file) : file_(file), context_(*file) {
         IfcParse::IfcFile& f = *file_;
         for (IfcUtil::IfcBaseClass* rel : ifc_instances(f, "IfcRelAssociatesMaterial")) {
             IfcUtil::IfcBaseClass* material = ifc_entity(rel, "RelatingMaterial");
@@ -991,6 +1015,7 @@ public:
 
 private:
     std::shared_ptr<IfcParse::IfcFile> file_;
+    PropertyDetailContext context_;
     std::unordered_map<int, IfcUtil::IfcBaseClass*> element_material_;
     std::unordered_map<int, int> element_type_; // occurrence -> its type
     std::unordered_map<int, std::vector<IfcUtil::IfcBaseClass*>> properties_;
@@ -1032,7 +1057,9 @@ private:
         definition->set_name(ifc_string(entity, type.is("IfcMaterialLayerSet") ? "LayerSetName" : "Name"));
         definition->set_description(ifc_string(entity, "Description"));
         definition->set_category(ifc_string(entity, "Category"));
-        definition->set_properties(read_properties(id));
+        Dictionary property_details;
+        definition->set_properties(read_properties(id, property_details));
+        definition->set_property_details(property_details);
         definition->set_classifications(read_references(id));
         definition->set_ifc_object(GDIFCEntityBase::wrap(entity, file_));
         read_members(entity, definition.ptr());
@@ -1097,28 +1124,47 @@ private:
         }
     }
 
-    // Material property sets, by name. IFC4 and later hold IfcProperty lists like property sets;
-    // IFC2X3 also has typed entities (thermal, mechanical, ...) whose attributes are the properties.
-    Dictionary read_properties(int id) {
+    // Material property sets, by name, with the value type and unit of each property in `details`.
+    // IFC4 and later hold IfcProperty lists like property sets; IFC2X3 also has typed entities
+    // (thermal, mechanical, ...) whose attributes are the properties.
+    Dictionary read_properties(int id, Dictionary& details) {
         Dictionary sets;
         auto found = properties_.find(id);
         if (found == properties_.end()) return sets;
         for (IfcUtil::IfcBaseClass* entity : found->second) {
             String name = ifc_string(entity, "Name");
             if (name.is_empty()) name = String(entity->declaration().name().c_str());
+            Dictionary set_details;
             if constexpr (std::is_same_v<schema, Ifc2x3>) {
                 if (auto* extended = entity->template as<Ifc2x3::IfcExtendedMaterialProperties>()) {
-                    sets[name] = convert_ifc_properties<schema>(extended->ExtendedProperties());
+                    sets[name] = convert_ifc_properties<schema>(extended->ExtendedProperties(), &context_, &set_details);
                 } else {
                     sets[name] = ifc_attributes(entity, "Material");
+                    set_details = attribute_details(entity, "Material");
                 }
             } else {
                 if (auto* extended = entity->template as<typename schema::IfcMaterialProperties>()) {
-                    sets[name] = convert_ifc_properties<schema>(extended->Properties());
+                    sets[name] = convert_ifc_properties<schema>(extended->Properties(), &context_, &set_details);
                 }
             }
+            if (sets.has(name)) details[name] = set_details;
         }
         return sets;
+    }
+
+    // The value type and unit of each attribute but `skip`, for ifc_attributes()
+    Dictionary attribute_details(IfcUtil::IfcBaseClass* entity, const char* skip) {
+        Dictionary result;
+        const IfcParse::entity* declaration = entity->declaration().as_entity();
+        if (!declaration) return result;
+        for (const IfcParse::attribute* attribute : declaration->all_attributes()) {
+            if (attribute->name() == skip) continue;
+            const IfcParse::named_type* named = attribute->type_of_attribute()->as_named_type();
+            if (!named || !named->declared_type()->as_type_declaration()) continue; // only defined types, such as IfcThermalConductivityMeasure
+            const std::string& type = named->declared_type()->name();
+            result[String::utf8(attribute->name().c_str())] = context_.shared_detail(context_.type_name(type), context_.unit_for(type));
+        }
+        return result;
     }
 
     // Classification and library references: their type and whichever identifying fields they have
@@ -1800,10 +1846,11 @@ void GDIFCManager::_metadata_extract_task() {
         }
     }
 
-    // Georeferencing data exists in IFC4 and later
+    // Georeferencing entities exist in IFC4 and later; IFC2X3 files can hold the same data in property sets
     try {
         switch (metadata_schema_index_) {
             case 0: metadata_georreference_ = get_georreference<Ifc4>(file); break;
+            case 2: metadata_georreference_ = get_georreference<Ifc2x3>(file); break;
             case 3: metadata_georreference_ = get_georreference<Ifc4x3_add2>(file); break;
             default: ;
         }
@@ -1965,17 +2012,16 @@ void GDIFCManager::_finish_metadata() {
             model->init(ifc_parse_file);
         }
 
-        // IFC4+: create Georeference node, or warn if georef data is absent
-        if (is_ifc4plus) {
-            if (georreference.valid) {
-                IFCGeoreference* georef_node = memnew(IFCGeoreference);
-                georef_node->set_name("Georeference");
-                georef_node->init(georreference);
-                model->add_child(georef_node);
-                georef_node->set_owner(get_owner() != nullptr ? get_owner() : this);
-            } else {
-                WARN_PRINT("IFC4+ file loaded without georeferencing data (IfcProjectedCRS/IfcMapConversion not found).");
-            }
+        // Create the Georeference node. Only IFC4+ files are warned about when the data is absent:
+        // few IFC2X3 files have it.
+        if (georreference.valid) {
+            IFCGeoreference* georef_node = memnew(IFCGeoreference);
+            georef_node->set_name("Georeference");
+            georef_node->init(georreference);
+            model->add_child(georef_node);
+            georef_node->set_owner(get_owner() != nullptr ? get_owner() : this);
+        } else if (is_ifc4plus) {
+            WARN_PRINT("IFC4+ file loaded without georeferencing data (IfcProjectedCRS/IfcMapConversion not found).");
         }
 
         // Place the model relative to the chosen reference georeference, if any
@@ -3029,15 +3075,18 @@ void GDIFCManager::_thread_task() {
     auto temp_ifc_manager = std::make_unique<WEBIFCManager>(geometric_settings.ptr());
     try {
         if (!temp_ifc_manager->read_ifc_file(buf_ptr, buf_size)) {
+            pending_load_error_ = "[web-ifc] Failed to read IFC file: the file is malformed and could only be partially parsed.";
             thread_failed_ = true;
-            ERR_FAIL_MSG("[web-ifc] Failed to read IFC file: the file is malformed and could only be partially parsed.");
+            ERR_FAIL_MSG(pending_load_error_);
         }
     } catch (const std::exception& e) {
+        pending_load_error_ = String("[web-ifc] Failed to read IFC file: ") + e.what();
         thread_failed_ = true;
-        ERR_FAIL_MSG(String("[web-ifc] Failed to read IFC file: ") + e.what());
+        ERR_FAIL_MSG(pending_load_error_);
     } catch (...) {
+        pending_load_error_ = "[web-ifc] Failed to read IFC file: unknown error.";
         thread_failed_ = true;
-        ERR_FAIL_MSG("[web-ifc] Failed to read IFC file: unknown error.");
+        ERR_FAIL_MSG(pending_load_error_);
     }
     progress_done_.store(1);
 
@@ -3062,11 +3111,13 @@ void GDIFCManager::_thread_task() {
     try {
         temp_ifc_manager->initialize_geometry_processor();
     } catch (const std::exception& e) {
+        pending_load_error_ = String("[web-ifc] Failed to initialize geometry processor: ") + e.what();
         thread_failed_ = true;
-        ERR_FAIL_MSG(String("[web-ifc] Failed to initialize geometry processor: ") + e.what());
+        ERR_FAIL_MSG(pending_load_error_);
     } catch (...) {
+        pending_load_error_ = "[web-ifc] Failed to initialize geometry processor: unknown error.";
         thread_failed_ = true;
-        ERR_FAIL_MSG("[web-ifc] Failed to initialize geometry processor: unknown error.");
+        ERR_FAIL_MSG(pending_load_error_);
     }
     progress_done_.store(2);
 
@@ -3773,6 +3824,8 @@ godot::Dictionary get_ifc_object_attributes(IfcParse::IfcFile& file, int express
     size_t idx = 0;
 
     for (; iter != attrs.end(); ++iter, ++idx) {
+        // Values only: references are left to ifc_object, which returns the entities themselves
+        if (!gd_holds_values((*iter)->type_of_attribute())) continue;
         attributes[(*iter)->name().c_str()] = convert_attribute_value(object->get_attribute_value(idx));
     }
 
@@ -3863,9 +3916,62 @@ godot::Variant to_godot_variant(const AttributeValue& attr_value) {
     });
 }
 
+// IFC2X3 has no georeferencing entities. The buildingSMART georeferencing guide puts their data in
+// the ePSet_MapConversion and ePSet_ProjectedCRS property sets, on the project or else the site.
+static godot::GeorreferenceData georeference_from_property_sets(IfcParse::IfcFile &file) {
+    Dictionary map_conversion;
+    Dictionary projected_crs;
+    int map_conversion_rank = 0; // 2 on the project, 1 on a site
+    int projected_crs_rank = 0;
+    auto rels = file.instances_by_type<Ifc2x3::IfcRelDefinesByProperties>();
+    if (!rels) return {};
+    for (auto* rel : *rels) {
+        auto* set = rel->RelatingPropertyDefinition()->template as<Ifc2x3::IfcPropertySet>();
+        if (!set) continue;
+        const String name = ifc_string(set, "Name").to_lower();
+        Dictionary* target = name == String("epset_mapconversion") ? &map_conversion
+                           : name == String("epset_projectedcrs") ? &projected_crs : nullptr;
+        if (!target) continue;
+        int* rank = target == &map_conversion ? &map_conversion_rank : &projected_crs_rank;
+        int object_rank = 0;
+        // Kept in a variable: iterating the returned list directly would outlive it
+        auto objects = rel->RelatedObjects();
+        for (auto* object : *objects) {
+            if (object->template as<Ifc2x3::IfcProject>()) object_rank = 2;
+            else if (object->template as<Ifc2x3::IfcSite>()) object_rank = MAX(object_rank, 1);
+        }
+        if (object_rank > *rank) {
+            *target = convert_ifc_properties<Ifc2x3>(set->HasProperties());
+            *rank = object_rank;
+        }
+    }
+    auto is_number = [](const Variant& v) { return v.get_type() == Variant::FLOAT || v.get_type() == Variant::INT; };
+    if (!is_number(map_conversion.get("Eastings", Variant())) || !is_number(map_conversion.get("Northings", Variant()))) return {};
+
+    auto number = [&](const char* key, double fallback) {
+        const Variant v = map_conversion.get(key, Variant());
+        return is_number(v) ? (double)v : fallback;
+    };
+    auto text = [&](const char* key) {
+        const Variant v = projected_crs.get(key, Variant());
+        return v.get_type() == Variant::STRING ? String(v) : String();
+    };
+    return GeorreferenceData(
+        MapConversion{number("Eastings", 0.0), number("Northings", 0.0), number("OrthogonalHeight", 0.0),
+                      number("XAxisAbscissa", 1.0), number("XAxisOrdinate", 0.0), number("Scale", 1.0)},
+        ProjectedCRS{text("Name"), text("Description"), text("GeodeticDatum"), text("VerticalDatum")});
+}
+
 template <typename schema>
 godot::GeorreferenceData get_georreference(IfcParse::IfcFile &file) {
     if constexpr (std::is_same_v<schema, Ifc2x3>) {
+        try {
+            return georeference_from_property_sets(file);
+        } catch (const std::exception& e) {
+            ERR_PRINT(godot::String("Failed to get georeference data: ") + e.what());
+        } catch (...) {
+            ERR_PRINT("Failed to get georeference data: unknown error.");
+        }
         return {};
     } else {
         try {
@@ -3890,15 +3996,24 @@ godot::GeorreferenceData get_georreference(IfcParse::IfcFile &file) {
                 crs_name = projected_crs->Name().value_or("");
             }
 
+            MapConversion conversion{
+                (double)map_conversion->Eastings(),
+                (double)map_conversion->Northings(),
+                (double)map_conversion->OrthogonalHeight(),
+                (double)map_conversion->XAxisAbscissa().value_or(1.0), // IFC default: no rotation
+                (double)map_conversion->XAxisOrdinate().value_or(0.0),
+                (double)map_conversion->Scale().value_or(1.0)          // IFC default: no scaling
+            };
+            if constexpr (std::is_same_v<schema, Ifc4x3_add2>) {
+                if (auto* scaled = map_conversion->template as<Ifc4x3_add2::IfcMapConversionScaled>()) {
+                    conversion.FactorX = scaled->FactorX();
+                    conversion.FactorY = scaled->FactorY();
+                    conversion.FactorZ = scaled->FactorZ();
+                }
+            }
+
             return GeorreferenceData(
-                MapConversion{
-                    (double)map_conversion->Eastings(),
-                    (double)map_conversion->Northings(),
-                    (double)map_conversion->OrthogonalHeight(),
-                    (double)map_conversion->XAxisAbscissa().value_or(1.0), // IFC default: no rotation
-                    (double)map_conversion->XAxisOrdinate().value_or(0.0),
-                    (double)map_conversion->Scale().value_or(1.0)          // IFC default: no scaling
-                },
+                conversion,
                 ProjectedCRS{
                     godot::String::utf8(crs_name.c_str()),
                     godot::String::utf8(projected_crs->Description().value_or("").c_str()),

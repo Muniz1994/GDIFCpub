@@ -6,19 +6,23 @@
 		The text literal is a geometric representation item which describes a text string using a string literal and additional position and path information. NOTE The IfcTextLiteral is an entity that had been adopted from ISO 10303, Industrial automation systems and integration—Product data representation and exchange. NOTE Corresponding ISO 10303 name: text_literal. Please refer to ISO/IS 10303-46:1994 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Literal" type="String" setter="set_Literal" getter="get_Literal">
-			The text literal to be presented.
+		<member name="Literal" type="Variant" setter="set_Literal" getter="get_Literal">
+			The text literal to be presented. A String, or null when unset.
 		</member>
 		<member name="Placement" type="GDIFCEntityBase" setter="set_Placement" getter="get_Placement">
 			An IfcAxis2Placement that determines the placement and orientation of the presented string. When used with a text style based on IfcTextStyleWithBoxCharacteristics then the y-axis is taken as the reference direction for the box rotation angle and the box slant angle.
 		</member>
-		<member name="Path" type="String" setter="set_Path" getter="get_Path">
-			The writing direction of the text literal.
+		<member name="Path" type="Variant" setter="set_Path" getter="get_Path">
+			The writing direction of the text literal. A String, one of the enumeration's values, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

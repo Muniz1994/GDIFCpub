@@ -6,11 +6,13 @@
 		Definition from ISO/CD 10303-42:1992 : A Boolean result is the result of a regularized operation on two solids to create a new solid. Valid operations are regularized union, regularized intersection, and regularized difference. For purpose of Boolean operations, a solid is considered to be a regularized set of points. The final Boolean result depends upon the operation and the two operands. In the
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Operator" type="String" setter="set_Operator" getter="get_Operator">
-			The Boolean operator used in the operation to create the result.
+		<member name="Operator" type="Variant" setter="set_Operator" getter="get_Operator">
+			The Boolean operator used in the operation to create the result. A String, one of the enumeration's values, or null when unset.
 		</member>
 		<member name="FirstOperand" type="GDIFCEntityBase" setter="set_FirstOperand" getter="get_FirstOperand">
 			The first operand to be operated upon by the Boolean operation.
@@ -19,6 +21,8 @@
 			The second operand specified for the operation.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

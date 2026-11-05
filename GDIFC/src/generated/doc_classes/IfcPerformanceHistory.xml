@@ -6,16 +6,20 @@
 		IfcPerformanceHistory is used to document the actual performance of an occurrence instance over time. In practice, performance-related data are generally not easy to obtain as they can originate from different sources (predicted, simulated, or measured) and occur during different stages of the building life-cycle. Such time-related data cover a large spectrum, including meteorological data, schedu
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="LifeCyclePhase" type="String" setter="set_LifeCyclePhase" getter="get_LifeCyclePhase">
-			Describes the applicable building life-cycle phase. Typical values should be DESIGNDEVELOPMENT, SCHEMATICDEVELOPMENT, CONSTRUCTIONDOCUMENT, CONSTRUCTION, ASBUILT, COMMISSIONING, OPERATION, etc.
+		<member name="LifeCyclePhase" type="Variant" setter="set_LifeCyclePhase" getter="get_LifeCyclePhase">
+			Describes the applicable building life-cycle phase. Typical values should be DESIGNDEVELOPMENT, SCHEMATICDEVELOPMENT, CONSTRUCTIONDOCUMENT, CONSTRUCTION, ASBUILT, COMMISSIONING, OPERATION, etc. A String, or null when unset.
 		</member>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Predefined generic type for a performace history that is specified in an enumeration. IFC2x4 CHANGE The attribute has been added at the end of the entity definition. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic type for a performace history that is specified in an enumeration. IFC2x4 CHANGE The attribute has been added at the end of the entity definition. A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

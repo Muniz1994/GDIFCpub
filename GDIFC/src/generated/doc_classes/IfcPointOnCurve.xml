@@ -6,16 +6,20 @@
 		Definition from ISO/CD 10303-42:1992 : A point on curve is a point which lies on a curve. The point is determined by evaluating the curve at a specific parameter value. The coordinate space dimensionality of the point is that of the basis curve. NOTE: Corresponding STEP entity: point_on_curve. Please refer to ISO/IS 10303-42:1994, p. 23 for the final definition of the formal standard. HISTORY: New
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="BasisCurve" type="GDIFCEntityBase" setter="set_BasisCurve" getter="get_BasisCurve">
 			The curve to which point parameter relates.
 		</member>
-		<member name="PointParameter" type="float" setter="set_PointParameter" getter="get_PointParameter">
-			The parameter value of the point location.
+		<member name="PointParameter" type="Variant" setter="set_PointParameter" getter="get_PointParameter">
+			The parameter value of the point location. A float, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

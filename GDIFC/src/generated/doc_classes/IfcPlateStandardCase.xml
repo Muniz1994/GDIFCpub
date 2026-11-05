@@ -6,10 +6,14 @@
 		The standard plate, IfcPlateStandardCase , defines a plate with certain constraints for the provision of material usage, parameters and with certain constraints for the geometric representation. The IfcPlateStandardCase handles all cases of plates, that: have a reference to the IfcMaterialLayerSetUsage defining the material layers of the plate with thicknesses are based on an extrusion of a planar
 	</brief_description>
 	<description>Only in IFC4 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

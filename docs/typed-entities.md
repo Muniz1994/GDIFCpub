@@ -33,13 +33,30 @@ if wall:
 
 If the cast returns `null`, the object is a different IFC class. A cast also succeeds for subtypes, so an `IfcWallStandardCase` casts to `IfcWall`.
 
+## Attribute Types
+
+Attributes that refer to another entity, such as `OwnerHistory` or `ObjectPlacement`, are `GDIFCEntityBase` properties. Every other attribute is a `Variant` property: the class reference says what it holds, such as a `float` for `IfcDoor.OverallHeight`, and it is `null` when the file leaves it unset.
+
+```gdscript
+var door := ifc_node.ifc_object as IfcDoor
+if door.OverallHeight != null:
+    print("Height: ", door.OverallHeight)
+```
+
+Since the property is a `Variant`, a typed variable fails at runtime when the attribute is unset: `var height: float = door.OverallHeight` errors on a door without a height. Check for `null` first.
+
+- Numbers are `int` or `float`, as the schema declares, even when the file writes them the other way.
+- Enumerations are `String`s, such as `"NOTDEFINED"`. Logicals are `"TRUE"`, `"FALSE"` or `"UNKNOWN"`.
+- Lists are arrays: packed arrays of numbers or strings, or `Array`s of entities.
+- Property values, such as an `IfcPropertySingleValue`'s `NominalValue`, read as their plain value (`"Reference"`, `3.5`), not as an `IfcLabel` or `IfcLengthMeasure`. Setting one keeps its IFC type when the new value fits.
+
 ## Files of Every Schema
 
 The same classes serve IFC2X3, IFC4 and IFC4X3 files. Each class has the attributes its entity has in any of them, and reads them from the file's own schema:
 
-- An attribute the file's schema doesn't have reads as empty (`""`, `0`, `null` or an empty array), and setting it reports an error. `IfcSpace.PredefinedType` is empty in an IFC2X3 file, which has `InteriorOrExteriorSpace` instead.
+- An attribute the file's schema doesn't have reads as `null`, and setting it reports an error. `IfcSpace.PredefinedType` is `null` in an IFC2X3 file, which has `InteriorOrExteriorSpace` instead.
 - Attributes IFC4X3 renamed are read under their new name. `IfcProperty.Specification` is the `Description` of an IFC2X3 or IFC4 property, and `IfcOrganization.Identification` the `Id` of an IFC2X3 organization.
-- About 40 attributes whose type changed between schemas are `Variant`, such as `IfcQuantityCount.CountValue` (an `int` in IFC4X3, a `float` before) and the dates that IFC2X3 holds as entities.
+- An attribute whose type changed between schemas reads as the type of the file's schema, such as `IfcQuantityCount.CountValue` (an `int` in IFC4X3, a `float` before) and the dates that IFC2X3 holds as entities.
 - Entities only found in older schemas, such as `IfcDoorStyle` or `IfcBuildingElement`, have classes too.
 
 The class reference in the editor says which schemas a class or attribute is in, and the old name of a renamed attribute. The hierarchy is IFC4X3's: an IFC4 wall is an `IfcBuiltElement` for a cast, although IFC4 calls that class `IfcBuildingElement`. `is_a()` follows the file's own schema, so `is_a("IfcBuildingElement")` is true for it.

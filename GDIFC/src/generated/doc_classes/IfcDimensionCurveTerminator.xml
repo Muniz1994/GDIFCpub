@@ -6,13 +6,17 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Role" type="String" setter="set_Role" getter="get_Role">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="Role" type="Variant" setter="set_Role" getter="get_Role">
+			A String, one of the enumeration's values, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

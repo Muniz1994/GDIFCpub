@@ -6,14 +6,16 @@
 		Definition from ISO/CD 10303-42:1992 : A geometric representation context is a representation context in which the geometric representation items are geometrically founded. A geometric representation context is a distinct coordinate space, spatially unrelated to other coordinate spaces. IfcGeometricRepresentationContext defines the context that applies to several shape representations of products 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="CoordinateSpaceDimension" type="int" setter="set_CoordinateSpaceDimension" getter="get_CoordinateSpaceDimension">
-			The integer dimension count of the coordinate space modeled in a geometric representation context.
+		<member name="CoordinateSpaceDimension" type="Variant" setter="set_CoordinateSpaceDimension" getter="get_CoordinateSpaceDimension">
+			The integer dimension count of the coordinate space modeled in a geometric representation context. An int, or null when unset.
 		</member>
-		<member name="Precision" type="float" setter="set_Precision" getter="get_Precision">
-			Value of the model precision for geometric models. It is a double value (REAL), typically in 1E-5 to 1E-8 range, that indicates the tolerance under which two given points are still assumed to be identical. The value can be used e.g. to sets the maximum distance from an edge curve to the underlying face surface in brep models.
+		<member name="Precision" type="Variant" setter="set_Precision" getter="get_Precision">
+			Value of the model precision for geometric models. It is a double value (REAL), typically in 1E-5 to 1E-8 range, that indicates the tolerance under which two given points are still assumed to be identical. The value can be used e.g. to sets the maximum distance from an edge curve to the underlying face surface in brep models. A float, or null when unset.
 		</member>
 		<member name="WorldCoordinateSystem" type="GDIFCEntityBase" setter="set_WorldCoordinateSystem" getter="get_WorldCoordinateSystem">
 			Establishment of the engineering coordinate system (often referred to as the world coordinate system in CAD) for all representation contexts used by the project. Note it can be used to provide better numeric stability if the placement of the building(s) is far away from the origin. In most cases however it would be set to origin: (0.,0.,0.) and directions x(1.,0.,0.), y(0.,1.,0.), z(0.,0.,1.).
@@ -27,6 +29,8 @@
 			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

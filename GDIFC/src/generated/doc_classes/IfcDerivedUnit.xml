@@ -6,21 +6,26 @@
 		Definition from ISO/CD 10303-41:1992 : A derived unit is an expression of units. EXAMPLE: Newton per square millimetre is a derived unit. NOTE: Corresponding ISO 10303 name: derived_unit, please refer to ISO/IS 10303-41 for the final definition of the formal standard. HISTORY: New entity in IFC Release 1.5.1.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Elements" type="Array" setter="set_Elements" getter="get_Elements">
-			The group of units and their exponents that define the derived unit.
+		<member name="Elements" type="Variant" setter="set_Elements" getter="get_Elements">
+			The group of units and their exponents that define the derived unit. An Array of GDIFCEntityBase entities, or null when unset.
 		</member>
-		<member name="UnitType" type="String" setter="set_UnitType" getter="get_UnitType">
-			Name of the derived unit chosen from an enumeration of derived unit types for use in IFC models.
+		<member name="UnitType" type="Variant" setter="set_UnitType" getter="get_UnitType">
+			Name of the derived unit chosen from an enumeration of derived unit types for use in IFC models. A String, one of the enumeration's values, or null when unset.
 		</member>
-		<member name="UserDefinedType" type="String" setter="set_UserDefinedType" getter="get_UserDefinedType">
+		<member name="UserDefinedType" type="Variant" setter="set_UserDefinedType" getter="get_UserDefinedType">
+			A String, or null when unset.
 		</member>
-		<member name="Name" type="String" setter="set_Name" getter="get_Name">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="Name" type="Variant" setter="set_Name" getter="get_Name">
+			A String, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

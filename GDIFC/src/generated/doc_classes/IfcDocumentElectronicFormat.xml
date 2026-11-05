@@ -6,19 +6,23 @@
 		IfcDocumentElectronicFormat captures the type of document being referenced as an external source, and for which metadata is specified by IfcDocumentInformation . HISTORY: New entity in IFC 2x
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="FileExtension" type="String" setter="set_FileExtension" getter="get_FileExtension">
-			File extension of electronic document used by computer operating system. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="FileExtension" type="Variant" setter="set_FileExtension" getter="get_FileExtension">
+			File extension of electronic document used by computer operating system. A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MimeContentType" type="String" setter="set_MimeContentType" getter="get_MimeContentType">
-			Main Mime type (as published by W3C or as user defined application type). Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="MimeContentType" type="Variant" setter="set_MimeContentType" getter="get_MimeContentType">
+			Main Mime type (as published by W3C or as user defined application type). A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MimeSubtype" type="String" setter="set_MimeSubtype" getter="get_MimeSubtype">
-			Mime subtype information. Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="MimeSubtype" type="Variant" setter="set_MimeSubtype" getter="get_MimeSubtype">
+			Mime subtype information. A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -6,13 +6,17 @@
 		This is a collection of properties applicable to section profile definitions. The following sets of extended profile property definitions are part of this IFC release: mechanical properties for all classes of profiles properties for precast concrete double-T sections properties for precast concrete hollow core sections HISTORY New entity in IFC2x2. IFC2x4 CHANGE Entity made non-abstract. Subtypes 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="ProfileDefinition" type="GDIFCEntityBase" setter="set_ProfileDefinition" getter="get_ProfileDefinition">
 			Profile definition which is qualified by these properties.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

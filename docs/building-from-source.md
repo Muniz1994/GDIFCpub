@@ -61,13 +61,15 @@ cd ifcopenshell-express
 python godot_codegen.py schemas/IFC4X3_ADD2.exp schemas/IFC4.exp schemas/IFC2X3_TC1.exp ../GDIFC/src/generated/
 ```
 
-One class is generated per entity name across the schemas, so the same classes serve files of every supported schema. The first schema decides the class hierarchy, attribute names and types; entities and attributes only found in the others are added. Parsing a schema the first time takes a few minutes and leaves a `.cache.dat` next to it, which later runs read in seconds.
+One class is generated per entity name across the schemas, so the same classes serve files of every supported schema. The first schema decides the class hierarchy and attribute names; entities and attributes only found in the others are added. References to entities become `GDIFCEntityBase` properties and every other attribute a `Variant` property. Parsing a schema the first time takes a few minutes and leaves a `.cache.dat` next to it, which later runs read in seconds.
 
 After regeneration, run your usual build command again, and check the classes against files of each schema with `tests/entities_test.gd`:
 
 ```bash
 godot --headless --path ifc-godot-project --script res://tests/entities_test.gd -- --file <ifc>
 ```
+
+The other scripts in `ifc-godot-project/tests` check property sets (`properties_test.gd`), collision (`collision_matrix_test.gd`), the load stage and error (`load_status_test.gd`) and georeferencing (`georeference_test.gd -- --ifc2x3 <ifc> --ifc4x3 <ifc>`, given an IFC2X3 file with a site and an IFC4X3 file with an `IfcMapConversion`). Each describes its arguments at its top.
 
 ## Common Build Notes
 

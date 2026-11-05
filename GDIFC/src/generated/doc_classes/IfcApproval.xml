@@ -6,47 +6,49 @@
 		Definition: An IfcApproval represents information about approval processes such as for a plan, a design, a proposal, or a change order in a construction or facilities management project. IfcApproval is referenced by IfcRelAssociatesApproval in IfcControlExtension schema, and thereby can be related to all subtypes of IfcRoot . An approval may also be given to resource objects using IfcResourceAppro
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Identifier" type="String" setter="set_Identifier" getter="get_Identifier">
-			A computer interpretable identifier by which the approval is known.
+		<member name="Identifier" type="Variant" setter="set_Identifier" getter="get_Identifier">
+			A computer interpretable identifier by which the approval is known. A String, or null when unset.
 		</member>
-		<member name="Name" type="String" setter="set_Name" getter="get_Name">
-			A human readable name given to an approval.
+		<member name="Name" type="Variant" setter="set_Name" getter="get_Name">
+			A human readable name given to an approval. A String, or null when unset.
 		</member>
-		<member name="Description" type="String" setter="set_Description" getter="get_Description">
-			A general textual description of a design, work task, plan, etc. that is being approved for.
+		<member name="Description" type="Variant" setter="set_Description" getter="get_Description">
+			A general textual description of a design, work task, plan, etc. that is being approved for. A String, or null when unset.
 		</member>
-		<member name="TimeOfApproval" type="String" setter="set_TimeOfApproval" getter="get_TimeOfApproval">
-			Date and time when the result of the approval process is produced. IFC2x4 CHANGE Attribute data type changed to IfcDateTime using ISO 8601 representation, renamed from ApprovalDateTime and made OPTIONAL. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="TimeOfApproval" type="Variant" setter="set_TimeOfApproval" getter="get_TimeOfApproval">
+			Date and time when the result of the approval process is produced. IFC2x4 CHANGE Attribute data type changed to IfcDateTime using ISO 8601 representation, renamed from ApprovalDateTime and made OPTIONAL. A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Status" type="String" setter="set_Status" getter="get_Status">
-			The result or current status of the approval, e.g. Requested, Processed, Approved, Not Approved. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="Status" type="Variant" setter="set_Status" getter="get_Status">
+			The result or current status of the approval, e.g. Requested, Processed, Approved, Not Approved. A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Level" type="String" setter="set_Level" getter="get_Level">
-			Level of the approval e.g. Draft v.s. Completed design. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="Level" type="Variant" setter="set_Level" getter="get_Level">
+			Level of the approval e.g. Draft v.s. Completed design. A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Qualifier" type="String" setter="set_Qualifier" getter="get_Qualifier">
-			Textual description of special constraints or conditions for the approval. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="Qualifier" type="Variant" setter="set_Qualifier" getter="get_Qualifier">
+			Textual description of special constraints or conditions for the approval. A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="RequestingApproval" type="GDIFCEntityBase" setter="set_RequestingApproval" getter="get_RequestingApproval">
-			The actor that is acting in the role specified at IfcOrganization or individually at IfcPerson and requesting an approval. IFC2x4 CHANGE New attribute for approval request replacing IfcApprovalActorRelationship (being deleted). Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+			The actor that is acting in the role specified at IfcOrganization or individually at IfcPerson and requesting an approval. IFC2x4 CHANGE New attribute for approval request replacing IfcApprovalActorRelationship (being deleted). Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="GivingApproval" type="GDIFCEntityBase" setter="set_GivingApproval" getter="get_GivingApproval">
-			The actor that is acting in the role specified at IfcOrganization or individually at IfcPerson and giving an approval. IFC2x4 CHANGE New attribute for approval provision replacing IfcApprovalActorRelationship (being deleted). Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+			The actor that is acting in the role specified at IfcOrganization or individually at IfcPerson and giving an approval. IFC2x4 CHANGE New attribute for approval provision replacing IfcApprovalActorRelationship (being deleted). Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="ApprovalDateTime" type="GDIFCEntityBase" setter="set_ApprovalDateTime" getter="get_ApprovalDateTime">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+			Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="ApprovalStatus" type="String" setter="set_ApprovalStatus" getter="get_ApprovalStatus">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="ApprovalStatus" type="Variant" setter="set_ApprovalStatus" getter="get_ApprovalStatus">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="ApprovalLevel" type="String" setter="set_ApprovalLevel" getter="get_ApprovalLevel">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="ApprovalLevel" type="Variant" setter="set_ApprovalLevel" getter="get_ApprovalLevel">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="ApprovalQualifier" type="String" setter="set_ApprovalQualifier" getter="get_ApprovalQualifier">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="ApprovalQualifier" type="Variant" setter="set_ApprovalQualifier" getter="get_ApprovalQualifier">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 		<member name="HasExternalReferences" type="Array" setter="" getter="get_HasExternalReferences">
 			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
@@ -65,6 +67,8 @@
 			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

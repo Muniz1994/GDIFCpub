@@ -9,10 +9,10 @@ hierarchy inside Godot's class system.
 Several schemas can be given: one class is generated per entity name across all of them, so a
 script using IfcWall works with files of every schema. The first schema is the primary one: its
 hierarchy, attribute names and types win. Entities and attributes only found in the others are
-added, attributes the primary schema renamed are read under their old name in files of the older
-schemas, and attributes whose type differs between schemas are exposed as Variant. Accessors look
-attributes up by name in the entity's own schema, so an attribute missing from a file's schema
-reads as empty.
+added, and attributes the primary schema renamed are read under their old name in files of the
+older schemas. Accessors look attributes up by name in the entity's own schema. References to
+entities are typed GDIFCEntityBase properties; every other attribute is a Variant property, read
+as the type the file's schema declares, and null when it's unset or missing from that schema.
 
 Usage:
     python3 godot_codegen.py <primary.exp> [<other.exp> ...] <output_dir>
@@ -46,7 +46,8 @@ sys.path.insert(0, _here)
 # ─────────────────────────────────────────────────────────────────────────────
 # Type-mapping tables  (Express argument type → Godot C++ side)
 # ─────────────────────────────────────────────────────────────────────────────
-# Each entry: (cpp_type, variant_type_enum, getter_helper, default_val)
+# Each entry: (cpp_type, variant_type_enum, getter_helper, default_val). Only entity references
+# keep these types as properties (see value_info); the others name what a Variant property holds.
 ARGTYPE_MAP = {
     "IfcUtil::Argument_INT":     ("int64_t",                   "Variant::INT",                "gd_attr_int",        "0"),
     "IfcUtil::Argument_DOUBLE":  ("double",                    "Variant::FLOAT",              "gd_attr_double",     "0.0"),
@@ -78,11 +79,9 @@ ARGTYPE_MAP = {
         "godot::Array", "Variant::ARRAY", "gd_attr_array", "godot::Array()"),
 }
 
-# Attributes whose type differs between schemas
-VARIANT_TYPE = ("godot::Variant", "Variant::NIL", "gd_attr_to_variant", "godot::Variant()")
-
-# Getters that wrap entities, which need the file to keep alive
-FILE_GETTERS = ("gd_attr_entity", "gd_attr_agg_entity", "gd_attr_array", "gd_attr_to_variant")
+# Every attribute but an entity reference: null when unset, otherwise the type the file's schema
+# declares, read by gd_get_attribute
+VARIANT_TYPE = ("godot::Variant", "Variant::NIL", "gd_get_attribute", "godot::Variant()")
 
 # Argument types holding a plain value, whose declared type may change when the attribute is
 # renamed (see same_value). Enumerations, entities and selects must keep their declared type.
@@ -209,6 +208,16 @@ _CPP_TO_XML_TYPE = {
 }
 
 
+def holds_description(a, all_schemas: list) -> str:
+    """What a Variant attribute holds, e.g. "A float, or null when unset."""
+    kinds = a.kinds_by_schema()
+    if len(kinds) == 1:
+        held = kinds[0][0]
+    else:
+        held = ", ".join(f"{kind} in {join_names(schemas)} files" for kind, schemas in kinds)
+    return f"{held[0].upper()}{held[1:]}, or null when unset."
+
+
 def emit_xml_doc(cls, entity_desc: str, attr_desc: dict, all_schemas: list) -> str:
     """Emit a Godot XML doc file for one generated class."""
     parent = cls.parent if cls.parent else "GDIFCEntityBase"
@@ -225,8 +234,11 @@ def emit_xml_doc(cls, entity_desc: str, attr_desc: dict, all_schemas: list) -> s
         f'\t\t{_xml(brief)}' if brief else '',
         '\t</brief_description>',
         f'\t<description>{_xml(description)}</description>',
-        '\t<tutorials/>',
-        '\t<methods/>',
+        # Open and close tags: Godot's doc parser reads a self-closing one as still open
+        '\t<tutorials>',
+        '\t</tutorials>',
+        '\t<methods>',
+        '\t</methods>',
         '\t<members>',
     ]
     for a in cls.attrs:
@@ -237,10 +249,9 @@ def emit_xml_doc(cls, entity_desc: str, attr_desc: dict, all_schemas: list) -> s
         for old_name, schemas in a.renamed_in():
             notes.append(f"In {join_names(schemas)} files, this is the [code]{old_name}[/code] attribute.")
         if a.type_info is VARIANT_TYPE:
-            notes.append("Its type depends on the file's schema: " + ", ".join(
-                f"{_CPP_TO_XML_TYPE.get(cpp, 'Variant')} in {join_names(schemas)}" for cpp, schemas in a.types_by_schema()) + ".")
+            notes.append(holds_description(a, all_schemas))
         if a.schemas != all_schemas:
-            notes.append(f"Only in {join_names(a.schemas)} files: in others it reads as empty and can't be set.")
+            notes.append(f"Only in {join_names(a.schemas)} files: in others it reads as null and can't be set.")
         lines.append(f'\t\t<member name="{a.name}" type="{xml_type}" setter="set_{a.name}" getter="get_{a.name}">')
         text = " ".join(n for n in notes if n)
         if text:
@@ -251,7 +262,7 @@ def emit_xml_doc(cls, entity_desc: str, attr_desc: dict, all_schemas: list) -> s
         if inv.schemas != all_schemas:
             lines.append(f'\t\t\t{_xml(f"Only in {join_names(inv.schemas)} files: in others it is empty.")}')
         lines.append('\t\t</member>')
-    lines += ['\t</members>', '\t<signals/>', '\t<constants/>', '</class>']
+    lines += ['\t</members>', '\t<signals>', '\t</signals>', '\t<constants>', '\t</constants>', '</class>']
     return '\n'.join(lines) + '\n'
 
 
@@ -261,16 +272,49 @@ def emit_xml_doc(cls, entity_desc: str, attr_desc: dict, all_schemas: list) -> s
 
 class SchemaAttr:
     """An explicit attribute as one schema declares it."""
-    def __init__(self, name, arg_type, declared):
+    def __init__(self, name, arg_type, declared, holds_values=True, holds_entities=False):
         self.name = name
         self.arg_type = arg_type    # IfcUtil::Argument_*, or SKIP when it can't be mapped
         self.declared = declared    # declared type, e.g. IfcLabel or set[1:?] of IfcRepresentationItem
+        # Whether it can hold plain values (anything but entities and selects of them) and entities
+        self.holds_values = holds_values
+        self.holds_entities = holds_entities
 
     @property
     def type_info(self):
         if self.arg_type == "SKIP" or "UNKNOWN" in self.arg_type:
             return None
         return ARGTYPE_MAP.get(self.arg_type)
+
+    @property
+    def is_reference(self):
+        """A single entity, or a select of only entities: a typed GDIFCEntityBase property"""
+        return self.arg_type == "IfcUtil::Argument_ENTITY_INSTANCE" and not self.holds_values
+
+    @property
+    def kind(self):
+        """What its value reads as, for the class reference"""
+        t = self.arg_type.split("_", 1)[1]
+        if t == "ENTITY_INSTANCE":
+            if not self.holds_values:
+                return "a GDIFCEntityBase"
+            return "a value or a GDIFCEntityBase" if self.holds_entities else "a value (String, float, int or bool)"
+        if t in ("AGGREGATE_OF_ENTITY_INSTANCE", "AGGREGATE_OF_AGGREGATE_OF_ENTITY_INSTANCE"):
+            if not self.holds_values:
+                inner = "GDIFCEntityBase entities"
+            elif self.holds_entities:
+                inner = "values and GDIFCEntityBase entities"
+            else:
+                inner = "values (String, float, int or bool)"
+            return ("an Array of Arrays of " if "AGGREGATE_OF_AGGREGATE" in t else "an Array of ") + inner
+        if t == "LOGICAL":
+            return 'a String ("TRUE", "FALSE" or "UNKNOWN")'
+        if t == "BINARY":
+            return "a String of 0s and 1s"
+        if t == "ENUMERATION":
+            return "a String, one of the enumeration's values"
+        xml = _CPP_TO_XML_TYPE.get(self.type_info[0], "Variant")
+        return ("an " if xml[0] in "AEIOU" or xml == "int" else "a ") + xml
 
 
 class Schema:
@@ -310,8 +354,23 @@ class Schema:
             except Exception:
                 # Derived attributes, expressions, or unsupported types
                 arg_type = "SKIP"
-            attrs.append(SchemaAttr(str(attr.name), arg_type, str(attr.type)))
+            values, entities = self.holds(attr.type)
+            attrs.append(SchemaAttr(str(attr.name), arg_type, str(attr.type), values, entities))
         return attrs
+
+    def holds(self, attr_type):
+        """(plain values, entities) an attribute of this type can hold, through aggregates and selects"""
+        import nodes
+        schema = self.mapping.schema
+        while isinstance(attr_type, nodes.AggregationType):
+            attr_type = attr_type.type
+        name = str(attr_type)
+        if schema.is_entity(name):
+            return False, True
+        if schema.is_select(name):
+            held = [self.holds(option) for option in schema.selects[name].values]
+            return any(v for v, _ in held), any(e for _, e in held)
+        return True, False
 
     def full_attrs(self, name):
         """Every explicit attribute of the entity, inherited first, in STEP order."""
@@ -351,14 +410,15 @@ class GenAttr:
                 schemas.append(schema)
         return list(by_name.items())
 
-    def types_by_schema(self):
-        by_type = {}
+    def kinds_by_schema(self):
+        """[(what it reads as, [schema names])]"""
+        by_kind = {}
         for schema, attr in self.found:
             if attr.type_info is not None:
-                schemas = by_type.setdefault(attr.type_info[0], [])
+                schemas = by_kind.setdefault(attr.kind, [])
                 if schema not in schemas:
                     schemas.append(schema)
-        return list(by_type.items())
+        return list(by_kind.items())
 
 
 class GenInverse:
@@ -550,14 +610,14 @@ def build_classes(schemas: list) -> list:
         if gen is not None:
             gen.aliases.append((older.name, name, old))
 
-    # Types: the primary schema's when every schema reads the attribute the same way, else Variant
+    # Types: a typed reference when every schema declares an entity there, else Variant
     for cls in classes.values():
         for gen in cls.attrs:
             gen.schemas = [s for s in all_schema_names if s in gen.schemas]
-            infos = [attr.type_info for _, attr in gen.found if attr.type_info is not None]
-            if not infos:
+            found = [attr for _, attr in gen.found if attr.type_info is not None]
+            if not found:
                 continue
-            gen.type_info = infos[0] if len(set(infos)) == 1 else VARIANT_TYPE
+            gen.type_info = found[0].type_info if all(attr.is_reference for attr in found) else VARIANT_TYPE
         for inv in cls.inverses:
             inv.schemas = [s for s in all_schema_names if s in inv.schemas]
 
@@ -638,12 +698,17 @@ def emit_bind_methods(cls) -> str:
 def emit_getter(cls, a) -> str:
     gd_class = gd_class_name(cls.name)
     cpp_type, _, getter_helper, default_val = a.type_info
-    file_arg = ", file_" if getter_helper in FILE_GETTERS else ""
     alias_arg = f", {alias_table_name(cls, a)}" if a.aliases else ""
+    if a.type_info is VARIANT_TYPE:
+        return (
+            f"{cpp_type} {gd_class}::get_{a.name}() {{\n"
+            f'    return gd_get_attribute(entity_, "{a.name}", file_{alias_arg});\n'
+            f"}}"
+        )
     return (
         f"{cpp_type} {gd_class}::get_{a.name}() {{\n"
         f'    const ptrdiff_t i = gd_attr_index(entity_, "{a.name}"{alias_arg});\n'
-        f"    return i < 0 ? {default_val} : {getter_helper}(entity_->get_attribute_value(i){file_arg});\n"
+        f"    return i < 0 ? {default_val} : {getter_helper}(entity_->get_attribute_value(i), file_);\n"
         f"}}"
     )
 

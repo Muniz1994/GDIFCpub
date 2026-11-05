@@ -6,10 +6,14 @@
 		The standard opening, IfcOpeningStandardCase , defines an opening with certain constraints for the dimension parameters, position within the voided element, and with certain constraints for the geometric representation. The IfcOpeningStandardCase handles all cases of openings, that: are true openings by cutting through the body of the voided element, i.e. where the opening depth is &gt;= to the thick
 	</brief_description>
 	<description>Only in IFC4 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

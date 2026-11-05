@@ -6,16 +6,20 @@
 		A distribution system is a network designed to receive, store, maintain, distribute, or control the flow of a distribution media. A common example is a heating hot water system that consists of a pump, a tank, and an interconnected piping system for distributing hot water to terminals. HISTORY New entity in IFC 2x4. The group IfcDistributionSystem defines the occurrence of a specialized system for
 	</brief_description>
 	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="LongName" type="String" setter="set_LongName" getter="get_LongName">
-			Long name for a system, used for informal purposes. It should be used, if available, in conjunction with the inherited Name attribute. NOTE In many scenarios the Name attribute refers to the short name or number of a distribution system or branch circuit, and the LongName refers to a descriptive name. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="LongName" type="Variant" setter="set_LongName" getter="get_LongName">
+			Long name for a system, used for informal purposes. It should be used, if available, in conjunction with the inherited Name attribute. NOTE In many scenarios the Name attribute refers to the short name or number of a distribution system or branch circuit, and the LongName refers to a descriptive name. A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Predefined types of distribution systems. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined types of distribution systems. A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

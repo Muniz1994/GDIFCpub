@@ -6,19 +6,23 @@
 
 	</brief_description>
 	<description>Only in IFC2X3 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="MolecularWeight" type="float" setter="set_MolecularWeight" getter="get_MolecularWeight">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="MolecularWeight" type="Variant" setter="set_MolecularWeight" getter="get_MolecularWeight">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Porosity" type="float" setter="set_Porosity" getter="get_Porosity">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="Porosity" type="Variant" setter="set_Porosity" getter="get_Porosity">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MassDensity" type="float" setter="set_MassDensity" getter="get_MassDensity">
-			Only in IFC2X3 files: in others it reads as empty and can't be set.
+		<member name="MassDensity" type="Variant" setter="set_MassDensity" getter="get_MassDensity">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

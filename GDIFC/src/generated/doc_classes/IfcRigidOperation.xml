@@ -6,19 +6,23 @@
 
 	</brief_description>
 	<description>Only in IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="FirstCoordinate" type="GDIFCEntityBase" setter="set_FirstCoordinate" getter="get_FirstCoordinate">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="FirstCoordinate" type="Variant" setter="set_FirstCoordinate" getter="get_FirstCoordinate">
+			A value (String, float, int or bool), or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="SecondCoordinate" type="GDIFCEntityBase" setter="set_SecondCoordinate" getter="get_SecondCoordinate">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="SecondCoordinate" type="Variant" setter="set_SecondCoordinate" getter="get_SecondCoordinate">
+			A value (String, float, int or bool), or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Height" type="float" setter="set_Height" getter="get_Height">
-			Only in IFC4X3_ADD2 files: in others it reads as empty and can't be set.
+		<member name="Height" type="Variant" setter="set_Height" getter="get_Height">
+			A float, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

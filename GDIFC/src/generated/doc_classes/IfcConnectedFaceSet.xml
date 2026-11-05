@@ -6,13 +6,17 @@
 		Definition from ISO/CD 10303-42:1992 : A connected_face_set is a set of faces such that the domain of faces together with their bounding edges and vertices is connected. NOTE Corresponding ISO 10303 entity: connected_face_set, the subtype closed_shell is included as IfcClosedShell and the subtype open_shell is included as IfcOpenShell . Please refer to ISO/IS 10303-42:1994, p. 144 for the final de
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="CfsFaces" type="Array" setter="set_CfsFaces" getter="get_CfsFaces">
-			The set of faces arcwise connected along common edges or vertices.
+		<member name="CfsFaces" type="Variant" setter="set_CfsFaces" getter="get_CfsFaces">
+			The set of faces arcwise connected along common edges or vertices. An Array of GDIFCEntityBase entities, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

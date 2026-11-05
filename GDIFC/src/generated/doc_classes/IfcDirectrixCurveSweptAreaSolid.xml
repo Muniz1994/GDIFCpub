@@ -6,18 +6,22 @@
 
 	</brief_description>
 	<description>Only in IFC4X3_ADD2 files.</description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="Directrix" type="GDIFCEntityBase" setter="set_Directrix" getter="get_Directrix">
 		</member>
 		<member name="StartParam" type="Variant" setter="set_StartParam" getter="get_StartParam">
-			Its type depends on the file's schema: GDIFCEntityBase in IFC4X3_ADD2, float in IFC2X3 and IFC4.
+			A value (String, float, int or bool) in IFC4X3_ADD2 files, a float in IFC2X3 and IFC4 files, or null when unset.
 		</member>
 		<member name="EndParam" type="Variant" setter="set_EndParam" getter="get_EndParam">
-			Its type depends on the file's schema: GDIFCEntityBase in IFC4X3_ADD2, float in IFC2X3 and IFC4.
+			A value (String, float, int or bool) in IFC4X3_ADD2 files, a float in IFC2X3 and IFC4 files, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>
