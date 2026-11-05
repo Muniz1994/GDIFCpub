@@ -29,6 +29,7 @@ New changes go under **Unreleased**. Builds are cut automatically: when a push t
 - Property values, such as `IfcPropertySingleValue.NominalValue` or `IfcPropertyListValue.ListValues`, read as their plain value, such as `"Reference"` or `3.5`, from typed properties and from `get_attribute()`. They returned an `IfcLabel` or `IfcLengthMeasure` wrapper, which had no attributes to read the value from.
 - Logical attributes read as `"TRUE"`, `"FALSE"` or `"UNKNOWN"`, and binary ones as a string of 0s and 1s. Typed properties used to return an empty string for both, and `get_attribute()` returned the number of bits of a binary.
 - `IFCNode.attributes` leaves out attributes that refer to other entities, such as `OwnerHistory`, `ObjectPlacement` and `Representation`, which held express ids. Read them from `ifc_object`, which returns the entities: `node.ifc_object.ObjectPlacement`. An unknown logical reads as `"UNKNOWN"` instead of `null`.
+- The dock's groups start folded. A group you unfold or fold stays that way in the project, as before.
 - The web-ifc settings of `GDIFCLoaderSettings` (`tape_size`, `memory_limit`, `line_writer_buffer`, the tolerances, `plane_refit_iterations` and `boolean_union_threshold`) are grouped under **Advanced (web-ifc)** in the Inspector. They are passed to web-ifc unchanged, and may change or go away with a web-ifc update. Their names are the same, so saved settings keep their values.
 
 ##### Fixed

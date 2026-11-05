@@ -193,7 +193,7 @@ func _apply_editor_theme():
 	else:
 		load_status_label.remove_theme_color_override("font_color")
 
-# Each group remembers whether it was folded, per project
+# Each group starts folded, and remembers whether it was unfolded, per project
 func _restore_group_folding():
 	var editor_settings := EditorInterface.get_editor_settings()
 	for child in groups.get_children():
@@ -201,7 +201,7 @@ func _restore_group_folding():
 		if not group:
 			continue
 		var key := "%s_folded" % group.name
-		group.folded = editor_settings.get_project_metadata(FOLDING_METADATA_SECTION, key, false)
+		group.folded = editor_settings.get_project_metadata(FOLDING_METADATA_SECTION, key, true)
 		group.folding_changed.connect(func(is_folded: bool):
 			editor_settings.set_project_metadata(FOLDING_METADATA_SECTION, key, is_folded))
 
