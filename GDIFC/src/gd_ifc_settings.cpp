@@ -40,6 +40,11 @@ void godot::GDIFCLoaderSettings::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_ifc_textures"), &GDIFCLoaderSettings::getIfcTextures);
     ADD_PROPERTY(PropertyInfo(Variant::BOOL, "ifc_textures"), "set_ifc_textures", "get_ifc_textures");
 
+    // --- IFC Objects ---
+    ClassDB::bind_method(D_METHOD("set_ifc_objects", "val"), &GDIFCLoaderSettings::setIfcObjects);
+    ClassDB::bind_method(D_METHOD("get_ifc_objects"), &GDIFCLoaderSettings::getIfcObjects);
+    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "ifc_objects"), "set_ifc_objects", "get_ifc_objects");
+
     // Passed to web-ifc unchanged, so they follow its releases: they may change or go away with a web-ifc update
     ADD_GROUP("Advanced (web-ifc)", "");
 

@@ -236,6 +236,8 @@ class GDIFCManager : public Node3D {
     // IFC material options, read once per load like the LOD options
     bool ifc_materials_enabled_ = false;
     bool ifc_textures_enabled_ = false;
+    // Off releases the IfcParse file once its data is on the nodes
+    bool ifc_objects_enabled_ = true;
 
     // Deferred metadata. IfcParse parses on its own task while web-ifc builds the geometry.
     // Attributes, property sets, quantities, typed objects and georeferencing are applied

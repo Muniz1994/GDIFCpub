@@ -276,6 +276,15 @@ void GDIFCManager::_ready() {
     }
     _apply_instance_reference_placement();
 
+    // Without IFC objects, everything the model has is already in the scene
+    if (geometric_settings.is_valid() && !geometric_settings->getIfcObjects()) {
+        current_state = DONE;
+        load_stage_.store(STAGE_DONE);
+        reported_stage_ = STAGE_DONE;
+        call_deferred("emit_signal", "ifc_objects_ready");
+        return;
+    }
+
     UtilityFunctions::print_rich("[color=blue]Cold reload detected — re-parsing IFC metadata from: " + ifc_file_path_);
 
     relink_failed_ = false;
@@ -525,6 +534,7 @@ void GDIFCManager::_reset_load_state(bool _create_collision, const Array &_colli
     this->lod_merge_angle_ = geometric_settings.is_valid() ? geometric_settings->getLodNormalMergeAngle() : 60.0f;
     this->ifc_materials_enabled_ = geometric_settings.is_valid() && geometric_settings->getIfcMaterials();
     this->ifc_textures_enabled_ = this->ifc_materials_enabled_ && geometric_settings->getIfcTextures();
+    this->ifc_objects_enabled_ = !geometric_settings.is_valid() || geometric_settings->getIfcObjects();
 
     // Parsing has two steps: web-ifc's read, then the geometry processor
     this->parse_bytes_ = this->pending_buffer.size();
@@ -929,7 +939,9 @@ static Ref<T> material_as(const Ref<GDIFCMaterialDefinition>& definition) {
 template <typename schema>
 class MaterialReader {
 public:
-    explicit MaterialReader(const std::shared_ptr<IfcParse::IfcFile>& file) : file_(file), context_(*file) {
+    // Without `ifc_objects`, definitions get no ifc_object, so nothing keeps the file alive
+    MaterialReader(const std::shared_ptr<IfcParse::IfcFile>& file, bool ifc_objects)
+        : file_(file), ifc_objects_(ifc_objects), context_(*file) {
         IfcParse::IfcFile& f = *file_;
         for (IfcUtil::IfcBaseClass* rel : ifc_instances(f, "IfcRelAssociatesMaterial")) {
             IfcUtil::IfcBaseClass* material = ifc_entity(rel, "RelatingMaterial");
@@ -1015,6 +1027,7 @@ public:
 
 private:
     std::shared_ptr<IfcParse::IfcFile> file_;
+    bool ifc_objects_;
     PropertyDetailContext context_;
     std::unordered_map<int, IfcUtil::IfcBaseClass*> element_material_;
     std::unordered_map<int, int> element_type_; // occurrence -> its type
@@ -1061,7 +1074,7 @@ private:
         definition->set_properties(read_properties(id, property_details));
         definition->set_property_details(property_details);
         definition->set_classifications(read_references(id));
-        definition->set_ifc_object(GDIFCEntityBase::wrap(entity, file_));
+        if (ifc_objects_) definition->set_ifc_object(GDIFCEntityBase::wrap(entity, file_));
         read_members(entity, definition.ptr());
         return definition;
     }
@@ -1567,9 +1580,9 @@ private:
 
 // Material definition of every item, and the library holding them. Writes only `items` and `library`.
 template <typename schema>
-static void extract_material_definitions(const std::shared_ptr<IfcParse::IfcFile>& file,
+static void extract_material_definitions(const std::shared_ptr<IfcParse::IfcFile>& file, bool ifc_objects,
                                          std::vector<PrecalculatedIFCMetadata>& items, Ref<GDIFCMaterialLibrary>& library) {
-    MaterialReader<schema> reader(file);
+    MaterialReader<schema> reader(file, ifc_objects);
     for (PrecalculatedIFCMetadata& item : items) {
         try {
             item.material = reader.for_element(item.express_id);
@@ -1825,9 +1838,9 @@ void GDIFCManager::_metadata_extract_task() {
     if (ifc_materials_enabled_) {
         try {
             switch (metadata_schema_index_) {
-                case 0: extract_material_definitions<Ifc4>(metadata_file_, metadata_results_, metadata_material_library_); break;
-                case 2: extract_material_definitions<Ifc2x3>(metadata_file_, metadata_results_, metadata_material_library_); break;
-                case 3: extract_material_definitions<Ifc4x3_add2>(metadata_file_, metadata_results_, metadata_material_library_); break;
+                case 0: extract_material_definitions<Ifc4>(metadata_file_, ifc_objects_enabled_, metadata_results_, metadata_material_library_); break;
+                case 2: extract_material_definitions<Ifc2x3>(metadata_file_, ifc_objects_enabled_, metadata_results_, metadata_material_library_); break;
+                case 3: extract_material_definitions<Ifc4x3_add2>(metadata_file_, ifc_objects_enabled_, metadata_results_, metadata_material_library_); break;
                 default: ;
             }
         } catch (const std::exception& e) {
@@ -1925,12 +1938,14 @@ void GDIFCManager::_apply_metadata_item(PrecalculatedIFCMetadata& item) {
             if (item.material.is_valid()) {
                 node->set_material_definition(item.material);
             }
-            try {
-                auto* inst = metadata_file_->instance_by_id(item.express_id);
-                if (inst) {
-                    node->set_ifc_object(GDIFCEntityBase::wrap(inst, metadata_file_));
-                }
-            } catch (...) {}
+            if (ifc_objects_enabled_) {
+                try {
+                    auto* inst = metadata_file_->instance_by_id(item.express_id);
+                    if (inst) {
+                        node->set_ifc_object(GDIFCEntityBase::wrap(inst, metadata_file_));
+                    }
+                } catch (...) {}
+            }
         }
     }
     item = PrecalculatedIFCMetadata();
@@ -1989,7 +2004,8 @@ void GDIFCManager::set_reference_georeference(const NodePath &path) {
 void GDIFCManager::_finish_metadata() {
     const bool is_ifc4plus = metadata_file_ && metadata_schema_index_ != 2;
     if (metadata_file_) {
-        ifc_parse_file = metadata_file_;
+        // Without IFC objects the file is released below, once its data is on the nodes
+        ifc_parse_file = ifc_objects_enabled_ ? metadata_file_ : nullptr;
         GeorreferenceData data = metadata_georreference_;
         data.coordination_offset = georreference.coordination_offset;
         georreference = data;

@@ -133,7 +133,7 @@ Node generated for each IFC object.
 - `properties: Dictionary`: property sets, `{set name: {property: value}}`, including the sets of the element's type (after `ifc_objects_ready`)
 - `quantities: Dictionary`: quantity sets, shaped like `properties` (after `ifc_objects_ready`)
 - `property_details: Dictionary`, `quantity_details: Dictionary`: shaped like `properties` and `quantities`, with a read-only `Dictionary` per value holding its `value_type`, `unit` and `from_type` (after `ifc_objects_ready`). See [Property And Quantity Sets](loading-models.md#property-and-quantity-sets).
-- `ifc_object: GDIFCEntityBase`: the IFC entity, to [walk the model](walking-the-model.md) from (after `ifc_objects_ready`; relinked on load, not saved)
+- `ifc_object: GDIFCEntityBase`: the IFC entity, to [walk the model](walking-the-model.md) from (after `ifc_objects_ready`; relinked on load, not saved; null when loaded with `ifc_objects` off)
 - `material_definition: GDIFCMaterialDefinition` (after `ifc_objects_ready`, with `ifc_materials` on)
 
 ## IFCGeoreference (Node3D)
@@ -181,7 +181,7 @@ Read with `ifc_materials` on. One resource per IFC material definition, shared b
 - `properties: Dictionary`: material property sets, `{set name: {property: value}}`
 - `property_details: Dictionary`: shaped like `properties`, with the `value_type` and `unit` of each value, like `IFCNode.property_details`
 - `classifications: Array`: classification and library references, one Dictionary each (`type`, and whichever of `identification`, `item_reference`, `name`, `location`, `description`, `notation`, `source` the reference has)
-- `ifc_object: GDIFCEntityBase`: relinked on load, not saved
+- `ifc_object: GDIFCEntityBase`: relinked on load, not saved; null when loaded with `ifc_objects` off
 
 | Class | IFC entity | Properties |
 | --- | --- | --- |
@@ -233,6 +233,7 @@ Controls geometry conversion behavior and processing limits.
 - `lod_normal_merge_angle: float` (default `60.0`, degrees)
 - `ifc_materials: bool` (default `false`): read IFC material definitions, and use one material per IFC material instead of per colour. See [IFC Materials](loading-models.md#ifc-materials).
 - `ifc_textures: bool` (default `false`): load the textures of IFC surface styles onto the generated materials. Used only with `ifc_materials`. See [Surface Styles And Textures](loading-models.md#surface-styles-and-textures).
+- `ifc_objects: bool` (default `true`): keep the parsed IFC file, for `ifc_object` and the `IFCModel` queries. Off releases it once its data is on the nodes, and saved or imported scenes don't read the file again. See [Without IFC Objects](loading-models.md#without-ifc-objects).
 
 ### Advanced (web-ifc)
 

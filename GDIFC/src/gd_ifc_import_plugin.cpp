@@ -51,6 +51,8 @@ TypedArray<Dictionary> GDIFCImportPlugin::_get_import_options(const String &p_pa
     options.push_back(make_option("lods/normal_merge_angle", 60.0, PROPERTY_HINT_RANGE, "0,180,0.1,degrees"));
     options.push_back(make_option("materials/ifc_materials", false));
     options.push_back(make_option("materials/textures", false));
+    // Off: instances don't re-parse the .ifc file, and have no ifc_object or IFCModel queries
+    options.push_back(make_option("data/ifc_objects", true));
     options.push_back(make_option("collision/create", false));
     // A GDIFCCollisionMatrix choosing the shape and layers per class. Replaces the class list when set.
     options.push_back(make_option("collision/matrix", String(), PROPERTY_HINT_FILE, "*.tres,*.res"));
@@ -85,6 +87,7 @@ Error GDIFCImportPlugin::_import(const String &p_source_file, const String &p_sa
     settings->setLodNormalMergeAngle((float)(double)p_options.get("lods/normal_merge_angle", 60.0));
     settings->setIfcMaterials(p_options.get("materials/ifc_materials", false));
     settings->setIfcTextures(p_options.get("materials/textures", false));
+    settings->setIfcObjects(p_options.get("data/ifc_objects", true));
 
     const bool create_collision = p_options.get("collision/create", false);
     const PackedStringArray class_names = p_options.get("collision/classes", PackedStringArray());

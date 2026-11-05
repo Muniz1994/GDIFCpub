@@ -151,6 +151,7 @@ var units := ifc_manager.get_ifc_model().get_units() # {"LENGTHUNIT": "mm", "ARE
 Walking needs the parsed IFC file, so it is not available:
 
 - before `ifc_objects_ready`
+- when the model was loaded with `GDIFCLoaderSettings.ifc_objects` off, which releases the file once its data is on the nodes
 - for files whose schema GDIFC can't read: they load with geometry only
 - in a reopened scene whose `.ifc` file can't be found. `ifc_object` is relinked from `GDIFCManager.ifc_file_path` when the scene opens, so models loaded with `read_ifc_base64` can't be walked after a reload, and exported projects need `*.ifc` in the export preset's **Filters to export non-resource files/folders**.
 

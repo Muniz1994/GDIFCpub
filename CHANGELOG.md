@@ -21,6 +21,7 @@ New changes go under **Unreleased**. Builds are cut automatically: when a push t
 - Georeferencing for IFC2X3 files, read from the `ePSet_MapConversion` and `ePSet_ProjectedCRS` property sets of the project or site. Such files now get an `IFCGeoreference` node, and are placed by it when loaded relative to another model.
 - IFC4X3 `IfcMapConversionScaled`: its per-axis factors are `IFCGeoreference.map_scale_x`, `map_scale_y` and `map_scale_z`, and are applied when placing a model relative to another. They used to be ignored.
 - `IFCModel.get_site_location()`: the site's latitude and longitude in decimal degrees, and its elevation.
+- **IFC objects** option, on by default: `GDIFCLoaderSettings.ifc_objects`, the dock's new Data group, and the importer's `data/ifc_objects`. Off, the parsed IFC file is released once attributes, property sets, materials and georeferencing are on the nodes, which saves memory, and saved scenes and instances of imported `.ifc` scenes no longer read the `.ifc` file again when they enter the tree. `ifc_object` is then null, and the `IFCModel` queries find nothing. See [Without IFC Objects](docs/loading-models.md#without-ifc-objects).
 
 ##### Changed
 

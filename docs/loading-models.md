@@ -28,9 +28,9 @@ Both collision parameters are optional, so `read_ifc("res://models/bridge.ifc")`
 
 From the GDIFC dock, turn on **Scene → Import as scene** before clicking **Load IFC...**: the file is imported with the dock's options and instanced in the edited scene. Files from outside the project are first copied into the **Import folder** (`res://ifc/` by default); files already in the project are imported where they are. Of the settings preset, only coordinate to origin and circle segments apply to imports.
 
-Select the `.ifc` file and open the **Import** dock to set its options (coordinate to origin, circle segments, LODs, IFC materials and textures, collision, and the classes or collision matrix to create it with), then click **Reimport**. The model is reimported automatically when the `.ifc` file changes.
+Select the `.ifc` file and open the **Import** dock to set its options (coordinate to origin, circle segments, LODs, IFC materials and textures, IFC objects, collision, and the classes or collision matrix to create it with), then click **Reimport**. The model is reimported automatically when the `.ifc` file changes.
 
-The root of an imported scene is a `GDIFCManager`. When an instance enters the tree, it re-parses the `.ifc` file to restore `ifc_object` and the `IFCModel` queries, then emits `ifc_objects_ready`. Set its `reference_georeference` to place the model relative to another model's `IFCGeoreference`. In exported projects, add `*.ifc` to the export preset's **Filters to export non-resource files/folders** so the file is available at runtime.
+The root of an imported scene is a `GDIFCManager`. When an instance enters the tree, it re-parses the `.ifc` file to restore `ifc_object` and the `IFCModel` queries, then emits `ifc_objects_ready`. With the `data/ifc_objects` import option off, it skips that and emits `ifc_objects_ready` on the next frame (see [Without IFC Objects](#without-ifc-objects)). Set its `reference_georeference` to place the model relative to another model's `IFCGeoreference`. In exported projects, add `*.ifc` to the export preset's **Filters to export non-resource files/folders** so the file is available at runtime.
 
 ## Loading From Base64 Data
 
@@ -137,7 +137,25 @@ Each `IFCNode` provides:
 - `properties`: property sets, including its type's (after `ifc_objects_ready`)
 - `quantities`: quantity sets, including its type's (after `ifc_objects_ready`)
 - `property_details` and `quantity_details`: the value type, unit and origin of each value (after `ifc_objects_ready`)
-- `ifc_object`: the IFC entity, to [walk the rest of the model](walking-the-model.md) from (after `ifc_objects_ready`)
+- `ifc_object`: the IFC entity, to [walk the rest of the model](walking-the-model.md) from (after `ifc_objects_ready`, unless `ifc_objects` is off)
+
+### Without IFC Objects
+
+After the data above is copied onto the nodes, GDIFC keeps the parsed IFC file in memory, so that `ifc_object` and the `IFCModel` queries can reach the rest of the model. Set `ifc_objects = false` when the dictionaries on the nodes are enough:
+
+```gdscript
+var settings := GDIFCLoaderSettings.new()
+settings.ifc_objects = false
+ifc_manager.geometric_settings = settings
+```
+
+Attributes, property and quantity sets, IFC materials and their properties, and georeferencing are still read. Then the file is released, which saves memory. In exchange:
+
+- `ifc_object` is null on nodes and material definitions, and `get_ifc_object_by_global_id()` returns null.
+- The `IFCModel` queries find nothing (`get_by_id`, `instances_by_type`, `get_project`, `get_units`, `get_site_location`), and the model can't be edited or saved.
+- A saved scene, or an instance of an imported `.ifc` scene, doesn't read the `.ifc` file again when it enters the tree. It emits `ifc_objects_ready` on the next frame, so instancing a model costs no parsing at all.
+
+Loading takes as long as before: the file is still parsed for its data. In the editor dock, the option is **Data → IFC objects**, which starts from the selected settings preset; the importer's option is `data/ifc_objects`.
 
 ### Property And Quantity Sets
 

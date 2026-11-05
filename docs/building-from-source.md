@@ -69,7 +69,7 @@ After regeneration, run your usual build command again, and check the classes ag
 godot --headless --path ifc-godot-project --script res://tests/entities_test.gd -- --file <ifc>
 ```
 
-The other scripts in `ifc-godot-project/tests` check property sets (`properties_test.gd`), collision (`collision_matrix_test.gd`), the load stage and error (`load_status_test.gd`) and georeferencing (`georeference_test.gd -- --ifc2x3 <ifc> --ifc4x3 <ifc>`, given an IFC2X3 file with a site and an IFC4X3 file with an `IfcMapConversion`). Each describes its arguments at its top.
+The other scripts in `ifc-godot-project/tests` check property sets (`properties_test.gd`), collision (`collision_matrix_test.gd`), the load stage and error (`load_status_test.gd`), loading without IFC objects (`ifc_objects_test.gd`) and georeferencing (`georeference_test.gd -- --ifc2x3 <ifc> --ifc4x3 <ifc>`, given an IFC2X3 file with a site and an IFC4X3 file with an `IfcMapConversion`). Each describes its arguments at its top.
 
 ## Common Build Notes
 
