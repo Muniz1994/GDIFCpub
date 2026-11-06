@@ -22,6 +22,12 @@ void IFCGeoreference::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_x_axis_ordinate", "v"),  &IFCGeoreference::set_x_axis_ordinate);
     ClassDB::bind_method(D_METHOD("get_map_scale"),             &IFCGeoreference::get_map_scale);
     ClassDB::bind_method(D_METHOD("set_map_scale", "v"),        &IFCGeoreference::set_map_scale);
+    ClassDB::bind_method(D_METHOD("get_map_scale_x"),           &IFCGeoreference::get_map_scale_x);
+    ClassDB::bind_method(D_METHOD("set_map_scale_x", "v"),      &IFCGeoreference::set_map_scale_x);
+    ClassDB::bind_method(D_METHOD("get_map_scale_y"),           &IFCGeoreference::get_map_scale_y);
+    ClassDB::bind_method(D_METHOD("set_map_scale_y", "v"),      &IFCGeoreference::set_map_scale_y);
+    ClassDB::bind_method(D_METHOD("get_map_scale_z"),           &IFCGeoreference::get_map_scale_z);
+    ClassDB::bind_method(D_METHOD("set_map_scale_z", "v"),      &IFCGeoreference::set_map_scale_z);
 
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "eastings"),
         "set_eastings", "get_eastings");
@@ -35,6 +41,12 @@ void IFCGeoreference::_bind_methods() {
         "set_x_axis_ordinate", "get_x_axis_ordinate");
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "map_scale"),
         "set_map_scale", "get_map_scale");
+    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "map_scale_x"),
+        "set_map_scale_x", "get_map_scale_x");
+    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "map_scale_y"),
+        "set_map_scale_y", "get_map_scale_y");
+    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "map_scale_z"),
+        "set_map_scale_z", "get_map_scale_z");
 
     // ── ProjectedCRS ─────────────────────────────────────────────────────
     ClassDB::bind_method(D_METHOD("get_crs_name"),                  &IFCGeoreference::get_crs_name);
@@ -88,6 +100,9 @@ void IFCGeoreference::init(const GeorreferenceData& data) {
     x_axis_abscissa_   = static_cast<double>(data.map_conversion.XAxisAbscissa);
     x_axis_ordinate_   = static_cast<double>(data.map_conversion.XAxisOrdinate);
     scale_             = static_cast<double>(data.map_conversion.Scale);
+    factor_x_          = data.map_conversion.FactorX;
+    factor_y_          = data.map_conversion.FactorY;
+    factor_z_          = data.map_conversion.FactorZ;
 
     crs_name_        = data.projected_crs.Name;
     crs_description_ = data.projected_crs.Description;
@@ -105,6 +120,9 @@ GeorreferenceData IFCGeoreference::get_data() const {
     mc.XAxisAbscissa    = x_axis_abscissa_;
     mc.XAxisOrdinate    = x_axis_ordinate_;
     mc.Scale            = scale_;
+    mc.FactorX          = factor_x_;
+    mc.FactorY          = factor_y_;
+    mc.FactorZ          = factor_z_;
 
     GeorreferenceData data(mc, ProjectedCRS{crs_name_, crs_description_, geodetic_datum_, vertical_datum_});
     data.coordination_offset = coordination_offset_;
@@ -120,10 +138,12 @@ glm::dmat4 godot::georef_map_matrix(const MapConversion& mc) {
     // which is a positive rotation around Godot +Y
     const double angle = std::atan2(mc.XAxisOrdinate, mc.XAxisAbscissa);
     const double scale = mc.Scale > 0.0 ? mc.Scale : 1.0;
+    auto factor = [](double f) { return f > 0.0 ? f : 1.0; };
 
     glm::dmat4 m = glm::translate(glm::dmat4(1.0), origin);
     m = glm::rotate(m, angle, glm::dvec3(0.0, 1.0, 0.0));
-    m = glm::scale(m, glm::dvec3(scale));
+    // IFC z is Godot +Y, IFC y is Godot -Z
+    m = glm::scale(m, scale * glm::dvec3(factor(mc.FactorX), factor(mc.FactorZ), factor(mc.FactorY)));
     return m;
 }
 

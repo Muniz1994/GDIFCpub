@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcWindowStandardCase" inherits="IfcWindow"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The standard window, IfcWindowStandardCase , defines a window with certain constraints for the provision of operation types, opening directions, frame and lining parameters, construction types and with certain constraints for the geometric representation. The IfcWindowStandardCase handles all cases of windows, that: are inserted into an opening, represented by IfcOpeningElement , using the IfcRelF
+	</brief_description>
+	<description>Only in IFC4 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

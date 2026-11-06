@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRibPlateProfileProperties" inherits="IfcProfileProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="Thickness" type="Variant" setter="set_Thickness" getter="get_Thickness">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="RibHeight" type="Variant" setter="set_RibHeight" getter="get_RibHeight">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="RibWidth" type="Variant" setter="set_RibWidth" getter="get_RibWidth">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="RibSpacing" type="Variant" setter="set_RibSpacing" getter="get_RibSpacing">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="Direction" type="Variant" setter="set_Direction" getter="get_Direction">
+			A String, one of the enumeration's values, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

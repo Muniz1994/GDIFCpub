@@ -18,6 +18,10 @@ struct MapConversion {
     double XAxisAbscissa    = 1.0;
     double XAxisOrdinate    = 0.0;
     double Scale            = 1.0;
+    // IFC4X3 IfcMapConversionScaled: per-axis factors on top of Scale (IFC axes)
+    double FactorX          = 1.0;
+    double FactorY          = 1.0;
+    double FactorZ          = 1.0;
 };
 
 struct ProjectedCRS {
@@ -45,8 +49,9 @@ struct GeorreferenceData {
 };
 
 // ── IFCGeoreference node ──────────────────────────────────────────────────
-// Created under IFCModel when a loaded IFC4+ file contains
-// IfcProjectedCRS and IfcMapConversion georeferencing data.
+// Created under IFCModel when a loaded file has georeferencing data: IfcMapConversion and
+// IfcProjectedCRS in IFC4 and later, the ePSet_MapConversion and ePSet_ProjectedCRS property sets
+// in IFC2X3.
 
 class IFCGeoreference : public Node3D {
     GDCLASS(IFCGeoreference, Node3D)
@@ -74,6 +79,16 @@ public:
     // Not "scale": that name belongs to Node3D
     double get_map_scale() const                   { return scale_; }
     void   set_map_scale(double v)                 { scale_ = v; }
+
+    // IFC4X3 IfcMapConversionScaled factors, along the IFC x, y and z axes. 1 otherwise.
+    double get_map_scale_x() const                 { return factor_x_; }
+    void   set_map_scale_x(double v)               { factor_x_ = v; }
+
+    double get_map_scale_y() const                 { return factor_y_; }
+    void   set_map_scale_y(double v)               { factor_y_ = v; }
+
+    double get_map_scale_z() const                 { return factor_z_; }
+    void   set_map_scale_z(double v)               { factor_z_ = v; }
 
     // ── ProjectedCRS properties ──────────────────────────────────────────
     String get_crs_name() const                    { return crs_name_; }
@@ -113,6 +128,9 @@ private:
     double x_axis_abscissa_   = 1.0;
     double x_axis_ordinate_   = 0.0;
     double scale_             = 1.0;
+    double factor_x_          = 1.0;
+    double factor_y_          = 1.0;
+    double factor_z_          = 1.0;
 
     // ProjectedCRS fields
     String crs_name_;

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcGeneralProfileProperties" inherits="IfcProfileProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="PhysicalWeight" type="Variant" setter="set_PhysicalWeight" getter="get_PhysicalWeight">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="Perimeter" type="Variant" setter="set_Perimeter" getter="get_Perimeter">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="MinimumPlateThickness" type="Variant" setter="set_MinimumPlateThickness" getter="get_MinimumPlateThickness">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="MaximumPlateThickness" type="Variant" setter="set_MaximumPlateThickness" getter="get_MaximumPlateThickness">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="CrossSectionArea" type="Variant" setter="set_CrossSectionArea" getter="get_CrossSectionArea">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

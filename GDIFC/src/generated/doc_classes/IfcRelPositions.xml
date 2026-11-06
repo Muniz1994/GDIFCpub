@@ -5,15 +5,21 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="RelatingPositioningElement" type="GDIFCEntityBase" setter="set_RelatingPositioningElement" getter="get_RelatingPositioningElement">
+			Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="RelatedProducts" type="Array" setter="set_RelatedProducts" getter="get_RelatedProducts">
+		<member name="RelatedProducts" type="Variant" setter="set_RelatedProducts" getter="get_RelatedProducts">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

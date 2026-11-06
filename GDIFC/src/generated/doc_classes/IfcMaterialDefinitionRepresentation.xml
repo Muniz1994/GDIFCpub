@@ -6,13 +6,17 @@
 		IfcMaterialDefinitionRepresentation defines presentation information relating to IfcMaterial . It allows for multiple presentations of the same material for different geometric representation contexts. NOTE The IfcMaterialDefinitionRepresentation is currently only used to define presentation information to material used at element occurrences, defined as subtypes of IfcElement , or at element type
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="RepresentedMaterial" type="GDIFCEntityBase" setter="set_RepresentedMaterial" getter="get_RepresentedMaterial">
 			Reference to the material to which the representation applies.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

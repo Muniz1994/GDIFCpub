@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcRelConnectsStructuralElement" inherits="IfcRelConnects"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="RelatingElement" type="GDIFCEntityBase" setter="set_RelatingElement" getter="get_RelatingElement">
+			Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="RelatedStructuralMember" type="GDIFCEntityBase" setter="set_RelatedStructuralMember" getter="get_RelatedStructuralMember">
+			Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

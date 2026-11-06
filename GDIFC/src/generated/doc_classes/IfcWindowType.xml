@@ -5,21 +5,27 @@
 	<brief_description>
 		Definition from IAI : The element type IfcWindowType defines commonly shared information for occurrences of windows. The set of shared information may include: common properties within shared property sets common material information common partitioning of panels common operation types of panels common shape representations A window type defines the particular parameter of the lining and one (or s
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Identifies the predefined types of a window element from which the type required may be set.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			Identifies the predefined types of a window element from which the type required may be set. A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="PartitioningType" type="String" setter="set_PartitioningType" getter="get_PartitioningType">
-			Type defining the general layout of the window type in terms of the partitioning of panels.
+		<member name="PartitioningType" type="Variant" setter="set_PartitioningType" getter="get_PartitioningType">
+			Type defining the general layout of the window type in terms of the partitioning of panels. A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="ParameterTakesPrecedence" type="bool" setter="set_ParameterTakesPrecedence" getter="get_ParameterTakesPrecedence">
+		<member name="ParameterTakesPrecedence" type="Variant" setter="set_ParameterTakesPrecedence" getter="get_ParameterTakesPrecedence">
+			A bool, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="UserDefinedPartitioningType" type="String" setter="set_UserDefinedPartitioningType" getter="get_UserDefinedPartitioningType">
+		<member name="UserDefinedPartitioningType" type="Variant" setter="set_UserDefinedPartitioningType" getter="get_UserDefinedPartitioningType">
+			A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

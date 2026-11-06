@@ -6,14 +6,16 @@
 		Definition from ISO9000 : A process is a set of activities that are interrelated or that interact with one another. Processes use resources to transform inputs into outputs. Processes are interconnected because the output from one process becomes the input for another process. In effect, processes are "glued" together by means of such input output relationships. IfcProcess is defined as one indivi
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Identification" type="String" setter="set_Identification" getter="get_Identification">
-			An identifying designation given to a process or activity. It is the identifier at the occurrence level. IFC2x4 CHANGE Attribute promoted from subtypes.
+		<member name="Identification" type="Variant" setter="set_Identification" getter="get_Identification">
+			An identifying designation given to a process or activity. It is the identifier at the occurrence level. IFC2x4 CHANGE Attribute promoted from subtypes. In IFC2X3 files, this is the [code]ProcedureID[/code] attribute. In IFC2X3 files, this is the [code]TaskId[/code] attribute. A String, or null when unset.
 		</member>
-		<member name="LongDescription" type="String" setter="set_LongDescription" getter="get_LongDescription">
-			An extended description or narrative that may be provided. IFC2x4 CHANGE New attribute.
+		<member name="LongDescription" type="Variant" setter="set_LongDescription" getter="get_LongDescription">
+			An extended description or narrative that may be provided. IFC2x4 CHANGE New attribute. A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="IsPredecessorTo" type="Array" setter="" getter="get_IsPredecessorTo">
 		</member>
@@ -22,6 +24,8 @@
 		<member name="OperatesOn" type="Array" setter="" getter="get_OperatesOn">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

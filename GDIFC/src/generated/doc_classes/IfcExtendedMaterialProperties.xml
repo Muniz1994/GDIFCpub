@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcExtendedMaterialProperties" inherits="IfcMaterialProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The IfcExtendedMaterialProperties assign a set of defined material properties to associated material definitions. This provides a mechanism to assign any material properties to material. Those material properties that are defined as part of the IFC specification are provided within the use definitions below. NOTE The usage of this entity has changed in IFC2x4, it is now used to express all materia
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="ExtendedProperties" type="Variant" setter="set_ExtendedProperties" getter="get_ExtendedProperties">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

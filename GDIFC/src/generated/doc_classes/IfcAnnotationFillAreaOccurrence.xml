@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcAnnotationFillAreaOccurrence" inherits="IfcAnnotationOccurrence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="FillStyleTarget" type="GDIFCEntityBase" setter="set_FillStyleTarget" getter="get_FillStyleTarget">
+			Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="GlobalOrLocal" type="Variant" setter="set_GlobalOrLocal" getter="get_GlobalOrLocal">
+			A String, one of the enumeration's values, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

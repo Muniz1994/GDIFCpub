@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcFuelProperties" inherits="IfcMaterialProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="CombustionTemperature" type="Variant" setter="set_CombustionTemperature" getter="get_CombustionTemperature">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="CarbonContent" type="Variant" setter="set_CarbonContent" getter="get_CarbonContent">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="LowerHeatingValue" type="Variant" setter="set_LowerHeatingValue" getter="get_LowerHeatingValue">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="HigherHeatingValue" type="Variant" setter="set_HigherHeatingValue" getter="get_HigherHeatingValue">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

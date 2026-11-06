@@ -5,17 +5,24 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="Coordinates" type="GDIFCEntityBase" setter="set_Coordinates" getter="get_Coordinates">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="HasColours" type="Array" setter="" getter="get_HasColours">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="HasTextures" type="Array" setter="" getter="get_HasTextures">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

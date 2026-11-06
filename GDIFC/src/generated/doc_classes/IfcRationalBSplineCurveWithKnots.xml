@@ -5,14 +5,18 @@
 	<brief_description>
 		A rational B-spline curve with knots is a B-spline curve described in terms of control points and basic functions. It describes weights in addition to the control points defined at the supertype IfcBSplineCurve . NOTE: The IfcRationalBSplineCurveWithKnots is an entity that had been adopted from ISO 10303, Industrial automation systems and integration — Product data representation and exchange, Par
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="WeightsData" type="PackedFloat64Array" setter="set_WeightsData" getter="get_WeightsData">
-			The supplied values of the weights.
+		<member name="WeightsData" type="Variant" setter="set_WeightsData" getter="get_WeightsData">
+			The supplied values of the weights. A PackedFloat64Array, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -5,17 +5,21 @@
 	<brief_description>
 		IfcConstructionResourceType is an abstract generalization of the different resource types used in construction projects, mainly labor, material, equipment and product resource types, plus subcontracted resource types and aggregations such as a crew resource type. A resource type represents a model of "use of something" and does not necessarily correspond to a specific type of object such as a pers
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="BaseCosts" type="Array" setter="set_BaseCosts" getter="get_BaseCosts">
-			Indicates how the resource is consumed or occupied during its use in a process. Production-based consumption is indicated by CONSUMED, PARTIALLYCONSUMED, or NOTCONSUMED, where QuantityProduced refers to a quantity applicable to the IfcTypeProduct to which the assigned IfcTypeProcess is assigned. Duration-based occupation is indicated by OCCUPIED, PARTIALLYOCCUPIED, or NOTOCCUPIED, where QuantityProduced refers to a quantity applicable to the the IfcTypeProcess to which the resource is assigned.
+		<member name="BaseCosts" type="Variant" setter="set_BaseCosts" getter="get_BaseCosts">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="BaseQuantity" type="GDIFCEntityBase" setter="set_BaseQuantity" getter="get_BaseQuantity">
-			The basic (i.e. default, or recommended) unit that should be used for measuring the amount of the resource and the relative quantity of the resource fully or partially consumed. For labor and equipment resources, this always refers to an IfcDuration quantity, typically 1 hour. For material resources, this always refers to a spatial quantity (e.g. IfcVolumeMeasure ).
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralPlanarActionVarying" inherits="IfcStructuralPlanarAction"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="VaryingAppliedLoadLocation" type="GDIFCEntityBase" setter="set_VaryingAppliedLoadLocation" getter="get_VaryingAppliedLoadLocation">
+			Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="SubsequentAppliedLoads" type="Variant" setter="set_SubsequentAppliedLoads" getter="get_SubsequentAppliedLoads">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

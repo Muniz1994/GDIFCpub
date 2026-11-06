@@ -6,10 +6,14 @@
 		IfcExternallyDefinedSurfaceStyle is a definition of a surface style through referencing an external source, such as a material library for rendering information. NOTE In order to achieve expected results, the externally defined surface style should normally only be given in addition to an explicitly defined surface styles. HISTORY New entity in IFC2x2. IFC2x3 CHANGE The spelling has been corrected
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -6,8 +6,10 @@
 		Definition from ISO/CD 10303-46:1992 : The text style is a presentation style for annotation text. The IfcTextStyle provides the text style table for presentation information assigned to text literals. The style is defined by color, text font characteristics, and text box characteristics. The definitions are based upon: definitions from ISO/IS 10303-46:1994 for (old) vector based and monospace tex
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="TextCharacterAppearance" type="GDIFCEntityBase" setter="set_TextCharacterAppearance" getter="get_TextCharacterAppearance">
 			A character style to be used for presented text.
@@ -18,9 +20,12 @@
 		<member name="TextFontStyle" type="GDIFCEntityBase" setter="set_TextFontStyle" getter="get_TextFontStyle">
 			The style applied to the text font for its visual appearance. It defines the font family, font style, weight and size. IFC2x Edition 2 Addendum 2 CHANGE The attribute TextFontStyle is a new attribute attached to IfcTextStyle .
 		</member>
-		<member name="ModelOrDraughting" type="bool" setter="set_ModelOrDraughting" getter="get_ModelOrDraughting">
+		<member name="ModelOrDraughting" type="Variant" setter="set_ModelOrDraughting" getter="get_ModelOrDraughting">
+			A bool, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

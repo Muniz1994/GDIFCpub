@@ -6,13 +6,20 @@
 		Definition from ISO 6707-1:1989 : Structural member designed to carry loads between or beyond points of support, usually narrow in relation to its length and horizontal or nearly so. An IfcBeam is a horizontal, or nearly horizontal, structural member that is capable of withstanding load primarily by resisting bending. It represents such a member from an architectural point of view. It is not requi
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Predefined generic type for a beam that is specified in an enumeration. There may be a property set given specificly for the predefined types. NOTE The PredefinedType shall only be used, if no type object IfcBeamType is assigned, providing its own IfcBeamType.PredefinedType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic type for a beam that is specified in an enumeration. There may be a property set given specificly for the predefined types. NOTE The PredefinedType shall only be used, if no type object IfcBeamType is assigned, providing its own IfcBeamType.PredefinedType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition. A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
+		</member>
+		<member name="HasPorts" type="Array" setter="" getter="get_HasPorts">
+			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

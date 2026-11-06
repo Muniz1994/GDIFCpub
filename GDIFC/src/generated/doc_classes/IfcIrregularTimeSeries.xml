@@ -6,13 +6,17 @@
 		In an irregular time series, unpredictable bursts of data arrive at unspecified points in time, or most time stamps cannot be characterized by a repeating pattern. EXAMPLE: A circulating pump cycles on and off at unpredictable times as dictated by the demands on the piping system; the amount of light in a classroom varies depending on when the lights are manually switched on and off and and how ma
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Values" type="Array" setter="set_Values" getter="get_Values">
-			The collection of time series values.
+		<member name="Values" type="Variant" setter="set_Values" getter="get_Values">
+			The collection of time series values. An Array of GDIFCEntityBase entities, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

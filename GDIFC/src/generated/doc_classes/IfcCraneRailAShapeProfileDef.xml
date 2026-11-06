@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcCraneRailAShapeProfileDef" inherits="IfcParameterizedProfileDef"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="OverallHeight" type="Variant" setter="set_OverallHeight" getter="get_OverallHeight">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="BaseWidth2" type="Variant" setter="set_BaseWidth2" getter="get_BaseWidth2">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="Radius" type="Variant" setter="set_Radius" getter="get_Radius">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="HeadWidth" type="Variant" setter="set_HeadWidth" getter="get_HeadWidth">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="HeadDepth2" type="Variant" setter="set_HeadDepth2" getter="get_HeadDepth2">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="HeadDepth3" type="Variant" setter="set_HeadDepth3" getter="get_HeadDepth3">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="WebThickness" type="Variant" setter="set_WebThickness" getter="get_WebThickness">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="BaseWidth4" type="Variant" setter="set_BaseWidth4" getter="get_BaseWidth4">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="BaseDepth1" type="Variant" setter="set_BaseDepth1" getter="get_BaseDepth1">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="BaseDepth2" type="Variant" setter="set_BaseDepth2" getter="get_BaseDepth2">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="BaseDepth3" type="Variant" setter="set_BaseDepth3" getter="get_BaseDepth3">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="CentreOfGravityInY" type="Variant" setter="set_CentreOfGravityInY" getter="get_CentreOfGravityInY">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

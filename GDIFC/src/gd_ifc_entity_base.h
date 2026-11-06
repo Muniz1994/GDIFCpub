@@ -66,9 +66,8 @@ private:
 
 // ── Free helper functions used by generated getters/setters ────────────────
 //
-//  Named gd_attr_* for read access and gd_set_* for write access.
-//  Defined inline here so the generated translation units can use them
-//  without additional link-time dependencies on entity_base.cpp.
+//  gd_attr_* convert an attribute value read from an entity; gd_attr_index finds where the
+//  entity holds an attribute, and gd_set_attribute sets one.
 //
 //  NOTE: entity_ and file_ are public on GDIFCEntityBase so helpers can
 //        access them directly.
@@ -91,12 +90,32 @@ inline godot::String gd_attr_string(const AttributeValue& av) {
         EnumerationReference ref = av;
         return godot::String(ref.value());
     }
+    // As STEP spells them
+    if (t == IfcUtil::Argument_LOGICAL) {
+        boost::logic::tribool tb = av;
+        return boost::logic::indeterminate(tb) ? "UNKNOWN" : (tb ? "TRUE" : "FALSE");
+    }
+    if (t == IfcUtil::Argument_BOOL) {
+        return (bool)av ? "TRUE" : "FALSE";
+    }
+    if (t == IfcUtil::Argument_BINARY) {
+        boost::dynamic_bitset<> bits = av;
+        std::string s;
+        boost::to_string(bits, s);
+        return godot::String(s.c_str());
+    }
     return godot::String();
 }
+
+// Numbers of either kind: files write reals without a decimal point, which parse as integers,
+// and some write integers, such as timestamps, as reals
 
 inline int64_t gd_attr_int(const AttributeValue& av) {
     if (av.type() == IfcUtil::Argument_INT) {
         return static_cast<int64_t>((int)av);
+    }
+    if (av.type() == IfcUtil::Argument_DOUBLE) {
+        return static_cast<int64_t>((double)av);
     }
     return 0;
 }
@@ -104,6 +123,9 @@ inline int64_t gd_attr_int(const AttributeValue& av) {
 inline double gd_attr_double(const AttributeValue& av) {
     if (av.type() == IfcUtil::Argument_DOUBLE) {
         return (double)av;
+    }
+    if (av.type() == IfcUtil::Argument_INT) {
+        return static_cast<double>((int)av);
     }
     return 0.0;
 }
@@ -139,28 +161,34 @@ inline godot::Ref<godot::GDIFCEntityBase> gd_attr_entity(
 
 // ── Aggregate getters ──────────────────────────────────────────────────────
 
-inline godot::PackedInt64Array gd_attr_agg_int(const AttributeValue& av) {
-    godot::PackedInt64Array result;
-    if (av.type() == IfcUtil::Argument_AGGREGATE_OF_INT) {
-        std::vector<int> v = av;
-        result.resize(static_cast<int64_t>(v.size()));
-        for (size_t i = 0; i < v.size(); ++i) {
-            result[static_cast<int64_t>(i)] = static_cast<int64_t>(v[i]);
-        }
+template <typename Packed, typename From>
+Packed gd_packed_from(const std::vector<From>& v) {
+    Packed result;
+    result.resize(static_cast<int64_t>(v.size()));
+    for (size_t i = 0; i < v.size(); ++i) {
+        result[static_cast<int64_t>(i)] = static_cast<std::decay_t<decltype(result[0])>>(v[i]);
     }
     return result;
 }
 
-inline godot::PackedFloat64Array gd_attr_agg_double(const AttributeValue& av) {
-    godot::PackedFloat64Array result;
-    if (av.type() == IfcUtil::Argument_AGGREGATE_OF_DOUBLE) {
-        std::vector<double> v = av;
-        result.resize(static_cast<int64_t>(v.size()));
-        for (size_t i = 0; i < v.size(); ++i) {
-            result[static_cast<int64_t>(i)] = v[i];
-        }
+inline godot::PackedInt64Array gd_attr_agg_int(const AttributeValue& av) {
+    if (av.type() == IfcUtil::Argument_AGGREGATE_OF_INT) {
+        return gd_packed_from<godot::PackedInt64Array>((std::vector<int>)av);
     }
-    return result;
+    if (av.type() == IfcUtil::Argument_AGGREGATE_OF_DOUBLE) {
+        return gd_packed_from<godot::PackedInt64Array>((std::vector<double>)av);
+    }
+    return godot::PackedInt64Array();
+}
+
+inline godot::PackedFloat64Array gd_attr_agg_double(const AttributeValue& av) {
+    if (av.type() == IfcUtil::Argument_AGGREGATE_OF_DOUBLE) {
+        return gd_packed_from<godot::PackedFloat64Array>((std::vector<double>)av);
+    }
+    if (av.type() == IfcUtil::Argument_AGGREGATE_OF_INT) {
+        return gd_packed_from<godot::PackedFloat64Array>((std::vector<int>)av);
+    }
+    return godot::PackedFloat64Array();
 }
 
 inline godot::PackedStringArray gd_attr_agg_string(const AttributeValue& av) {
@@ -190,91 +218,51 @@ inline godot::Array gd_attr_agg_entity(
     return result;
 }
 
-/// Fallback for aggregate-of-aggregate and other complex types.
-/// Returns an empty Variant for now; use get_attribute(name) for dynamic access.
-inline godot::Variant gd_attr_variant(const AttributeValue& /*av*/) {
-    return godot::Variant();
+/// Any attribute value, as get_attribute() returns it. Used for nested aggregates and for
+/// attributes whose type differs between schemas.
+godot::Variant gd_attr_to_variant(const AttributeValue& av, std::shared_ptr<IfcParse::IfcFile> file);
+
+/// Aggregates of aggregates, as an Array of arrays
+inline godot::Array gd_attr_array(const AttributeValue& av, std::shared_ptr<IfcParse::IfcFile> file) {
+    const godot::Variant v = gd_attr_to_variant(av, std::move(file));
+    return v.get_type() == godot::Variant::ARRAY ? godot::Array(v) : godot::Array();
 }
 
-// ── Scalar setters ─────────────────────────────────────────────────────────
+// ── Attribute lookup ───────────────────────────────────────────────────────
+//
+//  The generated classes cover IFC2X3, IFC4 and IFC4X3 together, so an attribute of a class can
+//  be missing from the schema of a given file, or sit at another position in it. Attributes are
+//  looked up by name in the entity's own schema: a missing one reads as empty and can't be set.
 
-inline void gd_set_string(IfcUtil::IfcBaseClass* e, size_t idx, godot::String v) {
-    e->set_attribute_value(idx, std::string(v.utf8().get_data()));
-}
+/// An attribute IFC4X3 renamed: in files of `schema`, entities of `entity_uc` (upper case) and
+/// its subtypes hold it under `name`. Lists of aliases end with an entry whose name is null.
+struct GDIFCAttributeAlias {
+    const char* schema;
+    const char* entity_uc;
+    const char* name;
+};
 
-inline void gd_set_int(IfcUtil::IfcBaseClass* e, size_t idx, int64_t v) {
-    e->set_attribute_value(idx, static_cast<int>(v));
-}
+/// Position of the attribute in the entity's own schema, or -1 when that schema doesn't have it
+ptrdiff_t gd_attr_index(const IfcUtil::IfcBaseClass* e, const char* name,
+                        const GDIFCAttributeAlias* aliases = nullptr);
 
-inline void gd_set_double(IfcUtil::IfcBaseClass* e, size_t idx, double v) {
-    e->set_attribute_value(idx, v);
-}
+/// The attribute as the typed classes read it, converted to the type the entity's schema declares:
+/// null when it's unset or that schema doesn't have it. Instances of defined types, such as the
+/// IfcLabel in an IfcValue select, read as their value.
+godot::Variant gd_get_attribute(const IfcUtil::IfcBaseClass* e, const char* name,
+                                std::shared_ptr<IfcParse::IfcFile> file,
+                                const GDIFCAttributeAlias* aliases = nullptr);
 
-inline void gd_set_bool(IfcUtil::IfcBaseClass* e, size_t idx, bool v) {
-    e->set_attribute_value(idx, v);
-}
+/// Whether an attribute of this type can hold a value rather than only references: anything but
+/// an entity, a select of entities, or aggregates of them
+bool gd_holds_values(const IfcParse::parameter_type* type);
 
-// ── Entity-reference setter ───────────────────────────────────────────────
-
-inline void gd_set_entity(IfcUtil::IfcBaseClass* e, size_t idx,
-                          godot::Ref<godot::GDIFCEntityBase> v)
-{
-    if (v.is_valid() && v->entity_ != nullptr) {
-        e->set_attribute_value(idx, v->entity_);
-    } else {
-        e->unset_attribute_value(idx);
-    }
-}
-
-// ── Aggregate setters ──────────────────────────────────────────────────────
-
-inline void gd_set_agg_int(IfcUtil::IfcBaseClass* e, size_t idx,
-                            godot::PackedInt64Array v)
-{
-    std::vector<int> vec;
-    vec.reserve(static_cast<size_t>(v.size()));
-    for (int64_t i = 0; i < v.size(); ++i) {
-        vec.push_back(static_cast<int>(v[i]));
-    }
-    e->set_attribute_value(idx, vec);
-}
-
-inline void gd_set_agg_double(IfcUtil::IfcBaseClass* e, size_t idx,
-                               godot::PackedFloat64Array v)
-{
-    std::vector<double> vec;
-    vec.reserve(static_cast<size_t>(v.size()));
-    for (int64_t i = 0; i < v.size(); ++i) {
-        vec.push_back(v[i]);
-    }
-    e->set_attribute_value(idx, vec);
-}
-
-inline void gd_set_agg_string(IfcUtil::IfcBaseClass* e, size_t idx,
-                               godot::PackedStringArray v)
-{
-    std::vector<std::string> vec;
-    vec.reserve(static_cast<size_t>(v.size()));
-    for (int64_t i = 0; i < v.size(); ++i) {
-        vec.push_back(std::string(v[i].utf8().get_data()));
-    }
-    e->set_attribute_value(idx, vec);
-}
-
-inline void gd_set_agg_entity(IfcUtil::IfcBaseClass* e, size_t idx,
-                               godot::Array v)
-{
-    auto agg = boost::make_shared<aggregate_of_instance>();
-    for (int64_t i = 0; i < v.size(); ++i) {
-        const godot::Variant& item = v[i];
-        auto* obj = godot::Object::cast_to<godot::GDIFCEntityBase>(
-            item.operator godot::Object*());
-        if (obj != nullptr && obj->entity_ != nullptr) {
-            agg->push(obj->entity_);
-        }
-    }
-    e->set_attribute_value(idx, agg);
-}
+/// Sets the attribute, converted to the type its schema declares. Reports an error and leaves the
+/// entity unchanged when its schema lacks the attribute, the attribute is derived, or the value
+/// doesn't fit. Null unsets it. A select of defined types, such as IfcValue, takes a plain value:
+/// it keeps the type of the value it replaces when that fits.
+void gd_set_attribute(IfcUtil::IfcBaseClass* e, const char* name, const godot::Variant& value,
+                      const GDIFCAttributeAlias* aliases = nullptr);
 
 // ── Generated registration declaration ────────────────────────────────────
 void register_all_gd_ifc_entities();

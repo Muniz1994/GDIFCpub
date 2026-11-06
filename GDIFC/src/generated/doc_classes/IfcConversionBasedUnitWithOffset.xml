@@ -5,14 +5,18 @@
 	<brief_description>
 		IfcConversionBasedUnitWithOffset is a unit which is converted from another unit by applying a conversion factor and an offset. HISTORY New entity in IFC 2x4. Example: The temperature unit Fahrenheit is based on the temperature unit Kelvin as follows: f = k · 1.8 – 459.67 wherein k is an absolute temperature expressed in Kelvin and f is the same temperature in Fahrenheit. The following entity insta
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="ConversionOffset" type="float" setter="set_ConversionOffset" getter="get_ConversionOffset">
-			A positive or negative offset to add after the inherited ConversionFactor was applied.
+		<member name="ConversionOffset" type="Variant" setter="set_ConversionOffset" getter="get_ConversionOffset">
+			A positive or negative offset to add after the inherited ConversionFactor was applied. A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

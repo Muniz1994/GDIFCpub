@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcWallElementedCase" inherits="IfcWall"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The IfcWallElementedCase defines a wall with certain constraints for the provision of its components. The IfcWallElementedCase handles all cases of walls, that are decomposed into parts:ÿ having components being assigned to the IfcWallElementedCase using the IfcRelAggregates relationship accessible by the inverse relationship IsDecomposedBy . applying the constraint that the parts within the decom
+	</brief_description>
+	<description>Only in IFC4 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

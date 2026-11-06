@@ -5,15 +5,21 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="NumberValue" type="float" setter="set_NumberValue" getter="get_NumberValue">
+		<member name="NumberValue" type="Variant" setter="set_NumberValue" getter="get_NumberValue">
+			A float, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Formula" type="String" setter="set_Formula" getter="get_Formula">
+		<member name="Formula" type="Variant" setter="set_Formula" getter="get_Formula">
+			A String, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

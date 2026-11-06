@@ -5,19 +5,27 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Normals" type="Array" setter="" getter="get_Normals">
+		<member name="Normals" type="Variant" setter="set_Normals" getter="get_Normals">
+			An Array, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Closed" type="bool" setter="set_Closed" getter="get_Closed">
+		<member name="Closed" type="Variant" setter="set_Closed" getter="get_Closed">
+			A bool, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="CoordIndex" type="Array" setter="" getter="get_CoordIndex">
+		<member name="CoordIndex" type="Variant" setter="set_CoordIndex" getter="get_CoordIndex">
+			An Array, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="PnIndex" type="PackedInt64Array" setter="set_PnIndex" getter="get_PnIndex">
+		<member name="PnIndex" type="Variant" setter="set_PnIndex" getter="get_PnIndex">
+			A PackedInt64Array, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

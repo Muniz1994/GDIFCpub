@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcAppliedValueRelationship" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcAppliedValueRelationship is a relationship class that enables cost values to be aggregated together as components of another cost value. HISTORY New Entity in Release IFC2.0. IFC2x4 CHANGE Subtyped from IfcResourceLevelRelationship , attribute order changed. Use definitions Dependency relationships can exist between applied values on the basis that one particular value may be determined by o
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="ComponentOfTotal" type="GDIFCEntityBase" setter="set_ComponentOfTotal" getter="get_ComponentOfTotal">
+			The applied value (total or subtotal) of which the value being considered is a component. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="Components" type="Variant" setter="set_Components" getter="get_Components">
+			Applied values that are components of another applied value and from which that applied value may be deduced. An Array of GDIFCEntityBase entities, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="ArithmeticOperator" type="Variant" setter="set_ArithmeticOperator" getter="get_ArithmeticOperator">
+			The arithmetic operator applied in an applied value relationship. A String, one of the enumeration's values, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="Name" type="Variant" setter="set_Name" getter="get_Name">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="Description" type="Variant" setter="set_Description" getter="get_Description">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

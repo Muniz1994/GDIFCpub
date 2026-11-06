@@ -5,13 +5,18 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="InnerTexCoordIndices" type="Array" setter="" getter="get_InnerTexCoordIndices">
+		<member name="InnerTexCoordIndices" type="Variant" setter="set_InnerTexCoordIndices" getter="get_InnerTexCoordIndices">
+			An Array, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

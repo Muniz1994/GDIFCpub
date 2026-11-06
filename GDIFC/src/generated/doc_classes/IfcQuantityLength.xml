@@ -6,16 +6,20 @@
 		IfcQuantityLength is a physical quantity that defines a derived length measure to provide an element's physical property. It is normally derived from the physical properties of the element under the specific measure rules given by a method of measurement. EXAMPLE A rafter within a roof construction may be measured according to its length (taking a common cross section into account). The actual siz
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="LengthValue" type="float" setter="set_LengthValue" getter="get_LengthValue">
-			Length measure value of this quantity.
+		<member name="LengthValue" type="Variant" setter="set_LengthValue" getter="get_LengthValue">
+			Length measure value of this quantity. A float, or null when unset.
 		</member>
-		<member name="Formula" type="String" setter="set_Formula" getter="get_Formula">
-			A formula by which the quantity has been calculated. It can be assigned in addition to the actual value of the quantity. Formulas could be mathematic calculations (like width x height), database links, or a combination. The formula is for informational purposes only. IFC2x4 CHANGE Attribute added to the end of the attribute list.
+		<member name="Formula" type="Variant" setter="set_Formula" getter="get_Formula">
+			A formula by which the quantity has been calculated. It can be assigned in addition to the actual value of the quantity. Formulas could be mathematic calculations (like width x height), database links, or a combination. The formula is for informational purposes only. IFC2x4 CHANGE Attribute added to the end of the attribute list. A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

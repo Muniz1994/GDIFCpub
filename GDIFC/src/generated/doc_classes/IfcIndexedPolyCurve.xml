@@ -5,17 +5,24 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="Points" type="GDIFCEntityBase" setter="set_Points" getter="get_Points">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Segments" type="Array" setter="set_Segments" getter="get_Segments">
+		<member name="Segments" type="Variant" setter="set_Segments" getter="get_Segments">
+			An Array of values (String, float, int or bool), or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="SelfIntersect" type="bool" setter="set_SelfIntersect" getter="get_SelfIntersect">
+		<member name="SelfIntersect" type="Variant" setter="set_SelfIntersect" getter="get_SelfIntersect">
+			A bool, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

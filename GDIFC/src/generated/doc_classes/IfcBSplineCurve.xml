@@ -6,25 +6,29 @@
 		Definition from ISO/CD 10303-42:1992 : A B-spline curve is a piecewise parametric polynomial or rational curve described in terms of control points and basis functions. The B-spline curve has been selected as the most stable format to represent all types of polynomial or rational parametric curves. With appropriate attribute values it is capable of representing single span or spline curves of expl
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Degree" type="int" setter="set_Degree" getter="get_Degree">
-			The algebraic degree of the basis functions.
+		<member name="Degree" type="Variant" setter="set_Degree" getter="get_Degree">
+			The algebraic degree of the basis functions. An int, or null when unset.
 		</member>
-		<member name="ControlPointsList" type="Array" setter="set_ControlPointsList" getter="get_ControlPointsList">
-			The list of control points for the curve.
+		<member name="ControlPointsList" type="Variant" setter="set_ControlPointsList" getter="get_ControlPointsList">
+			The list of control points for the curve. An Array of GDIFCEntityBase entities, or null when unset.
 		</member>
-		<member name="CurveForm" type="String" setter="set_CurveForm" getter="get_CurveForm">
-			Used to identify particular types of curve; it is for information only.
+		<member name="CurveForm" type="Variant" setter="set_CurveForm" getter="get_CurveForm">
+			Used to identify particular types of curve; it is for information only. A String, one of the enumeration's values, or null when unset.
 		</member>
-		<member name="ClosedCurve" type="String" setter="set_ClosedCurve" getter="get_ClosedCurve">
-			Indication of whether the curve is closed; it is for information only.
+		<member name="ClosedCurve" type="Variant" setter="set_ClosedCurve" getter="get_ClosedCurve">
+			Indication of whether the curve is closed; it is for information only. A String ("TRUE", "FALSE" or "UNKNOWN"), or null when unset.
 		</member>
-		<member name="SelfIntersect" type="String" setter="set_SelfIntersect" getter="get_SelfIntersect">
-			Indication whether the curve self-intersects or not; it is for information only.
+		<member name="SelfIntersect" type="Variant" setter="set_SelfIntersect" getter="get_SelfIntersect">
+			Indication whether the curve self-intersects or not; it is for information only. A String ("TRUE", "FALSE" or "UNKNOWN"), or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

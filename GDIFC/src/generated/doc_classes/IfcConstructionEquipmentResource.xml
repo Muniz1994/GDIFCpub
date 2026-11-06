@@ -6,13 +6,17 @@
 		IfcConstructionEquipmentResource is usage of construction equipment to assist in the performance of construction. Construction Equipment resources are wholly or partially consumed or occupied in the performance of construction. HISTORY: New Entity in IFC Release 2.0. Base type and documentation extended in IFC2x4. Occurrences of IfcConstructionEquipmentResource are products that are used as resour
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Defines types of construction equipment resources. IFC2x4 New attribute
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			Defines types of construction equipment resources. IFC2x4 New attribute A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

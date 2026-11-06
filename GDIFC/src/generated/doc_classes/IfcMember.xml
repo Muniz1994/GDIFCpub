@@ -6,13 +6,20 @@
 		An IfcMember is a structural member designed to carry loads between or beyond points of support. It is not required to be load bearing. The orientation of the member (being horizontal, vertical or sloped) is not relevant to its definition (in contrary to IfcBeam and IfcColumn ). An IfcMember represents a linear structural element from an architectural or structural modeling point of view and shall
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Predefined generic type for a member that is specified in an enumeration. There may be a property set given for the predefined types. NOTE The PredefinedType shall only be used, if no type object IfcMemberType is assigned, providing its own IfcMemberType.PredefinedType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic type for a member that is specified in an enumeration. There may be a property set given for the predefined types. NOTE The PredefinedType shall only be used, if no type object IfcMemberType is assigned, providing its own IfcMemberType.PredefinedType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition. A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
+		</member>
+		<member name="HasPorts" type="Array" setter="" getter="get_HasPorts">
+			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

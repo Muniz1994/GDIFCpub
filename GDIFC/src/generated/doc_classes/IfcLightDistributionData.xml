@@ -6,19 +6,23 @@
 		IfcLightDistributionData defines the luminous intensity of a light source given at a particular main plane angle. It is based on some standardized light distribution curves; the MainPlaneAngle is either the A angle; if the IfcLightDistributionCurveEnum is set to TYPE_A B angle; if the IfcLightDistributionCurveEnum is set to TYPE_B C angle; if the IfcLightDistributionCurveEnum is set to TYPE_C For 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="MainPlaneAngle" type="float" setter="set_MainPlaneAngle" getter="get_MainPlaneAngle">
-			The main plane angle (A, B or C angles, according to the light distribution curve chosen).
+		<member name="MainPlaneAngle" type="Variant" setter="set_MainPlaneAngle" getter="get_MainPlaneAngle">
+			The main plane angle (A, B or C angles, according to the light distribution curve chosen). A float, or null when unset.
 		</member>
-		<member name="SecondaryPlaneAngle" type="PackedFloat64Array" setter="set_SecondaryPlaneAngle" getter="get_SecondaryPlaneAngle">
-			The list of secondary plane angles (the α, β or γ angles) according to the light distribution curve chosen. NOTE: The SecondaryPlaneAngle and LuminousIntensity lists are corresponding lists.
+		<member name="SecondaryPlaneAngle" type="Variant" setter="set_SecondaryPlaneAngle" getter="get_SecondaryPlaneAngle">
+			The list of secondary plane angles (the α, β or γ angles) according to the light distribution curve chosen. NOTE: The SecondaryPlaneAngle and LuminousIntensity lists are corresponding lists. A PackedFloat64Array, or null when unset.
 		</member>
-		<member name="LuminousIntensity" type="PackedFloat64Array" setter="set_LuminousIntensity" getter="get_LuminousIntensity">
-			The luminous intensity distribution measure for this pair of main and secondary plane angles according to the light distribution curve chosen.
+		<member name="LuminousIntensity" type="Variant" setter="set_LuminousIntensity" getter="get_LuminousIntensity">
+			The luminous intensity distribution measure for this pair of main and secondary plane angles according to the light distribution curve chosen. A PackedFloat64Array, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

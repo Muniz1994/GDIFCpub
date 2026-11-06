@@ -6,21 +6,26 @@
 		An IfcMetric is used to capture quantitative resultant metrics that can be applied to objectives. HISTORY: New Entity in IFC Release 2.0 Use Definition IfcMetric is a subtype of IfcConstraint and may be associated with any subtype of IfcRoot through the IfcRelAssociatesConstraint relationship in the IfcControlExtension schema, or may be associated with IfcProperty by IfcPropertyConstraintRelations
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Benchmark" type="String" setter="set_Benchmark" getter="get_Benchmark">
-			Enumeration that identifies the type of benchmark data.
+		<member name="Benchmark" type="Variant" setter="set_Benchmark" getter="get_Benchmark">
+			Enumeration that identifies the type of benchmark data. A String, one of the enumeration's values, or null when unset.
 		</member>
-		<member name="ValueSource" type="String" setter="set_ValueSource" getter="get_ValueSource">
-			Reference source for data values.
+		<member name="ValueSource" type="Variant" setter="set_ValueSource" getter="get_ValueSource">
+			Reference source for data values. A String, or null when unset.
 		</member>
-		<member name="DataValue" type="GDIFCEntityBase" setter="set_DataValue" getter="get_DataValue">
-			The value with data type defined by the underlying type accesses via IfcMetricValueSelect .
+		<member name="DataValue" type="Variant" setter="set_DataValue" getter="get_DataValue">
+			The value with data type defined by the underlying type accesses via IfcMetricValueSelect . A value or a GDIFCEntityBase, or null when unset.
 		</member>
 		<member name="ReferencePath" type="GDIFCEntityBase" setter="set_ReferencePath" getter="get_ReferencePath">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

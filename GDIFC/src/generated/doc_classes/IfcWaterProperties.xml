@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcWaterProperties" inherits="IfcMaterialProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="IsPotable" type="Variant" setter="set_IsPotable" getter="get_IsPotable">
+			A bool, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="Hardness" type="Variant" setter="set_Hardness" getter="get_Hardness">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="AlkalinityConcentration" type="Variant" setter="set_AlkalinityConcentration" getter="get_AlkalinityConcentration">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="AcidityConcentration" type="Variant" setter="set_AcidityConcentration" getter="get_AcidityConcentration">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="ImpuritiesContent" type="Variant" setter="set_ImpuritiesContent" getter="get_ImpuritiesContent">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="PHLevel" type="Variant" setter="set_PHLevel" getter="get_PHLevel">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="DissolvedSolidsContent" type="Variant" setter="set_DissolvedSolidsContent" getter="get_DissolvedSolidsContent">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

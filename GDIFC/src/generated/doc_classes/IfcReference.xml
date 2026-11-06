@@ -5,21 +5,30 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="TypeIdentifier" type="String" setter="set_TypeIdentifier" getter="get_TypeIdentifier">
+		<member name="TypeIdentifier" type="Variant" setter="set_TypeIdentifier" getter="get_TypeIdentifier">
+			A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="AttributeIdentifier" type="String" setter="set_AttributeIdentifier" getter="get_AttributeIdentifier">
+		<member name="AttributeIdentifier" type="Variant" setter="set_AttributeIdentifier" getter="get_AttributeIdentifier">
+			A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="InstanceName" type="String" setter="set_InstanceName" getter="get_InstanceName">
+		<member name="InstanceName" type="Variant" setter="set_InstanceName" getter="get_InstanceName">
+			A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="ListPositions" type="PackedInt64Array" setter="set_ListPositions" getter="get_ListPositions">
+		<member name="ListPositions" type="Variant" setter="set_ListPositions" getter="get_ListPositions">
+			A PackedInt64Array, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="InnerReference" type="GDIFCEntityBase" setter="set_InnerReference" getter="get_InnerReference">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

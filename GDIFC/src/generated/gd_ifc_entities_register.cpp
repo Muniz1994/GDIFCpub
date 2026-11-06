@@ -7014,4 +7014,1044 @@ void register_all_gd_ifc_entities() {
             obj->init(e, f);
             return Ref<GDIFCEntityBase>(obj);
         });
+    ClassDB::register_class<IfcBeamStandardCase>();
+    GDIFCEntityBase::register_factory("IfcBeamStandardCase",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcBeamStandardCase> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcBuildingElement>();
+    GDIFCEntityBase::register_factory("IfcBuildingElement",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcBuildingElement> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcBuildingElementType>();
+    GDIFCEntityBase::register_factory("IfcBuildingElementType",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcBuildingElementType> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcColumnStandardCase>();
+    GDIFCEntityBase::register_factory("IfcColumnStandardCase",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcColumnStandardCase> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcDoorStandardCase>();
+    GDIFCEntityBase::register_factory("IfcDoorStandardCase",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcDoorStandardCase> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcDoorStyle>();
+    GDIFCEntityBase::register_factory("IfcDoorStyle",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcDoorStyle> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcMemberStandardCase>();
+    GDIFCEntityBase::register_factory("IfcMemberStandardCase",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcMemberStandardCase> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcOpeningStandardCase>();
+    GDIFCEntityBase::register_factory("IfcOpeningStandardCase",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcOpeningStandardCase> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcPlateStandardCase>();
+    GDIFCEntityBase::register_factory("IfcPlateStandardCase",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcPlateStandardCase> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcPresentationStyleAssignment>();
+    GDIFCEntityBase::register_factory("IfcPresentationStyleAssignment",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcPresentationStyleAssignment> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcProxy>();
+    GDIFCEntityBase::register_factory("IfcProxy",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcProxy> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcSlabElementedCase>();
+    GDIFCEntityBase::register_factory("IfcSlabElementedCase",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcSlabElementedCase> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcSlabStandardCase>();
+    GDIFCEntityBase::register_factory("IfcSlabStandardCase",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcSlabStandardCase> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcWallElementedCase>();
+    GDIFCEntityBase::register_factory("IfcWallElementedCase",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcWallElementedCase> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcWindowStandardCase>();
+    GDIFCEntityBase::register_factory("IfcWindowStandardCase",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcWindowStandardCase> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcWindowStyle>();
+    GDIFCEntityBase::register_factory("IfcWindowStyle",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcWindowStyle> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<Ifc2DCompositeCurve>();
+    GDIFCEntityBase::register_factory("Ifc2DCompositeCurve",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<Ifc2DCompositeCurve> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcDraughtingCallout>();
+    GDIFCEntityBase::register_factory("IfcDraughtingCallout",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcDraughtingCallout> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcDimensionCurveDirectedCallout>();
+    GDIFCEntityBase::register_factory("IfcDimensionCurveDirectedCallout",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcDimensionCurveDirectedCallout> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcAngularDimension>();
+    GDIFCEntityBase::register_factory("IfcAngularDimension",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcAngularDimension> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcAnnotationOccurrence>();
+    GDIFCEntityBase::register_factory("IfcAnnotationOccurrence",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcAnnotationOccurrence> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcAnnotationCurveOccurrence>();
+    GDIFCEntityBase::register_factory("IfcAnnotationCurveOccurrence",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcAnnotationCurveOccurrence> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcAnnotationFillAreaOccurrence>();
+    GDIFCEntityBase::register_factory("IfcAnnotationFillAreaOccurrence",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcAnnotationFillAreaOccurrence> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcAnnotationSurface>();
+    GDIFCEntityBase::register_factory("IfcAnnotationSurface",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcAnnotationSurface> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcAnnotationSurfaceOccurrence>();
+    GDIFCEntityBase::register_factory("IfcAnnotationSurfaceOccurrence",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcAnnotationSurfaceOccurrence> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcAnnotationSymbolOccurrence>();
+    GDIFCEntityBase::register_factory("IfcAnnotationSymbolOccurrence",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcAnnotationSymbolOccurrence> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcAnnotationTextOccurrence>();
+    GDIFCEntityBase::register_factory("IfcAnnotationTextOccurrence",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcAnnotationTextOccurrence> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcAppliedValueRelationship>();
+    GDIFCEntityBase::register_factory("IfcAppliedValueRelationship",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcAppliedValueRelationship> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcApprovalActorRelationship>();
+    GDIFCEntityBase::register_factory("IfcApprovalActorRelationship",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcApprovalActorRelationship> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcApprovalPropertyRelationship>();
+    GDIFCEntityBase::register_factory("IfcApprovalPropertyRelationship",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcApprovalPropertyRelationship> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcBezierCurve>();
+    GDIFCEntityBase::register_factory("IfcBezierCurve",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcBezierCurve> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcBuildingElementComponent>();
+    GDIFCEntityBase::register_factory("IfcBuildingElementComponent",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcBuildingElementComponent> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcCalendarDate>();
+    GDIFCEntityBase::register_factory("IfcCalendarDate",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcCalendarDate> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcEdgeFeature>();
+    GDIFCEntityBase::register_factory("IfcEdgeFeature",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcEdgeFeature> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcChamferEdgeFeature>();
+    GDIFCEntityBase::register_factory("IfcChamferEdgeFeature",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcChamferEdgeFeature> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcClassificationItem>();
+    GDIFCEntityBase::register_factory("IfcClassificationItem",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcClassificationItem> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcClassificationItemRelationship>();
+    GDIFCEntityBase::register_factory("IfcClassificationItemRelationship",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcClassificationItemRelationship> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcClassificationNotation>();
+    GDIFCEntityBase::register_factory("IfcClassificationNotation",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcClassificationNotation> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcClassificationNotationFacet>();
+    GDIFCEntityBase::register_factory("IfcClassificationNotationFacet",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcClassificationNotationFacet> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcCondition>();
+    GDIFCEntityBase::register_factory("IfcCondition",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcCondition> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcConditionCriterion>();
+    GDIFCEntityBase::register_factory("IfcConditionCriterion",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcConditionCriterion> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcConnectionPortGeometry>();
+    GDIFCEntityBase::register_factory("IfcConnectionPortGeometry",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcConnectionPortGeometry> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcConstraintAggregationRelationship>();
+    GDIFCEntityBase::register_factory("IfcConstraintAggregationRelationship",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcConstraintAggregationRelationship> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcConstraintClassificationRelationship>();
+    GDIFCEntityBase::register_factory("IfcConstraintClassificationRelationship",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcConstraintClassificationRelationship> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcConstraintRelationship>();
+    GDIFCEntityBase::register_factory("IfcConstraintRelationship",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcConstraintRelationship> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcCoordinatedUniversalTimeOffset>();
+    GDIFCEntityBase::register_factory("IfcCoordinatedUniversalTimeOffset",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcCoordinatedUniversalTimeOffset> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcCraneRailAShapeProfileDef>();
+    GDIFCEntityBase::register_factory("IfcCraneRailAShapeProfileDef",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcCraneRailAShapeProfileDef> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcCraneRailFShapeProfileDef>();
+    GDIFCEntityBase::register_factory("IfcCraneRailFShapeProfileDef",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcCraneRailFShapeProfileDef> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcDateAndTime>();
+    GDIFCEntityBase::register_factory("IfcDateAndTime",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcDateAndTime> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcDefinedSymbol>();
+    GDIFCEntityBase::register_factory("IfcDefinedSymbol",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcDefinedSymbol> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcDiameterDimension>();
+    GDIFCEntityBase::register_factory("IfcDiameterDimension",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcDiameterDimension> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcDraughtingCalloutRelationship>();
+    GDIFCEntityBase::register_factory("IfcDraughtingCalloutRelationship",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcDraughtingCalloutRelationship> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcDimensionCalloutRelationship>();
+    GDIFCEntityBase::register_factory("IfcDimensionCalloutRelationship",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcDimensionCalloutRelationship> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcDimensionCurve>();
+    GDIFCEntityBase::register_factory("IfcDimensionCurve",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcDimensionCurve> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcTerminatorSymbol>();
+    GDIFCEntityBase::register_factory("IfcTerminatorSymbol",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcTerminatorSymbol> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcDimensionCurveTerminator>();
+    GDIFCEntityBase::register_factory("IfcDimensionCurveTerminator",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcDimensionCurveTerminator> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcDimensionPair>();
+    GDIFCEntityBase::register_factory("IfcDimensionPair",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcDimensionPair> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcDocumentElectronicFormat>();
+    GDIFCEntityBase::register_factory("IfcDocumentElectronicFormat",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcDocumentElectronicFormat> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcDraughtingPreDefinedTextFont>();
+    GDIFCEntityBase::register_factory("IfcDraughtingPreDefinedTextFont",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcDraughtingPreDefinedTextFont> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcElectricDistributionPoint>();
+    GDIFCEntityBase::register_factory("IfcElectricDistributionPoint",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcElectricDistributionPoint> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcElectricHeaterType>();
+    GDIFCEntityBase::register_factory("IfcElectricHeaterType",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcElectricHeaterType> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcEnergyProperties>();
+    GDIFCEntityBase::register_factory("IfcEnergyProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcEnergyProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcElectricalBaseProperties>();
+    GDIFCEntityBase::register_factory("IfcElectricalBaseProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcElectricalBaseProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcElectricalCircuit>();
+    GDIFCEntityBase::register_factory("IfcElectricalCircuit",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcElectricalCircuit> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcElectricalElement>();
+    GDIFCEntityBase::register_factory("IfcElectricalElement",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcElectricalElement> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcEnvironmentalImpactValue>();
+    GDIFCEntityBase::register_factory("IfcEnvironmentalImpactValue",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcEnvironmentalImpactValue> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcEquipmentElement>();
+    GDIFCEntityBase::register_factory("IfcEquipmentElement",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcEquipmentElement> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcEquipmentStandard>();
+    GDIFCEntityBase::register_factory("IfcEquipmentStandard",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcEquipmentStandard> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcExtendedMaterialProperties>();
+    GDIFCEntityBase::register_factory("IfcExtendedMaterialProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcExtendedMaterialProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcExternallyDefinedSymbol>();
+    GDIFCEntityBase::register_factory("IfcExternallyDefinedSymbol",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcExternallyDefinedSymbol> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcFillAreaStyleTileSymbolWithStyle>();
+    GDIFCEntityBase::register_factory("IfcFillAreaStyleTileSymbolWithStyle",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcFillAreaStyleTileSymbolWithStyle> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcFluidFlowProperties>();
+    GDIFCEntityBase::register_factory("IfcFluidFlowProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcFluidFlowProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcFuelProperties>();
+    GDIFCEntityBase::register_factory("IfcFuelProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcFuelProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcFurnitureStandard>();
+    GDIFCEntityBase::register_factory("IfcFurnitureStandard",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcFurnitureStandard> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcGasTerminalType>();
+    GDIFCEntityBase::register_factory("IfcGasTerminalType",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcGasTerminalType> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcGeneralMaterialProperties>();
+    GDIFCEntityBase::register_factory("IfcGeneralMaterialProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcGeneralMaterialProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcGeneralProfileProperties>();
+    GDIFCEntityBase::register_factory("IfcGeneralProfileProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcGeneralProfileProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcHygroscopicMaterialProperties>();
+    GDIFCEntityBase::register_factory("IfcHygroscopicMaterialProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcHygroscopicMaterialProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcLinearDimension>();
+    GDIFCEntityBase::register_factory("IfcLinearDimension",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcLinearDimension> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcLocalTime>();
+    GDIFCEntityBase::register_factory("IfcLocalTime",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcLocalTime> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcMechanicalMaterialProperties>();
+    GDIFCEntityBase::register_factory("IfcMechanicalMaterialProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcMechanicalMaterialProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcMechanicalConcreteMaterialProperties>();
+    GDIFCEntityBase::register_factory("IfcMechanicalConcreteMaterialProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcMechanicalConcreteMaterialProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcMechanicalSteelMaterialProperties>();
+    GDIFCEntityBase::register_factory("IfcMechanicalSteelMaterialProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcMechanicalSteelMaterialProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcMove>();
+    GDIFCEntityBase::register_factory("IfcMove",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcMove> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcOneDirectionRepeatFactor>();
+    GDIFCEntityBase::register_factory("IfcOneDirectionRepeatFactor",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcOneDirectionRepeatFactor> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcOpticalMaterialProperties>();
+    GDIFCEntityBase::register_factory("IfcOpticalMaterialProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcOpticalMaterialProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcOrderAction>();
+    GDIFCEntityBase::register_factory("IfcOrderAction",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcOrderAction> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcPreDefinedSymbol>();
+    GDIFCEntityBase::register_factory("IfcPreDefinedSymbol",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcPreDefinedSymbol> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcPreDefinedDimensionSymbol>();
+    GDIFCEntityBase::register_factory("IfcPreDefinedDimensionSymbol",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcPreDefinedDimensionSymbol> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcPreDefinedPointMarkerSymbol>();
+    GDIFCEntityBase::register_factory("IfcPreDefinedPointMarkerSymbol",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcPreDefinedPointMarkerSymbol> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcPreDefinedTerminatorSymbol>();
+    GDIFCEntityBase::register_factory("IfcPreDefinedTerminatorSymbol",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcPreDefinedTerminatorSymbol> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcProductsOfCombustionProperties>();
+    GDIFCEntityBase::register_factory("IfcProductsOfCombustionProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcProductsOfCombustionProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcProjectOrderRecord>();
+    GDIFCEntityBase::register_factory("IfcProjectOrderRecord",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcProjectOrderRecord> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcProjectionCurve>();
+    GDIFCEntityBase::register_factory("IfcProjectionCurve",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcProjectionCurve> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcPropertyConstraintRelationship>();
+    GDIFCEntityBase::register_factory("IfcPropertyConstraintRelationship",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcPropertyConstraintRelationship> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcRadiusDimension>();
+    GDIFCEntityBase::register_factory("IfcRadiusDimension",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcRadiusDimension> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcRationalBezierCurve>();
+    GDIFCEntityBase::register_factory("IfcRationalBezierCurve",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcRationalBezierCurve> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcReferencesValueDocument>();
+    GDIFCEntityBase::register_factory("IfcReferencesValueDocument",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcReferencesValueDocument> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcRelAssignsTasks>();
+    GDIFCEntityBase::register_factory("IfcRelAssignsTasks",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcRelAssignsTasks> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcRelAssignsToProjectOrder>();
+    GDIFCEntityBase::register_factory("IfcRelAssignsToProjectOrder",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcRelAssignsToProjectOrder> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcRelAssociatesAppliedValue>();
+    GDIFCEntityBase::register_factory("IfcRelAssociatesAppliedValue",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcRelAssociatesAppliedValue> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcRelAssociatesProfileProperties>();
+    GDIFCEntityBase::register_factory("IfcRelAssociatesProfileProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcRelAssociatesProfileProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcRelConnectsStructuralElement>();
+    GDIFCEntityBase::register_factory("IfcRelConnectsStructuralElement",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcRelConnectsStructuralElement> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcRelInteractionRequirements>();
+    GDIFCEntityBase::register_factory("IfcRelInteractionRequirements",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcRelInteractionRequirements> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcRelOccupiesSpaces>();
+    GDIFCEntityBase::register_factory("IfcRelOccupiesSpaces",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcRelOccupiesSpaces> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcRelOverridesProperties>();
+    GDIFCEntityBase::register_factory("IfcRelOverridesProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcRelOverridesProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcRelSchedulesCostItems>();
+    GDIFCEntityBase::register_factory("IfcRelSchedulesCostItems",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcRelSchedulesCostItems> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcRelaxation>();
+    GDIFCEntityBase::register_factory("IfcRelaxation",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcRelaxation> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcRibPlateProfileProperties>();
+    GDIFCEntityBase::register_factory("IfcRibPlateProfileProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcRibPlateProfileProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcRoundedEdgeFeature>();
+    GDIFCEntityBase::register_factory("IfcRoundedEdgeFeature",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcRoundedEdgeFeature> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcScheduleTimeControl>();
+    GDIFCEntityBase::register_factory("IfcScheduleTimeControl",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcScheduleTimeControl> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcServiceLife>();
+    GDIFCEntityBase::register_factory("IfcServiceLife",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcServiceLife> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcServiceLifeFactor>();
+    GDIFCEntityBase::register_factory("IfcServiceLifeFactor",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcServiceLifeFactor> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcSoundProperties>();
+    GDIFCEntityBase::register_factory("IfcSoundProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcSoundProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcSoundValue>();
+    GDIFCEntityBase::register_factory("IfcSoundValue",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcSoundValue> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcSpaceProgram>();
+    GDIFCEntityBase::register_factory("IfcSpaceProgram",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcSpaceProgram> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcSpaceThermalLoadProperties>();
+    GDIFCEntityBase::register_factory("IfcSpaceThermalLoadProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcSpaceThermalLoadProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcStructuralLinearActionVarying>();
+    GDIFCEntityBase::register_factory("IfcStructuralLinearActionVarying",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcStructuralLinearActionVarying> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcStructuralPlanarActionVarying>();
+    GDIFCEntityBase::register_factory("IfcStructuralPlanarActionVarying",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcStructuralPlanarActionVarying> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcStructuralProfileProperties>();
+    GDIFCEntityBase::register_factory("IfcStructuralProfileProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcStructuralProfileProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcStructuralSteelProfileProperties>();
+    GDIFCEntityBase::register_factory("IfcStructuralSteelProfileProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcStructuralSteelProfileProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcStructuredDimensionCallout>();
+    GDIFCEntityBase::register_factory("IfcStructuredDimensionCallout",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcStructuredDimensionCallout> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcSymbolStyle>();
+    GDIFCEntityBase::register_factory("IfcSymbolStyle",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcSymbolStyle> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcTextStyleWithBoxCharacteristics>();
+    GDIFCEntityBase::register_factory("IfcTextStyleWithBoxCharacteristics",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcTextStyleWithBoxCharacteristics> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcThermalMaterialProperties>();
+    GDIFCEntityBase::register_factory("IfcThermalMaterialProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcThermalMaterialProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcTimeSeriesReferenceRelationship>();
+    GDIFCEntityBase::register_factory("IfcTimeSeriesReferenceRelationship",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcTimeSeriesReferenceRelationship> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcTimeSeriesSchedule>();
+    GDIFCEntityBase::register_factory("IfcTimeSeriesSchedule",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcTimeSeriesSchedule> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcTwoDirectionRepeatFactor>();
+    GDIFCEntityBase::register_factory("IfcTwoDirectionRepeatFactor",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcTwoDirectionRepeatFactor> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcVertexBasedTextureMap>();
+    GDIFCEntityBase::register_factory("IfcVertexBasedTextureMap",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcVertexBasedTextureMap> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
+    ClassDB::register_class<IfcWaterProperties>();
+    GDIFCEntityBase::register_factory("IfcWaterProperties",
+        [](IfcUtil::IfcBaseClass* e, std::shared_ptr<IfcParse::IfcFile> f) -> Ref<GDIFCEntityBase> {
+            Ref<IfcWaterProperties> obj;
+            obj.instantiate();
+            obj->init(e, f);
+            return Ref<GDIFCEntityBase>(obj);
+        });
 }

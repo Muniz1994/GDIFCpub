@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcBeamStandardCase" inherits="IfcBeam"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The standard beam, IfcBeamStandardCase , defines a beam with certain constraints for the provision of material usage, parameters and with certain constraints for the geometric representation. The IfcBeamStandardCase handles all cases of beams, that: have a reference to the IfcMaterialProfileSetUsage defining the material profile association of the beam with the cardinal point of its insertion rela
+	</brief_description>
+	<description>Only in IFC4 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

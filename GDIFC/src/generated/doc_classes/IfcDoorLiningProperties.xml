@@ -6,49 +6,53 @@
 		The door lining is the frame which enables the door leaf to be fixed in position. The door lining is used to hang the door leaf. The parameters of the door lining ( IfcDoorLiningProperties ) define the geometrically relevant parameter of the lining. NOTEÿ The IfcDoorLiningProperties shall only be applied to construct the 3D shape of a door, if the attribute IfcDoorStyle.ParameterTakesPrecedence is
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="LiningDepth" type="float" setter="set_LiningDepth" getter="get_LiningDepth">
-			Depth of the door lining, measured perpendicular to the plane of the door lining. If omitted (and with a given value to lining thickness) it indicates an adjustable depth (i.e. a depth that adjusts to the thickness of the wall into which the occurrence of this door style is inserted).
+		<member name="LiningDepth" type="Variant" setter="set_LiningDepth" getter="get_LiningDepth">
+			Depth of the door lining, measured perpendicular to the plane of the door lining. If omitted (and with a given value to lining thickness) it indicates an adjustable depth (i.e. a depth that adjusts to the thickness of the wall into which the occurrence of this door style is inserted). A float, or null when unset.
 		</member>
-		<member name="LiningThickness" type="float" setter="set_LiningThickness" getter="get_LiningThickness">
-			Thickness (width in plane parallel to door leaf) of the door lining.
+		<member name="LiningThickness" type="Variant" setter="set_LiningThickness" getter="get_LiningThickness">
+			Thickness (width in plane parallel to door leaf) of the door lining. A float, or null when unset.
 		</member>
-		<member name="ThresholdDepth" type="float" setter="set_ThresholdDepth" getter="get_ThresholdDepth">
-			Depth (dimension in plane perpendicular to door leaf) of the door threshold. Only given if the door lining includes a threshold. If omitted (and with a given value to threshold thickness) it indicates an adjustable depth (i.e. a depth that adjusts to the thickness of the wall into which the occurrence of this door style is inserted).
+		<member name="ThresholdDepth" type="Variant" setter="set_ThresholdDepth" getter="get_ThresholdDepth">
+			Depth (dimension in plane perpendicular to door leaf) of the door threshold. Only given if the door lining includes a threshold. If omitted (and with a given value to threshold thickness) it indicates an adjustable depth (i.e. a depth that adjusts to the thickness of the wall into which the occurrence of this door style is inserted). A float, or null when unset.
 		</member>
-		<member name="ThresholdThickness" type="float" setter="set_ThresholdThickness" getter="get_ThresholdThickness">
-			Thickness (width in plane parallel to door leaf) of the door threshold. Only given if the door lining includes a threshold and the parameter is known.
+		<member name="ThresholdThickness" type="Variant" setter="set_ThresholdThickness" getter="get_ThresholdThickness">
+			Thickness (width in plane parallel to door leaf) of the door threshold. Only given if the door lining includes a threshold and the parameter is known. A float, or null when unset.
 		</member>
-		<member name="TransomThickness" type="float" setter="set_TransomThickness" getter="get_TransomThickness">
-			Thickness (width in plane parallel to door leaf) of the transom (if given) which divides the door leaf from a glazing (or window) above.
+		<member name="TransomThickness" type="Variant" setter="set_TransomThickness" getter="get_TransomThickness">
+			Thickness (width in plane parallel to door leaf) of the transom (if given) which divides the door leaf from a glazing (or window) above. A float, or null when unset.
 		</member>
-		<member name="TransomOffset" type="float" setter="set_TransomOffset" getter="get_TransomOffset">
-			Offset of the transom (if given) which divides the door leaf from a glazing (or window) above. The offset is given from the bottom of the door opening.
+		<member name="TransomOffset" type="Variant" setter="set_TransomOffset" getter="get_TransomOffset">
+			Offset of the transom (if given) which divides the door leaf from a glazing (or window) above. The offset is given from the bottom of the door opening. A float, or null when unset.
 		</member>
-		<member name="LiningOffset" type="float" setter="set_LiningOffset" getter="get_LiningOffset">
-			Offset (dimension in plane perpendicular to door leaf) of the door lining. The offset is given as distance to the x axis of the local placement.
+		<member name="LiningOffset" type="Variant" setter="set_LiningOffset" getter="get_LiningOffset">
+			Offset (dimension in plane perpendicular to door leaf) of the door lining. The offset is given as distance to the x axis of the local placement. A float, or null when unset.
 		</member>
-		<member name="ThresholdOffset" type="float" setter="set_ThresholdOffset" getter="get_ThresholdOffset">
-			Offset (dimension in plane perpendicular to door leaf) of the door threshold. The offset is given as distance to the x axis of the local placement. Only given if the door lining includes a threshold and the parameter is known.
+		<member name="ThresholdOffset" type="Variant" setter="set_ThresholdOffset" getter="get_ThresholdOffset">
+			Offset (dimension in plane perpendicular to door leaf) of the door threshold. The offset is given as distance to the x axis of the local placement. Only given if the door lining includes a threshold and the parameter is known. A float, or null when unset.
 		</member>
-		<member name="CasingThickness" type="float" setter="set_CasingThickness" getter="get_CasingThickness">
-			Thickness of the casing (dimension in plane of the door leaf). If given it is applied equally to all four sides of the adjacent wall.
+		<member name="CasingThickness" type="Variant" setter="set_CasingThickness" getter="get_CasingThickness">
+			Thickness of the casing (dimension in plane of the door leaf). If given it is applied equally to all four sides of the adjacent wall. A float, or null when unset.
 		</member>
-		<member name="CasingDepth" type="float" setter="set_CasingDepth" getter="get_CasingDepth">
-			Depth of the casing (dimension in plane perpendicular to door leaf). If given it is applied equally to all four sides of the adjacent wall.
+		<member name="CasingDepth" type="Variant" setter="set_CasingDepth" getter="get_CasingDepth">
+			Depth of the casing (dimension in plane perpendicular to door leaf). If given it is applied equally to all four sides of the adjacent wall. A float, or null when unset.
 		</member>
 		<member name="ShapeAspectStyle" type="GDIFCEntityBase" setter="set_ShapeAspectStyle" getter="get_ShapeAspectStyle">
 			Pointer to the shape aspect, if given. The shape aspect reflects the part of the door shape, which represents the door lining. IFC2x4 CHANGE The attribute is deprecated and shall no longer be used, i.e. the value shall be NIL ($).
 		</member>
-		<member name="LiningToPanelOffsetX" type="float" setter="set_LiningToPanelOffsetX" getter="get_LiningToPanelOffsetX">
-			Offset between the lining and the window panel measured along the x-axis of the local placement. IFC2x4 CHANGE: New attribute added at the end of the entity definition.
+		<member name="LiningToPanelOffsetX" type="Variant" setter="set_LiningToPanelOffsetX" getter="get_LiningToPanelOffsetX">
+			Offset between the lining and the window panel measured along the x-axis of the local placement. IFC2x4 CHANGE: New attribute added at the end of the entity definition. A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="LiningToPanelOffsetY" type="float" setter="set_LiningToPanelOffsetY" getter="get_LiningToPanelOffsetY">
-			Offset between the lining and the door panel measured along the y-axis of the local placement. IFC2x4 CHANGE: New attribute added at the end of the entity definition.
+		<member name="LiningToPanelOffsetY" type="Variant" setter="set_LiningToPanelOffsetY" getter="get_LiningToPanelOffsetY">
+			Offset between the lining and the door panel measured along the y-axis of the local placement. IFC2x4 CHANGE: New attribute added at the end of the entity definition. A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

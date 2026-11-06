@@ -10,18 +10,76 @@ New changes go under **Unreleased**. Builds are cut automatically: when a push t
 
 ## [Unreleased]
 
-#### Added
+## [1.2.0-alpha]
+
+### Build 6 — 2026-11-06
+
+###### Added
+
+- The typed IFC classes now cover IFC2X3 and IFC4 as well as IFC4X3. The 130 entities only found in older schemas have classes of their own, such as `IfcDoorStyle`, `IfcWindowStyle` and `IfcBuildingElement`, and classes have the attributes their entity has in any schema, such as IFC2X3's `IfcSpace.InteriorOrExteriorSpace`. Attributes IFC4X3 renamed are read under their new name in older files: `IfcProperty.Specification` is an IFC2X3 or IFC4 property's `Description`. The class reference says which schemas a class or attribute is in. See [Typed Entity Access](docs/typed-entities.md#files-of-every-schema).
+- Setters of typed attributes check the value against the file's schema. An enumeration takes its value in any case, and is refused when the enumeration lacks it. An entity reference must be an entity of the same file and of the declared type. A value that doesn't fit is refused with an error and leaves the entity unchanged.
+- Nested lists, such as `IfcCartesianPointList3D.CoordList`, return their values, as an `Array` of packed arrays, and can be set.
+- Property values can be set as plain values: `property.NominalValue = 2.5`. The value keeps its IFC type, such as `IfcLengthMeasure`, when the new value fits; an unset value becomes an `IfcLabel`, `IfcInteger`, `IfcReal` or `IfcBoolean`. Lists of them, such as `IfcPropertyListValue.ListValues`, take plain values too.
+- `GDIFCManager.get_load_stage_id()` returns the load stage as one of the new `STAGE_*` constants, to compare instead of the display text of `get_load_stage()`. `get_load_error()` says why the last load failed.
+- `GDIFCMaterialDefinition.property_details`: the value type and unit of each material property, like `IFCNode.property_details`. In IFC2X3, typed material properties such as `IfcThermalMaterialProperties` get the value type of each attribute.
+- Georeferencing for IFC2X3 files, read from the `ePSet_MapConversion` and `ePSet_ProjectedCRS` property sets of the project or site. Such files now get an `IFCGeoreference` node, and are placed by it when loaded relative to another model.
+- IFC4X3 `IfcMapConversionScaled`: its per-axis factors are `IFCGeoreference.map_scale_x`, `map_scale_y` and `map_scale_z`, and are applied when placing a model relative to another. They used to be ignored.
+- `IFCModel.get_site_location()`: the site's latitude and longitude in decimal degrees, and its elevation.
+- **IFC objects** option, on by default: `GDIFCLoaderSettings.ifc_objects`, the dock's new Data group, and the importer's `data/ifc_objects`. Off, the parsed IFC file is released once attributes, property sets, materials and georeferencing are on the nodes, which saves memory, and saved scenes and instances of imported `.ifc` scenes no longer read the `.ifc` file again when they enter the tree. `ifc_object` is then null, and the `IFCModel` queries find nothing. See [Without IFC Objects](docs/loading-models.md#without-ifc-objects).
+
+###### Changed
+
+- Typed attributes are `null` when the file leaves them unset, or when the file's schema doesn't have them. They used to read as `""`, `0`, `false` or an empty array, which couldn't be told apart from real values. So every attribute except references to entities is now a `Variant` property, holding the type the file's schema declares, such as a `float` for `IfcDoor.OverallHeight` or an `int` for an IFC4X3 `IfcQuantityCount.CountValue`. A typed variable fails at runtime on an unset attribute: `var height: float = door.OverallHeight` errors on a door without a height, so check for `null` first. The class reference says what each attribute holds.
+- Property values, such as `IfcPropertySingleValue.NominalValue` or `IfcPropertyListValue.ListValues`, read as their plain value, such as `"Reference"` or `3.5`, from typed properties and from `get_attribute()`. They returned an `IfcLabel` or `IfcLengthMeasure` wrapper, which had no attributes to read the value from.
+- Logical attributes read as `"TRUE"`, `"FALSE"` or `"UNKNOWN"`, and binary ones as a string of 0s and 1s. Typed properties used to return an empty string for both, and `get_attribute()` returned the number of bits of a binary.
+- `IFCNode.attributes` leaves out attributes that refer to other entities, such as `OwnerHistory`, `ObjectPlacement` and `Representation`, which held express ids. Read them from `ifc_object`, which returns the entities: `node.ifc_object.ObjectPlacement`. An unknown logical reads as `"UNKNOWN"` instead of `null`.
+- The dock's groups start folded. A group you unfold or fold stays that way in the project, as before.
+- The web-ifc settings of `GDIFCLoaderSettings` (`tape_size`, `memory_limit`, `line_writer_buffer`, the tolerances, `plane_refit_iterations` and `boolean_union_threshold`) are grouped under **Advanced (web-ifc)** in the Inspector. They are passed to web-ifc unchanged, and may change or go away with a web-ifc update. Their names are the same, so saved settings keep their values.
+
+###### Fixed
+
+- Typed attributes of entities in IFC2X3 and IFC4 files read the attribute of that name. They read a fixed position from IFC4X3, so on an IFC2X3 file `IfcSpace.PredefinedType` returned `InteriorOrExteriorSpace`, and attributes past the end of the entity, such as an IFC2X3 `IfcDoor.PredefinedType` or an IFC4 `IfcAnnotation.PredefinedType`, crashed Godot. Setters wrote to the same wrong positions.
+- Setting an enumeration attribute wrote its value as a string, which isn't valid in the IFC file.
+- Godot no longer reports "Invalid tag in doc file" at every start: the class reference of the typed IFC classes used self-closing tags, which its doc parser doesn't read.
+- Typed number attributes read numbers written as the other kind. A real written without a decimal point, such as coordinates written as `0` or `1`, read as `0.0` or as an empty array, and an integer written as a real, such as `IfcOwnerHistory.CreationDate` in some files, read as `0`. Integers written as reals are truncated.
+
+## [1.1.0-alpha]
+
+### Build 5 — 2026-11-02
+
+##### Added
 
 - `.ifc` files are imported as scenes, like `.glb` files. Drag one into the 3D view or instance it, and the scene only stores a reference to the file instead of every mesh, collision shape and property set: a scene holding a 2.5 MB model went from a 2.2 MB `.tscn` to 230 bytes. Import options cover coordinate to origin, circle segments, LODs and collision. Instances re-link `ifc_object` from the `.ifc` file, and follow their `reference_georeference`.
 - **Import as scene** option in the dock's new Scene group. **Load IFC...** then imports the file with the dock's options and adds it to the edited scene as an instance, with undo. Files from outside the project are copied into a per-project import folder (`res://ifc/` by default). Picking a different file with the same name asks before replacing it.
 - IFC meshes have UVs, box-projected at 1 UV unit per meter, so textured materials display on them.
+- **IFC materials** option, off by default: `GDIFCLoaderSettings.ifc_materials`, the dock's new Materials group, and the importer's `materials/ifc_materials`. Each IFC material gets its own `StandardMaterial3D`, named after it and shared by every surface it colours, so editing it changes every element made of that material. Without the option, elements share materials by colour, so unrelated materials of the same colour are edited together. Layered walls and slabs show their layers: web-ifc gives them one solid in a single layer's colour, which is cut into one surface per layer of their `IfcMaterialLayerSetUsage`, each in its own material and colour. The parts of constituent and profile sets are linked to their materials through `IfcShapeAspect`, including aspects named after the parts of the element's type, so doors, windows and other multi-material elements get a material per part even when their styled colours differ from their materials'.
+- IFC material definitions, read with the IFC materials option. Each `IFCNode.material_definition` holds the element's material, layer set, profile set, constituent set, usage or list as resources (`GDIFCMaterialSingle`, `GDIFCMaterialLayerSetUsage`, ...), shared by every element using them, with their material property sets, classification references and, in IFC4, material relationships. `GDIFCMaterialSingle.visual` is the Godot material its surfaces use. `GDIFCManager.material_library` lists every definition. Definitions are saved in the scene and their `ifc_object` is relinked when it is opened again.
+- Replacing IFC materials: assign any `Material` to `GDIFCMaterialSingle.visual`, in code or in the inspector, and every surface showing the old visual gets it, so every element made of that material changes. `GDIFCManager.set_material_visual(name, material)` does it for every IFC material with that name, and `find_material_definitions(name)` finds definitions by name. Node surface overrides are left alone, and replaced materials are saved with the scene.
+- Collision matrix: `GDIFCManager.collision_matrix` takes a `GDIFCCollisionMatrix` resource with one `GDIFCCollisionRule` per IFC class, each choosing the shape (None, Trimesh, Simple Convex, Box or Decompose Convex) and the physics layers of the element's `StaticBody3D`. Rules match subtypes in the file's schema, the rule closest to the element's class wins, and a default rule covers the rest. Hulls and decompositions are built from the geometry in memory, without reading meshes back from the GPU. Decompose Convex is only built at import. The dock's Collisions group has a **Matrix** picker, and the importer a `collision/matrix` option; saving a matrix reimports the `.ifc` files using it. Three presets ship in `addons/GDIFC/settings/collision/`: **Walkthrough**, **Structure only** and **Picking**.
+- IFC surface styles on the generated materials, with the IFC materials option: roughness from `IfcSurfaceStyleRendering`'s specular highlight, and metallic from its reflectance method. With the new **Textures** option (`GDIFCLoaderSettings.ifc_textures`, importer `materials/textures`), the textures of `IfcSurfaceStyleWithTextures` too: image files, found at their path or next to the `.ifc` file, and textures embedded as `IfcBlobTexture` or `IfcPixelTexture`, as albedo, normal, height or emission maps. Textures use GDIFC's own UVs, not IFC texture coordinates.
+- `IFCNode.properties` and `quantities` include the sets of the element's type (`IfcTypeObject.HasPropertySets`). When the element and its type both set a property, the element's value is kept. In a test, Snowdon Towers' elements gained 2,107 values that were only on their types.
+- `IFCNode.property_details` and `quantity_details`: for each value, its IFC value type (`IfcLengthMeasure`, `IfcLabel`, ...), its unit as a symbol (`mm`, `m²`, `W/(m²·K)`), from the property or else the project's units, and whether it came from the type. They are shaped like `properties` and `quantities`, and read-only.
+- Complex properties (`IfcComplexProperty`) as nested dictionaries, table properties (`IfcPropertyTableValue`) as their defining and defined values, complex quantities (`IfcPhysicalComplexQuantity`) as nested dictionaries, and IFC4X3's `IfcQuantityNumber`. They used to be left out.
+- `IFCModel.get_units()`: the project's units, such as `{"LENGTHUNIT": "mm"}`.
+- [Walking The Model](docs/walking-the-model.md): how to reach the rest of the IFC file from a node's `ifc_object`, with recipes for the element's type, classifications, groups and systems, openings and their fillings, space boundaries and entities without a node.
 
-#### Fixed
+##### Changed
+
+- Updated web-ifc to 0.0.79 (`a26fae51`). It brings many geometry fixes (booleans, swept disks, sectioned and revolved solids, profile sweeps along IFC4X3 curves), support for `IfcSegmentedReferenceCurve`, the element type's material colour when an occurrence has none, and caching of mapped representations. Its bundled dependencies were moved to the versions web-ifc now pins: fast_float 8.3.2, earcut 3.2.4, CDT 2.0.1 and unordered_dense 5.3.3.
+- Malformed IFC files that web-ifc can only partially parse now fail to load with an error, instead of loading an incomplete model.
+- Loading a file whose `FILE_SCHEMA` isn't IFC2X3, IFC4 or IFC4X3_ADD2 now prints a highlighted message and a warning that name the declared schema and the supported ones. The geometry still loads, but properties, quantities, typed objects and georeferencing are unavailable. Before, the only sign was a generic "Failed to parse IFC file" error.
+- `GDIFCLoaderSettings` geometry tolerances now default to web-ifc's own defaults: `tolerance_plane_intersection` 1.0e-4 (was 1.0e-1), `tolerance_plane_deviation` and `tolerance_back_deviation_distance` 1.0e-4 (were 3.0e-4), and `plane_refit_iterations` 1 (was 10). The old values had been tuned in web-ifc's test program for one model. With them, some files never finished processing geometry (in a test, `417--buildingElementProxy` ran for over 120 s, against 0.4 s with the new defaults). Set the old values on a `GDIFCLoaderSettings` to keep the previous results.
+- Property and quantity sets without a name are keyed by their class, such as `"IfcElementQuantity"`, instead of being left out.
+- Scenes that store their nodes are larger, since they also save the type's sets and the details. On a 13,000-element Revit model, the property data grew from 5.5 MB to 16.4 MB and memory use by about 11%. Scenes that instance an imported `.ifc` file are not affected.
+
+##### Fixed
 
 - Vertices shared by faces facing different directions are split, so each face keeps its own flat normal.
 - The dock's collision element list no longer shows every element type twice.
-
-## [1.1.0-alpha]
+- Tasks, work plans and schedules, cost items and type objects no longer become nodes when they nest or aggregate other entities. Only products and the project are part of the node hierarchy. Before, a 4D file showed every task that had subtasks, without geometry, at the top of the model.
+- `IFCModel` header getters (`get_originating_system`, `get_preprocessor`, `get_authorization`, ...) return an empty value when the field is `$` in `FILE_NAME`, instead of crashing Godot with an unhandled exception. Several exporters, such as Simplebim, write `$` for these fields.
+- Loading a file no longer logs a web-ifc `[GetMesh()] unexpected mesh type` error for the `IfcProject`, which has no geometry.
+- Quantities whose value is 0 are 0 in `IFCNode.quantities`, instead of null.
 
 ### Build 4 — 2026-10-15
 

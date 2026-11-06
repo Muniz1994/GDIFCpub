@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcLocalTime" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="HourComponent" type="Variant" setter="set_HourComponent" getter="get_HourComponent">
+			An int, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="MinuteComponent" type="Variant" setter="set_MinuteComponent" getter="get_MinuteComponent">
+			An int, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="SecondComponent" type="Variant" setter="set_SecondComponent" getter="get_SecondComponent">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="Zone" type="GDIFCEntityBase" setter="set_Zone" getter="get_Zone">
+			Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="DaylightSavingOffset" type="Variant" setter="set_DaylightSavingOffset" getter="get_DaylightSavingOffset">
+			An int, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

@@ -5,17 +5,24 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="FactorX" type="float" setter="set_FactorX" getter="get_FactorX">
+		<member name="FactorX" type="Variant" setter="set_FactorX" getter="get_FactorX">
+			A float, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="FactorY" type="float" setter="set_FactorY" getter="get_FactorY">
+		<member name="FactorY" type="Variant" setter="set_FactorY" getter="get_FactorY">
+			A float, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="FactorZ" type="float" setter="set_FactorZ" getter="get_FactorZ">
+		<member name="FactorZ" type="Variant" setter="set_FactorZ" getter="get_FactorZ">
+			A float, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

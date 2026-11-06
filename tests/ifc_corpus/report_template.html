@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITLE__</title>
+<style>
+:root {
+  --bg: #f7f7f5; --panel: #ffffff; --text: #1d1d1b; --muted: #6b6b66; --line: #e3e3de; --hover: #f1f1ec;
+  --pass: #2f7d4f; --warn: #a36a00; --fail: #c0392b; --crash: #8e1b5c; --timeout: #5b4bb3;
+  --pass-bg: #e3f2e8; --warn-bg: #fbf0d9; --fail-bg: #fbe3e0; --crash-bg: #f6e0ec; --timeout-bg: #e8e5f7;
+  --mono: ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161615; --panel: #1f1f1d; --text: #ececea; --muted: #9a9a94; --line: #33332f; --hover: #2a2a27;
+    --pass: #6cc28f; --warn: #e0a83a; --fail: #f07a6c; --crash: #e27ab5; --timeout: #a597ee;
+    --pass-bg: #1d3326; --warn-bg: #3a2e14; --fail-bg: #3d1f1b; --crash-bg: #3a1d2e; --timeout-bg: #27223f;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 1280px; margin: 0 auto; padding: 24px 16px 64px; }
+h1 { font-size: 22px; margin: 0 0 4px; }
+h2 { font-size: 15px; margin: 32px 0 10px; }
+.meta { color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta b { color: var(--text); font-weight: 500; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-top: 20px; }
+.tile { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; cursor: pointer; }
+.tile.active { outline: 2px solid var(--text); }
+.tile .n { font-size: 26px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.tile .l { color: var(--muted); text-transform: capitalize; }
+.bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; margin-top: 12px; background: var(--line); }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+.chip { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .02em; }
+.s-pass { color: var(--pass); background: var(--pass-bg); } .s-warn { color: var(--warn); background: var(--warn-bg); }
+.s-fail { color: var(--fail); background: var(--fail-bg); } .s-crash { color: var(--crash); background: var(--crash-bg); }
+.s-timeout { color: var(--timeout); background: var(--timeout-bg); }
+.controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; }
+input[type=search] { flex: 1; min-width: 200px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); color: var(--text); font: inherit; }
+.table-wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; }
+th, td { padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { font-weight: 500; color: var(--muted); cursor: pointer; user-select: none; position: sticky; top: 0; background: var(--panel); }
+th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+th.sorted::after { content: " ↓"; } th.sorted.asc::after { content: " ↑"; }
+tbody tr.row { cursor: pointer; } tbody tr.row:hover { background: var(--hover); }
+td.file { white-space: normal; word-break: break-all; min-width: 260px; }
+td.file .dir { color: var(--muted); }
+td.note { color: var(--muted); white-space: normal; min-width: 220px; }
+tr.details > td { background: var(--bg); white-space: normal; padding: 14px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; }
+.kv span:nth-child(odd) { color: var(--muted); }
+.kv span:nth-child(even) { font-variant-numeric: tabular-nums; word-break: break-all; }
+ul.checks { list-style: none; margin: 0; padding: 0; } ul.checks li { margin: 3px 0; }
+pre { font: 12px/1.4 var(--mono); background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 10px; overflow-x: auto; max-height: 360px; margin: 0; white-space: pre-wrap; word-break: break-all; }
+h3 { font-size: 13px; margin: 0 0 6px; color: var(--muted); font-weight: 500; }
+.list { margin: 0; padding-left: 18px; } .list li { margin: 2px 0; }
+.count { font-variant-numeric: tabular-nums; color: var(--muted); }
+a { color: inherit; }
+.empty { color: var(--muted); padding: 20px; text-align: center; }
+</style>
+</head>
+<body>
+<main>
+  <h1 id="title"></h1>
+  <div class="meta" id="meta"></div>
+  <div class="tiles" id="tiles"></div>
+  <div class="bar" id="bar"></div>
+  <div id="changes"></div>
+  <div id="issues"></div>
+  <h2>Files</h2>
+  <div class="controls">
+    <input type="search" id="search" placeholder="Filter by file, schema, class or message">
+    <span class="count" id="shown"></span>
+  </div>
+  <div class="table-wrap"><table>
+    <thead><tr id="head"></tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+</main>
+<script id="report" type="application/json">__REPORT_JSON__</script>
+<script>
+const report = JSON.parse(document.getElementById("report").textContent);
+const STATUSES = ["pass", "warn", "fail", "crash", "timeout"];
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
+const fmtInt = (n) => n == null ? "" : Number(n).toLocaleString();
+const fmtMB = (b) => b == null ? "" : b < 1048576 ? Math.ceil(b / 1024) + " KB" : (b / 1048576).toFixed(b < 10485760 ? 1 : 0) + " MB";
+const fmtS = (ms) => ms == null ? "" : (ms / 1000).toFixed(ms < 10000 ? 2 : 1) + " s";
+const chip = (s) => `<span class="chip s-${s}">${s}</span>`;
+const metrics = (r) => (r.data && r.data.metrics) || {};
+const schema = (r) => metrics(r).schema || r.header.schema || "";
+const errorCount = (r) => r.message_counts.errors + r.message_counts.webifc_errors;
+const note = (r) => (r.checks.find((c) => c.status !== "pass") || {}).message || "";
+
+// Header
+const m = report.meta;
+$("title").textContent = "IFC corpus report";
+const git = m.git.commit ? `${m.git.branch} @ ${m.git.commit}${m.git.dirty ? " (uncommitted changes)" : ""}` : "";
+$("meta").innerHTML = [
+  ["Corpus", m.corpus], ["Started", m.started.replace("T", " ")], ["Duration", (m.duration_s / 60).toFixed(1) + " min"],
+  ["Branch", git], ["Godot", m.godot_version], ["Library built", m.library.modified ? m.library.modified.replace("T", " ") : ""],
+  ["Options", `${m.options.jobs} jobs · LODs ${m.options.lods ? "on" : "off"} · collision ${m.options.collision ? "on" : "off"}`
+    + (m.options.filter ? ` · filter /${m.options.filter}/` : "") + (m.interrupted ? " · INTERRUPTED" : "")],
+].filter(([, v]) => v).map(([k, v]) => `<span>${k} <b>${esc(v)}</b></span>`).join("");
+
+// Summary tiles double as status filters
+let statusFilter = null;
+function drawTiles() {
+  const s = report.summary;
+  $("tiles").innerHTML = `<div class="tile ${statusFilter ? "" : "active"}" data-s=""><div class="n">${s.total}</div><div class="l">files</div></div>`
+    + STATUSES.map((st) => `<div class="tile ${statusFilter === st ? "active" : ""}" data-s="${st}"><div class="n" style="color:var(--${st})">${s[st]}</div><div class="l">${st}</div></div>`).join("");
+  $("bar").innerHTML = STATUSES.filter((st) => s[st]).map((st) => `<div title="${st}: ${s[st]}" style="flex:${s[st]};background:var(--${st})"></div>`).join("");
+  document.querySelectorAll(".tile").forEach((t) => t.onclick = () => { statusFilter = t.dataset.s || null; drawTiles(); drawRows(); });
+}
+
+// Changes since the baseline run
+if (report.changes) {
+  const c = report.changes;
+  const list = (items, fn) => items.length ? `<ul class="list">${items.slice(0, 50).map(fn).join("")}</ul>${items.length > 50 ? `<div class="count">and ${items.length - 50} more</div>` : ""}` : `<div class="count">None</div>`;
+  $("changes").innerHTML = `<h2>Since ${esc(c.baseline_meta.started.replace("T", " "))} (${esc(c.baseline_meta.git.branch || "")} @ ${esc(c.baseline_meta.git.commit || "?")})</h2>
+    <div class="grid">
+      <div class="panel"><h3>Regressions (${c.regressions.length})</h3>${list(c.regressions, (x) => `<li>${esc(x.file)}: ${chip(x.from)} → ${chip(x.to)}</li>`)}</div>
+      <div class="panel"><h3>Fixed (${c.fixes.length})</h3>${list(c.fixes, (x) => `<li>${esc(x.file)}: ${chip(x.from)} → ${chip(x.to)}</li>`)}</div>
+      <div class="panel"><h3>Geometry changed (${c.geometry_changes.length})</h3>${list(c.geometry_changes, (x) => `<li>${esc(x.file)}: ${esc(x.metric)} ${fmtInt(x.from)} → ${fmtInt(x.to)}</li>`)}</div>
+      <div class="panel"><h3>Slower (${c.slower.length})</h3>${list(c.slower, (x) => `<li>${esc(x.file)}: ${fmtS(x.from_ms)} → ${fmtS(x.to_ms)}</li>`)}</div>
+    </div>`;
+}
+
+// Most common log messages over the whole corpus, to see which problem affects the most files
+(function drawIssues() {
+  const groups = [["errors", "Godot errors"], ["webifc_errors", "web-ifc errors"], ["warnings", "Godot warnings"]];
+  const panels = groups.map(([key, label]) => {
+    const agg = new Map();
+    for (const r of report.results) for (const msg of r.messages[key]) {
+      const text = msg.message.replace(/#\d+/g, "#N");
+      const e = agg.get(text) || {files: 0, count: 0};
+      e.files += 1; e.count += msg.count; agg.set(text, e);
+    }
+    const top = [...agg.entries()].sort((a, b) => b[1].files - a[1].files).slice(0, 10);
+    if (!top.length) return "";
+    return `<div class="panel"><h3>${label}</h3><ul class="list">${top.map(([t, e]) =>
+      `<li><span class="count">${e.files} file${e.files === 1 ? "" : "s"}</span> ${esc(t)}</li>`).join("")}</ul></div>`;
+  }).filter(Boolean);
+  if (panels.length) $("issues").innerHTML = `<h2>Most common messages</h2><div class="grid">${panels.join("")}</div>`;
+})();
+
+// Results table
+const columns = [
+  {key: "status", label: "Status", get: (r) => STATUSES.indexOf(r.status), show: (r) => chip(r.status)},
+  {key: "file", label: "File", get: (r) => r.file.toLowerCase(), cls: "file", show: (r) => {
+    const i = r.file.lastIndexOf("/");
+    return i < 0 ? esc(r.file) : `<span class="dir">${esc(r.file.slice(0, i + 1))}</span>${esc(r.file.slice(i + 1))}`;
+  }},
+  {key: "size", label: "Size", num: true, get: (r) => r.size, show: (r) => fmtMB(r.size)},
+  {key: "schema", label: "Schema", get: schema, show: (r) => esc(schema(r))},
+  {key: "shown", label: "Shown", num: true, get: (r) => r.data?.ifc_read_ms ?? -1, show: (r) => fmtS(r.data?.ifc_read_ms)},
+  {key: "ready", label: "Ready", num: true, get: (r) => r.data?.ifc_objects_ready_ms ?? -1, show: (r) => fmtS(r.data?.ifc_objects_ready_ms)},
+  {key: "memory", label: "Peak mem", num: true, get: (r) => r.peak_memory ?? -1, show: (r) => fmtMB(r.peak_memory)},
+  {key: "nodes", label: "Nodes", num: true, get: (r) => metrics(r).ifc_nodes ?? -1, show: (r) => fmtInt(metrics(r).ifc_nodes)},
+  {key: "triangles", label: "Triangles", num: true, get: (r) => metrics(r).triangles ?? -1, show: (r) => fmtInt(metrics(r).triangles)},
+  {key: "errors", label: "Errors", num: true, get: errorCount, show: (r) => errorCount(r) || ""},
+  {key: "note", label: "Note", get: note, cls: "note", show: (r) => esc(note(r))},
+];
+let sortKey = "status", sortAsc = false;
+const open = new Set();
+
+$("head").innerHTML = columns.map((c) => `<th data-k="${c.key}" class="${c.num ? "num" : ""}">${c.label}</th>`).join("");
+document.querySelectorAll("th").forEach((th) => th.onclick = () => {
+  if (sortKey === th.dataset.k) sortAsc = !sortAsc; else { sortKey = th.dataset.k; sortAsc = th.dataset.k === "file"; }
+  drawRows();
+});
+$("search").oninput = drawRows;
+
+function searchText(r) {
+  const parts = [r.file, schema(r), r.status, note(r), r.header.originating_system, Object.keys(metrics(r).classes || {}).join(" ")];
+  for (const key in r.messages) for (const msg of r.messages[key]) parts.push(msg.message);
+  return parts.join(" ").toLowerCase();
+}
+
+function details(r) {
+  const d = r.data || {}, mt = metrics(r);
+  const kv = (pairs) => `<div class="kv">${pairs.filter(([, v]) => v !== undefined && v !== "").map(([k, v]) => `<span>${k}</span><span>${v}</span>`).join("")}</div>`;
+  const checks = `<ul class="checks">${r.checks.map((c) => `<li>${chip(c.status)} <b>${esc(c.name)}</b> ${esc(c.message)}</li>`).join("")}</ul>`;
+  const stages = Object.entries(d.stages || {}).sort((a, b) => a[1] - b[1]).map(([k, v]) => [esc(k), fmtS(v)]);
+  const classes = Object.entries(mt.classes || {}).sort((a, b) => b[1] - a[1]).slice(0, 12).map(([k, v]) => [esc(k), fmtInt(v)]);
+  const msgs = Object.entries(r.messages).filter(([, v]) => v.length).map(([k, v]) =>
+    `<h3>${esc(k.replace("_", " "))}</h3><ul class="list">${v.map((x) => `<li><span class="count">${x.count}×</span> ${esc(x.message)}</li>`).join("")}</ul>`).join("");
+  const geo = mt.georeference;
+  return `<div class="grid">
+    <div><h3>Checks</h3>${checks}</div>
+    <div><h3>Process</h3>${kv([["Exit", esc(r.exit_description || r.exit_code)], ["Wall time", r.duration_s + " s"], ["Timeout", r.timeout_s + " s"],
+      ["Peak memory", fmtMB(r.peak_memory)], ["Originating system", esc(mt.originating_system || r.header.originating_system)], ["Log", `<a href="${esc(r.log)}">${esc(r.log)}</a>`]])}</div>
+    ${stages.length ? `<div><h3>Stage reached at</h3>${kv(stages)}</div>` : ""}
+    ${mt.ifc_nodes !== undefined ? `<div><h3>Model</h3>${kv([["IfcProduct in file", fmtInt(mt.products)], ["IFCNodes", fmtInt(mt.ifc_nodes)], ["With mesh", fmtInt(mt.mesh_nodes)],
+      ["Surfaces", fmtInt(mt.surfaces)], ["Vertices", fmtInt(mt.vertices)], ["Collision bodies", fmtInt(mt.collision_bodies)],
+      ["With attributes", fmtInt(mt.nodes_with_attributes)], ["With property sets", fmtInt(mt.nodes_with_properties)], ["With quantities", fmtInt(mt.nodes_with_quantities)],
+      ["Without GlobalId", fmtInt(mt.nodes_without_global_id)], ["Size (m)", mt.bounds_size ? mt.bounds_size.map((v) => v.toFixed(1)).join(" × ") : ""],
+      ["Georeference", geo ? esc(`${geo.crs_name || "?"} E ${geo.eastings} N ${geo.northings}`) : ""]])}</div>` : ""}
+    ${classes.length ? `<div><h3>Classes</h3>${kv(classes)}</div>` : ""}
+  </div>
+  ${msgs ? `<div style="margin-top:12px">${msgs}</div>` : ""}
+  <h3 style="margin-top:12px">End of log</h3><pre>${esc(r.log_tail.join("\n"))}</pre>`;
+}
+
+function drawRows() {
+  const q = $("search").value.trim().toLowerCase();
+  const col = columns.find((c) => c.key === sortKey);
+  const rows = report.results
+    .filter((r) => !statusFilter || r.status === statusFilter)
+    .filter((r) => !q || searchText(r).includes(q))
+    .sort((a, b) => {
+      const x = col.get(a), y = col.get(b);
+      const cmp = x < y ? -1 : x > y ? 1 : a.file.localeCompare(b.file);
+      return sortAsc ? cmp : -cmp;
+    });
+  document.querySelectorAll("th").forEach((th) => th.className = (columns.find((c) => c.key === th.dataset.k).num ? "num " : "")
+    + (th.dataset.k === sortKey ? "sorted" + (sortAsc ? " asc" : "") : ""));
+  $("shown").textContent = `${rows.length} of ${report.results.length}`;
+  $("rows").innerHTML = rows.length ? rows.map((r) => {
+    const i = report.results.indexOf(r);
+    const row = `<tr class="row" data-i="${i}">${columns.map((c) => `<td class="${c.num ? "num" : ""} ${c.cls || ""}">${c.show(r)}</td>`).join("")}</tr>`;
+    return open.has(i) ? row + `<tr class="details"><td colspan="${columns.length}">${details(r)}</td></tr>` : row;
+  }).join("") : `<tr><td colspan="${columns.length}" class="empty">No files match</td></tr>`;
+  document.querySelectorAll("tr.row").forEach((tr) => tr.onclick = () => {
+    const i = Number(tr.dataset.i);
+    open.has(i) ? open.delete(i) : open.add(i);
+    drawRows();
+  });
+}
+
+drawTiles();
+drawRows();
+</script>
+</body>
+</html>

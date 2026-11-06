@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcDoorStyle" inherits="IfcTypeProduct"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Definition: The door style, IfcDoorStyle , defines a particular style of doors, which may be included into the spatial context of the building model through instances of IfcDoor . A door style defines the overall parameter of the door style and refers to the particular parameter of the lining and one (or several) panels through the IfcDoorLiningProperties and the IfcDoorPanelProperties . The door 
+	</brief_description>
+	<description>Only in IFC2X3 and IFC4 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="OperationType" type="Variant" setter="set_OperationType" getter="get_OperationType">
+			Type defining the general layout and operation of the door style. A String, one of the enumeration's values, or null when unset. Only in IFC2X3 and IFC4 files: in others it reads as null and can't be set.
+		</member>
+		<member name="ConstructionType" type="Variant" setter="set_ConstructionType" getter="get_ConstructionType">
+			Type defining the basic construction and material type of the door. A String, one of the enumeration's values, or null when unset. Only in IFC2X3 and IFC4 files: in others it reads as null and can't be set.
+		</member>
+		<member name="ParameterTakesPrecedence" type="Variant" setter="set_ParameterTakesPrecedence" getter="get_ParameterTakesPrecedence">
+			The Boolean value reflects, whether the parameter given in the attached lining and panel properties exactly define the geometry (TRUE), or whether the attached style shape take precedence (FALSE). In the last case the parameter have only informative value. A bool, or null when unset. Only in IFC2X3 and IFC4 files: in others it reads as null and can't be set.
+		</member>
+		<member name="Sizeable" type="Variant" setter="set_Sizeable" getter="get_Sizeable">
+			The Boolean indicates, whether the attached IfcMappedRepresentation (if given) can be sized (using scale factor of transformation), or not (FALSE). If not, the IfcMappedRepresentation should be IfcShapeRepresentation of the IfcDoor (using IfcMappedItem as the Item ) with the scale factor = 1. A bool, or null when unset. Only in IFC2X3 and IFC4 files: in others it reads as null and can't be set.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

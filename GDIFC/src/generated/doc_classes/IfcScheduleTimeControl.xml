@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcScheduleTimeControl" inherits="IfcControl"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="ActualStart" type="GDIFCEntityBase" setter="set_ActualStart" getter="get_ActualStart">
+			Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="EarlyStart" type="GDIFCEntityBase" setter="set_EarlyStart" getter="get_EarlyStart">
+			Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="LateStart" type="GDIFCEntityBase" setter="set_LateStart" getter="get_LateStart">
+			Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="ScheduleStart" type="GDIFCEntityBase" setter="set_ScheduleStart" getter="get_ScheduleStart">
+			Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="ActualFinish" type="GDIFCEntityBase" setter="set_ActualFinish" getter="get_ActualFinish">
+			Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="EarlyFinish" type="GDIFCEntityBase" setter="set_EarlyFinish" getter="get_EarlyFinish">
+			Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="LateFinish" type="GDIFCEntityBase" setter="set_LateFinish" getter="get_LateFinish">
+			Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="ScheduleFinish" type="GDIFCEntityBase" setter="set_ScheduleFinish" getter="get_ScheduleFinish">
+			Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="ScheduleDuration" type="Variant" setter="set_ScheduleDuration" getter="get_ScheduleDuration">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="ActualDuration" type="Variant" setter="set_ActualDuration" getter="get_ActualDuration">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="RemainingTime" type="Variant" setter="set_RemainingTime" getter="get_RemainingTime">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="FreeFloat" type="Variant" setter="set_FreeFloat" getter="get_FreeFloat">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="TotalFloat" type="Variant" setter="set_TotalFloat" getter="get_TotalFloat">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="IsCritical" type="Variant" setter="set_IsCritical" getter="get_IsCritical">
+			A bool, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="StatusTime" type="GDIFCEntityBase" setter="set_StatusTime" getter="get_StatusTime">
+			Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="StartFloat" type="Variant" setter="set_StartFloat" getter="get_StartFloat">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="FinishFloat" type="Variant" setter="set_FinishFloat" getter="get_FinishFloat">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="Completion" type="Variant" setter="set_Completion" getter="get_Completion">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="ScheduleTimeControlAssigned" type="Array" setter="" getter="get_ScheduleTimeControlAssigned">
+			Only in IFC2X3 files: in others it is empty.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcProductsOfCombustionProperties" inherits="IfcMaterialProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="SpecificHeatCapacity" type="Variant" setter="set_SpecificHeatCapacity" getter="get_SpecificHeatCapacity">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="N20Content" type="Variant" setter="set_N20Content" getter="get_N20Content">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="COContent" type="Variant" setter="set_COContent" getter="get_COContent">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="CO2Content" type="Variant" setter="set_CO2Content" getter="get_CO2Content">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

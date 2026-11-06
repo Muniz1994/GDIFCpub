@@ -6,16 +6,20 @@
 		The IfcIrregularTimeSeriesValue describes a value (or set of values) at a particular time point. HISTORY: New entity in IFC 2x2.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="TimeStamp" type="String" setter="set_TimeStamp" getter="get_TimeStamp">
-			The specification of the time point.
+		<member name="TimeStamp" type="Variant" setter="set_TimeStamp" getter="get_TimeStamp">
+			The specification of the time point. A String in IFC4 and IFC4X3_ADD2 files, a GDIFCEntityBase in IFC2X3 files, or null when unset.
 		</member>
-		<member name="ListValues" type="Array" setter="set_ListValues" getter="get_ListValues">
-			A list of time-series values. At least one value is required.
+		<member name="ListValues" type="Variant" setter="set_ListValues" getter="get_ListValues">
+			A list of time-series values. At least one value is required. An Array of values (String, float, int or bool), or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

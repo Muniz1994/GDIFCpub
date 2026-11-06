@@ -6,28 +6,38 @@
 		IfcLShapeProfileDef defines a section profile that provides the defining parameters of an L-shaped section (equilateral L profiles are also covered by this entity) to be used by the swept area solid. Its parameters and orientation relative to the position coordinate system are according to the following illustration. The shorter leg has the same direction as the positive Position.P[1] -axis, the l
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Depth" type="float" setter="set_Depth" getter="get_Depth">
-			Leg length, see illustration above (= h). Same as the overall depth.
+		<member name="Depth" type="Variant" setter="set_Depth" getter="get_Depth">
+			Leg length, see illustration above (= h). Same as the overall depth. A float, or null when unset.
 		</member>
-		<member name="Width" type="float" setter="set_Width" getter="get_Width">
-			Leg length, see illustration above (= b). Same as the overall width.
+		<member name="Width" type="Variant" setter="set_Width" getter="get_Width">
+			Leg length, see illustration above (= b). Same as the overall width. A float, or null when unset.
 		</member>
-		<member name="Thickness" type="float" setter="set_Thickness" getter="get_Thickness">
-			Constant wall thickness of profile, see illustration above (= ts).
+		<member name="Thickness" type="Variant" setter="set_Thickness" getter="get_Thickness">
+			Constant wall thickness of profile, see illustration above (= ts). A float, or null when unset.
 		</member>
-		<member name="FilletRadius" type="float" setter="set_FilletRadius" getter="get_FilletRadius">
-			Fillet radius according the above illustration (= r1).
+		<member name="FilletRadius" type="Variant" setter="set_FilletRadius" getter="get_FilletRadius">
+			Fillet radius according the above illustration (= r1). A float, or null when unset.
 		</member>
-		<member name="EdgeRadius" type="float" setter="set_EdgeRadius" getter="get_EdgeRadius">
-			Edge radius according the above illustration (= r2).
+		<member name="EdgeRadius" type="Variant" setter="set_EdgeRadius" getter="get_EdgeRadius">
+			Edge radius according the above illustration (= r2). A float, or null when unset.
 		</member>
-		<member name="LegSlope" type="float" setter="set_LegSlope" getter="get_LegSlope">
-			Slope of the inner face of each leg of the profile.
+		<member name="LegSlope" type="Variant" setter="set_LegSlope" getter="get_LegSlope">
+			Slope of the inner face of each leg of the profile. A float, or null when unset.
+		</member>
+		<member name="CentreOfGravityInX" type="Variant" setter="set_CentreOfGravityInX" getter="get_CentreOfGravityInX">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="CentreOfGravityInY" type="Variant" setter="set_CentreOfGravityInY" getter="get_CentreOfGravityInY">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -6,10 +6,14 @@
 		Definition from IAI: Instances of IfcStructuralSurfaceConnection describe face 'nodes', i.e. faces where two or more surface members are joined, or face supports. Face surfaces may be planar or curved. HISTORY: New entity in IFC 2x2. IFC 2x4 change: Use definitions added. Coordinate Systems : See definitions at IfcStructuralItem . The local coordinate system is established by the reference surface
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

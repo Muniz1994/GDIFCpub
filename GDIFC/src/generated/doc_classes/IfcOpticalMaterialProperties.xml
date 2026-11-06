@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcOpticalMaterialProperties" inherits="IfcMaterialProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="VisibleTransmittance" type="Variant" setter="set_VisibleTransmittance" getter="get_VisibleTransmittance">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="SolarTransmittance" type="Variant" setter="set_SolarTransmittance" getter="get_SolarTransmittance">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="ThermalIrTransmittance" type="Variant" setter="set_ThermalIrTransmittance" getter="get_ThermalIrTransmittance">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="ThermalIrEmissivityBack" type="Variant" setter="set_ThermalIrEmissivityBack" getter="get_ThermalIrEmissivityBack">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="ThermalIrEmissivityFront" type="Variant" setter="set_ThermalIrEmissivityFront" getter="get_ThermalIrEmissivityFront">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="VisibleReflectanceBack" type="Variant" setter="set_VisibleReflectanceBack" getter="get_VisibleReflectanceBack">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="VisibleReflectanceFront" type="Variant" setter="set_VisibleReflectanceFront" getter="get_VisibleReflectanceFront">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="SolarReflectanceFront" type="Variant" setter="set_SolarReflectanceFront" getter="get_SolarReflectanceFront">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="SolarReflectanceBack" type="Variant" setter="set_SolarReflectanceBack" getter="get_SolarReflectanceBack">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

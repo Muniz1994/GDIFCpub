@@ -5,22 +5,28 @@
 using namespace godot;
 
 
+static const GDIFCAttributeAlias IfcControl_Identification_aliases[] = {
+    {"IFC2X3", "IFCACTIONREQUEST", "RequestID"},
+    {"IFC2X3", "IFCPERMIT", "PermitID"},
+    {"IFC2X3", "IFCPROJECTORDER", "ID"},
+    {"IFC2X3", "IFCWORKCONTROL", "Identifier"},
+    {nullptr, nullptr, nullptr},
+};
+
 void IfcControl::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Identification"), &IfcControl::get_Identification);
     ClassDB::bind_method(D_METHOD("set_Identification","v"), &IfcControl::set_Identification);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Identification"), "set_Identification", "get_Identification");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Identification", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Identification", "get_Identification");
     ClassDB::bind_method(D_METHOD("get_Controls"), &IfcControl::get_Controls);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "Controls"), "", "get_Controls");
 }
 
-godot::String IfcControl::get_Identification() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(5));
+godot::Variant IfcControl::get_Identification() {
+    return gd_get_attribute(entity_, "Identification", file_, IfcControl_Identification_aliases);
 }
 
-void IfcControl::set_Identification(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 5, v);
+void IfcControl::set_Identification(godot::Variant v) {
+    gd_set_attribute(entity_, "Identification", v, IfcControl_Identification_aliases);
 }
 
 godot::Array IfcControl::get_Controls() {
@@ -30,43 +36,37 @@ godot::Array IfcControl::get_Controls() {
 void IfcActionRequest::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcActionRequest::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcActionRequest::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
     ClassDB::bind_method(D_METHOD("get_Status"), &IfcActionRequest::get_Status);
     ClassDB::bind_method(D_METHOD("set_Status","v"), &IfcActionRequest::set_Status);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Status"), "set_Status", "get_Status");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Status", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Status", "get_Status");
     ClassDB::bind_method(D_METHOD("get_LongDescription"), &IfcActionRequest::get_LongDescription);
     ClassDB::bind_method(D_METHOD("set_LongDescription","v"), &IfcActionRequest::set_LongDescription);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "LongDescription"), "set_LongDescription", "get_LongDescription");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LongDescription", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LongDescription", "get_LongDescription");
 }
 
-godot::String IfcActionRequest::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(6));
+godot::Variant IfcActionRequest::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcActionRequest::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 6, v);
+void IfcActionRequest::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
-godot::String IfcActionRequest::get_Status() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(7));
+godot::Variant IfcActionRequest::get_Status() {
+    return gd_get_attribute(entity_, "Status", file_);
 }
 
-void IfcActionRequest::set_Status(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 7, v);
+void IfcActionRequest::set_Status(godot::Variant v) {
+    gd_set_attribute(entity_, "Status", v);
 }
 
-godot::String IfcActionRequest::get_LongDescription() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcActionRequest::get_LongDescription() {
+    return gd_get_attribute(entity_, "LongDescription", file_);
 }
 
-void IfcActionRequest::set_LongDescription(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcActionRequest::set_LongDescription(godot::Variant v) {
+    gd_set_attribute(entity_, "LongDescription", v);
 }
 
 void IfcActor::_bind_methods() {
@@ -78,13 +78,12 @@ void IfcActor::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcActor::get_TheActor() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(5), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "TheActor");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcActor::set_TheActor(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 5, v);
+    gd_set_attribute(entity_, "TheActor", v);
 }
 
 godot::Array IfcActor::get_IsActingUpon() {
@@ -94,45 +93,39 @@ godot::Array IfcActor::get_IsActingUpon() {
 void IfcActorRole::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Role"), &IfcActorRole::get_Role);
     ClassDB::bind_method(D_METHOD("set_Role","v"), &IfcActorRole::set_Role);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Role"), "set_Role", "get_Role");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Role", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Role", "get_Role");
     ClassDB::bind_method(D_METHOD("get_UserDefinedRole"), &IfcActorRole::get_UserDefinedRole);
     ClassDB::bind_method(D_METHOD("set_UserDefinedRole","v"), &IfcActorRole::set_UserDefinedRole);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "UserDefinedRole"), "set_UserDefinedRole", "get_UserDefinedRole");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "UserDefinedRole", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_UserDefinedRole", "get_UserDefinedRole");
     ClassDB::bind_method(D_METHOD("get_Description"), &IfcActorRole::get_Description);
     ClassDB::bind_method(D_METHOD("set_Description","v"), &IfcActorRole::set_Description);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Description"), "set_Description", "get_Description");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Description", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Description", "get_Description");
     ClassDB::bind_method(D_METHOD("get_HasExternalReference"), &IfcActorRole::get_HasExternalReference);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasExternalReference"), "", "get_HasExternalReference");
 }
 
-godot::String IfcActorRole::get_Role() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(0));
+godot::Variant IfcActorRole::get_Role() {
+    return gd_get_attribute(entity_, "Role", file_);
 }
 
-void IfcActorRole::set_Role(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 0, v);
+void IfcActorRole::set_Role(godot::Variant v) {
+    gd_set_attribute(entity_, "Role", v);
 }
 
-godot::String IfcActorRole::get_UserDefinedRole() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(1));
+godot::Variant IfcActorRole::get_UserDefinedRole() {
+    return gd_get_attribute(entity_, "UserDefinedRole", file_);
 }
 
-void IfcActorRole::set_UserDefinedRole(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 1, v);
+void IfcActorRole::set_UserDefinedRole(godot::Variant v) {
+    gd_set_attribute(entity_, "UserDefinedRole", v);
 }
 
-godot::String IfcActorRole::get_Description() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(2));
+godot::Variant IfcActorRole::get_Description() {
+    return gd_get_attribute(entity_, "Description", file_);
 }
 
-void IfcActorRole::set_Description(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 2, v);
+void IfcActorRole::set_Description(godot::Variant v) {
+    gd_set_attribute(entity_, "Description", v);
 }
 
 godot::Array IfcActorRole::get_HasExternalReference() {
@@ -142,7 +135,7 @@ godot::Array IfcActorRole::get_HasExternalReference() {
 void IfcElement::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Tag"), &IfcElement::get_Tag);
     ClassDB::bind_method(D_METHOD("set_Tag","v"), &IfcElement::set_Tag);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Tag"), "set_Tag", "get_Tag");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Tag", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Tag", "get_Tag");
     ClassDB::bind_method(D_METHOD("get_FillsVoids"), &IfcElement::get_FillsVoids);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "FillsVoids"), "", "get_FillsVoids");
     ClassDB::bind_method(D_METHOD("get_ConnectedTo"), &IfcElement::get_ConnectedTo);
@@ -167,16 +160,16 @@ void IfcElement::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasCoverings"), "", "get_HasCoverings");
     ClassDB::bind_method(D_METHOD("get_HasSurfaceFeatures"), &IfcElement::get_HasSurfaceFeatures);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasSurfaceFeatures"), "", "get_HasSurfaceFeatures");
+    ClassDB::bind_method(D_METHOD("get_HasStructuralMember"), &IfcElement::get_HasStructuralMember);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasStructuralMember"), "", "get_HasStructuralMember");
 }
 
-godot::String IfcElement::get_Tag() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(7));
+godot::Variant IfcElement::get_Tag() {
+    return gd_get_attribute(entity_, "Tag", file_);
 }
 
-void IfcElement::set_Tag(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 7, v);
+void IfcElement::set_Tag(godot::Variant v) {
+    gd_set_attribute(entity_, "Tag", v);
 }
 
 godot::Array IfcElement::get_FillsVoids() {
@@ -227,6 +220,10 @@ godot::Array IfcElement::get_HasSurfaceFeatures() {
     return get_inverse(godot::String("HasSurfaceFeatures"));
 }
 
+godot::Array IfcElement::get_HasStructuralMember() {
+    return get_inverse(godot::String("HasStructuralMember"));
+}
+
 void IfcDistributionElement::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_HasPorts"), &IfcDistributionElement::get_HasPorts);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasPorts"), "", "get_HasPorts");
@@ -237,8 +234,19 @@ godot::Array IfcDistributionElement::get_HasPorts() {
 }
 
 void IfcDistributionControlElement::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_ControlElementId"), &IfcDistributionControlElement::get_ControlElementId);
+    ClassDB::bind_method(D_METHOD("set_ControlElementId","v"), &IfcDistributionControlElement::set_ControlElementId);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ControlElementId", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ControlElementId", "get_ControlElementId");
     ClassDB::bind_method(D_METHOD("get_AssignedToFlowElement"), &IfcDistributionControlElement::get_AssignedToFlowElement);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "AssignedToFlowElement"), "", "get_AssignedToFlowElement");
+}
+
+godot::Variant IfcDistributionControlElement::get_ControlElementId() {
+    return gd_get_attribute(entity_, "ControlElementId", file_);
+}
+
+void IfcDistributionControlElement::set_ControlElementId(godot::Variant v) {
+    gd_set_attribute(entity_, "ControlElementId", v);
 }
 
 godot::Array IfcDistributionControlElement::get_AssignedToFlowElement() {
@@ -248,33 +256,29 @@ godot::Array IfcDistributionControlElement::get_AssignedToFlowElement() {
 void IfcActuator::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcActuator::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcActuator::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcActuator::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcActuator::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcActuator::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcActuator::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcElementType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_ElementType"), &IfcElementType::get_ElementType);
     ClassDB::bind_method(D_METHOD("set_ElementType","v"), &IfcElementType::set_ElementType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "ElementType"), "set_ElementType", "get_ElementType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ElementType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ElementType", "get_ElementType");
 }
 
-godot::String IfcElementType::get_ElementType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcElementType::get_ElementType() {
+    return gd_get_attribute(entity_, "ElementType", file_);
 }
 
-void IfcElementType::set_ElementType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcElementType::set_ElementType(godot::Variant v) {
+    gd_set_attribute(entity_, "ElementType", v);
 }
 
 void IfcDistributionElementType::_bind_methods() {
@@ -286,63 +290,55 @@ void IfcDistributionControlElementType::_bind_methods() {
 void IfcActuatorType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcActuatorType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcActuatorType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcActuatorType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcActuatorType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcActuatorType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcActuatorType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcAddress::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Purpose"), &IfcAddress::get_Purpose);
     ClassDB::bind_method(D_METHOD("set_Purpose","v"), &IfcAddress::set_Purpose);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Purpose"), "set_Purpose", "get_Purpose");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Purpose", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Purpose", "get_Purpose");
     ClassDB::bind_method(D_METHOD("get_Description"), &IfcAddress::get_Description);
     ClassDB::bind_method(D_METHOD("set_Description","v"), &IfcAddress::set_Description);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Description"), "set_Description", "get_Description");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Description", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Description", "get_Description");
     ClassDB::bind_method(D_METHOD("get_UserDefinedPurpose"), &IfcAddress::get_UserDefinedPurpose);
     ClassDB::bind_method(D_METHOD("set_UserDefinedPurpose","v"), &IfcAddress::set_UserDefinedPurpose);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "UserDefinedPurpose"), "set_UserDefinedPurpose", "get_UserDefinedPurpose");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "UserDefinedPurpose", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_UserDefinedPurpose", "get_UserDefinedPurpose");
     ClassDB::bind_method(D_METHOD("get_OfPerson"), &IfcAddress::get_OfPerson);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "OfPerson"), "", "get_OfPerson");
     ClassDB::bind_method(D_METHOD("get_OfOrganization"), &IfcAddress::get_OfOrganization);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "OfOrganization"), "", "get_OfOrganization");
 }
 
-godot::String IfcAddress::get_Purpose() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(0));
+godot::Variant IfcAddress::get_Purpose() {
+    return gd_get_attribute(entity_, "Purpose", file_);
 }
 
-void IfcAddress::set_Purpose(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 0, v);
+void IfcAddress::set_Purpose(godot::Variant v) {
+    gd_set_attribute(entity_, "Purpose", v);
 }
 
-godot::String IfcAddress::get_Description() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(1));
+godot::Variant IfcAddress::get_Description() {
+    return gd_get_attribute(entity_, "Description", file_);
 }
 
-void IfcAddress::set_Description(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 1, v);
+void IfcAddress::set_Description(godot::Variant v) {
+    gd_set_attribute(entity_, "Description", v);
 }
 
-godot::String IfcAddress::get_UserDefinedPurpose() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(2));
+godot::Variant IfcAddress::get_UserDefinedPurpose() {
+    return gd_get_attribute(entity_, "UserDefinedPurpose", file_);
 }
 
-void IfcAddress::set_UserDefinedPurpose(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 2, v);
+void IfcAddress::set_UserDefinedPurpose(godot::Variant v) {
+    gd_set_attribute(entity_, "UserDefinedPurpose", v);
 }
 
 godot::Array IfcAddress::get_OfPerson() {
@@ -359,17 +355,15 @@ void IfcAdvancedBrep::_bind_methods() {
 void IfcAdvancedBrepWithVoids::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Voids"), &IfcAdvancedBrepWithVoids::get_Voids);
     ClassDB::bind_method(D_METHOD("set_Voids","v"), &IfcAdvancedBrepWithVoids::set_Voids);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "Voids"), "set_Voids", "get_Voids");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Voids", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Voids", "get_Voids");
 }
 
-godot::Array IfcAdvancedBrepWithVoids::get_Voids() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(1), file_);
+godot::Variant IfcAdvancedBrepWithVoids::get_Voids() {
+    return gd_get_attribute(entity_, "Voids", file_);
 }
 
-void IfcAdvancedBrepWithVoids::set_Voids(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 1, v);
+void IfcAdvancedBrepWithVoids::set_Voids(godot::Variant v) {
+    gd_set_attribute(entity_, "Voids", v);
 }
 
 void IfcAdvancedFace::_bind_methods() {
@@ -387,33 +381,29 @@ godot::Array IfcDistributionFlowElement::get_HasControlElements() {
 void IfcAirTerminal::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcAirTerminal::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcAirTerminal::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcAirTerminal::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcAirTerminal::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcAirTerminal::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcAirTerminal::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcAirTerminalBox::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcAirTerminalBox::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcAirTerminalBox::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcAirTerminalBox::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcAirTerminalBox::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcAirTerminalBox::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcAirTerminalBox::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcDistributionFlowElementType::_bind_methods() {
@@ -422,33 +412,29 @@ void IfcDistributionFlowElementType::_bind_methods() {
 void IfcAirTerminalBoxType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcAirTerminalBoxType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcAirTerminalBoxType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcAirTerminalBoxType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcAirTerminalBoxType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcAirTerminalBoxType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcAirTerminalBoxType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcAirTerminalType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcAirTerminalType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcAirTerminalType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcAirTerminalType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcAirTerminalType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcAirTerminalType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcAirTerminalType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcEnergyConversionDevice::_bind_methods() {
@@ -457,17 +443,15 @@ void IfcEnergyConversionDevice::_bind_methods() {
 void IfcAirToAirHeatRecovery::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcAirToAirHeatRecovery::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcAirToAirHeatRecovery::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcAirToAirHeatRecovery::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcAirToAirHeatRecovery::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcAirToAirHeatRecovery::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcAirToAirHeatRecovery::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcEnergyConversionDeviceType::_bind_methods() {
@@ -476,204 +460,176 @@ void IfcEnergyConversionDeviceType::_bind_methods() {
 void IfcAirToAirHeatRecoveryType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcAirToAirHeatRecoveryType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcAirToAirHeatRecoveryType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcAirToAirHeatRecoveryType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcAirToAirHeatRecoveryType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcAirToAirHeatRecoveryType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcAirToAirHeatRecoveryType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcAlarm::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcAlarm::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcAlarm::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcAlarm::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcAlarm::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcAlarm::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcAlarm::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcAlarmType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcAlarmType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcAlarmType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcAlarmType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcAlarmType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcAlarmType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcAlarmType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcAlignment::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcAlignment::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcAlignment::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcAlignment::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(7));
+godot::Variant IfcAlignment::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcAlignment::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 7, v);
+void IfcAlignment::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcAlignmentCant::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_RailHeadDistance"), &IfcAlignmentCant::get_RailHeadDistance);
     ClassDB::bind_method(D_METHOD("set_RailHeadDistance","v"), &IfcAlignmentCant::set_RailHeadDistance);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "RailHeadDistance"), "set_RailHeadDistance", "get_RailHeadDistance");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RailHeadDistance", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RailHeadDistance", "get_RailHeadDistance");
 }
 
-double IfcAlignmentCant::get_RailHeadDistance() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(7));
+godot::Variant IfcAlignmentCant::get_RailHeadDistance() {
+    return gd_get_attribute(entity_, "RailHeadDistance", file_);
 }
 
-void IfcAlignmentCant::set_RailHeadDistance(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 7, v);
+void IfcAlignmentCant::set_RailHeadDistance(godot::Variant v) {
+    gd_set_attribute(entity_, "RailHeadDistance", v);
 }
 
 void IfcAlignmentParameterSegment::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_StartTag"), &IfcAlignmentParameterSegment::get_StartTag);
     ClassDB::bind_method(D_METHOD("set_StartTag","v"), &IfcAlignmentParameterSegment::set_StartTag);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "StartTag"), "set_StartTag", "get_StartTag");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "StartTag", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_StartTag", "get_StartTag");
     ClassDB::bind_method(D_METHOD("get_EndTag"), &IfcAlignmentParameterSegment::get_EndTag);
     ClassDB::bind_method(D_METHOD("set_EndTag","v"), &IfcAlignmentParameterSegment::set_EndTag);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "EndTag"), "set_EndTag", "get_EndTag");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "EndTag", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_EndTag", "get_EndTag");
 }
 
-godot::String IfcAlignmentParameterSegment::get_StartTag() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(0));
+godot::Variant IfcAlignmentParameterSegment::get_StartTag() {
+    return gd_get_attribute(entity_, "StartTag", file_);
 }
 
-void IfcAlignmentParameterSegment::set_StartTag(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 0, v);
+void IfcAlignmentParameterSegment::set_StartTag(godot::Variant v) {
+    gd_set_attribute(entity_, "StartTag", v);
 }
 
-godot::String IfcAlignmentParameterSegment::get_EndTag() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(1));
+godot::Variant IfcAlignmentParameterSegment::get_EndTag() {
+    return gd_get_attribute(entity_, "EndTag", file_);
 }
 
-void IfcAlignmentParameterSegment::set_EndTag(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 1, v);
+void IfcAlignmentParameterSegment::set_EndTag(godot::Variant v) {
+    gd_set_attribute(entity_, "EndTag", v);
 }
 
 void IfcAlignmentCantSegment::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_StartDistAlong"), &IfcAlignmentCantSegment::get_StartDistAlong);
     ClassDB::bind_method(D_METHOD("set_StartDistAlong","v"), &IfcAlignmentCantSegment::set_StartDistAlong);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "StartDistAlong"), "set_StartDistAlong", "get_StartDistAlong");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "StartDistAlong", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_StartDistAlong", "get_StartDistAlong");
     ClassDB::bind_method(D_METHOD("get_HorizontalLength"), &IfcAlignmentCantSegment::get_HorizontalLength);
     ClassDB::bind_method(D_METHOD("set_HorizontalLength","v"), &IfcAlignmentCantSegment::set_HorizontalLength);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "HorizontalLength"), "set_HorizontalLength", "get_HorizontalLength");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "HorizontalLength", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_HorizontalLength", "get_HorizontalLength");
     ClassDB::bind_method(D_METHOD("get_StartCantLeft"), &IfcAlignmentCantSegment::get_StartCantLeft);
     ClassDB::bind_method(D_METHOD("set_StartCantLeft","v"), &IfcAlignmentCantSegment::set_StartCantLeft);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "StartCantLeft"), "set_StartCantLeft", "get_StartCantLeft");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "StartCantLeft", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_StartCantLeft", "get_StartCantLeft");
     ClassDB::bind_method(D_METHOD("get_EndCantLeft"), &IfcAlignmentCantSegment::get_EndCantLeft);
     ClassDB::bind_method(D_METHOD("set_EndCantLeft","v"), &IfcAlignmentCantSegment::set_EndCantLeft);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "EndCantLeft"), "set_EndCantLeft", "get_EndCantLeft");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "EndCantLeft", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_EndCantLeft", "get_EndCantLeft");
     ClassDB::bind_method(D_METHOD("get_StartCantRight"), &IfcAlignmentCantSegment::get_StartCantRight);
     ClassDB::bind_method(D_METHOD("set_StartCantRight","v"), &IfcAlignmentCantSegment::set_StartCantRight);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "StartCantRight"), "set_StartCantRight", "get_StartCantRight");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "StartCantRight", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_StartCantRight", "get_StartCantRight");
     ClassDB::bind_method(D_METHOD("get_EndCantRight"), &IfcAlignmentCantSegment::get_EndCantRight);
     ClassDB::bind_method(D_METHOD("set_EndCantRight","v"), &IfcAlignmentCantSegment::set_EndCantRight);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "EndCantRight"), "set_EndCantRight", "get_EndCantRight");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "EndCantRight", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_EndCantRight", "get_EndCantRight");
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcAlignmentCantSegment::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcAlignmentCantSegment::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-double IfcAlignmentCantSegment::get_StartDistAlong() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(2));
+godot::Variant IfcAlignmentCantSegment::get_StartDistAlong() {
+    return gd_get_attribute(entity_, "StartDistAlong", file_);
 }
 
-void IfcAlignmentCantSegment::set_StartDistAlong(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 2, v);
+void IfcAlignmentCantSegment::set_StartDistAlong(godot::Variant v) {
+    gd_set_attribute(entity_, "StartDistAlong", v);
 }
 
-double IfcAlignmentCantSegment::get_HorizontalLength() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(3));
+godot::Variant IfcAlignmentCantSegment::get_HorizontalLength() {
+    return gd_get_attribute(entity_, "HorizontalLength", file_);
 }
 
-void IfcAlignmentCantSegment::set_HorizontalLength(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 3, v);
+void IfcAlignmentCantSegment::set_HorizontalLength(godot::Variant v) {
+    gd_set_attribute(entity_, "HorizontalLength", v);
 }
 
-double IfcAlignmentCantSegment::get_StartCantLeft() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(4));
+godot::Variant IfcAlignmentCantSegment::get_StartCantLeft() {
+    return gd_get_attribute(entity_, "StartCantLeft", file_);
 }
 
-void IfcAlignmentCantSegment::set_StartCantLeft(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 4, v);
+void IfcAlignmentCantSegment::set_StartCantLeft(godot::Variant v) {
+    gd_set_attribute(entity_, "StartCantLeft", v);
 }
 
-double IfcAlignmentCantSegment::get_EndCantLeft() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(5));
+godot::Variant IfcAlignmentCantSegment::get_EndCantLeft() {
+    return gd_get_attribute(entity_, "EndCantLeft", file_);
 }
 
-void IfcAlignmentCantSegment::set_EndCantLeft(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 5, v);
+void IfcAlignmentCantSegment::set_EndCantLeft(godot::Variant v) {
+    gd_set_attribute(entity_, "EndCantLeft", v);
 }
 
-double IfcAlignmentCantSegment::get_StartCantRight() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(6));
+godot::Variant IfcAlignmentCantSegment::get_StartCantRight() {
+    return gd_get_attribute(entity_, "StartCantRight", file_);
 }
 
-void IfcAlignmentCantSegment::set_StartCantRight(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 6, v);
+void IfcAlignmentCantSegment::set_StartCantRight(godot::Variant v) {
+    gd_set_attribute(entity_, "StartCantRight", v);
 }
 
-double IfcAlignmentCantSegment::get_EndCantRight() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(7));
+godot::Variant IfcAlignmentCantSegment::get_EndCantRight() {
+    return gd_get_attribute(entity_, "EndCantRight", file_);
 }
 
-void IfcAlignmentCantSegment::set_EndCantRight(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 7, v);
+void IfcAlignmentCantSegment::set_EndCantRight(godot::Variant v) {
+    gd_set_attribute(entity_, "EndCantRight", v);
 }
 
-godot::String IfcAlignmentCantSegment::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcAlignmentCantSegment::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcAlignmentCantSegment::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcAlignmentCantSegment::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcAlignmentHorizontal::_bind_methods() {
@@ -685,92 +641,79 @@ void IfcAlignmentHorizontalSegment::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "StartPoint", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_StartPoint", "get_StartPoint");
     ClassDB::bind_method(D_METHOD("get_StartDirection"), &IfcAlignmentHorizontalSegment::get_StartDirection);
     ClassDB::bind_method(D_METHOD("set_StartDirection","v"), &IfcAlignmentHorizontalSegment::set_StartDirection);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "StartDirection"), "set_StartDirection", "get_StartDirection");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "StartDirection", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_StartDirection", "get_StartDirection");
     ClassDB::bind_method(D_METHOD("get_StartRadiusOfCurvature"), &IfcAlignmentHorizontalSegment::get_StartRadiusOfCurvature);
     ClassDB::bind_method(D_METHOD("set_StartRadiusOfCurvature","v"), &IfcAlignmentHorizontalSegment::set_StartRadiusOfCurvature);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "StartRadiusOfCurvature"), "set_StartRadiusOfCurvature", "get_StartRadiusOfCurvature");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "StartRadiusOfCurvature", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_StartRadiusOfCurvature", "get_StartRadiusOfCurvature");
     ClassDB::bind_method(D_METHOD("get_EndRadiusOfCurvature"), &IfcAlignmentHorizontalSegment::get_EndRadiusOfCurvature);
     ClassDB::bind_method(D_METHOD("set_EndRadiusOfCurvature","v"), &IfcAlignmentHorizontalSegment::set_EndRadiusOfCurvature);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "EndRadiusOfCurvature"), "set_EndRadiusOfCurvature", "get_EndRadiusOfCurvature");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "EndRadiusOfCurvature", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_EndRadiusOfCurvature", "get_EndRadiusOfCurvature");
     ClassDB::bind_method(D_METHOD("get_SegmentLength"), &IfcAlignmentHorizontalSegment::get_SegmentLength);
     ClassDB::bind_method(D_METHOD("set_SegmentLength","v"), &IfcAlignmentHorizontalSegment::set_SegmentLength);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "SegmentLength"), "set_SegmentLength", "get_SegmentLength");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "SegmentLength", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_SegmentLength", "get_SegmentLength");
     ClassDB::bind_method(D_METHOD("get_GravityCenterLineHeight"), &IfcAlignmentHorizontalSegment::get_GravityCenterLineHeight);
     ClassDB::bind_method(D_METHOD("set_GravityCenterLineHeight","v"), &IfcAlignmentHorizontalSegment::set_GravityCenterLineHeight);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "GravityCenterLineHeight"), "set_GravityCenterLineHeight", "get_GravityCenterLineHeight");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "GravityCenterLineHeight", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_GravityCenterLineHeight", "get_GravityCenterLineHeight");
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcAlignmentHorizontalSegment::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcAlignmentHorizontalSegment::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
 Ref<GDIFCEntityBase> IfcAlignmentHorizontalSegment::get_StartPoint() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "StartPoint");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcAlignmentHorizontalSegment::set_StartPoint(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+    gd_set_attribute(entity_, "StartPoint", v);
 }
 
-double IfcAlignmentHorizontalSegment::get_StartDirection() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(3));
+godot::Variant IfcAlignmentHorizontalSegment::get_StartDirection() {
+    return gd_get_attribute(entity_, "StartDirection", file_);
 }
 
-void IfcAlignmentHorizontalSegment::set_StartDirection(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 3, v);
+void IfcAlignmentHorizontalSegment::set_StartDirection(godot::Variant v) {
+    gd_set_attribute(entity_, "StartDirection", v);
 }
 
-double IfcAlignmentHorizontalSegment::get_StartRadiusOfCurvature() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(4));
+godot::Variant IfcAlignmentHorizontalSegment::get_StartRadiusOfCurvature() {
+    return gd_get_attribute(entity_, "StartRadiusOfCurvature", file_);
 }
 
-void IfcAlignmentHorizontalSegment::set_StartRadiusOfCurvature(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 4, v);
+void IfcAlignmentHorizontalSegment::set_StartRadiusOfCurvature(godot::Variant v) {
+    gd_set_attribute(entity_, "StartRadiusOfCurvature", v);
 }
 
-double IfcAlignmentHorizontalSegment::get_EndRadiusOfCurvature() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(5));
+godot::Variant IfcAlignmentHorizontalSegment::get_EndRadiusOfCurvature() {
+    return gd_get_attribute(entity_, "EndRadiusOfCurvature", file_);
 }
 
-void IfcAlignmentHorizontalSegment::set_EndRadiusOfCurvature(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 5, v);
+void IfcAlignmentHorizontalSegment::set_EndRadiusOfCurvature(godot::Variant v) {
+    gd_set_attribute(entity_, "EndRadiusOfCurvature", v);
 }
 
-double IfcAlignmentHorizontalSegment::get_SegmentLength() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(6));
+godot::Variant IfcAlignmentHorizontalSegment::get_SegmentLength() {
+    return gd_get_attribute(entity_, "SegmentLength", file_);
 }
 
-void IfcAlignmentHorizontalSegment::set_SegmentLength(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 6, v);
+void IfcAlignmentHorizontalSegment::set_SegmentLength(godot::Variant v) {
+    gd_set_attribute(entity_, "SegmentLength", v);
 }
 
-double IfcAlignmentHorizontalSegment::get_GravityCenterLineHeight() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(7));
+godot::Variant IfcAlignmentHorizontalSegment::get_GravityCenterLineHeight() {
+    return gd_get_attribute(entity_, "GravityCenterLineHeight", file_);
 }
 
-void IfcAlignmentHorizontalSegment::set_GravityCenterLineHeight(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 7, v);
+void IfcAlignmentHorizontalSegment::set_GravityCenterLineHeight(godot::Variant v) {
+    gd_set_attribute(entity_, "GravityCenterLineHeight", v);
 }
 
-godot::String IfcAlignmentHorizontalSegment::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcAlignmentHorizontalSegment::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcAlignmentHorizontalSegment::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcAlignmentHorizontalSegment::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcAlignmentSegment::_bind_methods() {
@@ -780,13 +723,12 @@ void IfcAlignmentSegment::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcAlignmentSegment::get_DesignParameters() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(7), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "DesignParameters");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcAlignmentSegment::set_DesignParameters(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 7, v);
+    gd_set_attribute(entity_, "DesignParameters", v);
 }
 
 void IfcAlignmentVertical::_bind_methods() {
@@ -795,113 +737,97 @@ void IfcAlignmentVertical::_bind_methods() {
 void IfcAlignmentVerticalSegment::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_StartDistAlong"), &IfcAlignmentVerticalSegment::get_StartDistAlong);
     ClassDB::bind_method(D_METHOD("set_StartDistAlong","v"), &IfcAlignmentVerticalSegment::set_StartDistAlong);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "StartDistAlong"), "set_StartDistAlong", "get_StartDistAlong");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "StartDistAlong", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_StartDistAlong", "get_StartDistAlong");
     ClassDB::bind_method(D_METHOD("get_HorizontalLength"), &IfcAlignmentVerticalSegment::get_HorizontalLength);
     ClassDB::bind_method(D_METHOD("set_HorizontalLength","v"), &IfcAlignmentVerticalSegment::set_HorizontalLength);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "HorizontalLength"), "set_HorizontalLength", "get_HorizontalLength");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "HorizontalLength", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_HorizontalLength", "get_HorizontalLength");
     ClassDB::bind_method(D_METHOD("get_StartHeight"), &IfcAlignmentVerticalSegment::get_StartHeight);
     ClassDB::bind_method(D_METHOD("set_StartHeight","v"), &IfcAlignmentVerticalSegment::set_StartHeight);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "StartHeight"), "set_StartHeight", "get_StartHeight");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "StartHeight", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_StartHeight", "get_StartHeight");
     ClassDB::bind_method(D_METHOD("get_StartGradient"), &IfcAlignmentVerticalSegment::get_StartGradient);
     ClassDB::bind_method(D_METHOD("set_StartGradient","v"), &IfcAlignmentVerticalSegment::set_StartGradient);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "StartGradient"), "set_StartGradient", "get_StartGradient");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "StartGradient", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_StartGradient", "get_StartGradient");
     ClassDB::bind_method(D_METHOD("get_EndGradient"), &IfcAlignmentVerticalSegment::get_EndGradient);
     ClassDB::bind_method(D_METHOD("set_EndGradient","v"), &IfcAlignmentVerticalSegment::set_EndGradient);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "EndGradient"), "set_EndGradient", "get_EndGradient");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "EndGradient", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_EndGradient", "get_EndGradient");
     ClassDB::bind_method(D_METHOD("get_RadiusOfCurvature"), &IfcAlignmentVerticalSegment::get_RadiusOfCurvature);
     ClassDB::bind_method(D_METHOD("set_RadiusOfCurvature","v"), &IfcAlignmentVerticalSegment::set_RadiusOfCurvature);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "RadiusOfCurvature"), "set_RadiusOfCurvature", "get_RadiusOfCurvature");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RadiusOfCurvature", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RadiusOfCurvature", "get_RadiusOfCurvature");
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcAlignmentVerticalSegment::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcAlignmentVerticalSegment::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-double IfcAlignmentVerticalSegment::get_StartDistAlong() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(2));
+godot::Variant IfcAlignmentVerticalSegment::get_StartDistAlong() {
+    return gd_get_attribute(entity_, "StartDistAlong", file_);
 }
 
-void IfcAlignmentVerticalSegment::set_StartDistAlong(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 2, v);
+void IfcAlignmentVerticalSegment::set_StartDistAlong(godot::Variant v) {
+    gd_set_attribute(entity_, "StartDistAlong", v);
 }
 
-double IfcAlignmentVerticalSegment::get_HorizontalLength() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(3));
+godot::Variant IfcAlignmentVerticalSegment::get_HorizontalLength() {
+    return gd_get_attribute(entity_, "HorizontalLength", file_);
 }
 
-void IfcAlignmentVerticalSegment::set_HorizontalLength(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 3, v);
+void IfcAlignmentVerticalSegment::set_HorizontalLength(godot::Variant v) {
+    gd_set_attribute(entity_, "HorizontalLength", v);
 }
 
-double IfcAlignmentVerticalSegment::get_StartHeight() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(4));
+godot::Variant IfcAlignmentVerticalSegment::get_StartHeight() {
+    return gd_get_attribute(entity_, "StartHeight", file_);
 }
 
-void IfcAlignmentVerticalSegment::set_StartHeight(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 4, v);
+void IfcAlignmentVerticalSegment::set_StartHeight(godot::Variant v) {
+    gd_set_attribute(entity_, "StartHeight", v);
 }
 
-double IfcAlignmentVerticalSegment::get_StartGradient() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(5));
+godot::Variant IfcAlignmentVerticalSegment::get_StartGradient() {
+    return gd_get_attribute(entity_, "StartGradient", file_);
 }
 
-void IfcAlignmentVerticalSegment::set_StartGradient(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 5, v);
+void IfcAlignmentVerticalSegment::set_StartGradient(godot::Variant v) {
+    gd_set_attribute(entity_, "StartGradient", v);
 }
 
-double IfcAlignmentVerticalSegment::get_EndGradient() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(6));
+godot::Variant IfcAlignmentVerticalSegment::get_EndGradient() {
+    return gd_get_attribute(entity_, "EndGradient", file_);
 }
 
-void IfcAlignmentVerticalSegment::set_EndGradient(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 6, v);
+void IfcAlignmentVerticalSegment::set_EndGradient(godot::Variant v) {
+    gd_set_attribute(entity_, "EndGradient", v);
 }
 
-double IfcAlignmentVerticalSegment::get_RadiusOfCurvature() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(7));
+godot::Variant IfcAlignmentVerticalSegment::get_RadiusOfCurvature() {
+    return gd_get_attribute(entity_, "RadiusOfCurvature", file_);
 }
 
-void IfcAlignmentVerticalSegment::set_RadiusOfCurvature(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 7, v);
+void IfcAlignmentVerticalSegment::set_RadiusOfCurvature(godot::Variant v) {
+    gd_set_attribute(entity_, "RadiusOfCurvature", v);
 }
 
-godot::String IfcAlignmentVerticalSegment::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcAlignmentVerticalSegment::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcAlignmentVerticalSegment::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcAlignmentVerticalSegment::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcAnnotation::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcAnnotation::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcAnnotation::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
     ClassDB::bind_method(D_METHOD("get_ContainedInStructure"), &IfcAnnotation::get_ContainedInStructure);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ContainedInStructure"), "", "get_ContainedInStructure");
 }
 
-godot::String IfcAnnotation::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(7));
+godot::Variant IfcAnnotation::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcAnnotation::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 7, v);
+void IfcAnnotation::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 godot::Array IfcAnnotation::get_ContainedInStructure() {
@@ -914,27 +840,24 @@ void IfcAnnotationFillArea::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "OuterBoundary", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_OuterBoundary", "get_OuterBoundary");
     ClassDB::bind_method(D_METHOD("get_InnerBoundaries"), &IfcAnnotationFillArea::get_InnerBoundaries);
     ClassDB::bind_method(D_METHOD("set_InnerBoundaries","v"), &IfcAnnotationFillArea::set_InnerBoundaries);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "InnerBoundaries"), "set_InnerBoundaries", "get_InnerBoundaries");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "InnerBoundaries", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_InnerBoundaries", "get_InnerBoundaries");
 }
 
 Ref<GDIFCEntityBase> IfcAnnotationFillArea::get_OuterBoundary() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(0), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "OuterBoundary");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcAnnotationFillArea::set_OuterBoundary(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 0, v);
+    gd_set_attribute(entity_, "OuterBoundary", v);
 }
 
-godot::Array IfcAnnotationFillArea::get_InnerBoundaries() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(1), file_);
+godot::Variant IfcAnnotationFillArea::get_InnerBoundaries() {
+    return gd_get_attribute(entity_, "InnerBoundaries", file_);
 }
 
-void IfcAnnotationFillArea::set_InnerBoundaries(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 1, v);
+void IfcAnnotationFillArea::set_InnerBoundaries(godot::Variant v) {
+    gd_set_attribute(entity_, "InnerBoundaries", v);
 }
 
 void IfcApplication::_bind_methods() {
@@ -943,222 +866,231 @@ void IfcApplication::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "ApplicationDeveloper", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_ApplicationDeveloper", "get_ApplicationDeveloper");
     ClassDB::bind_method(D_METHOD("get_Version"), &IfcApplication::get_Version);
     ClassDB::bind_method(D_METHOD("set_Version","v"), &IfcApplication::set_Version);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Version"), "set_Version", "get_Version");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Version", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Version", "get_Version");
     ClassDB::bind_method(D_METHOD("get_ApplicationFullName"), &IfcApplication::get_ApplicationFullName);
     ClassDB::bind_method(D_METHOD("set_ApplicationFullName","v"), &IfcApplication::set_ApplicationFullName);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "ApplicationFullName"), "set_ApplicationFullName", "get_ApplicationFullName");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ApplicationFullName", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ApplicationFullName", "get_ApplicationFullName");
     ClassDB::bind_method(D_METHOD("get_ApplicationIdentifier"), &IfcApplication::get_ApplicationIdentifier);
     ClassDB::bind_method(D_METHOD("set_ApplicationIdentifier","v"), &IfcApplication::set_ApplicationIdentifier);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "ApplicationIdentifier"), "set_ApplicationIdentifier", "get_ApplicationIdentifier");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ApplicationIdentifier", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ApplicationIdentifier", "get_ApplicationIdentifier");
 }
 
 Ref<GDIFCEntityBase> IfcApplication::get_ApplicationDeveloper() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(0), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "ApplicationDeveloper");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcApplication::set_ApplicationDeveloper(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 0, v);
+    gd_set_attribute(entity_, "ApplicationDeveloper", v);
 }
 
-godot::String IfcApplication::get_Version() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(1));
+godot::Variant IfcApplication::get_Version() {
+    return gd_get_attribute(entity_, "Version", file_);
 }
 
-void IfcApplication::set_Version(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 1, v);
+void IfcApplication::set_Version(godot::Variant v) {
+    gd_set_attribute(entity_, "Version", v);
 }
 
-godot::String IfcApplication::get_ApplicationFullName() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(2));
+godot::Variant IfcApplication::get_ApplicationFullName() {
+    return gd_get_attribute(entity_, "ApplicationFullName", file_);
 }
 
-void IfcApplication::set_ApplicationFullName(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 2, v);
+void IfcApplication::set_ApplicationFullName(godot::Variant v) {
+    gd_set_attribute(entity_, "ApplicationFullName", v);
 }
 
-godot::String IfcApplication::get_ApplicationIdentifier() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(3));
+godot::Variant IfcApplication::get_ApplicationIdentifier() {
+    return gd_get_attribute(entity_, "ApplicationIdentifier", file_);
 }
 
-void IfcApplication::set_ApplicationIdentifier(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 3, v);
+void IfcApplication::set_ApplicationIdentifier(godot::Variant v) {
+    gd_set_attribute(entity_, "ApplicationIdentifier", v);
 }
+
+static const GDIFCAttributeAlias IfcAppliedValue_Category_aliases[] = {
+    {"IFC2X3", "IFCCOSTVALUE", "CostType"},
+    {nullptr, nullptr, nullptr},
+};
 
 void IfcAppliedValue::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Name"), &IfcAppliedValue::get_Name);
     ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcAppliedValue::set_Name);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Name"), "set_Name", "get_Name");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Name", "get_Name");
     ClassDB::bind_method(D_METHOD("get_Description"), &IfcAppliedValue::get_Description);
     ClassDB::bind_method(D_METHOD("set_Description","v"), &IfcAppliedValue::set_Description);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Description"), "set_Description", "get_Description");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Description", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Description", "get_Description");
     ClassDB::bind_method(D_METHOD("get_AppliedValue"), &IfcAppliedValue::get_AppliedValue);
     ClassDB::bind_method(D_METHOD("set_AppliedValue","v"), &IfcAppliedValue::set_AppliedValue);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "AppliedValue", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_AppliedValue", "get_AppliedValue");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "AppliedValue", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_AppliedValue", "get_AppliedValue");
     ClassDB::bind_method(D_METHOD("get_UnitBasis"), &IfcAppliedValue::get_UnitBasis);
     ClassDB::bind_method(D_METHOD("set_UnitBasis","v"), &IfcAppliedValue::set_UnitBasis);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "UnitBasis", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_UnitBasis", "get_UnitBasis");
     ClassDB::bind_method(D_METHOD("get_ApplicableDate"), &IfcAppliedValue::get_ApplicableDate);
     ClassDB::bind_method(D_METHOD("set_ApplicableDate","v"), &IfcAppliedValue::set_ApplicableDate);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "ApplicableDate"), "set_ApplicableDate", "get_ApplicableDate");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ApplicableDate", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ApplicableDate", "get_ApplicableDate");
     ClassDB::bind_method(D_METHOD("get_FixedUntilDate"), &IfcAppliedValue::get_FixedUntilDate);
     ClassDB::bind_method(D_METHOD("set_FixedUntilDate","v"), &IfcAppliedValue::set_FixedUntilDate);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "FixedUntilDate"), "set_FixedUntilDate", "get_FixedUntilDate");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "FixedUntilDate", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_FixedUntilDate", "get_FixedUntilDate");
     ClassDB::bind_method(D_METHOD("get_Category"), &IfcAppliedValue::get_Category);
     ClassDB::bind_method(D_METHOD("set_Category","v"), &IfcAppliedValue::set_Category);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Category"), "set_Category", "get_Category");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Category", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Category", "get_Category");
     ClassDB::bind_method(D_METHOD("get_Condition"), &IfcAppliedValue::get_Condition);
     ClassDB::bind_method(D_METHOD("set_Condition","v"), &IfcAppliedValue::set_Condition);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Condition"), "set_Condition", "get_Condition");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Condition", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Condition", "get_Condition");
     ClassDB::bind_method(D_METHOD("get_ArithmeticOperator"), &IfcAppliedValue::get_ArithmeticOperator);
     ClassDB::bind_method(D_METHOD("set_ArithmeticOperator","v"), &IfcAppliedValue::set_ArithmeticOperator);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "ArithmeticOperator"), "set_ArithmeticOperator", "get_ArithmeticOperator");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ArithmeticOperator", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ArithmeticOperator", "get_ArithmeticOperator");
     ClassDB::bind_method(D_METHOD("get_Components"), &IfcAppliedValue::get_Components);
     ClassDB::bind_method(D_METHOD("set_Components","v"), &IfcAppliedValue::set_Components);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "Components"), "set_Components", "get_Components");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Components", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Components", "get_Components");
     ClassDB::bind_method(D_METHOD("get_HasExternalReference"), &IfcAppliedValue::get_HasExternalReference);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasExternalReference"), "", "get_HasExternalReference");
+    ClassDB::bind_method(D_METHOD("get_ValuesReferenced"), &IfcAppliedValue::get_ValuesReferenced);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ValuesReferenced"), "", "get_ValuesReferenced");
+    ClassDB::bind_method(D_METHOD("get_ValueOfComponents"), &IfcAppliedValue::get_ValueOfComponents);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ValueOfComponents"), "", "get_ValueOfComponents");
+    ClassDB::bind_method(D_METHOD("get_IsComponentIn"), &IfcAppliedValue::get_IsComponentIn);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "IsComponentIn"), "", "get_IsComponentIn");
 }
 
-godot::String IfcAppliedValue::get_Name() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(0));
+godot::Variant IfcAppliedValue::get_Name() {
+    return gd_get_attribute(entity_, "Name", file_);
 }
 
-void IfcAppliedValue::set_Name(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 0, v);
+void IfcAppliedValue::set_Name(godot::Variant v) {
+    gd_set_attribute(entity_, "Name", v);
 }
 
-godot::String IfcAppliedValue::get_Description() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(1));
+godot::Variant IfcAppliedValue::get_Description() {
+    return gd_get_attribute(entity_, "Description", file_);
 }
 
-void IfcAppliedValue::set_Description(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 1, v);
+void IfcAppliedValue::set_Description(godot::Variant v) {
+    gd_set_attribute(entity_, "Description", v);
 }
 
-Ref<GDIFCEntityBase> IfcAppliedValue::get_AppliedValue() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+godot::Variant IfcAppliedValue::get_AppliedValue() {
+    return gd_get_attribute(entity_, "AppliedValue", file_);
 }
 
-void IfcAppliedValue::set_AppliedValue(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+void IfcAppliedValue::set_AppliedValue(godot::Variant v) {
+    gd_set_attribute(entity_, "AppliedValue", v);
 }
 
 Ref<GDIFCEntityBase> IfcAppliedValue::get_UnitBasis() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(3), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "UnitBasis");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcAppliedValue::set_UnitBasis(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 3, v);
+    gd_set_attribute(entity_, "UnitBasis", v);
 }
 
-godot::String IfcAppliedValue::get_ApplicableDate() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(4));
+godot::Variant IfcAppliedValue::get_ApplicableDate() {
+    return gd_get_attribute(entity_, "ApplicableDate", file_);
 }
 
-void IfcAppliedValue::set_ApplicableDate(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 4, v);
+void IfcAppliedValue::set_ApplicableDate(godot::Variant v) {
+    gd_set_attribute(entity_, "ApplicableDate", v);
 }
 
-godot::String IfcAppliedValue::get_FixedUntilDate() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(5));
+godot::Variant IfcAppliedValue::get_FixedUntilDate() {
+    return gd_get_attribute(entity_, "FixedUntilDate", file_);
 }
 
-void IfcAppliedValue::set_FixedUntilDate(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 5, v);
+void IfcAppliedValue::set_FixedUntilDate(godot::Variant v) {
+    gd_set_attribute(entity_, "FixedUntilDate", v);
 }
 
-godot::String IfcAppliedValue::get_Category() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(6));
+godot::Variant IfcAppliedValue::get_Category() {
+    return gd_get_attribute(entity_, "Category", file_, IfcAppliedValue_Category_aliases);
 }
 
-void IfcAppliedValue::set_Category(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 6, v);
+void IfcAppliedValue::set_Category(godot::Variant v) {
+    gd_set_attribute(entity_, "Category", v, IfcAppliedValue_Category_aliases);
 }
 
-godot::String IfcAppliedValue::get_Condition() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(7));
+godot::Variant IfcAppliedValue::get_Condition() {
+    return gd_get_attribute(entity_, "Condition", file_);
 }
 
-void IfcAppliedValue::set_Condition(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 7, v);
+void IfcAppliedValue::set_Condition(godot::Variant v) {
+    gd_set_attribute(entity_, "Condition", v);
 }
 
-godot::String IfcAppliedValue::get_ArithmeticOperator() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcAppliedValue::get_ArithmeticOperator() {
+    return gd_get_attribute(entity_, "ArithmeticOperator", file_);
 }
 
-void IfcAppliedValue::set_ArithmeticOperator(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcAppliedValue::set_ArithmeticOperator(godot::Variant v) {
+    gd_set_attribute(entity_, "ArithmeticOperator", v);
 }
 
-godot::Array IfcAppliedValue::get_Components() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(9), file_);
+godot::Variant IfcAppliedValue::get_Components() {
+    return gd_get_attribute(entity_, "Components", file_);
 }
 
-void IfcAppliedValue::set_Components(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 9, v);
+void IfcAppliedValue::set_Components(godot::Variant v) {
+    gd_set_attribute(entity_, "Components", v);
 }
 
 godot::Array IfcAppliedValue::get_HasExternalReference() {
     return get_inverse(godot::String("HasExternalReference"));
 }
 
+godot::Array IfcAppliedValue::get_ValuesReferenced() {
+    return get_inverse(godot::String("ValuesReferenced"));
+}
+
+godot::Array IfcAppliedValue::get_ValueOfComponents() {
+    return get_inverse(godot::String("ValueOfComponents"));
+}
+
+godot::Array IfcAppliedValue::get_IsComponentIn() {
+    return get_inverse(godot::String("IsComponentIn"));
+}
+
 void IfcApproval::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Identifier"), &IfcApproval::get_Identifier);
     ClassDB::bind_method(D_METHOD("set_Identifier","v"), &IfcApproval::set_Identifier);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Identifier"), "set_Identifier", "get_Identifier");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Identifier", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Identifier", "get_Identifier");
     ClassDB::bind_method(D_METHOD("get_Name"), &IfcApproval::get_Name);
     ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcApproval::set_Name);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Name"), "set_Name", "get_Name");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Name", "get_Name");
     ClassDB::bind_method(D_METHOD("get_Description"), &IfcApproval::get_Description);
     ClassDB::bind_method(D_METHOD("set_Description","v"), &IfcApproval::set_Description);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Description"), "set_Description", "get_Description");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Description", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Description", "get_Description");
     ClassDB::bind_method(D_METHOD("get_TimeOfApproval"), &IfcApproval::get_TimeOfApproval);
     ClassDB::bind_method(D_METHOD("set_TimeOfApproval","v"), &IfcApproval::set_TimeOfApproval);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "TimeOfApproval"), "set_TimeOfApproval", "get_TimeOfApproval");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TimeOfApproval", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TimeOfApproval", "get_TimeOfApproval");
     ClassDB::bind_method(D_METHOD("get_Status"), &IfcApproval::get_Status);
     ClassDB::bind_method(D_METHOD("set_Status","v"), &IfcApproval::set_Status);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Status"), "set_Status", "get_Status");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Status", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Status", "get_Status");
     ClassDB::bind_method(D_METHOD("get_Level"), &IfcApproval::get_Level);
     ClassDB::bind_method(D_METHOD("set_Level","v"), &IfcApproval::set_Level);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Level"), "set_Level", "get_Level");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Level", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Level", "get_Level");
     ClassDB::bind_method(D_METHOD("get_Qualifier"), &IfcApproval::get_Qualifier);
     ClassDB::bind_method(D_METHOD("set_Qualifier","v"), &IfcApproval::set_Qualifier);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Qualifier"), "set_Qualifier", "get_Qualifier");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Qualifier", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Qualifier", "get_Qualifier");
     ClassDB::bind_method(D_METHOD("get_RequestingApproval"), &IfcApproval::get_RequestingApproval);
     ClassDB::bind_method(D_METHOD("set_RequestingApproval","v"), &IfcApproval::set_RequestingApproval);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "RequestingApproval", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_RequestingApproval", "get_RequestingApproval");
     ClassDB::bind_method(D_METHOD("get_GivingApproval"), &IfcApproval::get_GivingApproval);
     ClassDB::bind_method(D_METHOD("set_GivingApproval","v"), &IfcApproval::set_GivingApproval);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "GivingApproval", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_GivingApproval", "get_GivingApproval");
+    ClassDB::bind_method(D_METHOD("get_ApprovalDateTime"), &IfcApproval::get_ApprovalDateTime);
+    ClassDB::bind_method(D_METHOD("set_ApprovalDateTime","v"), &IfcApproval::set_ApprovalDateTime);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "ApprovalDateTime", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_ApprovalDateTime", "get_ApprovalDateTime");
+    ClassDB::bind_method(D_METHOD("get_ApprovalStatus"), &IfcApproval::get_ApprovalStatus);
+    ClassDB::bind_method(D_METHOD("set_ApprovalStatus","v"), &IfcApproval::set_ApprovalStatus);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ApprovalStatus", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ApprovalStatus", "get_ApprovalStatus");
+    ClassDB::bind_method(D_METHOD("get_ApprovalLevel"), &IfcApproval::get_ApprovalLevel);
+    ClassDB::bind_method(D_METHOD("set_ApprovalLevel","v"), &IfcApproval::set_ApprovalLevel);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ApprovalLevel", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ApprovalLevel", "get_ApprovalLevel");
+    ClassDB::bind_method(D_METHOD("get_ApprovalQualifier"), &IfcApproval::get_ApprovalQualifier);
+    ClassDB::bind_method(D_METHOD("set_ApprovalQualifier","v"), &IfcApproval::set_ApprovalQualifier);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ApprovalQualifier", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ApprovalQualifier", "get_ApprovalQualifier");
     ClassDB::bind_method(D_METHOD("get_HasExternalReferences"), &IfcApproval::get_HasExternalReferences);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasExternalReferences"), "", "get_HasExternalReferences");
     ClassDB::bind_method(D_METHOD("get_ApprovedObjects"), &IfcApproval::get_ApprovedObjects);
@@ -1169,96 +1101,115 @@ void IfcApproval::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "IsRelatedWith"), "", "get_IsRelatedWith");
     ClassDB::bind_method(D_METHOD("get_Relates"), &IfcApproval::get_Relates);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "Relates"), "", "get_Relates");
+    ClassDB::bind_method(D_METHOD("get_Actors"), &IfcApproval::get_Actors);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "Actors"), "", "get_Actors");
 }
 
-godot::String IfcApproval::get_Identifier() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(0));
+godot::Variant IfcApproval::get_Identifier() {
+    return gd_get_attribute(entity_, "Identifier", file_);
 }
 
-void IfcApproval::set_Identifier(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 0, v);
+void IfcApproval::set_Identifier(godot::Variant v) {
+    gd_set_attribute(entity_, "Identifier", v);
 }
 
-godot::String IfcApproval::get_Name() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(1));
+godot::Variant IfcApproval::get_Name() {
+    return gd_get_attribute(entity_, "Name", file_);
 }
 
-void IfcApproval::set_Name(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 1, v);
+void IfcApproval::set_Name(godot::Variant v) {
+    gd_set_attribute(entity_, "Name", v);
 }
 
-godot::String IfcApproval::get_Description() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(2));
+godot::Variant IfcApproval::get_Description() {
+    return gd_get_attribute(entity_, "Description", file_);
 }
 
-void IfcApproval::set_Description(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 2, v);
+void IfcApproval::set_Description(godot::Variant v) {
+    gd_set_attribute(entity_, "Description", v);
 }
 
-godot::String IfcApproval::get_TimeOfApproval() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(3));
+godot::Variant IfcApproval::get_TimeOfApproval() {
+    return gd_get_attribute(entity_, "TimeOfApproval", file_);
 }
 
-void IfcApproval::set_TimeOfApproval(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 3, v);
+void IfcApproval::set_TimeOfApproval(godot::Variant v) {
+    gd_set_attribute(entity_, "TimeOfApproval", v);
 }
 
-godot::String IfcApproval::get_Status() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(4));
+godot::Variant IfcApproval::get_Status() {
+    return gd_get_attribute(entity_, "Status", file_);
 }
 
-void IfcApproval::set_Status(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 4, v);
+void IfcApproval::set_Status(godot::Variant v) {
+    gd_set_attribute(entity_, "Status", v);
 }
 
-godot::String IfcApproval::get_Level() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(5));
+godot::Variant IfcApproval::get_Level() {
+    return gd_get_attribute(entity_, "Level", file_);
 }
 
-void IfcApproval::set_Level(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 5, v);
+void IfcApproval::set_Level(godot::Variant v) {
+    gd_set_attribute(entity_, "Level", v);
 }
 
-godot::String IfcApproval::get_Qualifier() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(6));
+godot::Variant IfcApproval::get_Qualifier() {
+    return gd_get_attribute(entity_, "Qualifier", file_);
 }
 
-void IfcApproval::set_Qualifier(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 6, v);
+void IfcApproval::set_Qualifier(godot::Variant v) {
+    gd_set_attribute(entity_, "Qualifier", v);
 }
 
 Ref<GDIFCEntityBase> IfcApproval::get_RequestingApproval() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(7), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "RequestingApproval");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcApproval::set_RequestingApproval(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 7, v);
+    gd_set_attribute(entity_, "RequestingApproval", v);
 }
 
 Ref<GDIFCEntityBase> IfcApproval::get_GivingApproval() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(8), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "GivingApproval");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcApproval::set_GivingApproval(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 8, v);
+    gd_set_attribute(entity_, "GivingApproval", v);
+}
+
+Ref<GDIFCEntityBase> IfcApproval::get_ApprovalDateTime() {
+    const ptrdiff_t i = gd_attr_index(entity_, "ApprovalDateTime");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcApproval::set_ApprovalDateTime(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "ApprovalDateTime", v);
+}
+
+godot::Variant IfcApproval::get_ApprovalStatus() {
+    return gd_get_attribute(entity_, "ApprovalStatus", file_);
+}
+
+void IfcApproval::set_ApprovalStatus(godot::Variant v) {
+    gd_set_attribute(entity_, "ApprovalStatus", v);
+}
+
+godot::Variant IfcApproval::get_ApprovalLevel() {
+    return gd_get_attribute(entity_, "ApprovalLevel", file_);
+}
+
+void IfcApproval::set_ApprovalLevel(godot::Variant v) {
+    gd_set_attribute(entity_, "ApprovalLevel", v);
+}
+
+godot::Variant IfcApproval::get_ApprovalQualifier() {
+    return gd_get_attribute(entity_, "ApprovalQualifier", file_);
+}
+
+void IfcApproval::set_ApprovalQualifier(godot::Variant v) {
+    gd_set_attribute(entity_, "ApprovalQualifier", v);
 }
 
 godot::Array IfcApproval::get_HasExternalReferences() {
@@ -1281,33 +1232,46 @@ godot::Array IfcApproval::get_Relates() {
     return get_inverse(godot::String("Relates"));
 }
 
+godot::Array IfcApproval::get_Actors() {
+    return get_inverse(godot::String("Actors"));
+}
+
 void IfcApprovalRelationship::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_RelatingApproval"), &IfcApprovalRelationship::get_RelatingApproval);
     ClassDB::bind_method(D_METHOD("set_RelatingApproval","v"), &IfcApprovalRelationship::set_RelatingApproval);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "RelatingApproval", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_RelatingApproval", "get_RelatingApproval");
     ClassDB::bind_method(D_METHOD("get_RelatedApprovals"), &IfcApprovalRelationship::get_RelatedApprovals);
     ClassDB::bind_method(D_METHOD("set_RelatedApprovals","v"), &IfcApprovalRelationship::set_RelatedApprovals);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "RelatedApprovals"), "set_RelatedApprovals", "get_RelatedApprovals");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RelatedApprovals", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RelatedApprovals", "get_RelatedApprovals");
+    ClassDB::bind_method(D_METHOD("get_RelatedApproval"), &IfcApprovalRelationship::get_RelatedApproval);
+    ClassDB::bind_method(D_METHOD("set_RelatedApproval","v"), &IfcApprovalRelationship::set_RelatedApproval);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "RelatedApproval", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_RelatedApproval", "get_RelatedApproval");
 }
 
 Ref<GDIFCEntityBase> IfcApprovalRelationship::get_RelatingApproval() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "RelatingApproval");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcApprovalRelationship::set_RelatingApproval(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+    gd_set_attribute(entity_, "RelatingApproval", v);
 }
 
-godot::Array IfcApprovalRelationship::get_RelatedApprovals() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(3), file_);
+godot::Variant IfcApprovalRelationship::get_RelatedApprovals() {
+    return gd_get_attribute(entity_, "RelatedApprovals", file_);
 }
 
-void IfcApprovalRelationship::set_RelatedApprovals(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 3, v);
+void IfcApprovalRelationship::set_RelatedApprovals(godot::Variant v) {
+    gd_set_attribute(entity_, "RelatedApprovals", v);
+}
+
+Ref<GDIFCEntityBase> IfcApprovalRelationship::get_RelatedApproval() {
+    const ptrdiff_t i = gd_attr_index(entity_, "RelatedApproval");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcApprovalRelationship::set_RelatedApproval(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "RelatedApproval", v);
 }
 
 void IfcArbitraryClosedProfileDef::_bind_methods() {
@@ -1317,13 +1281,12 @@ void IfcArbitraryClosedProfileDef::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcArbitraryClosedProfileDef::get_OuterCurve() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "OuterCurve");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcArbitraryClosedProfileDef::set_OuterCurve(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+    gd_set_attribute(entity_, "OuterCurve", v);
 }
 
 void IfcArbitraryOpenProfileDef::_bind_methods() {
@@ -1333,35 +1296,37 @@ void IfcArbitraryOpenProfileDef::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcArbitraryOpenProfileDef::get_Curve() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "Curve");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcArbitraryOpenProfileDef::set_Curve(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+    gd_set_attribute(entity_, "Curve", v);
 }
 
 void IfcArbitraryProfileDefWithVoids::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_InnerCurves"), &IfcArbitraryProfileDefWithVoids::get_InnerCurves);
     ClassDB::bind_method(D_METHOD("set_InnerCurves","v"), &IfcArbitraryProfileDefWithVoids::set_InnerCurves);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "InnerCurves"), "set_InnerCurves", "get_InnerCurves");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "InnerCurves", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_InnerCurves", "get_InnerCurves");
 }
 
-godot::Array IfcArbitraryProfileDefWithVoids::get_InnerCurves() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(3), file_);
+godot::Variant IfcArbitraryProfileDefWithVoids::get_InnerCurves() {
+    return gd_get_attribute(entity_, "InnerCurves", file_);
 }
 
-void IfcArbitraryProfileDefWithVoids::set_InnerCurves(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 3, v);
+void IfcArbitraryProfileDefWithVoids::set_InnerCurves(godot::Variant v) {
+    gd_set_attribute(entity_, "InnerCurves", v);
 }
+
+static const GDIFCAttributeAlias IfcAsset_Identification_aliases[] = {
+    {"IFC2X3", "IFCASSET", "AssetID"},
+    {nullptr, nullptr, nullptr},
+};
 
 void IfcAsset::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Identification"), &IfcAsset::get_Identification);
     ClassDB::bind_method(D_METHOD("set_Identification","v"), &IfcAsset::set_Identification);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Identification"), "set_Identification", "get_Identification");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Identification", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Identification", "get_Identification");
     ClassDB::bind_method(D_METHOD("get_OriginalValue"), &IfcAsset::get_OriginalValue);
     ClassDB::bind_method(D_METHOD("set_OriginalValue","v"), &IfcAsset::set_OriginalValue);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "OriginalValue", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_OriginalValue", "get_OriginalValue");
@@ -1382,291 +1347,278 @@ void IfcAsset::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "ResponsiblePerson", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_ResponsiblePerson", "get_ResponsiblePerson");
     ClassDB::bind_method(D_METHOD("get_IncorporationDate"), &IfcAsset::get_IncorporationDate);
     ClassDB::bind_method(D_METHOD("set_IncorporationDate","v"), &IfcAsset::set_IncorporationDate);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "IncorporationDate"), "set_IncorporationDate", "get_IncorporationDate");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "IncorporationDate", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_IncorporationDate", "get_IncorporationDate");
     ClassDB::bind_method(D_METHOD("get_DepreciatedValue"), &IfcAsset::get_DepreciatedValue);
     ClassDB::bind_method(D_METHOD("set_DepreciatedValue","v"), &IfcAsset::set_DepreciatedValue);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "DepreciatedValue", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_DepreciatedValue", "get_DepreciatedValue");
 }
 
-godot::String IfcAsset::get_Identification() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(5));
+godot::Variant IfcAsset::get_Identification() {
+    return gd_get_attribute(entity_, "Identification", file_, IfcAsset_Identification_aliases);
 }
 
-void IfcAsset::set_Identification(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 5, v);
+void IfcAsset::set_Identification(godot::Variant v) {
+    gd_set_attribute(entity_, "Identification", v, IfcAsset_Identification_aliases);
 }
 
 Ref<GDIFCEntityBase> IfcAsset::get_OriginalValue() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(6), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "OriginalValue");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcAsset::set_OriginalValue(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 6, v);
+    gd_set_attribute(entity_, "OriginalValue", v);
 }
 
 Ref<GDIFCEntityBase> IfcAsset::get_CurrentValue() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(7), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "CurrentValue");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcAsset::set_CurrentValue(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 7, v);
+    gd_set_attribute(entity_, "CurrentValue", v);
 }
 
 Ref<GDIFCEntityBase> IfcAsset::get_TotalReplacementCost() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(8), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "TotalReplacementCost");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcAsset::set_TotalReplacementCost(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 8, v);
+    gd_set_attribute(entity_, "TotalReplacementCost", v);
 }
 
 Ref<GDIFCEntityBase> IfcAsset::get_Owner() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(9), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "Owner");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcAsset::set_Owner(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 9, v);
+    gd_set_attribute(entity_, "Owner", v);
 }
 
 Ref<GDIFCEntityBase> IfcAsset::get_User() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(10), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "User");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcAsset::set_User(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 10, v);
+    gd_set_attribute(entity_, "User", v);
 }
 
 Ref<GDIFCEntityBase> IfcAsset::get_ResponsiblePerson() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(11), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "ResponsiblePerson");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcAsset::set_ResponsiblePerson(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 11, v);
+    gd_set_attribute(entity_, "ResponsiblePerson", v);
 }
 
-godot::String IfcAsset::get_IncorporationDate() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(12));
+godot::Variant IfcAsset::get_IncorporationDate() {
+    return gd_get_attribute(entity_, "IncorporationDate", file_);
 }
 
-void IfcAsset::set_IncorporationDate(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 12, v);
+void IfcAsset::set_IncorporationDate(godot::Variant v) {
+    gd_set_attribute(entity_, "IncorporationDate", v);
 }
 
 Ref<GDIFCEntityBase> IfcAsset::get_DepreciatedValue() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(13), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "DepreciatedValue");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcAsset::set_DepreciatedValue(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 13, v);
+    gd_set_attribute(entity_, "DepreciatedValue", v);
 }
+
+static const GDIFCAttributeAlias IfcAsymmetricIShapeProfileDef_BottomFlangeWidth_aliases[] = {
+    {"IFC2X3", "IFCASYMMETRICISHAPEPROFILEDEF", "OverallWidth"},
+    {nullptr, nullptr, nullptr},
+};
+
+static const GDIFCAttributeAlias IfcAsymmetricIShapeProfileDef_BottomFlangeThickness_aliases[] = {
+    {"IFC2X3", "IFCASYMMETRICISHAPEPROFILEDEF", "FlangeThickness"},
+    {nullptr, nullptr, nullptr},
+};
+
+static const GDIFCAttributeAlias IfcAsymmetricIShapeProfileDef_BottomFlangeFilletRadius_aliases[] = {
+    {"IFC2X3", "IFCASYMMETRICISHAPEPROFILEDEF", "FilletRadius"},
+    {nullptr, nullptr, nullptr},
+};
 
 void IfcAsymmetricIShapeProfileDef::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_BottomFlangeWidth"), &IfcAsymmetricIShapeProfileDef::get_BottomFlangeWidth);
     ClassDB::bind_method(D_METHOD("set_BottomFlangeWidth","v"), &IfcAsymmetricIShapeProfileDef::set_BottomFlangeWidth);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "BottomFlangeWidth"), "set_BottomFlangeWidth", "get_BottomFlangeWidth");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "BottomFlangeWidth", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_BottomFlangeWidth", "get_BottomFlangeWidth");
     ClassDB::bind_method(D_METHOD("get_OverallDepth"), &IfcAsymmetricIShapeProfileDef::get_OverallDepth);
     ClassDB::bind_method(D_METHOD("set_OverallDepth","v"), &IfcAsymmetricIShapeProfileDef::set_OverallDepth);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "OverallDepth"), "set_OverallDepth", "get_OverallDepth");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "OverallDepth", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_OverallDepth", "get_OverallDepth");
     ClassDB::bind_method(D_METHOD("get_WebThickness"), &IfcAsymmetricIShapeProfileDef::get_WebThickness);
     ClassDB::bind_method(D_METHOD("set_WebThickness","v"), &IfcAsymmetricIShapeProfileDef::set_WebThickness);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "WebThickness"), "set_WebThickness", "get_WebThickness");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "WebThickness", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_WebThickness", "get_WebThickness");
     ClassDB::bind_method(D_METHOD("get_BottomFlangeThickness"), &IfcAsymmetricIShapeProfileDef::get_BottomFlangeThickness);
     ClassDB::bind_method(D_METHOD("set_BottomFlangeThickness","v"), &IfcAsymmetricIShapeProfileDef::set_BottomFlangeThickness);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "BottomFlangeThickness"), "set_BottomFlangeThickness", "get_BottomFlangeThickness");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "BottomFlangeThickness", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_BottomFlangeThickness", "get_BottomFlangeThickness");
     ClassDB::bind_method(D_METHOD("get_BottomFlangeFilletRadius"), &IfcAsymmetricIShapeProfileDef::get_BottomFlangeFilletRadius);
     ClassDB::bind_method(D_METHOD("set_BottomFlangeFilletRadius","v"), &IfcAsymmetricIShapeProfileDef::set_BottomFlangeFilletRadius);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "BottomFlangeFilletRadius"), "set_BottomFlangeFilletRadius", "get_BottomFlangeFilletRadius");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "BottomFlangeFilletRadius", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_BottomFlangeFilletRadius", "get_BottomFlangeFilletRadius");
     ClassDB::bind_method(D_METHOD("get_TopFlangeWidth"), &IfcAsymmetricIShapeProfileDef::get_TopFlangeWidth);
     ClassDB::bind_method(D_METHOD("set_TopFlangeWidth","v"), &IfcAsymmetricIShapeProfileDef::set_TopFlangeWidth);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "TopFlangeWidth"), "set_TopFlangeWidth", "get_TopFlangeWidth");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TopFlangeWidth", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TopFlangeWidth", "get_TopFlangeWidth");
     ClassDB::bind_method(D_METHOD("get_TopFlangeThickness"), &IfcAsymmetricIShapeProfileDef::get_TopFlangeThickness);
     ClassDB::bind_method(D_METHOD("set_TopFlangeThickness","v"), &IfcAsymmetricIShapeProfileDef::set_TopFlangeThickness);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "TopFlangeThickness"), "set_TopFlangeThickness", "get_TopFlangeThickness");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TopFlangeThickness", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TopFlangeThickness", "get_TopFlangeThickness");
     ClassDB::bind_method(D_METHOD("get_TopFlangeFilletRadius"), &IfcAsymmetricIShapeProfileDef::get_TopFlangeFilletRadius);
     ClassDB::bind_method(D_METHOD("set_TopFlangeFilletRadius","v"), &IfcAsymmetricIShapeProfileDef::set_TopFlangeFilletRadius);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "TopFlangeFilletRadius"), "set_TopFlangeFilletRadius", "get_TopFlangeFilletRadius");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TopFlangeFilletRadius", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TopFlangeFilletRadius", "get_TopFlangeFilletRadius");
     ClassDB::bind_method(D_METHOD("get_BottomFlangeEdgeRadius"), &IfcAsymmetricIShapeProfileDef::get_BottomFlangeEdgeRadius);
     ClassDB::bind_method(D_METHOD("set_BottomFlangeEdgeRadius","v"), &IfcAsymmetricIShapeProfileDef::set_BottomFlangeEdgeRadius);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "BottomFlangeEdgeRadius"), "set_BottomFlangeEdgeRadius", "get_BottomFlangeEdgeRadius");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "BottomFlangeEdgeRadius", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_BottomFlangeEdgeRadius", "get_BottomFlangeEdgeRadius");
     ClassDB::bind_method(D_METHOD("get_BottomFlangeSlope"), &IfcAsymmetricIShapeProfileDef::get_BottomFlangeSlope);
     ClassDB::bind_method(D_METHOD("set_BottomFlangeSlope","v"), &IfcAsymmetricIShapeProfileDef::set_BottomFlangeSlope);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "BottomFlangeSlope"), "set_BottomFlangeSlope", "get_BottomFlangeSlope");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "BottomFlangeSlope", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_BottomFlangeSlope", "get_BottomFlangeSlope");
     ClassDB::bind_method(D_METHOD("get_TopFlangeEdgeRadius"), &IfcAsymmetricIShapeProfileDef::get_TopFlangeEdgeRadius);
     ClassDB::bind_method(D_METHOD("set_TopFlangeEdgeRadius","v"), &IfcAsymmetricIShapeProfileDef::set_TopFlangeEdgeRadius);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "TopFlangeEdgeRadius"), "set_TopFlangeEdgeRadius", "get_TopFlangeEdgeRadius");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TopFlangeEdgeRadius", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TopFlangeEdgeRadius", "get_TopFlangeEdgeRadius");
     ClassDB::bind_method(D_METHOD("get_TopFlangeSlope"), &IfcAsymmetricIShapeProfileDef::get_TopFlangeSlope);
     ClassDB::bind_method(D_METHOD("set_TopFlangeSlope","v"), &IfcAsymmetricIShapeProfileDef::set_TopFlangeSlope);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "TopFlangeSlope"), "set_TopFlangeSlope", "get_TopFlangeSlope");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TopFlangeSlope", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TopFlangeSlope", "get_TopFlangeSlope");
+    ClassDB::bind_method(D_METHOD("get_CentreOfGravityInY"), &IfcAsymmetricIShapeProfileDef::get_CentreOfGravityInY);
+    ClassDB::bind_method(D_METHOD("set_CentreOfGravityInY","v"), &IfcAsymmetricIShapeProfileDef::set_CentreOfGravityInY);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "CentreOfGravityInY", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_CentreOfGravityInY", "get_CentreOfGravityInY");
 }
 
-double IfcAsymmetricIShapeProfileDef::get_BottomFlangeWidth() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(3));
+godot::Variant IfcAsymmetricIShapeProfileDef::get_BottomFlangeWidth() {
+    return gd_get_attribute(entity_, "BottomFlangeWidth", file_, IfcAsymmetricIShapeProfileDef_BottomFlangeWidth_aliases);
 }
 
-void IfcAsymmetricIShapeProfileDef::set_BottomFlangeWidth(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 3, v);
+void IfcAsymmetricIShapeProfileDef::set_BottomFlangeWidth(godot::Variant v) {
+    gd_set_attribute(entity_, "BottomFlangeWidth", v, IfcAsymmetricIShapeProfileDef_BottomFlangeWidth_aliases);
 }
 
-double IfcAsymmetricIShapeProfileDef::get_OverallDepth() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(4));
+godot::Variant IfcAsymmetricIShapeProfileDef::get_OverallDepth() {
+    return gd_get_attribute(entity_, "OverallDepth", file_);
 }
 
-void IfcAsymmetricIShapeProfileDef::set_OverallDepth(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 4, v);
+void IfcAsymmetricIShapeProfileDef::set_OverallDepth(godot::Variant v) {
+    gd_set_attribute(entity_, "OverallDepth", v);
 }
 
-double IfcAsymmetricIShapeProfileDef::get_WebThickness() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(5));
+godot::Variant IfcAsymmetricIShapeProfileDef::get_WebThickness() {
+    return gd_get_attribute(entity_, "WebThickness", file_);
 }
 
-void IfcAsymmetricIShapeProfileDef::set_WebThickness(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 5, v);
+void IfcAsymmetricIShapeProfileDef::set_WebThickness(godot::Variant v) {
+    gd_set_attribute(entity_, "WebThickness", v);
 }
 
-double IfcAsymmetricIShapeProfileDef::get_BottomFlangeThickness() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(6));
+godot::Variant IfcAsymmetricIShapeProfileDef::get_BottomFlangeThickness() {
+    return gd_get_attribute(entity_, "BottomFlangeThickness", file_, IfcAsymmetricIShapeProfileDef_BottomFlangeThickness_aliases);
 }
 
-void IfcAsymmetricIShapeProfileDef::set_BottomFlangeThickness(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 6, v);
+void IfcAsymmetricIShapeProfileDef::set_BottomFlangeThickness(godot::Variant v) {
+    gd_set_attribute(entity_, "BottomFlangeThickness", v, IfcAsymmetricIShapeProfileDef_BottomFlangeThickness_aliases);
 }
 
-double IfcAsymmetricIShapeProfileDef::get_BottomFlangeFilletRadius() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(7));
+godot::Variant IfcAsymmetricIShapeProfileDef::get_BottomFlangeFilletRadius() {
+    return gd_get_attribute(entity_, "BottomFlangeFilletRadius", file_, IfcAsymmetricIShapeProfileDef_BottomFlangeFilletRadius_aliases);
 }
 
-void IfcAsymmetricIShapeProfileDef::set_BottomFlangeFilletRadius(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 7, v);
+void IfcAsymmetricIShapeProfileDef::set_BottomFlangeFilletRadius(godot::Variant v) {
+    gd_set_attribute(entity_, "BottomFlangeFilletRadius", v, IfcAsymmetricIShapeProfileDef_BottomFlangeFilletRadius_aliases);
 }
 
-double IfcAsymmetricIShapeProfileDef::get_TopFlangeWidth() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(8));
+godot::Variant IfcAsymmetricIShapeProfileDef::get_TopFlangeWidth() {
+    return gd_get_attribute(entity_, "TopFlangeWidth", file_);
 }
 
-void IfcAsymmetricIShapeProfileDef::set_TopFlangeWidth(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 8, v);
+void IfcAsymmetricIShapeProfileDef::set_TopFlangeWidth(godot::Variant v) {
+    gd_set_attribute(entity_, "TopFlangeWidth", v);
 }
 
-double IfcAsymmetricIShapeProfileDef::get_TopFlangeThickness() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(9));
+godot::Variant IfcAsymmetricIShapeProfileDef::get_TopFlangeThickness() {
+    return gd_get_attribute(entity_, "TopFlangeThickness", file_);
 }
 
-void IfcAsymmetricIShapeProfileDef::set_TopFlangeThickness(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 9, v);
+void IfcAsymmetricIShapeProfileDef::set_TopFlangeThickness(godot::Variant v) {
+    gd_set_attribute(entity_, "TopFlangeThickness", v);
 }
 
-double IfcAsymmetricIShapeProfileDef::get_TopFlangeFilletRadius() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(10));
+godot::Variant IfcAsymmetricIShapeProfileDef::get_TopFlangeFilletRadius() {
+    return gd_get_attribute(entity_, "TopFlangeFilletRadius", file_);
 }
 
-void IfcAsymmetricIShapeProfileDef::set_TopFlangeFilletRadius(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 10, v);
+void IfcAsymmetricIShapeProfileDef::set_TopFlangeFilletRadius(godot::Variant v) {
+    gd_set_attribute(entity_, "TopFlangeFilletRadius", v);
 }
 
-double IfcAsymmetricIShapeProfileDef::get_BottomFlangeEdgeRadius() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(11));
+godot::Variant IfcAsymmetricIShapeProfileDef::get_BottomFlangeEdgeRadius() {
+    return gd_get_attribute(entity_, "BottomFlangeEdgeRadius", file_);
 }
 
-void IfcAsymmetricIShapeProfileDef::set_BottomFlangeEdgeRadius(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 11, v);
+void IfcAsymmetricIShapeProfileDef::set_BottomFlangeEdgeRadius(godot::Variant v) {
+    gd_set_attribute(entity_, "BottomFlangeEdgeRadius", v);
 }
 
-double IfcAsymmetricIShapeProfileDef::get_BottomFlangeSlope() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(12));
+godot::Variant IfcAsymmetricIShapeProfileDef::get_BottomFlangeSlope() {
+    return gd_get_attribute(entity_, "BottomFlangeSlope", file_);
 }
 
-void IfcAsymmetricIShapeProfileDef::set_BottomFlangeSlope(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 12, v);
+void IfcAsymmetricIShapeProfileDef::set_BottomFlangeSlope(godot::Variant v) {
+    gd_set_attribute(entity_, "BottomFlangeSlope", v);
 }
 
-double IfcAsymmetricIShapeProfileDef::get_TopFlangeEdgeRadius() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(13));
+godot::Variant IfcAsymmetricIShapeProfileDef::get_TopFlangeEdgeRadius() {
+    return gd_get_attribute(entity_, "TopFlangeEdgeRadius", file_);
 }
 
-void IfcAsymmetricIShapeProfileDef::set_TopFlangeEdgeRadius(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 13, v);
+void IfcAsymmetricIShapeProfileDef::set_TopFlangeEdgeRadius(godot::Variant v) {
+    gd_set_attribute(entity_, "TopFlangeEdgeRadius", v);
 }
 
-double IfcAsymmetricIShapeProfileDef::get_TopFlangeSlope() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(14));
+godot::Variant IfcAsymmetricIShapeProfileDef::get_TopFlangeSlope() {
+    return gd_get_attribute(entity_, "TopFlangeSlope", file_);
 }
 
-void IfcAsymmetricIShapeProfileDef::set_TopFlangeSlope(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 14, v);
+void IfcAsymmetricIShapeProfileDef::set_TopFlangeSlope(godot::Variant v) {
+    gd_set_attribute(entity_, "TopFlangeSlope", v);
+}
+
+godot::Variant IfcAsymmetricIShapeProfileDef::get_CentreOfGravityInY() {
+    return gd_get_attribute(entity_, "CentreOfGravityInY", file_);
+}
+
+void IfcAsymmetricIShapeProfileDef::set_CentreOfGravityInY(godot::Variant v) {
+    gd_set_attribute(entity_, "CentreOfGravityInY", v);
 }
 
 void IfcAudioVisualAppliance::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcAudioVisualAppliance::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcAudioVisualAppliance::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcAudioVisualAppliance::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcAudioVisualAppliance::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcAudioVisualAppliance::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcAudioVisualAppliance::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcAudioVisualApplianceType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcAudioVisualApplianceType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcAudioVisualApplianceType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcAudioVisualApplianceType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcAudioVisualApplianceType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcAudioVisualApplianceType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcAudioVisualApplianceType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcAxis1Placement::_bind_methods() {
@@ -1676,13 +1628,12 @@ void IfcAxis1Placement::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcAxis1Placement::get_Axis() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(1), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "Axis");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcAxis1Placement::set_Axis(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 1, v);
+    gd_set_attribute(entity_, "Axis", v);
 }
 
 void IfcAxis2Placement2D::_bind_methods() {
@@ -1692,13 +1643,12 @@ void IfcAxis2Placement2D::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcAxis2Placement2D::get_RefDirection() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(1), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "RefDirection");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcAxis2Placement2D::set_RefDirection(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 1, v);
+    gd_set_attribute(entity_, "RefDirection", v);
 }
 
 void IfcAxis2Placement3D::_bind_methods() {
@@ -1711,23 +1661,21 @@ void IfcAxis2Placement3D::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcAxis2Placement3D::get_Axis() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(1), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "Axis");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcAxis2Placement3D::set_Axis(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 1, v);
+    gd_set_attribute(entity_, "Axis", v);
 }
 
 Ref<GDIFCEntityBase> IfcAxis2Placement3D::get_RefDirection() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "RefDirection");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcAxis2Placement3D::set_RefDirection(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+    gd_set_attribute(entity_, "RefDirection", v);
 }
 
 void IfcAxis2PlacementLinear::_bind_methods() {
@@ -1740,23 +1688,21 @@ void IfcAxis2PlacementLinear::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcAxis2PlacementLinear::get_Axis() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(1), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "Axis");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcAxis2PlacementLinear::set_Axis(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 1, v);
+    gd_set_attribute(entity_, "Axis", v);
 }
 
 Ref<GDIFCEntityBase> IfcAxis2PlacementLinear::get_RefDirection() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "RefDirection");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcAxis2PlacementLinear::set_RefDirection(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+    gd_set_attribute(entity_, "RefDirection", v);
 }
 
 void IfcCurve::_bind_methods() {
@@ -1768,111 +1714,95 @@ void IfcBoundedCurve::_bind_methods() {
 void IfcBSplineCurve::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Degree"), &IfcBSplineCurve::get_Degree);
     ClassDB::bind_method(D_METHOD("set_Degree","v"), &IfcBSplineCurve::set_Degree);
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "Degree"), "set_Degree", "get_Degree");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Degree", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Degree", "get_Degree");
     ClassDB::bind_method(D_METHOD("get_ControlPointsList"), &IfcBSplineCurve::get_ControlPointsList);
     ClassDB::bind_method(D_METHOD("set_ControlPointsList","v"), &IfcBSplineCurve::set_ControlPointsList);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ControlPointsList"), "set_ControlPointsList", "get_ControlPointsList");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ControlPointsList", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ControlPointsList", "get_ControlPointsList");
     ClassDB::bind_method(D_METHOD("get_CurveForm"), &IfcBSplineCurve::get_CurveForm);
     ClassDB::bind_method(D_METHOD("set_CurveForm","v"), &IfcBSplineCurve::set_CurveForm);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "CurveForm"), "set_CurveForm", "get_CurveForm");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "CurveForm", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_CurveForm", "get_CurveForm");
     ClassDB::bind_method(D_METHOD("get_ClosedCurve"), &IfcBSplineCurve::get_ClosedCurve);
     ClassDB::bind_method(D_METHOD("set_ClosedCurve","v"), &IfcBSplineCurve::set_ClosedCurve);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "ClosedCurve"), "set_ClosedCurve", "get_ClosedCurve");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ClosedCurve", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ClosedCurve", "get_ClosedCurve");
     ClassDB::bind_method(D_METHOD("get_SelfIntersect"), &IfcBSplineCurve::get_SelfIntersect);
     ClassDB::bind_method(D_METHOD("set_SelfIntersect","v"), &IfcBSplineCurve::set_SelfIntersect);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "SelfIntersect"), "set_SelfIntersect", "get_SelfIntersect");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "SelfIntersect", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_SelfIntersect", "get_SelfIntersect");
 }
 
-int64_t IfcBSplineCurve::get_Degree() {
-    if (!entity_) return 0;
-    return gd_attr_int(entity_->get_attribute_value(0));
+godot::Variant IfcBSplineCurve::get_Degree() {
+    return gd_get_attribute(entity_, "Degree", file_);
 }
 
-void IfcBSplineCurve::set_Degree(int64_t v) {
-    if (!entity_) return;
-    gd_set_int(entity_, 0, v);
+void IfcBSplineCurve::set_Degree(godot::Variant v) {
+    gd_set_attribute(entity_, "Degree", v);
 }
 
-godot::Array IfcBSplineCurve::get_ControlPointsList() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(1), file_);
+godot::Variant IfcBSplineCurve::get_ControlPointsList() {
+    return gd_get_attribute(entity_, "ControlPointsList", file_);
 }
 
-void IfcBSplineCurve::set_ControlPointsList(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 1, v);
+void IfcBSplineCurve::set_ControlPointsList(godot::Variant v) {
+    gd_set_attribute(entity_, "ControlPointsList", v);
 }
 
-godot::String IfcBSplineCurve::get_CurveForm() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(2));
+godot::Variant IfcBSplineCurve::get_CurveForm() {
+    return gd_get_attribute(entity_, "CurveForm", file_);
 }
 
-void IfcBSplineCurve::set_CurveForm(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 2, v);
+void IfcBSplineCurve::set_CurveForm(godot::Variant v) {
+    gd_set_attribute(entity_, "CurveForm", v);
 }
 
-godot::String IfcBSplineCurve::get_ClosedCurve() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(3));
+godot::Variant IfcBSplineCurve::get_ClosedCurve() {
+    return gd_get_attribute(entity_, "ClosedCurve", file_);
 }
 
-void IfcBSplineCurve::set_ClosedCurve(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 3, v);
+void IfcBSplineCurve::set_ClosedCurve(godot::Variant v) {
+    gd_set_attribute(entity_, "ClosedCurve", v);
 }
 
-godot::String IfcBSplineCurve::get_SelfIntersect() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(4));
+godot::Variant IfcBSplineCurve::get_SelfIntersect() {
+    return gd_get_attribute(entity_, "SelfIntersect", file_);
 }
 
-void IfcBSplineCurve::set_SelfIntersect(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 4, v);
+void IfcBSplineCurve::set_SelfIntersect(godot::Variant v) {
+    gd_set_attribute(entity_, "SelfIntersect", v);
 }
 
 void IfcBSplineCurveWithKnots::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_KnotMultiplicities"), &IfcBSplineCurveWithKnots::get_KnotMultiplicities);
     ClassDB::bind_method(D_METHOD("set_KnotMultiplicities","v"), &IfcBSplineCurveWithKnots::set_KnotMultiplicities);
-    ADD_PROPERTY(PropertyInfo(Variant::PACKED_INT64_ARRAY, "KnotMultiplicities"), "set_KnotMultiplicities", "get_KnotMultiplicities");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "KnotMultiplicities", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_KnotMultiplicities", "get_KnotMultiplicities");
     ClassDB::bind_method(D_METHOD("get_Knots"), &IfcBSplineCurveWithKnots::get_Knots);
     ClassDB::bind_method(D_METHOD("set_Knots","v"), &IfcBSplineCurveWithKnots::set_Knots);
-    ADD_PROPERTY(PropertyInfo(Variant::PACKED_FLOAT64_ARRAY, "Knots"), "set_Knots", "get_Knots");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Knots", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Knots", "get_Knots");
     ClassDB::bind_method(D_METHOD("get_KnotSpec"), &IfcBSplineCurveWithKnots::get_KnotSpec);
     ClassDB::bind_method(D_METHOD("set_KnotSpec","v"), &IfcBSplineCurveWithKnots::set_KnotSpec);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "KnotSpec"), "set_KnotSpec", "get_KnotSpec");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "KnotSpec", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_KnotSpec", "get_KnotSpec");
 }
 
-godot::PackedInt64Array IfcBSplineCurveWithKnots::get_KnotMultiplicities() {
-    if (!entity_) return godot::PackedInt64Array();
-    return gd_attr_agg_int(entity_->get_attribute_value(5));
+godot::Variant IfcBSplineCurveWithKnots::get_KnotMultiplicities() {
+    return gd_get_attribute(entity_, "KnotMultiplicities", file_);
 }
 
-void IfcBSplineCurveWithKnots::set_KnotMultiplicities(godot::PackedInt64Array v) {
-    if (!entity_) return;
-    gd_set_agg_int(entity_, 5, v);
+void IfcBSplineCurveWithKnots::set_KnotMultiplicities(godot::Variant v) {
+    gd_set_attribute(entity_, "KnotMultiplicities", v);
 }
 
-godot::PackedFloat64Array IfcBSplineCurveWithKnots::get_Knots() {
-    if (!entity_) return godot::PackedFloat64Array();
-    return gd_attr_agg_double(entity_->get_attribute_value(6));
+godot::Variant IfcBSplineCurveWithKnots::get_Knots() {
+    return gd_get_attribute(entity_, "Knots", file_);
 }
 
-void IfcBSplineCurveWithKnots::set_Knots(godot::PackedFloat64Array v) {
-    if (!entity_) return;
-    gd_set_agg_double(entity_, 6, v);
+void IfcBSplineCurveWithKnots::set_Knots(godot::Variant v) {
+    gd_set_attribute(entity_, "Knots", v);
 }
 
-godot::String IfcBSplineCurveWithKnots::get_KnotSpec() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(7));
+godot::Variant IfcBSplineCurveWithKnots::get_KnotSpec() {
+    return gd_get_attribute(entity_, "KnotSpec", file_);
 }
 
-void IfcBSplineCurveWithKnots::set_KnotSpec(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 7, v);
+void IfcBSplineCurveWithKnots::set_KnotSpec(godot::Variant v) {
+    gd_set_attribute(entity_, "KnotSpec", v);
 }
 
 void IfcBoundedSurface::_bind_methods() {
@@ -1881,157 +1811,139 @@ void IfcBoundedSurface::_bind_methods() {
 void IfcBSplineSurface::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_UDegree"), &IfcBSplineSurface::get_UDegree);
     ClassDB::bind_method(D_METHOD("set_UDegree","v"), &IfcBSplineSurface::set_UDegree);
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "UDegree"), "set_UDegree", "get_UDegree");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "UDegree", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_UDegree", "get_UDegree");
     ClassDB::bind_method(D_METHOD("get_VDegree"), &IfcBSplineSurface::get_VDegree);
     ClassDB::bind_method(D_METHOD("set_VDegree","v"), &IfcBSplineSurface::set_VDegree);
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "VDegree"), "set_VDegree", "get_VDegree");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "VDegree", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_VDegree", "get_VDegree");
     ClassDB::bind_method(D_METHOD("get_ControlPointsList"), &IfcBSplineSurface::get_ControlPointsList);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ControlPointsList"), "", "get_ControlPointsList");
+    ClassDB::bind_method(D_METHOD("set_ControlPointsList","v"), &IfcBSplineSurface::set_ControlPointsList);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ControlPointsList", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ControlPointsList", "get_ControlPointsList");
     ClassDB::bind_method(D_METHOD("get_SurfaceForm"), &IfcBSplineSurface::get_SurfaceForm);
     ClassDB::bind_method(D_METHOD("set_SurfaceForm","v"), &IfcBSplineSurface::set_SurfaceForm);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "SurfaceForm"), "set_SurfaceForm", "get_SurfaceForm");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "SurfaceForm", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_SurfaceForm", "get_SurfaceForm");
     ClassDB::bind_method(D_METHOD("get_UClosed"), &IfcBSplineSurface::get_UClosed);
     ClassDB::bind_method(D_METHOD("set_UClosed","v"), &IfcBSplineSurface::set_UClosed);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "UClosed"), "set_UClosed", "get_UClosed");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "UClosed", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_UClosed", "get_UClosed");
     ClassDB::bind_method(D_METHOD("get_VClosed"), &IfcBSplineSurface::get_VClosed);
     ClassDB::bind_method(D_METHOD("set_VClosed","v"), &IfcBSplineSurface::set_VClosed);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "VClosed"), "set_VClosed", "get_VClosed");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "VClosed", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_VClosed", "get_VClosed");
     ClassDB::bind_method(D_METHOD("get_SelfIntersect"), &IfcBSplineSurface::get_SelfIntersect);
     ClassDB::bind_method(D_METHOD("set_SelfIntersect","v"), &IfcBSplineSurface::set_SelfIntersect);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "SelfIntersect"), "set_SelfIntersect", "get_SelfIntersect");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "SelfIntersect", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_SelfIntersect", "get_SelfIntersect");
 }
 
-int64_t IfcBSplineSurface::get_UDegree() {
-    if (!entity_) return 0;
-    return gd_attr_int(entity_->get_attribute_value(0));
+godot::Variant IfcBSplineSurface::get_UDegree() {
+    return gd_get_attribute(entity_, "UDegree", file_);
 }
 
-void IfcBSplineSurface::set_UDegree(int64_t v) {
-    if (!entity_) return;
-    gd_set_int(entity_, 0, v);
+void IfcBSplineSurface::set_UDegree(godot::Variant v) {
+    gd_set_attribute(entity_, "UDegree", v);
 }
 
-int64_t IfcBSplineSurface::get_VDegree() {
-    if (!entity_) return 0;
-    return gd_attr_int(entity_->get_attribute_value(1));
+godot::Variant IfcBSplineSurface::get_VDegree() {
+    return gd_get_attribute(entity_, "VDegree", file_);
 }
 
-void IfcBSplineSurface::set_VDegree(int64_t v) {
-    if (!entity_) return;
-    gd_set_int(entity_, 1, v);
+void IfcBSplineSurface::set_VDegree(godot::Variant v) {
+    gd_set_attribute(entity_, "VDegree", v);
 }
 
-godot::Array IfcBSplineSurface::get_ControlPointsList() {
-    if (!entity_) return godot::Array();
-    return gd_attr_variant(entity_->get_attribute_value(2));
+godot::Variant IfcBSplineSurface::get_ControlPointsList() {
+    return gd_get_attribute(entity_, "ControlPointsList", file_);
 }
 
-godot::String IfcBSplineSurface::get_SurfaceForm() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(3));
+void IfcBSplineSurface::set_ControlPointsList(godot::Variant v) {
+    gd_set_attribute(entity_, "ControlPointsList", v);
 }
 
-void IfcBSplineSurface::set_SurfaceForm(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 3, v);
+godot::Variant IfcBSplineSurface::get_SurfaceForm() {
+    return gd_get_attribute(entity_, "SurfaceForm", file_);
 }
 
-godot::String IfcBSplineSurface::get_UClosed() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(4));
+void IfcBSplineSurface::set_SurfaceForm(godot::Variant v) {
+    gd_set_attribute(entity_, "SurfaceForm", v);
 }
 
-void IfcBSplineSurface::set_UClosed(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 4, v);
+godot::Variant IfcBSplineSurface::get_UClosed() {
+    return gd_get_attribute(entity_, "UClosed", file_);
 }
 
-godot::String IfcBSplineSurface::get_VClosed() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(5));
+void IfcBSplineSurface::set_UClosed(godot::Variant v) {
+    gd_set_attribute(entity_, "UClosed", v);
 }
 
-void IfcBSplineSurface::set_VClosed(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 5, v);
+godot::Variant IfcBSplineSurface::get_VClosed() {
+    return gd_get_attribute(entity_, "VClosed", file_);
 }
 
-godot::String IfcBSplineSurface::get_SelfIntersect() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(6));
+void IfcBSplineSurface::set_VClosed(godot::Variant v) {
+    gd_set_attribute(entity_, "VClosed", v);
 }
 
-void IfcBSplineSurface::set_SelfIntersect(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 6, v);
+godot::Variant IfcBSplineSurface::get_SelfIntersect() {
+    return gd_get_attribute(entity_, "SelfIntersect", file_);
+}
+
+void IfcBSplineSurface::set_SelfIntersect(godot::Variant v) {
+    gd_set_attribute(entity_, "SelfIntersect", v);
 }
 
 void IfcBSplineSurfaceWithKnots::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_UMultiplicities"), &IfcBSplineSurfaceWithKnots::get_UMultiplicities);
     ClassDB::bind_method(D_METHOD("set_UMultiplicities","v"), &IfcBSplineSurfaceWithKnots::set_UMultiplicities);
-    ADD_PROPERTY(PropertyInfo(Variant::PACKED_INT64_ARRAY, "UMultiplicities"), "set_UMultiplicities", "get_UMultiplicities");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "UMultiplicities", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_UMultiplicities", "get_UMultiplicities");
     ClassDB::bind_method(D_METHOD("get_VMultiplicities"), &IfcBSplineSurfaceWithKnots::get_VMultiplicities);
     ClassDB::bind_method(D_METHOD("set_VMultiplicities","v"), &IfcBSplineSurfaceWithKnots::set_VMultiplicities);
-    ADD_PROPERTY(PropertyInfo(Variant::PACKED_INT64_ARRAY, "VMultiplicities"), "set_VMultiplicities", "get_VMultiplicities");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "VMultiplicities", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_VMultiplicities", "get_VMultiplicities");
     ClassDB::bind_method(D_METHOD("get_UKnots"), &IfcBSplineSurfaceWithKnots::get_UKnots);
     ClassDB::bind_method(D_METHOD("set_UKnots","v"), &IfcBSplineSurfaceWithKnots::set_UKnots);
-    ADD_PROPERTY(PropertyInfo(Variant::PACKED_FLOAT64_ARRAY, "UKnots"), "set_UKnots", "get_UKnots");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "UKnots", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_UKnots", "get_UKnots");
     ClassDB::bind_method(D_METHOD("get_VKnots"), &IfcBSplineSurfaceWithKnots::get_VKnots);
     ClassDB::bind_method(D_METHOD("set_VKnots","v"), &IfcBSplineSurfaceWithKnots::set_VKnots);
-    ADD_PROPERTY(PropertyInfo(Variant::PACKED_FLOAT64_ARRAY, "VKnots"), "set_VKnots", "get_VKnots");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "VKnots", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_VKnots", "get_VKnots");
     ClassDB::bind_method(D_METHOD("get_KnotSpec"), &IfcBSplineSurfaceWithKnots::get_KnotSpec);
     ClassDB::bind_method(D_METHOD("set_KnotSpec","v"), &IfcBSplineSurfaceWithKnots::set_KnotSpec);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "KnotSpec"), "set_KnotSpec", "get_KnotSpec");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "KnotSpec", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_KnotSpec", "get_KnotSpec");
 }
 
-godot::PackedInt64Array IfcBSplineSurfaceWithKnots::get_UMultiplicities() {
-    if (!entity_) return godot::PackedInt64Array();
-    return gd_attr_agg_int(entity_->get_attribute_value(7));
+godot::Variant IfcBSplineSurfaceWithKnots::get_UMultiplicities() {
+    return gd_get_attribute(entity_, "UMultiplicities", file_);
 }
 
-void IfcBSplineSurfaceWithKnots::set_UMultiplicities(godot::PackedInt64Array v) {
-    if (!entity_) return;
-    gd_set_agg_int(entity_, 7, v);
+void IfcBSplineSurfaceWithKnots::set_UMultiplicities(godot::Variant v) {
+    gd_set_attribute(entity_, "UMultiplicities", v);
 }
 
-godot::PackedInt64Array IfcBSplineSurfaceWithKnots::get_VMultiplicities() {
-    if (!entity_) return godot::PackedInt64Array();
-    return gd_attr_agg_int(entity_->get_attribute_value(8));
+godot::Variant IfcBSplineSurfaceWithKnots::get_VMultiplicities() {
+    return gd_get_attribute(entity_, "VMultiplicities", file_);
 }
 
-void IfcBSplineSurfaceWithKnots::set_VMultiplicities(godot::PackedInt64Array v) {
-    if (!entity_) return;
-    gd_set_agg_int(entity_, 8, v);
+void IfcBSplineSurfaceWithKnots::set_VMultiplicities(godot::Variant v) {
+    gd_set_attribute(entity_, "VMultiplicities", v);
 }
 
-godot::PackedFloat64Array IfcBSplineSurfaceWithKnots::get_UKnots() {
-    if (!entity_) return godot::PackedFloat64Array();
-    return gd_attr_agg_double(entity_->get_attribute_value(9));
+godot::Variant IfcBSplineSurfaceWithKnots::get_UKnots() {
+    return gd_get_attribute(entity_, "UKnots", file_);
 }
 
-void IfcBSplineSurfaceWithKnots::set_UKnots(godot::PackedFloat64Array v) {
-    if (!entity_) return;
-    gd_set_agg_double(entity_, 9, v);
+void IfcBSplineSurfaceWithKnots::set_UKnots(godot::Variant v) {
+    gd_set_attribute(entity_, "UKnots", v);
 }
 
-godot::PackedFloat64Array IfcBSplineSurfaceWithKnots::get_VKnots() {
-    if (!entity_) return godot::PackedFloat64Array();
-    return gd_attr_agg_double(entity_->get_attribute_value(10));
+godot::Variant IfcBSplineSurfaceWithKnots::get_VKnots() {
+    return gd_get_attribute(entity_, "VKnots", file_);
 }
 
-void IfcBSplineSurfaceWithKnots::set_VKnots(godot::PackedFloat64Array v) {
-    if (!entity_) return;
-    gd_set_agg_double(entity_, 10, v);
+void IfcBSplineSurfaceWithKnots::set_VKnots(godot::Variant v) {
+    gd_set_attribute(entity_, "VKnots", v);
 }
 
-godot::String IfcBSplineSurfaceWithKnots::get_KnotSpec() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(11));
+godot::Variant IfcBSplineSurfaceWithKnots::get_KnotSpec() {
+    return gd_get_attribute(entity_, "KnotSpec", file_);
 }
 
-void IfcBSplineSurfaceWithKnots::set_KnotSpec(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 11, v);
+void IfcBSplineSurfaceWithKnots::set_KnotSpec(godot::Variant v) {
+    gd_set_attribute(entity_, "KnotSpec", v);
 }
 
 void IfcBuiltElement::_bind_methods() {
@@ -2040,17 +1952,21 @@ void IfcBuiltElement::_bind_methods() {
 void IfcBeam::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcBeam::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcBeam::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
+    ClassDB::bind_method(D_METHOD("get_HasPorts"), &IfcBeam::get_HasPorts);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasPorts"), "", "get_HasPorts");
 }
 
-godot::String IfcBeam::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcBeam::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcBeam::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcBeam::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
+}
+
+godot::Array IfcBeam::get_HasPorts() {
+    return get_inverse(godot::String("HasPorts"));
 }
 
 void IfcBuiltElementType::_bind_methods() {
@@ -2059,78 +1975,68 @@ void IfcBuiltElementType::_bind_methods() {
 void IfcBeamType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcBeamType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcBeamType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcBeamType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcBeamType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcBeamType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcBeamType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcBearing::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcBearing::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcBearing::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcBearing::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcBearing::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcBearing::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcBearing::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcBearingType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcBearingType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcBearingType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcBearingType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcBearingType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcBearingType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcBearingType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcBlobTexture::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_RasterFormat"), &IfcBlobTexture::get_RasterFormat);
     ClassDB::bind_method(D_METHOD("set_RasterFormat","v"), &IfcBlobTexture::set_RasterFormat);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "RasterFormat"), "set_RasterFormat", "get_RasterFormat");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RasterFormat", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RasterFormat", "get_RasterFormat");
     ClassDB::bind_method(D_METHOD("get_RasterCode"), &IfcBlobTexture::get_RasterCode);
     ClassDB::bind_method(D_METHOD("set_RasterCode","v"), &IfcBlobTexture::set_RasterCode);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "RasterCode"), "set_RasterCode", "get_RasterCode");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RasterCode", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RasterCode", "get_RasterCode");
 }
 
-godot::String IfcBlobTexture::get_RasterFormat() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(5));
+godot::Variant IfcBlobTexture::get_RasterFormat() {
+    return gd_get_attribute(entity_, "RasterFormat", file_);
 }
 
-void IfcBlobTexture::set_RasterFormat(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 5, v);
+void IfcBlobTexture::set_RasterFormat(godot::Variant v) {
+    gd_set_attribute(entity_, "RasterFormat", v);
 }
 
-godot::String IfcBlobTexture::get_RasterCode() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(6));
+godot::Variant IfcBlobTexture::get_RasterCode() {
+    return gd_get_attribute(entity_, "RasterCode", file_);
 }
 
-void IfcBlobTexture::set_RasterCode(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 6, v);
+void IfcBlobTexture::set_RasterCode(godot::Variant v) {
+    gd_set_attribute(entity_, "RasterCode", v);
 }
 
 void IfcCsgPrimitive3D::_bind_methods() {
@@ -2140,93 +2046,82 @@ void IfcCsgPrimitive3D::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcCsgPrimitive3D::get_Position() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(0), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "Position");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcCsgPrimitive3D::set_Position(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 0, v);
+    gd_set_attribute(entity_, "Position", v);
 }
 
 void IfcBlock::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_XLength"), &IfcBlock::get_XLength);
     ClassDB::bind_method(D_METHOD("set_XLength","v"), &IfcBlock::set_XLength);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "XLength"), "set_XLength", "get_XLength");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "XLength", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_XLength", "get_XLength");
     ClassDB::bind_method(D_METHOD("get_YLength"), &IfcBlock::get_YLength);
     ClassDB::bind_method(D_METHOD("set_YLength","v"), &IfcBlock::set_YLength);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "YLength"), "set_YLength", "get_YLength");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "YLength", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_YLength", "get_YLength");
     ClassDB::bind_method(D_METHOD("get_ZLength"), &IfcBlock::get_ZLength);
     ClassDB::bind_method(D_METHOD("set_ZLength","v"), &IfcBlock::set_ZLength);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ZLength"), "set_ZLength", "get_ZLength");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ZLength", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ZLength", "get_ZLength");
 }
 
-double IfcBlock::get_XLength() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(1));
+godot::Variant IfcBlock::get_XLength() {
+    return gd_get_attribute(entity_, "XLength", file_);
 }
 
-void IfcBlock::set_XLength(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 1, v);
+void IfcBlock::set_XLength(godot::Variant v) {
+    gd_set_attribute(entity_, "XLength", v);
 }
 
-double IfcBlock::get_YLength() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(2));
+godot::Variant IfcBlock::get_YLength() {
+    return gd_get_attribute(entity_, "YLength", file_);
 }
 
-void IfcBlock::set_YLength(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 2, v);
+void IfcBlock::set_YLength(godot::Variant v) {
+    gd_set_attribute(entity_, "YLength", v);
 }
 
-double IfcBlock::get_ZLength() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(3));
+godot::Variant IfcBlock::get_ZLength() {
+    return gd_get_attribute(entity_, "ZLength", file_);
 }
 
-void IfcBlock::set_ZLength(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 3, v);
+void IfcBlock::set_ZLength(godot::Variant v) {
+    gd_set_attribute(entity_, "ZLength", v);
 }
 
 void IfcBoiler::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcBoiler::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcBoiler::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcBoiler::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcBoiler::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcBoiler::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcBoiler::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcBoilerType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcBoilerType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcBoilerType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcBoilerType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcBoilerType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcBoilerType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcBoilerType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcBooleanResult::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Operator"), &IfcBooleanResult::get_Operator);
     ClassDB::bind_method(D_METHOD("set_Operator","v"), &IfcBooleanResult::set_Operator);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Operator"), "set_Operator", "get_Operator");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Operator", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Operator", "get_Operator");
     ClassDB::bind_method(D_METHOD("get_FirstOperand"), &IfcBooleanResult::get_FirstOperand);
     ClassDB::bind_method(D_METHOD("set_FirstOperand","v"), &IfcBooleanResult::set_FirstOperand);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "FirstOperand", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_FirstOperand", "get_FirstOperand");
@@ -2235,34 +2130,30 @@ void IfcBooleanResult::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "SecondOperand", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_SecondOperand", "get_SecondOperand");
 }
 
-godot::String IfcBooleanResult::get_Operator() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(0));
+godot::Variant IfcBooleanResult::get_Operator() {
+    return gd_get_attribute(entity_, "Operator", file_);
 }
 
-void IfcBooleanResult::set_Operator(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 0, v);
+void IfcBooleanResult::set_Operator(godot::Variant v) {
+    gd_set_attribute(entity_, "Operator", v);
 }
 
 Ref<GDIFCEntityBase> IfcBooleanResult::get_FirstOperand() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(1), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "FirstOperand");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcBooleanResult::set_FirstOperand(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 1, v);
+    gd_set_attribute(entity_, "FirstOperand", v);
 }
 
 Ref<GDIFCEntityBase> IfcBooleanResult::get_SecondOperand() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "SecondOperand");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcBooleanResult::set_SecondOperand(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+    gd_set_attribute(entity_, "SecondOperand", v);
 }
 
 void IfcBooleanClippingResult::_bind_methods() {
@@ -2274,46 +2165,40 @@ void IfcBorehole::_bind_methods() {
 void IfcBoundaryCondition::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Name"), &IfcBoundaryCondition::get_Name);
     ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcBoundaryCondition::set_Name);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Name"), "set_Name", "get_Name");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Name", "get_Name");
 }
 
-godot::String IfcBoundaryCondition::get_Name() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(0));
+godot::Variant IfcBoundaryCondition::get_Name() {
+    return gd_get_attribute(entity_, "Name", file_);
 }
 
-void IfcBoundaryCondition::set_Name(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 0, v);
+void IfcBoundaryCondition::set_Name(godot::Variant v) {
+    gd_set_attribute(entity_, "Name", v);
 }
 
 void IfcCompositeCurve::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Segments"), &IfcCompositeCurve::get_Segments);
     ClassDB::bind_method(D_METHOD("set_Segments","v"), &IfcCompositeCurve::set_Segments);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "Segments"), "set_Segments", "get_Segments");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Segments", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Segments", "get_Segments");
     ClassDB::bind_method(D_METHOD("get_SelfIntersect"), &IfcCompositeCurve::get_SelfIntersect);
     ClassDB::bind_method(D_METHOD("set_SelfIntersect","v"), &IfcCompositeCurve::set_SelfIntersect);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "SelfIntersect"), "set_SelfIntersect", "get_SelfIntersect");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "SelfIntersect", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_SelfIntersect", "get_SelfIntersect");
 }
 
-godot::Array IfcCompositeCurve::get_Segments() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(0), file_);
+godot::Variant IfcCompositeCurve::get_Segments() {
+    return gd_get_attribute(entity_, "Segments", file_);
 }
 
-void IfcCompositeCurve::set_Segments(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 0, v);
+void IfcCompositeCurve::set_Segments(godot::Variant v) {
+    gd_set_attribute(entity_, "Segments", v);
 }
 
-godot::String IfcCompositeCurve::get_SelfIntersect() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(1));
+godot::Variant IfcCompositeCurve::get_SelfIntersect() {
+    return gd_get_attribute(entity_, "SelfIntersect", file_);
 }
 
-void IfcCompositeCurve::set_SelfIntersect(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 1, v);
+void IfcCompositeCurve::set_SelfIntersect(godot::Variant v) {
+    gd_set_attribute(entity_, "SelfIntersect", v);
 }
 
 void IfcCompositeCurveOnSurface::_bind_methods() {
@@ -2325,221 +2210,288 @@ void IfcBoundaryCurve::_bind_methods() {
 void IfcBoundaryEdgeCondition::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_TranslationalStiffnessByLengthX"), &IfcBoundaryEdgeCondition::get_TranslationalStiffnessByLengthX);
     ClassDB::bind_method(D_METHOD("set_TranslationalStiffnessByLengthX","v"), &IfcBoundaryEdgeCondition::set_TranslationalStiffnessByLengthX);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "TranslationalStiffnessByLengthX", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_TranslationalStiffnessByLengthX", "get_TranslationalStiffnessByLengthX");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TranslationalStiffnessByLengthX", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TranslationalStiffnessByLengthX", "get_TranslationalStiffnessByLengthX");
     ClassDB::bind_method(D_METHOD("get_TranslationalStiffnessByLengthY"), &IfcBoundaryEdgeCondition::get_TranslationalStiffnessByLengthY);
     ClassDB::bind_method(D_METHOD("set_TranslationalStiffnessByLengthY","v"), &IfcBoundaryEdgeCondition::set_TranslationalStiffnessByLengthY);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "TranslationalStiffnessByLengthY", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_TranslationalStiffnessByLengthY", "get_TranslationalStiffnessByLengthY");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TranslationalStiffnessByLengthY", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TranslationalStiffnessByLengthY", "get_TranslationalStiffnessByLengthY");
     ClassDB::bind_method(D_METHOD("get_TranslationalStiffnessByLengthZ"), &IfcBoundaryEdgeCondition::get_TranslationalStiffnessByLengthZ);
     ClassDB::bind_method(D_METHOD("set_TranslationalStiffnessByLengthZ","v"), &IfcBoundaryEdgeCondition::set_TranslationalStiffnessByLengthZ);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "TranslationalStiffnessByLengthZ", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_TranslationalStiffnessByLengthZ", "get_TranslationalStiffnessByLengthZ");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TranslationalStiffnessByLengthZ", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TranslationalStiffnessByLengthZ", "get_TranslationalStiffnessByLengthZ");
     ClassDB::bind_method(D_METHOD("get_RotationalStiffnessByLengthX"), &IfcBoundaryEdgeCondition::get_RotationalStiffnessByLengthX);
     ClassDB::bind_method(D_METHOD("set_RotationalStiffnessByLengthX","v"), &IfcBoundaryEdgeCondition::set_RotationalStiffnessByLengthX);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "RotationalStiffnessByLengthX", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_RotationalStiffnessByLengthX", "get_RotationalStiffnessByLengthX");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RotationalStiffnessByLengthX", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RotationalStiffnessByLengthX", "get_RotationalStiffnessByLengthX");
     ClassDB::bind_method(D_METHOD("get_RotationalStiffnessByLengthY"), &IfcBoundaryEdgeCondition::get_RotationalStiffnessByLengthY);
     ClassDB::bind_method(D_METHOD("set_RotationalStiffnessByLengthY","v"), &IfcBoundaryEdgeCondition::set_RotationalStiffnessByLengthY);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "RotationalStiffnessByLengthY", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_RotationalStiffnessByLengthY", "get_RotationalStiffnessByLengthY");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RotationalStiffnessByLengthY", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RotationalStiffnessByLengthY", "get_RotationalStiffnessByLengthY");
     ClassDB::bind_method(D_METHOD("get_RotationalStiffnessByLengthZ"), &IfcBoundaryEdgeCondition::get_RotationalStiffnessByLengthZ);
     ClassDB::bind_method(D_METHOD("set_RotationalStiffnessByLengthZ","v"), &IfcBoundaryEdgeCondition::set_RotationalStiffnessByLengthZ);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "RotationalStiffnessByLengthZ", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_RotationalStiffnessByLengthZ", "get_RotationalStiffnessByLengthZ");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RotationalStiffnessByLengthZ", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RotationalStiffnessByLengthZ", "get_RotationalStiffnessByLengthZ");
+    ClassDB::bind_method(D_METHOD("get_LinearStiffnessByLengthX"), &IfcBoundaryEdgeCondition::get_LinearStiffnessByLengthX);
+    ClassDB::bind_method(D_METHOD("set_LinearStiffnessByLengthX","v"), &IfcBoundaryEdgeCondition::set_LinearStiffnessByLengthX);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LinearStiffnessByLengthX", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LinearStiffnessByLengthX", "get_LinearStiffnessByLengthX");
+    ClassDB::bind_method(D_METHOD("get_LinearStiffnessByLengthY"), &IfcBoundaryEdgeCondition::get_LinearStiffnessByLengthY);
+    ClassDB::bind_method(D_METHOD("set_LinearStiffnessByLengthY","v"), &IfcBoundaryEdgeCondition::set_LinearStiffnessByLengthY);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LinearStiffnessByLengthY", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LinearStiffnessByLengthY", "get_LinearStiffnessByLengthY");
+    ClassDB::bind_method(D_METHOD("get_LinearStiffnessByLengthZ"), &IfcBoundaryEdgeCondition::get_LinearStiffnessByLengthZ);
+    ClassDB::bind_method(D_METHOD("set_LinearStiffnessByLengthZ","v"), &IfcBoundaryEdgeCondition::set_LinearStiffnessByLengthZ);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LinearStiffnessByLengthZ", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LinearStiffnessByLengthZ", "get_LinearStiffnessByLengthZ");
 }
 
-Ref<GDIFCEntityBase> IfcBoundaryEdgeCondition::get_TranslationalStiffnessByLengthX() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(1), file_);
+godot::Variant IfcBoundaryEdgeCondition::get_TranslationalStiffnessByLengthX() {
+    return gd_get_attribute(entity_, "TranslationalStiffnessByLengthX", file_);
 }
 
-void IfcBoundaryEdgeCondition::set_TranslationalStiffnessByLengthX(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 1, v);
+void IfcBoundaryEdgeCondition::set_TranslationalStiffnessByLengthX(godot::Variant v) {
+    gd_set_attribute(entity_, "TranslationalStiffnessByLengthX", v);
 }
 
-Ref<GDIFCEntityBase> IfcBoundaryEdgeCondition::get_TranslationalStiffnessByLengthY() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+godot::Variant IfcBoundaryEdgeCondition::get_TranslationalStiffnessByLengthY() {
+    return gd_get_attribute(entity_, "TranslationalStiffnessByLengthY", file_);
 }
 
-void IfcBoundaryEdgeCondition::set_TranslationalStiffnessByLengthY(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+void IfcBoundaryEdgeCondition::set_TranslationalStiffnessByLengthY(godot::Variant v) {
+    gd_set_attribute(entity_, "TranslationalStiffnessByLengthY", v);
 }
 
-Ref<GDIFCEntityBase> IfcBoundaryEdgeCondition::get_TranslationalStiffnessByLengthZ() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(3), file_);
+godot::Variant IfcBoundaryEdgeCondition::get_TranslationalStiffnessByLengthZ() {
+    return gd_get_attribute(entity_, "TranslationalStiffnessByLengthZ", file_);
 }
 
-void IfcBoundaryEdgeCondition::set_TranslationalStiffnessByLengthZ(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 3, v);
+void IfcBoundaryEdgeCondition::set_TranslationalStiffnessByLengthZ(godot::Variant v) {
+    gd_set_attribute(entity_, "TranslationalStiffnessByLengthZ", v);
 }
 
-Ref<GDIFCEntityBase> IfcBoundaryEdgeCondition::get_RotationalStiffnessByLengthX() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(4), file_);
+godot::Variant IfcBoundaryEdgeCondition::get_RotationalStiffnessByLengthX() {
+    return gd_get_attribute(entity_, "RotationalStiffnessByLengthX", file_);
 }
 
-void IfcBoundaryEdgeCondition::set_RotationalStiffnessByLengthX(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 4, v);
+void IfcBoundaryEdgeCondition::set_RotationalStiffnessByLengthX(godot::Variant v) {
+    gd_set_attribute(entity_, "RotationalStiffnessByLengthX", v);
 }
 
-Ref<GDIFCEntityBase> IfcBoundaryEdgeCondition::get_RotationalStiffnessByLengthY() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(5), file_);
+godot::Variant IfcBoundaryEdgeCondition::get_RotationalStiffnessByLengthY() {
+    return gd_get_attribute(entity_, "RotationalStiffnessByLengthY", file_);
 }
 
-void IfcBoundaryEdgeCondition::set_RotationalStiffnessByLengthY(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 5, v);
+void IfcBoundaryEdgeCondition::set_RotationalStiffnessByLengthY(godot::Variant v) {
+    gd_set_attribute(entity_, "RotationalStiffnessByLengthY", v);
 }
 
-Ref<GDIFCEntityBase> IfcBoundaryEdgeCondition::get_RotationalStiffnessByLengthZ() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(6), file_);
+godot::Variant IfcBoundaryEdgeCondition::get_RotationalStiffnessByLengthZ() {
+    return gd_get_attribute(entity_, "RotationalStiffnessByLengthZ", file_);
 }
 
-void IfcBoundaryEdgeCondition::set_RotationalStiffnessByLengthZ(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 6, v);
+void IfcBoundaryEdgeCondition::set_RotationalStiffnessByLengthZ(godot::Variant v) {
+    gd_set_attribute(entity_, "RotationalStiffnessByLengthZ", v);
+}
+
+godot::Variant IfcBoundaryEdgeCondition::get_LinearStiffnessByLengthX() {
+    return gd_get_attribute(entity_, "LinearStiffnessByLengthX", file_);
+}
+
+void IfcBoundaryEdgeCondition::set_LinearStiffnessByLengthX(godot::Variant v) {
+    gd_set_attribute(entity_, "LinearStiffnessByLengthX", v);
+}
+
+godot::Variant IfcBoundaryEdgeCondition::get_LinearStiffnessByLengthY() {
+    return gd_get_attribute(entity_, "LinearStiffnessByLengthY", file_);
+}
+
+void IfcBoundaryEdgeCondition::set_LinearStiffnessByLengthY(godot::Variant v) {
+    gd_set_attribute(entity_, "LinearStiffnessByLengthY", v);
+}
+
+godot::Variant IfcBoundaryEdgeCondition::get_LinearStiffnessByLengthZ() {
+    return gd_get_attribute(entity_, "LinearStiffnessByLengthZ", file_);
+}
+
+void IfcBoundaryEdgeCondition::set_LinearStiffnessByLengthZ(godot::Variant v) {
+    gd_set_attribute(entity_, "LinearStiffnessByLengthZ", v);
 }
 
 void IfcBoundaryFaceCondition::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_TranslationalStiffnessByAreaX"), &IfcBoundaryFaceCondition::get_TranslationalStiffnessByAreaX);
     ClassDB::bind_method(D_METHOD("set_TranslationalStiffnessByAreaX","v"), &IfcBoundaryFaceCondition::set_TranslationalStiffnessByAreaX);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "TranslationalStiffnessByAreaX", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_TranslationalStiffnessByAreaX", "get_TranslationalStiffnessByAreaX");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TranslationalStiffnessByAreaX", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TranslationalStiffnessByAreaX", "get_TranslationalStiffnessByAreaX");
     ClassDB::bind_method(D_METHOD("get_TranslationalStiffnessByAreaY"), &IfcBoundaryFaceCondition::get_TranslationalStiffnessByAreaY);
     ClassDB::bind_method(D_METHOD("set_TranslationalStiffnessByAreaY","v"), &IfcBoundaryFaceCondition::set_TranslationalStiffnessByAreaY);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "TranslationalStiffnessByAreaY", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_TranslationalStiffnessByAreaY", "get_TranslationalStiffnessByAreaY");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TranslationalStiffnessByAreaY", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TranslationalStiffnessByAreaY", "get_TranslationalStiffnessByAreaY");
     ClassDB::bind_method(D_METHOD("get_TranslationalStiffnessByAreaZ"), &IfcBoundaryFaceCondition::get_TranslationalStiffnessByAreaZ);
     ClassDB::bind_method(D_METHOD("set_TranslationalStiffnessByAreaZ","v"), &IfcBoundaryFaceCondition::set_TranslationalStiffnessByAreaZ);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "TranslationalStiffnessByAreaZ", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_TranslationalStiffnessByAreaZ", "get_TranslationalStiffnessByAreaZ");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TranslationalStiffnessByAreaZ", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TranslationalStiffnessByAreaZ", "get_TranslationalStiffnessByAreaZ");
+    ClassDB::bind_method(D_METHOD("get_LinearStiffnessByAreaX"), &IfcBoundaryFaceCondition::get_LinearStiffnessByAreaX);
+    ClassDB::bind_method(D_METHOD("set_LinearStiffnessByAreaX","v"), &IfcBoundaryFaceCondition::set_LinearStiffnessByAreaX);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LinearStiffnessByAreaX", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LinearStiffnessByAreaX", "get_LinearStiffnessByAreaX");
+    ClassDB::bind_method(D_METHOD("get_LinearStiffnessByAreaY"), &IfcBoundaryFaceCondition::get_LinearStiffnessByAreaY);
+    ClassDB::bind_method(D_METHOD("set_LinearStiffnessByAreaY","v"), &IfcBoundaryFaceCondition::set_LinearStiffnessByAreaY);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LinearStiffnessByAreaY", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LinearStiffnessByAreaY", "get_LinearStiffnessByAreaY");
+    ClassDB::bind_method(D_METHOD("get_LinearStiffnessByAreaZ"), &IfcBoundaryFaceCondition::get_LinearStiffnessByAreaZ);
+    ClassDB::bind_method(D_METHOD("set_LinearStiffnessByAreaZ","v"), &IfcBoundaryFaceCondition::set_LinearStiffnessByAreaZ);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LinearStiffnessByAreaZ", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LinearStiffnessByAreaZ", "get_LinearStiffnessByAreaZ");
 }
 
-Ref<GDIFCEntityBase> IfcBoundaryFaceCondition::get_TranslationalStiffnessByAreaX() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(1), file_);
+godot::Variant IfcBoundaryFaceCondition::get_TranslationalStiffnessByAreaX() {
+    return gd_get_attribute(entity_, "TranslationalStiffnessByAreaX", file_);
 }
 
-void IfcBoundaryFaceCondition::set_TranslationalStiffnessByAreaX(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 1, v);
+void IfcBoundaryFaceCondition::set_TranslationalStiffnessByAreaX(godot::Variant v) {
+    gd_set_attribute(entity_, "TranslationalStiffnessByAreaX", v);
 }
 
-Ref<GDIFCEntityBase> IfcBoundaryFaceCondition::get_TranslationalStiffnessByAreaY() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+godot::Variant IfcBoundaryFaceCondition::get_TranslationalStiffnessByAreaY() {
+    return gd_get_attribute(entity_, "TranslationalStiffnessByAreaY", file_);
 }
 
-void IfcBoundaryFaceCondition::set_TranslationalStiffnessByAreaY(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+void IfcBoundaryFaceCondition::set_TranslationalStiffnessByAreaY(godot::Variant v) {
+    gd_set_attribute(entity_, "TranslationalStiffnessByAreaY", v);
 }
 
-Ref<GDIFCEntityBase> IfcBoundaryFaceCondition::get_TranslationalStiffnessByAreaZ() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(3), file_);
+godot::Variant IfcBoundaryFaceCondition::get_TranslationalStiffnessByAreaZ() {
+    return gd_get_attribute(entity_, "TranslationalStiffnessByAreaZ", file_);
 }
 
-void IfcBoundaryFaceCondition::set_TranslationalStiffnessByAreaZ(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 3, v);
+void IfcBoundaryFaceCondition::set_TranslationalStiffnessByAreaZ(godot::Variant v) {
+    gd_set_attribute(entity_, "TranslationalStiffnessByAreaZ", v);
+}
+
+godot::Variant IfcBoundaryFaceCondition::get_LinearStiffnessByAreaX() {
+    return gd_get_attribute(entity_, "LinearStiffnessByAreaX", file_);
+}
+
+void IfcBoundaryFaceCondition::set_LinearStiffnessByAreaX(godot::Variant v) {
+    gd_set_attribute(entity_, "LinearStiffnessByAreaX", v);
+}
+
+godot::Variant IfcBoundaryFaceCondition::get_LinearStiffnessByAreaY() {
+    return gd_get_attribute(entity_, "LinearStiffnessByAreaY", file_);
+}
+
+void IfcBoundaryFaceCondition::set_LinearStiffnessByAreaY(godot::Variant v) {
+    gd_set_attribute(entity_, "LinearStiffnessByAreaY", v);
+}
+
+godot::Variant IfcBoundaryFaceCondition::get_LinearStiffnessByAreaZ() {
+    return gd_get_attribute(entity_, "LinearStiffnessByAreaZ", file_);
+}
+
+void IfcBoundaryFaceCondition::set_LinearStiffnessByAreaZ(godot::Variant v) {
+    gd_set_attribute(entity_, "LinearStiffnessByAreaZ", v);
 }
 
 void IfcBoundaryNodeCondition::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_TranslationalStiffnessX"), &IfcBoundaryNodeCondition::get_TranslationalStiffnessX);
     ClassDB::bind_method(D_METHOD("set_TranslationalStiffnessX","v"), &IfcBoundaryNodeCondition::set_TranslationalStiffnessX);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "TranslationalStiffnessX", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_TranslationalStiffnessX", "get_TranslationalStiffnessX");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TranslationalStiffnessX", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TranslationalStiffnessX", "get_TranslationalStiffnessX");
     ClassDB::bind_method(D_METHOD("get_TranslationalStiffnessY"), &IfcBoundaryNodeCondition::get_TranslationalStiffnessY);
     ClassDB::bind_method(D_METHOD("set_TranslationalStiffnessY","v"), &IfcBoundaryNodeCondition::set_TranslationalStiffnessY);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "TranslationalStiffnessY", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_TranslationalStiffnessY", "get_TranslationalStiffnessY");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TranslationalStiffnessY", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TranslationalStiffnessY", "get_TranslationalStiffnessY");
     ClassDB::bind_method(D_METHOD("get_TranslationalStiffnessZ"), &IfcBoundaryNodeCondition::get_TranslationalStiffnessZ);
     ClassDB::bind_method(D_METHOD("set_TranslationalStiffnessZ","v"), &IfcBoundaryNodeCondition::set_TranslationalStiffnessZ);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "TranslationalStiffnessZ", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_TranslationalStiffnessZ", "get_TranslationalStiffnessZ");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TranslationalStiffnessZ", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TranslationalStiffnessZ", "get_TranslationalStiffnessZ");
     ClassDB::bind_method(D_METHOD("get_RotationalStiffnessX"), &IfcBoundaryNodeCondition::get_RotationalStiffnessX);
     ClassDB::bind_method(D_METHOD("set_RotationalStiffnessX","v"), &IfcBoundaryNodeCondition::set_RotationalStiffnessX);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "RotationalStiffnessX", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_RotationalStiffnessX", "get_RotationalStiffnessX");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RotationalStiffnessX", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RotationalStiffnessX", "get_RotationalStiffnessX");
     ClassDB::bind_method(D_METHOD("get_RotationalStiffnessY"), &IfcBoundaryNodeCondition::get_RotationalStiffnessY);
     ClassDB::bind_method(D_METHOD("set_RotationalStiffnessY","v"), &IfcBoundaryNodeCondition::set_RotationalStiffnessY);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "RotationalStiffnessY", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_RotationalStiffnessY", "get_RotationalStiffnessY");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RotationalStiffnessY", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RotationalStiffnessY", "get_RotationalStiffnessY");
     ClassDB::bind_method(D_METHOD("get_RotationalStiffnessZ"), &IfcBoundaryNodeCondition::get_RotationalStiffnessZ);
     ClassDB::bind_method(D_METHOD("set_RotationalStiffnessZ","v"), &IfcBoundaryNodeCondition::set_RotationalStiffnessZ);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "RotationalStiffnessZ", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_RotationalStiffnessZ", "get_RotationalStiffnessZ");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RotationalStiffnessZ", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RotationalStiffnessZ", "get_RotationalStiffnessZ");
+    ClassDB::bind_method(D_METHOD("get_LinearStiffnessX"), &IfcBoundaryNodeCondition::get_LinearStiffnessX);
+    ClassDB::bind_method(D_METHOD("set_LinearStiffnessX","v"), &IfcBoundaryNodeCondition::set_LinearStiffnessX);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LinearStiffnessX", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LinearStiffnessX", "get_LinearStiffnessX");
+    ClassDB::bind_method(D_METHOD("get_LinearStiffnessY"), &IfcBoundaryNodeCondition::get_LinearStiffnessY);
+    ClassDB::bind_method(D_METHOD("set_LinearStiffnessY","v"), &IfcBoundaryNodeCondition::set_LinearStiffnessY);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LinearStiffnessY", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LinearStiffnessY", "get_LinearStiffnessY");
+    ClassDB::bind_method(D_METHOD("get_LinearStiffnessZ"), &IfcBoundaryNodeCondition::get_LinearStiffnessZ);
+    ClassDB::bind_method(D_METHOD("set_LinearStiffnessZ","v"), &IfcBoundaryNodeCondition::set_LinearStiffnessZ);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LinearStiffnessZ", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LinearStiffnessZ", "get_LinearStiffnessZ");
 }
 
-Ref<GDIFCEntityBase> IfcBoundaryNodeCondition::get_TranslationalStiffnessX() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(1), file_);
+godot::Variant IfcBoundaryNodeCondition::get_TranslationalStiffnessX() {
+    return gd_get_attribute(entity_, "TranslationalStiffnessX", file_);
 }
 
-void IfcBoundaryNodeCondition::set_TranslationalStiffnessX(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 1, v);
+void IfcBoundaryNodeCondition::set_TranslationalStiffnessX(godot::Variant v) {
+    gd_set_attribute(entity_, "TranslationalStiffnessX", v);
 }
 
-Ref<GDIFCEntityBase> IfcBoundaryNodeCondition::get_TranslationalStiffnessY() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+godot::Variant IfcBoundaryNodeCondition::get_TranslationalStiffnessY() {
+    return gd_get_attribute(entity_, "TranslationalStiffnessY", file_);
 }
 
-void IfcBoundaryNodeCondition::set_TranslationalStiffnessY(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+void IfcBoundaryNodeCondition::set_TranslationalStiffnessY(godot::Variant v) {
+    gd_set_attribute(entity_, "TranslationalStiffnessY", v);
 }
 
-Ref<GDIFCEntityBase> IfcBoundaryNodeCondition::get_TranslationalStiffnessZ() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(3), file_);
+godot::Variant IfcBoundaryNodeCondition::get_TranslationalStiffnessZ() {
+    return gd_get_attribute(entity_, "TranslationalStiffnessZ", file_);
 }
 
-void IfcBoundaryNodeCondition::set_TranslationalStiffnessZ(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 3, v);
+void IfcBoundaryNodeCondition::set_TranslationalStiffnessZ(godot::Variant v) {
+    gd_set_attribute(entity_, "TranslationalStiffnessZ", v);
 }
 
-Ref<GDIFCEntityBase> IfcBoundaryNodeCondition::get_RotationalStiffnessX() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(4), file_);
+godot::Variant IfcBoundaryNodeCondition::get_RotationalStiffnessX() {
+    return gd_get_attribute(entity_, "RotationalStiffnessX", file_);
 }
 
-void IfcBoundaryNodeCondition::set_RotationalStiffnessX(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 4, v);
+void IfcBoundaryNodeCondition::set_RotationalStiffnessX(godot::Variant v) {
+    gd_set_attribute(entity_, "RotationalStiffnessX", v);
 }
 
-Ref<GDIFCEntityBase> IfcBoundaryNodeCondition::get_RotationalStiffnessY() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(5), file_);
+godot::Variant IfcBoundaryNodeCondition::get_RotationalStiffnessY() {
+    return gd_get_attribute(entity_, "RotationalStiffnessY", file_);
 }
 
-void IfcBoundaryNodeCondition::set_RotationalStiffnessY(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 5, v);
+void IfcBoundaryNodeCondition::set_RotationalStiffnessY(godot::Variant v) {
+    gd_set_attribute(entity_, "RotationalStiffnessY", v);
 }
 
-Ref<GDIFCEntityBase> IfcBoundaryNodeCondition::get_RotationalStiffnessZ() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(6), file_);
+godot::Variant IfcBoundaryNodeCondition::get_RotationalStiffnessZ() {
+    return gd_get_attribute(entity_, "RotationalStiffnessZ", file_);
 }
 
-void IfcBoundaryNodeCondition::set_RotationalStiffnessZ(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 6, v);
+void IfcBoundaryNodeCondition::set_RotationalStiffnessZ(godot::Variant v) {
+    gd_set_attribute(entity_, "RotationalStiffnessZ", v);
+}
+
+godot::Variant IfcBoundaryNodeCondition::get_LinearStiffnessX() {
+    return gd_get_attribute(entity_, "LinearStiffnessX", file_);
+}
+
+void IfcBoundaryNodeCondition::set_LinearStiffnessX(godot::Variant v) {
+    gd_set_attribute(entity_, "LinearStiffnessX", v);
+}
+
+godot::Variant IfcBoundaryNodeCondition::get_LinearStiffnessY() {
+    return gd_get_attribute(entity_, "LinearStiffnessY", file_);
+}
+
+void IfcBoundaryNodeCondition::set_LinearStiffnessY(godot::Variant v) {
+    gd_set_attribute(entity_, "LinearStiffnessY", v);
+}
+
+godot::Variant IfcBoundaryNodeCondition::get_LinearStiffnessZ() {
+    return gd_get_attribute(entity_, "LinearStiffnessZ", file_);
+}
+
+void IfcBoundaryNodeCondition::set_LinearStiffnessZ(godot::Variant v) {
+    gd_set_attribute(entity_, "LinearStiffnessZ", v);
 }
 
 void IfcBoundaryNodeConditionWarping::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_WarpingStiffness"), &IfcBoundaryNodeConditionWarping::get_WarpingStiffness);
     ClassDB::bind_method(D_METHOD("set_WarpingStiffness","v"), &IfcBoundaryNodeConditionWarping::set_WarpingStiffness);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "WarpingStiffness", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_WarpingStiffness", "get_WarpingStiffness");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "WarpingStiffness", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_WarpingStiffness", "get_WarpingStiffness");
 }
 
-Ref<GDIFCEntityBase> IfcBoundaryNodeConditionWarping::get_WarpingStiffness() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(7), file_);
+godot::Variant IfcBoundaryNodeConditionWarping::get_WarpingStiffness() {
+    return gd_get_attribute(entity_, "WarpingStiffness", file_);
 }
 
-void IfcBoundaryNodeConditionWarping::set_WarpingStiffness(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 7, v);
+void IfcBoundaryNodeConditionWarping::set_WarpingStiffness(godot::Variant v) {
+    gd_set_attribute(entity_, "WarpingStiffness", v);
 }
 
 void IfcBoundingBox::_bind_methods() {
@@ -2548,53 +2500,46 @@ void IfcBoundingBox::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "Corner", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_Corner", "get_Corner");
     ClassDB::bind_method(D_METHOD("get_XDim"), &IfcBoundingBox::get_XDim);
     ClassDB::bind_method(D_METHOD("set_XDim","v"), &IfcBoundingBox::set_XDim);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "XDim"), "set_XDim", "get_XDim");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "XDim", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_XDim", "get_XDim");
     ClassDB::bind_method(D_METHOD("get_YDim"), &IfcBoundingBox::get_YDim);
     ClassDB::bind_method(D_METHOD("set_YDim","v"), &IfcBoundingBox::set_YDim);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "YDim"), "set_YDim", "get_YDim");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "YDim", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_YDim", "get_YDim");
     ClassDB::bind_method(D_METHOD("get_ZDim"), &IfcBoundingBox::get_ZDim);
     ClassDB::bind_method(D_METHOD("set_ZDim","v"), &IfcBoundingBox::set_ZDim);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ZDim"), "set_ZDim", "get_ZDim");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ZDim", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ZDim", "get_ZDim");
 }
 
 Ref<GDIFCEntityBase> IfcBoundingBox::get_Corner() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(0), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "Corner");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcBoundingBox::set_Corner(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 0, v);
+    gd_set_attribute(entity_, "Corner", v);
 }
 
-double IfcBoundingBox::get_XDim() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(1));
+godot::Variant IfcBoundingBox::get_XDim() {
+    return gd_get_attribute(entity_, "XDim", file_);
 }
 
-void IfcBoundingBox::set_XDim(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 1, v);
+void IfcBoundingBox::set_XDim(godot::Variant v) {
+    gd_set_attribute(entity_, "XDim", v);
 }
 
-double IfcBoundingBox::get_YDim() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(2));
+godot::Variant IfcBoundingBox::get_YDim() {
+    return gd_get_attribute(entity_, "YDim", file_);
 }
 
-void IfcBoundingBox::set_YDim(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 2, v);
+void IfcBoundingBox::set_YDim(godot::Variant v) {
+    gd_set_attribute(entity_, "YDim", v);
 }
 
-double IfcBoundingBox::get_ZDim() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(3));
+godot::Variant IfcBoundingBox::get_ZDim() {
+    return gd_get_attribute(entity_, "ZDim", file_);
 }
 
-void IfcBoundingBox::set_ZDim(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 3, v);
+void IfcBoundingBox::set_ZDim(godot::Variant v) {
+    gd_set_attribute(entity_, "ZDim", v);
 }
 
 void IfcBoxedHalfSpace::_bind_methods() {
@@ -2604,106 +2549,100 @@ void IfcBoxedHalfSpace::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcBoxedHalfSpace::get_Enclosure() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "Enclosure");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcBoxedHalfSpace::set_Enclosure(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+    gd_set_attribute(entity_, "Enclosure", v);
 }
 
 void IfcBridge::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcBridge::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcBridge::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcBridge::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcBridge::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcBridge::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcBridge::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcBridgePart::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcBridgePart::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcBridgePart::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcBridgePart::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(10));
+godot::Variant IfcBridgePart::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcBridgePart::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 10, v);
+void IfcBridgePart::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcBuilding::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_ElevationOfRefHeight"), &IfcBuilding::get_ElevationOfRefHeight);
     ClassDB::bind_method(D_METHOD("set_ElevationOfRefHeight","v"), &IfcBuilding::set_ElevationOfRefHeight);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ElevationOfRefHeight"), "set_ElevationOfRefHeight", "get_ElevationOfRefHeight");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ElevationOfRefHeight", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ElevationOfRefHeight", "get_ElevationOfRefHeight");
     ClassDB::bind_method(D_METHOD("get_ElevationOfTerrain"), &IfcBuilding::get_ElevationOfTerrain);
     ClassDB::bind_method(D_METHOD("set_ElevationOfTerrain","v"), &IfcBuilding::set_ElevationOfTerrain);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ElevationOfTerrain"), "set_ElevationOfTerrain", "get_ElevationOfTerrain");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ElevationOfTerrain", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ElevationOfTerrain", "get_ElevationOfTerrain");
     ClassDB::bind_method(D_METHOD("get_BuildingAddress"), &IfcBuilding::get_BuildingAddress);
     ClassDB::bind_method(D_METHOD("set_BuildingAddress","v"), &IfcBuilding::set_BuildingAddress);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "BuildingAddress", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_BuildingAddress", "get_BuildingAddress");
 }
 
-double IfcBuilding::get_ElevationOfRefHeight() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(9));
+godot::Variant IfcBuilding::get_ElevationOfRefHeight() {
+    return gd_get_attribute(entity_, "ElevationOfRefHeight", file_);
 }
 
-void IfcBuilding::set_ElevationOfRefHeight(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 9, v);
+void IfcBuilding::set_ElevationOfRefHeight(godot::Variant v) {
+    gd_set_attribute(entity_, "ElevationOfRefHeight", v);
 }
 
-double IfcBuilding::get_ElevationOfTerrain() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(10));
+godot::Variant IfcBuilding::get_ElevationOfTerrain() {
+    return gd_get_attribute(entity_, "ElevationOfTerrain", file_);
 }
 
-void IfcBuilding::set_ElevationOfTerrain(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 10, v);
+void IfcBuilding::set_ElevationOfTerrain(godot::Variant v) {
+    gd_set_attribute(entity_, "ElevationOfTerrain", v);
 }
 
 Ref<GDIFCEntityBase> IfcBuilding::get_BuildingAddress() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(11), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "BuildingAddress");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcBuilding::set_BuildingAddress(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 11, v);
+    gd_set_attribute(entity_, "BuildingAddress", v);
 }
 
 void IfcElementComponent::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_HasPorts"), &IfcElementComponent::get_HasPorts);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasPorts"), "", "get_HasPorts");
+}
+
+godot::Array IfcElementComponent::get_HasPorts() {
+    return get_inverse(godot::String("HasPorts"));
 }
 
 void IfcBuildingElementPart::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcBuildingElementPart::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcBuildingElementPart::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcBuildingElementPart::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcBuildingElementPart::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcBuildingElementPart::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcBuildingElementPart::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcElementComponentType::_bind_methods() {
@@ -2712,351 +2651,333 @@ void IfcElementComponentType::_bind_methods() {
 void IfcBuildingElementPartType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcBuildingElementPartType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcBuildingElementPartType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcBuildingElementPartType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcBuildingElementPartType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcBuildingElementPartType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcBuildingElementPartType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcBuildingElementProxy::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcBuildingElementProxy::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcBuildingElementProxy::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
+    ClassDB::bind_method(D_METHOD("get_CompositionType"), &IfcBuildingElementProxy::get_CompositionType);
+    ClassDB::bind_method(D_METHOD("set_CompositionType","v"), &IfcBuildingElementProxy::set_CompositionType);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "CompositionType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_CompositionType", "get_CompositionType");
+    ClassDB::bind_method(D_METHOD("get_HasPorts"), &IfcBuildingElementProxy::get_HasPorts);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasPorts"), "", "get_HasPorts");
 }
 
-godot::String IfcBuildingElementProxy::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcBuildingElementProxy::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcBuildingElementProxy::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcBuildingElementProxy::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
+}
+
+godot::Variant IfcBuildingElementProxy::get_CompositionType() {
+    return gd_get_attribute(entity_, "CompositionType", file_);
+}
+
+void IfcBuildingElementProxy::set_CompositionType(godot::Variant v) {
+    gd_set_attribute(entity_, "CompositionType", v);
+}
+
+godot::Array IfcBuildingElementProxy::get_HasPorts() {
+    return get_inverse(godot::String("HasPorts"));
 }
 
 void IfcBuildingElementProxyType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcBuildingElementProxyType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcBuildingElementProxyType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcBuildingElementProxyType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcBuildingElementProxyType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcBuildingElementProxyType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcBuildingElementProxyType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcBuildingStorey::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Elevation"), &IfcBuildingStorey::get_Elevation);
     ClassDB::bind_method(D_METHOD("set_Elevation","v"), &IfcBuildingStorey::set_Elevation);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "Elevation"), "set_Elevation", "get_Elevation");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Elevation", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Elevation", "get_Elevation");
 }
 
-double IfcBuildingStorey::get_Elevation() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(9));
+godot::Variant IfcBuildingStorey::get_Elevation() {
+    return gd_get_attribute(entity_, "Elevation", file_);
 }
 
-void IfcBuildingStorey::set_Elevation(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 9, v);
+void IfcBuildingStorey::set_Elevation(godot::Variant v) {
+    gd_set_attribute(entity_, "Elevation", v);
 }
 
 void IfcBuildingSystem::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcBuildingSystem::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcBuildingSystem::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
     ClassDB::bind_method(D_METHOD("get_LongName"), &IfcBuildingSystem::get_LongName);
     ClassDB::bind_method(D_METHOD("set_LongName","v"), &IfcBuildingSystem::set_LongName);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "LongName"), "set_LongName", "get_LongName");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LongName", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LongName", "get_LongName");
 }
 
-godot::String IfcBuildingSystem::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(5));
+godot::Variant IfcBuildingSystem::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcBuildingSystem::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 5, v);
+void IfcBuildingSystem::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
-godot::String IfcBuildingSystem::get_LongName() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(6));
+godot::Variant IfcBuildingSystem::get_LongName() {
+    return gd_get_attribute(entity_, "LongName", file_);
 }
 
-void IfcBuildingSystem::set_LongName(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 6, v);
+void IfcBuildingSystem::set_LongName(godot::Variant v) {
+    gd_set_attribute(entity_, "LongName", v);
 }
 
 void IfcBuiltSystem::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcBuiltSystem::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcBuiltSystem::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
     ClassDB::bind_method(D_METHOD("get_LongName"), &IfcBuiltSystem::get_LongName);
     ClassDB::bind_method(D_METHOD("set_LongName","v"), &IfcBuiltSystem::set_LongName);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "LongName"), "set_LongName", "get_LongName");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LongName", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LongName", "get_LongName");
 }
 
-godot::String IfcBuiltSystem::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(5));
+godot::Variant IfcBuiltSystem::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcBuiltSystem::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 5, v);
+void IfcBuiltSystem::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
-godot::String IfcBuiltSystem::get_LongName() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(6));
+godot::Variant IfcBuiltSystem::get_LongName() {
+    return gd_get_attribute(entity_, "LongName", file_);
 }
 
-void IfcBuiltSystem::set_LongName(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 6, v);
+void IfcBuiltSystem::set_LongName(godot::Variant v) {
+    gd_set_attribute(entity_, "LongName", v);
 }
 
 void IfcBurner::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcBurner::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcBurner::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcBurner::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcBurner::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcBurner::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcBurner::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcBurnerType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcBurnerType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcBurnerType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcBurnerType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcBurnerType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcBurnerType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcBurnerType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCShapeProfileDef::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Depth"), &IfcCShapeProfileDef::get_Depth);
     ClassDB::bind_method(D_METHOD("set_Depth","v"), &IfcCShapeProfileDef::set_Depth);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "Depth"), "set_Depth", "get_Depth");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Depth", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Depth", "get_Depth");
     ClassDB::bind_method(D_METHOD("get_Width"), &IfcCShapeProfileDef::get_Width);
     ClassDB::bind_method(D_METHOD("set_Width","v"), &IfcCShapeProfileDef::set_Width);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "Width"), "set_Width", "get_Width");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Width", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Width", "get_Width");
     ClassDB::bind_method(D_METHOD("get_WallThickness"), &IfcCShapeProfileDef::get_WallThickness);
     ClassDB::bind_method(D_METHOD("set_WallThickness","v"), &IfcCShapeProfileDef::set_WallThickness);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "WallThickness"), "set_WallThickness", "get_WallThickness");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "WallThickness", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_WallThickness", "get_WallThickness");
     ClassDB::bind_method(D_METHOD("get_Girth"), &IfcCShapeProfileDef::get_Girth);
     ClassDB::bind_method(D_METHOD("set_Girth","v"), &IfcCShapeProfileDef::set_Girth);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "Girth"), "set_Girth", "get_Girth");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Girth", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Girth", "get_Girth");
     ClassDB::bind_method(D_METHOD("get_InternalFilletRadius"), &IfcCShapeProfileDef::get_InternalFilletRadius);
     ClassDB::bind_method(D_METHOD("set_InternalFilletRadius","v"), &IfcCShapeProfileDef::set_InternalFilletRadius);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "InternalFilletRadius"), "set_InternalFilletRadius", "get_InternalFilletRadius");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "InternalFilletRadius", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_InternalFilletRadius", "get_InternalFilletRadius");
+    ClassDB::bind_method(D_METHOD("get_CentreOfGravityInX"), &IfcCShapeProfileDef::get_CentreOfGravityInX);
+    ClassDB::bind_method(D_METHOD("set_CentreOfGravityInX","v"), &IfcCShapeProfileDef::set_CentreOfGravityInX);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "CentreOfGravityInX", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_CentreOfGravityInX", "get_CentreOfGravityInX");
 }
 
-double IfcCShapeProfileDef::get_Depth() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(3));
+godot::Variant IfcCShapeProfileDef::get_Depth() {
+    return gd_get_attribute(entity_, "Depth", file_);
 }
 
-void IfcCShapeProfileDef::set_Depth(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 3, v);
+void IfcCShapeProfileDef::set_Depth(godot::Variant v) {
+    gd_set_attribute(entity_, "Depth", v);
 }
 
-double IfcCShapeProfileDef::get_Width() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(4));
+godot::Variant IfcCShapeProfileDef::get_Width() {
+    return gd_get_attribute(entity_, "Width", file_);
 }
 
-void IfcCShapeProfileDef::set_Width(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 4, v);
+void IfcCShapeProfileDef::set_Width(godot::Variant v) {
+    gd_set_attribute(entity_, "Width", v);
 }
 
-double IfcCShapeProfileDef::get_WallThickness() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(5));
+godot::Variant IfcCShapeProfileDef::get_WallThickness() {
+    return gd_get_attribute(entity_, "WallThickness", file_);
 }
 
-void IfcCShapeProfileDef::set_WallThickness(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 5, v);
+void IfcCShapeProfileDef::set_WallThickness(godot::Variant v) {
+    gd_set_attribute(entity_, "WallThickness", v);
 }
 
-double IfcCShapeProfileDef::get_Girth() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(6));
+godot::Variant IfcCShapeProfileDef::get_Girth() {
+    return gd_get_attribute(entity_, "Girth", file_);
 }
 
-void IfcCShapeProfileDef::set_Girth(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 6, v);
+void IfcCShapeProfileDef::set_Girth(godot::Variant v) {
+    gd_set_attribute(entity_, "Girth", v);
 }
 
-double IfcCShapeProfileDef::get_InternalFilletRadius() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(7));
+godot::Variant IfcCShapeProfileDef::get_InternalFilletRadius() {
+    return gd_get_attribute(entity_, "InternalFilletRadius", file_);
 }
 
-void IfcCShapeProfileDef::set_InternalFilletRadius(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 7, v);
+void IfcCShapeProfileDef::set_InternalFilletRadius(godot::Variant v) {
+    gd_set_attribute(entity_, "InternalFilletRadius", v);
+}
+
+godot::Variant IfcCShapeProfileDef::get_CentreOfGravityInX() {
+    return gd_get_attribute(entity_, "CentreOfGravityInX", file_);
+}
+
+void IfcCShapeProfileDef::set_CentreOfGravityInX(godot::Variant v) {
+    gd_set_attribute(entity_, "CentreOfGravityInX", v);
 }
 
 void IfcCableCarrierFitting::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCableCarrierFitting::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCableCarrierFitting::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCableCarrierFitting::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcCableCarrierFitting::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCableCarrierFitting::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcCableCarrierFitting::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCableCarrierFittingType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCableCarrierFittingType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCableCarrierFittingType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCableCarrierFittingType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcCableCarrierFittingType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCableCarrierFittingType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcCableCarrierFittingType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCableCarrierSegment::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCableCarrierSegment::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCableCarrierSegment::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCableCarrierSegment::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcCableCarrierSegment::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCableCarrierSegment::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcCableCarrierSegment::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCableCarrierSegmentType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCableCarrierSegmentType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCableCarrierSegmentType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCableCarrierSegmentType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcCableCarrierSegmentType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCableCarrierSegmentType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcCableCarrierSegmentType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCableFitting::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCableFitting::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCableFitting::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCableFitting::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcCableFitting::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCableFitting::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcCableFitting::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCableFittingType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCableFittingType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCableFittingType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCableFittingType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcCableFittingType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCableFittingType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcCableFittingType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCableSegment::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCableSegment::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCableSegment::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCableSegment::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcCableSegment::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCableSegment::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcCableSegment::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCableSegmentType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCableSegmentType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCableSegmentType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCableSegmentType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcCableSegmentType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCableSegmentType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcCableSegmentType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcDeepFoundation::_bind_methods() {
@@ -3065,17 +2986,15 @@ void IfcDeepFoundation::_bind_methods() {
 void IfcCaissonFoundation::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCaissonFoundation::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCaissonFoundation::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCaissonFoundation::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcCaissonFoundation::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCaissonFoundation::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcCaissonFoundation::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcDeepFoundationType::_bind_methods() {
@@ -3084,33 +3003,29 @@ void IfcDeepFoundationType::_bind_methods() {
 void IfcCaissonFoundationType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCaissonFoundationType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCaissonFoundationType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCaissonFoundationType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcCaissonFoundationType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCaissonFoundationType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcCaissonFoundationType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCartesianPoint::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Coordinates"), &IfcCartesianPoint::get_Coordinates);
     ClassDB::bind_method(D_METHOD("set_Coordinates","v"), &IfcCartesianPoint::set_Coordinates);
-    ADD_PROPERTY(PropertyInfo(Variant::PACKED_FLOAT64_ARRAY, "Coordinates"), "set_Coordinates", "get_Coordinates");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Coordinates", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Coordinates", "get_Coordinates");
 }
 
-godot::PackedFloat64Array IfcCartesianPoint::get_Coordinates() {
-    if (!entity_) return godot::PackedFloat64Array();
-    return gd_attr_agg_double(entity_->get_attribute_value(0));
+godot::Variant IfcCartesianPoint::get_Coordinates() {
+    return gd_get_attribute(entity_, "Coordinates", file_);
 }
 
-void IfcCartesianPoint::set_Coordinates(godot::PackedFloat64Array v) {
-    if (!entity_) return;
-    gd_set_agg_double(entity_, 0, v);
+void IfcCartesianPoint::set_Coordinates(godot::Variant v) {
+    gd_set_attribute(entity_, "Coordinates", v);
 }
 
 void IfcCartesianPointList::_bind_methods() {
@@ -3118,48 +3033,52 @@ void IfcCartesianPointList::_bind_methods() {
 
 void IfcCartesianPointList2D::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_CoordList"), &IfcCartesianPointList2D::get_CoordList);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "CoordList"), "", "get_CoordList");
+    ClassDB::bind_method(D_METHOD("set_CoordList","v"), &IfcCartesianPointList2D::set_CoordList);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "CoordList", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_CoordList", "get_CoordList");
     ClassDB::bind_method(D_METHOD("get_TagList"), &IfcCartesianPointList2D::get_TagList);
     ClassDB::bind_method(D_METHOD("set_TagList","v"), &IfcCartesianPointList2D::set_TagList);
-    ADD_PROPERTY(PropertyInfo(Variant::PACKED_STRING_ARRAY, "TagList"), "set_TagList", "get_TagList");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TagList", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TagList", "get_TagList");
 }
 
-godot::Array IfcCartesianPointList2D::get_CoordList() {
-    if (!entity_) return godot::Array();
-    return gd_attr_variant(entity_->get_attribute_value(0));
+godot::Variant IfcCartesianPointList2D::get_CoordList() {
+    return gd_get_attribute(entity_, "CoordList", file_);
 }
 
-godot::PackedStringArray IfcCartesianPointList2D::get_TagList() {
-    if (!entity_) return godot::PackedStringArray();
-    return gd_attr_agg_string(entity_->get_attribute_value(1));
+void IfcCartesianPointList2D::set_CoordList(godot::Variant v) {
+    gd_set_attribute(entity_, "CoordList", v);
 }
 
-void IfcCartesianPointList2D::set_TagList(godot::PackedStringArray v) {
-    if (!entity_) return;
-    gd_set_agg_string(entity_, 1, v);
+godot::Variant IfcCartesianPointList2D::get_TagList() {
+    return gd_get_attribute(entity_, "TagList", file_);
+}
+
+void IfcCartesianPointList2D::set_TagList(godot::Variant v) {
+    gd_set_attribute(entity_, "TagList", v);
 }
 
 void IfcCartesianPointList3D::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_CoordList"), &IfcCartesianPointList3D::get_CoordList);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "CoordList"), "", "get_CoordList");
+    ClassDB::bind_method(D_METHOD("set_CoordList","v"), &IfcCartesianPointList3D::set_CoordList);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "CoordList", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_CoordList", "get_CoordList");
     ClassDB::bind_method(D_METHOD("get_TagList"), &IfcCartesianPointList3D::get_TagList);
     ClassDB::bind_method(D_METHOD("set_TagList","v"), &IfcCartesianPointList3D::set_TagList);
-    ADD_PROPERTY(PropertyInfo(Variant::PACKED_STRING_ARRAY, "TagList"), "set_TagList", "get_TagList");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TagList", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TagList", "get_TagList");
 }
 
-godot::Array IfcCartesianPointList3D::get_CoordList() {
-    if (!entity_) return godot::Array();
-    return gd_attr_variant(entity_->get_attribute_value(0));
+godot::Variant IfcCartesianPointList3D::get_CoordList() {
+    return gd_get_attribute(entity_, "CoordList", file_);
 }
 
-godot::PackedStringArray IfcCartesianPointList3D::get_TagList() {
-    if (!entity_) return godot::PackedStringArray();
-    return gd_attr_agg_string(entity_->get_attribute_value(1));
+void IfcCartesianPointList3D::set_CoordList(godot::Variant v) {
+    gd_set_attribute(entity_, "CoordList", v);
 }
 
-void IfcCartesianPointList3D::set_TagList(godot::PackedStringArray v) {
-    if (!entity_) return;
-    gd_set_agg_string(entity_, 1, v);
+godot::Variant IfcCartesianPointList3D::get_TagList() {
+    return gd_get_attribute(entity_, "TagList", file_);
+}
+
+void IfcCartesianPointList3D::set_TagList(godot::Variant v) {
+    gd_set_attribute(entity_, "TagList", v);
 }
 
 void IfcCartesianTransformationOperator::_bind_methods() {
@@ -3174,47 +3093,42 @@ void IfcCartesianTransformationOperator::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "LocalOrigin", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_LocalOrigin", "get_LocalOrigin");
     ClassDB::bind_method(D_METHOD("get_Scale"), &IfcCartesianTransformationOperator::get_Scale);
     ClassDB::bind_method(D_METHOD("set_Scale","v"), &IfcCartesianTransformationOperator::set_Scale);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "Scale"), "set_Scale", "get_Scale");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Scale", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Scale", "get_Scale");
 }
 
 Ref<GDIFCEntityBase> IfcCartesianTransformationOperator::get_Axis1() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(0), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "Axis1");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcCartesianTransformationOperator::set_Axis1(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 0, v);
+    gd_set_attribute(entity_, "Axis1", v);
 }
 
 Ref<GDIFCEntityBase> IfcCartesianTransformationOperator::get_Axis2() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(1), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "Axis2");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcCartesianTransformationOperator::set_Axis2(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 1, v);
+    gd_set_attribute(entity_, "Axis2", v);
 }
 
 Ref<GDIFCEntityBase> IfcCartesianTransformationOperator::get_LocalOrigin() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "LocalOrigin");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcCartesianTransformationOperator::set_LocalOrigin(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+    gd_set_attribute(entity_, "LocalOrigin", v);
 }
 
-double IfcCartesianTransformationOperator::get_Scale() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(3));
+godot::Variant IfcCartesianTransformationOperator::get_Scale() {
+    return gd_get_attribute(entity_, "Scale", file_);
 }
 
-void IfcCartesianTransformationOperator::set_Scale(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 3, v);
+void IfcCartesianTransformationOperator::set_Scale(godot::Variant v) {
+    gd_set_attribute(entity_, "Scale", v);
 }
 
 void IfcCartesianTransformationOperator2D::_bind_methods() {
@@ -3223,17 +3137,15 @@ void IfcCartesianTransformationOperator2D::_bind_methods() {
 void IfcCartesianTransformationOperator2DnonUniform::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Scale2"), &IfcCartesianTransformationOperator2DnonUniform::get_Scale2);
     ClassDB::bind_method(D_METHOD("set_Scale2","v"), &IfcCartesianTransformationOperator2DnonUniform::set_Scale2);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "Scale2"), "set_Scale2", "get_Scale2");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Scale2", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Scale2", "get_Scale2");
 }
 
-double IfcCartesianTransformationOperator2DnonUniform::get_Scale2() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(4));
+godot::Variant IfcCartesianTransformationOperator2DnonUniform::get_Scale2() {
+    return gd_get_attribute(entity_, "Scale2", file_);
 }
 
-void IfcCartesianTransformationOperator2DnonUniform::set_Scale2(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 4, v);
+void IfcCartesianTransformationOperator2DnonUniform::set_Scale2(godot::Variant v) {
+    gd_set_attribute(entity_, "Scale2", v);
 }
 
 void IfcCartesianTransformationOperator3D::_bind_methods() {
@@ -3243,122 +3155,107 @@ void IfcCartesianTransformationOperator3D::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcCartesianTransformationOperator3D::get_Axis3() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(4), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "Axis3");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcCartesianTransformationOperator3D::set_Axis3(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 4, v);
+    gd_set_attribute(entity_, "Axis3", v);
 }
 
 void IfcCartesianTransformationOperator3DnonUniform::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Scale2"), &IfcCartesianTransformationOperator3DnonUniform::get_Scale2);
     ClassDB::bind_method(D_METHOD("set_Scale2","v"), &IfcCartesianTransformationOperator3DnonUniform::set_Scale2);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "Scale2"), "set_Scale2", "get_Scale2");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Scale2", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Scale2", "get_Scale2");
     ClassDB::bind_method(D_METHOD("get_Scale3"), &IfcCartesianTransformationOperator3DnonUniform::get_Scale3);
     ClassDB::bind_method(D_METHOD("set_Scale3","v"), &IfcCartesianTransformationOperator3DnonUniform::set_Scale3);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "Scale3"), "set_Scale3", "get_Scale3");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Scale3", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Scale3", "get_Scale3");
 }
 
-double IfcCartesianTransformationOperator3DnonUniform::get_Scale2() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(5));
+godot::Variant IfcCartesianTransformationOperator3DnonUniform::get_Scale2() {
+    return gd_get_attribute(entity_, "Scale2", file_);
 }
 
-void IfcCartesianTransformationOperator3DnonUniform::set_Scale2(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 5, v);
+void IfcCartesianTransformationOperator3DnonUniform::set_Scale2(godot::Variant v) {
+    gd_set_attribute(entity_, "Scale2", v);
 }
 
-double IfcCartesianTransformationOperator3DnonUniform::get_Scale3() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(6));
+godot::Variant IfcCartesianTransformationOperator3DnonUniform::get_Scale3() {
+    return gd_get_attribute(entity_, "Scale3", file_);
 }
 
-void IfcCartesianTransformationOperator3DnonUniform::set_Scale3(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 6, v);
+void IfcCartesianTransformationOperator3DnonUniform::set_Scale3(godot::Variant v) {
+    gd_set_attribute(entity_, "Scale3", v);
 }
 
 void IfcCenterLineProfileDef::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Thickness"), &IfcCenterLineProfileDef::get_Thickness);
     ClassDB::bind_method(D_METHOD("set_Thickness","v"), &IfcCenterLineProfileDef::set_Thickness);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "Thickness"), "set_Thickness", "get_Thickness");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Thickness", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Thickness", "get_Thickness");
 }
 
-double IfcCenterLineProfileDef::get_Thickness() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(3));
+godot::Variant IfcCenterLineProfileDef::get_Thickness() {
+    return gd_get_attribute(entity_, "Thickness", file_);
 }
 
-void IfcCenterLineProfileDef::set_Thickness(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 3, v);
+void IfcCenterLineProfileDef::set_Thickness(godot::Variant v) {
+    gd_set_attribute(entity_, "Thickness", v);
 }
 
 void IfcChiller::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcChiller::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcChiller::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcChiller::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcChiller::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcChiller::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcChiller::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcChillerType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcChillerType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcChillerType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcChillerType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcChillerType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcChillerType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcChillerType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcChimney::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcChimney::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcChimney::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcChimney::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcChimney::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcChimney::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcChimney::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcChimneyType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcChimneyType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcChimneyType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcChimneyType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcChimneyType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcChimneyType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcChimneyType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcConic::_bind_methods() {
@@ -3368,61 +3265,54 @@ void IfcConic::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcConic::get_Position() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(0), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "Position");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcConic::set_Position(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 0, v);
+    gd_set_attribute(entity_, "Position", v);
 }
 
 void IfcCircle::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Radius"), &IfcCircle::get_Radius);
     ClassDB::bind_method(D_METHOD("set_Radius","v"), &IfcCircle::set_Radius);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "Radius"), "set_Radius", "get_Radius");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Radius", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Radius", "get_Radius");
 }
 
-double IfcCircle::get_Radius() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(1));
+godot::Variant IfcCircle::get_Radius() {
+    return gd_get_attribute(entity_, "Radius", file_);
 }
 
-void IfcCircle::set_Radius(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 1, v);
+void IfcCircle::set_Radius(godot::Variant v) {
+    gd_set_attribute(entity_, "Radius", v);
 }
 
 void IfcCircleProfileDef::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Radius"), &IfcCircleProfileDef::get_Radius);
     ClassDB::bind_method(D_METHOD("set_Radius","v"), &IfcCircleProfileDef::set_Radius);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "Radius"), "set_Radius", "get_Radius");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Radius", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Radius", "get_Radius");
 }
 
-double IfcCircleProfileDef::get_Radius() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(3));
+godot::Variant IfcCircleProfileDef::get_Radius() {
+    return gd_get_attribute(entity_, "Radius", file_);
 }
 
-void IfcCircleProfileDef::set_Radius(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 3, v);
+void IfcCircleProfileDef::set_Radius(godot::Variant v) {
+    gd_set_attribute(entity_, "Radius", v);
 }
 
 void IfcCircleHollowProfileDef::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_WallThickness"), &IfcCircleHollowProfileDef::get_WallThickness);
     ClassDB::bind_method(D_METHOD("set_WallThickness","v"), &IfcCircleHollowProfileDef::set_WallThickness);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "WallThickness"), "set_WallThickness", "get_WallThickness");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "WallThickness", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_WallThickness", "get_WallThickness");
 }
 
-double IfcCircleHollowProfileDef::get_WallThickness() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(4));
+godot::Variant IfcCircleHollowProfileDef::get_WallThickness() {
+    return gd_get_attribute(entity_, "WallThickness", file_);
 }
 
-void IfcCircleHollowProfileDef::set_WallThickness(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 4, v);
+void IfcCircleHollowProfileDef::set_WallThickness(godot::Variant v) {
+    gd_set_attribute(entity_, "WallThickness", v);
 }
 
 void IfcCivilElement::_bind_methods() {
@@ -3434,102 +3324,95 @@ void IfcCivilElementType::_bind_methods() {
 void IfcExternalInformation::_bind_methods() {
 }
 
+static const GDIFCAttributeAlias IfcClassification_Specification_aliases[] = {
+    {"IFC4", "IFCCLASSIFICATION", "Location"},
+    {nullptr, nullptr, nullptr},
+};
+
 void IfcClassification::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Source"), &IfcClassification::get_Source);
     ClassDB::bind_method(D_METHOD("set_Source","v"), &IfcClassification::set_Source);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Source"), "set_Source", "get_Source");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Source", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Source", "get_Source");
     ClassDB::bind_method(D_METHOD("get_Edition"), &IfcClassification::get_Edition);
     ClassDB::bind_method(D_METHOD("set_Edition","v"), &IfcClassification::set_Edition);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Edition"), "set_Edition", "get_Edition");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Edition", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Edition", "get_Edition");
     ClassDB::bind_method(D_METHOD("get_EditionDate"), &IfcClassification::get_EditionDate);
     ClassDB::bind_method(D_METHOD("set_EditionDate","v"), &IfcClassification::set_EditionDate);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "EditionDate"), "set_EditionDate", "get_EditionDate");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "EditionDate", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_EditionDate", "get_EditionDate");
     ClassDB::bind_method(D_METHOD("get_Name"), &IfcClassification::get_Name);
     ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcClassification::set_Name);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Name"), "set_Name", "get_Name");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Name", "get_Name");
     ClassDB::bind_method(D_METHOD("get_Description"), &IfcClassification::get_Description);
     ClassDB::bind_method(D_METHOD("set_Description","v"), &IfcClassification::set_Description);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Description"), "set_Description", "get_Description");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Description", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Description", "get_Description");
     ClassDB::bind_method(D_METHOD("get_Specification"), &IfcClassification::get_Specification);
     ClassDB::bind_method(D_METHOD("set_Specification","v"), &IfcClassification::set_Specification);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Specification"), "set_Specification", "get_Specification");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Specification", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Specification", "get_Specification");
     ClassDB::bind_method(D_METHOD("get_ReferenceTokens"), &IfcClassification::get_ReferenceTokens);
     ClassDB::bind_method(D_METHOD("set_ReferenceTokens","v"), &IfcClassification::set_ReferenceTokens);
-    ADD_PROPERTY(PropertyInfo(Variant::PACKED_STRING_ARRAY, "ReferenceTokens"), "set_ReferenceTokens", "get_ReferenceTokens");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ReferenceTokens", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ReferenceTokens", "get_ReferenceTokens");
     ClassDB::bind_method(D_METHOD("get_ClassificationForObjects"), &IfcClassification::get_ClassificationForObjects);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ClassificationForObjects"), "", "get_ClassificationForObjects");
     ClassDB::bind_method(D_METHOD("get_HasReferences"), &IfcClassification::get_HasReferences);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasReferences"), "", "get_HasReferences");
+    ClassDB::bind_method(D_METHOD("get_Contains"), &IfcClassification::get_Contains);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "Contains"), "", "get_Contains");
 }
 
-godot::String IfcClassification::get_Source() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(0));
+godot::Variant IfcClassification::get_Source() {
+    return gd_get_attribute(entity_, "Source", file_);
 }
 
-void IfcClassification::set_Source(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 0, v);
+void IfcClassification::set_Source(godot::Variant v) {
+    gd_set_attribute(entity_, "Source", v);
 }
 
-godot::String IfcClassification::get_Edition() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(1));
+godot::Variant IfcClassification::get_Edition() {
+    return gd_get_attribute(entity_, "Edition", file_);
 }
 
-void IfcClassification::set_Edition(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 1, v);
+void IfcClassification::set_Edition(godot::Variant v) {
+    gd_set_attribute(entity_, "Edition", v);
 }
 
-godot::String IfcClassification::get_EditionDate() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(2));
+godot::Variant IfcClassification::get_EditionDate() {
+    return gd_get_attribute(entity_, "EditionDate", file_);
 }
 
-void IfcClassification::set_EditionDate(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 2, v);
+void IfcClassification::set_EditionDate(godot::Variant v) {
+    gd_set_attribute(entity_, "EditionDate", v);
 }
 
-godot::String IfcClassification::get_Name() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(3));
+godot::Variant IfcClassification::get_Name() {
+    return gd_get_attribute(entity_, "Name", file_);
 }
 
-void IfcClassification::set_Name(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 3, v);
+void IfcClassification::set_Name(godot::Variant v) {
+    gd_set_attribute(entity_, "Name", v);
 }
 
-godot::String IfcClassification::get_Description() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(4));
+godot::Variant IfcClassification::get_Description() {
+    return gd_get_attribute(entity_, "Description", file_);
 }
 
-void IfcClassification::set_Description(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 4, v);
+void IfcClassification::set_Description(godot::Variant v) {
+    gd_set_attribute(entity_, "Description", v);
 }
 
-godot::String IfcClassification::get_Specification() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(5));
+godot::Variant IfcClassification::get_Specification() {
+    return gd_get_attribute(entity_, "Specification", file_, IfcClassification_Specification_aliases);
 }
 
-void IfcClassification::set_Specification(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 5, v);
+void IfcClassification::set_Specification(godot::Variant v) {
+    gd_set_attribute(entity_, "Specification", v, IfcClassification_Specification_aliases);
 }
 
-godot::PackedStringArray IfcClassification::get_ReferenceTokens() {
-    if (!entity_) return godot::PackedStringArray();
-    return gd_attr_agg_string(entity_->get_attribute_value(6));
+godot::Variant IfcClassification::get_ReferenceTokens() {
+    return gd_get_attribute(entity_, "ReferenceTokens", file_);
 }
 
-void IfcClassification::set_ReferenceTokens(godot::PackedStringArray v) {
-    if (!entity_) return;
-    gd_set_agg_string(entity_, 6, v);
+void IfcClassification::set_ReferenceTokens(godot::Variant v) {
+    gd_set_attribute(entity_, "ReferenceTokens", v);
 }
 
 godot::Array IfcClassification::get_ClassificationForObjects() {
@@ -3540,48 +3423,51 @@ godot::Array IfcClassification::get_HasReferences() {
     return get_inverse(godot::String("HasReferences"));
 }
 
+godot::Array IfcClassification::get_Contains() {
+    return get_inverse(godot::String("Contains"));
+}
+
+static const GDIFCAttributeAlias IfcExternalReference_Identification_aliases[] = {
+    {"IFC2X3", "IFCEXTERNALREFERENCE", "ItemReference"},
+    {nullptr, nullptr, nullptr},
+};
+
 void IfcExternalReference::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Location"), &IfcExternalReference::get_Location);
     ClassDB::bind_method(D_METHOD("set_Location","v"), &IfcExternalReference::set_Location);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Location"), "set_Location", "get_Location");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Location", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Location", "get_Location");
     ClassDB::bind_method(D_METHOD("get_Identification"), &IfcExternalReference::get_Identification);
     ClassDB::bind_method(D_METHOD("set_Identification","v"), &IfcExternalReference::set_Identification);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Identification"), "set_Identification", "get_Identification");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Identification", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Identification", "get_Identification");
     ClassDB::bind_method(D_METHOD("get_Name"), &IfcExternalReference::get_Name);
     ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcExternalReference::set_Name);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Name"), "set_Name", "get_Name");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Name", "get_Name");
     ClassDB::bind_method(D_METHOD("get_ExternalReferenceForResources"), &IfcExternalReference::get_ExternalReferenceForResources);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ExternalReferenceForResources"), "", "get_ExternalReferenceForResources");
 }
 
-godot::String IfcExternalReference::get_Location() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(0));
+godot::Variant IfcExternalReference::get_Location() {
+    return gd_get_attribute(entity_, "Location", file_);
 }
 
-void IfcExternalReference::set_Location(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 0, v);
+void IfcExternalReference::set_Location(godot::Variant v) {
+    gd_set_attribute(entity_, "Location", v);
 }
 
-godot::String IfcExternalReference::get_Identification() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(1));
+godot::Variant IfcExternalReference::get_Identification() {
+    return gd_get_attribute(entity_, "Identification", file_, IfcExternalReference_Identification_aliases);
 }
 
-void IfcExternalReference::set_Identification(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 1, v);
+void IfcExternalReference::set_Identification(godot::Variant v) {
+    gd_set_attribute(entity_, "Identification", v, IfcExternalReference_Identification_aliases);
 }
 
-godot::String IfcExternalReference::get_Name() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(2));
+godot::Variant IfcExternalReference::get_Name() {
+    return gd_get_attribute(entity_, "Name", file_);
 }
 
-void IfcExternalReference::set_Name(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 2, v);
+void IfcExternalReference::set_Name(godot::Variant v) {
+    gd_set_attribute(entity_, "Name", v);
 }
 
 godot::Array IfcExternalReference::get_ExternalReferenceForResources() {
@@ -3594,10 +3480,10 @@ void IfcClassificationReference::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "ReferencedSource", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_ReferencedSource", "get_ReferencedSource");
     ClassDB::bind_method(D_METHOD("get_Description"), &IfcClassificationReference::get_Description);
     ClassDB::bind_method(D_METHOD("set_Description","v"), &IfcClassificationReference::set_Description);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Description"), "set_Description", "get_Description");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Description", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Description", "get_Description");
     ClassDB::bind_method(D_METHOD("get_Sort"), &IfcClassificationReference::get_Sort);
     ClassDB::bind_method(D_METHOD("set_Sort","v"), &IfcClassificationReference::set_Sort);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Sort"), "set_Sort", "get_Sort");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Sort", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Sort", "get_Sort");
     ClassDB::bind_method(D_METHOD("get_ClassificationRefForObjects"), &IfcClassificationReference::get_ClassificationRefForObjects);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ClassificationRefForObjects"), "", "get_ClassificationRefForObjects");
     ClassDB::bind_method(D_METHOD("get_HasReferences"), &IfcClassificationReference::get_HasReferences);
@@ -3605,33 +3491,28 @@ void IfcClassificationReference::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcClassificationReference::get_ReferencedSource() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(3), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "ReferencedSource");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcClassificationReference::set_ReferencedSource(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 3, v);
+    gd_set_attribute(entity_, "ReferencedSource", v);
 }
 
-godot::String IfcClassificationReference::get_Description() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(4));
+godot::Variant IfcClassificationReference::get_Description() {
+    return gd_get_attribute(entity_, "Description", file_);
 }
 
-void IfcClassificationReference::set_Description(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 4, v);
+void IfcClassificationReference::set_Description(godot::Variant v) {
+    gd_set_attribute(entity_, "Description", v);
 }
 
-godot::String IfcClassificationReference::get_Sort() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(5));
+godot::Variant IfcClassificationReference::get_Sort() {
+    return gd_get_attribute(entity_, "Sort", file_);
 }
 
-void IfcClassificationReference::set_Sort(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 5, v);
+void IfcClassificationReference::set_Sort(godot::Variant v) {
+    gd_set_attribute(entity_, "Sort", v);
 }
 
 godot::Array IfcClassificationReference::get_ClassificationRefForObjects() {
@@ -3645,17 +3526,15 @@ godot::Array IfcClassificationReference::get_HasReferences() {
 void IfcConnectedFaceSet::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_CfsFaces"), &IfcConnectedFaceSet::get_CfsFaces);
     ClassDB::bind_method(D_METHOD("set_CfsFaces","v"), &IfcConnectedFaceSet::set_CfsFaces);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "CfsFaces"), "set_CfsFaces", "get_CfsFaces");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "CfsFaces", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_CfsFaces", "get_CfsFaces");
 }
 
-godot::Array IfcConnectedFaceSet::get_CfsFaces() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(0), file_);
+godot::Variant IfcConnectedFaceSet::get_CfsFaces() {
+    return gd_get_attribute(entity_, "CfsFaces", file_);
 }
 
-void IfcConnectedFaceSet::set_CfsFaces(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 0, v);
+void IfcConnectedFaceSet::set_CfsFaces(godot::Variant v) {
+    gd_set_attribute(entity_, "CfsFaces", v);
 }
 
 void IfcClosedShell::_bind_methods() {
@@ -3664,374 +3543,337 @@ void IfcClosedShell::_bind_methods() {
 void IfcClothoid::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_ClothoidConstant"), &IfcClothoid::get_ClothoidConstant);
     ClassDB::bind_method(D_METHOD("set_ClothoidConstant","v"), &IfcClothoid::set_ClothoidConstant);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ClothoidConstant"), "set_ClothoidConstant", "get_ClothoidConstant");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ClothoidConstant", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ClothoidConstant", "get_ClothoidConstant");
 }
 
-double IfcClothoid::get_ClothoidConstant() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(1));
+godot::Variant IfcClothoid::get_ClothoidConstant() {
+    return gd_get_attribute(entity_, "ClothoidConstant", file_);
 }
 
-void IfcClothoid::set_ClothoidConstant(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 1, v);
+void IfcClothoid::set_ClothoidConstant(godot::Variant v) {
+    gd_set_attribute(entity_, "ClothoidConstant", v);
 }
 
 void IfcCoil::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCoil::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCoil::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCoil::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcCoil::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCoil::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcCoil::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCoilType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCoilType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCoilType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCoilType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcCoilType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCoilType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcCoilType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcColourSpecification::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Name"), &IfcColourSpecification::get_Name);
     ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcColourSpecification::set_Name);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Name"), "set_Name", "get_Name");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Name", "get_Name");
 }
 
-godot::String IfcColourSpecification::get_Name() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(0));
+godot::Variant IfcColourSpecification::get_Name() {
+    return gd_get_attribute(entity_, "Name", file_);
 }
 
-void IfcColourSpecification::set_Name(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 0, v);
+void IfcColourSpecification::set_Name(godot::Variant v) {
+    gd_set_attribute(entity_, "Name", v);
 }
 
 void IfcColourRgb::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Red"), &IfcColourRgb::get_Red);
     ClassDB::bind_method(D_METHOD("set_Red","v"), &IfcColourRgb::set_Red);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "Red"), "set_Red", "get_Red");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Red", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Red", "get_Red");
     ClassDB::bind_method(D_METHOD("get_Green"), &IfcColourRgb::get_Green);
     ClassDB::bind_method(D_METHOD("set_Green","v"), &IfcColourRgb::set_Green);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "Green"), "set_Green", "get_Green");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Green", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Green", "get_Green");
     ClassDB::bind_method(D_METHOD("get_Blue"), &IfcColourRgb::get_Blue);
     ClassDB::bind_method(D_METHOD("set_Blue","v"), &IfcColourRgb::set_Blue);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "Blue"), "set_Blue", "get_Blue");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Blue", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Blue", "get_Blue");
 }
 
-double IfcColourRgb::get_Red() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(1));
+godot::Variant IfcColourRgb::get_Red() {
+    return gd_get_attribute(entity_, "Red", file_);
 }
 
-void IfcColourRgb::set_Red(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 1, v);
+void IfcColourRgb::set_Red(godot::Variant v) {
+    gd_set_attribute(entity_, "Red", v);
 }
 
-double IfcColourRgb::get_Green() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(2));
+godot::Variant IfcColourRgb::get_Green() {
+    return gd_get_attribute(entity_, "Green", file_);
 }
 
-void IfcColourRgb::set_Green(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 2, v);
+void IfcColourRgb::set_Green(godot::Variant v) {
+    gd_set_attribute(entity_, "Green", v);
 }
 
-double IfcColourRgb::get_Blue() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(3));
+godot::Variant IfcColourRgb::get_Blue() {
+    return gd_get_attribute(entity_, "Blue", file_);
 }
 
-void IfcColourRgb::set_Blue(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 3, v);
+void IfcColourRgb::set_Blue(godot::Variant v) {
+    gd_set_attribute(entity_, "Blue", v);
 }
 
 void IfcColourRgbList::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_ColourList"), &IfcColourRgbList::get_ColourList);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ColourList"), "", "get_ColourList");
+    ClassDB::bind_method(D_METHOD("set_ColourList","v"), &IfcColourRgbList::set_ColourList);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ColourList", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ColourList", "get_ColourList");
 }
 
-godot::Array IfcColourRgbList::get_ColourList() {
-    if (!entity_) return godot::Array();
-    return gd_attr_variant(entity_->get_attribute_value(0));
+godot::Variant IfcColourRgbList::get_ColourList() {
+    return gd_get_attribute(entity_, "ColourList", file_);
+}
+
+void IfcColourRgbList::set_ColourList(godot::Variant v) {
+    gd_set_attribute(entity_, "ColourList", v);
 }
 
 void IfcColumn::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcColumn::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcColumn::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
+    ClassDB::bind_method(D_METHOD("get_HasPorts"), &IfcColumn::get_HasPorts);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasPorts"), "", "get_HasPorts");
 }
 
-godot::String IfcColumn::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcColumn::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcColumn::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcColumn::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
+}
+
+godot::Array IfcColumn::get_HasPorts() {
+    return get_inverse(godot::String("HasPorts"));
 }
 
 void IfcColumnType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcColumnType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcColumnType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcColumnType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcColumnType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcColumnType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcColumnType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCommunicationsAppliance::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCommunicationsAppliance::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCommunicationsAppliance::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCommunicationsAppliance::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcCommunicationsAppliance::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCommunicationsAppliance::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcCommunicationsAppliance::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCommunicationsApplianceType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCommunicationsApplianceType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCommunicationsApplianceType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCommunicationsApplianceType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcCommunicationsApplianceType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCommunicationsApplianceType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcCommunicationsApplianceType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcComplexProperty::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_UsageName"), &IfcComplexProperty::get_UsageName);
     ClassDB::bind_method(D_METHOD("set_UsageName","v"), &IfcComplexProperty::set_UsageName);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "UsageName"), "set_UsageName", "get_UsageName");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "UsageName", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_UsageName", "get_UsageName");
     ClassDB::bind_method(D_METHOD("get_HasProperties"), &IfcComplexProperty::get_HasProperties);
     ClassDB::bind_method(D_METHOD("set_HasProperties","v"), &IfcComplexProperty::set_HasProperties);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasProperties"), "set_HasProperties", "get_HasProperties");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "HasProperties", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_HasProperties", "get_HasProperties");
 }
 
-godot::String IfcComplexProperty::get_UsageName() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(2));
+godot::Variant IfcComplexProperty::get_UsageName() {
+    return gd_get_attribute(entity_, "UsageName", file_);
 }
 
-void IfcComplexProperty::set_UsageName(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 2, v);
+void IfcComplexProperty::set_UsageName(godot::Variant v) {
+    gd_set_attribute(entity_, "UsageName", v);
 }
 
-godot::Array IfcComplexProperty::get_HasProperties() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(3), file_);
+godot::Variant IfcComplexProperty::get_HasProperties() {
+    return gd_get_attribute(entity_, "HasProperties", file_);
 }
 
-void IfcComplexProperty::set_HasProperties(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 3, v);
+void IfcComplexProperty::set_HasProperties(godot::Variant v) {
+    gd_set_attribute(entity_, "HasProperties", v);
 }
 
 void IfcComplexPropertyTemplate::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_UsageName"), &IfcComplexPropertyTemplate::get_UsageName);
     ClassDB::bind_method(D_METHOD("set_UsageName","v"), &IfcComplexPropertyTemplate::set_UsageName);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "UsageName"), "set_UsageName", "get_UsageName");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "UsageName", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_UsageName", "get_UsageName");
     ClassDB::bind_method(D_METHOD("get_TemplateType"), &IfcComplexPropertyTemplate::get_TemplateType);
     ClassDB::bind_method(D_METHOD("set_TemplateType","v"), &IfcComplexPropertyTemplate::set_TemplateType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "TemplateType"), "set_TemplateType", "get_TemplateType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TemplateType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TemplateType", "get_TemplateType");
     ClassDB::bind_method(D_METHOD("get_HasPropertyTemplates"), &IfcComplexPropertyTemplate::get_HasPropertyTemplates);
     ClassDB::bind_method(D_METHOD("set_HasPropertyTemplates","v"), &IfcComplexPropertyTemplate::set_HasPropertyTemplates);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasPropertyTemplates"), "set_HasPropertyTemplates", "get_HasPropertyTemplates");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "HasPropertyTemplates", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_HasPropertyTemplates", "get_HasPropertyTemplates");
 }
 
-godot::String IfcComplexPropertyTemplate::get_UsageName() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(4));
+godot::Variant IfcComplexPropertyTemplate::get_UsageName() {
+    return gd_get_attribute(entity_, "UsageName", file_);
 }
 
-void IfcComplexPropertyTemplate::set_UsageName(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 4, v);
+void IfcComplexPropertyTemplate::set_UsageName(godot::Variant v) {
+    gd_set_attribute(entity_, "UsageName", v);
 }
 
-godot::String IfcComplexPropertyTemplate::get_TemplateType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(5));
+godot::Variant IfcComplexPropertyTemplate::get_TemplateType() {
+    return gd_get_attribute(entity_, "TemplateType", file_);
 }
 
-void IfcComplexPropertyTemplate::set_TemplateType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 5, v);
+void IfcComplexPropertyTemplate::set_TemplateType(godot::Variant v) {
+    gd_set_attribute(entity_, "TemplateType", v);
 }
 
-godot::Array IfcComplexPropertyTemplate::get_HasPropertyTemplates() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(6), file_);
+godot::Variant IfcComplexPropertyTemplate::get_HasPropertyTemplates() {
+    return gd_get_attribute(entity_, "HasPropertyTemplates", file_);
 }
 
-void IfcComplexPropertyTemplate::set_HasPropertyTemplates(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 6, v);
+void IfcComplexPropertyTemplate::set_HasPropertyTemplates(godot::Variant v) {
+    gd_set_attribute(entity_, "HasPropertyTemplates", v);
 }
 
 void IfcCompositeCurveSegment::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_SameSense"), &IfcCompositeCurveSegment::get_SameSense);
     ClassDB::bind_method(D_METHOD("set_SameSense","v"), &IfcCompositeCurveSegment::set_SameSense);
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "SameSense"), "set_SameSense", "get_SameSense");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "SameSense", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_SameSense", "get_SameSense");
     ClassDB::bind_method(D_METHOD("get_ParentCurve"), &IfcCompositeCurveSegment::get_ParentCurve);
     ClassDB::bind_method(D_METHOD("set_ParentCurve","v"), &IfcCompositeCurveSegment::set_ParentCurve);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "ParentCurve", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_ParentCurve", "get_ParentCurve");
 }
 
-bool IfcCompositeCurveSegment::get_SameSense() {
-    if (!entity_) return false;
-    return gd_attr_bool(entity_->get_attribute_value(1));
+godot::Variant IfcCompositeCurveSegment::get_SameSense() {
+    return gd_get_attribute(entity_, "SameSense", file_);
 }
 
-void IfcCompositeCurveSegment::set_SameSense(bool v) {
-    if (!entity_) return;
-    gd_set_bool(entity_, 1, v);
+void IfcCompositeCurveSegment::set_SameSense(godot::Variant v) {
+    gd_set_attribute(entity_, "SameSense", v);
 }
 
 Ref<GDIFCEntityBase> IfcCompositeCurveSegment::get_ParentCurve() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "ParentCurve");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcCompositeCurveSegment::set_ParentCurve(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+    gd_set_attribute(entity_, "ParentCurve", v);
 }
 
 void IfcCompositeProfileDef::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Profiles"), &IfcCompositeProfileDef::get_Profiles);
     ClassDB::bind_method(D_METHOD("set_Profiles","v"), &IfcCompositeProfileDef::set_Profiles);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "Profiles"), "set_Profiles", "get_Profiles");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Profiles", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Profiles", "get_Profiles");
     ClassDB::bind_method(D_METHOD("get_Label"), &IfcCompositeProfileDef::get_Label);
     ClassDB::bind_method(D_METHOD("set_Label","v"), &IfcCompositeProfileDef::set_Label);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Label"), "set_Label", "get_Label");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Label", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Label", "get_Label");
 }
 
-godot::Array IfcCompositeProfileDef::get_Profiles() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(2), file_);
+godot::Variant IfcCompositeProfileDef::get_Profiles() {
+    return gd_get_attribute(entity_, "Profiles", file_);
 }
 
-void IfcCompositeProfileDef::set_Profiles(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 2, v);
+void IfcCompositeProfileDef::set_Profiles(godot::Variant v) {
+    gd_set_attribute(entity_, "Profiles", v);
 }
 
-godot::String IfcCompositeProfileDef::get_Label() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(3));
+godot::Variant IfcCompositeProfileDef::get_Label() {
+    return gd_get_attribute(entity_, "Label", file_);
 }
 
-void IfcCompositeProfileDef::set_Label(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 3, v);
+void IfcCompositeProfileDef::set_Label(godot::Variant v) {
+    gd_set_attribute(entity_, "Label", v);
 }
 
 void IfcCompressor::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCompressor::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCompressor::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCompressor::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcCompressor::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCompressor::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcCompressor::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCompressorType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCompressorType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCompressorType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCompressorType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcCompressorType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCompressorType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcCompressorType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCondenser::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCondenser::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCondenser::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCondenser::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcCondenser::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCondenser::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcCondenser::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCondenserType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCondenserType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCondenserType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCondenserType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcCondenserType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCondenserType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcCondenserType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcConnectionGeometry::_bind_methods() {
@@ -4047,23 +3889,21 @@ void IfcConnectionCurveGeometry::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcConnectionCurveGeometry::get_CurveOnRelatingElement() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(0), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "CurveOnRelatingElement");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcConnectionCurveGeometry::set_CurveOnRelatingElement(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 0, v);
+    gd_set_attribute(entity_, "CurveOnRelatingElement", v);
 }
 
 Ref<GDIFCEntityBase> IfcConnectionCurveGeometry::get_CurveOnRelatedElement() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(1), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "CurveOnRelatedElement");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcConnectionCurveGeometry::set_CurveOnRelatedElement(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 1, v);
+    gd_set_attribute(entity_, "CurveOnRelatedElement", v);
 }
 
 void IfcConnectionPointGeometry::_bind_methods() {
@@ -4076,65 +3916,57 @@ void IfcConnectionPointGeometry::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcConnectionPointGeometry::get_PointOnRelatingElement() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(0), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "PointOnRelatingElement");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcConnectionPointGeometry::set_PointOnRelatingElement(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 0, v);
+    gd_set_attribute(entity_, "PointOnRelatingElement", v);
 }
 
 Ref<GDIFCEntityBase> IfcConnectionPointGeometry::get_PointOnRelatedElement() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(1), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "PointOnRelatedElement");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcConnectionPointGeometry::set_PointOnRelatedElement(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 1, v);
+    gd_set_attribute(entity_, "PointOnRelatedElement", v);
 }
 
 void IfcConnectionPointEccentricity::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_EccentricityInX"), &IfcConnectionPointEccentricity::get_EccentricityInX);
     ClassDB::bind_method(D_METHOD("set_EccentricityInX","v"), &IfcConnectionPointEccentricity::set_EccentricityInX);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "EccentricityInX"), "set_EccentricityInX", "get_EccentricityInX");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "EccentricityInX", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_EccentricityInX", "get_EccentricityInX");
     ClassDB::bind_method(D_METHOD("get_EccentricityInY"), &IfcConnectionPointEccentricity::get_EccentricityInY);
     ClassDB::bind_method(D_METHOD("set_EccentricityInY","v"), &IfcConnectionPointEccentricity::set_EccentricityInY);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "EccentricityInY"), "set_EccentricityInY", "get_EccentricityInY");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "EccentricityInY", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_EccentricityInY", "get_EccentricityInY");
     ClassDB::bind_method(D_METHOD("get_EccentricityInZ"), &IfcConnectionPointEccentricity::get_EccentricityInZ);
     ClassDB::bind_method(D_METHOD("set_EccentricityInZ","v"), &IfcConnectionPointEccentricity::set_EccentricityInZ);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "EccentricityInZ"), "set_EccentricityInZ", "get_EccentricityInZ");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "EccentricityInZ", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_EccentricityInZ", "get_EccentricityInZ");
 }
 
-double IfcConnectionPointEccentricity::get_EccentricityInX() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(2));
+godot::Variant IfcConnectionPointEccentricity::get_EccentricityInX() {
+    return gd_get_attribute(entity_, "EccentricityInX", file_);
 }
 
-void IfcConnectionPointEccentricity::set_EccentricityInX(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 2, v);
+void IfcConnectionPointEccentricity::set_EccentricityInX(godot::Variant v) {
+    gd_set_attribute(entity_, "EccentricityInX", v);
 }
 
-double IfcConnectionPointEccentricity::get_EccentricityInY() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(3));
+godot::Variant IfcConnectionPointEccentricity::get_EccentricityInY() {
+    return gd_get_attribute(entity_, "EccentricityInY", file_);
 }
 
-void IfcConnectionPointEccentricity::set_EccentricityInY(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 3, v);
+void IfcConnectionPointEccentricity::set_EccentricityInY(godot::Variant v) {
+    gd_set_attribute(entity_, "EccentricityInY", v);
 }
 
-double IfcConnectionPointEccentricity::get_EccentricityInZ() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(4));
+godot::Variant IfcConnectionPointEccentricity::get_EccentricityInZ() {
+    return gd_get_attribute(entity_, "EccentricityInZ", file_);
 }
 
-void IfcConnectionPointEccentricity::set_EccentricityInZ(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 4, v);
+void IfcConnectionPointEccentricity::set_EccentricityInZ(godot::Variant v) {
+    gd_set_attribute(entity_, "EccentricityInZ", v);
 }
 
 void IfcConnectionSurfaceGeometry::_bind_methods() {
@@ -4147,23 +3979,21 @@ void IfcConnectionSurfaceGeometry::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcConnectionSurfaceGeometry::get_SurfaceOnRelatingElement() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(0), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "SurfaceOnRelatingElement");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcConnectionSurfaceGeometry::set_SurfaceOnRelatingElement(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 0, v);
+    gd_set_attribute(entity_, "SurfaceOnRelatingElement", v);
 }
 
 Ref<GDIFCEntityBase> IfcConnectionSurfaceGeometry::get_SurfaceOnRelatedElement() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(1), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "SurfaceOnRelatedElement");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcConnectionSurfaceGeometry::set_SurfaceOnRelatedElement(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 1, v);
+    gd_set_attribute(entity_, "SurfaceOnRelatedElement", v);
 }
 
 void IfcConnectionVolumeGeometry::_bind_methods() {
@@ -4176,121 +4006,116 @@ void IfcConnectionVolumeGeometry::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcConnectionVolumeGeometry::get_VolumeOnRelatingElement() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(0), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "VolumeOnRelatingElement");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcConnectionVolumeGeometry::set_VolumeOnRelatingElement(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 0, v);
+    gd_set_attribute(entity_, "VolumeOnRelatingElement", v);
 }
 
 Ref<GDIFCEntityBase> IfcConnectionVolumeGeometry::get_VolumeOnRelatedElement() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(1), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "VolumeOnRelatedElement");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcConnectionVolumeGeometry::set_VolumeOnRelatedElement(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 1, v);
+    gd_set_attribute(entity_, "VolumeOnRelatedElement", v);
 }
 
 void IfcConstraint::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Name"), &IfcConstraint::get_Name);
     ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcConstraint::set_Name);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Name"), "set_Name", "get_Name");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Name", "get_Name");
     ClassDB::bind_method(D_METHOD("get_Description"), &IfcConstraint::get_Description);
     ClassDB::bind_method(D_METHOD("set_Description","v"), &IfcConstraint::set_Description);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Description"), "set_Description", "get_Description");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Description", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Description", "get_Description");
     ClassDB::bind_method(D_METHOD("get_ConstraintGrade"), &IfcConstraint::get_ConstraintGrade);
     ClassDB::bind_method(D_METHOD("set_ConstraintGrade","v"), &IfcConstraint::set_ConstraintGrade);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "ConstraintGrade"), "set_ConstraintGrade", "get_ConstraintGrade");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ConstraintGrade", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ConstraintGrade", "get_ConstraintGrade");
     ClassDB::bind_method(D_METHOD("get_ConstraintSource"), &IfcConstraint::get_ConstraintSource);
     ClassDB::bind_method(D_METHOD("set_ConstraintSource","v"), &IfcConstraint::set_ConstraintSource);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "ConstraintSource"), "set_ConstraintSource", "get_ConstraintSource");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ConstraintSource", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ConstraintSource", "get_ConstraintSource");
     ClassDB::bind_method(D_METHOD("get_CreatingActor"), &IfcConstraint::get_CreatingActor);
     ClassDB::bind_method(D_METHOD("set_CreatingActor","v"), &IfcConstraint::set_CreatingActor);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "CreatingActor", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_CreatingActor", "get_CreatingActor");
     ClassDB::bind_method(D_METHOD("get_CreationTime"), &IfcConstraint::get_CreationTime);
     ClassDB::bind_method(D_METHOD("set_CreationTime","v"), &IfcConstraint::set_CreationTime);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "CreationTime"), "set_CreationTime", "get_CreationTime");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "CreationTime", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_CreationTime", "get_CreationTime");
     ClassDB::bind_method(D_METHOD("get_UserDefinedGrade"), &IfcConstraint::get_UserDefinedGrade);
     ClassDB::bind_method(D_METHOD("set_UserDefinedGrade","v"), &IfcConstraint::set_UserDefinedGrade);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "UserDefinedGrade"), "set_UserDefinedGrade", "get_UserDefinedGrade");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "UserDefinedGrade", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_UserDefinedGrade", "get_UserDefinedGrade");
     ClassDB::bind_method(D_METHOD("get_HasExternalReferences"), &IfcConstraint::get_HasExternalReferences);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasExternalReferences"), "", "get_HasExternalReferences");
     ClassDB::bind_method(D_METHOD("get_PropertiesForConstraint"), &IfcConstraint::get_PropertiesForConstraint);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "PropertiesForConstraint"), "", "get_PropertiesForConstraint");
+    ClassDB::bind_method(D_METHOD("get_ClassifiedAs"), &IfcConstraint::get_ClassifiedAs);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ClassifiedAs"), "", "get_ClassifiedAs");
+    ClassDB::bind_method(D_METHOD("get_RelatesConstraints"), &IfcConstraint::get_RelatesConstraints);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "RelatesConstraints"), "", "get_RelatesConstraints");
+    ClassDB::bind_method(D_METHOD("get_IsRelatedWith"), &IfcConstraint::get_IsRelatedWith);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "IsRelatedWith"), "", "get_IsRelatedWith");
+    ClassDB::bind_method(D_METHOD("get_Aggregates"), &IfcConstraint::get_Aggregates);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "Aggregates"), "", "get_Aggregates");
+    ClassDB::bind_method(D_METHOD("get_IsAggregatedIn"), &IfcConstraint::get_IsAggregatedIn);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "IsAggregatedIn"), "", "get_IsAggregatedIn");
 }
 
-godot::String IfcConstraint::get_Name() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(0));
+godot::Variant IfcConstraint::get_Name() {
+    return gd_get_attribute(entity_, "Name", file_);
 }
 
-void IfcConstraint::set_Name(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 0, v);
+void IfcConstraint::set_Name(godot::Variant v) {
+    gd_set_attribute(entity_, "Name", v);
 }
 
-godot::String IfcConstraint::get_Description() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(1));
+godot::Variant IfcConstraint::get_Description() {
+    return gd_get_attribute(entity_, "Description", file_);
 }
 
-void IfcConstraint::set_Description(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 1, v);
+void IfcConstraint::set_Description(godot::Variant v) {
+    gd_set_attribute(entity_, "Description", v);
 }
 
-godot::String IfcConstraint::get_ConstraintGrade() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(2));
+godot::Variant IfcConstraint::get_ConstraintGrade() {
+    return gd_get_attribute(entity_, "ConstraintGrade", file_);
 }
 
-void IfcConstraint::set_ConstraintGrade(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 2, v);
+void IfcConstraint::set_ConstraintGrade(godot::Variant v) {
+    gd_set_attribute(entity_, "ConstraintGrade", v);
 }
 
-godot::String IfcConstraint::get_ConstraintSource() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(3));
+godot::Variant IfcConstraint::get_ConstraintSource() {
+    return gd_get_attribute(entity_, "ConstraintSource", file_);
 }
 
-void IfcConstraint::set_ConstraintSource(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 3, v);
+void IfcConstraint::set_ConstraintSource(godot::Variant v) {
+    gd_set_attribute(entity_, "ConstraintSource", v);
 }
 
 Ref<GDIFCEntityBase> IfcConstraint::get_CreatingActor() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(4), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "CreatingActor");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcConstraint::set_CreatingActor(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 4, v);
+    gd_set_attribute(entity_, "CreatingActor", v);
 }
 
-godot::String IfcConstraint::get_CreationTime() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(5));
+godot::Variant IfcConstraint::get_CreationTime() {
+    return gd_get_attribute(entity_, "CreationTime", file_);
 }
 
-void IfcConstraint::set_CreationTime(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 5, v);
+void IfcConstraint::set_CreationTime(godot::Variant v) {
+    gd_set_attribute(entity_, "CreationTime", v);
 }
 
-godot::String IfcConstraint::get_UserDefinedGrade() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(6));
+godot::Variant IfcConstraint::get_UserDefinedGrade() {
+    return gd_get_attribute(entity_, "UserDefinedGrade", file_);
 }
 
-void IfcConstraint::set_UserDefinedGrade(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 6, v);
+void IfcConstraint::set_UserDefinedGrade(godot::Variant v) {
+    gd_set_attribute(entity_, "UserDefinedGrade", v);
 }
 
 godot::Array IfcConstraint::get_HasExternalReferences() {
@@ -4301,186 +4126,231 @@ godot::Array IfcConstraint::get_PropertiesForConstraint() {
     return get_inverse(godot::String("PropertiesForConstraint"));
 }
 
+godot::Array IfcConstraint::get_ClassifiedAs() {
+    return get_inverse(godot::String("ClassifiedAs"));
+}
+
+godot::Array IfcConstraint::get_RelatesConstraints() {
+    return get_inverse(godot::String("RelatesConstraints"));
+}
+
+godot::Array IfcConstraint::get_IsRelatedWith() {
+    return get_inverse(godot::String("IsRelatedWith"));
+}
+
+godot::Array IfcConstraint::get_Aggregates() {
+    return get_inverse(godot::String("Aggregates"));
+}
+
+godot::Array IfcConstraint::get_IsAggregatedIn() {
+    return get_inverse(godot::String("IsAggregatedIn"));
+}
+
 void IfcConstructionResource::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Usage"), &IfcConstructionResource::get_Usage);
     ClassDB::bind_method(D_METHOD("set_Usage","v"), &IfcConstructionResource::set_Usage);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "Usage", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_Usage", "get_Usage");
     ClassDB::bind_method(D_METHOD("get_BaseCosts"), &IfcConstructionResource::get_BaseCosts);
     ClassDB::bind_method(D_METHOD("set_BaseCosts","v"), &IfcConstructionResource::set_BaseCosts);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "BaseCosts"), "set_BaseCosts", "get_BaseCosts");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "BaseCosts", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_BaseCosts", "get_BaseCosts");
     ClassDB::bind_method(D_METHOD("get_BaseQuantity"), &IfcConstructionResource::get_BaseQuantity);
     ClassDB::bind_method(D_METHOD("set_BaseQuantity","v"), &IfcConstructionResource::set_BaseQuantity);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "BaseQuantity", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_BaseQuantity", "get_BaseQuantity");
+    ClassDB::bind_method(D_METHOD("get_ResourceGroup"), &IfcConstructionResource::get_ResourceGroup);
+    ClassDB::bind_method(D_METHOD("set_ResourceGroup","v"), &IfcConstructionResource::set_ResourceGroup);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ResourceGroup", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ResourceGroup", "get_ResourceGroup");
+    ClassDB::bind_method(D_METHOD("get_ResourceConsumption"), &IfcConstructionResource::get_ResourceConsumption);
+    ClassDB::bind_method(D_METHOD("set_ResourceConsumption","v"), &IfcConstructionResource::set_ResourceConsumption);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ResourceConsumption", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ResourceConsumption", "get_ResourceConsumption");
 }
 
 Ref<GDIFCEntityBase> IfcConstructionResource::get_Usage() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(7), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "Usage");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcConstructionResource::set_Usage(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 7, v);
+    gd_set_attribute(entity_, "Usage", v);
 }
 
-godot::Array IfcConstructionResource::get_BaseCosts() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(8), file_);
+godot::Variant IfcConstructionResource::get_BaseCosts() {
+    return gd_get_attribute(entity_, "BaseCosts", file_);
 }
 
-void IfcConstructionResource::set_BaseCosts(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 8, v);
+void IfcConstructionResource::set_BaseCosts(godot::Variant v) {
+    gd_set_attribute(entity_, "BaseCosts", v);
 }
 
 Ref<GDIFCEntityBase> IfcConstructionResource::get_BaseQuantity() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(9), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "BaseQuantity");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcConstructionResource::set_BaseQuantity(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 9, v);
+    gd_set_attribute(entity_, "BaseQuantity", v);
+}
+
+godot::Variant IfcConstructionResource::get_ResourceGroup() {
+    return gd_get_attribute(entity_, "ResourceGroup", file_);
+}
+
+void IfcConstructionResource::set_ResourceGroup(godot::Variant v) {
+    gd_set_attribute(entity_, "ResourceGroup", v);
+}
+
+godot::Variant IfcConstructionResource::get_ResourceConsumption() {
+    return gd_get_attribute(entity_, "ResourceConsumption", file_);
+}
+
+void IfcConstructionResource::set_ResourceConsumption(godot::Variant v) {
+    gd_set_attribute(entity_, "ResourceConsumption", v);
 }
 
 void IfcConstructionEquipmentResource::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcConstructionEquipmentResource::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcConstructionEquipmentResource::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcConstructionEquipmentResource::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(10));
+godot::Variant IfcConstructionEquipmentResource::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcConstructionEquipmentResource::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 10, v);
+void IfcConstructionEquipmentResource::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcConstructionResourceType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_BaseCosts"), &IfcConstructionResourceType::get_BaseCosts);
     ClassDB::bind_method(D_METHOD("set_BaseCosts","v"), &IfcConstructionResourceType::set_BaseCosts);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "BaseCosts"), "set_BaseCosts", "get_BaseCosts");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "BaseCosts", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_BaseCosts", "get_BaseCosts");
     ClassDB::bind_method(D_METHOD("get_BaseQuantity"), &IfcConstructionResourceType::get_BaseQuantity);
     ClassDB::bind_method(D_METHOD("set_BaseQuantity","v"), &IfcConstructionResourceType::set_BaseQuantity);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "BaseQuantity", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_BaseQuantity", "get_BaseQuantity");
 }
 
-godot::Array IfcConstructionResourceType::get_BaseCosts() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(9), file_);
+godot::Variant IfcConstructionResourceType::get_BaseCosts() {
+    return gd_get_attribute(entity_, "BaseCosts", file_);
 }
 
-void IfcConstructionResourceType::set_BaseCosts(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 9, v);
+void IfcConstructionResourceType::set_BaseCosts(godot::Variant v) {
+    gd_set_attribute(entity_, "BaseCosts", v);
 }
 
 Ref<GDIFCEntityBase> IfcConstructionResourceType::get_BaseQuantity() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(10), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "BaseQuantity");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcConstructionResourceType::set_BaseQuantity(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 10, v);
+    gd_set_attribute(entity_, "BaseQuantity", v);
 }
 
 void IfcConstructionEquipmentResourceType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcConstructionEquipmentResourceType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcConstructionEquipmentResourceType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcConstructionEquipmentResourceType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(11));
+godot::Variant IfcConstructionEquipmentResourceType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcConstructionEquipmentResourceType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 11, v);
+void IfcConstructionEquipmentResourceType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcConstructionMaterialResource::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcConstructionMaterialResource::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcConstructionMaterialResource::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
+    ClassDB::bind_method(D_METHOD("get_Suppliers"), &IfcConstructionMaterialResource::get_Suppliers);
+    ClassDB::bind_method(D_METHOD("set_Suppliers","v"), &IfcConstructionMaterialResource::set_Suppliers);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Suppliers", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Suppliers", "get_Suppliers");
+    ClassDB::bind_method(D_METHOD("get_UsageRatio"), &IfcConstructionMaterialResource::get_UsageRatio);
+    ClassDB::bind_method(D_METHOD("set_UsageRatio","v"), &IfcConstructionMaterialResource::set_UsageRatio);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "UsageRatio", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_UsageRatio", "get_UsageRatio");
 }
 
-godot::String IfcConstructionMaterialResource::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(10));
+godot::Variant IfcConstructionMaterialResource::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcConstructionMaterialResource::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 10, v);
+void IfcConstructionMaterialResource::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
+}
+
+godot::Variant IfcConstructionMaterialResource::get_Suppliers() {
+    return gd_get_attribute(entity_, "Suppliers", file_);
+}
+
+void IfcConstructionMaterialResource::set_Suppliers(godot::Variant v) {
+    gd_set_attribute(entity_, "Suppliers", v);
+}
+
+godot::Variant IfcConstructionMaterialResource::get_UsageRatio() {
+    return gd_get_attribute(entity_, "UsageRatio", file_);
+}
+
+void IfcConstructionMaterialResource::set_UsageRatio(godot::Variant v) {
+    gd_set_attribute(entity_, "UsageRatio", v);
 }
 
 void IfcConstructionMaterialResourceType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcConstructionMaterialResourceType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcConstructionMaterialResourceType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcConstructionMaterialResourceType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(11));
+godot::Variant IfcConstructionMaterialResourceType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcConstructionMaterialResourceType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 11, v);
+void IfcConstructionMaterialResourceType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcConstructionProductResource::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcConstructionProductResource::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcConstructionProductResource::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcConstructionProductResource::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(10));
+godot::Variant IfcConstructionProductResource::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcConstructionProductResource::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 10, v);
+void IfcConstructionProductResource::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcConstructionProductResourceType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcConstructionProductResourceType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcConstructionProductResourceType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcConstructionProductResourceType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(11));
+godot::Variant IfcConstructionProductResourceType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcConstructionProductResourceType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 11, v);
+void IfcConstructionProductResourceType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcContext::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_ObjectType"), &IfcContext::get_ObjectType);
     ClassDB::bind_method(D_METHOD("set_ObjectType","v"), &IfcContext::set_ObjectType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "ObjectType"), "set_ObjectType", "get_ObjectType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ObjectType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ObjectType", "get_ObjectType");
     ClassDB::bind_method(D_METHOD("get_LongName"), &IfcContext::get_LongName);
     ClassDB::bind_method(D_METHOD("set_LongName","v"), &IfcContext::set_LongName);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "LongName"), "set_LongName", "get_LongName");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LongName", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LongName", "get_LongName");
     ClassDB::bind_method(D_METHOD("get_Phase"), &IfcContext::get_Phase);
     ClassDB::bind_method(D_METHOD("set_Phase","v"), &IfcContext::set_Phase);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Phase"), "set_Phase", "get_Phase");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Phase", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Phase", "get_Phase");
     ClassDB::bind_method(D_METHOD("get_RepresentationContexts"), &IfcContext::get_RepresentationContexts);
     ClassDB::bind_method(D_METHOD("set_RepresentationContexts","v"), &IfcContext::set_RepresentationContexts);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "RepresentationContexts"), "set_RepresentationContexts", "get_RepresentationContexts");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RepresentationContexts", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RepresentationContexts", "get_RepresentationContexts");
     ClassDB::bind_method(D_METHOD("get_UnitsInContext"), &IfcContext::get_UnitsInContext);
     ClassDB::bind_method(D_METHOD("set_UnitsInContext","v"), &IfcContext::set_UnitsInContext);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "UnitsInContext", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_UnitsInContext", "get_UnitsInContext");
@@ -4490,54 +4360,45 @@ void IfcContext::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "Declares"), "", "get_Declares");
 }
 
-godot::String IfcContext::get_ObjectType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(4));
+godot::Variant IfcContext::get_ObjectType() {
+    return gd_get_attribute(entity_, "ObjectType", file_);
 }
 
-void IfcContext::set_ObjectType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 4, v);
+void IfcContext::set_ObjectType(godot::Variant v) {
+    gd_set_attribute(entity_, "ObjectType", v);
 }
 
-godot::String IfcContext::get_LongName() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(5));
+godot::Variant IfcContext::get_LongName() {
+    return gd_get_attribute(entity_, "LongName", file_);
 }
 
-void IfcContext::set_LongName(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 5, v);
+void IfcContext::set_LongName(godot::Variant v) {
+    gd_set_attribute(entity_, "LongName", v);
 }
 
-godot::String IfcContext::get_Phase() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(6));
+godot::Variant IfcContext::get_Phase() {
+    return gd_get_attribute(entity_, "Phase", file_);
 }
 
-void IfcContext::set_Phase(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 6, v);
+void IfcContext::set_Phase(godot::Variant v) {
+    gd_set_attribute(entity_, "Phase", v);
 }
 
-godot::Array IfcContext::get_RepresentationContexts() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(7), file_);
+godot::Variant IfcContext::get_RepresentationContexts() {
+    return gd_get_attribute(entity_, "RepresentationContexts", file_);
 }
 
-void IfcContext::set_RepresentationContexts(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 7, v);
+void IfcContext::set_RepresentationContexts(godot::Variant v) {
+    gd_set_attribute(entity_, "RepresentationContexts", v);
 }
 
 Ref<GDIFCEntityBase> IfcContext::get_UnitsInContext() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(8), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "UnitsInContext");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcContext::set_UnitsInContext(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 8, v);
+    gd_set_attribute(entity_, "UnitsInContext", v);
 }
 
 godot::Array IfcContext::get_IsDefinedBy() {
@@ -4551,19 +4412,17 @@ godot::Array IfcContext::get_Declares() {
 void IfcContextDependentUnit::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Name"), &IfcContextDependentUnit::get_Name);
     ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcContextDependentUnit::set_Name);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Name"), "set_Name", "get_Name");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Name", "get_Name");
     ClassDB::bind_method(D_METHOD("get_HasExternalReference"), &IfcContextDependentUnit::get_HasExternalReference);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasExternalReference"), "", "get_HasExternalReference");
 }
 
-godot::String IfcContextDependentUnit::get_Name() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(2));
+godot::Variant IfcContextDependentUnit::get_Name() {
+    return gd_get_attribute(entity_, "Name", file_);
 }
 
-void IfcContextDependentUnit::set_Name(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 2, v);
+void IfcContextDependentUnit::set_Name(godot::Variant v) {
+    gd_set_attribute(entity_, "Name", v);
 }
 
 godot::Array IfcContextDependentUnit::get_HasExternalReference() {
@@ -4573,39 +4432,35 @@ godot::Array IfcContextDependentUnit::get_HasExternalReference() {
 void IfcController::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcController::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcController::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcController::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcController::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcController::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcController::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcControllerType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcControllerType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcControllerType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcControllerType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcControllerType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcControllerType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcControllerType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcConversionBasedUnit::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Name"), &IfcConversionBasedUnit::get_Name);
     ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcConversionBasedUnit::set_Name);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Name"), "set_Name", "get_Name");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Name", "get_Name");
     ClassDB::bind_method(D_METHOD("get_ConversionFactor"), &IfcConversionBasedUnit::get_ConversionFactor);
     ClassDB::bind_method(D_METHOD("set_ConversionFactor","v"), &IfcConversionBasedUnit::set_ConversionFactor);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "ConversionFactor", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_ConversionFactor", "get_ConversionFactor");
@@ -4613,24 +4468,21 @@ void IfcConversionBasedUnit::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasExternalReference"), "", "get_HasExternalReference");
 }
 
-godot::String IfcConversionBasedUnit::get_Name() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(2));
+godot::Variant IfcConversionBasedUnit::get_Name() {
+    return gd_get_attribute(entity_, "Name", file_);
 }
 
-void IfcConversionBasedUnit::set_Name(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 2, v);
+void IfcConversionBasedUnit::set_Name(godot::Variant v) {
+    gd_set_attribute(entity_, "Name", v);
 }
 
 Ref<GDIFCEntityBase> IfcConversionBasedUnit::get_ConversionFactor() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(3), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "ConversionFactor");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcConversionBasedUnit::set_ConversionFactor(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 3, v);
+    gd_set_attribute(entity_, "ConversionFactor", v);
 }
 
 godot::Array IfcConversionBasedUnit::get_HasExternalReference() {
@@ -4640,113 +4492,99 @@ godot::Array IfcConversionBasedUnit::get_HasExternalReference() {
 void IfcConversionBasedUnitWithOffset::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_ConversionOffset"), &IfcConversionBasedUnitWithOffset::get_ConversionOffset);
     ClassDB::bind_method(D_METHOD("set_ConversionOffset","v"), &IfcConversionBasedUnitWithOffset::set_ConversionOffset);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ConversionOffset"), "set_ConversionOffset", "get_ConversionOffset");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ConversionOffset", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ConversionOffset", "get_ConversionOffset");
 }
 
-double IfcConversionBasedUnitWithOffset::get_ConversionOffset() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(4));
+godot::Variant IfcConversionBasedUnitWithOffset::get_ConversionOffset() {
+    return gd_get_attribute(entity_, "ConversionOffset", file_);
 }
 
-void IfcConversionBasedUnitWithOffset::set_ConversionOffset(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 4, v);
+void IfcConversionBasedUnitWithOffset::set_ConversionOffset(godot::Variant v) {
+    gd_set_attribute(entity_, "ConversionOffset", v);
 }
 
 void IfcConveyorSegment::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcConveyorSegment::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcConveyorSegment::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcConveyorSegment::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcConveyorSegment::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcConveyorSegment::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcConveyorSegment::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcConveyorSegmentType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcConveyorSegmentType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcConveyorSegmentType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcConveyorSegmentType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcConveyorSegmentType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcConveyorSegmentType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcConveyorSegmentType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCooledBeam::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCooledBeam::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCooledBeam::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCooledBeam::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcCooledBeam::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCooledBeam::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcCooledBeam::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCooledBeamType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCooledBeamType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCooledBeamType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCooledBeamType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcCooledBeamType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCooledBeamType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcCooledBeamType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCoolingTower::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCoolingTower::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCoolingTower::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCoolingTower::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcCoolingTower::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCoolingTower::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcCoolingTower::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCoolingTowerType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCoolingTowerType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCoolingTowerType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCoolingTowerType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcCoolingTowerType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCoolingTowerType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcCoolingTowerType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCoordinateOperation::_bind_methods() {
@@ -4759,69 +4597,61 @@ void IfcCoordinateOperation::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcCoordinateOperation::get_SourceCRS() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(0), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "SourceCRS");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcCoordinateOperation::set_SourceCRS(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 0, v);
+    gd_set_attribute(entity_, "SourceCRS", v);
 }
 
 Ref<GDIFCEntityBase> IfcCoordinateOperation::get_TargetCRS() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(1), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "TargetCRS");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcCoordinateOperation::set_TargetCRS(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 1, v);
+    gd_set_attribute(entity_, "TargetCRS", v);
 }
 
 void IfcCoordinateReferenceSystem::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Name"), &IfcCoordinateReferenceSystem::get_Name);
     ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcCoordinateReferenceSystem::set_Name);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Name"), "set_Name", "get_Name");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Name", "get_Name");
     ClassDB::bind_method(D_METHOD("get_Description"), &IfcCoordinateReferenceSystem::get_Description);
     ClassDB::bind_method(D_METHOD("set_Description","v"), &IfcCoordinateReferenceSystem::set_Description);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Description"), "set_Description", "get_Description");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Description", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Description", "get_Description");
     ClassDB::bind_method(D_METHOD("get_GeodeticDatum"), &IfcCoordinateReferenceSystem::get_GeodeticDatum);
     ClassDB::bind_method(D_METHOD("set_GeodeticDatum","v"), &IfcCoordinateReferenceSystem::set_GeodeticDatum);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "GeodeticDatum"), "set_GeodeticDatum", "get_GeodeticDatum");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "GeodeticDatum", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_GeodeticDatum", "get_GeodeticDatum");
     ClassDB::bind_method(D_METHOD("get_HasCoordinateOperation"), &IfcCoordinateReferenceSystem::get_HasCoordinateOperation);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasCoordinateOperation"), "", "get_HasCoordinateOperation");
     ClassDB::bind_method(D_METHOD("get_WellKnownText"), &IfcCoordinateReferenceSystem::get_WellKnownText);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "WellKnownText"), "", "get_WellKnownText");
 }
 
-godot::String IfcCoordinateReferenceSystem::get_Name() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(0));
+godot::Variant IfcCoordinateReferenceSystem::get_Name() {
+    return gd_get_attribute(entity_, "Name", file_);
 }
 
-void IfcCoordinateReferenceSystem::set_Name(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 0, v);
+void IfcCoordinateReferenceSystem::set_Name(godot::Variant v) {
+    gd_set_attribute(entity_, "Name", v);
 }
 
-godot::String IfcCoordinateReferenceSystem::get_Description() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(1));
+godot::Variant IfcCoordinateReferenceSystem::get_Description() {
+    return gd_get_attribute(entity_, "Description", file_);
 }
 
-void IfcCoordinateReferenceSystem::set_Description(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 1, v);
+void IfcCoordinateReferenceSystem::set_Description(godot::Variant v) {
+    gd_set_attribute(entity_, "Description", v);
 }
 
-godot::String IfcCoordinateReferenceSystem::get_GeodeticDatum() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(2));
+godot::Variant IfcCoordinateReferenceSystem::get_GeodeticDatum() {
+    return gd_get_attribute(entity_, "GeodeticDatum", file_);
 }
 
-void IfcCoordinateReferenceSystem::set_GeodeticDatum(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 2, v);
+void IfcCoordinateReferenceSystem::set_GeodeticDatum(godot::Variant v) {
+    gd_set_attribute(entity_, "GeodeticDatum", v);
 }
 
 godot::Array IfcCoordinateReferenceSystem::get_HasCoordinateOperation() {
@@ -4835,127 +4665,155 @@ godot::Array IfcCoordinateReferenceSystem::get_WellKnownText() {
 void IfcCosineSpiral::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_CosineTerm"), &IfcCosineSpiral::get_CosineTerm);
     ClassDB::bind_method(D_METHOD("set_CosineTerm","v"), &IfcCosineSpiral::set_CosineTerm);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "CosineTerm"), "set_CosineTerm", "get_CosineTerm");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "CosineTerm", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_CosineTerm", "get_CosineTerm");
     ClassDB::bind_method(D_METHOD("get_ConstantTerm"), &IfcCosineSpiral::get_ConstantTerm);
     ClassDB::bind_method(D_METHOD("set_ConstantTerm","v"), &IfcCosineSpiral::set_ConstantTerm);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ConstantTerm"), "set_ConstantTerm", "get_ConstantTerm");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ConstantTerm", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ConstantTerm", "get_ConstantTerm");
 }
 
-double IfcCosineSpiral::get_CosineTerm() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(1));
+godot::Variant IfcCosineSpiral::get_CosineTerm() {
+    return gd_get_attribute(entity_, "CosineTerm", file_);
 }
 
-void IfcCosineSpiral::set_CosineTerm(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 1, v);
+void IfcCosineSpiral::set_CosineTerm(godot::Variant v) {
+    gd_set_attribute(entity_, "CosineTerm", v);
 }
 
-double IfcCosineSpiral::get_ConstantTerm() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(2));
+godot::Variant IfcCosineSpiral::get_ConstantTerm() {
+    return gd_get_attribute(entity_, "ConstantTerm", file_);
 }
 
-void IfcCosineSpiral::set_ConstantTerm(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 2, v);
+void IfcCosineSpiral::set_ConstantTerm(godot::Variant v) {
+    gd_set_attribute(entity_, "ConstantTerm", v);
 }
 
 void IfcCostItem::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCostItem::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCostItem::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
     ClassDB::bind_method(D_METHOD("get_CostValues"), &IfcCostItem::get_CostValues);
     ClassDB::bind_method(D_METHOD("set_CostValues","v"), &IfcCostItem::set_CostValues);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "CostValues"), "set_CostValues", "get_CostValues");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "CostValues", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_CostValues", "get_CostValues");
     ClassDB::bind_method(D_METHOD("get_CostQuantities"), &IfcCostItem::get_CostQuantities);
     ClassDB::bind_method(D_METHOD("set_CostQuantities","v"), &IfcCostItem::set_CostQuantities);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "CostQuantities"), "set_CostQuantities", "get_CostQuantities");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "CostQuantities", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_CostQuantities", "get_CostQuantities");
 }
 
-godot::String IfcCostItem::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(6));
+godot::Variant IfcCostItem::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCostItem::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 6, v);
+void IfcCostItem::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
-godot::Array IfcCostItem::get_CostValues() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(7), file_);
+godot::Variant IfcCostItem::get_CostValues() {
+    return gd_get_attribute(entity_, "CostValues", file_);
 }
 
-void IfcCostItem::set_CostValues(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 7, v);
+void IfcCostItem::set_CostValues(godot::Variant v) {
+    gd_set_attribute(entity_, "CostValues", v);
 }
 
-godot::Array IfcCostItem::get_CostQuantities() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(8), file_);
+godot::Variant IfcCostItem::get_CostQuantities() {
+    return gd_get_attribute(entity_, "CostQuantities", file_);
 }
 
-void IfcCostItem::set_CostQuantities(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 8, v);
+void IfcCostItem::set_CostQuantities(godot::Variant v) {
+    gd_set_attribute(entity_, "CostQuantities", v);
 }
 
 void IfcCostSchedule::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCostSchedule::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCostSchedule::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
     ClassDB::bind_method(D_METHOD("get_Status"), &IfcCostSchedule::get_Status);
     ClassDB::bind_method(D_METHOD("set_Status","v"), &IfcCostSchedule::set_Status);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Status"), "set_Status", "get_Status");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Status", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Status", "get_Status");
     ClassDB::bind_method(D_METHOD("get_SubmittedOn"), &IfcCostSchedule::get_SubmittedOn);
     ClassDB::bind_method(D_METHOD("set_SubmittedOn","v"), &IfcCostSchedule::set_SubmittedOn);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "SubmittedOn"), "set_SubmittedOn", "get_SubmittedOn");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "SubmittedOn", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_SubmittedOn", "get_SubmittedOn");
     ClassDB::bind_method(D_METHOD("get_UpdateDate"), &IfcCostSchedule::get_UpdateDate);
     ClassDB::bind_method(D_METHOD("set_UpdateDate","v"), &IfcCostSchedule::set_UpdateDate);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "UpdateDate"), "set_UpdateDate", "get_UpdateDate");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "UpdateDate", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_UpdateDate", "get_UpdateDate");
+    ClassDB::bind_method(D_METHOD("get_SubmittedBy"), &IfcCostSchedule::get_SubmittedBy);
+    ClassDB::bind_method(D_METHOD("set_SubmittedBy","v"), &IfcCostSchedule::set_SubmittedBy);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "SubmittedBy", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_SubmittedBy", "get_SubmittedBy");
+    ClassDB::bind_method(D_METHOD("get_PreparedBy"), &IfcCostSchedule::get_PreparedBy);
+    ClassDB::bind_method(D_METHOD("set_PreparedBy","v"), &IfcCostSchedule::set_PreparedBy);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "PreparedBy", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_PreparedBy", "get_PreparedBy");
+    ClassDB::bind_method(D_METHOD("get_TargetUsers"), &IfcCostSchedule::get_TargetUsers);
+    ClassDB::bind_method(D_METHOD("set_TargetUsers","v"), &IfcCostSchedule::set_TargetUsers);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TargetUsers", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TargetUsers", "get_TargetUsers");
+    ClassDB::bind_method(D_METHOD("get_ID"), &IfcCostSchedule::get_ID);
+    ClassDB::bind_method(D_METHOD("set_ID","v"), &IfcCostSchedule::set_ID);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ID", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ID", "get_ID");
 }
 
-godot::String IfcCostSchedule::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(6));
+godot::Variant IfcCostSchedule::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCostSchedule::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 6, v);
+void IfcCostSchedule::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
-godot::String IfcCostSchedule::get_Status() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(7));
+godot::Variant IfcCostSchedule::get_Status() {
+    return gd_get_attribute(entity_, "Status", file_);
 }
 
-void IfcCostSchedule::set_Status(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 7, v);
+void IfcCostSchedule::set_Status(godot::Variant v) {
+    gd_set_attribute(entity_, "Status", v);
 }
 
-godot::String IfcCostSchedule::get_SubmittedOn() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcCostSchedule::get_SubmittedOn() {
+    return gd_get_attribute(entity_, "SubmittedOn", file_);
 }
 
-void IfcCostSchedule::set_SubmittedOn(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcCostSchedule::set_SubmittedOn(godot::Variant v) {
+    gd_set_attribute(entity_, "SubmittedOn", v);
 }
 
-godot::String IfcCostSchedule::get_UpdateDate() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcCostSchedule::get_UpdateDate() {
+    return gd_get_attribute(entity_, "UpdateDate", file_);
 }
 
-void IfcCostSchedule::set_UpdateDate(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcCostSchedule::set_UpdateDate(godot::Variant v) {
+    gd_set_attribute(entity_, "UpdateDate", v);
+}
+
+Ref<GDIFCEntityBase> IfcCostSchedule::get_SubmittedBy() {
+    const ptrdiff_t i = gd_attr_index(entity_, "SubmittedBy");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcCostSchedule::set_SubmittedBy(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "SubmittedBy", v);
+}
+
+Ref<GDIFCEntityBase> IfcCostSchedule::get_PreparedBy() {
+    const ptrdiff_t i = gd_attr_index(entity_, "PreparedBy");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcCostSchedule::set_PreparedBy(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "PreparedBy", v);
+}
+
+godot::Variant IfcCostSchedule::get_TargetUsers() {
+    return gd_get_attribute(entity_, "TargetUsers", file_);
+}
+
+void IfcCostSchedule::set_TargetUsers(godot::Variant v) {
+    gd_set_attribute(entity_, "TargetUsers", v);
+}
+
+godot::Variant IfcCostSchedule::get_ID() {
+    return gd_get_attribute(entity_, "ID", file_);
+}
+
+void IfcCostSchedule::set_ID(godot::Variant v) {
+    gd_set_attribute(entity_, "ID", v);
 }
 
 void IfcCostValue::_bind_methods() {
@@ -4964,53 +4822,51 @@ void IfcCostValue::_bind_methods() {
 void IfcCourse::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCourse::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCourse::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCourse::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcCourse::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCourse::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcCourse::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCourseType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCourseType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCourseType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCourseType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcCourseType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCourseType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcCourseType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCovering::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCovering::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCovering::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
     ClassDB::bind_method(D_METHOD("get_CoversSpaces"), &IfcCovering::get_CoversSpaces);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "CoversSpaces"), "", "get_CoversSpaces");
     ClassDB::bind_method(D_METHOD("get_CoversElements"), &IfcCovering::get_CoversElements);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "CoversElements"), "", "get_CoversElements");
+    ClassDB::bind_method(D_METHOD("get_HasPorts"), &IfcCovering::get_HasPorts);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasPorts"), "", "get_HasPorts");
+    ClassDB::bind_method(D_METHOD("get_Covers"), &IfcCovering::get_Covers);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "Covers"), "", "get_Covers");
 }
 
-godot::String IfcCovering::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcCovering::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCovering::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcCovering::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 godot::Array IfcCovering::get_CoversSpaces() {
@@ -5021,52 +4877,54 @@ godot::Array IfcCovering::get_CoversElements() {
     return get_inverse(godot::String("CoversElements"));
 }
 
+godot::Array IfcCovering::get_HasPorts() {
+    return get_inverse(godot::String("HasPorts"));
+}
+
+godot::Array IfcCovering::get_Covers() {
+    return get_inverse(godot::String("Covers"));
+}
+
 void IfcCoveringType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCoveringType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCoveringType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCoveringType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcCoveringType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCoveringType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcCoveringType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCrewResource::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCrewResource::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCrewResource::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCrewResource::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(10));
+godot::Variant IfcCrewResource::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCrewResource::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 10, v);
+void IfcCrewResource::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCrewResourceType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCrewResourceType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCrewResourceType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCrewResourceType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(11));
+godot::Variant IfcCrewResourceType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCrewResourceType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 11, v);
+void IfcCrewResourceType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCsgSolid::_bind_methods() {
@@ -5076,13 +4934,12 @@ void IfcCsgSolid::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcCsgSolid::get_TreeRootExpression() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(0), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "TreeRootExpression");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcCsgSolid::set_TreeRootExpression(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 0, v);
+    gd_set_attribute(entity_, "TreeRootExpression", v);
 }
 
 void IfcCurrencyRelationship::_bind_methods() {
@@ -5094,95 +4951,90 @@ void IfcCurrencyRelationship::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "RelatedMonetaryUnit", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_RelatedMonetaryUnit", "get_RelatedMonetaryUnit");
     ClassDB::bind_method(D_METHOD("get_ExchangeRate"), &IfcCurrencyRelationship::get_ExchangeRate);
     ClassDB::bind_method(D_METHOD("set_ExchangeRate","v"), &IfcCurrencyRelationship::set_ExchangeRate);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ExchangeRate"), "set_ExchangeRate", "get_ExchangeRate");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ExchangeRate", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ExchangeRate", "get_ExchangeRate");
     ClassDB::bind_method(D_METHOD("get_RateDateTime"), &IfcCurrencyRelationship::get_RateDateTime);
     ClassDB::bind_method(D_METHOD("set_RateDateTime","v"), &IfcCurrencyRelationship::set_RateDateTime);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "RateDateTime"), "set_RateDateTime", "get_RateDateTime");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RateDateTime", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RateDateTime", "get_RateDateTime");
     ClassDB::bind_method(D_METHOD("get_RateSource"), &IfcCurrencyRelationship::get_RateSource);
     ClassDB::bind_method(D_METHOD("set_RateSource","v"), &IfcCurrencyRelationship::set_RateSource);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "RateSource", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_RateSource", "get_RateSource");
 }
 
 Ref<GDIFCEntityBase> IfcCurrencyRelationship::get_RelatingMonetaryUnit() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "RelatingMonetaryUnit");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcCurrencyRelationship::set_RelatingMonetaryUnit(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+    gd_set_attribute(entity_, "RelatingMonetaryUnit", v);
 }
 
 Ref<GDIFCEntityBase> IfcCurrencyRelationship::get_RelatedMonetaryUnit() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(3), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "RelatedMonetaryUnit");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcCurrencyRelationship::set_RelatedMonetaryUnit(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 3, v);
+    gd_set_attribute(entity_, "RelatedMonetaryUnit", v);
 }
 
-double IfcCurrencyRelationship::get_ExchangeRate() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(4));
+godot::Variant IfcCurrencyRelationship::get_ExchangeRate() {
+    return gd_get_attribute(entity_, "ExchangeRate", file_);
 }
 
-void IfcCurrencyRelationship::set_ExchangeRate(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 4, v);
+void IfcCurrencyRelationship::set_ExchangeRate(godot::Variant v) {
+    gd_set_attribute(entity_, "ExchangeRate", v);
 }
 
-godot::String IfcCurrencyRelationship::get_RateDateTime() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(5));
+godot::Variant IfcCurrencyRelationship::get_RateDateTime() {
+    return gd_get_attribute(entity_, "RateDateTime", file_);
 }
 
-void IfcCurrencyRelationship::set_RateDateTime(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 5, v);
+void IfcCurrencyRelationship::set_RateDateTime(godot::Variant v) {
+    gd_set_attribute(entity_, "RateDateTime", v);
 }
 
 Ref<GDIFCEntityBase> IfcCurrencyRelationship::get_RateSource() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(6), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "RateSource");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcCurrencyRelationship::set_RateSource(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 6, v);
+    gd_set_attribute(entity_, "RateSource", v);
 }
 
 void IfcCurtainWall::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCurtainWall::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCurtainWall::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
+    ClassDB::bind_method(D_METHOD("get_HasPorts"), &IfcCurtainWall::get_HasPorts);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasPorts"), "", "get_HasPorts");
 }
 
-godot::String IfcCurtainWall::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcCurtainWall::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCurtainWall::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcCurtainWall::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
+}
+
+godot::Array IfcCurtainWall::get_HasPorts() {
+    return get_inverse(godot::String("HasPorts"));
 }
 
 void IfcCurtainWallType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcCurtainWallType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcCurtainWallType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcCurtainWallType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcCurtainWallType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcCurtainWallType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcCurtainWallType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcCurveBoundedPlane::_bind_methods() {
@@ -5194,37 +5046,33 @@ void IfcCurveBoundedPlane::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "OuterBoundary", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_OuterBoundary", "get_OuterBoundary");
     ClassDB::bind_method(D_METHOD("get_InnerBoundaries"), &IfcCurveBoundedPlane::get_InnerBoundaries);
     ClassDB::bind_method(D_METHOD("set_InnerBoundaries","v"), &IfcCurveBoundedPlane::set_InnerBoundaries);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "InnerBoundaries"), "set_InnerBoundaries", "get_InnerBoundaries");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "InnerBoundaries", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_InnerBoundaries", "get_InnerBoundaries");
 }
 
 Ref<GDIFCEntityBase> IfcCurveBoundedPlane::get_BasisSurface() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(0), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "BasisSurface");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcCurveBoundedPlane::set_BasisSurface(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 0, v);
+    gd_set_attribute(entity_, "BasisSurface", v);
 }
 
 Ref<GDIFCEntityBase> IfcCurveBoundedPlane::get_OuterBoundary() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(1), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "OuterBoundary");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcCurveBoundedPlane::set_OuterBoundary(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 1, v);
+    gd_set_attribute(entity_, "OuterBoundary", v);
 }
 
-godot::Array IfcCurveBoundedPlane::get_InnerBoundaries() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(2), file_);
+godot::Variant IfcCurveBoundedPlane::get_InnerBoundaries() {
+    return gd_get_attribute(entity_, "InnerBoundaries", file_);
 }
 
-void IfcCurveBoundedPlane::set_InnerBoundaries(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 2, v);
+void IfcCurveBoundedPlane::set_InnerBoundaries(godot::Variant v) {
+    gd_set_attribute(entity_, "InnerBoundaries", v);
 }
 
 void IfcCurveBoundedSurface::_bind_methods() {
@@ -5233,40 +5081,35 @@ void IfcCurveBoundedSurface::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "BasisSurface", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_BasisSurface", "get_BasisSurface");
     ClassDB::bind_method(D_METHOD("get_Boundaries"), &IfcCurveBoundedSurface::get_Boundaries);
     ClassDB::bind_method(D_METHOD("set_Boundaries","v"), &IfcCurveBoundedSurface::set_Boundaries);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "Boundaries"), "set_Boundaries", "get_Boundaries");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Boundaries", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Boundaries", "get_Boundaries");
     ClassDB::bind_method(D_METHOD("get_ImplicitOuter"), &IfcCurveBoundedSurface::get_ImplicitOuter);
     ClassDB::bind_method(D_METHOD("set_ImplicitOuter","v"), &IfcCurveBoundedSurface::set_ImplicitOuter);
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "ImplicitOuter"), "set_ImplicitOuter", "get_ImplicitOuter");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ImplicitOuter", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ImplicitOuter", "get_ImplicitOuter");
 }
 
 Ref<GDIFCEntityBase> IfcCurveBoundedSurface::get_BasisSurface() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(0), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "BasisSurface");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcCurveBoundedSurface::set_BasisSurface(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 0, v);
+    gd_set_attribute(entity_, "BasisSurface", v);
 }
 
-godot::Array IfcCurveBoundedSurface::get_Boundaries() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(1), file_);
+godot::Variant IfcCurveBoundedSurface::get_Boundaries() {
+    return gd_get_attribute(entity_, "Boundaries", file_);
 }
 
-void IfcCurveBoundedSurface::set_Boundaries(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 1, v);
+void IfcCurveBoundedSurface::set_Boundaries(godot::Variant v) {
+    gd_set_attribute(entity_, "Boundaries", v);
 }
 
-bool IfcCurveBoundedSurface::get_ImplicitOuter() {
-    if (!entity_) return false;
-    return gd_attr_bool(entity_->get_attribute_value(2));
+godot::Variant IfcCurveBoundedSurface::get_ImplicitOuter() {
+    return gd_get_attribute(entity_, "ImplicitOuter", file_);
 }
 
-void IfcCurveBoundedSurface::set_ImplicitOuter(bool v) {
-    if (!entity_) return;
-    gd_set_bool(entity_, 2, v);
+void IfcCurveBoundedSurface::set_ImplicitOuter(godot::Variant v) {
+    gd_set_attribute(entity_, "ImplicitOuter", v);
 }
 
 void IfcCurveSegment::_bind_methods() {
@@ -5275,53 +5118,47 @@ void IfcCurveSegment::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "Placement", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_Placement", "get_Placement");
     ClassDB::bind_method(D_METHOD("get_SegmentStart"), &IfcCurveSegment::get_SegmentStart);
     ClassDB::bind_method(D_METHOD("set_SegmentStart","v"), &IfcCurveSegment::set_SegmentStart);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "SegmentStart", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_SegmentStart", "get_SegmentStart");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "SegmentStart", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_SegmentStart", "get_SegmentStart");
     ClassDB::bind_method(D_METHOD("get_SegmentLength"), &IfcCurveSegment::get_SegmentLength);
     ClassDB::bind_method(D_METHOD("set_SegmentLength","v"), &IfcCurveSegment::set_SegmentLength);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "SegmentLength", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_SegmentLength", "get_SegmentLength");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "SegmentLength", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_SegmentLength", "get_SegmentLength");
     ClassDB::bind_method(D_METHOD("get_ParentCurve"), &IfcCurveSegment::get_ParentCurve);
     ClassDB::bind_method(D_METHOD("set_ParentCurve","v"), &IfcCurveSegment::set_ParentCurve);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "ParentCurve", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_ParentCurve", "get_ParentCurve");
 }
 
 Ref<GDIFCEntityBase> IfcCurveSegment::get_Placement() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(1), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "Placement");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcCurveSegment::set_Placement(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 1, v);
+    gd_set_attribute(entity_, "Placement", v);
 }
 
-Ref<GDIFCEntityBase> IfcCurveSegment::get_SegmentStart() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+godot::Variant IfcCurveSegment::get_SegmentStart() {
+    return gd_get_attribute(entity_, "SegmentStart", file_);
 }
 
-void IfcCurveSegment::set_SegmentStart(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+void IfcCurveSegment::set_SegmentStart(godot::Variant v) {
+    gd_set_attribute(entity_, "SegmentStart", v);
 }
 
-Ref<GDIFCEntityBase> IfcCurveSegment::get_SegmentLength() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(3), file_);
+godot::Variant IfcCurveSegment::get_SegmentLength() {
+    return gd_get_attribute(entity_, "SegmentLength", file_);
 }
 
-void IfcCurveSegment::set_SegmentLength(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 3, v);
+void IfcCurveSegment::set_SegmentLength(godot::Variant v) {
+    gd_set_attribute(entity_, "SegmentLength", v);
 }
 
 Ref<GDIFCEntityBase> IfcCurveSegment::get_ParentCurve() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(4), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "ParentCurve");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcCurveSegment::set_ParentCurve(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 4, v);
+    gd_set_attribute(entity_, "ParentCurve", v);
 }
 
 void IfcCurveStyle::_bind_methods() {
@@ -5330,153 +5167,140 @@ void IfcCurveStyle::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "CurveFont", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_CurveFont", "get_CurveFont");
     ClassDB::bind_method(D_METHOD("get_CurveWidth"), &IfcCurveStyle::get_CurveWidth);
     ClassDB::bind_method(D_METHOD("set_CurveWidth","v"), &IfcCurveStyle::set_CurveWidth);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "CurveWidth", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_CurveWidth", "get_CurveWidth");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "CurveWidth", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_CurveWidth", "get_CurveWidth");
     ClassDB::bind_method(D_METHOD("get_CurveColour"), &IfcCurveStyle::get_CurveColour);
     ClassDB::bind_method(D_METHOD("set_CurveColour","v"), &IfcCurveStyle::set_CurveColour);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "CurveColour", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_CurveColour", "get_CurveColour");
     ClassDB::bind_method(D_METHOD("get_ModelOrDraughting"), &IfcCurveStyle::get_ModelOrDraughting);
     ClassDB::bind_method(D_METHOD("set_ModelOrDraughting","v"), &IfcCurveStyle::set_ModelOrDraughting);
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "ModelOrDraughting"), "set_ModelOrDraughting", "get_ModelOrDraughting");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ModelOrDraughting", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ModelOrDraughting", "get_ModelOrDraughting");
 }
 
 Ref<GDIFCEntityBase> IfcCurveStyle::get_CurveFont() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(1), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "CurveFont");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcCurveStyle::set_CurveFont(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 1, v);
+    gd_set_attribute(entity_, "CurveFont", v);
 }
 
-Ref<GDIFCEntityBase> IfcCurveStyle::get_CurveWidth() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+godot::Variant IfcCurveStyle::get_CurveWidth() {
+    return gd_get_attribute(entity_, "CurveWidth", file_);
 }
 
-void IfcCurveStyle::set_CurveWidth(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+void IfcCurveStyle::set_CurveWidth(godot::Variant v) {
+    gd_set_attribute(entity_, "CurveWidth", v);
 }
 
 Ref<GDIFCEntityBase> IfcCurveStyle::get_CurveColour() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(3), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "CurveColour");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcCurveStyle::set_CurveColour(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 3, v);
+    gd_set_attribute(entity_, "CurveColour", v);
 }
 
-bool IfcCurveStyle::get_ModelOrDraughting() {
-    if (!entity_) return false;
-    return gd_attr_bool(entity_->get_attribute_value(4));
+godot::Variant IfcCurveStyle::get_ModelOrDraughting() {
+    return gd_get_attribute(entity_, "ModelOrDraughting", file_);
 }
 
-void IfcCurveStyle::set_ModelOrDraughting(bool v) {
-    if (!entity_) return;
-    gd_set_bool(entity_, 4, v);
+void IfcCurveStyle::set_ModelOrDraughting(godot::Variant v) {
+    gd_set_attribute(entity_, "ModelOrDraughting", v);
 }
 
 void IfcCurveStyleFont::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Name"), &IfcCurveStyleFont::get_Name);
     ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcCurveStyleFont::set_Name);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Name"), "set_Name", "get_Name");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Name", "get_Name");
     ClassDB::bind_method(D_METHOD("get_PatternList"), &IfcCurveStyleFont::get_PatternList);
     ClassDB::bind_method(D_METHOD("set_PatternList","v"), &IfcCurveStyleFont::set_PatternList);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "PatternList"), "set_PatternList", "get_PatternList");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PatternList", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PatternList", "get_PatternList");
 }
 
-godot::String IfcCurveStyleFont::get_Name() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(0));
+godot::Variant IfcCurveStyleFont::get_Name() {
+    return gd_get_attribute(entity_, "Name", file_);
 }
 
-void IfcCurveStyleFont::set_Name(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 0, v);
+void IfcCurveStyleFont::set_Name(godot::Variant v) {
+    gd_set_attribute(entity_, "Name", v);
 }
 
-godot::Array IfcCurveStyleFont::get_PatternList() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(1), file_);
+godot::Variant IfcCurveStyleFont::get_PatternList() {
+    return gd_get_attribute(entity_, "PatternList", file_);
 }
 
-void IfcCurveStyleFont::set_PatternList(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 1, v);
+void IfcCurveStyleFont::set_PatternList(godot::Variant v) {
+    gd_set_attribute(entity_, "PatternList", v);
 }
+
+static const GDIFCAttributeAlias IfcCurveStyleFontAndScaling_CurveStyleFont_aliases[] = {
+    {"IFC4", "IFCCURVESTYLEFONTANDSCALING", "CurveFont"},
+    {"IFC2X3", "IFCCURVESTYLEFONTANDSCALING", "CurveFont"},
+    {nullptr, nullptr, nullptr},
+};
 
 void IfcCurveStyleFontAndScaling::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Name"), &IfcCurveStyleFontAndScaling::get_Name);
     ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcCurveStyleFontAndScaling::set_Name);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Name"), "set_Name", "get_Name");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Name", "get_Name");
     ClassDB::bind_method(D_METHOD("get_CurveStyleFont"), &IfcCurveStyleFontAndScaling::get_CurveStyleFont);
     ClassDB::bind_method(D_METHOD("set_CurveStyleFont","v"), &IfcCurveStyleFontAndScaling::set_CurveStyleFont);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "CurveStyleFont", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_CurveStyleFont", "get_CurveStyleFont");
     ClassDB::bind_method(D_METHOD("get_CurveFontScaling"), &IfcCurveStyleFontAndScaling::get_CurveFontScaling);
     ClassDB::bind_method(D_METHOD("set_CurveFontScaling","v"), &IfcCurveStyleFontAndScaling::set_CurveFontScaling);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "CurveFontScaling"), "set_CurveFontScaling", "get_CurveFontScaling");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "CurveFontScaling", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_CurveFontScaling", "get_CurveFontScaling");
 }
 
-godot::String IfcCurveStyleFontAndScaling::get_Name() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(0));
+godot::Variant IfcCurveStyleFontAndScaling::get_Name() {
+    return gd_get_attribute(entity_, "Name", file_);
 }
 
-void IfcCurveStyleFontAndScaling::set_Name(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 0, v);
+void IfcCurveStyleFontAndScaling::set_Name(godot::Variant v) {
+    gd_set_attribute(entity_, "Name", v);
 }
 
 Ref<GDIFCEntityBase> IfcCurveStyleFontAndScaling::get_CurveStyleFont() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(1), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "CurveStyleFont", IfcCurveStyleFontAndScaling_CurveStyleFont_aliases);
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcCurveStyleFontAndScaling::set_CurveStyleFont(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 1, v);
+    gd_set_attribute(entity_, "CurveStyleFont", v, IfcCurveStyleFontAndScaling_CurveStyleFont_aliases);
 }
 
-double IfcCurveStyleFontAndScaling::get_CurveFontScaling() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(2));
+godot::Variant IfcCurveStyleFontAndScaling::get_CurveFontScaling() {
+    return gd_get_attribute(entity_, "CurveFontScaling", file_);
 }
 
-void IfcCurveStyleFontAndScaling::set_CurveFontScaling(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 2, v);
+void IfcCurveStyleFontAndScaling::set_CurveFontScaling(godot::Variant v) {
+    gd_set_attribute(entity_, "CurveFontScaling", v);
 }
 
 void IfcCurveStyleFontPattern::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_VisibleSegmentLength"), &IfcCurveStyleFontPattern::get_VisibleSegmentLength);
     ClassDB::bind_method(D_METHOD("set_VisibleSegmentLength","v"), &IfcCurveStyleFontPattern::set_VisibleSegmentLength);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "VisibleSegmentLength"), "set_VisibleSegmentLength", "get_VisibleSegmentLength");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "VisibleSegmentLength", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_VisibleSegmentLength", "get_VisibleSegmentLength");
     ClassDB::bind_method(D_METHOD("get_InvisibleSegmentLength"), &IfcCurveStyleFontPattern::get_InvisibleSegmentLength);
     ClassDB::bind_method(D_METHOD("set_InvisibleSegmentLength","v"), &IfcCurveStyleFontPattern::set_InvisibleSegmentLength);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "InvisibleSegmentLength"), "set_InvisibleSegmentLength", "get_InvisibleSegmentLength");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "InvisibleSegmentLength", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_InvisibleSegmentLength", "get_InvisibleSegmentLength");
 }
 
-double IfcCurveStyleFontPattern::get_VisibleSegmentLength() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(0));
+godot::Variant IfcCurveStyleFontPattern::get_VisibleSegmentLength() {
+    return gd_get_attribute(entity_, "VisibleSegmentLength", file_);
 }
 
-void IfcCurveStyleFontPattern::set_VisibleSegmentLength(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 0, v);
+void IfcCurveStyleFontPattern::set_VisibleSegmentLength(godot::Variant v) {
+    gd_set_attribute(entity_, "VisibleSegmentLength", v);
 }
 
-double IfcCurveStyleFontPattern::get_InvisibleSegmentLength() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(1));
+godot::Variant IfcCurveStyleFontPattern::get_InvisibleSegmentLength() {
+    return gd_get_attribute(entity_, "InvisibleSegmentLength", file_);
 }
 
-void IfcCurveStyleFontPattern::set_InvisibleSegmentLength(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 1, v);
+void IfcCurveStyleFontPattern::set_InvisibleSegmentLength(godot::Variant v) {
+    gd_set_attribute(entity_, "InvisibleSegmentLength", v);
 }
 
 void IfcElementarySurface::_bind_methods() {
@@ -5486,61 +5310,54 @@ void IfcElementarySurface::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcElementarySurface::get_Position() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(0), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "Position");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcElementarySurface::set_Position(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 0, v);
+    gd_set_attribute(entity_, "Position", v);
 }
 
 void IfcCylindricalSurface::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Radius"), &IfcCylindricalSurface::get_Radius);
     ClassDB::bind_method(D_METHOD("set_Radius","v"), &IfcCylindricalSurface::set_Radius);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "Radius"), "set_Radius", "get_Radius");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Radius", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Radius", "get_Radius");
 }
 
-double IfcCylindricalSurface::get_Radius() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(1));
+godot::Variant IfcCylindricalSurface::get_Radius() {
+    return gd_get_attribute(entity_, "Radius", file_);
 }
 
-void IfcCylindricalSurface::set_Radius(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 1, v);
+void IfcCylindricalSurface::set_Radius(godot::Variant v) {
+    gd_set_attribute(entity_, "Radius", v);
 }
 
 void IfcDamper::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcDamper::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcDamper::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcDamper::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcDamper::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcDamper::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcDamper::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcDamperType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcDamperType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcDamperType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcDamperType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcDamperType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcDamperType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcDamperType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcDerivedProfileDef::_bind_methods() {
@@ -5552,92 +5369,80 @@ void IfcDerivedProfileDef::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "Operator", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_Operator", "get_Operator");
     ClassDB::bind_method(D_METHOD("get_Label"), &IfcDerivedProfileDef::get_Label);
     ClassDB::bind_method(D_METHOD("set_Label","v"), &IfcDerivedProfileDef::set_Label);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Label"), "set_Label", "get_Label");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Label", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Label", "get_Label");
 }
 
 Ref<GDIFCEntityBase> IfcDerivedProfileDef::get_ParentProfile() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "ParentProfile");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcDerivedProfileDef::set_ParentProfile(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+    gd_set_attribute(entity_, "ParentProfile", v);
 }
 
 Ref<GDIFCEntityBase> IfcDerivedProfileDef::get_Operator() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(3), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "Operator");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcDerivedProfileDef::set_Operator(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 3, v);
+    gd_set_attribute(entity_, "Operator", v);
 }
 
-godot::String IfcDerivedProfileDef::get_Label() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(4));
+godot::Variant IfcDerivedProfileDef::get_Label() {
+    return gd_get_attribute(entity_, "Label", file_);
 }
 
-void IfcDerivedProfileDef::set_Label(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 4, v);
+void IfcDerivedProfileDef::set_Label(godot::Variant v) {
+    gd_set_attribute(entity_, "Label", v);
 }
 
 void IfcDerivedUnit::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Elements"), &IfcDerivedUnit::get_Elements);
     ClassDB::bind_method(D_METHOD("set_Elements","v"), &IfcDerivedUnit::set_Elements);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "Elements"), "set_Elements", "get_Elements");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Elements", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Elements", "get_Elements");
     ClassDB::bind_method(D_METHOD("get_UnitType"), &IfcDerivedUnit::get_UnitType);
     ClassDB::bind_method(D_METHOD("set_UnitType","v"), &IfcDerivedUnit::set_UnitType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "UnitType"), "set_UnitType", "get_UnitType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "UnitType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_UnitType", "get_UnitType");
     ClassDB::bind_method(D_METHOD("get_UserDefinedType"), &IfcDerivedUnit::get_UserDefinedType);
     ClassDB::bind_method(D_METHOD("set_UserDefinedType","v"), &IfcDerivedUnit::set_UserDefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "UserDefinedType"), "set_UserDefinedType", "get_UserDefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "UserDefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_UserDefinedType", "get_UserDefinedType");
     ClassDB::bind_method(D_METHOD("get_Name"), &IfcDerivedUnit::get_Name);
     ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcDerivedUnit::set_Name);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Name"), "set_Name", "get_Name");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Name", "get_Name");
 }
 
-godot::Array IfcDerivedUnit::get_Elements() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(0), file_);
+godot::Variant IfcDerivedUnit::get_Elements() {
+    return gd_get_attribute(entity_, "Elements", file_);
 }
 
-void IfcDerivedUnit::set_Elements(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 0, v);
+void IfcDerivedUnit::set_Elements(godot::Variant v) {
+    gd_set_attribute(entity_, "Elements", v);
 }
 
-godot::String IfcDerivedUnit::get_UnitType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(1));
+godot::Variant IfcDerivedUnit::get_UnitType() {
+    return gd_get_attribute(entity_, "UnitType", file_);
 }
 
-void IfcDerivedUnit::set_UnitType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 1, v);
+void IfcDerivedUnit::set_UnitType(godot::Variant v) {
+    gd_set_attribute(entity_, "UnitType", v);
 }
 
-godot::String IfcDerivedUnit::get_UserDefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(2));
+godot::Variant IfcDerivedUnit::get_UserDefinedType() {
+    return gd_get_attribute(entity_, "UserDefinedType", file_);
 }
 
-void IfcDerivedUnit::set_UserDefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 2, v);
+void IfcDerivedUnit::set_UserDefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "UserDefinedType", v);
 }
 
-godot::String IfcDerivedUnit::get_Name() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(3));
+godot::Variant IfcDerivedUnit::get_Name() {
+    return gd_get_attribute(entity_, "Name", file_);
 }
 
-void IfcDerivedUnit::set_Name(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 3, v);
+void IfcDerivedUnit::set_Name(godot::Variant v) {
+    gd_set_attribute(entity_, "Name", v);
 }
 
 void IfcDerivedUnitElement::_bind_methods() {
@@ -5646,137 +5451,118 @@ void IfcDerivedUnitElement::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "Unit", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_Unit", "get_Unit");
     ClassDB::bind_method(D_METHOD("get_Exponent"), &IfcDerivedUnitElement::get_Exponent);
     ClassDB::bind_method(D_METHOD("set_Exponent","v"), &IfcDerivedUnitElement::set_Exponent);
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "Exponent"), "set_Exponent", "get_Exponent");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Exponent", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Exponent", "get_Exponent");
 }
 
 Ref<GDIFCEntityBase> IfcDerivedUnitElement::get_Unit() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(0), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "Unit");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcDerivedUnitElement::set_Unit(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 0, v);
+    gd_set_attribute(entity_, "Unit", v);
 }
 
-int64_t IfcDerivedUnitElement::get_Exponent() {
-    if (!entity_) return 0;
-    return gd_attr_int(entity_->get_attribute_value(1));
+godot::Variant IfcDerivedUnitElement::get_Exponent() {
+    return gd_get_attribute(entity_, "Exponent", file_);
 }
 
-void IfcDerivedUnitElement::set_Exponent(int64_t v) {
-    if (!entity_) return;
-    gd_set_int(entity_, 1, v);
+void IfcDerivedUnitElement::set_Exponent(godot::Variant v) {
+    gd_set_attribute(entity_, "Exponent", v);
 }
 
 void IfcDimensionalExponents::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_LengthExponent"), &IfcDimensionalExponents::get_LengthExponent);
     ClassDB::bind_method(D_METHOD("set_LengthExponent","v"), &IfcDimensionalExponents::set_LengthExponent);
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "LengthExponent"), "set_LengthExponent", "get_LengthExponent");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LengthExponent", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LengthExponent", "get_LengthExponent");
     ClassDB::bind_method(D_METHOD("get_MassExponent"), &IfcDimensionalExponents::get_MassExponent);
     ClassDB::bind_method(D_METHOD("set_MassExponent","v"), &IfcDimensionalExponents::set_MassExponent);
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "MassExponent"), "set_MassExponent", "get_MassExponent");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "MassExponent", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_MassExponent", "get_MassExponent");
     ClassDB::bind_method(D_METHOD("get_TimeExponent"), &IfcDimensionalExponents::get_TimeExponent);
     ClassDB::bind_method(D_METHOD("set_TimeExponent","v"), &IfcDimensionalExponents::set_TimeExponent);
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "TimeExponent"), "set_TimeExponent", "get_TimeExponent");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TimeExponent", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TimeExponent", "get_TimeExponent");
     ClassDB::bind_method(D_METHOD("get_ElectricCurrentExponent"), &IfcDimensionalExponents::get_ElectricCurrentExponent);
     ClassDB::bind_method(D_METHOD("set_ElectricCurrentExponent","v"), &IfcDimensionalExponents::set_ElectricCurrentExponent);
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "ElectricCurrentExponent"), "set_ElectricCurrentExponent", "get_ElectricCurrentExponent");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ElectricCurrentExponent", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ElectricCurrentExponent", "get_ElectricCurrentExponent");
     ClassDB::bind_method(D_METHOD("get_ThermodynamicTemperatureExponent"), &IfcDimensionalExponents::get_ThermodynamicTemperatureExponent);
     ClassDB::bind_method(D_METHOD("set_ThermodynamicTemperatureExponent","v"), &IfcDimensionalExponents::set_ThermodynamicTemperatureExponent);
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "ThermodynamicTemperatureExponent"), "set_ThermodynamicTemperatureExponent", "get_ThermodynamicTemperatureExponent");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ThermodynamicTemperatureExponent", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ThermodynamicTemperatureExponent", "get_ThermodynamicTemperatureExponent");
     ClassDB::bind_method(D_METHOD("get_AmountOfSubstanceExponent"), &IfcDimensionalExponents::get_AmountOfSubstanceExponent);
     ClassDB::bind_method(D_METHOD("set_AmountOfSubstanceExponent","v"), &IfcDimensionalExponents::set_AmountOfSubstanceExponent);
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "AmountOfSubstanceExponent"), "set_AmountOfSubstanceExponent", "get_AmountOfSubstanceExponent");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "AmountOfSubstanceExponent", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_AmountOfSubstanceExponent", "get_AmountOfSubstanceExponent");
     ClassDB::bind_method(D_METHOD("get_LuminousIntensityExponent"), &IfcDimensionalExponents::get_LuminousIntensityExponent);
     ClassDB::bind_method(D_METHOD("set_LuminousIntensityExponent","v"), &IfcDimensionalExponents::set_LuminousIntensityExponent);
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "LuminousIntensityExponent"), "set_LuminousIntensityExponent", "get_LuminousIntensityExponent");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LuminousIntensityExponent", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LuminousIntensityExponent", "get_LuminousIntensityExponent");
 }
 
-int64_t IfcDimensionalExponents::get_LengthExponent() {
-    if (!entity_) return 0;
-    return gd_attr_int(entity_->get_attribute_value(0));
+godot::Variant IfcDimensionalExponents::get_LengthExponent() {
+    return gd_get_attribute(entity_, "LengthExponent", file_);
 }
 
-void IfcDimensionalExponents::set_LengthExponent(int64_t v) {
-    if (!entity_) return;
-    gd_set_int(entity_, 0, v);
+void IfcDimensionalExponents::set_LengthExponent(godot::Variant v) {
+    gd_set_attribute(entity_, "LengthExponent", v);
 }
 
-int64_t IfcDimensionalExponents::get_MassExponent() {
-    if (!entity_) return 0;
-    return gd_attr_int(entity_->get_attribute_value(1));
+godot::Variant IfcDimensionalExponents::get_MassExponent() {
+    return gd_get_attribute(entity_, "MassExponent", file_);
 }
 
-void IfcDimensionalExponents::set_MassExponent(int64_t v) {
-    if (!entity_) return;
-    gd_set_int(entity_, 1, v);
+void IfcDimensionalExponents::set_MassExponent(godot::Variant v) {
+    gd_set_attribute(entity_, "MassExponent", v);
 }
 
-int64_t IfcDimensionalExponents::get_TimeExponent() {
-    if (!entity_) return 0;
-    return gd_attr_int(entity_->get_attribute_value(2));
+godot::Variant IfcDimensionalExponents::get_TimeExponent() {
+    return gd_get_attribute(entity_, "TimeExponent", file_);
 }
 
-void IfcDimensionalExponents::set_TimeExponent(int64_t v) {
-    if (!entity_) return;
-    gd_set_int(entity_, 2, v);
+void IfcDimensionalExponents::set_TimeExponent(godot::Variant v) {
+    gd_set_attribute(entity_, "TimeExponent", v);
 }
 
-int64_t IfcDimensionalExponents::get_ElectricCurrentExponent() {
-    if (!entity_) return 0;
-    return gd_attr_int(entity_->get_attribute_value(3));
+godot::Variant IfcDimensionalExponents::get_ElectricCurrentExponent() {
+    return gd_get_attribute(entity_, "ElectricCurrentExponent", file_);
 }
 
-void IfcDimensionalExponents::set_ElectricCurrentExponent(int64_t v) {
-    if (!entity_) return;
-    gd_set_int(entity_, 3, v);
+void IfcDimensionalExponents::set_ElectricCurrentExponent(godot::Variant v) {
+    gd_set_attribute(entity_, "ElectricCurrentExponent", v);
 }
 
-int64_t IfcDimensionalExponents::get_ThermodynamicTemperatureExponent() {
-    if (!entity_) return 0;
-    return gd_attr_int(entity_->get_attribute_value(4));
+godot::Variant IfcDimensionalExponents::get_ThermodynamicTemperatureExponent() {
+    return gd_get_attribute(entity_, "ThermodynamicTemperatureExponent", file_);
 }
 
-void IfcDimensionalExponents::set_ThermodynamicTemperatureExponent(int64_t v) {
-    if (!entity_) return;
-    gd_set_int(entity_, 4, v);
+void IfcDimensionalExponents::set_ThermodynamicTemperatureExponent(godot::Variant v) {
+    gd_set_attribute(entity_, "ThermodynamicTemperatureExponent", v);
 }
 
-int64_t IfcDimensionalExponents::get_AmountOfSubstanceExponent() {
-    if (!entity_) return 0;
-    return gd_attr_int(entity_->get_attribute_value(5));
+godot::Variant IfcDimensionalExponents::get_AmountOfSubstanceExponent() {
+    return gd_get_attribute(entity_, "AmountOfSubstanceExponent", file_);
 }
 
-void IfcDimensionalExponents::set_AmountOfSubstanceExponent(int64_t v) {
-    if (!entity_) return;
-    gd_set_int(entity_, 5, v);
+void IfcDimensionalExponents::set_AmountOfSubstanceExponent(godot::Variant v) {
+    gd_set_attribute(entity_, "AmountOfSubstanceExponent", v);
 }
 
-int64_t IfcDimensionalExponents::get_LuminousIntensityExponent() {
-    if (!entity_) return 0;
-    return gd_attr_int(entity_->get_attribute_value(6));
+godot::Variant IfcDimensionalExponents::get_LuminousIntensityExponent() {
+    return gd_get_attribute(entity_, "LuminousIntensityExponent", file_);
 }
 
-void IfcDimensionalExponents::set_LuminousIntensityExponent(int64_t v) {
-    if (!entity_) return;
-    gd_set_int(entity_, 6, v);
+void IfcDimensionalExponents::set_LuminousIntensityExponent(godot::Variant v) {
+    gd_set_attribute(entity_, "LuminousIntensityExponent", v);
 }
 
 void IfcDirection::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_DirectionRatios"), &IfcDirection::get_DirectionRatios);
     ClassDB::bind_method(D_METHOD("set_DirectionRatios","v"), &IfcDirection::set_DirectionRatios);
-    ADD_PROPERTY(PropertyInfo(Variant::PACKED_FLOAT64_ARRAY, "DirectionRatios"), "set_DirectionRatios", "get_DirectionRatios");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "DirectionRatios", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_DirectionRatios", "get_DirectionRatios");
 }
 
-godot::PackedFloat64Array IfcDirection::get_DirectionRatios() {
-    if (!entity_) return godot::PackedFloat64Array();
-    return gd_attr_agg_double(entity_->get_attribute_value(0));
+godot::Variant IfcDirection::get_DirectionRatios() {
+    return gd_get_attribute(entity_, "DirectionRatios", file_);
 }
 
-void IfcDirection::set_DirectionRatios(godot::PackedFloat64Array v) {
-    if (!entity_) return;
-    gd_set_agg_double(entity_, 0, v);
+void IfcDirection::set_DirectionRatios(godot::Variant v) {
+    gd_set_attribute(entity_, "DirectionRatios", v);
 }
 
 void IfcDirectrixCurveSweptAreaSolid::_bind_methods() {
@@ -5785,40 +5571,35 @@ void IfcDirectrixCurveSweptAreaSolid::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "Directrix", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_Directrix", "get_Directrix");
     ClassDB::bind_method(D_METHOD("get_StartParam"), &IfcDirectrixCurveSweptAreaSolid::get_StartParam);
     ClassDB::bind_method(D_METHOD("set_StartParam","v"), &IfcDirectrixCurveSweptAreaSolid::set_StartParam);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "StartParam", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_StartParam", "get_StartParam");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "StartParam", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_StartParam", "get_StartParam");
     ClassDB::bind_method(D_METHOD("get_EndParam"), &IfcDirectrixCurveSweptAreaSolid::get_EndParam);
     ClassDB::bind_method(D_METHOD("set_EndParam","v"), &IfcDirectrixCurveSweptAreaSolid::set_EndParam);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "EndParam", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_EndParam", "get_EndParam");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "EndParam", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_EndParam", "get_EndParam");
 }
 
 Ref<GDIFCEntityBase> IfcDirectrixCurveSweptAreaSolid::get_Directrix() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "Directrix");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcDirectrixCurveSweptAreaSolid::set_Directrix(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+    gd_set_attribute(entity_, "Directrix", v);
 }
 
-Ref<GDIFCEntityBase> IfcDirectrixCurveSweptAreaSolid::get_StartParam() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(3), file_);
+godot::Variant IfcDirectrixCurveSweptAreaSolid::get_StartParam() {
+    return gd_get_attribute(entity_, "StartParam", file_);
 }
 
-void IfcDirectrixCurveSweptAreaSolid::set_StartParam(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 3, v);
+void IfcDirectrixCurveSweptAreaSolid::set_StartParam(godot::Variant v) {
+    gd_set_attribute(entity_, "StartParam", v);
 }
 
-Ref<GDIFCEntityBase> IfcDirectrixCurveSweptAreaSolid::get_EndParam() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(4), file_);
+godot::Variant IfcDirectrixCurveSweptAreaSolid::get_EndParam() {
+    return gd_get_attribute(entity_, "EndParam", file_);
 }
 
-void IfcDirectrixCurveSweptAreaSolid::set_EndParam(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 4, v);
+void IfcDirectrixCurveSweptAreaSolid::set_EndParam(godot::Variant v) {
+    gd_set_attribute(entity_, "EndParam", v);
 }
 
 void IfcDirectrixDerivedReferenceSweptAreaSolid::_bind_methods() {
@@ -5827,126 +5608,110 @@ void IfcDirectrixDerivedReferenceSweptAreaSolid::_bind_methods() {
 void IfcDiscreteAccessory::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcDiscreteAccessory::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcDiscreteAccessory::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcDiscreteAccessory::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcDiscreteAccessory::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcDiscreteAccessory::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcDiscreteAccessory::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcDiscreteAccessoryType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcDiscreteAccessoryType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcDiscreteAccessoryType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcDiscreteAccessoryType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcDiscreteAccessoryType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcDiscreteAccessoryType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcDiscreteAccessoryType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcDistributionBoard::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcDistributionBoard::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcDistributionBoard::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcDistributionBoard::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcDistributionBoard::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcDistributionBoard::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcDistributionBoard::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcDistributionBoardType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcDistributionBoardType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcDistributionBoardType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcDistributionBoardType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcDistributionBoardType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcDistributionBoardType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcDistributionBoardType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcDistributionChamberElement::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcDistributionChamberElement::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcDistributionChamberElement::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcDistributionChamberElement::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcDistributionChamberElement::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcDistributionChamberElement::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcDistributionChamberElement::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcDistributionChamberElementType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcDistributionChamberElementType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcDistributionChamberElementType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcDistributionChamberElementType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcDistributionChamberElementType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcDistributionChamberElementType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcDistributionChamberElementType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcDistributionSystem::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_LongName"), &IfcDistributionSystem::get_LongName);
     ClassDB::bind_method(D_METHOD("set_LongName","v"), &IfcDistributionSystem::set_LongName);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "LongName"), "set_LongName", "get_LongName");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LongName", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LongName", "get_LongName");
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcDistributionSystem::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcDistributionSystem::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcDistributionSystem::get_LongName() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(5));
+godot::Variant IfcDistributionSystem::get_LongName() {
+    return gd_get_attribute(entity_, "LongName", file_);
 }
 
-void IfcDistributionSystem::set_LongName(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 5, v);
+void IfcDistributionSystem::set_LongName(godot::Variant v) {
+    gd_set_attribute(entity_, "LongName", v);
 }
 
-godot::String IfcDistributionSystem::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(6));
+godot::Variant IfcDistributionSystem::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcDistributionSystem::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 6, v);
+void IfcDistributionSystem::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcDistributionCircuit::_bind_methods() {
@@ -5955,97 +5720,99 @@ void IfcDistributionCircuit::_bind_methods() {
 void IfcDistributionPort::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_FlowDirection"), &IfcDistributionPort::get_FlowDirection);
     ClassDB::bind_method(D_METHOD("set_FlowDirection","v"), &IfcDistributionPort::set_FlowDirection);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "FlowDirection"), "set_FlowDirection", "get_FlowDirection");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "FlowDirection", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_FlowDirection", "get_FlowDirection");
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcDistributionPort::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcDistributionPort::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
     ClassDB::bind_method(D_METHOD("get_SystemType"), &IfcDistributionPort::get_SystemType);
     ClassDB::bind_method(D_METHOD("set_SystemType","v"), &IfcDistributionPort::set_SystemType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "SystemType"), "set_SystemType", "get_SystemType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "SystemType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_SystemType", "get_SystemType");
 }
 
-godot::String IfcDistributionPort::get_FlowDirection() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(7));
+godot::Variant IfcDistributionPort::get_FlowDirection() {
+    return gd_get_attribute(entity_, "FlowDirection", file_);
 }
 
-void IfcDistributionPort::set_FlowDirection(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 7, v);
+void IfcDistributionPort::set_FlowDirection(godot::Variant v) {
+    gd_set_attribute(entity_, "FlowDirection", v);
 }
 
-godot::String IfcDistributionPort::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcDistributionPort::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcDistributionPort::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcDistributionPort::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
-godot::String IfcDistributionPort::get_SystemType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcDistributionPort::get_SystemType() {
+    return gd_get_attribute(entity_, "SystemType", file_);
 }
 
-void IfcDistributionPort::set_SystemType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcDistributionPort::set_SystemType(godot::Variant v) {
+    gd_set_attribute(entity_, "SystemType", v);
 }
+
+static const GDIFCAttributeAlias IfcDocumentInformation_Identification_aliases[] = {
+    {"IFC2X3", "IFCDOCUMENTINFORMATION", "DocumentId"},
+    {nullptr, nullptr, nullptr},
+};
 
 void IfcDocumentInformation::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Identification"), &IfcDocumentInformation::get_Identification);
     ClassDB::bind_method(D_METHOD("set_Identification","v"), &IfcDocumentInformation::set_Identification);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Identification"), "set_Identification", "get_Identification");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Identification", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Identification", "get_Identification");
     ClassDB::bind_method(D_METHOD("get_Name"), &IfcDocumentInformation::get_Name);
     ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcDocumentInformation::set_Name);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Name"), "set_Name", "get_Name");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Name", "get_Name");
     ClassDB::bind_method(D_METHOD("get_Description"), &IfcDocumentInformation::get_Description);
     ClassDB::bind_method(D_METHOD("set_Description","v"), &IfcDocumentInformation::set_Description);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Description"), "set_Description", "get_Description");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Description", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Description", "get_Description");
     ClassDB::bind_method(D_METHOD("get_Location"), &IfcDocumentInformation::get_Location);
     ClassDB::bind_method(D_METHOD("set_Location","v"), &IfcDocumentInformation::set_Location);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Location"), "set_Location", "get_Location");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Location", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Location", "get_Location");
     ClassDB::bind_method(D_METHOD("get_Purpose"), &IfcDocumentInformation::get_Purpose);
     ClassDB::bind_method(D_METHOD("set_Purpose","v"), &IfcDocumentInformation::set_Purpose);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Purpose"), "set_Purpose", "get_Purpose");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Purpose", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Purpose", "get_Purpose");
     ClassDB::bind_method(D_METHOD("get_IntendedUse"), &IfcDocumentInformation::get_IntendedUse);
     ClassDB::bind_method(D_METHOD("set_IntendedUse","v"), &IfcDocumentInformation::set_IntendedUse);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "IntendedUse"), "set_IntendedUse", "get_IntendedUse");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "IntendedUse", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_IntendedUse", "get_IntendedUse");
     ClassDB::bind_method(D_METHOD("get_Scope"), &IfcDocumentInformation::get_Scope);
     ClassDB::bind_method(D_METHOD("set_Scope","v"), &IfcDocumentInformation::set_Scope);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Scope"), "set_Scope", "get_Scope");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Scope", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Scope", "get_Scope");
     ClassDB::bind_method(D_METHOD("get_Revision"), &IfcDocumentInformation::get_Revision);
     ClassDB::bind_method(D_METHOD("set_Revision","v"), &IfcDocumentInformation::set_Revision);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Revision"), "set_Revision", "get_Revision");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Revision", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Revision", "get_Revision");
     ClassDB::bind_method(D_METHOD("get_DocumentOwner"), &IfcDocumentInformation::get_DocumentOwner);
     ClassDB::bind_method(D_METHOD("set_DocumentOwner","v"), &IfcDocumentInformation::set_DocumentOwner);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "DocumentOwner", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_DocumentOwner", "get_DocumentOwner");
     ClassDB::bind_method(D_METHOD("get_Editors"), &IfcDocumentInformation::get_Editors);
     ClassDB::bind_method(D_METHOD("set_Editors","v"), &IfcDocumentInformation::set_Editors);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "Editors"), "set_Editors", "get_Editors");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Editors", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Editors", "get_Editors");
     ClassDB::bind_method(D_METHOD("get_CreationTime"), &IfcDocumentInformation::get_CreationTime);
     ClassDB::bind_method(D_METHOD("set_CreationTime","v"), &IfcDocumentInformation::set_CreationTime);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "CreationTime"), "set_CreationTime", "get_CreationTime");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "CreationTime", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_CreationTime", "get_CreationTime");
     ClassDB::bind_method(D_METHOD("get_LastRevisionTime"), &IfcDocumentInformation::get_LastRevisionTime);
     ClassDB::bind_method(D_METHOD("set_LastRevisionTime","v"), &IfcDocumentInformation::set_LastRevisionTime);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "LastRevisionTime"), "set_LastRevisionTime", "get_LastRevisionTime");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LastRevisionTime", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LastRevisionTime", "get_LastRevisionTime");
     ClassDB::bind_method(D_METHOD("get_ElectronicFormat"), &IfcDocumentInformation::get_ElectronicFormat);
     ClassDB::bind_method(D_METHOD("set_ElectronicFormat","v"), &IfcDocumentInformation::set_ElectronicFormat);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "ElectronicFormat"), "set_ElectronicFormat", "get_ElectronicFormat");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ElectronicFormat", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ElectronicFormat", "get_ElectronicFormat");
     ClassDB::bind_method(D_METHOD("get_ValidFrom"), &IfcDocumentInformation::get_ValidFrom);
     ClassDB::bind_method(D_METHOD("set_ValidFrom","v"), &IfcDocumentInformation::set_ValidFrom);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "ValidFrom"), "set_ValidFrom", "get_ValidFrom");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ValidFrom", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ValidFrom", "get_ValidFrom");
     ClassDB::bind_method(D_METHOD("get_ValidUntil"), &IfcDocumentInformation::get_ValidUntil);
     ClassDB::bind_method(D_METHOD("set_ValidUntil","v"), &IfcDocumentInformation::set_ValidUntil);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "ValidUntil"), "set_ValidUntil", "get_ValidUntil");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ValidUntil", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ValidUntil", "get_ValidUntil");
     ClassDB::bind_method(D_METHOD("get_Confidentiality"), &IfcDocumentInformation::get_Confidentiality);
     ClassDB::bind_method(D_METHOD("set_Confidentiality","v"), &IfcDocumentInformation::set_Confidentiality);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Confidentiality"), "set_Confidentiality", "get_Confidentiality");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Confidentiality", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Confidentiality", "get_Confidentiality");
     ClassDB::bind_method(D_METHOD("get_Status"), &IfcDocumentInformation::get_Status);
     ClassDB::bind_method(D_METHOD("set_Status","v"), &IfcDocumentInformation::set_Status);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Status"), "set_Status", "get_Status");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Status", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Status", "get_Status");
+    ClassDB::bind_method(D_METHOD("get_DocumentReferences"), &IfcDocumentInformation::get_DocumentReferences);
+    ClassDB::bind_method(D_METHOD("set_DocumentReferences","v"), &IfcDocumentInformation::set_DocumentReferences);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "DocumentReferences", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_DocumentReferences", "get_DocumentReferences");
     ClassDB::bind_method(D_METHOD("get_DocumentInfoForObjects"), &IfcDocumentInformation::get_DocumentInfoForObjects);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "DocumentInfoForObjects"), "", "get_DocumentInfoForObjects");
     ClassDB::bind_method(D_METHOD("get_HasDocumentReferences"), &IfcDocumentInformation::get_HasDocumentReferences);
@@ -6056,174 +5823,149 @@ void IfcDocumentInformation::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "IsPointer"), "", "get_IsPointer");
 }
 
-godot::String IfcDocumentInformation::get_Identification() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(0));
+godot::Variant IfcDocumentInformation::get_Identification() {
+    return gd_get_attribute(entity_, "Identification", file_, IfcDocumentInformation_Identification_aliases);
 }
 
-void IfcDocumentInformation::set_Identification(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 0, v);
+void IfcDocumentInformation::set_Identification(godot::Variant v) {
+    gd_set_attribute(entity_, "Identification", v, IfcDocumentInformation_Identification_aliases);
 }
 
-godot::String IfcDocumentInformation::get_Name() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(1));
+godot::Variant IfcDocumentInformation::get_Name() {
+    return gd_get_attribute(entity_, "Name", file_);
 }
 
-void IfcDocumentInformation::set_Name(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 1, v);
+void IfcDocumentInformation::set_Name(godot::Variant v) {
+    gd_set_attribute(entity_, "Name", v);
 }
 
-godot::String IfcDocumentInformation::get_Description() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(2));
+godot::Variant IfcDocumentInformation::get_Description() {
+    return gd_get_attribute(entity_, "Description", file_);
 }
 
-void IfcDocumentInformation::set_Description(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 2, v);
+void IfcDocumentInformation::set_Description(godot::Variant v) {
+    gd_set_attribute(entity_, "Description", v);
 }
 
-godot::String IfcDocumentInformation::get_Location() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(3));
+godot::Variant IfcDocumentInformation::get_Location() {
+    return gd_get_attribute(entity_, "Location", file_);
 }
 
-void IfcDocumentInformation::set_Location(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 3, v);
+void IfcDocumentInformation::set_Location(godot::Variant v) {
+    gd_set_attribute(entity_, "Location", v);
 }
 
-godot::String IfcDocumentInformation::get_Purpose() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(4));
+godot::Variant IfcDocumentInformation::get_Purpose() {
+    return gd_get_attribute(entity_, "Purpose", file_);
 }
 
-void IfcDocumentInformation::set_Purpose(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 4, v);
+void IfcDocumentInformation::set_Purpose(godot::Variant v) {
+    gd_set_attribute(entity_, "Purpose", v);
 }
 
-godot::String IfcDocumentInformation::get_IntendedUse() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(5));
+godot::Variant IfcDocumentInformation::get_IntendedUse() {
+    return gd_get_attribute(entity_, "IntendedUse", file_);
 }
 
-void IfcDocumentInformation::set_IntendedUse(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 5, v);
+void IfcDocumentInformation::set_IntendedUse(godot::Variant v) {
+    gd_set_attribute(entity_, "IntendedUse", v);
 }
 
-godot::String IfcDocumentInformation::get_Scope() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(6));
+godot::Variant IfcDocumentInformation::get_Scope() {
+    return gd_get_attribute(entity_, "Scope", file_);
 }
 
-void IfcDocumentInformation::set_Scope(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 6, v);
+void IfcDocumentInformation::set_Scope(godot::Variant v) {
+    gd_set_attribute(entity_, "Scope", v);
 }
 
-godot::String IfcDocumentInformation::get_Revision() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(7));
+godot::Variant IfcDocumentInformation::get_Revision() {
+    return gd_get_attribute(entity_, "Revision", file_);
 }
 
-void IfcDocumentInformation::set_Revision(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 7, v);
+void IfcDocumentInformation::set_Revision(godot::Variant v) {
+    gd_set_attribute(entity_, "Revision", v);
 }
 
 Ref<GDIFCEntityBase> IfcDocumentInformation::get_DocumentOwner() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(8), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "DocumentOwner");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcDocumentInformation::set_DocumentOwner(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 8, v);
+    gd_set_attribute(entity_, "DocumentOwner", v);
 }
 
-godot::Array IfcDocumentInformation::get_Editors() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(9), file_);
+godot::Variant IfcDocumentInformation::get_Editors() {
+    return gd_get_attribute(entity_, "Editors", file_);
 }
 
-void IfcDocumentInformation::set_Editors(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 9, v);
+void IfcDocumentInformation::set_Editors(godot::Variant v) {
+    gd_set_attribute(entity_, "Editors", v);
 }
 
-godot::String IfcDocumentInformation::get_CreationTime() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(10));
+godot::Variant IfcDocumentInformation::get_CreationTime() {
+    return gd_get_attribute(entity_, "CreationTime", file_);
 }
 
-void IfcDocumentInformation::set_CreationTime(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 10, v);
+void IfcDocumentInformation::set_CreationTime(godot::Variant v) {
+    gd_set_attribute(entity_, "CreationTime", v);
 }
 
-godot::String IfcDocumentInformation::get_LastRevisionTime() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(11));
+godot::Variant IfcDocumentInformation::get_LastRevisionTime() {
+    return gd_get_attribute(entity_, "LastRevisionTime", file_);
 }
 
-void IfcDocumentInformation::set_LastRevisionTime(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 11, v);
+void IfcDocumentInformation::set_LastRevisionTime(godot::Variant v) {
+    gd_set_attribute(entity_, "LastRevisionTime", v);
 }
 
-godot::String IfcDocumentInformation::get_ElectronicFormat() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(12));
+godot::Variant IfcDocumentInformation::get_ElectronicFormat() {
+    return gd_get_attribute(entity_, "ElectronicFormat", file_);
 }
 
-void IfcDocumentInformation::set_ElectronicFormat(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 12, v);
+void IfcDocumentInformation::set_ElectronicFormat(godot::Variant v) {
+    gd_set_attribute(entity_, "ElectronicFormat", v);
 }
 
-godot::String IfcDocumentInformation::get_ValidFrom() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(13));
+godot::Variant IfcDocumentInformation::get_ValidFrom() {
+    return gd_get_attribute(entity_, "ValidFrom", file_);
 }
 
-void IfcDocumentInformation::set_ValidFrom(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 13, v);
+void IfcDocumentInformation::set_ValidFrom(godot::Variant v) {
+    gd_set_attribute(entity_, "ValidFrom", v);
 }
 
-godot::String IfcDocumentInformation::get_ValidUntil() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(14));
+godot::Variant IfcDocumentInformation::get_ValidUntil() {
+    return gd_get_attribute(entity_, "ValidUntil", file_);
 }
 
-void IfcDocumentInformation::set_ValidUntil(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 14, v);
+void IfcDocumentInformation::set_ValidUntil(godot::Variant v) {
+    gd_set_attribute(entity_, "ValidUntil", v);
 }
 
-godot::String IfcDocumentInformation::get_Confidentiality() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(15));
+godot::Variant IfcDocumentInformation::get_Confidentiality() {
+    return gd_get_attribute(entity_, "Confidentiality", file_);
 }
 
-void IfcDocumentInformation::set_Confidentiality(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 15, v);
+void IfcDocumentInformation::set_Confidentiality(godot::Variant v) {
+    gd_set_attribute(entity_, "Confidentiality", v);
 }
 
-godot::String IfcDocumentInformation::get_Status() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(16));
+godot::Variant IfcDocumentInformation::get_Status() {
+    return gd_get_attribute(entity_, "Status", file_);
 }
 
-void IfcDocumentInformation::set_Status(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 16, v);
+void IfcDocumentInformation::set_Status(godot::Variant v) {
+    gd_set_attribute(entity_, "Status", v);
+}
+
+godot::Variant IfcDocumentInformation::get_DocumentReferences() {
+    return gd_get_attribute(entity_, "DocumentReferences", file_);
+}
+
+void IfcDocumentInformation::set_DocumentReferences(godot::Variant v) {
+    gd_set_attribute(entity_, "DocumentReferences", v);
 }
 
 godot::Array IfcDocumentInformation::get_DocumentInfoForObjects() {
@@ -6248,438 +5990,390 @@ void IfcDocumentInformationRelationship::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "RelatingDocument", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_RelatingDocument", "get_RelatingDocument");
     ClassDB::bind_method(D_METHOD("get_RelatedDocuments"), &IfcDocumentInformationRelationship::get_RelatedDocuments);
     ClassDB::bind_method(D_METHOD("set_RelatedDocuments","v"), &IfcDocumentInformationRelationship::set_RelatedDocuments);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "RelatedDocuments"), "set_RelatedDocuments", "get_RelatedDocuments");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RelatedDocuments", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RelatedDocuments", "get_RelatedDocuments");
     ClassDB::bind_method(D_METHOD("get_RelationshipType"), &IfcDocumentInformationRelationship::get_RelationshipType);
     ClassDB::bind_method(D_METHOD("set_RelationshipType","v"), &IfcDocumentInformationRelationship::set_RelationshipType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "RelationshipType"), "set_RelationshipType", "get_RelationshipType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RelationshipType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RelationshipType", "get_RelationshipType");
 }
 
 Ref<GDIFCEntityBase> IfcDocumentInformationRelationship::get_RelatingDocument() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "RelatingDocument");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcDocumentInformationRelationship::set_RelatingDocument(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+    gd_set_attribute(entity_, "RelatingDocument", v);
 }
 
-godot::Array IfcDocumentInformationRelationship::get_RelatedDocuments() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(3), file_);
+godot::Variant IfcDocumentInformationRelationship::get_RelatedDocuments() {
+    return gd_get_attribute(entity_, "RelatedDocuments", file_);
 }
 
-void IfcDocumentInformationRelationship::set_RelatedDocuments(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 3, v);
+void IfcDocumentInformationRelationship::set_RelatedDocuments(godot::Variant v) {
+    gd_set_attribute(entity_, "RelatedDocuments", v);
 }
 
-godot::String IfcDocumentInformationRelationship::get_RelationshipType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(4));
+godot::Variant IfcDocumentInformationRelationship::get_RelationshipType() {
+    return gd_get_attribute(entity_, "RelationshipType", file_);
 }
 
-void IfcDocumentInformationRelationship::set_RelationshipType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 4, v);
+void IfcDocumentInformationRelationship::set_RelationshipType(godot::Variant v) {
+    gd_set_attribute(entity_, "RelationshipType", v);
 }
 
 void IfcDocumentReference::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Description"), &IfcDocumentReference::get_Description);
     ClassDB::bind_method(D_METHOD("set_Description","v"), &IfcDocumentReference::set_Description);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Description"), "set_Description", "get_Description");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Description", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Description", "get_Description");
     ClassDB::bind_method(D_METHOD("get_ReferencedDocument"), &IfcDocumentReference::get_ReferencedDocument);
     ClassDB::bind_method(D_METHOD("set_ReferencedDocument","v"), &IfcDocumentReference::set_ReferencedDocument);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "ReferencedDocument", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_ReferencedDocument", "get_ReferencedDocument");
     ClassDB::bind_method(D_METHOD("get_DocumentRefForObjects"), &IfcDocumentReference::get_DocumentRefForObjects);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "DocumentRefForObjects"), "", "get_DocumentRefForObjects");
+    ClassDB::bind_method(D_METHOD("get_ReferenceToDocument"), &IfcDocumentReference::get_ReferenceToDocument);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ReferenceToDocument"), "", "get_ReferenceToDocument");
 }
 
-godot::String IfcDocumentReference::get_Description() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(3));
+godot::Variant IfcDocumentReference::get_Description() {
+    return gd_get_attribute(entity_, "Description", file_);
 }
 
-void IfcDocumentReference::set_Description(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 3, v);
+void IfcDocumentReference::set_Description(godot::Variant v) {
+    gd_set_attribute(entity_, "Description", v);
 }
 
 Ref<GDIFCEntityBase> IfcDocumentReference::get_ReferencedDocument() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(4), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "ReferencedDocument");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcDocumentReference::set_ReferencedDocument(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 4, v);
+    gd_set_attribute(entity_, "ReferencedDocument", v);
 }
 
 godot::Array IfcDocumentReference::get_DocumentRefForObjects() {
     return get_inverse(godot::String("DocumentRefForObjects"));
 }
 
+godot::Array IfcDocumentReference::get_ReferenceToDocument() {
+    return get_inverse(godot::String("ReferenceToDocument"));
+}
+
 void IfcDoor::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_OverallHeight"), &IfcDoor::get_OverallHeight);
     ClassDB::bind_method(D_METHOD("set_OverallHeight","v"), &IfcDoor::set_OverallHeight);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "OverallHeight"), "set_OverallHeight", "get_OverallHeight");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "OverallHeight", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_OverallHeight", "get_OverallHeight");
     ClassDB::bind_method(D_METHOD("get_OverallWidth"), &IfcDoor::get_OverallWidth);
     ClassDB::bind_method(D_METHOD("set_OverallWidth","v"), &IfcDoor::set_OverallWidth);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "OverallWidth"), "set_OverallWidth", "get_OverallWidth");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "OverallWidth", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_OverallWidth", "get_OverallWidth");
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcDoor::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcDoor::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
     ClassDB::bind_method(D_METHOD("get_OperationType"), &IfcDoor::get_OperationType);
     ClassDB::bind_method(D_METHOD("set_OperationType","v"), &IfcDoor::set_OperationType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "OperationType"), "set_OperationType", "get_OperationType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "OperationType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_OperationType", "get_OperationType");
     ClassDB::bind_method(D_METHOD("get_UserDefinedOperationType"), &IfcDoor::get_UserDefinedOperationType);
     ClassDB::bind_method(D_METHOD("set_UserDefinedOperationType","v"), &IfcDoor::set_UserDefinedOperationType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "UserDefinedOperationType"), "set_UserDefinedOperationType", "get_UserDefinedOperationType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "UserDefinedOperationType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_UserDefinedOperationType", "get_UserDefinedOperationType");
+    ClassDB::bind_method(D_METHOD("get_HasPorts"), &IfcDoor::get_HasPorts);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasPorts"), "", "get_HasPorts");
 }
 
-double IfcDoor::get_OverallHeight() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(8));
+godot::Variant IfcDoor::get_OverallHeight() {
+    return gd_get_attribute(entity_, "OverallHeight", file_);
 }
 
-void IfcDoor::set_OverallHeight(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 8, v);
+void IfcDoor::set_OverallHeight(godot::Variant v) {
+    gd_set_attribute(entity_, "OverallHeight", v);
 }
 
-double IfcDoor::get_OverallWidth() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(9));
+godot::Variant IfcDoor::get_OverallWidth() {
+    return gd_get_attribute(entity_, "OverallWidth", file_);
 }
 
-void IfcDoor::set_OverallWidth(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 9, v);
+void IfcDoor::set_OverallWidth(godot::Variant v) {
+    gd_set_attribute(entity_, "OverallWidth", v);
 }
 
-godot::String IfcDoor::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(10));
+godot::Variant IfcDoor::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcDoor::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 10, v);
+void IfcDoor::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
-godot::String IfcDoor::get_OperationType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(11));
+godot::Variant IfcDoor::get_OperationType() {
+    return gd_get_attribute(entity_, "OperationType", file_);
 }
 
-void IfcDoor::set_OperationType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 11, v);
+void IfcDoor::set_OperationType(godot::Variant v) {
+    gd_set_attribute(entity_, "OperationType", v);
 }
 
-godot::String IfcDoor::get_UserDefinedOperationType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(12));
+godot::Variant IfcDoor::get_UserDefinedOperationType() {
+    return gd_get_attribute(entity_, "UserDefinedOperationType", file_);
 }
 
-void IfcDoor::set_UserDefinedOperationType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 12, v);
+void IfcDoor::set_UserDefinedOperationType(godot::Variant v) {
+    gd_set_attribute(entity_, "UserDefinedOperationType", v);
+}
+
+godot::Array IfcDoor::get_HasPorts() {
+    return get_inverse(godot::String("HasPorts"));
 }
 
 void IfcDoorLiningProperties::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_LiningDepth"), &IfcDoorLiningProperties::get_LiningDepth);
     ClassDB::bind_method(D_METHOD("set_LiningDepth","v"), &IfcDoorLiningProperties::set_LiningDepth);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "LiningDepth"), "set_LiningDepth", "get_LiningDepth");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LiningDepth", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LiningDepth", "get_LiningDepth");
     ClassDB::bind_method(D_METHOD("get_LiningThickness"), &IfcDoorLiningProperties::get_LiningThickness);
     ClassDB::bind_method(D_METHOD("set_LiningThickness","v"), &IfcDoorLiningProperties::set_LiningThickness);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "LiningThickness"), "set_LiningThickness", "get_LiningThickness");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LiningThickness", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LiningThickness", "get_LiningThickness");
     ClassDB::bind_method(D_METHOD("get_ThresholdDepth"), &IfcDoorLiningProperties::get_ThresholdDepth);
     ClassDB::bind_method(D_METHOD("set_ThresholdDepth","v"), &IfcDoorLiningProperties::set_ThresholdDepth);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ThresholdDepth"), "set_ThresholdDepth", "get_ThresholdDepth");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ThresholdDepth", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ThresholdDepth", "get_ThresholdDepth");
     ClassDB::bind_method(D_METHOD("get_ThresholdThickness"), &IfcDoorLiningProperties::get_ThresholdThickness);
     ClassDB::bind_method(D_METHOD("set_ThresholdThickness","v"), &IfcDoorLiningProperties::set_ThresholdThickness);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ThresholdThickness"), "set_ThresholdThickness", "get_ThresholdThickness");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ThresholdThickness", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ThresholdThickness", "get_ThresholdThickness");
     ClassDB::bind_method(D_METHOD("get_TransomThickness"), &IfcDoorLiningProperties::get_TransomThickness);
     ClassDB::bind_method(D_METHOD("set_TransomThickness","v"), &IfcDoorLiningProperties::set_TransomThickness);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "TransomThickness"), "set_TransomThickness", "get_TransomThickness");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TransomThickness", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TransomThickness", "get_TransomThickness");
     ClassDB::bind_method(D_METHOD("get_TransomOffset"), &IfcDoorLiningProperties::get_TransomOffset);
     ClassDB::bind_method(D_METHOD("set_TransomOffset","v"), &IfcDoorLiningProperties::set_TransomOffset);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "TransomOffset"), "set_TransomOffset", "get_TransomOffset");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "TransomOffset", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_TransomOffset", "get_TransomOffset");
     ClassDB::bind_method(D_METHOD("get_LiningOffset"), &IfcDoorLiningProperties::get_LiningOffset);
     ClassDB::bind_method(D_METHOD("set_LiningOffset","v"), &IfcDoorLiningProperties::set_LiningOffset);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "LiningOffset"), "set_LiningOffset", "get_LiningOffset");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LiningOffset", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LiningOffset", "get_LiningOffset");
     ClassDB::bind_method(D_METHOD("get_ThresholdOffset"), &IfcDoorLiningProperties::get_ThresholdOffset);
     ClassDB::bind_method(D_METHOD("set_ThresholdOffset","v"), &IfcDoorLiningProperties::set_ThresholdOffset);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ThresholdOffset"), "set_ThresholdOffset", "get_ThresholdOffset");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ThresholdOffset", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ThresholdOffset", "get_ThresholdOffset");
     ClassDB::bind_method(D_METHOD("get_CasingThickness"), &IfcDoorLiningProperties::get_CasingThickness);
     ClassDB::bind_method(D_METHOD("set_CasingThickness","v"), &IfcDoorLiningProperties::set_CasingThickness);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "CasingThickness"), "set_CasingThickness", "get_CasingThickness");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "CasingThickness", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_CasingThickness", "get_CasingThickness");
     ClassDB::bind_method(D_METHOD("get_CasingDepth"), &IfcDoorLiningProperties::get_CasingDepth);
     ClassDB::bind_method(D_METHOD("set_CasingDepth","v"), &IfcDoorLiningProperties::set_CasingDepth);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "CasingDepth"), "set_CasingDepth", "get_CasingDepth");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "CasingDepth", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_CasingDepth", "get_CasingDepth");
     ClassDB::bind_method(D_METHOD("get_ShapeAspectStyle"), &IfcDoorLiningProperties::get_ShapeAspectStyle);
     ClassDB::bind_method(D_METHOD("set_ShapeAspectStyle","v"), &IfcDoorLiningProperties::set_ShapeAspectStyle);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "ShapeAspectStyle", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_ShapeAspectStyle", "get_ShapeAspectStyle");
     ClassDB::bind_method(D_METHOD("get_LiningToPanelOffsetX"), &IfcDoorLiningProperties::get_LiningToPanelOffsetX);
     ClassDB::bind_method(D_METHOD("set_LiningToPanelOffsetX","v"), &IfcDoorLiningProperties::set_LiningToPanelOffsetX);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "LiningToPanelOffsetX"), "set_LiningToPanelOffsetX", "get_LiningToPanelOffsetX");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LiningToPanelOffsetX", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LiningToPanelOffsetX", "get_LiningToPanelOffsetX");
     ClassDB::bind_method(D_METHOD("get_LiningToPanelOffsetY"), &IfcDoorLiningProperties::get_LiningToPanelOffsetY);
     ClassDB::bind_method(D_METHOD("set_LiningToPanelOffsetY","v"), &IfcDoorLiningProperties::set_LiningToPanelOffsetY);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "LiningToPanelOffsetY"), "set_LiningToPanelOffsetY", "get_LiningToPanelOffsetY");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LiningToPanelOffsetY", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LiningToPanelOffsetY", "get_LiningToPanelOffsetY");
 }
 
-double IfcDoorLiningProperties::get_LiningDepth() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(4));
+godot::Variant IfcDoorLiningProperties::get_LiningDepth() {
+    return gd_get_attribute(entity_, "LiningDepth", file_);
 }
 
-void IfcDoorLiningProperties::set_LiningDepth(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 4, v);
+void IfcDoorLiningProperties::set_LiningDepth(godot::Variant v) {
+    gd_set_attribute(entity_, "LiningDepth", v);
 }
 
-double IfcDoorLiningProperties::get_LiningThickness() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(5));
+godot::Variant IfcDoorLiningProperties::get_LiningThickness() {
+    return gd_get_attribute(entity_, "LiningThickness", file_);
 }
 
-void IfcDoorLiningProperties::set_LiningThickness(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 5, v);
+void IfcDoorLiningProperties::set_LiningThickness(godot::Variant v) {
+    gd_set_attribute(entity_, "LiningThickness", v);
 }
 
-double IfcDoorLiningProperties::get_ThresholdDepth() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(6));
+godot::Variant IfcDoorLiningProperties::get_ThresholdDepth() {
+    return gd_get_attribute(entity_, "ThresholdDepth", file_);
 }
 
-void IfcDoorLiningProperties::set_ThresholdDepth(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 6, v);
+void IfcDoorLiningProperties::set_ThresholdDepth(godot::Variant v) {
+    gd_set_attribute(entity_, "ThresholdDepth", v);
 }
 
-double IfcDoorLiningProperties::get_ThresholdThickness() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(7));
+godot::Variant IfcDoorLiningProperties::get_ThresholdThickness() {
+    return gd_get_attribute(entity_, "ThresholdThickness", file_);
 }
 
-void IfcDoorLiningProperties::set_ThresholdThickness(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 7, v);
+void IfcDoorLiningProperties::set_ThresholdThickness(godot::Variant v) {
+    gd_set_attribute(entity_, "ThresholdThickness", v);
 }
 
-double IfcDoorLiningProperties::get_TransomThickness() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(8));
+godot::Variant IfcDoorLiningProperties::get_TransomThickness() {
+    return gd_get_attribute(entity_, "TransomThickness", file_);
 }
 
-void IfcDoorLiningProperties::set_TransomThickness(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 8, v);
+void IfcDoorLiningProperties::set_TransomThickness(godot::Variant v) {
+    gd_set_attribute(entity_, "TransomThickness", v);
 }
 
-double IfcDoorLiningProperties::get_TransomOffset() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(9));
+godot::Variant IfcDoorLiningProperties::get_TransomOffset() {
+    return gd_get_attribute(entity_, "TransomOffset", file_);
 }
 
-void IfcDoorLiningProperties::set_TransomOffset(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 9, v);
+void IfcDoorLiningProperties::set_TransomOffset(godot::Variant v) {
+    gd_set_attribute(entity_, "TransomOffset", v);
 }
 
-double IfcDoorLiningProperties::get_LiningOffset() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(10));
+godot::Variant IfcDoorLiningProperties::get_LiningOffset() {
+    return gd_get_attribute(entity_, "LiningOffset", file_);
 }
 
-void IfcDoorLiningProperties::set_LiningOffset(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 10, v);
+void IfcDoorLiningProperties::set_LiningOffset(godot::Variant v) {
+    gd_set_attribute(entity_, "LiningOffset", v);
 }
 
-double IfcDoorLiningProperties::get_ThresholdOffset() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(11));
+godot::Variant IfcDoorLiningProperties::get_ThresholdOffset() {
+    return gd_get_attribute(entity_, "ThresholdOffset", file_);
 }
 
-void IfcDoorLiningProperties::set_ThresholdOffset(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 11, v);
+void IfcDoorLiningProperties::set_ThresholdOffset(godot::Variant v) {
+    gd_set_attribute(entity_, "ThresholdOffset", v);
 }
 
-double IfcDoorLiningProperties::get_CasingThickness() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(12));
+godot::Variant IfcDoorLiningProperties::get_CasingThickness() {
+    return gd_get_attribute(entity_, "CasingThickness", file_);
 }
 
-void IfcDoorLiningProperties::set_CasingThickness(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 12, v);
+void IfcDoorLiningProperties::set_CasingThickness(godot::Variant v) {
+    gd_set_attribute(entity_, "CasingThickness", v);
 }
 
-double IfcDoorLiningProperties::get_CasingDepth() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(13));
+godot::Variant IfcDoorLiningProperties::get_CasingDepth() {
+    return gd_get_attribute(entity_, "CasingDepth", file_);
 }
 
-void IfcDoorLiningProperties::set_CasingDepth(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 13, v);
+void IfcDoorLiningProperties::set_CasingDepth(godot::Variant v) {
+    gd_set_attribute(entity_, "CasingDepth", v);
 }
 
 Ref<GDIFCEntityBase> IfcDoorLiningProperties::get_ShapeAspectStyle() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(14), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "ShapeAspectStyle");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcDoorLiningProperties::set_ShapeAspectStyle(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 14, v);
+    gd_set_attribute(entity_, "ShapeAspectStyle", v);
 }
 
-double IfcDoorLiningProperties::get_LiningToPanelOffsetX() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(15));
+godot::Variant IfcDoorLiningProperties::get_LiningToPanelOffsetX() {
+    return gd_get_attribute(entity_, "LiningToPanelOffsetX", file_);
 }
 
-void IfcDoorLiningProperties::set_LiningToPanelOffsetX(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 15, v);
+void IfcDoorLiningProperties::set_LiningToPanelOffsetX(godot::Variant v) {
+    gd_set_attribute(entity_, "LiningToPanelOffsetX", v);
 }
 
-double IfcDoorLiningProperties::get_LiningToPanelOffsetY() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(16));
+godot::Variant IfcDoorLiningProperties::get_LiningToPanelOffsetY() {
+    return gd_get_attribute(entity_, "LiningToPanelOffsetY", file_);
 }
 
-void IfcDoorLiningProperties::set_LiningToPanelOffsetY(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 16, v);
+void IfcDoorLiningProperties::set_LiningToPanelOffsetY(godot::Variant v) {
+    gd_set_attribute(entity_, "LiningToPanelOffsetY", v);
 }
 
 void IfcDoorPanelProperties::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PanelDepth"), &IfcDoorPanelProperties::get_PanelDepth);
     ClassDB::bind_method(D_METHOD("set_PanelDepth","v"), &IfcDoorPanelProperties::set_PanelDepth);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "PanelDepth"), "set_PanelDepth", "get_PanelDepth");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PanelDepth", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PanelDepth", "get_PanelDepth");
     ClassDB::bind_method(D_METHOD("get_PanelOperation"), &IfcDoorPanelProperties::get_PanelOperation);
     ClassDB::bind_method(D_METHOD("set_PanelOperation","v"), &IfcDoorPanelProperties::set_PanelOperation);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PanelOperation"), "set_PanelOperation", "get_PanelOperation");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PanelOperation", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PanelOperation", "get_PanelOperation");
     ClassDB::bind_method(D_METHOD("get_PanelWidth"), &IfcDoorPanelProperties::get_PanelWidth);
     ClassDB::bind_method(D_METHOD("set_PanelWidth","v"), &IfcDoorPanelProperties::set_PanelWidth);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "PanelWidth"), "set_PanelWidth", "get_PanelWidth");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PanelWidth", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PanelWidth", "get_PanelWidth");
     ClassDB::bind_method(D_METHOD("get_PanelPosition"), &IfcDoorPanelProperties::get_PanelPosition);
     ClassDB::bind_method(D_METHOD("set_PanelPosition","v"), &IfcDoorPanelProperties::set_PanelPosition);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PanelPosition"), "set_PanelPosition", "get_PanelPosition");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PanelPosition", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PanelPosition", "get_PanelPosition");
     ClassDB::bind_method(D_METHOD("get_ShapeAspectStyle"), &IfcDoorPanelProperties::get_ShapeAspectStyle);
     ClassDB::bind_method(D_METHOD("set_ShapeAspectStyle","v"), &IfcDoorPanelProperties::set_ShapeAspectStyle);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "ShapeAspectStyle", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_ShapeAspectStyle", "get_ShapeAspectStyle");
 }
 
-double IfcDoorPanelProperties::get_PanelDepth() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(4));
+godot::Variant IfcDoorPanelProperties::get_PanelDepth() {
+    return gd_get_attribute(entity_, "PanelDepth", file_);
 }
 
-void IfcDoorPanelProperties::set_PanelDepth(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 4, v);
+void IfcDoorPanelProperties::set_PanelDepth(godot::Variant v) {
+    gd_set_attribute(entity_, "PanelDepth", v);
 }
 
-godot::String IfcDoorPanelProperties::get_PanelOperation() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(5));
+godot::Variant IfcDoorPanelProperties::get_PanelOperation() {
+    return gd_get_attribute(entity_, "PanelOperation", file_);
 }
 
-void IfcDoorPanelProperties::set_PanelOperation(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 5, v);
+void IfcDoorPanelProperties::set_PanelOperation(godot::Variant v) {
+    gd_set_attribute(entity_, "PanelOperation", v);
 }
 
-double IfcDoorPanelProperties::get_PanelWidth() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(6));
+godot::Variant IfcDoorPanelProperties::get_PanelWidth() {
+    return gd_get_attribute(entity_, "PanelWidth", file_);
 }
 
-void IfcDoorPanelProperties::set_PanelWidth(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 6, v);
+void IfcDoorPanelProperties::set_PanelWidth(godot::Variant v) {
+    gd_set_attribute(entity_, "PanelWidth", v);
 }
 
-godot::String IfcDoorPanelProperties::get_PanelPosition() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(7));
+godot::Variant IfcDoorPanelProperties::get_PanelPosition() {
+    return gd_get_attribute(entity_, "PanelPosition", file_);
 }
 
-void IfcDoorPanelProperties::set_PanelPosition(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 7, v);
+void IfcDoorPanelProperties::set_PanelPosition(godot::Variant v) {
+    gd_set_attribute(entity_, "PanelPosition", v);
 }
 
 Ref<GDIFCEntityBase> IfcDoorPanelProperties::get_ShapeAspectStyle() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(8), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "ShapeAspectStyle");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcDoorPanelProperties::set_ShapeAspectStyle(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 8, v);
+    gd_set_attribute(entity_, "ShapeAspectStyle", v);
 }
 
 void IfcDoorType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcDoorType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcDoorType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
     ClassDB::bind_method(D_METHOD("get_OperationType"), &IfcDoorType::get_OperationType);
     ClassDB::bind_method(D_METHOD("set_OperationType","v"), &IfcDoorType::set_OperationType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "OperationType"), "set_OperationType", "get_OperationType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "OperationType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_OperationType", "get_OperationType");
     ClassDB::bind_method(D_METHOD("get_ParameterTakesPrecedence"), &IfcDoorType::get_ParameterTakesPrecedence);
     ClassDB::bind_method(D_METHOD("set_ParameterTakesPrecedence","v"), &IfcDoorType::set_ParameterTakesPrecedence);
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "ParameterTakesPrecedence"), "set_ParameterTakesPrecedence", "get_ParameterTakesPrecedence");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ParameterTakesPrecedence", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ParameterTakesPrecedence", "get_ParameterTakesPrecedence");
     ClassDB::bind_method(D_METHOD("get_UserDefinedOperationType"), &IfcDoorType::get_UserDefinedOperationType);
     ClassDB::bind_method(D_METHOD("set_UserDefinedOperationType","v"), &IfcDoorType::set_UserDefinedOperationType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "UserDefinedOperationType"), "set_UserDefinedOperationType", "get_UserDefinedOperationType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "UserDefinedOperationType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_UserDefinedOperationType", "get_UserDefinedOperationType");
 }
 
-godot::String IfcDoorType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcDoorType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcDoorType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcDoorType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
-godot::String IfcDoorType::get_OperationType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(10));
+godot::Variant IfcDoorType::get_OperationType() {
+    return gd_get_attribute(entity_, "OperationType", file_);
 }
 
-void IfcDoorType::set_OperationType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 10, v);
+void IfcDoorType::set_OperationType(godot::Variant v) {
+    gd_set_attribute(entity_, "OperationType", v);
 }
 
-bool IfcDoorType::get_ParameterTakesPrecedence() {
-    if (!entity_) return false;
-    return gd_attr_bool(entity_->get_attribute_value(11));
+godot::Variant IfcDoorType::get_ParameterTakesPrecedence() {
+    return gd_get_attribute(entity_, "ParameterTakesPrecedence", file_);
 }
 
-void IfcDoorType::set_ParameterTakesPrecedence(bool v) {
-    if (!entity_) return;
-    gd_set_bool(entity_, 11, v);
+void IfcDoorType::set_ParameterTakesPrecedence(godot::Variant v) {
+    gd_set_attribute(entity_, "ParameterTakesPrecedence", v);
 }
 
-godot::String IfcDoorType::get_UserDefinedOperationType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(12));
+godot::Variant IfcDoorType::get_UserDefinedOperationType() {
+    return gd_get_attribute(entity_, "UserDefinedOperationType", file_);
 }
 
-void IfcDoorType::set_UserDefinedOperationType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 12, v);
+void IfcDoorType::set_UserDefinedOperationType(godot::Variant v) {
+    gd_set_attribute(entity_, "UserDefinedOperationType", v);
 }
 
 void IfcDraughtingPreDefinedColour::_bind_methods() {
@@ -6691,113 +6385,99 @@ void IfcDraughtingPreDefinedCurveFont::_bind_methods() {
 void IfcDuctFitting::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcDuctFitting::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcDuctFitting::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcDuctFitting::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcDuctFitting::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcDuctFitting::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcDuctFitting::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcDuctFittingType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcDuctFittingType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcDuctFittingType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcDuctFittingType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcDuctFittingType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcDuctFittingType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcDuctFittingType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcDuctSegment::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcDuctSegment::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcDuctSegment::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcDuctSegment::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcDuctSegment::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcDuctSegment::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcDuctSegment::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcDuctSegmentType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcDuctSegmentType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcDuctSegmentType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcDuctSegmentType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcDuctSegmentType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcDuctSegmentType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcDuctSegmentType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcDuctSilencer::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcDuctSilencer::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcDuctSilencer::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcDuctSilencer::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcDuctSilencer::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcDuctSilencer::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcDuctSilencer::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcDuctSilencerType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcDuctSilencerType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcDuctSilencerType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcDuctSilencerType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcDuctSilencerType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcDuctSilencerType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcDuctSilencerType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcEarthworksCut::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcEarthworksCut::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcEarthworksCut::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcEarthworksCut::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcEarthworksCut::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcEarthworksCut::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcEarthworksCut::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcEarthworksElement::_bind_methods() {
@@ -6806,17 +6486,15 @@ void IfcEarthworksElement::_bind_methods() {
 void IfcEarthworksFill::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcEarthworksFill::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcEarthworksFill::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcEarthworksFill::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcEarthworksFill::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcEarthworksFill::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcEarthworksFill::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcEdge::_bind_methods() {
@@ -6829,23 +6507,21 @@ void IfcEdge::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcEdge::get_EdgeStart() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(0), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "EdgeStart");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcEdge::set_EdgeStart(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 0, v);
+    gd_set_attribute(entity_, "EdgeStart", v);
 }
 
 Ref<GDIFCEntityBase> IfcEdge::get_EdgeEnd() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(1), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "EdgeEnd");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcEdge::set_EdgeEnd(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 1, v);
+    gd_set_attribute(entity_, "EdgeEnd", v);
 }
 
 void IfcEdgeCurve::_bind_methods() {
@@ -6854,689 +6530,610 @@ void IfcEdgeCurve::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "EdgeGeometry", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_EdgeGeometry", "get_EdgeGeometry");
     ClassDB::bind_method(D_METHOD("get_SameSense"), &IfcEdgeCurve::get_SameSense);
     ClassDB::bind_method(D_METHOD("set_SameSense","v"), &IfcEdgeCurve::set_SameSense);
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "SameSense"), "set_SameSense", "get_SameSense");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "SameSense", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_SameSense", "get_SameSense");
 }
 
 Ref<GDIFCEntityBase> IfcEdgeCurve::get_EdgeGeometry() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "EdgeGeometry");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcEdgeCurve::set_EdgeGeometry(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+    gd_set_attribute(entity_, "EdgeGeometry", v);
 }
 
-bool IfcEdgeCurve::get_SameSense() {
-    if (!entity_) return false;
-    return gd_attr_bool(entity_->get_attribute_value(3));
+godot::Variant IfcEdgeCurve::get_SameSense() {
+    return gd_get_attribute(entity_, "SameSense", file_);
 }
 
-void IfcEdgeCurve::set_SameSense(bool v) {
-    if (!entity_) return;
-    gd_set_bool(entity_, 3, v);
+void IfcEdgeCurve::set_SameSense(godot::Variant v) {
+    gd_set_attribute(entity_, "SameSense", v);
 }
 
 void IfcEdgeLoop::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_EdgeList"), &IfcEdgeLoop::get_EdgeList);
     ClassDB::bind_method(D_METHOD("set_EdgeList","v"), &IfcEdgeLoop::set_EdgeList);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "EdgeList"), "set_EdgeList", "get_EdgeList");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "EdgeList", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_EdgeList", "get_EdgeList");
 }
 
-godot::Array IfcEdgeLoop::get_EdgeList() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(0), file_);
+godot::Variant IfcEdgeLoop::get_EdgeList() {
+    return gd_get_attribute(entity_, "EdgeList", file_);
 }
 
-void IfcEdgeLoop::set_EdgeList(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 0, v);
+void IfcEdgeLoop::set_EdgeList(godot::Variant v) {
+    gd_set_attribute(entity_, "EdgeList", v);
 }
 
 void IfcElectricAppliance::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcElectricAppliance::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcElectricAppliance::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcElectricAppliance::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcElectricAppliance::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcElectricAppliance::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcElectricAppliance::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcElectricApplianceType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcElectricApplianceType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcElectricApplianceType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcElectricApplianceType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcElectricApplianceType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcElectricApplianceType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcElectricApplianceType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcElectricDistributionBoard::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcElectricDistributionBoard::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcElectricDistributionBoard::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcElectricDistributionBoard::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcElectricDistributionBoard::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcElectricDistributionBoard::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcElectricDistributionBoard::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcElectricDistributionBoardType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcElectricDistributionBoardType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcElectricDistributionBoardType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcElectricDistributionBoardType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcElectricDistributionBoardType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcElectricDistributionBoardType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcElectricDistributionBoardType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcElectricFlowStorageDevice::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcElectricFlowStorageDevice::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcElectricFlowStorageDevice::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcElectricFlowStorageDevice::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcElectricFlowStorageDevice::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcElectricFlowStorageDevice::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcElectricFlowStorageDevice::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcElectricFlowStorageDeviceType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcElectricFlowStorageDeviceType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcElectricFlowStorageDeviceType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcElectricFlowStorageDeviceType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcElectricFlowStorageDeviceType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcElectricFlowStorageDeviceType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcElectricFlowStorageDeviceType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcElectricFlowTreatmentDevice::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcElectricFlowTreatmentDevice::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcElectricFlowTreatmentDevice::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcElectricFlowTreatmentDevice::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcElectricFlowTreatmentDevice::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcElectricFlowTreatmentDevice::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcElectricFlowTreatmentDevice::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcElectricFlowTreatmentDeviceType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcElectricFlowTreatmentDeviceType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcElectricFlowTreatmentDeviceType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcElectricFlowTreatmentDeviceType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcElectricFlowTreatmentDeviceType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcElectricFlowTreatmentDeviceType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcElectricFlowTreatmentDeviceType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcElectricGenerator::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcElectricGenerator::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcElectricGenerator::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcElectricGenerator::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcElectricGenerator::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcElectricGenerator::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcElectricGenerator::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcElectricGeneratorType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcElectricGeneratorType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcElectricGeneratorType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcElectricGeneratorType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcElectricGeneratorType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcElectricGeneratorType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcElectricGeneratorType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcElectricMotor::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcElectricMotor::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcElectricMotor::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcElectricMotor::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcElectricMotor::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcElectricMotor::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcElectricMotor::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcElectricMotorType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcElectricMotorType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcElectricMotorType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcElectricMotorType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcElectricMotorType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcElectricMotorType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcElectricMotorType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcElectricTimeControl::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcElectricTimeControl::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcElectricTimeControl::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcElectricTimeControl::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcElectricTimeControl::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcElectricTimeControl::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcElectricTimeControl::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcElectricTimeControlType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcElectricTimeControlType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcElectricTimeControlType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcElectricTimeControlType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcElectricTimeControlType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcElectricTimeControlType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcElectricTimeControlType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcElementAssembly::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_AssemblyPlace"), &IfcElementAssembly::get_AssemblyPlace);
     ClassDB::bind_method(D_METHOD("set_AssemblyPlace","v"), &IfcElementAssembly::set_AssemblyPlace);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "AssemblyPlace"), "set_AssemblyPlace", "get_AssemblyPlace");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "AssemblyPlace", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_AssemblyPlace", "get_AssemblyPlace");
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcElementAssembly::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcElementAssembly::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
+    ClassDB::bind_method(D_METHOD("get_HasPorts"), &IfcElementAssembly::get_HasPorts);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasPorts"), "", "get_HasPorts");
 }
 
-godot::String IfcElementAssembly::get_AssemblyPlace() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcElementAssembly::get_AssemblyPlace() {
+    return gd_get_attribute(entity_, "AssemblyPlace", file_);
 }
 
-void IfcElementAssembly::set_AssemblyPlace(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcElementAssembly::set_AssemblyPlace(godot::Variant v) {
+    gd_set_attribute(entity_, "AssemblyPlace", v);
 }
 
-godot::String IfcElementAssembly::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcElementAssembly::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcElementAssembly::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcElementAssembly::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
+}
+
+godot::Array IfcElementAssembly::get_HasPorts() {
+    return get_inverse(godot::String("HasPorts"));
 }
 
 void IfcElementAssemblyType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcElementAssemblyType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcElementAssemblyType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcElementAssemblyType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcElementAssemblyType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcElementAssemblyType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcElementAssemblyType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcElementQuantity::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_MethodOfMeasurement"), &IfcElementQuantity::get_MethodOfMeasurement);
     ClassDB::bind_method(D_METHOD("set_MethodOfMeasurement","v"), &IfcElementQuantity::set_MethodOfMeasurement);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "MethodOfMeasurement"), "set_MethodOfMeasurement", "get_MethodOfMeasurement");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "MethodOfMeasurement", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_MethodOfMeasurement", "get_MethodOfMeasurement");
     ClassDB::bind_method(D_METHOD("get_Quantities"), &IfcElementQuantity::get_Quantities);
     ClassDB::bind_method(D_METHOD("set_Quantities","v"), &IfcElementQuantity::set_Quantities);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "Quantities"), "set_Quantities", "get_Quantities");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Quantities", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Quantities", "get_Quantities");
 }
 
-godot::String IfcElementQuantity::get_MethodOfMeasurement() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(4));
+godot::Variant IfcElementQuantity::get_MethodOfMeasurement() {
+    return gd_get_attribute(entity_, "MethodOfMeasurement", file_);
 }
 
-void IfcElementQuantity::set_MethodOfMeasurement(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 4, v);
+void IfcElementQuantity::set_MethodOfMeasurement(godot::Variant v) {
+    gd_set_attribute(entity_, "MethodOfMeasurement", v);
 }
 
-godot::Array IfcElementQuantity::get_Quantities() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(5), file_);
+godot::Variant IfcElementQuantity::get_Quantities() {
+    return gd_get_attribute(entity_, "Quantities", file_);
 }
 
-void IfcElementQuantity::set_Quantities(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 5, v);
+void IfcElementQuantity::set_Quantities(godot::Variant v) {
+    gd_set_attribute(entity_, "Quantities", v);
 }
 
 void IfcEllipse::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_SemiAxis1"), &IfcEllipse::get_SemiAxis1);
     ClassDB::bind_method(D_METHOD("set_SemiAxis1","v"), &IfcEllipse::set_SemiAxis1);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "SemiAxis1"), "set_SemiAxis1", "get_SemiAxis1");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "SemiAxis1", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_SemiAxis1", "get_SemiAxis1");
     ClassDB::bind_method(D_METHOD("get_SemiAxis2"), &IfcEllipse::get_SemiAxis2);
     ClassDB::bind_method(D_METHOD("set_SemiAxis2","v"), &IfcEllipse::set_SemiAxis2);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "SemiAxis2"), "set_SemiAxis2", "get_SemiAxis2");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "SemiAxis2", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_SemiAxis2", "get_SemiAxis2");
 }
 
-double IfcEllipse::get_SemiAxis1() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(1));
+godot::Variant IfcEllipse::get_SemiAxis1() {
+    return gd_get_attribute(entity_, "SemiAxis1", file_);
 }
 
-void IfcEllipse::set_SemiAxis1(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 1, v);
+void IfcEllipse::set_SemiAxis1(godot::Variant v) {
+    gd_set_attribute(entity_, "SemiAxis1", v);
 }
 
-double IfcEllipse::get_SemiAxis2() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(2));
+godot::Variant IfcEllipse::get_SemiAxis2() {
+    return gd_get_attribute(entity_, "SemiAxis2", file_);
 }
 
-void IfcEllipse::set_SemiAxis2(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 2, v);
+void IfcEllipse::set_SemiAxis2(godot::Variant v) {
+    gd_set_attribute(entity_, "SemiAxis2", v);
 }
 
 void IfcEllipseProfileDef::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_SemiAxis1"), &IfcEllipseProfileDef::get_SemiAxis1);
     ClassDB::bind_method(D_METHOD("set_SemiAxis1","v"), &IfcEllipseProfileDef::set_SemiAxis1);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "SemiAxis1"), "set_SemiAxis1", "get_SemiAxis1");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "SemiAxis1", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_SemiAxis1", "get_SemiAxis1");
     ClassDB::bind_method(D_METHOD("get_SemiAxis2"), &IfcEllipseProfileDef::get_SemiAxis2);
     ClassDB::bind_method(D_METHOD("set_SemiAxis2","v"), &IfcEllipseProfileDef::set_SemiAxis2);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "SemiAxis2"), "set_SemiAxis2", "get_SemiAxis2");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "SemiAxis2", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_SemiAxis2", "get_SemiAxis2");
 }
 
-double IfcEllipseProfileDef::get_SemiAxis1() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(3));
+godot::Variant IfcEllipseProfileDef::get_SemiAxis1() {
+    return gd_get_attribute(entity_, "SemiAxis1", file_);
 }
 
-void IfcEllipseProfileDef::set_SemiAxis1(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 3, v);
+void IfcEllipseProfileDef::set_SemiAxis1(godot::Variant v) {
+    gd_set_attribute(entity_, "SemiAxis1", v);
 }
 
-double IfcEllipseProfileDef::get_SemiAxis2() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(4));
+godot::Variant IfcEllipseProfileDef::get_SemiAxis2() {
+    return gd_get_attribute(entity_, "SemiAxis2", file_);
 }
 
-void IfcEllipseProfileDef::set_SemiAxis2(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 4, v);
+void IfcEllipseProfileDef::set_SemiAxis2(godot::Variant v) {
+    gd_set_attribute(entity_, "SemiAxis2", v);
 }
 
 void IfcEngine::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcEngine::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcEngine::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcEngine::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcEngine::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcEngine::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcEngine::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcEngineType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcEngineType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcEngineType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcEngineType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcEngineType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcEngineType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcEngineType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcEvaporativeCooler::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcEvaporativeCooler::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcEvaporativeCooler::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcEvaporativeCooler::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcEvaporativeCooler::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcEvaporativeCooler::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcEvaporativeCooler::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcEvaporativeCoolerType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcEvaporativeCoolerType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcEvaporativeCoolerType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcEvaporativeCoolerType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcEvaporativeCoolerType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcEvaporativeCoolerType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcEvaporativeCoolerType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcEvaporator::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcEvaporator::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcEvaporator::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcEvaporator::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcEvaporator::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcEvaporator::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcEvaporator::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcEvaporatorType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcEvaporatorType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcEvaporatorType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
 }
 
-godot::String IfcEvaporatorType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcEvaporatorType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcEvaporatorType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcEvaporatorType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 void IfcEvent::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcEvent::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcEvent::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
     ClassDB::bind_method(D_METHOD("get_EventTriggerType"), &IfcEvent::get_EventTriggerType);
     ClassDB::bind_method(D_METHOD("set_EventTriggerType","v"), &IfcEvent::set_EventTriggerType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "EventTriggerType"), "set_EventTriggerType", "get_EventTriggerType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "EventTriggerType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_EventTriggerType", "get_EventTriggerType");
     ClassDB::bind_method(D_METHOD("get_UserDefinedEventTriggerType"), &IfcEvent::get_UserDefinedEventTriggerType);
     ClassDB::bind_method(D_METHOD("set_UserDefinedEventTriggerType","v"), &IfcEvent::set_UserDefinedEventTriggerType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "UserDefinedEventTriggerType"), "set_UserDefinedEventTriggerType", "get_UserDefinedEventTriggerType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "UserDefinedEventTriggerType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_UserDefinedEventTriggerType", "get_UserDefinedEventTriggerType");
     ClassDB::bind_method(D_METHOD("get_EventOccurenceTime"), &IfcEvent::get_EventOccurenceTime);
     ClassDB::bind_method(D_METHOD("set_EventOccurenceTime","v"), &IfcEvent::set_EventOccurenceTime);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "EventOccurenceTime", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_EventOccurenceTime", "get_EventOccurenceTime");
 }
 
-godot::String IfcEvent::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(7));
+godot::Variant IfcEvent::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcEvent::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 7, v);
+void IfcEvent::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
-godot::String IfcEvent::get_EventTriggerType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcEvent::get_EventTriggerType() {
+    return gd_get_attribute(entity_, "EventTriggerType", file_);
 }
 
-void IfcEvent::set_EventTriggerType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcEvent::set_EventTriggerType(godot::Variant v) {
+    gd_set_attribute(entity_, "EventTriggerType", v);
 }
 
-godot::String IfcEvent::get_UserDefinedEventTriggerType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcEvent::get_UserDefinedEventTriggerType() {
+    return gd_get_attribute(entity_, "UserDefinedEventTriggerType", file_);
 }
 
-void IfcEvent::set_UserDefinedEventTriggerType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcEvent::set_UserDefinedEventTriggerType(godot::Variant v) {
+    gd_set_attribute(entity_, "UserDefinedEventTriggerType", v);
 }
 
 Ref<GDIFCEntityBase> IfcEvent::get_EventOccurenceTime() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(10), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "EventOccurenceTime");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcEvent::set_EventOccurenceTime(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 10, v);
+    gd_set_attribute(entity_, "EventOccurenceTime", v);
 }
 
 void IfcEventTime::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_ActualDate"), &IfcEventTime::get_ActualDate);
     ClassDB::bind_method(D_METHOD("set_ActualDate","v"), &IfcEventTime::set_ActualDate);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "ActualDate"), "set_ActualDate", "get_ActualDate");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ActualDate", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ActualDate", "get_ActualDate");
     ClassDB::bind_method(D_METHOD("get_EarlyDate"), &IfcEventTime::get_EarlyDate);
     ClassDB::bind_method(D_METHOD("set_EarlyDate","v"), &IfcEventTime::set_EarlyDate);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "EarlyDate"), "set_EarlyDate", "get_EarlyDate");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "EarlyDate", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_EarlyDate", "get_EarlyDate");
     ClassDB::bind_method(D_METHOD("get_LateDate"), &IfcEventTime::get_LateDate);
     ClassDB::bind_method(D_METHOD("set_LateDate","v"), &IfcEventTime::set_LateDate);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "LateDate"), "set_LateDate", "get_LateDate");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LateDate", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LateDate", "get_LateDate");
     ClassDB::bind_method(D_METHOD("get_ScheduleDate"), &IfcEventTime::get_ScheduleDate);
     ClassDB::bind_method(D_METHOD("set_ScheduleDate","v"), &IfcEventTime::set_ScheduleDate);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "ScheduleDate"), "set_ScheduleDate", "get_ScheduleDate");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ScheduleDate", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ScheduleDate", "get_ScheduleDate");
 }
 
-godot::String IfcEventTime::get_ActualDate() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(3));
+godot::Variant IfcEventTime::get_ActualDate() {
+    return gd_get_attribute(entity_, "ActualDate", file_);
 }
 
-void IfcEventTime::set_ActualDate(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 3, v);
+void IfcEventTime::set_ActualDate(godot::Variant v) {
+    gd_set_attribute(entity_, "ActualDate", v);
 }
 
-godot::String IfcEventTime::get_EarlyDate() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(4));
+godot::Variant IfcEventTime::get_EarlyDate() {
+    return gd_get_attribute(entity_, "EarlyDate", file_);
 }
 
-void IfcEventTime::set_EarlyDate(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 4, v);
+void IfcEventTime::set_EarlyDate(godot::Variant v) {
+    gd_set_attribute(entity_, "EarlyDate", v);
 }
 
-godot::String IfcEventTime::get_LateDate() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(5));
+godot::Variant IfcEventTime::get_LateDate() {
+    return gd_get_attribute(entity_, "LateDate", file_);
 }
 
-void IfcEventTime::set_LateDate(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 5, v);
+void IfcEventTime::set_LateDate(godot::Variant v) {
+    gd_set_attribute(entity_, "LateDate", v);
 }
 
-godot::String IfcEventTime::get_ScheduleDate() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(6));
+godot::Variant IfcEventTime::get_ScheduleDate() {
+    return gd_get_attribute(entity_, "ScheduleDate", file_);
 }
 
-void IfcEventTime::set_ScheduleDate(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 6, v);
+void IfcEventTime::set_ScheduleDate(godot::Variant v) {
+    gd_set_attribute(entity_, "ScheduleDate", v);
 }
 
 void IfcEventType::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcEventType::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcEventType::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
     ClassDB::bind_method(D_METHOD("get_EventTriggerType"), &IfcEventType::get_EventTriggerType);
     ClassDB::bind_method(D_METHOD("set_EventTriggerType","v"), &IfcEventType::set_EventTriggerType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "EventTriggerType"), "set_EventTriggerType", "get_EventTriggerType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "EventTriggerType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_EventTriggerType", "get_EventTriggerType");
     ClassDB::bind_method(D_METHOD("get_UserDefinedEventTriggerType"), &IfcEventType::get_UserDefinedEventTriggerType);
     ClassDB::bind_method(D_METHOD("set_UserDefinedEventTriggerType","v"), &IfcEventType::set_UserDefinedEventTriggerType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "UserDefinedEventTriggerType"), "set_UserDefinedEventTriggerType", "get_UserDefinedEventTriggerType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "UserDefinedEventTriggerType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_UserDefinedEventTriggerType", "get_UserDefinedEventTriggerType");
 }
 
-godot::String IfcEventType::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(9));
+godot::Variant IfcEventType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcEventType::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 9, v);
+void IfcEventType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
-godot::String IfcEventType::get_EventTriggerType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(10));
+godot::Variant IfcEventType::get_EventTriggerType() {
+    return gd_get_attribute(entity_, "EventTriggerType", file_);
 }
 
-void IfcEventType::set_EventTriggerType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 10, v);
+void IfcEventType::set_EventTriggerType(godot::Variant v) {
+    gd_set_attribute(entity_, "EventTriggerType", v);
 }
 
-godot::String IfcEventType::get_UserDefinedEventTriggerType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(11));
+godot::Variant IfcEventType::get_UserDefinedEventTriggerType() {
+    return gd_get_attribute(entity_, "UserDefinedEventTriggerType", file_);
 }
 
-void IfcEventType::set_UserDefinedEventTriggerType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 11, v);
+void IfcEventType::set_UserDefinedEventTriggerType(godot::Variant v) {
+    gd_set_attribute(entity_, "UserDefinedEventTriggerType", v);
 }
+
+static const GDIFCAttributeAlias IfcExtendedProperties_Name_aliases[] = {
+    {"IFC2X3", "IFCPROFILEPROPERTIES", "ProfileName"},
+    {nullptr, nullptr, nullptr},
+};
 
 void IfcExtendedProperties::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_Name"), &IfcExtendedProperties::get_Name);
     ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcExtendedProperties::set_Name);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Name"), "set_Name", "get_Name");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Name", "get_Name");
     ClassDB::bind_method(D_METHOD("get_Description"), &IfcExtendedProperties::get_Description);
     ClassDB::bind_method(D_METHOD("set_Description","v"), &IfcExtendedProperties::set_Description);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "Description"), "set_Description", "get_Description");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Description", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Description", "get_Description");
     ClassDB::bind_method(D_METHOD("get_Properties"), &IfcExtendedProperties::get_Properties);
     ClassDB::bind_method(D_METHOD("set_Properties","v"), &IfcExtendedProperties::set_Properties);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "Properties"), "set_Properties", "get_Properties");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Properties", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Properties", "get_Properties");
 }
 
-godot::String IfcExtendedProperties::get_Name() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(0));
+godot::Variant IfcExtendedProperties::get_Name() {
+    return gd_get_attribute(entity_, "Name", file_, IfcExtendedProperties_Name_aliases);
 }
 
-void IfcExtendedProperties::set_Name(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 0, v);
+void IfcExtendedProperties::set_Name(godot::Variant v) {
+    gd_set_attribute(entity_, "Name", v, IfcExtendedProperties_Name_aliases);
 }
 
-godot::String IfcExtendedProperties::get_Description() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(1));
+godot::Variant IfcExtendedProperties::get_Description() {
+    return gd_get_attribute(entity_, "Description", file_);
 }
 
-void IfcExtendedProperties::set_Description(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 1, v);
+void IfcExtendedProperties::set_Description(godot::Variant v) {
+    gd_set_attribute(entity_, "Description", v);
 }
 
-godot::Array IfcExtendedProperties::get_Properties() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(2), file_);
+godot::Variant IfcExtendedProperties::get_Properties() {
+    return gd_get_attribute(entity_, "Properties", file_);
 }
 
-void IfcExtendedProperties::set_Properties(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 2, v);
+void IfcExtendedProperties::set_Properties(godot::Variant v) {
+    gd_set_attribute(entity_, "Properties", v);
 }
 
 void IfcExternalReferenceRelationship::_bind_methods() {
@@ -7545,27 +7142,24 @@ void IfcExternalReferenceRelationship::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "RelatingReference", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_RelatingReference", "get_RelatingReference");
     ClassDB::bind_method(D_METHOD("get_RelatedResourceObjects"), &IfcExternalReferenceRelationship::get_RelatedResourceObjects);
     ClassDB::bind_method(D_METHOD("set_RelatedResourceObjects","v"), &IfcExternalReferenceRelationship::set_RelatedResourceObjects);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "RelatedResourceObjects"), "set_RelatedResourceObjects", "get_RelatedResourceObjects");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RelatedResourceObjects", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RelatedResourceObjects", "get_RelatedResourceObjects");
 }
 
 Ref<GDIFCEntityBase> IfcExternalReferenceRelationship::get_RelatingReference() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "RelatingReference");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcExternalReferenceRelationship::set_RelatingReference(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+    gd_set_attribute(entity_, "RelatingReference", v);
 }
 
-godot::Array IfcExternalReferenceRelationship::get_RelatedResourceObjects() {
-    if (!entity_) return godot::Array();
-    return gd_attr_agg_entity(entity_->get_attribute_value(3), file_);
+godot::Variant IfcExternalReferenceRelationship::get_RelatedResourceObjects() {
+    return gd_get_attribute(entity_, "RelatedResourceObjects", file_);
 }
 
-void IfcExternalReferenceRelationship::set_RelatedResourceObjects(godot::Array v) {
-    if (!entity_) return;
-    gd_set_agg_entity(entity_, 3, v);
+void IfcExternalReferenceRelationship::set_RelatedResourceObjects(godot::Variant v) {
+    gd_set_attribute(entity_, "RelatedResourceObjects", v);
 }
 
 void IfcExternalSpatialStructureElement::_bind_methods() {
@@ -7574,19 +7168,17 @@ void IfcExternalSpatialStructureElement::_bind_methods() {
 void IfcExternalSpatialElement::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcExternalSpatialElement::get_PredefinedType);
     ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcExternalSpatialElement::set_PredefinedType);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "PredefinedType"), "set_PredefinedType", "get_PredefinedType");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
     ClassDB::bind_method(D_METHOD("get_BoundedBy"), &IfcExternalSpatialElement::get_BoundedBy);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "BoundedBy"), "", "get_BoundedBy");
 }
 
-godot::String IfcExternalSpatialElement::get_PredefinedType() {
-    if (!entity_) return godot::String();
-    return gd_attr_string(entity_->get_attribute_value(8));
+godot::Variant IfcExternalSpatialElement::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
 }
 
-void IfcExternalSpatialElement::set_PredefinedType(godot::String v) {
-    if (!entity_) return;
-    gd_set_string(entity_, 8, v);
+void IfcExternalSpatialElement::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
 }
 
 godot::Array IfcExternalSpatialElement::get_BoundedBy() {
@@ -7608,27 +7200,24 @@ void IfcExtrudedAreaSolid::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "ExtrudedDirection", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_ExtrudedDirection", "get_ExtrudedDirection");
     ClassDB::bind_method(D_METHOD("get_Depth"), &IfcExtrudedAreaSolid::get_Depth);
     ClassDB::bind_method(D_METHOD("set_Depth","v"), &IfcExtrudedAreaSolid::set_Depth);
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "Depth"), "set_Depth", "get_Depth");
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Depth", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Depth", "get_Depth");
 }
 
 Ref<GDIFCEntityBase> IfcExtrudedAreaSolid::get_ExtrudedDirection() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(2), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "ExtrudedDirection");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcExtrudedAreaSolid::set_ExtrudedDirection(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 2, v);
+    gd_set_attribute(entity_, "ExtrudedDirection", v);
 }
 
-double IfcExtrudedAreaSolid::get_Depth() {
-    if (!entity_) return 0.0;
-    return gd_attr_double(entity_->get_attribute_value(3));
+godot::Variant IfcExtrudedAreaSolid::get_Depth() {
+    return gd_get_attribute(entity_, "Depth", file_);
 }
 
-void IfcExtrudedAreaSolid::set_Depth(double v) {
-    if (!entity_) return;
-    gd_set_double(entity_, 3, v);
+void IfcExtrudedAreaSolid::set_Depth(godot::Variant v) {
+    gd_set_attribute(entity_, "Depth", v);
 }
 
 void IfcExtrudedAreaSolidTapered::_bind_methods() {
@@ -7638,11 +7227,1359 @@ void IfcExtrudedAreaSolidTapered::_bind_methods() {
 }
 
 Ref<GDIFCEntityBase> IfcExtrudedAreaSolidTapered::get_EndSweptArea() {
-    if (!entity_) return Ref<GDIFCEntityBase>();
-    return gd_attr_entity(entity_->get_attribute_value(4), file_);
+    const ptrdiff_t i = gd_attr_index(entity_, "EndSweptArea");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
 }
 
 void IfcExtrudedAreaSolidTapered::set_EndSweptArea(Ref<GDIFCEntityBase> v) {
-    if (!entity_) return;
-    gd_set_entity(entity_, 4, v);
+    gd_set_attribute(entity_, "EndSweptArea", v);
+}
+
+void IfcBeamStandardCase::_bind_methods() {
+}
+
+void IfcBuildingElement::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_HasPorts"), &IfcBuildingElement::get_HasPorts);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasPorts"), "", "get_HasPorts");
+}
+
+godot::Array IfcBuildingElement::get_HasPorts() {
+    return get_inverse(godot::String("HasPorts"));
+}
+
+void IfcBuildingElementType::_bind_methods() {
+}
+
+void IfcColumnStandardCase::_bind_methods() {
+}
+
+void IfcDoorStandardCase::_bind_methods() {
+}
+
+void IfcDoorStyle::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_OperationType"), &IfcDoorStyle::get_OperationType);
+    ClassDB::bind_method(D_METHOD("set_OperationType","v"), &IfcDoorStyle::set_OperationType);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "OperationType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_OperationType", "get_OperationType");
+    ClassDB::bind_method(D_METHOD("get_ConstructionType"), &IfcDoorStyle::get_ConstructionType);
+    ClassDB::bind_method(D_METHOD("set_ConstructionType","v"), &IfcDoorStyle::set_ConstructionType);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ConstructionType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ConstructionType", "get_ConstructionType");
+    ClassDB::bind_method(D_METHOD("get_ParameterTakesPrecedence"), &IfcDoorStyle::get_ParameterTakesPrecedence);
+    ClassDB::bind_method(D_METHOD("set_ParameterTakesPrecedence","v"), &IfcDoorStyle::set_ParameterTakesPrecedence);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ParameterTakesPrecedence", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ParameterTakesPrecedence", "get_ParameterTakesPrecedence");
+    ClassDB::bind_method(D_METHOD("get_Sizeable"), &IfcDoorStyle::get_Sizeable);
+    ClassDB::bind_method(D_METHOD("set_Sizeable","v"), &IfcDoorStyle::set_Sizeable);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Sizeable", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Sizeable", "get_Sizeable");
+}
+
+godot::Variant IfcDoorStyle::get_OperationType() {
+    return gd_get_attribute(entity_, "OperationType", file_);
+}
+
+void IfcDoorStyle::set_OperationType(godot::Variant v) {
+    gd_set_attribute(entity_, "OperationType", v);
+}
+
+godot::Variant IfcDoorStyle::get_ConstructionType() {
+    return gd_get_attribute(entity_, "ConstructionType", file_);
+}
+
+void IfcDoorStyle::set_ConstructionType(godot::Variant v) {
+    gd_set_attribute(entity_, "ConstructionType", v);
+}
+
+godot::Variant IfcDoorStyle::get_ParameterTakesPrecedence() {
+    return gd_get_attribute(entity_, "ParameterTakesPrecedence", file_);
+}
+
+void IfcDoorStyle::set_ParameterTakesPrecedence(godot::Variant v) {
+    gd_set_attribute(entity_, "ParameterTakesPrecedence", v);
+}
+
+godot::Variant IfcDoorStyle::get_Sizeable() {
+    return gd_get_attribute(entity_, "Sizeable", file_);
+}
+
+void IfcDoorStyle::set_Sizeable(godot::Variant v) {
+    gd_set_attribute(entity_, "Sizeable", v);
+}
+
+void Ifc2DCompositeCurve::_bind_methods() {
+}
+
+void IfcDraughtingCallout::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_Contents"), &IfcDraughtingCallout::get_Contents);
+    ClassDB::bind_method(D_METHOD("set_Contents","v"), &IfcDraughtingCallout::set_Contents);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Contents", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Contents", "get_Contents");
+    ClassDB::bind_method(D_METHOD("get_IsRelatedFromCallout"), &IfcDraughtingCallout::get_IsRelatedFromCallout);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "IsRelatedFromCallout"), "", "get_IsRelatedFromCallout");
+    ClassDB::bind_method(D_METHOD("get_IsRelatedToCallout"), &IfcDraughtingCallout::get_IsRelatedToCallout);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "IsRelatedToCallout"), "", "get_IsRelatedToCallout");
+}
+
+godot::Variant IfcDraughtingCallout::get_Contents() {
+    return gd_get_attribute(entity_, "Contents", file_);
+}
+
+void IfcDraughtingCallout::set_Contents(godot::Variant v) {
+    gd_set_attribute(entity_, "Contents", v);
+}
+
+godot::Array IfcDraughtingCallout::get_IsRelatedFromCallout() {
+    return get_inverse(godot::String("IsRelatedFromCallout"));
+}
+
+godot::Array IfcDraughtingCallout::get_IsRelatedToCallout() {
+    return get_inverse(godot::String("IsRelatedToCallout"));
+}
+
+void IfcDimensionCurveDirectedCallout::_bind_methods() {
+}
+
+void IfcAngularDimension::_bind_methods() {
+}
+
+void IfcAnnotationOccurrence::_bind_methods() {
+}
+
+void IfcAnnotationCurveOccurrence::_bind_methods() {
+}
+
+void IfcAnnotationFillAreaOccurrence::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_FillStyleTarget"), &IfcAnnotationFillAreaOccurrence::get_FillStyleTarget);
+    ClassDB::bind_method(D_METHOD("set_FillStyleTarget","v"), &IfcAnnotationFillAreaOccurrence::set_FillStyleTarget);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "FillStyleTarget", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_FillStyleTarget", "get_FillStyleTarget");
+    ClassDB::bind_method(D_METHOD("get_GlobalOrLocal"), &IfcAnnotationFillAreaOccurrence::get_GlobalOrLocal);
+    ClassDB::bind_method(D_METHOD("set_GlobalOrLocal","v"), &IfcAnnotationFillAreaOccurrence::set_GlobalOrLocal);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "GlobalOrLocal", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_GlobalOrLocal", "get_GlobalOrLocal");
+}
+
+Ref<GDIFCEntityBase> IfcAnnotationFillAreaOccurrence::get_FillStyleTarget() {
+    const ptrdiff_t i = gd_attr_index(entity_, "FillStyleTarget");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcAnnotationFillAreaOccurrence::set_FillStyleTarget(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "FillStyleTarget", v);
+}
+
+godot::Variant IfcAnnotationFillAreaOccurrence::get_GlobalOrLocal() {
+    return gd_get_attribute(entity_, "GlobalOrLocal", file_);
+}
+
+void IfcAnnotationFillAreaOccurrence::set_GlobalOrLocal(godot::Variant v) {
+    gd_set_attribute(entity_, "GlobalOrLocal", v);
+}
+
+void IfcAnnotationSurface::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_Item"), &IfcAnnotationSurface::get_Item);
+    ClassDB::bind_method(D_METHOD("set_Item","v"), &IfcAnnotationSurface::set_Item);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "Item", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_Item", "get_Item");
+    ClassDB::bind_method(D_METHOD("get_TextureCoordinates"), &IfcAnnotationSurface::get_TextureCoordinates);
+    ClassDB::bind_method(D_METHOD("set_TextureCoordinates","v"), &IfcAnnotationSurface::set_TextureCoordinates);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "TextureCoordinates", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_TextureCoordinates", "get_TextureCoordinates");
+}
+
+Ref<GDIFCEntityBase> IfcAnnotationSurface::get_Item() {
+    const ptrdiff_t i = gd_attr_index(entity_, "Item");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcAnnotationSurface::set_Item(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "Item", v);
+}
+
+Ref<GDIFCEntityBase> IfcAnnotationSurface::get_TextureCoordinates() {
+    const ptrdiff_t i = gd_attr_index(entity_, "TextureCoordinates");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcAnnotationSurface::set_TextureCoordinates(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "TextureCoordinates", v);
+}
+
+void IfcAnnotationSurfaceOccurrence::_bind_methods() {
+}
+
+void IfcAnnotationSymbolOccurrence::_bind_methods() {
+}
+
+void IfcAnnotationTextOccurrence::_bind_methods() {
+}
+
+void IfcAppliedValueRelationship::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_ComponentOfTotal"), &IfcAppliedValueRelationship::get_ComponentOfTotal);
+    ClassDB::bind_method(D_METHOD("set_ComponentOfTotal","v"), &IfcAppliedValueRelationship::set_ComponentOfTotal);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "ComponentOfTotal", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_ComponentOfTotal", "get_ComponentOfTotal");
+    ClassDB::bind_method(D_METHOD("get_Components"), &IfcAppliedValueRelationship::get_Components);
+    ClassDB::bind_method(D_METHOD("set_Components","v"), &IfcAppliedValueRelationship::set_Components);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Components", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Components", "get_Components");
+    ClassDB::bind_method(D_METHOD("get_ArithmeticOperator"), &IfcAppliedValueRelationship::get_ArithmeticOperator);
+    ClassDB::bind_method(D_METHOD("set_ArithmeticOperator","v"), &IfcAppliedValueRelationship::set_ArithmeticOperator);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ArithmeticOperator", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ArithmeticOperator", "get_ArithmeticOperator");
+    ClassDB::bind_method(D_METHOD("get_Name"), &IfcAppliedValueRelationship::get_Name);
+    ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcAppliedValueRelationship::set_Name);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Name", "get_Name");
+    ClassDB::bind_method(D_METHOD("get_Description"), &IfcAppliedValueRelationship::get_Description);
+    ClassDB::bind_method(D_METHOD("set_Description","v"), &IfcAppliedValueRelationship::set_Description);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Description", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Description", "get_Description");
+}
+
+Ref<GDIFCEntityBase> IfcAppliedValueRelationship::get_ComponentOfTotal() {
+    const ptrdiff_t i = gd_attr_index(entity_, "ComponentOfTotal");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcAppliedValueRelationship::set_ComponentOfTotal(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "ComponentOfTotal", v);
+}
+
+godot::Variant IfcAppliedValueRelationship::get_Components() {
+    return gd_get_attribute(entity_, "Components", file_);
+}
+
+void IfcAppliedValueRelationship::set_Components(godot::Variant v) {
+    gd_set_attribute(entity_, "Components", v);
+}
+
+godot::Variant IfcAppliedValueRelationship::get_ArithmeticOperator() {
+    return gd_get_attribute(entity_, "ArithmeticOperator", file_);
+}
+
+void IfcAppliedValueRelationship::set_ArithmeticOperator(godot::Variant v) {
+    gd_set_attribute(entity_, "ArithmeticOperator", v);
+}
+
+godot::Variant IfcAppliedValueRelationship::get_Name() {
+    return gd_get_attribute(entity_, "Name", file_);
+}
+
+void IfcAppliedValueRelationship::set_Name(godot::Variant v) {
+    gd_set_attribute(entity_, "Name", v);
+}
+
+godot::Variant IfcAppliedValueRelationship::get_Description() {
+    return gd_get_attribute(entity_, "Description", file_);
+}
+
+void IfcAppliedValueRelationship::set_Description(godot::Variant v) {
+    gd_set_attribute(entity_, "Description", v);
+}
+
+void IfcApprovalActorRelationship::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_Actor"), &IfcApprovalActorRelationship::get_Actor);
+    ClassDB::bind_method(D_METHOD("set_Actor","v"), &IfcApprovalActorRelationship::set_Actor);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "Actor", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_Actor", "get_Actor");
+    ClassDB::bind_method(D_METHOD("get_Approval"), &IfcApprovalActorRelationship::get_Approval);
+    ClassDB::bind_method(D_METHOD("set_Approval","v"), &IfcApprovalActorRelationship::set_Approval);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "Approval", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_Approval", "get_Approval");
+    ClassDB::bind_method(D_METHOD("get_Role"), &IfcApprovalActorRelationship::get_Role);
+    ClassDB::bind_method(D_METHOD("set_Role","v"), &IfcApprovalActorRelationship::set_Role);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "Role", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_Role", "get_Role");
+}
+
+Ref<GDIFCEntityBase> IfcApprovalActorRelationship::get_Actor() {
+    const ptrdiff_t i = gd_attr_index(entity_, "Actor");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcApprovalActorRelationship::set_Actor(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "Actor", v);
+}
+
+Ref<GDIFCEntityBase> IfcApprovalActorRelationship::get_Approval() {
+    const ptrdiff_t i = gd_attr_index(entity_, "Approval");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcApprovalActorRelationship::set_Approval(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "Approval", v);
+}
+
+Ref<GDIFCEntityBase> IfcApprovalActorRelationship::get_Role() {
+    const ptrdiff_t i = gd_attr_index(entity_, "Role");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcApprovalActorRelationship::set_Role(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "Role", v);
+}
+
+void IfcApprovalPropertyRelationship::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_ApprovedProperties"), &IfcApprovalPropertyRelationship::get_ApprovedProperties);
+    ClassDB::bind_method(D_METHOD("set_ApprovedProperties","v"), &IfcApprovalPropertyRelationship::set_ApprovedProperties);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ApprovedProperties", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ApprovedProperties", "get_ApprovedProperties");
+    ClassDB::bind_method(D_METHOD("get_Approval"), &IfcApprovalPropertyRelationship::get_Approval);
+    ClassDB::bind_method(D_METHOD("set_Approval","v"), &IfcApprovalPropertyRelationship::set_Approval);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "Approval", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_Approval", "get_Approval");
+}
+
+godot::Variant IfcApprovalPropertyRelationship::get_ApprovedProperties() {
+    return gd_get_attribute(entity_, "ApprovedProperties", file_);
+}
+
+void IfcApprovalPropertyRelationship::set_ApprovedProperties(godot::Variant v) {
+    gd_set_attribute(entity_, "ApprovedProperties", v);
+}
+
+Ref<GDIFCEntityBase> IfcApprovalPropertyRelationship::get_Approval() {
+    const ptrdiff_t i = gd_attr_index(entity_, "Approval");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcApprovalPropertyRelationship::set_Approval(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "Approval", v);
+}
+
+void IfcBezierCurve::_bind_methods() {
+}
+
+void IfcBuildingElementComponent::_bind_methods() {
+}
+
+void IfcCalendarDate::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_DayComponent"), &IfcCalendarDate::get_DayComponent);
+    ClassDB::bind_method(D_METHOD("set_DayComponent","v"), &IfcCalendarDate::set_DayComponent);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "DayComponent", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_DayComponent", "get_DayComponent");
+    ClassDB::bind_method(D_METHOD("get_MonthComponent"), &IfcCalendarDate::get_MonthComponent);
+    ClassDB::bind_method(D_METHOD("set_MonthComponent","v"), &IfcCalendarDate::set_MonthComponent);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "MonthComponent", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_MonthComponent", "get_MonthComponent");
+    ClassDB::bind_method(D_METHOD("get_YearComponent"), &IfcCalendarDate::get_YearComponent);
+    ClassDB::bind_method(D_METHOD("set_YearComponent","v"), &IfcCalendarDate::set_YearComponent);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "YearComponent", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_YearComponent", "get_YearComponent");
+}
+
+godot::Variant IfcCalendarDate::get_DayComponent() {
+    return gd_get_attribute(entity_, "DayComponent", file_);
+}
+
+void IfcCalendarDate::set_DayComponent(godot::Variant v) {
+    gd_set_attribute(entity_, "DayComponent", v);
+}
+
+godot::Variant IfcCalendarDate::get_MonthComponent() {
+    return gd_get_attribute(entity_, "MonthComponent", file_);
+}
+
+void IfcCalendarDate::set_MonthComponent(godot::Variant v) {
+    gd_set_attribute(entity_, "MonthComponent", v);
+}
+
+godot::Variant IfcCalendarDate::get_YearComponent() {
+    return gd_get_attribute(entity_, "YearComponent", file_);
+}
+
+void IfcCalendarDate::set_YearComponent(godot::Variant v) {
+    gd_set_attribute(entity_, "YearComponent", v);
+}
+
+void IfcEdgeFeature::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_FeatureLength"), &IfcEdgeFeature::get_FeatureLength);
+    ClassDB::bind_method(D_METHOD("set_FeatureLength","v"), &IfcEdgeFeature::set_FeatureLength);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "FeatureLength", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_FeatureLength", "get_FeatureLength");
+}
+
+godot::Variant IfcEdgeFeature::get_FeatureLength() {
+    return gd_get_attribute(entity_, "FeatureLength", file_);
+}
+
+void IfcEdgeFeature::set_FeatureLength(godot::Variant v) {
+    gd_set_attribute(entity_, "FeatureLength", v);
+}
+
+void IfcChamferEdgeFeature::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_Width"), &IfcChamferEdgeFeature::get_Width);
+    ClassDB::bind_method(D_METHOD("set_Width","v"), &IfcChamferEdgeFeature::set_Width);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Width", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Width", "get_Width");
+    ClassDB::bind_method(D_METHOD("get_Height"), &IfcChamferEdgeFeature::get_Height);
+    ClassDB::bind_method(D_METHOD("set_Height","v"), &IfcChamferEdgeFeature::set_Height);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Height", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Height", "get_Height");
+}
+
+godot::Variant IfcChamferEdgeFeature::get_Width() {
+    return gd_get_attribute(entity_, "Width", file_);
+}
+
+void IfcChamferEdgeFeature::set_Width(godot::Variant v) {
+    gd_set_attribute(entity_, "Width", v);
+}
+
+godot::Variant IfcChamferEdgeFeature::get_Height() {
+    return gd_get_attribute(entity_, "Height", file_);
+}
+
+void IfcChamferEdgeFeature::set_Height(godot::Variant v) {
+    gd_set_attribute(entity_, "Height", v);
+}
+
+void IfcClassificationItem::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_Notation"), &IfcClassificationItem::get_Notation);
+    ClassDB::bind_method(D_METHOD("set_Notation","v"), &IfcClassificationItem::set_Notation);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "Notation", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_Notation", "get_Notation");
+    ClassDB::bind_method(D_METHOD("get_ItemOf"), &IfcClassificationItem::get_ItemOf);
+    ClassDB::bind_method(D_METHOD("set_ItemOf","v"), &IfcClassificationItem::set_ItemOf);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "ItemOf", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_ItemOf", "get_ItemOf");
+    ClassDB::bind_method(D_METHOD("get_Title"), &IfcClassificationItem::get_Title);
+    ClassDB::bind_method(D_METHOD("set_Title","v"), &IfcClassificationItem::set_Title);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Title", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Title", "get_Title");
+    ClassDB::bind_method(D_METHOD("get_IsClassifiedItemIn"), &IfcClassificationItem::get_IsClassifiedItemIn);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "IsClassifiedItemIn"), "", "get_IsClassifiedItemIn");
+    ClassDB::bind_method(D_METHOD("get_IsClassifyingItemIn"), &IfcClassificationItem::get_IsClassifyingItemIn);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "IsClassifyingItemIn"), "", "get_IsClassifyingItemIn");
+}
+
+Ref<GDIFCEntityBase> IfcClassificationItem::get_Notation() {
+    const ptrdiff_t i = gd_attr_index(entity_, "Notation");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcClassificationItem::set_Notation(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "Notation", v);
+}
+
+Ref<GDIFCEntityBase> IfcClassificationItem::get_ItemOf() {
+    const ptrdiff_t i = gd_attr_index(entity_, "ItemOf");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcClassificationItem::set_ItemOf(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "ItemOf", v);
+}
+
+godot::Variant IfcClassificationItem::get_Title() {
+    return gd_get_attribute(entity_, "Title", file_);
+}
+
+void IfcClassificationItem::set_Title(godot::Variant v) {
+    gd_set_attribute(entity_, "Title", v);
+}
+
+godot::Array IfcClassificationItem::get_IsClassifiedItemIn() {
+    return get_inverse(godot::String("IsClassifiedItemIn"));
+}
+
+godot::Array IfcClassificationItem::get_IsClassifyingItemIn() {
+    return get_inverse(godot::String("IsClassifyingItemIn"));
+}
+
+void IfcClassificationItemRelationship::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_RelatingItem"), &IfcClassificationItemRelationship::get_RelatingItem);
+    ClassDB::bind_method(D_METHOD("set_RelatingItem","v"), &IfcClassificationItemRelationship::set_RelatingItem);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "RelatingItem", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_RelatingItem", "get_RelatingItem");
+    ClassDB::bind_method(D_METHOD("get_RelatedItems"), &IfcClassificationItemRelationship::get_RelatedItems);
+    ClassDB::bind_method(D_METHOD("set_RelatedItems","v"), &IfcClassificationItemRelationship::set_RelatedItems);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RelatedItems", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RelatedItems", "get_RelatedItems");
+}
+
+Ref<GDIFCEntityBase> IfcClassificationItemRelationship::get_RelatingItem() {
+    const ptrdiff_t i = gd_attr_index(entity_, "RelatingItem");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcClassificationItemRelationship::set_RelatingItem(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "RelatingItem", v);
+}
+
+godot::Variant IfcClassificationItemRelationship::get_RelatedItems() {
+    return gd_get_attribute(entity_, "RelatedItems", file_);
+}
+
+void IfcClassificationItemRelationship::set_RelatedItems(godot::Variant v) {
+    gd_set_attribute(entity_, "RelatedItems", v);
+}
+
+void IfcClassificationNotation::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_NotationFacets"), &IfcClassificationNotation::get_NotationFacets);
+    ClassDB::bind_method(D_METHOD("set_NotationFacets","v"), &IfcClassificationNotation::set_NotationFacets);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "NotationFacets", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_NotationFacets", "get_NotationFacets");
+}
+
+godot::Variant IfcClassificationNotation::get_NotationFacets() {
+    return gd_get_attribute(entity_, "NotationFacets", file_);
+}
+
+void IfcClassificationNotation::set_NotationFacets(godot::Variant v) {
+    gd_set_attribute(entity_, "NotationFacets", v);
+}
+
+void IfcClassificationNotationFacet::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_NotationValue"), &IfcClassificationNotationFacet::get_NotationValue);
+    ClassDB::bind_method(D_METHOD("set_NotationValue","v"), &IfcClassificationNotationFacet::set_NotationValue);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "NotationValue", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_NotationValue", "get_NotationValue");
+}
+
+godot::Variant IfcClassificationNotationFacet::get_NotationValue() {
+    return gd_get_attribute(entity_, "NotationValue", file_);
+}
+
+void IfcClassificationNotationFacet::set_NotationValue(godot::Variant v) {
+    gd_set_attribute(entity_, "NotationValue", v);
+}
+
+void IfcCondition::_bind_methods() {
+}
+
+void IfcConditionCriterion::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_Criterion"), &IfcConditionCriterion::get_Criterion);
+    ClassDB::bind_method(D_METHOD("set_Criterion","v"), &IfcConditionCriterion::set_Criterion);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Criterion", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Criterion", "get_Criterion");
+    ClassDB::bind_method(D_METHOD("get_CriterionDateTime"), &IfcConditionCriterion::get_CriterionDateTime);
+    ClassDB::bind_method(D_METHOD("set_CriterionDateTime","v"), &IfcConditionCriterion::set_CriterionDateTime);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "CriterionDateTime", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_CriterionDateTime", "get_CriterionDateTime");
+}
+
+godot::Variant IfcConditionCriterion::get_Criterion() {
+    return gd_get_attribute(entity_, "Criterion", file_);
+}
+
+void IfcConditionCriterion::set_Criterion(godot::Variant v) {
+    gd_set_attribute(entity_, "Criterion", v);
+}
+
+Ref<GDIFCEntityBase> IfcConditionCriterion::get_CriterionDateTime() {
+    const ptrdiff_t i = gd_attr_index(entity_, "CriterionDateTime");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcConditionCriterion::set_CriterionDateTime(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "CriterionDateTime", v);
+}
+
+void IfcConnectionPortGeometry::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_LocationAtRelatingElement"), &IfcConnectionPortGeometry::get_LocationAtRelatingElement);
+    ClassDB::bind_method(D_METHOD("set_LocationAtRelatingElement","v"), &IfcConnectionPortGeometry::set_LocationAtRelatingElement);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "LocationAtRelatingElement", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_LocationAtRelatingElement", "get_LocationAtRelatingElement");
+    ClassDB::bind_method(D_METHOD("get_LocationAtRelatedElement"), &IfcConnectionPortGeometry::get_LocationAtRelatedElement);
+    ClassDB::bind_method(D_METHOD("set_LocationAtRelatedElement","v"), &IfcConnectionPortGeometry::set_LocationAtRelatedElement);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "LocationAtRelatedElement", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_LocationAtRelatedElement", "get_LocationAtRelatedElement");
+    ClassDB::bind_method(D_METHOD("get_ProfileOfPort"), &IfcConnectionPortGeometry::get_ProfileOfPort);
+    ClassDB::bind_method(D_METHOD("set_ProfileOfPort","v"), &IfcConnectionPortGeometry::set_ProfileOfPort);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "ProfileOfPort", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_ProfileOfPort", "get_ProfileOfPort");
+}
+
+Ref<GDIFCEntityBase> IfcConnectionPortGeometry::get_LocationAtRelatingElement() {
+    const ptrdiff_t i = gd_attr_index(entity_, "LocationAtRelatingElement");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcConnectionPortGeometry::set_LocationAtRelatingElement(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "LocationAtRelatingElement", v);
+}
+
+Ref<GDIFCEntityBase> IfcConnectionPortGeometry::get_LocationAtRelatedElement() {
+    const ptrdiff_t i = gd_attr_index(entity_, "LocationAtRelatedElement");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcConnectionPortGeometry::set_LocationAtRelatedElement(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "LocationAtRelatedElement", v);
+}
+
+Ref<GDIFCEntityBase> IfcConnectionPortGeometry::get_ProfileOfPort() {
+    const ptrdiff_t i = gd_attr_index(entity_, "ProfileOfPort");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcConnectionPortGeometry::set_ProfileOfPort(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "ProfileOfPort", v);
+}
+
+void IfcConstraintAggregationRelationship::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_Name"), &IfcConstraintAggregationRelationship::get_Name);
+    ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcConstraintAggregationRelationship::set_Name);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Name", "get_Name");
+    ClassDB::bind_method(D_METHOD("get_Description"), &IfcConstraintAggregationRelationship::get_Description);
+    ClassDB::bind_method(D_METHOD("set_Description","v"), &IfcConstraintAggregationRelationship::set_Description);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Description", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Description", "get_Description");
+    ClassDB::bind_method(D_METHOD("get_RelatingConstraint"), &IfcConstraintAggregationRelationship::get_RelatingConstraint);
+    ClassDB::bind_method(D_METHOD("set_RelatingConstraint","v"), &IfcConstraintAggregationRelationship::set_RelatingConstraint);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "RelatingConstraint", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_RelatingConstraint", "get_RelatingConstraint");
+    ClassDB::bind_method(D_METHOD("get_RelatedConstraints"), &IfcConstraintAggregationRelationship::get_RelatedConstraints);
+    ClassDB::bind_method(D_METHOD("set_RelatedConstraints","v"), &IfcConstraintAggregationRelationship::set_RelatedConstraints);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RelatedConstraints", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RelatedConstraints", "get_RelatedConstraints");
+    ClassDB::bind_method(D_METHOD("get_LogicalAggregator"), &IfcConstraintAggregationRelationship::get_LogicalAggregator);
+    ClassDB::bind_method(D_METHOD("set_LogicalAggregator","v"), &IfcConstraintAggregationRelationship::set_LogicalAggregator);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "LogicalAggregator", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_LogicalAggregator", "get_LogicalAggregator");
+}
+
+godot::Variant IfcConstraintAggregationRelationship::get_Name() {
+    return gd_get_attribute(entity_, "Name", file_);
+}
+
+void IfcConstraintAggregationRelationship::set_Name(godot::Variant v) {
+    gd_set_attribute(entity_, "Name", v);
+}
+
+godot::Variant IfcConstraintAggregationRelationship::get_Description() {
+    return gd_get_attribute(entity_, "Description", file_);
+}
+
+void IfcConstraintAggregationRelationship::set_Description(godot::Variant v) {
+    gd_set_attribute(entity_, "Description", v);
+}
+
+Ref<GDIFCEntityBase> IfcConstraintAggregationRelationship::get_RelatingConstraint() {
+    const ptrdiff_t i = gd_attr_index(entity_, "RelatingConstraint");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcConstraintAggregationRelationship::set_RelatingConstraint(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "RelatingConstraint", v);
+}
+
+godot::Variant IfcConstraintAggregationRelationship::get_RelatedConstraints() {
+    return gd_get_attribute(entity_, "RelatedConstraints", file_);
+}
+
+void IfcConstraintAggregationRelationship::set_RelatedConstraints(godot::Variant v) {
+    gd_set_attribute(entity_, "RelatedConstraints", v);
+}
+
+godot::Variant IfcConstraintAggregationRelationship::get_LogicalAggregator() {
+    return gd_get_attribute(entity_, "LogicalAggregator", file_);
+}
+
+void IfcConstraintAggregationRelationship::set_LogicalAggregator(godot::Variant v) {
+    gd_set_attribute(entity_, "LogicalAggregator", v);
+}
+
+void IfcConstraintClassificationRelationship::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_ClassifiedConstraint"), &IfcConstraintClassificationRelationship::get_ClassifiedConstraint);
+    ClassDB::bind_method(D_METHOD("set_ClassifiedConstraint","v"), &IfcConstraintClassificationRelationship::set_ClassifiedConstraint);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "ClassifiedConstraint", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_ClassifiedConstraint", "get_ClassifiedConstraint");
+    ClassDB::bind_method(D_METHOD("get_RelatedClassifications"), &IfcConstraintClassificationRelationship::get_RelatedClassifications);
+    ClassDB::bind_method(D_METHOD("set_RelatedClassifications","v"), &IfcConstraintClassificationRelationship::set_RelatedClassifications);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RelatedClassifications", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RelatedClassifications", "get_RelatedClassifications");
+}
+
+Ref<GDIFCEntityBase> IfcConstraintClassificationRelationship::get_ClassifiedConstraint() {
+    const ptrdiff_t i = gd_attr_index(entity_, "ClassifiedConstraint");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcConstraintClassificationRelationship::set_ClassifiedConstraint(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "ClassifiedConstraint", v);
+}
+
+godot::Variant IfcConstraintClassificationRelationship::get_RelatedClassifications() {
+    return gd_get_attribute(entity_, "RelatedClassifications", file_);
+}
+
+void IfcConstraintClassificationRelationship::set_RelatedClassifications(godot::Variant v) {
+    gd_set_attribute(entity_, "RelatedClassifications", v);
+}
+
+void IfcConstraintRelationship::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_Name"), &IfcConstraintRelationship::get_Name);
+    ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcConstraintRelationship::set_Name);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Name", "get_Name");
+    ClassDB::bind_method(D_METHOD("get_Description"), &IfcConstraintRelationship::get_Description);
+    ClassDB::bind_method(D_METHOD("set_Description","v"), &IfcConstraintRelationship::set_Description);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Description", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Description", "get_Description");
+    ClassDB::bind_method(D_METHOD("get_RelatingConstraint"), &IfcConstraintRelationship::get_RelatingConstraint);
+    ClassDB::bind_method(D_METHOD("set_RelatingConstraint","v"), &IfcConstraintRelationship::set_RelatingConstraint);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "RelatingConstraint", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_RelatingConstraint", "get_RelatingConstraint");
+    ClassDB::bind_method(D_METHOD("get_RelatedConstraints"), &IfcConstraintRelationship::get_RelatedConstraints);
+    ClassDB::bind_method(D_METHOD("set_RelatedConstraints","v"), &IfcConstraintRelationship::set_RelatedConstraints);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RelatedConstraints", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RelatedConstraints", "get_RelatedConstraints");
+}
+
+godot::Variant IfcConstraintRelationship::get_Name() {
+    return gd_get_attribute(entity_, "Name", file_);
+}
+
+void IfcConstraintRelationship::set_Name(godot::Variant v) {
+    gd_set_attribute(entity_, "Name", v);
+}
+
+godot::Variant IfcConstraintRelationship::get_Description() {
+    return gd_get_attribute(entity_, "Description", file_);
+}
+
+void IfcConstraintRelationship::set_Description(godot::Variant v) {
+    gd_set_attribute(entity_, "Description", v);
+}
+
+Ref<GDIFCEntityBase> IfcConstraintRelationship::get_RelatingConstraint() {
+    const ptrdiff_t i = gd_attr_index(entity_, "RelatingConstraint");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcConstraintRelationship::set_RelatingConstraint(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "RelatingConstraint", v);
+}
+
+godot::Variant IfcConstraintRelationship::get_RelatedConstraints() {
+    return gd_get_attribute(entity_, "RelatedConstraints", file_);
+}
+
+void IfcConstraintRelationship::set_RelatedConstraints(godot::Variant v) {
+    gd_set_attribute(entity_, "RelatedConstraints", v);
+}
+
+void IfcCoordinatedUniversalTimeOffset::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_HourOffset"), &IfcCoordinatedUniversalTimeOffset::get_HourOffset);
+    ClassDB::bind_method(D_METHOD("set_HourOffset","v"), &IfcCoordinatedUniversalTimeOffset::set_HourOffset);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "HourOffset", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_HourOffset", "get_HourOffset");
+    ClassDB::bind_method(D_METHOD("get_MinuteOffset"), &IfcCoordinatedUniversalTimeOffset::get_MinuteOffset);
+    ClassDB::bind_method(D_METHOD("set_MinuteOffset","v"), &IfcCoordinatedUniversalTimeOffset::set_MinuteOffset);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "MinuteOffset", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_MinuteOffset", "get_MinuteOffset");
+    ClassDB::bind_method(D_METHOD("get_Sense"), &IfcCoordinatedUniversalTimeOffset::get_Sense);
+    ClassDB::bind_method(D_METHOD("set_Sense","v"), &IfcCoordinatedUniversalTimeOffset::set_Sense);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Sense", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Sense", "get_Sense");
+}
+
+godot::Variant IfcCoordinatedUniversalTimeOffset::get_HourOffset() {
+    return gd_get_attribute(entity_, "HourOffset", file_);
+}
+
+void IfcCoordinatedUniversalTimeOffset::set_HourOffset(godot::Variant v) {
+    gd_set_attribute(entity_, "HourOffset", v);
+}
+
+godot::Variant IfcCoordinatedUniversalTimeOffset::get_MinuteOffset() {
+    return gd_get_attribute(entity_, "MinuteOffset", file_);
+}
+
+void IfcCoordinatedUniversalTimeOffset::set_MinuteOffset(godot::Variant v) {
+    gd_set_attribute(entity_, "MinuteOffset", v);
+}
+
+godot::Variant IfcCoordinatedUniversalTimeOffset::get_Sense() {
+    return gd_get_attribute(entity_, "Sense", file_);
+}
+
+void IfcCoordinatedUniversalTimeOffset::set_Sense(godot::Variant v) {
+    gd_set_attribute(entity_, "Sense", v);
+}
+
+void IfcCraneRailAShapeProfileDef::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_OverallHeight"), &IfcCraneRailAShapeProfileDef::get_OverallHeight);
+    ClassDB::bind_method(D_METHOD("set_OverallHeight","v"), &IfcCraneRailAShapeProfileDef::set_OverallHeight);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "OverallHeight", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_OverallHeight", "get_OverallHeight");
+    ClassDB::bind_method(D_METHOD("get_BaseWidth2"), &IfcCraneRailAShapeProfileDef::get_BaseWidth2);
+    ClassDB::bind_method(D_METHOD("set_BaseWidth2","v"), &IfcCraneRailAShapeProfileDef::set_BaseWidth2);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "BaseWidth2", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_BaseWidth2", "get_BaseWidth2");
+    ClassDB::bind_method(D_METHOD("get_Radius"), &IfcCraneRailAShapeProfileDef::get_Radius);
+    ClassDB::bind_method(D_METHOD("set_Radius","v"), &IfcCraneRailAShapeProfileDef::set_Radius);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Radius", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Radius", "get_Radius");
+    ClassDB::bind_method(D_METHOD("get_HeadWidth"), &IfcCraneRailAShapeProfileDef::get_HeadWidth);
+    ClassDB::bind_method(D_METHOD("set_HeadWidth","v"), &IfcCraneRailAShapeProfileDef::set_HeadWidth);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "HeadWidth", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_HeadWidth", "get_HeadWidth");
+    ClassDB::bind_method(D_METHOD("get_HeadDepth2"), &IfcCraneRailAShapeProfileDef::get_HeadDepth2);
+    ClassDB::bind_method(D_METHOD("set_HeadDepth2","v"), &IfcCraneRailAShapeProfileDef::set_HeadDepth2);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "HeadDepth2", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_HeadDepth2", "get_HeadDepth2");
+    ClassDB::bind_method(D_METHOD("get_HeadDepth3"), &IfcCraneRailAShapeProfileDef::get_HeadDepth3);
+    ClassDB::bind_method(D_METHOD("set_HeadDepth3","v"), &IfcCraneRailAShapeProfileDef::set_HeadDepth3);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "HeadDepth3", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_HeadDepth3", "get_HeadDepth3");
+    ClassDB::bind_method(D_METHOD("get_WebThickness"), &IfcCraneRailAShapeProfileDef::get_WebThickness);
+    ClassDB::bind_method(D_METHOD("set_WebThickness","v"), &IfcCraneRailAShapeProfileDef::set_WebThickness);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "WebThickness", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_WebThickness", "get_WebThickness");
+    ClassDB::bind_method(D_METHOD("get_BaseWidth4"), &IfcCraneRailAShapeProfileDef::get_BaseWidth4);
+    ClassDB::bind_method(D_METHOD("set_BaseWidth4","v"), &IfcCraneRailAShapeProfileDef::set_BaseWidth4);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "BaseWidth4", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_BaseWidth4", "get_BaseWidth4");
+    ClassDB::bind_method(D_METHOD("get_BaseDepth1"), &IfcCraneRailAShapeProfileDef::get_BaseDepth1);
+    ClassDB::bind_method(D_METHOD("set_BaseDepth1","v"), &IfcCraneRailAShapeProfileDef::set_BaseDepth1);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "BaseDepth1", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_BaseDepth1", "get_BaseDepth1");
+    ClassDB::bind_method(D_METHOD("get_BaseDepth2"), &IfcCraneRailAShapeProfileDef::get_BaseDepth2);
+    ClassDB::bind_method(D_METHOD("set_BaseDepth2","v"), &IfcCraneRailAShapeProfileDef::set_BaseDepth2);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "BaseDepth2", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_BaseDepth2", "get_BaseDepth2");
+    ClassDB::bind_method(D_METHOD("get_BaseDepth3"), &IfcCraneRailAShapeProfileDef::get_BaseDepth3);
+    ClassDB::bind_method(D_METHOD("set_BaseDepth3","v"), &IfcCraneRailAShapeProfileDef::set_BaseDepth3);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "BaseDepth3", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_BaseDepth3", "get_BaseDepth3");
+    ClassDB::bind_method(D_METHOD("get_CentreOfGravityInY"), &IfcCraneRailAShapeProfileDef::get_CentreOfGravityInY);
+    ClassDB::bind_method(D_METHOD("set_CentreOfGravityInY","v"), &IfcCraneRailAShapeProfileDef::set_CentreOfGravityInY);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "CentreOfGravityInY", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_CentreOfGravityInY", "get_CentreOfGravityInY");
+}
+
+godot::Variant IfcCraneRailAShapeProfileDef::get_OverallHeight() {
+    return gd_get_attribute(entity_, "OverallHeight", file_);
+}
+
+void IfcCraneRailAShapeProfileDef::set_OverallHeight(godot::Variant v) {
+    gd_set_attribute(entity_, "OverallHeight", v);
+}
+
+godot::Variant IfcCraneRailAShapeProfileDef::get_BaseWidth2() {
+    return gd_get_attribute(entity_, "BaseWidth2", file_);
+}
+
+void IfcCraneRailAShapeProfileDef::set_BaseWidth2(godot::Variant v) {
+    gd_set_attribute(entity_, "BaseWidth2", v);
+}
+
+godot::Variant IfcCraneRailAShapeProfileDef::get_Radius() {
+    return gd_get_attribute(entity_, "Radius", file_);
+}
+
+void IfcCraneRailAShapeProfileDef::set_Radius(godot::Variant v) {
+    gd_set_attribute(entity_, "Radius", v);
+}
+
+godot::Variant IfcCraneRailAShapeProfileDef::get_HeadWidth() {
+    return gd_get_attribute(entity_, "HeadWidth", file_);
+}
+
+void IfcCraneRailAShapeProfileDef::set_HeadWidth(godot::Variant v) {
+    gd_set_attribute(entity_, "HeadWidth", v);
+}
+
+godot::Variant IfcCraneRailAShapeProfileDef::get_HeadDepth2() {
+    return gd_get_attribute(entity_, "HeadDepth2", file_);
+}
+
+void IfcCraneRailAShapeProfileDef::set_HeadDepth2(godot::Variant v) {
+    gd_set_attribute(entity_, "HeadDepth2", v);
+}
+
+godot::Variant IfcCraneRailAShapeProfileDef::get_HeadDepth3() {
+    return gd_get_attribute(entity_, "HeadDepth3", file_);
+}
+
+void IfcCraneRailAShapeProfileDef::set_HeadDepth3(godot::Variant v) {
+    gd_set_attribute(entity_, "HeadDepth3", v);
+}
+
+godot::Variant IfcCraneRailAShapeProfileDef::get_WebThickness() {
+    return gd_get_attribute(entity_, "WebThickness", file_);
+}
+
+void IfcCraneRailAShapeProfileDef::set_WebThickness(godot::Variant v) {
+    gd_set_attribute(entity_, "WebThickness", v);
+}
+
+godot::Variant IfcCraneRailAShapeProfileDef::get_BaseWidth4() {
+    return gd_get_attribute(entity_, "BaseWidth4", file_);
+}
+
+void IfcCraneRailAShapeProfileDef::set_BaseWidth4(godot::Variant v) {
+    gd_set_attribute(entity_, "BaseWidth4", v);
+}
+
+godot::Variant IfcCraneRailAShapeProfileDef::get_BaseDepth1() {
+    return gd_get_attribute(entity_, "BaseDepth1", file_);
+}
+
+void IfcCraneRailAShapeProfileDef::set_BaseDepth1(godot::Variant v) {
+    gd_set_attribute(entity_, "BaseDepth1", v);
+}
+
+godot::Variant IfcCraneRailAShapeProfileDef::get_BaseDepth2() {
+    return gd_get_attribute(entity_, "BaseDepth2", file_);
+}
+
+void IfcCraneRailAShapeProfileDef::set_BaseDepth2(godot::Variant v) {
+    gd_set_attribute(entity_, "BaseDepth2", v);
+}
+
+godot::Variant IfcCraneRailAShapeProfileDef::get_BaseDepth3() {
+    return gd_get_attribute(entity_, "BaseDepth3", file_);
+}
+
+void IfcCraneRailAShapeProfileDef::set_BaseDepth3(godot::Variant v) {
+    gd_set_attribute(entity_, "BaseDepth3", v);
+}
+
+godot::Variant IfcCraneRailAShapeProfileDef::get_CentreOfGravityInY() {
+    return gd_get_attribute(entity_, "CentreOfGravityInY", file_);
+}
+
+void IfcCraneRailAShapeProfileDef::set_CentreOfGravityInY(godot::Variant v) {
+    gd_set_attribute(entity_, "CentreOfGravityInY", v);
+}
+
+void IfcCraneRailFShapeProfileDef::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_OverallHeight"), &IfcCraneRailFShapeProfileDef::get_OverallHeight);
+    ClassDB::bind_method(D_METHOD("set_OverallHeight","v"), &IfcCraneRailFShapeProfileDef::set_OverallHeight);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "OverallHeight", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_OverallHeight", "get_OverallHeight");
+    ClassDB::bind_method(D_METHOD("get_HeadWidth"), &IfcCraneRailFShapeProfileDef::get_HeadWidth);
+    ClassDB::bind_method(D_METHOD("set_HeadWidth","v"), &IfcCraneRailFShapeProfileDef::set_HeadWidth);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "HeadWidth", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_HeadWidth", "get_HeadWidth");
+    ClassDB::bind_method(D_METHOD("get_Radius"), &IfcCraneRailFShapeProfileDef::get_Radius);
+    ClassDB::bind_method(D_METHOD("set_Radius","v"), &IfcCraneRailFShapeProfileDef::set_Radius);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Radius", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Radius", "get_Radius");
+    ClassDB::bind_method(D_METHOD("get_HeadDepth2"), &IfcCraneRailFShapeProfileDef::get_HeadDepth2);
+    ClassDB::bind_method(D_METHOD("set_HeadDepth2","v"), &IfcCraneRailFShapeProfileDef::set_HeadDepth2);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "HeadDepth2", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_HeadDepth2", "get_HeadDepth2");
+    ClassDB::bind_method(D_METHOD("get_HeadDepth3"), &IfcCraneRailFShapeProfileDef::get_HeadDepth3);
+    ClassDB::bind_method(D_METHOD("set_HeadDepth3","v"), &IfcCraneRailFShapeProfileDef::set_HeadDepth3);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "HeadDepth3", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_HeadDepth3", "get_HeadDepth3");
+    ClassDB::bind_method(D_METHOD("get_WebThickness"), &IfcCraneRailFShapeProfileDef::get_WebThickness);
+    ClassDB::bind_method(D_METHOD("set_WebThickness","v"), &IfcCraneRailFShapeProfileDef::set_WebThickness);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "WebThickness", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_WebThickness", "get_WebThickness");
+    ClassDB::bind_method(D_METHOD("get_BaseDepth1"), &IfcCraneRailFShapeProfileDef::get_BaseDepth1);
+    ClassDB::bind_method(D_METHOD("set_BaseDepth1","v"), &IfcCraneRailFShapeProfileDef::set_BaseDepth1);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "BaseDepth1", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_BaseDepth1", "get_BaseDepth1");
+    ClassDB::bind_method(D_METHOD("get_BaseDepth2"), &IfcCraneRailFShapeProfileDef::get_BaseDepth2);
+    ClassDB::bind_method(D_METHOD("set_BaseDepth2","v"), &IfcCraneRailFShapeProfileDef::set_BaseDepth2);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "BaseDepth2", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_BaseDepth2", "get_BaseDepth2");
+    ClassDB::bind_method(D_METHOD("get_CentreOfGravityInY"), &IfcCraneRailFShapeProfileDef::get_CentreOfGravityInY);
+    ClassDB::bind_method(D_METHOD("set_CentreOfGravityInY","v"), &IfcCraneRailFShapeProfileDef::set_CentreOfGravityInY);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "CentreOfGravityInY", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_CentreOfGravityInY", "get_CentreOfGravityInY");
+}
+
+godot::Variant IfcCraneRailFShapeProfileDef::get_OverallHeight() {
+    return gd_get_attribute(entity_, "OverallHeight", file_);
+}
+
+void IfcCraneRailFShapeProfileDef::set_OverallHeight(godot::Variant v) {
+    gd_set_attribute(entity_, "OverallHeight", v);
+}
+
+godot::Variant IfcCraneRailFShapeProfileDef::get_HeadWidth() {
+    return gd_get_attribute(entity_, "HeadWidth", file_);
+}
+
+void IfcCraneRailFShapeProfileDef::set_HeadWidth(godot::Variant v) {
+    gd_set_attribute(entity_, "HeadWidth", v);
+}
+
+godot::Variant IfcCraneRailFShapeProfileDef::get_Radius() {
+    return gd_get_attribute(entity_, "Radius", file_);
+}
+
+void IfcCraneRailFShapeProfileDef::set_Radius(godot::Variant v) {
+    gd_set_attribute(entity_, "Radius", v);
+}
+
+godot::Variant IfcCraneRailFShapeProfileDef::get_HeadDepth2() {
+    return gd_get_attribute(entity_, "HeadDepth2", file_);
+}
+
+void IfcCraneRailFShapeProfileDef::set_HeadDepth2(godot::Variant v) {
+    gd_set_attribute(entity_, "HeadDepth2", v);
+}
+
+godot::Variant IfcCraneRailFShapeProfileDef::get_HeadDepth3() {
+    return gd_get_attribute(entity_, "HeadDepth3", file_);
+}
+
+void IfcCraneRailFShapeProfileDef::set_HeadDepth3(godot::Variant v) {
+    gd_set_attribute(entity_, "HeadDepth3", v);
+}
+
+godot::Variant IfcCraneRailFShapeProfileDef::get_WebThickness() {
+    return gd_get_attribute(entity_, "WebThickness", file_);
+}
+
+void IfcCraneRailFShapeProfileDef::set_WebThickness(godot::Variant v) {
+    gd_set_attribute(entity_, "WebThickness", v);
+}
+
+godot::Variant IfcCraneRailFShapeProfileDef::get_BaseDepth1() {
+    return gd_get_attribute(entity_, "BaseDepth1", file_);
+}
+
+void IfcCraneRailFShapeProfileDef::set_BaseDepth1(godot::Variant v) {
+    gd_set_attribute(entity_, "BaseDepth1", v);
+}
+
+godot::Variant IfcCraneRailFShapeProfileDef::get_BaseDepth2() {
+    return gd_get_attribute(entity_, "BaseDepth2", file_);
+}
+
+void IfcCraneRailFShapeProfileDef::set_BaseDepth2(godot::Variant v) {
+    gd_set_attribute(entity_, "BaseDepth2", v);
+}
+
+godot::Variant IfcCraneRailFShapeProfileDef::get_CentreOfGravityInY() {
+    return gd_get_attribute(entity_, "CentreOfGravityInY", file_);
+}
+
+void IfcCraneRailFShapeProfileDef::set_CentreOfGravityInY(godot::Variant v) {
+    gd_set_attribute(entity_, "CentreOfGravityInY", v);
+}
+
+void IfcDateAndTime::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_DateComponent"), &IfcDateAndTime::get_DateComponent);
+    ClassDB::bind_method(D_METHOD("set_DateComponent","v"), &IfcDateAndTime::set_DateComponent);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "DateComponent", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_DateComponent", "get_DateComponent");
+    ClassDB::bind_method(D_METHOD("get_TimeComponent"), &IfcDateAndTime::get_TimeComponent);
+    ClassDB::bind_method(D_METHOD("set_TimeComponent","v"), &IfcDateAndTime::set_TimeComponent);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "TimeComponent", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_TimeComponent", "get_TimeComponent");
+}
+
+Ref<GDIFCEntityBase> IfcDateAndTime::get_DateComponent() {
+    const ptrdiff_t i = gd_attr_index(entity_, "DateComponent");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcDateAndTime::set_DateComponent(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "DateComponent", v);
+}
+
+Ref<GDIFCEntityBase> IfcDateAndTime::get_TimeComponent() {
+    const ptrdiff_t i = gd_attr_index(entity_, "TimeComponent");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcDateAndTime::set_TimeComponent(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "TimeComponent", v);
+}
+
+void IfcDefinedSymbol::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_Definition"), &IfcDefinedSymbol::get_Definition);
+    ClassDB::bind_method(D_METHOD("set_Definition","v"), &IfcDefinedSymbol::set_Definition);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "Definition", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_Definition", "get_Definition");
+    ClassDB::bind_method(D_METHOD("get_Target"), &IfcDefinedSymbol::get_Target);
+    ClassDB::bind_method(D_METHOD("set_Target","v"), &IfcDefinedSymbol::set_Target);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "Target", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_Target", "get_Target");
+}
+
+Ref<GDIFCEntityBase> IfcDefinedSymbol::get_Definition() {
+    const ptrdiff_t i = gd_attr_index(entity_, "Definition");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcDefinedSymbol::set_Definition(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "Definition", v);
+}
+
+Ref<GDIFCEntityBase> IfcDefinedSymbol::get_Target() {
+    const ptrdiff_t i = gd_attr_index(entity_, "Target");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcDefinedSymbol::set_Target(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "Target", v);
+}
+
+void IfcDiameterDimension::_bind_methods() {
+}
+
+void IfcDraughtingCalloutRelationship::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_Name"), &IfcDraughtingCalloutRelationship::get_Name);
+    ClassDB::bind_method(D_METHOD("set_Name","v"), &IfcDraughtingCalloutRelationship::set_Name);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Name", "get_Name");
+    ClassDB::bind_method(D_METHOD("get_Description"), &IfcDraughtingCalloutRelationship::get_Description);
+    ClassDB::bind_method(D_METHOD("set_Description","v"), &IfcDraughtingCalloutRelationship::set_Description);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Description", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Description", "get_Description");
+    ClassDB::bind_method(D_METHOD("get_RelatingDraughtingCallout"), &IfcDraughtingCalloutRelationship::get_RelatingDraughtingCallout);
+    ClassDB::bind_method(D_METHOD("set_RelatingDraughtingCallout","v"), &IfcDraughtingCalloutRelationship::set_RelatingDraughtingCallout);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "RelatingDraughtingCallout", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_RelatingDraughtingCallout", "get_RelatingDraughtingCallout");
+    ClassDB::bind_method(D_METHOD("get_RelatedDraughtingCallout"), &IfcDraughtingCalloutRelationship::get_RelatedDraughtingCallout);
+    ClassDB::bind_method(D_METHOD("set_RelatedDraughtingCallout","v"), &IfcDraughtingCalloutRelationship::set_RelatedDraughtingCallout);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "RelatedDraughtingCallout", PROPERTY_HINT_RESOURCE_TYPE, "GDIFCEntityBase"), "set_RelatedDraughtingCallout", "get_RelatedDraughtingCallout");
+}
+
+godot::Variant IfcDraughtingCalloutRelationship::get_Name() {
+    return gd_get_attribute(entity_, "Name", file_);
+}
+
+void IfcDraughtingCalloutRelationship::set_Name(godot::Variant v) {
+    gd_set_attribute(entity_, "Name", v);
+}
+
+godot::Variant IfcDraughtingCalloutRelationship::get_Description() {
+    return gd_get_attribute(entity_, "Description", file_);
+}
+
+void IfcDraughtingCalloutRelationship::set_Description(godot::Variant v) {
+    gd_set_attribute(entity_, "Description", v);
+}
+
+Ref<GDIFCEntityBase> IfcDraughtingCalloutRelationship::get_RelatingDraughtingCallout() {
+    const ptrdiff_t i = gd_attr_index(entity_, "RelatingDraughtingCallout");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcDraughtingCalloutRelationship::set_RelatingDraughtingCallout(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "RelatingDraughtingCallout", v);
+}
+
+Ref<GDIFCEntityBase> IfcDraughtingCalloutRelationship::get_RelatedDraughtingCallout() {
+    const ptrdiff_t i = gd_attr_index(entity_, "RelatedDraughtingCallout");
+    return i < 0 ? Ref<GDIFCEntityBase>() : gd_attr_entity(entity_->get_attribute_value(i), file_);
+}
+
+void IfcDraughtingCalloutRelationship::set_RelatedDraughtingCallout(Ref<GDIFCEntityBase> v) {
+    gd_set_attribute(entity_, "RelatedDraughtingCallout", v);
+}
+
+void IfcDimensionCalloutRelationship::_bind_methods() {
+}
+
+void IfcDimensionCurve::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_AnnotatedBySymbols"), &IfcDimensionCurve::get_AnnotatedBySymbols);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "AnnotatedBySymbols"), "", "get_AnnotatedBySymbols");
+}
+
+godot::Array IfcDimensionCurve::get_AnnotatedBySymbols() {
+    return get_inverse(godot::String("AnnotatedBySymbols"));
+}
+
+void IfcDimensionCurveTerminator::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_Role"), &IfcDimensionCurveTerminator::get_Role);
+    ClassDB::bind_method(D_METHOD("set_Role","v"), &IfcDimensionCurveTerminator::set_Role);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "Role", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_Role", "get_Role");
+}
+
+godot::Variant IfcDimensionCurveTerminator::get_Role() {
+    return gd_get_attribute(entity_, "Role", file_);
+}
+
+void IfcDimensionCurveTerminator::set_Role(godot::Variant v) {
+    gd_set_attribute(entity_, "Role", v);
+}
+
+void IfcDimensionPair::_bind_methods() {
+}
+
+void IfcDocumentElectronicFormat::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_FileExtension"), &IfcDocumentElectronicFormat::get_FileExtension);
+    ClassDB::bind_method(D_METHOD("set_FileExtension","v"), &IfcDocumentElectronicFormat::set_FileExtension);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "FileExtension", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_FileExtension", "get_FileExtension");
+    ClassDB::bind_method(D_METHOD("get_MimeContentType"), &IfcDocumentElectronicFormat::get_MimeContentType);
+    ClassDB::bind_method(D_METHOD("set_MimeContentType","v"), &IfcDocumentElectronicFormat::set_MimeContentType);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "MimeContentType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_MimeContentType", "get_MimeContentType");
+    ClassDB::bind_method(D_METHOD("get_MimeSubtype"), &IfcDocumentElectronicFormat::get_MimeSubtype);
+    ClassDB::bind_method(D_METHOD("set_MimeSubtype","v"), &IfcDocumentElectronicFormat::set_MimeSubtype);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "MimeSubtype", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_MimeSubtype", "get_MimeSubtype");
+}
+
+godot::Variant IfcDocumentElectronicFormat::get_FileExtension() {
+    return gd_get_attribute(entity_, "FileExtension", file_);
+}
+
+void IfcDocumentElectronicFormat::set_FileExtension(godot::Variant v) {
+    gd_set_attribute(entity_, "FileExtension", v);
+}
+
+godot::Variant IfcDocumentElectronicFormat::get_MimeContentType() {
+    return gd_get_attribute(entity_, "MimeContentType", file_);
+}
+
+void IfcDocumentElectronicFormat::set_MimeContentType(godot::Variant v) {
+    gd_set_attribute(entity_, "MimeContentType", v);
+}
+
+godot::Variant IfcDocumentElectronicFormat::get_MimeSubtype() {
+    return gd_get_attribute(entity_, "MimeSubtype", file_);
+}
+
+void IfcDocumentElectronicFormat::set_MimeSubtype(godot::Variant v) {
+    gd_set_attribute(entity_, "MimeSubtype", v);
+}
+
+void IfcDraughtingPreDefinedTextFont::_bind_methods() {
+}
+
+void IfcElectricDistributionPoint::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_DistributionPointFunction"), &IfcElectricDistributionPoint::get_DistributionPointFunction);
+    ClassDB::bind_method(D_METHOD("set_DistributionPointFunction","v"), &IfcElectricDistributionPoint::set_DistributionPointFunction);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "DistributionPointFunction", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_DistributionPointFunction", "get_DistributionPointFunction");
+    ClassDB::bind_method(D_METHOD("get_UserDefinedFunction"), &IfcElectricDistributionPoint::get_UserDefinedFunction);
+    ClassDB::bind_method(D_METHOD("set_UserDefinedFunction","v"), &IfcElectricDistributionPoint::set_UserDefinedFunction);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "UserDefinedFunction", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_UserDefinedFunction", "get_UserDefinedFunction");
+}
+
+godot::Variant IfcElectricDistributionPoint::get_DistributionPointFunction() {
+    return gd_get_attribute(entity_, "DistributionPointFunction", file_);
+}
+
+void IfcElectricDistributionPoint::set_DistributionPointFunction(godot::Variant v) {
+    gd_set_attribute(entity_, "DistributionPointFunction", v);
+}
+
+godot::Variant IfcElectricDistributionPoint::get_UserDefinedFunction() {
+    return gd_get_attribute(entity_, "UserDefinedFunction", file_);
+}
+
+void IfcElectricDistributionPoint::set_UserDefinedFunction(godot::Variant v) {
+    gd_set_attribute(entity_, "UserDefinedFunction", v);
+}
+
+void IfcElectricHeaterType::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_PredefinedType"), &IfcElectricHeaterType::get_PredefinedType);
+    ClassDB::bind_method(D_METHOD("set_PredefinedType","v"), &IfcElectricHeaterType::set_PredefinedType);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "PredefinedType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_PredefinedType", "get_PredefinedType");
+}
+
+godot::Variant IfcElectricHeaterType::get_PredefinedType() {
+    return gd_get_attribute(entity_, "PredefinedType", file_);
+}
+
+void IfcElectricHeaterType::set_PredefinedType(godot::Variant v) {
+    gd_set_attribute(entity_, "PredefinedType", v);
+}
+
+void IfcEnergyProperties::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_EnergySequence"), &IfcEnergyProperties::get_EnergySequence);
+    ClassDB::bind_method(D_METHOD("set_EnergySequence","v"), &IfcEnergyProperties::set_EnergySequence);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "EnergySequence", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_EnergySequence", "get_EnergySequence");
+    ClassDB::bind_method(D_METHOD("get_UserDefinedEnergySequence"), &IfcEnergyProperties::get_UserDefinedEnergySequence);
+    ClassDB::bind_method(D_METHOD("set_UserDefinedEnergySequence","v"), &IfcEnergyProperties::set_UserDefinedEnergySequence);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "UserDefinedEnergySequence", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_UserDefinedEnergySequence", "get_UserDefinedEnergySequence");
+}
+
+godot::Variant IfcEnergyProperties::get_EnergySequence() {
+    return gd_get_attribute(entity_, "EnergySequence", file_);
+}
+
+void IfcEnergyProperties::set_EnergySequence(godot::Variant v) {
+    gd_set_attribute(entity_, "EnergySequence", v);
+}
+
+godot::Variant IfcEnergyProperties::get_UserDefinedEnergySequence() {
+    return gd_get_attribute(entity_, "UserDefinedEnergySequence", file_);
+}
+
+void IfcEnergyProperties::set_UserDefinedEnergySequence(godot::Variant v) {
+    gd_set_attribute(entity_, "UserDefinedEnergySequence", v);
+}
+
+void IfcElectricalBaseProperties::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_ElectricCurrentType"), &IfcElectricalBaseProperties::get_ElectricCurrentType);
+    ClassDB::bind_method(D_METHOD("set_ElectricCurrentType","v"), &IfcElectricalBaseProperties::set_ElectricCurrentType);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ElectricCurrentType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ElectricCurrentType", "get_ElectricCurrentType");
+    ClassDB::bind_method(D_METHOD("get_InputVoltage"), &IfcElectricalBaseProperties::get_InputVoltage);
+    ClassDB::bind_method(D_METHOD("set_InputVoltage","v"), &IfcElectricalBaseProperties::set_InputVoltage);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "InputVoltage", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_InputVoltage", "get_InputVoltage");
+    ClassDB::bind_method(D_METHOD("get_InputFrequency"), &IfcElectricalBaseProperties::get_InputFrequency);
+    ClassDB::bind_method(D_METHOD("set_InputFrequency","v"), &IfcElectricalBaseProperties::set_InputFrequency);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "InputFrequency", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_InputFrequency", "get_InputFrequency");
+    ClassDB::bind_method(D_METHOD("get_FullLoadCurrent"), &IfcElectricalBaseProperties::get_FullLoadCurrent);
+    ClassDB::bind_method(D_METHOD("set_FullLoadCurrent","v"), &IfcElectricalBaseProperties::set_FullLoadCurrent);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "FullLoadCurrent", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_FullLoadCurrent", "get_FullLoadCurrent");
+    ClassDB::bind_method(D_METHOD("get_MinimumCircuitCurrent"), &IfcElectricalBaseProperties::get_MinimumCircuitCurrent);
+    ClassDB::bind_method(D_METHOD("set_MinimumCircuitCurrent","v"), &IfcElectricalBaseProperties::set_MinimumCircuitCurrent);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "MinimumCircuitCurrent", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_MinimumCircuitCurrent", "get_MinimumCircuitCurrent");
+    ClassDB::bind_method(D_METHOD("get_MaximumPowerInput"), &IfcElectricalBaseProperties::get_MaximumPowerInput);
+    ClassDB::bind_method(D_METHOD("set_MaximumPowerInput","v"), &IfcElectricalBaseProperties::set_MaximumPowerInput);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "MaximumPowerInput", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_MaximumPowerInput", "get_MaximumPowerInput");
+    ClassDB::bind_method(D_METHOD("get_RatedPowerInput"), &IfcElectricalBaseProperties::get_RatedPowerInput);
+    ClassDB::bind_method(D_METHOD("set_RatedPowerInput","v"), &IfcElectricalBaseProperties::set_RatedPowerInput);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "RatedPowerInput", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_RatedPowerInput", "get_RatedPowerInput");
+    ClassDB::bind_method(D_METHOD("get_InputPhase"), &IfcElectricalBaseProperties::get_InputPhase);
+    ClassDB::bind_method(D_METHOD("set_InputPhase","v"), &IfcElectricalBaseProperties::set_InputPhase);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "InputPhase", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_InputPhase", "get_InputPhase");
+}
+
+godot::Variant IfcElectricalBaseProperties::get_ElectricCurrentType() {
+    return gd_get_attribute(entity_, "ElectricCurrentType", file_);
+}
+
+void IfcElectricalBaseProperties::set_ElectricCurrentType(godot::Variant v) {
+    gd_set_attribute(entity_, "ElectricCurrentType", v);
+}
+
+godot::Variant IfcElectricalBaseProperties::get_InputVoltage() {
+    return gd_get_attribute(entity_, "InputVoltage", file_);
+}
+
+void IfcElectricalBaseProperties::set_InputVoltage(godot::Variant v) {
+    gd_set_attribute(entity_, "InputVoltage", v);
+}
+
+godot::Variant IfcElectricalBaseProperties::get_InputFrequency() {
+    return gd_get_attribute(entity_, "InputFrequency", file_);
+}
+
+void IfcElectricalBaseProperties::set_InputFrequency(godot::Variant v) {
+    gd_set_attribute(entity_, "InputFrequency", v);
+}
+
+godot::Variant IfcElectricalBaseProperties::get_FullLoadCurrent() {
+    return gd_get_attribute(entity_, "FullLoadCurrent", file_);
+}
+
+void IfcElectricalBaseProperties::set_FullLoadCurrent(godot::Variant v) {
+    gd_set_attribute(entity_, "FullLoadCurrent", v);
+}
+
+godot::Variant IfcElectricalBaseProperties::get_MinimumCircuitCurrent() {
+    return gd_get_attribute(entity_, "MinimumCircuitCurrent", file_);
+}
+
+void IfcElectricalBaseProperties::set_MinimumCircuitCurrent(godot::Variant v) {
+    gd_set_attribute(entity_, "MinimumCircuitCurrent", v);
+}
+
+godot::Variant IfcElectricalBaseProperties::get_MaximumPowerInput() {
+    return gd_get_attribute(entity_, "MaximumPowerInput", file_);
+}
+
+void IfcElectricalBaseProperties::set_MaximumPowerInput(godot::Variant v) {
+    gd_set_attribute(entity_, "MaximumPowerInput", v);
+}
+
+godot::Variant IfcElectricalBaseProperties::get_RatedPowerInput() {
+    return gd_get_attribute(entity_, "RatedPowerInput", file_);
+}
+
+void IfcElectricalBaseProperties::set_RatedPowerInput(godot::Variant v) {
+    gd_set_attribute(entity_, "RatedPowerInput", v);
+}
+
+godot::Variant IfcElectricalBaseProperties::get_InputPhase() {
+    return gd_get_attribute(entity_, "InputPhase", file_);
+}
+
+void IfcElectricalBaseProperties::set_InputPhase(godot::Variant v) {
+    gd_set_attribute(entity_, "InputPhase", v);
+}
+
+void IfcElectricalCircuit::_bind_methods() {
+}
+
+void IfcElectricalElement::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_HasPorts"), &IfcElectricalElement::get_HasPorts);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasPorts"), "", "get_HasPorts");
+}
+
+godot::Array IfcElectricalElement::get_HasPorts() {
+    return get_inverse(godot::String("HasPorts"));
+}
+
+void IfcEnvironmentalImpactValue::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_ImpactType"), &IfcEnvironmentalImpactValue::get_ImpactType);
+    ClassDB::bind_method(D_METHOD("set_ImpactType","v"), &IfcEnvironmentalImpactValue::set_ImpactType);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ImpactType", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ImpactType", "get_ImpactType");
+    ClassDB::bind_method(D_METHOD("get_UserDefinedCategory"), &IfcEnvironmentalImpactValue::get_UserDefinedCategory);
+    ClassDB::bind_method(D_METHOD("set_UserDefinedCategory","v"), &IfcEnvironmentalImpactValue::set_UserDefinedCategory);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "UserDefinedCategory", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_UserDefinedCategory", "get_UserDefinedCategory");
+}
+
+godot::Variant IfcEnvironmentalImpactValue::get_ImpactType() {
+    return gd_get_attribute(entity_, "ImpactType", file_);
+}
+
+void IfcEnvironmentalImpactValue::set_ImpactType(godot::Variant v) {
+    gd_set_attribute(entity_, "ImpactType", v);
+}
+
+godot::Variant IfcEnvironmentalImpactValue::get_UserDefinedCategory() {
+    return gd_get_attribute(entity_, "UserDefinedCategory", file_);
+}
+
+void IfcEnvironmentalImpactValue::set_UserDefinedCategory(godot::Variant v) {
+    gd_set_attribute(entity_, "UserDefinedCategory", v);
+}
+
+void IfcEquipmentElement::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_HasPorts"), &IfcEquipmentElement::get_HasPorts);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "HasPorts"), "", "get_HasPorts");
+}
+
+godot::Array IfcEquipmentElement::get_HasPorts() {
+    return get_inverse(godot::String("HasPorts"));
+}
+
+void IfcEquipmentStandard::_bind_methods() {
+}
+
+void IfcExtendedMaterialProperties::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_ExtendedProperties"), &IfcExtendedMaterialProperties::get_ExtendedProperties);
+    ClassDB::bind_method(D_METHOD("set_ExtendedProperties","v"), &IfcExtendedMaterialProperties::set_ExtendedProperties);
+    ADD_PROPERTY(PropertyInfo(Variant::NIL, "ExtendedProperties", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NIL_IS_VARIANT), "set_ExtendedProperties", "get_ExtendedProperties");
+}
+
+godot::Variant IfcExtendedMaterialProperties::get_ExtendedProperties() {
+    return gd_get_attribute(entity_, "ExtendedProperties", file_);
+}
+
+void IfcExtendedMaterialProperties::set_ExtendedProperties(godot::Variant v) {
+    gd_set_attribute(entity_, "ExtendedProperties", v);
+}
+
+void IfcExternallyDefinedSymbol::_bind_methods() {
 }

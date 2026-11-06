@@ -5,20 +5,24 @@
 	<brief_description>
 		IfcWorkTime defines time periods that are used by IfcWorkCalendar for either describing working times or non-working exception times. Besides start and finish dates, a set of time periods can be given by various types of recurrence patterns. HISTORY: New entity in IFC2x4. Use definitions A work time should have a meaningful name that describes the time periods (for example, working week, holiday n
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="RecurrencePattern" type="GDIFCEntityBase" setter="set_RecurrencePattern" getter="get_RecurrencePattern">
-			Recurrence pattern that defines a time period, which, if given, is valid within the time period defined by IfcWorkTime.Start and IfcWorkTime.Finish .
+			Recurrence pattern that defines a time period, which, if given, is valid within the time period defined by IfcWorkTime.Start and IfcWorkTime.Finish . Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="StartDate" type="String" setter="set_StartDate" getter="get_StartDate">
-			Start date of the work time (0:00), that might be further restricted by a recurrence pattern.
+		<member name="StartDate" type="Variant" setter="set_StartDate" getter="get_StartDate">
+			In IFC4 files, this is the [code]Start[/code] attribute. A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="FinishDate" type="String" setter="set_FinishDate" getter="get_FinishDate">
-			End date of the work time (24:00), that might be further restricted by a recurrence pattern.
+		<member name="FinishDate" type="Variant" setter="set_FinishDate" getter="get_FinishDate">
+			In IFC4 files, this is the [code]Finish[/code] attribute. A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

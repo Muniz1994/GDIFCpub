@@ -6,21 +6,32 @@
 		Definition from IAI: A steel bar, usually with manufactured deformations in the surface, used in concrete and masonry construction to provide additional strength. A single instance of this class may represent one or many of actual rebars, for example a row of rebars. HISTORY New entity in IFC Release 2x2 IFC 2x4 CHANGE All attributes removed; information now provided by IfcReinforcingBarType . Geo
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="NominalDiameter" type="float" setter="set_NominalDiameter" getter="get_NominalDiameter">
-			The predefined type is always BAR.
+		<member name="NominalDiameter" type="Variant" setter="set_NominalDiameter" getter="get_NominalDiameter">
+			A float, or null when unset.
 		</member>
-		<member name="CrossSectionArea" type="float" setter="set_CrossSectionArea" getter="get_CrossSectionArea">
+		<member name="CrossSectionArea" type="Variant" setter="set_CrossSectionArea" getter="get_CrossSectionArea">
+			A float, or null when unset.
 		</member>
-		<member name="BarLength" type="float" setter="set_BarLength" getter="get_BarLength">
+		<member name="BarLength" type="Variant" setter="set_BarLength" getter="get_BarLength">
+			A float, or null when unset.
 		</member>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			The predefined type is always BAR. A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="BarSurface" type="String" setter="set_BarSurface" getter="get_BarSurface">
+		<member name="BarSurface" type="Variant" setter="set_BarSurface" getter="get_BarSurface">
+			A String, one of the enumeration's values, or null when unset.
+		</member>
+		<member name="BarRole" type="Variant" setter="set_BarRole" getter="get_BarRole">
+			A String, one of the enumeration's values, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

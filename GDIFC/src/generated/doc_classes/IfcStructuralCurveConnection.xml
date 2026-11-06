@@ -6,13 +6,17 @@
 		Definition from IAI: Instances of IfcStructuralCurveConnection describe edge 'nodes', i.e. edges where two or more surface members are joined, or edge supports. Edge curves may be straight or curved. HISTORY: New entity in IFC 2x2. IFC 2x4 change: Attribute Axis added, allowing for skewed supports. Use definitions added. Coordinate Systems : See definitions at IfcStructuralItem . The local coordin
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="AxisDirection" type="GDIFCEntityBase" setter="set_AxisDirection" getter="get_AxisDirection">
-			Direction which is used in the definition of the local z axis. Axis is specified relative to the so-called global coordinate system, i.e. the SELF\IfcProduct.ObjectPlacement . NOTE It is desirable and usually possible that many instances of IfcStructuralCurveConnection and IfcStructuralCurveMember share a common instance of IfcDirection as their Axis attribute.
+			In IFC4 files, this is the [code]Axis[/code] attribute. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

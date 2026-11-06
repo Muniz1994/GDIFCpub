@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralSteelProfileProperties" inherits="IfcStructuralProfileProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="ShearAreaZ" type="Variant" setter="set_ShearAreaZ" getter="get_ShearAreaZ">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="ShearAreaY" type="Variant" setter="set_ShearAreaY" getter="get_ShearAreaY">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="PlasticShapeFactorY" type="Variant" setter="set_PlasticShapeFactorY" getter="get_PlasticShapeFactorY">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="PlasticShapeFactorZ" type="Variant" setter="set_PlasticShapeFactorZ" getter="get_PlasticShapeFactorZ">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

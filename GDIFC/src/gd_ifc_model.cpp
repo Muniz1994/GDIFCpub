@@ -1,4 +1,5 @@
 #include "gd_ifc_model.h"
+#include "gd_ifc_units.h"
 
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/file_access.hpp>
@@ -20,81 +21,108 @@ void IFCModel::init(std::shared_ptr<IfcParse::IfcFile> file) {
 
 // ── Header helpers ─────────────────────────────────────────────────────────
 
+namespace {
+
+// IfcParse reads header attributes on demand and throws for one it can't convert, such as $.
+// Exporters often write $ for optional FILE_NAME fields (originating_system, authorization, ...),
+// so an unreadable field comes back empty instead of escaping into Godot.
+template <typename Read>
+godot::String header_string(const IfcParse::IfcFile* file, Read read) {
+    if (!file) return godot::String();
+    try {
+        return godot::String::utf8(read(file->header()).c_str());
+    } catch (...) {
+        return godot::String();
+    }
+}
+
+template <typename Read>
+godot::PackedStringArray header_strings(const IfcParse::IfcFile* file, Read read) {
+    godot::PackedStringArray result;
+    if (!file) return result;
+    try {
+        for (const auto& s : read(file->header())) {
+            result.push_back(godot::String::utf8(s.c_str()));
+        }
+    } catch (...) {
+        result.clear();
+    }
+    return result;
+}
+
+using Header = IfcParse::IfcSpfHeader;
+using Strings = std::vector<std::string>;
+
+} // namespace
+
 godot::String IFCModel::get_schema_name() const {
-    if (!ifc_file_) return godot::String();
-    const auto* fs = ifc_file_->header().file_schema();
-    if (!fs) return godot::String();
-    const auto& ids = fs->schema_identifiers();
-    if (ids.empty()) return godot::String();
-    return godot::String::utf8(ids.front().c_str());
+    return header_string(ifc_file_.get(), [](const Header& h) {
+        const auto* fs = h.file_schema();
+        if (!fs) return std::string();
+        const Strings ids = fs->schema_identifiers();
+        return ids.empty() ? std::string() : ids.front();
+    });
 }
 
 godot::PackedStringArray IFCModel::get_file_description() const {
-    godot::PackedStringArray result;
-    if (!ifc_file_) return result;
-    const auto* fd = ifc_file_->header().file_description();
-    if (!fd) return result;
-    for (const auto& s : fd->description()) {
-        result.push_back(godot::String::utf8(s.c_str()));
-    }
-    return result;
+    return header_strings(ifc_file_.get(), [](const Header& h) {
+        const auto* fd = h.file_description();
+        return fd ? fd->description() : Strings();
+    });
 }
 
 godot::String IFCModel::get_file_name() const {
-    if (!ifc_file_) return godot::String();
-    const auto* fn = ifc_file_->header().file_name();
-    if (!fn) return godot::String();
-    return godot::String::utf8(fn->name().c_str());
+    return header_string(ifc_file_.get(), [](const Header& h) {
+        const auto* fn = h.file_name();
+        return fn ? fn->name() : std::string();
+    });
 }
 
 godot::String IFCModel::get_timestamp() const {
-    if (!ifc_file_) return godot::String();
-    const auto* fn = ifc_file_->header().file_name();
-    if (!fn) return godot::String();
-    return godot::String::utf8(fn->time_stamp().c_str());
+    return header_string(ifc_file_.get(), [](const Header& h) {
+        const auto* fn = h.file_name();
+        return fn ? fn->time_stamp() : std::string();
+    });
 }
 
 godot::PackedStringArray IFCModel::get_author() const {
-    godot::PackedStringArray result;
-    if (!ifc_file_) return result;
-    const auto* fn = ifc_file_->header().file_name();
-    if (!fn) return result;
-    for (const auto& s : fn->author()) {
-        result.push_back(godot::String::utf8(s.c_str()));
-    }
-    return result;
+    return header_strings(ifc_file_.get(), [](const Header& h) {
+        const auto* fn = h.file_name();
+        return fn ? fn->author() : Strings();
+    });
 }
 
 godot::PackedStringArray IFCModel::get_organization() const {
-    godot::PackedStringArray result;
-    if (!ifc_file_) return result;
-    const auto* fn = ifc_file_->header().file_name();
-    if (!fn) return result;
-    for (const auto& s : fn->organization()) {
-        result.push_back(godot::String::utf8(s.c_str()));
-    }
-    return result;
+    return header_strings(ifc_file_.get(), [](const Header& h) {
+        const auto* fn = h.file_name();
+        return fn ? fn->organization() : Strings();
+    });
 }
 
 godot::String IFCModel::get_preprocessor() const {
-    if (!ifc_file_) return godot::String();
-    const auto* fn = ifc_file_->header().file_name();
-    if (!fn) return godot::String();
-    return godot::String::utf8(fn->preprocessor_version().c_str());
+    return header_string(ifc_file_.get(), [](const Header& h) {
+        const auto* fn = h.file_name();
+        return fn ? fn->preprocessor_version() : std::string();
+    });
 }
 
 godot::String IFCModel::get_originating_system() const {
-    if (!ifc_file_) return godot::String();
-    const auto* fn = ifc_file_->header().file_name();
-    if (!fn) return godot::String();
-    return godot::String::utf8(fn->originating_system().c_str());
+    return header_string(ifc_file_.get(), [](const Header& h) {
+        const auto* fn = h.file_name();
+        return fn ? fn->originating_system() : std::string();
+    });
 }
 
 godot::String IFCModel::get_authorization() const {
-    if (!ifc_file_) return godot::String();
-    const auto* fn = ifc_file_->header().file_name();
-    if (!fn) return godot::String();
-    return godot::String::utf8(fn->authorization().c_str());
+    return header_string(ifc_file_.get(), [](const Header& h) {
+        const auto* fn = h.file_name();
+        return fn ? fn->authorization() : std::string();
+    });
+}
+
+godot::Dictionary IFCModel::get_units() const {
+    if (!ifc_file_) return {};
+    return IfcUnitTable(*ifc_file_).to_dictionary();
 }
 
 // ── Entity lookup ─────────────────────────────────────────────────────────
@@ -146,6 +174,43 @@ godot::Array IFCModel::instances_by_type_exact(godot::String ifc_class) {
         if (instances) {
             for (auto* inst : *instances) {
                 result.push_back(GDIFCEntityBase::wrap(inst, ifc_file_));
+            }
+        }
+    } catch (...) {}
+    return result;
+}
+
+godot::Dictionary IFCModel::get_site_location() const {
+    godot::Dictionary result;
+    if (!ifc_file_) return result;
+    try {
+        auto sites = ifc_file_->instances_by_type("IfcSite");
+        if (!sites || sites->size() == 0) return result;
+        const IfcUtil::IfcBaseClass* site = (*sites)[0];
+        const IfcParse::entity* decl = site->declaration().as_entity();
+        if (!decl) return result;
+
+        // IfcCompoundPlaneAngleMeasure: degrees, minutes, seconds and millionths of a second, all
+        // with the same sign
+        auto angle = [&](const char* name, const char* key) {
+            const ptrdiff_t index = decl->attribute_index(name);
+            if (index < 0) return;
+            const AttributeValue value = site->get_attribute_value(static_cast<size_t>(index));
+            if (value.type() != IfcUtil::Argument_AGGREGATE_OF_INT) return;
+            const std::vector<int> parts = value;
+            static const double DIVISORS[] = {1.0, 60.0, 3600.0, 3600.0e6};
+            double degrees = 0.0;
+            for (size_t i = 0; i < parts.size() && i < 4; ++i) degrees += parts[i] / DIVISORS[i];
+            result[key] = degrees;
+        };
+        angle("RefLatitude", "latitude");
+        angle("RefLongitude", "longitude");
+
+        const ptrdiff_t elevation = decl->attribute_index("RefElevation");
+        if (elevation >= 0) {
+            const AttributeValue value = site->get_attribute_value(static_cast<size_t>(elevation));
+            if (value.type() == IfcUtil::Argument_DOUBLE || value.type() == IfcUtil::Argument_INT) {
+                result["elevation"] = gd_attr_double(value);
             }
         }
     } catch (...) {}
@@ -244,6 +309,8 @@ void IFCModel::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_preprocessor"),      &IFCModel::get_preprocessor);
     ClassDB::bind_method(D_METHOD("get_originating_system"),&IFCModel::get_originating_system);
     ClassDB::bind_method(D_METHOD("get_authorization"),     &IFCModel::get_authorization);
+    ClassDB::bind_method(D_METHOD("get_units"),             &IFCModel::get_units);
+    ClassDB::bind_method(D_METHOD("get_site_location"),     &IFCModel::get_site_location);
 
     // Lookup
     ClassDB::bind_method(D_METHOD("get_by_id", "express_id"),      &IFCModel::get_by_id);

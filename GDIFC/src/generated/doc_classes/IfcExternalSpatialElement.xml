@@ -5,16 +5,21 @@
 	<brief_description>
 		Definition from IAI : The external spatial element defines external regions at the building site. Those regions can be defined: logically - e.g. an instance of IfcExternalSpatialElement could represent the air space around the building without having an own shape representation, or physically - e.g. an instance of IfcExternalSpatialElement could represent the sloping ground around the building to 
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Predefined generic types for an external spatial element that are specified in an enumeration. There might be property sets defined specifically for each predefined type.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic types for an external spatial element that are specified in an enumeration. There might be property sets defined specifically for each predefined type. A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="BoundedBy" type="Array" setter="" getter="get_BoundedBy">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

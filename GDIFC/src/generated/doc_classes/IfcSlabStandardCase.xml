@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcSlabStandardCase" inherits="IfcSlab"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The standard slab, IfcSlabStandardCase , defines a slab with certain constraints for the provision of material usage, parameters and with certain constraints for the geometric representation. The IfcSlabStandardCase handles all cases of slabs, that: have a reference to the IfcMaterialLayerSetUsage defining the material layers of the slab with thicknesses are based on an extrusion of a planar surfa
+	</brief_description>
+	<description>Only in IFC4 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

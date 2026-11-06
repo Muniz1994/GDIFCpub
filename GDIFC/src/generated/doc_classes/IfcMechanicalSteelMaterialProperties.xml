@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcMechanicalSteelMaterialProperties" inherits="IfcMechanicalMaterialProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="YieldStress" type="Variant" setter="set_YieldStress" getter="get_YieldStress">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="UltimateStress" type="Variant" setter="set_UltimateStress" getter="get_UltimateStress">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="UltimateStrain" type="Variant" setter="set_UltimateStrain" getter="get_UltimateStrain">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="HardeningModule" type="Variant" setter="set_HardeningModule" getter="get_HardeningModule">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="ProportionalStress" type="Variant" setter="set_ProportionalStress" getter="get_ProportionalStress">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="PlasticStrain" type="Variant" setter="set_PlasticStrain" getter="get_PlasticStrain">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="Relaxations" type="Variant" setter="set_Relaxations" getter="get_Relaxations">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

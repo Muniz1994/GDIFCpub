@@ -5,18 +5,24 @@
 	<brief_description>
 		The IfcComplexPropertyTemplate defines the template for all complex properties, either the IfcComplexProperty 's, or the IfcPhysicalComplexQuantity 's. The individual complex property templates are interpreted according to their Name attribute and and optional UsageName attribute. HISTORY New entity in IFC2x4.
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="UsageName" type="String" setter="set_UsageName" getter="get_UsageName">
+		<member name="UsageName" type="Variant" setter="set_UsageName" getter="get_UsageName">
+			A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="TemplateType" type="String" setter="set_TemplateType" getter="get_TemplateType">
+		<member name="TemplateType" type="Variant" setter="set_TemplateType" getter="get_TemplateType">
+			A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="HasPropertyTemplates" type="Array" setter="set_HasPropertyTemplates" getter="get_HasPropertyTemplates">
-			Reference to a set of property templates. It should only be provided, if the PropertyType is set to COMPLEX .
+		<member name="HasPropertyTemplates" type="Variant" setter="set_HasPropertyTemplates" getter="get_HasPropertyTemplates">
+			Reference to a set of property templates. It should only be provided, if the PropertyType is set to COMPLEX . An Array of GDIFCEntityBase entities, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

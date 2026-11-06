@@ -5,6 +5,7 @@
 #include "godot_cpp/classes/node3d.hpp"
 #include "godot_cpp/classes/mesh_instance3d.hpp"
 #include "gd_ifc_entity_base.h"
+#include "gd_ifc_material.h"
 
 
 // Your existing class definition
@@ -29,6 +30,14 @@ public:
     godot::Dictionary get_quantities();
     void set_quantities(godot::Dictionary quants);
 
+    /// Value type, unit and origin of each property, shaped like properties
+    godot::Dictionary get_property_details() const { return property_details; }
+    void set_property_details(godot::Dictionary details) { property_details = std::move(details); }
+
+    /// Value type, unit and origin of each quantity, shaped like quantities
+    godot::Dictionary get_quantity_details() const { return quantity_details; }
+    void set_quantity_details(godot::Dictionary details) { quantity_details = std::move(details); }
+
     godot::String get_ifc_class() {return ifc_class;}
     void set_ifc_class(godot::String ifcclass) {ifc_class = ifcclass;};
 
@@ -40,16 +49,24 @@ public:
     godot::Ref<godot::GDIFCEntityBase> get_ifc_object() const { return ifc_object_; }
     void set_ifc_object(godot::Ref<godot::GDIFCEntityBase> obj) { ifc_object_ = obj; }
 
+    /// IFC material of the element, shared with every element using it. Set with IFC materials on.
+    godot::Ref<godot::GDIFCMaterialDefinition> get_material_definition() const { return material_definition_; }
+    void set_material_definition(godot::Ref<godot::GDIFCMaterialDefinition> definition) { material_definition_ = definition; }
+
 private:
 
     godot::String ifc_class;
     godot::String global_id_;
     godot::Dictionary attributes;
     godot::Dictionary properties;
+    godot::Dictionary property_details;
     godot::Dictionary quantities;
+    godot::Dictionary quantity_details;
 
     /// Typed GD wrapper for the IFC entity (set after loading).
     godot::Ref<godot::GDIFCEntityBase> ifc_object_;
+
+    godot::Ref<godot::GDIFCMaterialDefinition> material_definition_;
 
 };
 

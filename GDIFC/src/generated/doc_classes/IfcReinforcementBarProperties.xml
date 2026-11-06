@@ -6,28 +6,32 @@
 		IfcReinforcementProperties defines the set of properties for a specific combination of reinforcement bar steel grade, bar type and effective depth. HISTORY New entity in IFC2x2. The total cross section area for the specific steel grade is always provided. Additionally also general reinforcing bar configurations as a count of bars may be provided as defined in attribute BarCount . In this case the 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="TotalCrossSectionArea" type="float" setter="set_TotalCrossSectionArea" getter="get_TotalCrossSectionArea">
-			The total effective cross-section area of the reinforcement of a specific steel grade.
+		<member name="TotalCrossSectionArea" type="Variant" setter="set_TotalCrossSectionArea" getter="get_TotalCrossSectionArea">
+			The total effective cross-section area of the reinforcement of a specific steel grade. A float, or null when unset.
 		</member>
-		<member name="SteelGrade" type="String" setter="set_SteelGrade" getter="get_SteelGrade">
-			The nominal steel grade defined according to local standards.
+		<member name="SteelGrade" type="Variant" setter="set_SteelGrade" getter="get_SteelGrade">
+			The nominal steel grade defined according to local standards. A String, or null when unset.
 		</member>
-		<member name="BarSurface" type="String" setter="set_BarSurface" getter="get_BarSurface">
-			Indicator for whether the bar surface is plain or textured.
+		<member name="BarSurface" type="Variant" setter="set_BarSurface" getter="get_BarSurface">
+			Indicator for whether the bar surface is plain or textured. A String, one of the enumeration's values, or null when unset.
 		</member>
-		<member name="EffectiveDepth" type="float" setter="set_EffectiveDepth" getter="get_EffectiveDepth">
-			The effective depth, i.e. the distance of the specific reinforcement cross section area or reinforcement configuration in a row, counted from a common specific reference point. Usually the reference point is the upper surface (for beams and slabs) or a similar projection in a plane (for columns).
+		<member name="EffectiveDepth" type="Variant" setter="set_EffectiveDepth" getter="get_EffectiveDepth">
+			The effective depth, i.e. the distance of the specific reinforcement cross section area or reinforcement configuration in a row, counted from a common specific reference point. Usually the reference point is the upper surface (for beams and slabs) or a similar projection in a plane (for columns). A float, or null when unset.
 		</member>
-		<member name="NominalBarDiameter" type="float" setter="set_NominalBarDiameter" getter="get_NominalBarDiameter">
-			The nominal diameter defining the cross-section size of the reinforcing bar. The bar diameter should be identical for all bars included in the specific reinforcement configuration.
+		<member name="NominalBarDiameter" type="Variant" setter="set_NominalBarDiameter" getter="get_NominalBarDiameter">
+			The nominal diameter defining the cross-section size of the reinforcing bar. The bar diameter should be identical for all bars included in the specific reinforcement configuration. A float, or null when unset.
 		</member>
-		<member name="BarCount" type="int" setter="set_BarCount" getter="get_BarCount">
-			The number of bars with identical nominal diameter and steel grade included in the specific reinforcement configuration.
+		<member name="BarCount" type="Variant" setter="set_BarCount" getter="get_BarCount">
+			The number of bars with identical nominal diameter and steel grade included in the specific reinforcement configuration. An int in IFC4X3_ADD2 files, a float in IFC2X3 and IFC4 files, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

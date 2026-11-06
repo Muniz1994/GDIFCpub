@@ -6,25 +6,29 @@
 		A window panel is a casement, that is, a component, fixed or opening, consisting essentially of a frame and the infilling. The infilling of a window panel is normally glazing. The way of operation is defined in the operation type. The IfcWindowPanelProperties are used to parametrically describe the shape and operation of window panels. The parametric definition can be added solely or additionally 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="OperationType" type="String" setter="set_OperationType" getter="get_OperationType">
-			Types of window panel operations. Also used to assign standard symbolic presentations according to national building standards.
+		<member name="OperationType" type="Variant" setter="set_OperationType" getter="get_OperationType">
+			Types of window panel operations. Also used to assign standard symbolic presentations according to national building standards. A String, one of the enumeration's values, or null when unset.
 		</member>
-		<member name="PanelPosition" type="String" setter="set_PanelPosition" getter="get_PanelPosition">
-			Position of this panel within the overall window style.
+		<member name="PanelPosition" type="Variant" setter="set_PanelPosition" getter="get_PanelPosition">
+			Position of this panel within the overall window style. A String, one of the enumeration's values, or null when unset.
 		</member>
-		<member name="FrameDepth" type="float" setter="set_FrameDepth" getter="get_FrameDepth">
-			Depth of panel frame, measured from front face to back face horizontally (i.e. perpendicular to the window (elevation) plane.
+		<member name="FrameDepth" type="Variant" setter="set_FrameDepth" getter="get_FrameDepth">
+			Depth of panel frame, measured from front face to back face horizontally (i.e. perpendicular to the window (elevation) plane. A float, or null when unset.
 		</member>
-		<member name="FrameThickness" type="float" setter="set_FrameThickness" getter="get_FrameThickness">
-			Width of panel frame, measured from inside of panel (at glazing) to outside of panel (at lining), i.e. parallel to the window (elevation) plane.
+		<member name="FrameThickness" type="Variant" setter="set_FrameThickness" getter="get_FrameThickness">
+			Width of panel frame, measured from inside of panel (at glazing) to outside of panel (at lining), i.e. parallel to the window (elevation) plane. A float, or null when unset.
 		</member>
 		<member name="ShapeAspectStyle" type="GDIFCEntityBase" setter="set_ShapeAspectStyle" getter="get_ShapeAspectStyle">
 			Optional link to a shape aspect definition, which points to the part of the geometric representation of the window style, which is used to represent the panel. IFC2x4 CHANGE The attribute is deprecated and shall no longer be used, i.e. the value shall be NIL ($).
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

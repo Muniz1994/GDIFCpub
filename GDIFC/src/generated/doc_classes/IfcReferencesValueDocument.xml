@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcReferencesValueDocument" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="ReferencedDocument" type="GDIFCEntityBase" setter="set_ReferencedDocument" getter="get_ReferencedDocument">
+			Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="ReferencingValues" type="Variant" setter="set_ReferencingValues" getter="get_ReferencingValues">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="Name" type="Variant" setter="set_Name" getter="get_Name">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="Description" type="Variant" setter="set_Description" getter="get_Description">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

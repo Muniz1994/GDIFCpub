@@ -45,11 +45,22 @@ tooltip_text = "Pick an .ifc file and load it into the edited scene using the op
 text = "Load IFC..."
 icon = SubResource("DPITexture_3o44k")
 
-[node name="LoadingLabel" type="Label" parent="MarginContainer/VBoxContainer/LoadRow" unique_id=1285165020]
+[node name="LoadStatus" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1285165020]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-text = "Loading..."
+
+[node name="LoadProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/LoadStatus" unique_id=1738204517]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[node name="LoadStatusLabel" type="Label" parent="MarginContainer/VBoxContainer/LoadStatus" unique_id=1093826741]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 1
+text_overrun_behavior = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer" unique_id=1462093817]
 layout_mode = 2
@@ -61,6 +72,54 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 6
+
+[node name="Scene" type="FoldableContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups" unique_id=1749203381]
+layout_mode = 2
+title = "Scene"
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Scene" unique_id=860317245]
+layout_mode = 2
+columns = 2
+
+[node name="ImportAsSceneLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Scene/GridContainer" unique_id=1302958716]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Import the file into the project and add it as an instanced scene. The scene then only stores a reference to the .ifc file, so it stays small and quick to save. Change the options later in the Import dock. From the settings preset, only coordinate to origin and circle segments apply to imports."
+mouse_filter = 1
+text = "Import as scene"
+text_overrun_behavior = 3
+
+[node name="ImportAsSceneCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Scene/GridContainer" unique_id=417260938]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "On"
+
+[node name="ImportFolderLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Scene/GridContainer" unique_id=1985542107]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Project folder that files from outside the project are copied into before they are imported. Files already in the project are imported where they are."
+mouse_filter = 1
+text = "Import folder"
+text_overrun_behavior = 3
+
+[node name="ImportFolder" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Scene/GridContainer" unique_id=1137700594]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ImportFolderEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Scene/GridContainer/ImportFolder" unique_id=2061733580]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "res://ifc/"
+placeholder_text = "res://ifc/"
+
+[node name="ImportFolderBrowse" type="Button" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Scene/GridContainer/ImportFolder" unique_id=698154263]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Pick the import folder"
+icon = SubResource("DPITexture_3o44k")
+flat = true
 
 [node name="Geometry" type="FoldableContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups" unique_id=522308283]
 layout_mode = 2
@@ -115,6 +174,65 @@ step = 0.1
 value = 60.0
 suffix = "°"
 
+[node name="Materials" type="FoldableContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups" unique_id=1583920471]
+layout_mode = 2
+title = "Materials"
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Materials" unique_id=742019386]
+layout_mode = 2
+columns = 2
+
+[node name="IfcMaterialsLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Materials/GridContainer" unique_id=1098273645]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Read IFC materials into material definition resources, and give each IFC material its own Godot material. Off: one Godot material per colour."
+mouse_filter = 1
+text = "IFC materials"
+text_overrun_behavior = 3
+
+[node name="IfcMaterialsCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Materials/GridContainer" unique_id=1876302958]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "On"
+
+[node name="IfcTexturesLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Materials/GridContainer" unique_id=523987140]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Load the textures referenced or embedded by IFC surface styles. Increases load time and memory use."
+mouse_filter = 1
+text = "Textures"
+text_overrun_behavior = 3
+
+[node name="IfcTexturesCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Materials/GridContainer" unique_id=1347065829]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "On"
+
+[node name="Data" type="FoldableContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups" unique_id=1729384056]
+layout_mode = 2
+title = "Data"
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Data" unique_id=1093847561]
+layout_mode = 2
+columns = 2
+
+[node name="IfcObjectsLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Data/GridContainer" unique_id=1648203957]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Keep the IFC file loaded, so scripts can walk the model from each node's ifc_object and query the IFCModel. Off: attributes, property sets, quantities, materials and georeferencing are still read, then the file is released, which saves memory, and instances of imported scenes don't re-read the .ifc file when they enter the scene."
+mouse_filter = 1
+text = "IFC objects"
+text_overrun_behavior = 3
+
+[node name="IfcObjectsCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Data/GridContainer" unique_id=1185720364]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+button_pressed = true
+text = "On"
+
 [node name="Collisions" type="FoldableContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups" unique_id=1262357727]
 layout_mode = 2
 title = "Collisions"
@@ -129,7 +247,7 @@ columns = 2
 [node name="CreateCollisionsLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Collisions/VBoxContainer/GridContainer" unique_id=1397557480]
 layout_mode = 2
 size_flags_horizontal = 3
-tooltip_text = "Create static collision bodies for the selected element types."
+tooltip_text = "Create static collision bodies for the selected element types, or for the classes of the collision matrix."
 mouse_filter = 1
 text = "Enabled"
 text_overrun_behavior = 3
@@ -140,9 +258,22 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "On"
 
+[node name="CollisionMatrixLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Collisions/VBoxContainer/GridContainer" unique_id=1587203916]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "A GDIFCCollisionMatrix choosing the shape and physics layers per IFC class. Replaces the element list while set."
+mouse_filter = 1
+text = "Matrix"
+text_overrun_behavior = 3
+
+[node name="CollisionMatrix" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Collisions/VBoxContainer/GridContainer" unique_id=902345671]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="CollisionElementsLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Collisions/VBoxContainer" unique_id=78863048]
 layout_mode = 2
-tooltip_text = "IFC building element types that receive collisions. Ctrl/Shift-click to select several. Selecting a type also includes its IFC4 StandardCase and ElementedCase variants."
+tooltip_text = "IFC building element types that receive collisions. Ctrl/Shift-click to select several. Selecting a type also includes its IFC4 StandardCase and ElementedCase variants. Not used while a collision matrix is set."
 mouse_filter = 1
 text = "Elements"
 text_overrun_behavior = 3

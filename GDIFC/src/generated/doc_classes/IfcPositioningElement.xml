@@ -5,15 +5,20 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="ContainedInStructure" type="Array" setter="" getter="get_ContainedInStructure">
 		</member>
 		<member name="Positions" type="Array" setter="" getter="get_Positions">
+			Only in IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

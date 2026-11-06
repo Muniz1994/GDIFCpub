@@ -297,6 +297,9 @@ gdifc_sources = [
     "GDIFC/src/gd_ifc_model.cpp",
     "GDIFC/src/gd_ifc_georeference.cpp",
     "GDIFC/src/gd_ifc_import_plugin.cpp",
+    "GDIFC/src/gd_ifc_material.cpp",
+    "GDIFC/src/gd_ifc_collision.cpp",
+    "GDIFC/src/gd_ifc_units.cpp",
 ]
 
 import glob as _glob

@@ -5,42 +5,48 @@
 	<brief_description>
 		Definition from IAI: A series of longitudinal and transverse wires or bars of various gauges, arranged at right angles to each other and welded at all points of intersection; usually used for concrete slab reinforcement. Also known as welded wire fabric. HISTORY New entity in IFC Release 2x4 Material Use Definition : An associated material denotes the steel grade, preferrably via material classifi
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			The overall length of the mesh measured in its longitudinal direction.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			The predefined type is always MESH. A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MeshLength" type="float" setter="set_MeshLength" getter="get_MeshLength">
-			The overall width of the mesh measured in its transversal direction.
+		<member name="MeshLength" type="Variant" setter="set_MeshLength" getter="get_MeshLength">
+			The overall length of the mesh measured in its longitudinal direction. A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="MeshWidth" type="float" setter="set_MeshWidth" getter="get_MeshWidth">
-			The nominal diameter denoting the cross-section size of the longitudinal bars.
+		<member name="MeshWidth" type="Variant" setter="set_MeshWidth" getter="get_MeshWidth">
+			The overall width of the mesh measured in its transversal direction. A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="LongitudinalBarNominalDiameter" type="float" setter="set_LongitudinalBarNominalDiameter" getter="get_LongitudinalBarNominalDiameter">
-			The nominal diameter denoting the cross-section size of the transverse bars.
+		<member name="LongitudinalBarNominalDiameter" type="Variant" setter="set_LongitudinalBarNominalDiameter" getter="get_LongitudinalBarNominalDiameter">
+			The nominal diameter denoting the cross-section size of the longitudinal bars. A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="TransverseBarNominalDiameter" type="float" setter="set_TransverseBarNominalDiameter" getter="get_TransverseBarNominalDiameter">
-			The effective cross-section area of the longitudinal bars of the mesh.
+		<member name="TransverseBarNominalDiameter" type="Variant" setter="set_TransverseBarNominalDiameter" getter="get_TransverseBarNominalDiameter">
+			The nominal diameter denoting the cross-section size of the transverse bars. A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="LongitudinalBarCrossSectionArea" type="float" setter="set_LongitudinalBarCrossSectionArea" getter="get_LongitudinalBarCrossSectionArea">
-			The effective cross-section area of the transverse bars of the mesh.
+		<member name="LongitudinalBarCrossSectionArea" type="Variant" setter="set_LongitudinalBarCrossSectionArea" getter="get_LongitudinalBarCrossSectionArea">
+			The effective cross-section area of the longitudinal bars of the mesh. A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="TransverseBarCrossSectionArea" type="float" setter="set_TransverseBarCrossSectionArea" getter="get_TransverseBarCrossSectionArea">
-			The spacing between the longitudinal bars. Note: an even distribution of bars is presumed; other cases are handled by classification or property sets.
+		<member name="TransverseBarCrossSectionArea" type="Variant" setter="set_TransverseBarCrossSectionArea" getter="get_TransverseBarCrossSectionArea">
+			The effective cross-section area of the transverse bars of the mesh. A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="LongitudinalBarSpacing" type="float" setter="set_LongitudinalBarSpacing" getter="get_LongitudinalBarSpacing">
-			The spacing between the transverse bars. Note: an even distribution of bars is presumed; other cases are handled by classification or property sets.
+		<member name="LongitudinalBarSpacing" type="Variant" setter="set_LongitudinalBarSpacing" getter="get_LongitudinalBarSpacing">
+			The spacing between the longitudinal bars. Note: an even distribution of bars is presumed; other cases are handled by classification or property sets. A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="TransverseBarSpacing" type="float" setter="set_TransverseBarSpacing" getter="get_TransverseBarSpacing">
-			The predefined type is always MESH.
+		<member name="TransverseBarSpacing" type="Variant" setter="set_TransverseBarSpacing" getter="get_TransverseBarSpacing">
+			The spacing between the transverse bars. Note: an even distribution of bars is presumed; other cases are handled by classification or property sets. A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="BendingShapeCode" type="String" setter="set_BendingShapeCode" getter="get_BendingShapeCode">
+		<member name="BendingShapeCode" type="Variant" setter="set_BendingShapeCode" getter="get_BendingShapeCode">
+			A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="BendingParameters" type="Array" setter="set_BendingParameters" getter="get_BendingParameters">
+		<member name="BendingParameters" type="Variant" setter="set_BendingParameters" getter="get_BendingParameters">
+			An Array of values (String, float, int or bool), or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

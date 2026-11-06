@@ -6,19 +6,23 @@
 		Definition from IAI: An instance of the entity IfcStructuralLoadPlanarForce shall be used to define actions on faces. HISTORY: New entity in Release IFC2x edition 2.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="PlanarForceX" type="float" setter="set_PlanarForceX" getter="get_PlanarForceX">
-			Planar force value in x-direction.
+		<member name="PlanarForceX" type="Variant" setter="set_PlanarForceX" getter="get_PlanarForceX">
+			Planar force value in x-direction. A float, or null when unset.
 		</member>
-		<member name="PlanarForceY" type="float" setter="set_PlanarForceY" getter="get_PlanarForceY">
-			Planar force value in y-direction.
+		<member name="PlanarForceY" type="Variant" setter="set_PlanarForceY" getter="get_PlanarForceY">
+			Planar force value in y-direction. A float, or null when unset.
 		</member>
-		<member name="PlanarForceZ" type="float" setter="set_PlanarForceZ" getter="get_PlanarForceZ">
-			Planar force value in z-direction.
+		<member name="PlanarForceZ" type="Variant" setter="set_PlanarForceZ" getter="get_PlanarForceZ">
+			Planar force value in z-direction. A float, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

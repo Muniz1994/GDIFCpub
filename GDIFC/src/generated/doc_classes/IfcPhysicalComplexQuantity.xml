@@ -6,22 +6,26 @@
 		The complex physical quantity, IfcPhysicalComplexQuantity , is an entity that holds a set of single quantity measure value (as defined at the subtypes of IfcPhysicalSimpleQuantity ), that all apply to a given component or aspect of the element. EXAMPLE: A layered element, like a wall, may have several material layers, each having individual quantities, like footprint area, side area and volume. An
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="HasQuantities" type="Array" setter="set_HasQuantities" getter="get_HasQuantities">
-			Set of physical quantities that are grouped by this complex physical quantity according to a given discrimination.
+		<member name="HasQuantities" type="Variant" setter="set_HasQuantities" getter="get_HasQuantities">
+			Set of physical quantities that are grouped by this complex physical quantity according to a given discrimination. An Array of GDIFCEntityBase entities, or null when unset.
 		</member>
-		<member name="Discrimination" type="String" setter="set_Discrimination" getter="get_Discrimination">
-			Identification of the discrimination by which this physical complex property is distinguished. Examples of discriminations are 'layer', 'steel bar diameter', etc.
+		<member name="Discrimination" type="Variant" setter="set_Discrimination" getter="get_Discrimination">
+			Identification of the discrimination by which this physical complex property is distinguished. Examples of discriminations are 'layer', 'steel bar diameter', etc. A String, or null when unset.
 		</member>
-		<member name="Quality" type="String" setter="set_Quality" getter="get_Quality">
-			Additional indication of a quality of the quantities that are grouped under this physical complex quantity.
+		<member name="Quality" type="Variant" setter="set_Quality" getter="get_Quality">
+			Additional indication of a quality of the quantities that are grouped under this physical complex quantity. A String, or null when unset.
 		</member>
-		<member name="Usage" type="String" setter="set_Usage" getter="get_Usage">
-			Additional indication of a usage type of the quantities that are grouped under this physical complex quantity.
+		<member name="Usage" type="Variant" setter="set_Usage" getter="get_Usage">
+			Additional indication of a usage type of the quantities that are grouped under this physical complex quantity. A String, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

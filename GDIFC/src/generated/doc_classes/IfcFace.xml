@@ -6,15 +6,20 @@
 		Definition from ISO/CD 10303-42:1992 : A face is a topological entity of dimensionality 2 corresponding to the intuitive notion of a piece of surface bounded by loops. Its domain, if present, is an oriented, connected, finite 2-manifold in R m . A face domain shall not have handles but it may have holes, each hole bounded by a loop. The domain of the underlying geometry of the face, if present, do
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Bounds" type="Array" setter="set_Bounds" getter="get_Bounds">
-			Boundaries of the face.
+		<member name="Bounds" type="Variant" setter="set_Bounds" getter="get_Bounds">
+			Boundaries of the face. An Array of GDIFCEntityBase entities, or null when unset.
 		</member>
 		<member name="HasTextureMaps" type="Array" setter="" getter="get_HasTextureMaps">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

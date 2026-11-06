@@ -6,24 +6,32 @@
 		Definition from ISO 6707-1:1989 : Construction for closing an opening, intended primarily for access with hinged, pivoted or sliding operation. The door is a building element that is predominately used to provide controlled access for people and goods. It includes constructions with hinged, pivoted, sliding, and additionally revolving and folding operations. A door consists of a lining and one or 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="OverallHeight" type="float" setter="set_OverallHeight" getter="get_OverallHeight">
-			Overall measure of the height, it reflects the Z Dimension of a bounding box, enclosing the body of the door opening. If omitted, the OverallHeight should be taken from the geometric representation of the IfcOpening in which the door is inserted. NOTE The body of the door might be taller then the door opening (e.g. in cases where the door lining includes a casing). In these cases the OverallHeight shall still be given as the door opening height, and not as the total height of the door lining.
+		<member name="OverallHeight" type="Variant" setter="set_OverallHeight" getter="get_OverallHeight">
+			Overall measure of the height, it reflects the Z Dimension of a bounding box, enclosing the body of the door opening. If omitted, the OverallHeight should be taken from the geometric representation of the IfcOpening in which the door is inserted. NOTE The body of the door might be taller then the door opening (e.g. in cases where the door lining includes a casing). In these cases the OverallHeight shall still be given as the door opening height, and not as the total height of the door lining. A float, or null when unset.
 		</member>
-		<member name="OverallWidth" type="float" setter="set_OverallWidth" getter="get_OverallWidth">
-			Overall measure of the width, it reflects the X Dimension of a bounding box, enclosing the body of the door opening. If omitted, the OverallWidth should be taken from the geometric representation of the IfcOpening in which the door is inserted. NOTE The body of the door might be wider then the door opening (e.g. in cases where the door lining includes a casing). In these cases the OverallWidth shall still be given as the door opening width, and not as the total width of the door lining.
+		<member name="OverallWidth" type="Variant" setter="set_OverallWidth" getter="get_OverallWidth">
+			Overall measure of the width, it reflects the X Dimension of a bounding box, enclosing the body of the door opening. If omitted, the OverallWidth should be taken from the geometric representation of the IfcOpening in which the door is inserted. NOTE The body of the door might be wider then the door opening (e.g. in cases where the door lining includes a casing). In these cases the OverallWidth shall still be given as the door opening width, and not as the total width of the door lining. A float, or null when unset.
 		</member>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			Predefined generic type for a door that is specified in an enumeration. There may be a property set given specificly for the predefined types. NOTE The PredefinedType shall only be used, if no type object IfcDoorType is assigned, providing its own IfcDoorType.PredefinedType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			Predefined generic type for a door that is specified in an enumeration. There may be a property set given specificly for the predefined types. NOTE The PredefinedType shall only be used, if no type object IfcDoorType is assigned, providing its own IfcDoorType.PredefinedType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition. A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="OperationType" type="String" setter="set_OperationType" getter="get_OperationType">
-			Type defining the general layout and operation of the door type in terms of the partitioning of panels and panel operations. NOTE The OperationType shall only be used, if no type object IfcDoorType is assigned, providing its own IfcDoorType.OperationType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition.
+		<member name="OperationType" type="Variant" setter="set_OperationType" getter="get_OperationType">
+			Type defining the general layout and operation of the door type in terms of the partitioning of panels and panel operations. NOTE The OperationType shall only be used, if no type object IfcDoorType is assigned, providing its own IfcDoorType.OperationType . IFC2x4 CHANGE The attribute has been added at the end of the entity definition. A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="UserDefinedOperationType" type="String" setter="set_UserDefinedOperationType" getter="get_UserDefinedOperationType">
+		<member name="UserDefinedOperationType" type="Variant" setter="set_UserDefinedOperationType" getter="get_UserDefinedOperationType">
+			A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
+		</member>
+		<member name="HasPorts" type="Array" setter="" getter="get_HasPorts">
+			Only in IFC2X3 files: in others it is empty.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

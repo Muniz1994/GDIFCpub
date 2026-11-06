@@ -6,19 +6,23 @@
 		IfcProductRepresentation defines a representation of a product, including its (geometric or topological) representation. A product can have zero, one or many geometric representations, and a single geometric representation can be shared among various products using mapped representations. NOTE: The definition of this entity relates to the ISO 10303 entity property_definition. The use of the term ‘
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Name" type="String" setter="set_Name" getter="get_Name">
-			The word or group of words by which the product representation is known.
+		<member name="Name" type="Variant" setter="set_Name" getter="get_Name">
+			The word or group of words by which the product representation is known. A String, or null when unset.
 		</member>
-		<member name="Description" type="String" setter="set_Description" getter="get_Description">
-			The word or group of words that characterize the product representation. It can be used to add additional meaning to the name of the product representation.
+		<member name="Description" type="Variant" setter="set_Description" getter="get_Description">
+			The word or group of words that characterize the product representation. It can be used to add additional meaning to the name of the product representation. A String, or null when unset.
 		</member>
-		<member name="Representations" type="Array" setter="set_Representations" getter="get_Representations">
-			Contained list of representations (including shape representations). Each member defines a valid representation of a particular type within a particular representation context.
+		<member name="Representations" type="Variant" setter="set_Representations" getter="get_Representations">
+			Contained list of representations (including shape representations). Each member defines a valid representation of a particular type within a particular representation context. An Array of GDIFCEntityBase entities, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

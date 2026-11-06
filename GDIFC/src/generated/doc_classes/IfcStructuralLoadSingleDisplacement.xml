@@ -6,28 +6,32 @@
 		Definition from IAI: Instances of the entity IfcStructuralLoadSingleDisplacement shall be used to define displacements. HISTORY: New entity in Release IFC2x edition 2.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="DisplacementX" type="float" setter="set_DisplacementX" getter="get_DisplacementX">
-			Displacement in x-direction.
+		<member name="DisplacementX" type="Variant" setter="set_DisplacementX" getter="get_DisplacementX">
+			Displacement in x-direction. A float, or null when unset.
 		</member>
-		<member name="DisplacementY" type="float" setter="set_DisplacementY" getter="get_DisplacementY">
-			Displacement in y-direction.
+		<member name="DisplacementY" type="Variant" setter="set_DisplacementY" getter="get_DisplacementY">
+			Displacement in y-direction. A float, or null when unset.
 		</member>
-		<member name="DisplacementZ" type="float" setter="set_DisplacementZ" getter="get_DisplacementZ">
-			Displacement in z-direction.
+		<member name="DisplacementZ" type="Variant" setter="set_DisplacementZ" getter="get_DisplacementZ">
+			Displacement in z-direction. A float, or null when unset.
 		</member>
-		<member name="RotationalDisplacementRX" type="float" setter="set_RotationalDisplacementRX" getter="get_RotationalDisplacementRX">
-			Rotation about the x-axis.
+		<member name="RotationalDisplacementRX" type="Variant" setter="set_RotationalDisplacementRX" getter="get_RotationalDisplacementRX">
+			Rotation about the x-axis. A float, or null when unset.
 		</member>
-		<member name="RotationalDisplacementRY" type="float" setter="set_RotationalDisplacementRY" getter="get_RotationalDisplacementRY">
-			Rotation about the y-axis.
+		<member name="RotationalDisplacementRY" type="Variant" setter="set_RotationalDisplacementRY" getter="get_RotationalDisplacementRY">
+			Rotation about the y-axis. A float, or null when unset.
 		</member>
-		<member name="RotationalDisplacementRZ" type="float" setter="set_RotationalDisplacementRZ" getter="get_RotationalDisplacementRZ">
-			Rotation about the z-axis.
+		<member name="RotationalDisplacementRZ" type="Variant" setter="set_RotationalDisplacementRZ" getter="get_RotationalDisplacementRZ">
+			Rotation about the z-axis. A float, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

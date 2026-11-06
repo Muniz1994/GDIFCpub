@@ -6,16 +6,20 @@
 		IfcSurfaceStyle is an assignment of one or many surface style elements to a surface, defined by subtypes of IfcSurface , IfcFaceBasedSurfaceModel , IfcShellBasedSurfaceModel , or by subtypes of IfcSolidModel . The positive direction of the surface normal relates to the positive side. In case of solids the outside of the solid is to be taken as positive side. NOTE: The surface style is often referr
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Side" type="String" setter="set_Side" getter="get_Side">
-			An indication of which side of the surface to apply the style.
+		<member name="Side" type="Variant" setter="set_Side" getter="get_Side">
+			An indication of which side of the surface to apply the style. A String, one of the enumeration's values, or null when unset.
 		</member>
-		<member name="Styles" type="Array" setter="set_Styles" getter="get_Styles">
-			A collection of different surface styles.
+		<member name="Styles" type="Variant" setter="set_Styles" getter="get_Styles">
+			A collection of different surface styles. An Array of GDIFCEntityBase entities, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

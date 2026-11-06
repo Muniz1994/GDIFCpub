@@ -5,17 +5,21 @@
 	<brief_description>
 		IfcMaterialLayerWithOffsets is a specialization of IfcMaterialLayer enabling definition of offset values along edges (within the material layer set usage in parent layer set). It defines the assignment of two offset values for a material layer in its intended use within a material layer set. Offsets are applied to the edges of layered elements (that is, in directions perpendicular to the layer set
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="OffsetDirection" type="String" setter="set_OffsetDirection" getter="get_OffsetDirection">
-			Orientation of the offset; shall be perpendicular to the parent layer set direction.
+		<member name="OffsetDirection" type="Variant" setter="set_OffsetDirection" getter="get_OffsetDirection">
+			Orientation of the offset; shall be perpendicular to the parent layer set direction. A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="OffsetValues" type="PackedFloat64Array" setter="set_OffsetValues" getter="get_OffsetValues">
-			The numerical value of layer offset, in the direction of the axis assigned by the attribute OffsetDirection . The OffsetValues[1] identifies the offset from the lower position along the axis direction (normally the start of the standard extrusion), the OffsetValues[2] identifies the offset from the upper position along the axis direction (normally the end of the standard extrusion),
+		<member name="OffsetValues" type="Variant" setter="set_OffsetValues" getter="get_OffsetValues">
+			The numerical value of layer offset, in the direction of the axis assigned by the attribute OffsetDirection . The OffsetValues[1] identifies the offset from the lower position along the axis direction (normally the start of the standard extrusion), the OffsetValues[2] identifies the offset from the upper position along the axis direction (normally the end of the standard extrusion), A PackedFloat64Array, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

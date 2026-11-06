@@ -6,16 +6,20 @@
 		Definition from IAI : IfcRelConnectsWithRealizingElements defines a generic relationship that is made between two elements that require the realization of that relationship by means of further realizing elements. An IfcRelConnectsWithRealizingElements is a specialization of IfcRelConnectsElement where the connecting operation has the additional attribute of (one or many) realizing elements that ma
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="RealizingElements" type="Array" setter="set_RealizingElements" getter="get_RealizingElements">
-			Defines the elements that realize a connection relationship.
+		<member name="RealizingElements" type="Variant" setter="set_RealizingElements" getter="get_RealizingElements">
+			Defines the elements that realize a connection relationship. An Array of GDIFCEntityBase entities, or null when unset.
 		</member>
-		<member name="ConnectionType" type="String" setter="set_ConnectionType" getter="get_ConnectionType">
-			The type of the connection given for informal purposes, it may include labels, like 'joint', 'rigid joint', 'flexible joint', etc.
+		<member name="ConnectionType" type="Variant" setter="set_ConnectionType" getter="get_ConnectionType">
+			The type of the connection given for informal purposes, it may include labels, like 'joint', 'rigid joint', 'flexible joint', etc. A String, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

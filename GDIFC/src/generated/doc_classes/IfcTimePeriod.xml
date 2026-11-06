@@ -5,17 +5,21 @@
 	<brief_description>
 		IfcTimePeriod defines a time period given by a start and end time. Both time definitions consider the time zone and allow for the daylight savings offset. HISTORY: New entity in IFC R2x4. Use definitions A time period is defined by a start and an end time, which is defined by IfcTime . The given time period should be within reasonable values (for example, the start time must be before the end time
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="StartTime" type="String" setter="set_StartTime" getter="get_StartTime">
-			Start time of the time period.
+		<member name="StartTime" type="Variant" setter="set_StartTime" getter="get_StartTime">
+			Start time of the time period. A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="EndTime" type="String" setter="set_EndTime" getter="get_EndTime">
-			End time of the time period.
+		<member name="EndTime" type="Variant" setter="set_EndTime" getter="get_EndTime">
+			End time of the time period. A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

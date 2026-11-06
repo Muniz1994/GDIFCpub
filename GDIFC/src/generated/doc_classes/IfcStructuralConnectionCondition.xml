@@ -6,13 +6,17 @@
 		Definition from IAI: Describe more rarely needed connection properties. HISTORY: New entity in IFC 2x2.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Name" type="String" setter="set_Name" getter="get_Name">
-			Optionally defines a name for this connection condition.
+		<member name="Name" type="Variant" setter="set_Name" getter="get_Name">
+			Optionally defines a name for this connection condition. A String, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

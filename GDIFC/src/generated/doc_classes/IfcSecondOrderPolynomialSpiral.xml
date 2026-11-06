@@ -5,17 +5,24 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="QuadraticTerm" type="float" setter="set_QuadraticTerm" getter="get_QuadraticTerm">
+		<member name="QuadraticTerm" type="Variant" setter="set_QuadraticTerm" getter="get_QuadraticTerm">
+			A float, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="LinearTerm" type="float" setter="set_LinearTerm" getter="get_LinearTerm">
+		<member name="LinearTerm" type="Variant" setter="set_LinearTerm" getter="get_LinearTerm">
+			A float, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="ConstantTerm" type="float" setter="set_ConstantTerm" getter="get_ConstantTerm">
+		<member name="ConstantTerm" type="Variant" setter="set_ConstantTerm" getter="get_ConstantTerm">
+			A float, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

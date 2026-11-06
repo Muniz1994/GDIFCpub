@@ -6,22 +6,26 @@
 		The presentation layer assignment provides the layer name (and optionally a description and an identifier) for a collection of geometric representation items. The IfcPresentationLayerAssignment corresponds to the term "CAD Layer" and is used mainly for grouping and visibility control. NOTE The use of presentation layer shall be restricted to simple grouping and displaying purposes. Visibility and 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Name" type="String" setter="set_Name" getter="get_Name">
-			Name of the layer.
+		<member name="Name" type="Variant" setter="set_Name" getter="get_Name">
+			Name of the layer. A String, or null when unset.
 		</member>
-		<member name="Description" type="String" setter="set_Description" getter="get_Description">
-			Additional description of the layer.
+		<member name="Description" type="Variant" setter="set_Description" getter="get_Description">
+			Additional description of the layer. A String, or null when unset.
 		</member>
-		<member name="AssignedItems" type="Array" setter="set_AssignedItems" getter="get_AssignedItems">
-			The set of layered items, which are assigned to this layer.
+		<member name="AssignedItems" type="Variant" setter="set_AssignedItems" getter="get_AssignedItems">
+			The set of layered items, which are assigned to this layer. An Array of GDIFCEntityBase entities, or null when unset.
 		</member>
-		<member name="Identifier" type="String" setter="set_Identifier" getter="get_Identifier">
-			An (internal) identifier assigned to the layer.
+		<member name="Identifier" type="Variant" setter="set_Identifier" getter="get_Identifier">
+			An (internal) identifier assigned to the layer. A String, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

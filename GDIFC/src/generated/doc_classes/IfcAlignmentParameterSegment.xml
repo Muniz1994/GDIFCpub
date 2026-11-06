@@ -5,15 +5,21 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="StartTag" type="String" setter="set_StartTag" getter="get_StartTag">
+		<member name="StartTag" type="Variant" setter="set_StartTag" getter="get_StartTag">
+			A String, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="EndTag" type="String" setter="set_EndTag" getter="get_EndTag">
+		<member name="EndTag" type="Variant" setter="set_EndTag" getter="get_EndTag">
+			A String, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

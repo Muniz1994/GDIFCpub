@@ -23,6 +23,13 @@ void IFCNode::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY,"quantities"),"set_quantities","get_quantities");
     ADD_PROPERTY(PropertyInfo(Variant::STRING,"ifc_class"),"set_ifc_class","get_ifc_class");
 
+    ClassDB::bind_method(D_METHOD("get_property_details"), &IFCNode::get_property_details);
+    ClassDB::bind_method(D_METHOD("set_property_details","details"), &IFCNode::set_property_details);
+    ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY,"property_details"),"set_property_details","get_property_details");
+    ClassDB::bind_method(D_METHOD("get_quantity_details"), &IFCNode::get_quantity_details);
+    ClassDB::bind_method(D_METHOD("set_quantity_details","details"), &IFCNode::set_quantity_details);
+    ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY,"quantity_details"),"set_quantity_details","get_quantity_details");
+
     ClassDB::bind_method(D_METHOD("get_global_id"), &IFCNode::get_global_id);
     ClassDB::bind_method(D_METHOD("set_global_id","id"), &IFCNode::set_global_id);
     ADD_PROPERTY(PropertyInfo(Variant::STRING,"global_id"),"set_global_id","get_global_id");
@@ -31,6 +38,11 @@ void IFCNode::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_ifc_object","obj"), &IFCNode::set_ifc_object);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT,"ifc_object",PROPERTY_HINT_RESOURCE_TYPE,"GDIFCEntityBase", PROPERTY_USAGE_NONE),
         "set_ifc_object","get_ifc_object");
+
+    ClassDB::bind_method(D_METHOD("get_material_definition"), &IFCNode::get_material_definition);
+    ClassDB::bind_method(D_METHOD("set_material_definition","definition"), &IFCNode::set_material_definition);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT,"material_definition",PROPERTY_HINT_RESOURCE_TYPE,"GDIFCMaterialDefinition"),
+        "set_material_definition","get_material_definition");
 };
 
 

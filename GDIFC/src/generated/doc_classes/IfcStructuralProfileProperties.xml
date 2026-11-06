@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcStructuralProfileProperties" inherits="IfcGeneralProfileProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="TorsionalConstantX" type="Variant" setter="set_TorsionalConstantX" getter="get_TorsionalConstantX">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="MomentOfInertiaYZ" type="Variant" setter="set_MomentOfInertiaYZ" getter="get_MomentOfInertiaYZ">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="MomentOfInertiaY" type="Variant" setter="set_MomentOfInertiaY" getter="get_MomentOfInertiaY">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="MomentOfInertiaZ" type="Variant" setter="set_MomentOfInertiaZ" getter="get_MomentOfInertiaZ">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="WarpingConstant" type="Variant" setter="set_WarpingConstant" getter="get_WarpingConstant">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="ShearCentreZ" type="Variant" setter="set_ShearCentreZ" getter="get_ShearCentreZ">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="ShearCentreY" type="Variant" setter="set_ShearCentreY" getter="get_ShearCentreY">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="ShearDeformationAreaZ" type="Variant" setter="set_ShearDeformationAreaZ" getter="get_ShearDeformationAreaZ">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="ShearDeformationAreaY" type="Variant" setter="set_ShearDeformationAreaY" getter="get_ShearDeformationAreaY">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="MaximumSectionModulusY" type="Variant" setter="set_MaximumSectionModulusY" getter="get_MaximumSectionModulusY">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="MinimumSectionModulusY" type="Variant" setter="set_MinimumSectionModulusY" getter="get_MinimumSectionModulusY">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="MaximumSectionModulusZ" type="Variant" setter="set_MaximumSectionModulusZ" getter="get_MaximumSectionModulusZ">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="MinimumSectionModulusZ" type="Variant" setter="set_MinimumSectionModulusZ" getter="get_MinimumSectionModulusZ">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="TorsionalSectionModulus" type="Variant" setter="set_TorsionalSectionModulus" getter="get_TorsionalSectionModulus">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="CentreOfGravityInX" type="Variant" setter="set_CentreOfGravityInX" getter="get_CentreOfGravityInX">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="CentreOfGravityInY" type="Variant" setter="set_CentreOfGravityInY" getter="get_CentreOfGravityInY">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

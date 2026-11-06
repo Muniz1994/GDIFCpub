@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcConstraintAggregationRelationship" inherits="GDIFCEntityBase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An IfcConstraintAggregationRelationship is an objectified relationship that enables instances of IfcConstraint subtypes to be aggregated together logically. HISTORY New Entity in IFC Release 2.0. Modified in IFC2x2. IFC2x4 CHANGE Subtyped from IfcConstraintRelationship Use definition IfcConstraintAggregationRelationship allows the aggregation link between subtypes of constraint to be logically def
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="Name" type="Variant" setter="set_Name" getter="get_Name">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="Description" type="Variant" setter="set_Description" getter="get_Description">
+			A String, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="RelatingConstraint" type="GDIFCEntityBase" setter="set_RelatingConstraint" getter="get_RelatingConstraint">
+			Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="RelatedConstraints" type="Variant" setter="set_RelatedConstraints" getter="get_RelatedConstraints">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="LogicalAggregator" type="Variant" setter="set_LogicalAggregator" getter="get_LogicalAggregator">
+			Enumeration that identifies the logical type of aggregation. A String, one of the enumeration's values, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

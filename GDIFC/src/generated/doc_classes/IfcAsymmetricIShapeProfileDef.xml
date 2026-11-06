@@ -6,37 +6,53 @@
 		IfcAsymmetricIShapeProfileDef defines a section profile that provides the defining parameters of a singly symmetric I-shaped section. Its parameters and orientation relative to the position coordinate system are according to the following illustration. The centre of the position coordinate system is in the profile's centre of the bounding box. The inherited attributes are redefined as: OverallWidt
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="BottomFlangeWidth" type="float" setter="set_BottomFlangeWidth" getter="get_BottomFlangeWidth">
-			Extent of the top flange, defined parallel to the x axis of the position coordinate system.
+		<member name="BottomFlangeWidth" type="Variant" setter="set_BottomFlangeWidth" getter="get_BottomFlangeWidth">
+			In IFC2X3 files, this is the [code]OverallWidth[/code] attribute. A float, or null when unset.
 		</member>
-		<member name="OverallDepth" type="float" setter="set_OverallDepth" getter="get_OverallDepth">
-			Flange thickness of the top flange of the I-shape.
+		<member name="OverallDepth" type="Variant" setter="set_OverallDepth" getter="get_OverallDepth">
+			A float, or null when unset.
 		</member>
-		<member name="WebThickness" type="float" setter="set_WebThickness" getter="get_WebThickness">
-			The fillet between the web and the top flange of the I-shape.
+		<member name="WebThickness" type="Variant" setter="set_WebThickness" getter="get_WebThickness">
+			A float, or null when unset.
 		</member>
-		<member name="BottomFlangeThickness" type="float" setter="set_BottomFlangeThickness" getter="get_BottomFlangeThickness">
+		<member name="BottomFlangeThickness" type="Variant" setter="set_BottomFlangeThickness" getter="get_BottomFlangeThickness">
+			In IFC2X3 files, this is the [code]FlangeThickness[/code] attribute. A float, or null when unset.
 		</member>
-		<member name="BottomFlangeFilletRadius" type="float" setter="set_BottomFlangeFilletRadius" getter="get_BottomFlangeFilletRadius">
+		<member name="BottomFlangeFilletRadius" type="Variant" setter="set_BottomFlangeFilletRadius" getter="get_BottomFlangeFilletRadius">
+			In IFC2X3 files, this is the [code]FilletRadius[/code] attribute. A float, or null when unset.
 		</member>
-		<member name="TopFlangeWidth" type="float" setter="set_TopFlangeWidth" getter="get_TopFlangeWidth">
+		<member name="TopFlangeWidth" type="Variant" setter="set_TopFlangeWidth" getter="get_TopFlangeWidth">
+			Extent of the top flange, defined parallel to the x axis of the position coordinate system. A float, or null when unset.
 		</member>
-		<member name="TopFlangeThickness" type="float" setter="set_TopFlangeThickness" getter="get_TopFlangeThickness">
+		<member name="TopFlangeThickness" type="Variant" setter="set_TopFlangeThickness" getter="get_TopFlangeThickness">
+			Flange thickness of the top flange of the I-shape. A float, or null when unset.
 		</member>
-		<member name="TopFlangeFilletRadius" type="float" setter="set_TopFlangeFilletRadius" getter="get_TopFlangeFilletRadius">
+		<member name="TopFlangeFilletRadius" type="Variant" setter="set_TopFlangeFilletRadius" getter="get_TopFlangeFilletRadius">
+			The fillet between the web and the top flange of the I-shape. A float, or null when unset.
 		</member>
-		<member name="BottomFlangeEdgeRadius" type="float" setter="set_BottomFlangeEdgeRadius" getter="get_BottomFlangeEdgeRadius">
+		<member name="BottomFlangeEdgeRadius" type="Variant" setter="set_BottomFlangeEdgeRadius" getter="get_BottomFlangeEdgeRadius">
+			A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="BottomFlangeSlope" type="float" setter="set_BottomFlangeSlope" getter="get_BottomFlangeSlope">
+		<member name="BottomFlangeSlope" type="Variant" setter="set_BottomFlangeSlope" getter="get_BottomFlangeSlope">
+			A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="TopFlangeEdgeRadius" type="float" setter="set_TopFlangeEdgeRadius" getter="get_TopFlangeEdgeRadius">
+		<member name="TopFlangeEdgeRadius" type="Variant" setter="set_TopFlangeEdgeRadius" getter="get_TopFlangeEdgeRadius">
+			A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="TopFlangeSlope" type="float" setter="set_TopFlangeSlope" getter="get_TopFlangeSlope">
+		<member name="TopFlangeSlope" type="Variant" setter="set_TopFlangeSlope" getter="get_TopFlangeSlope">
+			A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
+		</member>
+		<member name="CentreOfGravityInY" type="Variant" setter="set_CentreOfGravityInY" getter="get_CentreOfGravityInY">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

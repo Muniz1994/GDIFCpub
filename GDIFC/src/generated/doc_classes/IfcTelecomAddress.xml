@@ -6,28 +6,32 @@
 		Definition: Address to which telephone, electronic mail and other forms of telecommunications should be addressed. HISTORY New entity in IFC Release 2x. IFC 2x4 change: Added attribute MessagingIDs . Type of attribute WWWHomePageURL compatibly changed from IfcLabel to IfcURIReference .
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="TelephoneNumbers" type="PackedStringArray" setter="set_TelephoneNumbers" getter="get_TelephoneNumbers">
-			The list of telephone numbers at which telephone messages may be received.
+		<member name="TelephoneNumbers" type="Variant" setter="set_TelephoneNumbers" getter="get_TelephoneNumbers">
+			The list of telephone numbers at which telephone messages may be received. A PackedStringArray, or null when unset.
 		</member>
-		<member name="FacsimileNumbers" type="PackedStringArray" setter="set_FacsimileNumbers" getter="get_FacsimileNumbers">
-			The list of fax numbers at which fax messages may be received.
+		<member name="FacsimileNumbers" type="Variant" setter="set_FacsimileNumbers" getter="get_FacsimileNumbers">
+			The list of fax numbers at which fax messages may be received. A PackedStringArray, or null when unset.
 		</member>
-		<member name="PagerNumber" type="String" setter="set_PagerNumber" getter="get_PagerNumber">
-			The pager number at which paging messages may be received.
+		<member name="PagerNumber" type="Variant" setter="set_PagerNumber" getter="get_PagerNumber">
+			The pager number at which paging messages may be received. A String, or null when unset.
 		</member>
-		<member name="ElectronicMailAddresses" type="PackedStringArray" setter="set_ElectronicMailAddresses" getter="get_ElectronicMailAddresses">
-			The list of Email addresses at which Email messages may be received.
+		<member name="ElectronicMailAddresses" type="Variant" setter="set_ElectronicMailAddresses" getter="get_ElectronicMailAddresses">
+			The list of Email addresses at which Email messages may be received. A PackedStringArray, or null when unset.
 		</member>
-		<member name="WWWHomePageURL" type="String" setter="set_WWWHomePageURL" getter="get_WWWHomePageURL">
-			The world wide web address at which the preliminary page of information for the person or organization can be located. NOTE: Information on the world wide web for a person or organization may be separated into a number of pages and across a number of host sites, all of which may be linked together. It is assumed that all such information may be referenced from a single page that is termed the home page for that person or organization.
+		<member name="WWWHomePageURL" type="Variant" setter="set_WWWHomePageURL" getter="get_WWWHomePageURL">
+			The world wide web address at which the preliminary page of information for the person or organization can be located. NOTE: Information on the world wide web for a person or organization may be separated into a number of pages and across a number of host sites, all of which may be linked together. It is assumed that all such information may be referenced from a single page that is termed the home page for that person or organization. A String, or null when unset.
 		</member>
-		<member name="MessagingIDs" type="PackedStringArray" setter="set_MessagingIDs" getter="get_MessagingIDs">
-			IDs or addresses for any other means of telecommunication, for example instant messaging, voice-over-IP, or file transfer protocols. The communication protocol is indicated by the URI value with scheme designations such as irc:, sip:, or ftp:.
+		<member name="MessagingIDs" type="Variant" setter="set_MessagingIDs" getter="get_MessagingIDs">
+			IDs or addresses for any other means of telecommunication, for example instant messaging, voice-over-IP, or file transfer protocols. The communication protocol is indicated by the URI value with scheme designations such as irc:, sip:, or ftp:. A PackedStringArray, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

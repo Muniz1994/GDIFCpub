@@ -6,8 +6,10 @@
 		Any object that relates to a geometric or spatial context. Subtypes of IfcProduct usually hold a shape representation and a object placement within the project structure. This includes manufactured, supplied or created objects (referred to as elements) for incorporation into an AEC/FM project. This also includes objects that are created indirectly by other products, as spaces are defined by boundi
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="ObjectPlacement" type="GDIFCEntityBase" setter="set_ObjectPlacement" getter="get_ObjectPlacement">
 			Placement of the product in space, the placement can either be absolute (relative to the world coordinate system), relative (relative to the object placement of another product), or constraint (e.g. relative to grid axes). It is determined by the various subtypes of IfcObjectPlacement, which includes the axis placement information to determine the transformation for the object coordinate system.
@@ -18,10 +20,13 @@
 		<member name="ReferencedBy" type="Array" setter="" getter="get_ReferencedBy">
 		</member>
 		<member name="PositionedRelativeTo" type="Array" setter="" getter="get_PositionedRelativeTo">
+			Only in IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="ReferencedInStructures" type="Array" setter="" getter="get_ReferencedInStructures">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

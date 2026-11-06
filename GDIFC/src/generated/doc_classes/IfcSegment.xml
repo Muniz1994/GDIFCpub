@@ -5,15 +5,20 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Transition" type="String" setter="set_Transition" getter="get_Transition">
+		<member name="Transition" type="Variant" setter="set_Transition" getter="get_Transition">
+			A String, one of the enumeration's values, or null when unset.
 		</member>
 		<member name="UsingCurves" type="Array" setter="" getter="get_UsingCurves">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

@@ -5,17 +5,24 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="Directrix" type="GDIFCEntityBase" setter="set_Directrix" getter="get_Directrix">
+			Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="CrossSectionPositions" type="Array" setter="set_CrossSectionPositions" getter="get_CrossSectionPositions">
+		<member name="CrossSectionPositions" type="Variant" setter="set_CrossSectionPositions" getter="get_CrossSectionPositions">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="CrossSections" type="Array" setter="set_CrossSections" getter="get_CrossSections">
+		<member name="CrossSections" type="Variant" setter="set_CrossSections" getter="get_CrossSections">
+			An Array of GDIFCEntityBase entities, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

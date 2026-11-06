@@ -6,19 +6,23 @@
 		IfcConnectionPointEccentricity is used to describe the geometric constraints that facilitate the physical connection of two objects at a point or vertex point with associated point coordinates. There is a physical distance, or eccentricity, etween the connection points of both object. The eccentricity can be either given by: providing the PointOnRelatingElement and the PointOnRelatedElement , wher
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="EccentricityInX" type="float" setter="set_EccentricityInX" getter="get_EccentricityInX">
-			Distance in x direction between the two points (or vertex points) engaged in the point connection.
+		<member name="EccentricityInX" type="Variant" setter="set_EccentricityInX" getter="get_EccentricityInX">
+			Distance in x direction between the two points (or vertex points) engaged in the point connection. A float, or null when unset.
 		</member>
-		<member name="EccentricityInY" type="float" setter="set_EccentricityInY" getter="get_EccentricityInY">
-			Distance in y direction between the two points (or vertex points) engaged in the point connection.
+		<member name="EccentricityInY" type="Variant" setter="set_EccentricityInY" getter="get_EccentricityInY">
+			Distance in y direction between the two points (or vertex points) engaged in the point connection. A float, or null when unset.
 		</member>
-		<member name="EccentricityInZ" type="float" setter="set_EccentricityInZ" getter="get_EccentricityInZ">
-			Distance in z direction between the two points (or vertex points) engaged in the point connection.
+		<member name="EccentricityInZ" type="Variant" setter="set_EccentricityInZ" getter="get_EccentricityInZ">
+			Distance in z direction between the two points (or vertex points) engaged in the point connection. A float, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

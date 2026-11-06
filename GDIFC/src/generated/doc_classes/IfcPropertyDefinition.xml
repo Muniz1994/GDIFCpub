@@ -6,14 +6,19 @@
 		IfcPropertyDefinition defines the generalization of all characteristics (i.e. a grouping of individual properties), that may be assigned to objects. Currently, subtypes of IfcPropertyDefinition include property set occurrences, property set templates, and property templates. Property set template - IfcPropertySetTemplate , a collection of property templates that determine the definition of propert
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="HasContext" type="Array" setter="" getter="get_HasContext">
+			Only in IFC4 and IFC4X3_ADD2 files: in others it is empty.
 		</member>
 		<member name="HasAssociations" type="Array" setter="" getter="get_HasAssociations">
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

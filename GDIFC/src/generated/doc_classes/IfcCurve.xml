@@ -6,10 +6,14 @@
 		Definition from ISO/CD 10303-42:1992 : A curve can be envisioned as the path of a point moving in its coordinate space. NOTE: Corresponding ISO 10303 entity: curve, only the following subtypes have been incorporated into IFC: line as IfcLine , conic as IfcConic , bounded_curve as IfcBoundedCurve . Please refer to ISO/IS 10303-42:1994, p.37 for the final definition of the formal standard. The deriv
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

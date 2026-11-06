@@ -5,30 +5,36 @@
 	<brief_description>
 		Definition from IAI: A steel bar, usually with manufactured deformations in the surface, used in concrete and masonry construction to provide additional strength. HISTORY New entity in IFC Release 2x4 Material Use Definition : An associated material denotes the steel grade, preferrably by material classification. Geometry Use Definition : The IfcReinforcingBarType may define the shared geometric r
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
-			The nominal diameter defining the cross-section size of the reinforcing bar.
+		<member name="PredefinedType" type="Variant" setter="set_PredefinedType" getter="get_PredefinedType">
+			The predefined type is always BAR. A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="NominalDiameter" type="float" setter="set_NominalDiameter" getter="get_NominalDiameter">
-			The effective cross-section area of the reinforcing bar.
+		<member name="NominalDiameter" type="Variant" setter="set_NominalDiameter" getter="get_NominalDiameter">
+			The nominal diameter defining the cross-section size of the reinforcing bar. A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="CrossSectionArea" type="float" setter="set_CrossSectionArea" getter="get_CrossSectionArea">
-			The total length of the reinforcing bar. The total length of bended bars are calculated according to local standards with corrections for the bends.
+		<member name="CrossSectionArea" type="Variant" setter="set_CrossSectionArea" getter="get_CrossSectionArea">
+			The effective cross-section area of the reinforcing bar. A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="BarLength" type="float" setter="set_BarLength" getter="get_BarLength">
-			Indicator for whether the bar surface is plain or textured.
+		<member name="BarLength" type="Variant" setter="set_BarLength" getter="get_BarLength">
+			The total length of the reinforcing bar. The total length of bended bars are calculated according to local standards with corrections for the bends. A float, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="BarSurface" type="String" setter="set_BarSurface" getter="get_BarSurface">
-			The predefined type is always BAR.
+		<member name="BarSurface" type="Variant" setter="set_BarSurface" getter="get_BarSurface">
+			Indicator for whether the bar surface is plain or textured. A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="BendingShapeCode" type="String" setter="set_BendingShapeCode" getter="get_BendingShapeCode">
+		<member name="BendingShapeCode" type="Variant" setter="set_BendingShapeCode" getter="get_BendingShapeCode">
+			A String, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="BendingParameters" type="Array" setter="set_BendingParameters" getter="get_BendingParameters">
+		<member name="BendingParameters" type="Variant" setter="set_BendingParameters" getter="get_BendingParameters">
+			An Array of values (String, float, int or bool), or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

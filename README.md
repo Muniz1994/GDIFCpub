@@ -3,15 +3,19 @@
 ![GDIFC](images/GDIFC.png)
 
 A GDExtension for loading [buildingSMART IFC](https://www.buildingsmart.org/standards/bsi-standards/industry-foundation-classes/) files directly in Godot 4.  
-It creates a node tree of `IFCNode` meshes with the full geometry, properties, and quantity sets of the model.
+
 
 ## Features
 
-- Asynchronous, threaded loading — the editor and game remain responsive while the model is parsed
-- IFC schema support: IFC 2.3.0.1 (IFC 2x3 TC1), IFC 4.0.2.1 (IFC 4 ADD2 TC1), 4.3.2.0 (IFC 4.3 ADD2)    
-- Per-object property sets, quantity sets, and attributes exposed as `Dictionary`
-- Optional collision shape generation per object
-- Georeferencing data (`MapConversion` / `ProjectedCRS`) available after load
+- Asynchronous, threaded loading — the editor and game remain responsive while the model is parsed, with progress reporting
+- IFC schema support: IFC 2.3.0.1 (IFC 2x3 TC1), IFC 4.0.2.1 (IFC 4 ADD2 TC1), 4.3.2.0 (IFC 4.3 ADD2)
+- `.ifc` files imported as scenes, like `.glb` files
+- Per-object attributes, property sets and quantity sets exposed as `Dictionary`, with the element type's sets merged in and the value type and unit of each value
+- The whole IFC model can be walked from any element: every IFC class of the three schemas is a typed Godot class (`IfcWall`, `IfcSlab`, …) whose attributes and inverse relationships lead to its type, classifications, systems, zones, openings and every other entity, including those without geometry
+- Optional IFC materials and textures, with one Godot material per IFC material that can be replaced from scripts or the Inspector
+- Automatic mesh LODs
+- Optional collision shape generation per object, with a shape type and physics layers per IFC class
+- Georeferencing data (`MapConversion` / `ProjectedCRS`, and IFC2X3's `ePSet_MapConversion`), and placing models relative to each other's georeference
 - Platforms: Windows, Linux, Android, Web (WASM)
 
 <p align="center">
@@ -19,6 +23,10 @@ It creates a node tree of `IFCNode` meshes with the full geometry, properties, a
 </p>
 
 IFC 4.3 example on godot 4.7 dev outline branch
+
+## Requirements
+
+Godot 4.5 or later.
 
 ## Installation
 
@@ -36,7 +44,9 @@ IFC 4.3 example on godot 4.7 dev outline branch
 
 ## Quick Start
 
-Add a **GDIFCManager** node to your scene, then call `read_ifc` from a script:
+In the editor, drag an `.ifc` file from the FileSystem dock into the 3D view, or use **Load IFC...** in the GDIFC dock.
+
+From a script, add a **GDIFCManager** node to your scene and call `read_ifc`:
 
 ```gdscript
 extends Node3D
@@ -44,171 +54,27 @@ extends Node3D
 @onready var ifc_manager: GDIFCManager = $GDIFCManager
 
 func _ready() -> void:
-    # Load an IFC file.  Pass an empty Array for collision_classes to skip
-    # collision generation, or list IFC class names to include (e.g. ["IfcWall"]).
-    ifc_manager.read_ifc("res://models/building.ifc", false, [])
+    ifc_manager.ifc_objects_ready.connect(_on_ifc_objects_ready)
+    ifc_manager.read_ifc("res://models/building.ifc")
+
+func _on_ifc_objects_ready() -> void:
+    for node in ifc_manager.find_children("*", "IFCNode", true, false):
+        var wall := node.ifc_object as IfcWall
+        if wall:
+            print(wall.Name, " ", node.properties.keys())
 ```
 
-After loading finishes, child `IFCNode` nodes are automatically added under the `GDIFCManager`.
-
-To load from a base-64 encoded string (e.g. data received over the network):
-
-```gdscript
-ifc_manager.read_ifc_base64(base64_string, false, [])
-```
-
-### Importing `.ifc` files as scenes
-
-`.ifc` files inside the project are imported like `.glb` files: drag one from the FileSystem dock into the 3D view, or instance it in a scene. The model is built once per import and stored in binary under `.godot/imported/`, so the scene that uses it only stores a reference to the `.ifc` file and stays small and quick to save. To change individual nodes, enable **Editable Children** on the instance.
-
-From the GDIFC dock, turn on **Scene → Import as scene** before clicking **Load IFC...**: the file is imported with the dock's options and instanced in the edited scene. Files from outside the project are first copied into the **Import folder** (`res://ifc/` by default); files already in the project are imported where they are. Of the settings preset, only coordinate to origin and circle segments apply to imports.
-
-Select the `.ifc` file and open the **Import** dock to set its options (coordinate to origin, circle segments, LODs, collision and the classes to create it for), then click **Reimport**. The model is reimported automatically when the `.ifc` file changes.
-
-The root of an imported scene is a `GDIFCManager`. When an instance enters the tree, it re-parses the `.ifc` file to restore `ifc_object` and the `IFCModel` queries. Set its `reference_georeference` to place the model relative to another model's `IFCGeoreference`. In exported projects, add `*.ifc` to the export preset's **Filters to export non-resource files/folders** so the file is available at runtime.
+The model appears at `ifc_read`, as an `IFCModel` node under the manager holding the `IFCNode` tree. Attributes, property sets, quantities and the typed `ifc_object` follow at `ifc_objects_ready`.
 
 ## Documentation
 
-Extended documentation is available in the [`docs/`](docs/) folder:
-
-- [Documentation Index](docs/index.md)
 - [Getting Started](docs/getting-started.md)
-- [Loading Models](docs/loading-models.md)
+- [Loading Models](docs/loading-models.md): collision, importing as scenes, LODs, IFC materials, georeferencing
 - [Typed Entity Access](docs/typed-entities.md)
+- [Walking The Model](docs/walking-the-model.md): types, classifications, systems, openings and entities without a node
 - [API Reference](docs/api-reference.md)
 - [Building From Source](docs/building-from-source.md)
-
-## API Reference
-
-### `GDIFCManager` — `Node3D`
-
-The entry point for all IFC loading.
-
-| Member | Type | Description |
-|---|---|---|
-| `read_ifc(path, create_collision, collision_classes)` | `Error` | Load an IFC file from disk. `path` is a Godot resource path or absolute path. `collision_classes` is an `Array[String]` of IFC class names to generate collision shapes for (pass `[]` to disable). |
-| `read_ifc_base64(data, create_collision, collision_classes)` | `Error` | Load an IFC file from a base-64 encoded string. Same parameters as `read_ifc`. |
-| `geometric_settings` | `GDIFCLoaderSettings` | Resource controlling geometry tessellation, memory limits, and tolerances. Assign before calling `read_ifc`. |
-| `ifc_read` | signal | Emitted when the node tree with its geometry has been added. Attributes, property sets, quantities and `ifc_object` are not filled yet. |
-| `ifc_objects_ready` | signal | Emitted after `ifc_read`, when attributes, property sets, quantities, `ifc_object` references and georeferencing are on the nodes (after a load or a cold reload of a saved scene). |
-| `ifc_load_failed` | signal | Emitted when parsing fails. The manager can load again afterwards. |
-
----
-
-### `IFCNode` — `MeshInstance3D`
-
-Represents a single IFC object in the scene tree.
-
-| Property | Type | Description |
-|---|---|---|
-| `ifc_class` | `String` | IFC class name, e.g. `"IfcWall"`, `"IfcSlab"`. |
-| `attributes` | `Dictionary` | Core IFC attributes (GlobalId, Name, Description, …). |
-| `properties` | `Dictionary` | All property sets keyed by set name. |
-| `quantities` | `Dictionary` | All quantity sets keyed by set name. |
-
----
-
-### `GDIFCLoaderSettings` — `Resource`
-
-Attach to `GDIFCManager.geometric_settings` to control the loader.
-
-| Property | Default | Description |
-|---|---|---|
-| `coordinate_to_origin` | `false` | Translate the model so the project origin aligns with the IFC site origin. |
-| `circle_segments` | `12` | Number of segments used to approximate circular profiles. |
-| `tape_size` | `67108864` (64 MB) | Internal parser tape buffer size in bytes. |
-| `memory_limit` | `2147483648` (2 GB) | Maximum memory the geometry processor may use in bytes. |
-| `line_writer_buffer` | `10000` | Internal line-writer buffer size. |
-| `tolerance_plane_intersection` | `1.0e-1` | Tolerance for plane-intersection tests. |
-| `tolerance_plane_deviation` | `3.0e-4` | Tolerance for plane-deviation tests. |
-| `tolerance_back_deviation_distance` | `3.0e-4` | Tolerance for back-deviation distance tests. |
-| `tolerance_inside_outside_perimeter` | `1.0e-10` | Tolerance for inside/outside perimeter tests. |
-| `tolerance_scalar_equality` | `1.0e-4` | Tolerance for scalar equality comparisons. |
-| `plane_refit_iterations` | `10` | Maximum iterations for the plane-refit solver. |
-| `boolean_union_threshold` | `150` | Maximum number of boolean union operations per object before the operation is skipped. |
-| `generate_lods` | `true` | Generate mesh LODs with Godot's `ImporterMesh` (the same path the glTF importer uses). LOD data is saved with the scene, so `.tscn` files get larger. |
-| `lod_normal_merge_angle` | `60.0` | Angle in degrees below which vertices with different normals may be merged while simplifying. |
-
----
-
-## Typed IFC Access
-
-Every IFC entity class is exposed as a native Godot class following the IFC naming convention (`IfcWall`, `IfcSlab`, `IfcDoor`, …). Each class inherits from `GDIFCEntityBase` and exposes its own IFC attributes as typed Godot properties with the exact IFC attribute names (e.g. `PredefinedType`, `Name`, `Description`).
-
-### Cast to a specific IFC type
-
-```gdscript
-# ifc_node.ifc_object is a GDIFCEntityBase reference.
-# Cast it to the typed class to access typed properties.
-var wall := ifc_node.ifc_object as IfcWall
-if wall:
-    print(wall.PredefinedType)   # e.g. "SOLIDWALL"
-    print(wall.Name)             # e.g. "External Wall"
-```
-
-### Traverse the model tree
-
-```gdscript
-# Iterate all children of the GDIFCManager and access typed data.
-for child in ifc_manager.get_children():
-    if child is IFCNode:
-        var slab := child.ifc_object as IfcSlab
-        if slab:
-            print("Slab name: ", slab.Name)
-            print("Slab type: ", slab.PredefinedType)
-```
-
-### Create and modify an IFC object at runtime
-
-```gdscript
-# Create entities through the loaded model so they belong to its IFC file.
-# (IfcWall.new() gives an empty wrapper: its setters do nothing.)
-var wall := ifc_manager.get_ifc_model().create("IfcWall") as IfcWall
-wall.Name = "New Wall"
-```
-
-### Dynamic fallback via GDIFCEntityBase
-
-When the exact IFC class is not known at compile time, use the generic base-class API:
-
-```gdscript
-var entity: GDIFCEntityBase = ifc_node.ifc_object
-print(entity.get_type())                      # e.g. "IfcWall"
-print(entity.get_attribute("Name"))           # generic attribute read
-print(entity.get_all_attributes())            # Dictionary of all attributes
-```
-
-
-
-### Requirements
-
-- Python 3.8+ and [SCons](https://scons.org) (`pip install scons`)
-- A C++17 compiler (MSVC 2022, GCC 12+, or Clang 14+)
-- Boost headers — fetched automatically by the setup script (see below)
-- **Android**: `ANDROID_HOME` set with the NDK installed
-- **Web**: Emscripten SDK installed and activated (`emcc` in `PATH`)
-
-### Steps
-
-```bash
-# 1. Clone with submodules
-git clone --recurse-submodules https://github.com/Muniz1994/GDIFC.git
-cd GDIFC
-
-# 2. Download Boost headers into thirdparty/boost/
-python tools/setup_boost.py
-
-# 3. Build for the host platform (debug by default)
-scons
-
-# Or specify platform and target explicitly:
-scons platform=windows target=template_release
-scons platform=linux   target=template_release
-scons platform=android target=template_release arch=arm64
-scons platform=web     target=template_release
-```
-
-The compiled library is placed in both `addons/GDIFC/` (for distribution) and `ifc-godot-project/addons/GDIFC/` (for the test project) automatically.
+- [Changelog](CHANGELOG.md)
 
 ## Dependencies
 
@@ -221,4 +87,3 @@ The compiled library is placed in both `addons/GDIFC/` (for distribution) and `i
 ## Licence
 
 See [LICENCE.md](LICENCE.md).
-

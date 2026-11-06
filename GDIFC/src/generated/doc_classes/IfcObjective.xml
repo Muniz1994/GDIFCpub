@@ -6,22 +6,29 @@
 		An IfcObjective captures qualitative information for an objective-based constraint. HISTORY: New Entity in IFC Release 2.0 Use definition IfcObjective is a subtype of IfcConstraint and may be associated with any subtype of IfcRoot through the IfcRelAssociatesConstraint relationship in the IfcControlExtension schema, or may be associated with IfcProperty by IfcPropertyConstraintRelationship . The a
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="BenchmarkValues" type="Array" setter="set_BenchmarkValues" getter="get_BenchmarkValues">
-			A list of any benchmark values used for comparison purposes.
+		<member name="BenchmarkValues" type="Variant" setter="set_BenchmarkValues" getter="get_BenchmarkValues">
+			A list of any benchmark values used for comparison purposes. An Array of GDIFCEntityBase entities in IFC4 and IFC4X3_ADD2 files, a GDIFCEntityBase in IFC2X3 files, or null when unset.
 		</member>
-		<member name="LogicalAggregator" type="String" setter="set_LogicalAggregator" getter="get_LogicalAggregator">
-			A list of any resultant values used for comparison purposes.
+		<member name="LogicalAggregator" type="Variant" setter="set_LogicalAggregator" getter="get_LogicalAggregator">
+			A String, one of the enumeration's values, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="ObjectiveQualifier" type="String" setter="set_ObjectiveQualifier" getter="get_ObjectiveQualifier">
-			Enumeration that qualifies the type of objective constraint.
+		<member name="ObjectiveQualifier" type="Variant" setter="set_ObjectiveQualifier" getter="get_ObjectiveQualifier">
+			Enumeration that qualifies the type of objective constraint. A String, one of the enumeration's values, or null when unset.
 		</member>
-		<member name="UserDefinedQualifier" type="String" setter="set_UserDefinedQualifier" getter="get_UserDefinedQualifier">
-			A user defined value that qualifies the type of objective constraint when ObjectiveQualifier attribute of type IfcObjectiveEnum has value USERDEFINED.
+		<member name="UserDefinedQualifier" type="Variant" setter="set_UserDefinedQualifier" getter="get_UserDefinedQualifier">
+			A user defined value that qualifies the type of objective constraint when ObjectiveQualifier attribute of type IfcObjectiveEnum has value USERDEFINED. A String, or null when unset.
+		</member>
+		<member name="ResultValues" type="GDIFCEntityBase" setter="set_ResultValues" getter="get_ResultValues">
+			A list of any resultant values used for comparison purposes. Only in IFC2X3 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

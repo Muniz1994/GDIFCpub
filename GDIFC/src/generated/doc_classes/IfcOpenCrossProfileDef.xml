@@ -5,21 +5,30 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="HorizontalWidths" type="bool" setter="set_HorizontalWidths" getter="get_HorizontalWidths">
+		<member name="HorizontalWidths" type="Variant" setter="set_HorizontalWidths" getter="get_HorizontalWidths">
+			A bool, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Widths" type="PackedFloat64Array" setter="set_Widths" getter="get_Widths">
+		<member name="Widths" type="Variant" setter="set_Widths" getter="get_Widths">
+			A PackedFloat64Array, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Slopes" type="PackedFloat64Array" setter="set_Slopes" getter="get_Slopes">
+		<member name="Slopes" type="Variant" setter="set_Slopes" getter="get_Slopes">
+			A PackedFloat64Array, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="Tags" type="PackedStringArray" setter="set_Tags" getter="get_Tags">
+		<member name="Tags" type="Variant" setter="set_Tags" getter="get_Tags">
+			A PackedStringArray, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="OffsetPoint" type="GDIFCEntityBase" setter="set_OffsetPoint" getter="get_OffsetPoint">
+			Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

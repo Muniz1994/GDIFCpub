@@ -21,15 +21,22 @@ private:
     uint32_t m_tapeSize { 67108864 };
     uint32_t m_memoryLimit { 2147483648 };
     uint16_t m_lineWriterBuffer { 10000 };
-    double m_tolerancePlaneIntersection { 1.0E-01 };
-    double m_tolerancePlaneDeviation { 3.0E-04 };
-    double m_toleranceBackDeviationDistance { 3.0E-04 };
+    // web-ifc's own defaults (ModelManager.h LoaderSettings)
+    double m_tolerancePlaneIntersection { 1.0E-04 };
+    double m_tolerancePlaneDeviation { 1.0E-04 };
+    double m_toleranceBackDeviationDistance { 1.0E-04 };
     double m_toleranceInsideOutsidePerimeter { 1.0E-10 };
     double m_toleranceScalarEquality { 1.0E-04 };
-    uint16_t m_planeRefitIterations { 10 };
+    uint16_t m_planeRefitIterations { 1 };
     uint16_t m_booleanUnionThreshold { 150 };
     bool m_generateLods { true };
     float m_lodNormalMergeAngle { 60.0f };
+    // Off keeps one Godot material per colour, as before IFC materials were read
+    bool m_ifcMaterials { false };
+    // Only read when m_ifcMaterials is on
+    bool m_ifcTextures { false };
+    // Off releases the IfcParse file once its data is on the nodes: no ifc_object, no IFCModel queries
+    bool m_ifcObjects { true };
 
 public:
     // Default Constructor (Uses the values defined above)
@@ -50,6 +57,9 @@ public:
     uint16_t getBooleanUnionThreshold() const { return m_booleanUnionThreshold; }
     bool getGenerateLods() const { return m_generateLods; }
     float getLodNormalMergeAngle() const { return m_lodNormalMergeAngle; }
+    bool getIfcMaterials() const { return m_ifcMaterials; }
+    bool getIfcTextures() const { return m_ifcTextures; }
+    bool getIfcObjects() const { return m_ifcObjects; }
 
     // --- Setters (Mutators) ---
     // These return a reference to *this to allow chaining (Fluent Interface)
@@ -108,6 +118,18 @@ public:
 
     void setLodNormalMergeAngle(float val) {
         m_lodNormalMergeAngle = val;
+    }
+
+    void setIfcMaterials(bool val) {
+        m_ifcMaterials = val;
+    }
+
+    void setIfcTextures(bool val) {
+        m_ifcTextures = val;
+    }
+
+    void setIfcObjects(bool val) {
+        m_ifcObjects = val;
     }
 };
 

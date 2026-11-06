@@ -6,13 +6,17 @@
 		IfcMaterialProperties is defined as an abstract supertype for entities that apply material properties to material definitions. A set of material properties that are assigned to an individual material definiton may be identified by a Name and a Description . NOTE The set of material properties can be assigned to an individual IfcMaterial , a set or composite of materials ( IfcMaterialConstituent , 
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="Material" type="GDIFCEntityBase" setter="set_Material" getter="get_Material">
-			The name given to the set of extended properties.
+			Reference to the material definition to which the set of properties is assigned. IFC2x4 CHANGE The datatype has been changed to supertype IfcMaterialDefinition .
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

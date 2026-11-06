@@ -73,7 +73,7 @@ public:
 
     void initialize_geometry_processor();
 
-    void read_ifc_file(const char* data, size_t length) const;
+    bool read_ifc_file(const char* data, size_t length) const;
 
     godot::Variant get_value_from_token(webifc::parsing::IfcTokenType t);
 

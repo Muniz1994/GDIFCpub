@@ -5,17 +5,24 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="TexCoordIndex" type="PackedInt64Array" setter="set_TexCoordIndex" getter="get_TexCoordIndex">
+		<member name="TexCoordIndex" type="Variant" setter="set_TexCoordIndex" getter="get_TexCoordIndex">
+			A PackedInt64Array, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="TexCoordsOf" type="GDIFCEntityBase" setter="set_TexCoordsOf" getter="get_TexCoordsOf">
+			Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 		<member name="ToTexMap" type="Array" setter="" getter="get_ToTexMap">
+			Only in IFC4X3_ADD2 files: in others it is empty.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

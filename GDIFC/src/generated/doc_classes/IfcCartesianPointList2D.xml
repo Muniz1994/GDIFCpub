@@ -5,15 +5,21 @@
 	<brief_description>
 
 	</brief_description>
-	<description></description>
-	<tutorials/>
-	<methods/>
+	<description>Only in IFC4 and IFC4X3_ADD2 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="CoordList" type="Array" setter="" getter="get_CoordList">
+		<member name="CoordList" type="Variant" setter="set_CoordList" getter="get_CoordList">
+			An Array, or null when unset. Only in IFC4 and IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
-		<member name="TagList" type="PackedStringArray" setter="set_TagList" getter="get_TagList">
+		<member name="TagList" type="Variant" setter="set_TagList" getter="get_TagList">
+			A PackedStringArray, or null when unset. Only in IFC4X3_ADD2 files: in others it reads as null and can't be set.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

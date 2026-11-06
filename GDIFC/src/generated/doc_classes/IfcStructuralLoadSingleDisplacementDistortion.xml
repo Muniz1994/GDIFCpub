@@ -6,13 +6,17 @@
 		Definition from IAI: Defines a displacement with warping. HISTORY: New entity in IFC 2x2.
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
-		<member name="Distortion" type="float" setter="set_Distortion" getter="get_Distortion">
-			The distortion curvature (warping, i.e. a cross-sectional deplanation) given to the displacement load.
+		<member name="Distortion" type="Variant" setter="set_Distortion" getter="get_Distortion">
+			The distortion curvature (warping, i.e. a cross-sectional deplanation) given to the displacement load. A float, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>

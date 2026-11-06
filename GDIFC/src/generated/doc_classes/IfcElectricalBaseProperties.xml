@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IfcElectricalBaseProperties" inherits="IfcEnergyProperties"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+
+	</brief_description>
+	<description>Only in IFC2X3 files.</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="ElectricCurrentType" type="Variant" setter="set_ElectricCurrentType" getter="get_ElectricCurrentType">
+			A String, one of the enumeration's values, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="InputVoltage" type="Variant" setter="set_InputVoltage" getter="get_InputVoltage">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="InputFrequency" type="Variant" setter="set_InputFrequency" getter="get_InputFrequency">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="FullLoadCurrent" type="Variant" setter="set_FullLoadCurrent" getter="get_FullLoadCurrent">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="MinimumCircuitCurrent" type="Variant" setter="set_MinimumCircuitCurrent" getter="get_MinimumCircuitCurrent">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="MaximumPowerInput" type="Variant" setter="set_MaximumPowerInput" getter="get_MaximumPowerInput">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="RatedPowerInput" type="Variant" setter="set_RatedPowerInput" getter="get_RatedPowerInput">
+			A float, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+		<member name="InputPhase" type="Variant" setter="set_InputPhase" getter="get_InputPhase">
+			An int, or null when unset. Only in IFC2X3 files: in others it reads as null and can't be set.
+		</member>
+	</members>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
+</class>

@@ -6,8 +6,10 @@
 		IfcDerivedProfileDef defines the profile by transformation from the parent profile. The transformation is given by a two dimensional transformation operator. Transformation includes translation, rotation, mirror and scaling. The latter can be uniform or non uniform. The derived profiles may be used to define swept surfaces, swept area solids or sectioned spines. The transformation effects the posi
 	</brief_description>
 	<description></description>
-	<tutorials/>
-	<methods/>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
 	<members>
 		<member name="ParentProfile" type="GDIFCEntityBase" setter="set_ParentProfile" getter="get_ParentProfile">
 			The parent profile provides the origin of the transformation.
@@ -15,10 +17,12 @@
 		<member name="Operator" type="GDIFCEntityBase" setter="set_Operator" getter="get_Operator">
 			Transformation operator applied to the parent profile.
 		</member>
-		<member name="Label" type="String" setter="set_Label" getter="get_Label">
-			The name by which the transformation may be referred to. The actual meaning of the name has to be defined in the context of applications.
+		<member name="Label" type="Variant" setter="set_Label" getter="get_Label">
+			The name by which the transformation may be referred to. The actual meaning of the name has to be defined in the context of applications. A String, or null when unset.
 		</member>
 	</members>
-	<signals/>
-	<constants/>
+	<signals>
+	</signals>
+	<constants>
+	</constants>
 </class>
