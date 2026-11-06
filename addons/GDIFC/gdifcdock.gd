@@ -83,6 +83,7 @@ const COLLISION_LIST_VISIBLE_ROWS := 8
 @onready var lod_merge_angle: SpinBox = %LodMergeAngleSpinBox
 @onready var ifc_materials_check: CheckBox = %IfcMaterialsCheckBox
 @onready var ifc_textures_check: CheckBox = %IfcTexturesCheckBox
+@onready var ifc_objects_check: CheckBox = %IfcObjectsCheckBox
 @onready var build_label: Label = %BuildLabel
 @onready var logo: TextureRect = %Logo
 @onready var margin_container: MarginContainer = %MarginContainer
@@ -143,6 +144,9 @@ func _start_interface():
 	ifc_materials_check.toggled.connect(func(on: bool): ifc_textures_check.disabled = not on)
 	_sync_material_controls(settings)
 
+	geom_settings_picker.resource_changed.connect(_sync_data_controls)
+	_sync_data_controls(settings)
+
 	# The list may hold items saved with the dock scene; the constant is the source of truth
 	elements_list.clear()
 	for type_name in COLLISION_ELEMENT_TYPES:
@@ -189,7 +193,7 @@ func _apply_editor_theme():
 	else:
 		load_status_label.remove_theme_color_override("font_color")
 
-# Each group remembers whether it was folded, per project
+# Each group starts folded, and remembers whether it was unfolded, per project
 func _restore_group_folding():
 	var editor_settings := EditorInterface.get_editor_settings()
 	for child in groups.get_children():
@@ -197,7 +201,7 @@ func _restore_group_folding():
 		if not group:
 			continue
 		var key := "%s_folded" % group.name
-		group.folded = editor_settings.get_project_metadata(FOLDING_METADATA_SECTION, key, false)
+		group.folded = editor_settings.get_project_metadata(FOLDING_METADATA_SECTION, key, true)
 		group.folding_changed.connect(func(is_folded: bool):
 			editor_settings.set_project_metadata(FOLDING_METADATA_SECTION, key, is_folded))
 
@@ -274,7 +278,12 @@ func _sync_material_controls(resource: Resource):
 		ifc_textures_check.button_pressed = preset.ifc_textures
 	ifc_textures_check.disabled = not ifc_materials_check.button_pressed
 
-# Copy of the picked preset with the dock's LOD and material options applied, so the shared .tres is never modified
+func _sync_data_controls(resource: Resource):
+	var preset := resource as GDIFCLoaderSettings
+	if preset:
+		ifc_objects_check.button_pressed = preset.ifc_objects
+
+# Copy of the picked preset with the dock's LOD, material and data options applied, so the shared .tres is never modified
 func _build_load_settings() -> GDIFCLoaderSettings:
 	var picked = geom_settings_picker.edited_resource
 	var load_settings: GDIFCLoaderSettings = picked.duplicate() if picked else GDIFCLoaderSettings.new()
@@ -282,6 +291,7 @@ func _build_load_settings() -> GDIFCLoaderSettings:
 	load_settings.lod_normal_merge_angle = lod_merge_angle.value
 	load_settings.ifc_materials = ifc_materials_check.button_pressed
 	load_settings.ifc_textures = ifc_textures_check.button_pressed
+	load_settings.ifc_objects = ifc_objects_check.button_pressed
 	return load_settings
 
 # Lists every IFCGeoreference in the edited scene, keyed by its path from the scene root
@@ -527,6 +537,7 @@ func _write_import_options(res_path: String, create_collision: bool, collision_e
 	import_config.set_value("params", "lods/normal_merge_angle", load_settings.lod_normal_merge_angle)
 	import_config.set_value("params", "materials/ifc_materials", load_settings.ifc_materials)
 	import_config.set_value("params", "materials/textures", load_settings.ifc_textures)
+	import_config.set_value("params", "data/ifc_objects", load_settings.ifc_objects)
 	import_config.set_value("params", "collision/create", create_collision)
 	import_config.set_value("params", "collision/matrix", collision_matrix.resource_path if collision_matrix else "")
 	import_config.set_value("params", "collision/classes", PackedStringArray(collision_elements))

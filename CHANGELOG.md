@@ -10,7 +10,11 @@ New changes go under **Unreleased**. Builds are cut automatically: when a push t
 
 ## [Unreleased]
 
-##### Added
+## [1.2.0-alpha]
+
+### Build 6 — 2026-11-06
+
+###### Added
 
 - The typed IFC classes now cover IFC2X3 and IFC4 as well as IFC4X3. The 130 entities only found in older schemas have classes of their own, such as `IfcDoorStyle`, `IfcWindowStyle` and `IfcBuildingElement`, and classes have the attributes their entity has in any schema, such as IFC2X3's `IfcSpace.InteriorOrExteriorSpace`. Attributes IFC4X3 renamed are read under their new name in older files: `IfcProperty.Specification` is an IFC2X3 or IFC4 property's `Description`. The class reference says which schemas a class or attribute is in. See [Typed Entity Access](docs/typed-entities.md#files-of-every-schema).
 - Setters of typed attributes check the value against the file's schema. An enumeration takes its value in any case, and is refused when the enumeration lacks it. An entity reference must be an entity of the same file and of the declared type. A value that doesn't fit is refused with an error and leaves the entity unchanged.
@@ -23,7 +27,7 @@ New changes go under **Unreleased**. Builds are cut automatically: when a push t
 - `IFCModel.get_site_location()`: the site's latitude and longitude in decimal degrees, and its elevation.
 - **IFC objects** option, on by default: `GDIFCLoaderSettings.ifc_objects`, the dock's new Data group, and the importer's `data/ifc_objects`. Off, the parsed IFC file is released once attributes, property sets, materials and georeferencing are on the nodes, which saves memory, and saved scenes and instances of imported `.ifc` scenes no longer read the `.ifc` file again when they enter the tree. `ifc_object` is then null, and the `IFCModel` queries find nothing. See [Without IFC Objects](docs/loading-models.md#without-ifc-objects).
 
-##### Changed
+###### Changed
 
 - Typed attributes are `null` when the file leaves them unset, or when the file's schema doesn't have them. They used to read as `""`, `0`, `false` or an empty array, which couldn't be told apart from real values. So every attribute except references to entities is now a `Variant` property, holding the type the file's schema declares, such as a `float` for `IfcDoor.OverallHeight` or an `int` for an IFC4X3 `IfcQuantityCount.CountValue`. A typed variable fails at runtime on an unset attribute: `var height: float = door.OverallHeight` errors on a door without a height, so check for `null` first. The class reference says what each attribute holds.
 - Property values, such as `IfcPropertySingleValue.NominalValue` or `IfcPropertyListValue.ListValues`, read as their plain value, such as `"Reference"` or `3.5`, from typed properties and from `get_attribute()`. They returned an `IfcLabel` or `IfcLengthMeasure` wrapper, which had no attributes to read the value from.
@@ -32,7 +36,7 @@ New changes go under **Unreleased**. Builds are cut automatically: when a push t
 - The dock's groups start folded. A group you unfold or fold stays that way in the project, as before.
 - The web-ifc settings of `GDIFCLoaderSettings` (`tape_size`, `memory_limit`, `line_writer_buffer`, the tolerances, `plane_refit_iterations` and `boolean_union_threshold`) are grouped under **Advanced (web-ifc)** in the Inspector. They are passed to web-ifc unchanged, and may change or go away with a web-ifc update. Their names are the same, so saved settings keep their values.
 
-##### Fixed
+###### Fixed
 
 - Typed attributes of entities in IFC2X3 and IFC4 files read the attribute of that name. They read a fixed position from IFC4X3, so on an IFC2X3 file `IfcSpace.PredefinedType` returned `InteriorOrExteriorSpace`, and attributes past the end of the entity, such as an IFC2X3 `IfcDoor.PredefinedType` or an IFC4 `IfcAnnotation.PredefinedType`, crashed Godot. Setters wrote to the same wrong positions.
 - Setting an enumeration attribute wrote its value as a string, which isn't valid in the IFC file.

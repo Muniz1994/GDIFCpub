@@ -210,6 +210,29 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "On"
 
+[node name="Data" type="FoldableContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups" unique_id=1729384056]
+layout_mode = 2
+title = "Data"
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Data" unique_id=1093847561]
+layout_mode = 2
+columns = 2
+
+[node name="IfcObjectsLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Data/GridContainer" unique_id=1648203957]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Keep the IFC file loaded, so scripts can walk the model from each node's ifc_object and query the IFCModel. Off: attributes, property sets, quantities, materials and georeferencing are still read, then the file is released, which saves memory, and instances of imported scenes don't re-read the .ifc file when they enter the scene."
+mouse_filter = 1
+text = "IFC objects"
+text_overrun_behavior = 3
+
+[node name="IfcObjectsCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups/Data/GridContainer" unique_id=1185720364]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+button_pressed = true
+text = "On"
+
 [node name="Collisions" type="FoldableContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/Groups" unique_id=1262357727]
 layout_mode = 2
 title = "Collisions"
