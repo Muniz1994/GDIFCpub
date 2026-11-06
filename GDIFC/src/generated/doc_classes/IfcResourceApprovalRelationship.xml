@@ -6,8 +6,8 @@
 		An IfcResourceApprovalRelationship is used for associating an approval to resource objects. A single approval might be given to one or many items via IfcResourceObjectSelect . HISTORY New Entity in IFC Release 2x4
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="RelatedResourceObjects" type="Array" setter="set_RelatedResourceObjects" getter="get_RelatedResourceObjects">
 			Resource objects that are approved.
@@ -16,4 +16,6 @@
 			The approval for the resource objects selected.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

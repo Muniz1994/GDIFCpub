@@ -6,8 +6,8 @@
 		A property with a bounded value, IfcPropertyBoundedValue , defines a property object which has a maximum of two (numeric or descriptive) values assigned, the first value specifying the upper bound and the second value specifying the lower bound. It defines a property - value bound (min-max) combination for which the property Name , an optional Description ,ÿthe optional UpperBoundValue with measur
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="UpperBoundValue" type="GDIFCEntityBase" setter="set_UpperBoundValue" getter="get_UpperBoundValue">
 			Upper bound value for the interval defining the property value. If the value is not given, it indicates an open bound (all values to be greater than or equal to LowerBoundValue ).
@@ -22,4 +22,6 @@
 			Set point value as typically used for operational value setting. IFC2x4 CHANGE The attribute has been added at the end of the attribute list.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

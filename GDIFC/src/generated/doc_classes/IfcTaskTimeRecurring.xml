@@ -6,10 +6,12 @@
 		IfcTaskTimeRecurring is a recurring instance of IfcTaskTime for handling regularly scheduled or repetitive tasks. HISTORY: New entity in IFC2x4.
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Recurrence" type="GDIFCEntityBase" setter="set_Recurrence" getter="get_Recurrence">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

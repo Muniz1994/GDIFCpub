@@ -6,8 +6,8 @@
 		An IfcClassificationReference is a reference into a classification system or source (see IfcClassification ) for a specific classification key (or notation). The inherited attributes have the following meaning: Identification : holds the key provided for a specific references to classification items (or tables). Name : allows for a human interpretable designation of a classification notation. Loca
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="ReferencedSource" type="GDIFCEntityBase" setter="set_ReferencedSource" getter="get_ReferencedSource">
 			The classification system or source that is referenced.
@@ -23,4 +23,6 @@
 		<member name="HasReferences" type="Array" setter="" getter="get_HasReferences">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

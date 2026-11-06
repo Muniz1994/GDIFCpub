@@ -6,12 +6,14 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 		</member>
 		<member name="LongName" type="String" setter="set_LongName" getter="get_LongName">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

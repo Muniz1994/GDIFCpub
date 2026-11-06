@@ -6,8 +6,8 @@
 		A Cartesian transformation operator 3d non uniform defines a geometric transformation in three-dimensional space composed of translation, rotation, mirroring and non uniform scaling. Non uniform scaling is given by three different scaling factors: SELF\IfcCartesianTransformationOperator.Scale : the x axis scale factor Scale2 : the y axis scale factor Scale3 : the z axis scale factor If the Scale f
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Scale2" type="float" setter="set_Scale2" getter="get_Scale2">
 			The scaling value specified for the transformation along the axis 2. This is normally the y scale factor.
@@ -16,4 +16,6 @@
 			The scaling value specified for the transformation along the axis 3. This is normally the z scale factor.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

@@ -6,10 +6,12 @@
 		A tank is a vessel or container in which a fluid or gas is stored for later use. HISTORY New entity in IFC2x4 Type Use Definition IfcTank defines the occurrence of any tank; common information about tank types is handled by IfcTankType . The IfcTankType (if present) may establish the common type name, usage (predefined type), properties, materials, ports, composition, assignments, and representati
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

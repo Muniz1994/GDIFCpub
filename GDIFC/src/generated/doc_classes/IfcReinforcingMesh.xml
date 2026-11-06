@@ -6,8 +6,8 @@
 		Definition from IAI: A series of longitudinal and transverse wires or bars of various gauges, arranged at right angles to each other and welded at all points of intersection; usually used for concrete slab reinforcement. Also known as welded wire fabric. HISTORY New entity in IFC Release 2x2 IFC 2x4 CHANGE All attributes removed; information now provided by IfcReinforcingMeshType . Geometry Use De
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="MeshLength" type="float" setter="set_MeshLength" getter="get_MeshLength">
 			The predefined type is always MESH.
@@ -29,4 +29,6 @@
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

@@ -6,10 +6,12 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="RailHeadDistance" type="float" setter="set_RailHeadDistance" getter="get_RailHeadDistance">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

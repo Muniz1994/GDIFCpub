@@ -6,8 +6,8 @@
 		IfcConnectionPointEccentricity is used to describe the geometric constraints that facilitate the physical connection of two objects at a point or vertex point with associated point coordinates. There is a physical distance, or eccentricity, etween the connection points of both object. The eccentricity can be either given by: providing the PointOnRelatingElement and the PointOnRelatedElement , wher
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="EccentricityInX" type="float" setter="set_EccentricityInX" getter="get_EccentricityInX">
 			Distance in x direction between the two points (or vertex points) engaged in the point connection.
@@ -19,4 +19,6 @@
 			Distance in z direction between the two points (or vertex points) engaged in the point connection.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

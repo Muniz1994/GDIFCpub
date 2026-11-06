@@ -6,8 +6,8 @@
 		IfcResourceTime captures the time-related information about a construction resource. HISTORY: New entity in IFC2x4.
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="ScheduleWork" type="String" setter="set_ScheduleWork" getter="get_ScheduleWork">
 			Indicates the total work (e.g. person-hours) allocated to the task on behalf of the resource. Note: this is not necessarily the same as the task duration (IfcTaskTime.ScheduleDuration); it may vary according to the resource usage ratio and other resources assigned to the task.
@@ -54,4 +54,6 @@
 			Indicates the percent completion of this resource. If the resource is assigned to a task, then indicates completion of the task on behalf of the resource; if the resource is partitioned into sub-allocations, then indicates overall completion of sub-allocations.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

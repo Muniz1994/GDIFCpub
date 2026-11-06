@@ -6,8 +6,8 @@
 		Definition from ISO/CD 10303-42:1992 : A Cartesian transformation operator defines a geometric transformation composed of translation, rotation, mirroring and uniform scaling. The list of normalized vectors u defines the columns of an orthogonal matrix T. These vectors are computed, by the base axis function, from the direction attributes axis1, axis2 and, in Cartesian transformation operator 3d, 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Axis1" type="GDIFCEntityBase" setter="set_Axis1" getter="get_Axis1">
 			The direction used to determine U[1], the derived X axis direction.
@@ -22,4 +22,6 @@
 			The scaling value specified for the transformation.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

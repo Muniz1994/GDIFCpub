@@ -6,8 +6,8 @@
 		IfcMaterialProfile is a single and identifiable part of an element which is constructed of a number of profiles (one or more). NOTE ÿ In case of multiple MaterialProfiles , the relative positioning of individual profiles in IfcMaterialProfileSet are defined using the concept of IfcCompositeProfileDef in IfcProfileResource schema; otherwise, only one MaterialProfile is given and defined by an indiv
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Name" type="String" setter="set_Name" getter="get_Name">
 			The name by which the material profile is known.
@@ -30,4 +30,6 @@
 		<member name="ToMaterialProfileSet" type="Array" setter="" getter="get_ToMaterialProfileSet">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

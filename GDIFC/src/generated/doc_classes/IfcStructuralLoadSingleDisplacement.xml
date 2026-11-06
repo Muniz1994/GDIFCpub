@@ -6,8 +6,8 @@
 		Definition from IAI: Instances of the entity IfcStructuralLoadSingleDisplacement shall be used to define displacements. HISTORY: New entity in Release IFC2x edition 2.
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="DisplacementX" type="float" setter="set_DisplacementX" getter="get_DisplacementX">
 			Displacement in x-direction.
@@ -28,4 +28,6 @@
 			Rotation about the z-axis.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

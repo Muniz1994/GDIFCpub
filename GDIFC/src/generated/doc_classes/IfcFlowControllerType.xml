@@ -6,8 +6,10 @@
 		The element type IfcFlowControllerType defines a list of commonly shared property set definitions of a flow controller and an optional set of product representations. It is used to define a flow controller specification (i.e. the specific product information, that is common to all occurrences of that product type). NOTE: The product representations are defined as representation maps (at the level 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 	</members>
+	<signals/>
+	<constants/>
 </class>

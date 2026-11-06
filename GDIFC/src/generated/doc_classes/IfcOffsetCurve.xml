@@ -6,10 +6,12 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="BasisCurve" type="GDIFCEntityBase" setter="set_BasisCurve" getter="get_BasisCurve">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

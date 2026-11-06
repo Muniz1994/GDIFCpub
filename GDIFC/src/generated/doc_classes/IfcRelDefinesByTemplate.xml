@@ -6,8 +6,8 @@
 		The objectified relationship IfcRelDefinesByTemplate defines the relationships between property set template and property sets. Common information about property sets, e.g. the applicable name, description, contained properties, is defined by the property set template and assigned to all property sets. The IfcRelDefinesByTemplate is a 1-to-N relationship, as it allows for the assignment of one pro
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="RelatedPropertySets" type="Array" setter="set_RelatedPropertySets" getter="get_RelatedPropertySets">
 			One or many property sets defined by a single property set template.
@@ -16,4 +16,6 @@
 			Property set template that provides the common definition of related property sets.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

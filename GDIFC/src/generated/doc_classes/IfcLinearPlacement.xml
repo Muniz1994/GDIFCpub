@@ -6,12 +6,14 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="RelativePlacement" type="GDIFCEntityBase" setter="set_RelativePlacement" getter="get_RelativePlacement">
 		</member>
 		<member name="CartesianPosition" type="GDIFCEntityBase" setter="set_CartesianPosition" getter="get_CartesianPosition">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

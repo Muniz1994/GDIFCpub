@@ -6,8 +6,8 @@
 		IfcRelSequence is a sequential relationship between processes where one process must occur before the other in time and where the timing of the relationship may be described as a type of sequence. The relating process ( IfcRelSequence.RelatingProcess ) is considered to be the predecessor in the relationship (has precedence) whilst the related process ( IfcRelSequence.RelatedProcess ) is the succes
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="RelatingProcess" type="GDIFCEntityBase" setter="set_RelatingProcess" getter="get_RelatingProcess">
 			Reference to the process, that is the predecessor.
@@ -25,4 +25,6 @@
 			Allows for specification of user defined type of the sequence beyond the enumeration values (START_START, START_FINISH, FINISH_START, FINISH_FINISH) provided by SequenceType attribute of type IfcSequenceEnum . When a value is provided for attribute UserDefinedSequenceType in parallel the attribute SequenceType shall have enumeration value USERDEFINED. Added in IFC 2x4
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

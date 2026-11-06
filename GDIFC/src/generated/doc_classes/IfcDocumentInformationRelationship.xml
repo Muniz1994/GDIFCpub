@@ -6,8 +6,8 @@
 		An IfcDocumentInformationRelationship is a relationship class that enables a document to have the ability to reference other documents. HISTORY New entity in Release IFC2x. IFC2x4 CHANGE Subtyped from IfcResourceLevelRelationship , order of attributes changed. Use definitions This class can be used to describe relationships in which one document may reference one or more other sub documents or whe
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="RelatingDocument" type="GDIFCEntityBase" setter="set_RelatingDocument" getter="get_RelatingDocument">
 			The document that acts as the parent, referencing or original document in a relationship.
@@ -19,4 +19,6 @@
 			Describes the type of relationship between documents. This could be sub-document, replacement etc. The interpretation has to be established in an application context.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

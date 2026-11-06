@@ -6,8 +6,8 @@
 		IfcResourceLevelRelationship is an abstract base class for relationships between resource-level entities. HISTORY New Entity in IFC 2x4
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Name" type="String" setter="set_Name" getter="get_Name">
 			A name used to identify or qualify the relationship.
@@ -16,4 +16,6 @@
 			A description that may apply additional information about the relationship.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

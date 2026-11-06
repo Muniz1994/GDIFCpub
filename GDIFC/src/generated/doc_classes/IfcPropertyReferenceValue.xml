@@ -6,8 +6,8 @@
 		IfcPropertyReferenceValue allows a property value to be given by referencing other entities within the resource definitions of IFC. Those other entities are regarded as predefined complex properties and can be aggregated within a property set ( IfcPropertySet ). The allowable entities to be used as value references are given by the IfcObjectReferenceSelect . HISTORY New entity in IFC Release 1.5. 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="UsageName" type="String" setter="set_UsageName" getter="get_UsageName">
 			Description of the use of the referenced value within the property.
@@ -16,4 +16,6 @@
 			Reference to another property entity through one of the select types in the IfcObjectReferenceSelect . IFC2x4 CHANGE The attribute has been made optional with upward compatibility for file based exchange.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

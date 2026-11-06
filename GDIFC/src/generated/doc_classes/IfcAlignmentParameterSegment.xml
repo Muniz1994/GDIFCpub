@@ -6,12 +6,14 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="StartTag" type="String" setter="set_StartTag" getter="get_StartTag">
 		</member>
 		<member name="EndTag" type="String" setter="set_EndTag" getter="get_EndTag">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

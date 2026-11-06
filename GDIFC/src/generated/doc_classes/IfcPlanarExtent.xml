@@ -6,8 +6,8 @@
 		The planar extent defines the extent along the two axes of the two-dimensional coordinate system, independently of its position. NOTE Corresponding ISO 10303 name: planar_extent. Please refer to ISO/IS 10303-46:1994, p. 141 for the final definition of the formal standard. HISTORY New entity in IFC2x2.
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="SizeInX" type="float" setter="set_SizeInX" getter="get_SizeInX">
 			The extent in the direction of the x-axis.
@@ -16,4 +16,6 @@
 			The extent in the direction of the y-axis.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

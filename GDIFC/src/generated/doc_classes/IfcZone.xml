@@ -6,11 +6,13 @@
 		Definition from IAI : A zone isÿa group of spaces, partial spaces or other zones. Zone structures may not be hierarchical (in contrary to the spatial structure of a project - see IfcSpatialStructureElement ), i.e. one individual IfcSpace may be associated with zero, one, or several IfcZone 's. IfcSpace 's are grouped into an IfcZone by using the objectified relationship IfcRelAssignsToGroup as spe
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="LongName" type="String" setter="set_LongName" getter="get_LongName">
 			Long name for a zone, used for informal purposes. It should be used, if available, in conjunction with the inherited Name attribute. NOTE In many scenarios the Name attribute refers to the short name or number of a zone, and the LongName refers to the full name. IFC2x4 CHANGE The attribute has been added at the end of the entity definition.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

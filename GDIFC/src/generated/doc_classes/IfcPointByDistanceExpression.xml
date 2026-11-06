@@ -6,8 +6,8 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="DistanceAlong" type="GDIFCEntityBase" setter="set_DistanceAlong" getter="get_DistanceAlong">
 		</member>
@@ -20,4 +20,6 @@
 		<member name="BasisCurve" type="GDIFCEntityBase" setter="set_BasisCurve" getter="get_BasisCurve">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

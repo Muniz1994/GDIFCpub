@@ -6,8 +6,8 @@
 		Definition from ISO 6707-1:1989 : Construction work that has the provision of shelter for its occupants or contents as one of its main purpose and is normally designed to stand permanently in one place. A building represents a structure that provides shelter for its occupants or contents and stands in one place. The building is also used to provide a basic element within the spatial structure hier
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="ElevationOfRefHeight" type="float" setter="set_ElevationOfRefHeight" getter="get_ElevationOfRefHeight">
 			Elevation above sea level of the reference height used for all storey elevation measures, equals to height 0.0. It is usually the ground floor level.
@@ -19,4 +19,6 @@
 			Address given to the building for postal purposes.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

@@ -6,8 +6,8 @@
 		IfcGeometricRepresentationSubContext defines the context that applies to several shape representations of a product being a sub context, sharing the WorldCoordinateSystem , CoordinateSpaceDimension , Precision and TrueNorth attributes with the parent IfcGeometricRepresentationContext . The IfcGeometricRepresentationSubContext is used to define semantically distinguished representation types for di
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="ParentContext" type="GDIFCEntityBase" setter="set_ParentContext" getter="get_ParentContext">
 			Parent context from which the sub context derives its world coordinate system, precision, space coordinate dimension and true north.
@@ -22,4 +22,6 @@
 			User defined target view, this attribute value shall be given, if the TargetView attribute is set to USERDEFINED.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

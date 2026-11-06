@@ -6,8 +6,8 @@
 		An IfcTask is an identifiable unit of work to be carried out in a construction project. A task is typically used to describe an activity for the construction or installation of products, but is not limited to these types. For example it might be used to describe design processes, move operations and other design, construction and operation related activities as well. HISTORY New entity in IFC 1.0.
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Status" type="String" setter="set_Status" getter="get_Status">
 			Current status of the task. NOTE: Particular values for status are not specified, these should be determined and agreed by local usage. Examples of possible status values include 'Not Yet Started', 'Started', 'Completed'.
@@ -28,4 +28,6 @@
 			Identifies the predefined types of a task from which the type required may be set. Added in IFC 2x4
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

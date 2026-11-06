@@ -6,8 +6,8 @@
 		An IfcDocumentReference is a reference to the location of a document. The reference is given by a system interpretable Location attribute (a URL string) where the document can be found, and an optional inherited internal reference Identification , which refers to a system interpretable position within the document. The optional inherited Name attribute is meant to have meaning for human readers. O
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Description" type="String" setter="set_Description" getter="get_Description">
 			Description of the document reference for informational purposes. IFC2x4 CHANGE New attribute added at the end of the attribute list.
@@ -18,4 +18,6 @@
 		<member name="DocumentRefForObjects" type="Array" setter="" getter="get_DocumentRefForObjects">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

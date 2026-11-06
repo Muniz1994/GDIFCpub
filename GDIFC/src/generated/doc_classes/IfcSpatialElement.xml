@@ -6,8 +6,8 @@
 		Definition from IAI : A spatial element is the generalization of all spatial elements that might be used to define a spatial structure or to define spatial zones. a hierarchical spatial structure element as IfcSpatialStructureElement a spatial structure is a hiearchical decomposition of the project. That spatial structure is often used to provide a project structure to organize a building project.
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="LongName" type="String" setter="set_LongName" getter="get_LongName">
 			Long name for a spatial structure element, used for informal purposes. It should be used, if available, in conjunction with the inherited Name attribute. NOTE In many scenarios the Name attribute refers to the short name or number of a spacial element, and the LongName refers to the full name.
@@ -23,4 +23,6 @@
 		<member name="InterferesElements" type="Array" setter="" getter="get_InterferesElements">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

@@ -6,8 +6,8 @@
 		The space boundary defines the physical or virtual delimiter of a space by the relationship IfcRelSpaceBoundary to the surrounding elements. In the case of a physical space boundary, the placement and shape of the boundary may be given, and the building element, providing the boundary, is referenced, In the case of a virtual space boundary, the placement and shape of the boundary may be given, but
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="RelatingSpace" type="GDIFCEntityBase" setter="set_RelatingSpace" getter="get_RelatingSpace">
 			Reference to one spaces that is delimited by this boundary.
@@ -25,4 +25,6 @@
 			Defines, whether the Space Boundary is internal (Internal), or external, i.e. adjacent to open space (that can be an partially enclosed space, such as terrace (External).
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

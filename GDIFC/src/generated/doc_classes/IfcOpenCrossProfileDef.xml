@@ -6,8 +6,8 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="HorizontalWidths" type="bool" setter="set_HorizontalWidths" getter="get_HorizontalWidths">
 		</member>
@@ -20,4 +20,6 @@
 		<member name="OffsetPoint" type="GDIFCEntityBase" setter="set_OffsetPoint" getter="get_OffsetPoint">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

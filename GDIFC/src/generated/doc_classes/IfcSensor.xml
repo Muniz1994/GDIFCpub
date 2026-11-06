@@ -6,10 +6,12 @@
 		A sensor is a device that measures a physical quantity and converts it into a signal which can be read by an observer or by an instrument. HISTORY New entity in IFC2x4 Type Use Definition IfcSensor defines the occurrence of any sensor; common information about sensor types is handled by IfcSensorType . The IfcSensorType (if present) may establish the common type name, usage (predefined type), prop
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

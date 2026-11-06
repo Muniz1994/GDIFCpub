@@ -6,10 +6,12 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="CrossSectionPositions" type="Array" setter="set_CrossSectionPositions" getter="get_CrossSectionPositions">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

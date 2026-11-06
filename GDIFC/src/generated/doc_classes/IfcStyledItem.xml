@@ -6,8 +6,8 @@
 		Definition from ISO/CD 10303-46:1992 : The styled item is an assignment of style for presentation to a geometric representation item as it is used in a representation. NOTE Corresponding ISO 10303 name: styled_item. Please refer to ISO/IS 10303-46:1994 for the final definition of the formal standard. The IfcStyledItem holds presentation style information for products, either explicitly for an IfcG
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Item" type="GDIFCEntityBase" setter="set_Item" getter="get_Item">
 			A geometric representation item to which the style is assigned. IFC2x Edition 2 Addendum 2 CHANGE The attribute Item has been made optional. Upward compatibility for file based exchange is guaranteed.
@@ -19,4 +19,6 @@
 			The word, or group of words, by which the styled item is referred to.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

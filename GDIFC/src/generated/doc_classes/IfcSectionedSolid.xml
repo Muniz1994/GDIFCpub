@@ -6,12 +6,14 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Directrix" type="GDIFCEntityBase" setter="set_Directrix" getter="get_Directrix">
 		</member>
 		<member name="CrossSections" type="Array" setter="set_CrossSections" getter="get_CrossSections">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

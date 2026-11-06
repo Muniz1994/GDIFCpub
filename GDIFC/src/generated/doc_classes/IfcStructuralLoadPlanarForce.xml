@@ -6,8 +6,8 @@
 		Definition from IAI: An instance of the entity IfcStructuralLoadPlanarForce shall be used to define actions on faces. HISTORY: New entity in Release IFC2x edition 2.
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="PlanarForceX" type="float" setter="set_PlanarForceX" getter="get_PlanarForceX">
 			Planar force value in x-direction.
@@ -19,4 +19,6 @@
 			Planar force value in z-direction.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

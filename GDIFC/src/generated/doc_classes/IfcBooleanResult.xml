@@ -6,8 +6,8 @@
 		Definition from ISO/CD 10303-42:1992 : A Boolean result is the result of a regularized operation on two solids to create a new solid. Valid operations are regularized union, regularized intersection, and regularized difference. For purpose of Boolean operations, a solid is considered to be a regularized set of points. The final Boolean result depends upon the operation and the two operands. In the
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Operator" type="String" setter="set_Operator" getter="get_Operator">
 			The Boolean operator used in the operation to create the result.
@@ -19,4 +19,6 @@
 			The second operand specified for the operation.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

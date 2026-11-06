@@ -6,12 +6,14 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="NumberValue" type="float" setter="set_NumberValue" getter="get_NumberValue">
 		</member>
 		<member name="Formula" type="String" setter="set_Formula" getter="get_Formula">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

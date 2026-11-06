@@ -6,12 +6,14 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="OffsetValues" type="Array" setter="set_OffsetValues" getter="get_OffsetValues">
 		</member>
 		<member name="Tag" type="String" setter="set_Tag" getter="get_Tag">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

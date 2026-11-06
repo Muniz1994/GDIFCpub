@@ -6,8 +6,8 @@
 		An IfcExternalReference is the identification of information that is not explicitly represented in the current model or in the project database (as an implementation of the current model). Such information may be contained in classifications, documents or libraries. The IfcExternalReference identifies a particular item, such as a dictionary entry, a classification notation, or a document reference
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Location" type="String" setter="set_Location" getter="get_Location">
 			Location, where the external source (classification, document or library) can be accessed by electronic means. The electronic location is provided as an URI, and would normally be given as an URL location string. IFC2x4 CHANGE The data type has been changed from IfcLabel to IfcURIReference .
@@ -21,4 +21,6 @@
 		<member name="ExternalReferenceForResources" type="Array" setter="" getter="get_ExternalReferenceForResources">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

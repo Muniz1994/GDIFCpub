@@ -6,8 +6,8 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="MappedTo" type="GDIFCEntityBase" setter="set_MappedTo" getter="get_MappedTo">
 		</member>
@@ -18,4 +18,6 @@
 		<member name="ColourIndex" type="PackedInt64Array" setter="set_ColourIndex" getter="get_ColourIndex">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

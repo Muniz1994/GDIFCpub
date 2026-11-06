@@ -6,8 +6,8 @@
 		IfcTypeResource defines a specific (or type) definition of a resource.ÿIt is used to define a resource specification (the specific resource, that is common to all occurrences that are defined for that resource) and could act as a resource template. An IfcTypeResource may have a list of property sets attached. Values of these properties are common to all occurrences of that resource type. The type 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Identification" type="String" setter="set_Identification" getter="get_Identification">
 			An identifying designation given to a resource type.
@@ -21,4 +21,6 @@
 		<member name="ResourceOf" type="Array" setter="" getter="get_ResourceOf">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

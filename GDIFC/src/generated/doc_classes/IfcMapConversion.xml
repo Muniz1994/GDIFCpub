@@ -6,8 +6,8 @@
 		The map conversion deals with transforming the local engineering coordinate system, often called world coordinate system, into the coordinate reference system of the underlying map. NOTE The IfcMapConversion does not handle the projection of a map from the geodetic coordinate reference system. The map conversion allows to convert the local origin of the local engineering coordinate system to its p
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Eastings" type="float" setter="set_Eastings" getter="get_Eastings">
 			Specifies the location along the easting of the coordinate system of the target map coordinate reference system. NOTE for right-handed Cartesian coordinate systems this would establish the location along the x axis
@@ -28,4 +28,6 @@
 			Scale to be used, when the units of the CRS are not identical to the units of the engineering coordinate system. If omited, the value of 1.0 is assumed.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

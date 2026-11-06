@@ -6,8 +6,8 @@
 		Definition from ISO/CD 10303-46:1992 : The text style is a presentation style for annotation text. The IfcTextStyle provides the text style table for presentation information assigned to text literals. The style is defined by color, text font characteristics, and text box characteristics. The definitions are based upon: definitions from ISO/IS 10303-46:1994 for (old) vector based and monospace tex
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="TextCharacterAppearance" type="GDIFCEntityBase" setter="set_TextCharacterAppearance" getter="get_TextCharacterAppearance">
 			A character style to be used for presented text.
@@ -21,4 +21,6 @@
 		<member name="ModelOrDraughting" type="bool" setter="set_ModelOrDraughting" getter="get_ModelOrDraughting">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

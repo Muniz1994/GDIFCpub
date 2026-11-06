@@ -6,8 +6,8 @@
 		An IfcLibraryInformation describes a library where a library is a structured store of information, normally organized in a manner which allows information lookup through an index or reference value. IfcLibraryInformation provides the library Name and optional Version , VersionDate and Publisher attributes. A Location may be added for electronic access to the library. NOTE The complete definition o
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Name" type="String" setter="set_Name" getter="get_Name">
 			The name which is used to identify the library.
@@ -32,4 +32,6 @@
 		<member name="HasLibraryReferences" type="Array" setter="" getter="get_HasLibraryReferences">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

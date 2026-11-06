@@ -6,8 +6,8 @@
 		Definition from ISO/CD 10303-42:1992 : A geometric representation context is a representation context in which the geometric representation items are geometrically founded. A geometric representation context is a distinct coordinate space, spatially unrelated to other coordinate spaces. IfcGeometricRepresentationContext defines the context that applies to several shape representations of products 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="CoordinateSpaceDimension" type="int" setter="set_CoordinateSpaceDimension" getter="get_CoordinateSpaceDimension">
 			The integer dimension count of the coordinate space modeled in a geometric representation context.
@@ -26,4 +26,6 @@
 		<member name="HasCoordinateOperation" type="Array" setter="" getter="get_HasCoordinateOperation">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

@@ -6,8 +6,8 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Closed" type="bool" setter="set_Closed" getter="get_Closed">
 		</member>
@@ -16,4 +16,6 @@
 		<member name="PnIndex" type="PackedInt64Array" setter="set_PnIndex" getter="get_PnIndex">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

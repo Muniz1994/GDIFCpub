@@ -6,8 +6,8 @@
 		Definition from IAI : The element type IfcWindowType defines commonly shared information for occurrences of windows. The set of shared information may include: common properties within shared property sets common material information common partitioning of panels common operation types of panels common shape representations A window type defines the particular parameter of the lining and one (or s
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 			Identifies the predefined types of a window element from which the type required may be set.
@@ -20,4 +20,6 @@
 		<member name="UserDefinedPartitioningType" type="String" setter="set_UserDefinedPartitioningType" getter="get_UserDefinedPartitioningType">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

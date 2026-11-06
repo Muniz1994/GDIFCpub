@@ -6,11 +6,13 @@
 		A rational B-spline surface with knots is a piecewise parametric rational surface described in terms of control points, and associated weight values. The surface is to be interpreted as follows: σ NOTE: The IfcRationalBSplineSurfaceWithKnots is an entity that had been adopted from ISO 10303, Industrial automation systems and integration — Product data representation and exchange, Part 42: Integrat
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="WeightsData" type="Array" setter="" getter="get_WeightsData">
 			The weights associated with the control points in the rational case.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

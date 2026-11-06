@@ -6,8 +6,8 @@
 		An IfcObjectDefinition is the generalization of any semantically treated thing or process, either being a type or an occurrences. Object defintions can be named, using the inherited Name attribute, which should be a user recognizable label for the object occurrance. Further explanations to the object can be given using the inherited Description attribute. A context is a specific kind of object def
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="HasAssignments" type="Array" setter="" getter="get_HasAssignments">
 		</member>
@@ -24,4 +24,6 @@
 		<member name="HasAssociations" type="Array" setter="" getter="get_HasAssociations">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

@@ -6,8 +6,8 @@
 		Definition from IAI: This class combines one or more load or result values in a 1- or 2-dimensional configuration. HISTORY: New entity in IFC 2x4. Informal propositions : All items in Values shall be of the same type. If the loads or results comprise a curve activity, 1-dimensional locations shall be given, measured locally along the curve. The location shall not exceed the bounds of the curve act
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Values" type="Array" setter="set_Values" getter="get_Values">
 			List of load or result values.
@@ -16,4 +16,6 @@
 			Locations of the load samples or result samples, given within the local coordinate system defined by the instance which uses this resource object. Each item in the list of locations pertains to the values list item at the same list index. This attribute is optional for configurations in which the locations are implicitly known from higher-level definitions.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

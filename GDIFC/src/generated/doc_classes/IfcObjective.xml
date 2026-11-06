@@ -6,8 +6,8 @@
 		An IfcObjective captures qualitative information for an objective-based constraint. HISTORY: New Entity in IFC Release 2.0 Use definition IfcObjective is a subtype of IfcConstraint and may be associated with any subtype of IfcRoot through the IfcRelAssociatesConstraint relationship in the IfcControlExtension schema, or may be associated with IfcProperty by IfcPropertyConstraintRelationship . The a
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="BenchmarkValues" type="Array" setter="set_BenchmarkValues" getter="get_BenchmarkValues">
 			A list of any benchmark values used for comparison purposes.
@@ -22,4 +22,6 @@
 			A user defined value that qualifies the type of objective constraint when ObjectiveQualifier attribute of type IfcObjectiveEnum has value USERDEFINED.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

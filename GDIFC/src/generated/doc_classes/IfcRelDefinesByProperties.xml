@@ -6,8 +6,8 @@
 		The objectified relationship IfcRelDefinesByProperties defines the relationships between property set definitions and objects. Properties are aggregated in property sets. Property sets can be either directly assigned to occurrence objects using this relationship, or assigned to an object type and assigned via that type to occurrence objects. The IfcRelDefinesByProperties is a 1-to-N relationship, 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="RelatedObjects" type="Array" setter="set_RelatedObjects" getter="get_RelatedObjects">
 			Reference to the objects (or single object) to which the property definition applies.
@@ -16,4 +16,6 @@
 			Reference to the property set definition for that object or set of objects.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

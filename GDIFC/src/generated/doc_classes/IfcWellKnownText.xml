@@ -6,12 +6,14 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="WellKnownText" type="String" setter="set_WellKnownText" getter="get_WellKnownText">
 		</member>
 		<member name="CoordinateReferenceSystem" type="GDIFCEntityBase" setter="set_CoordinateReferenceSystem" getter="get_CoordinateReferenceSystem">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

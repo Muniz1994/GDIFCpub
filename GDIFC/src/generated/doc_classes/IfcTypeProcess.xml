@@ -6,8 +6,8 @@
 		IfcTypeProcess defines a specific (or type) definition of a process or activity without being assigned to a schedule or a time.ÿIt is used to define a process or activity specification, that is, the specific process or activity information that is common to all occurrences that are defined for that process or activity type. An IfcTypeProcess may have a list of property set attached. Values of thes
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Identification" type="String" setter="set_Identification" getter="get_Identification">
 			An identifying designation given to a process type.
@@ -21,4 +21,6 @@
 		<member name="OperatesOn" type="Array" setter="" getter="get_OperatesOn">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

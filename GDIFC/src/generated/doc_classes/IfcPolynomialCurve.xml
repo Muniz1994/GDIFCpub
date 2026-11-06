@@ -6,8 +6,8 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Position" type="GDIFCEntityBase" setter="set_Position" getter="get_Position">
 		</member>
@@ -18,4 +18,6 @@
 		<member name="CoefficientsZ" type="PackedFloat64Array" setter="set_CoefficientsZ" getter="get_CoefficientsZ">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

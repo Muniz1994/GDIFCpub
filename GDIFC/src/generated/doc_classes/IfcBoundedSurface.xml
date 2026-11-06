@@ -6,8 +6,10 @@
 		Definition from ISO/CD 10303-42:1992 : A bounded surface is a surface of finite area with identifiable boundaries. NOTE Corresponding ISO 10303 name: bounded_surface. Please refer to ISO/IS 10303-42:1994, p.78 for the final definition of the formal standard. HISTORY New entity in IFC Release 2x IFC2x4 CHANGE Entity made abstract. Informal propositions : A bounded surface has finite non-zero surfac
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 	</members>
+	<signals/>
+	<constants/>
 </class>

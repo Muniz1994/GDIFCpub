@@ -6,8 +6,8 @@
 		Definition from IAI: The entity IfcStructuralLoadGroup is used to structure the physical impacts. By using the grouping features inherited from IfcGroup , instances of IfcStructuralAction (or its subclasses) and of IfcStructuralLoadGroup can be used to define load groups, load cases and load combinations. (See also IfcLoadGroupTypeEnum .) NOTE: Important functionality for the description of a load
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 			Selects a predefined type for the load group. It can be differentiated between load groups, load cases, load combinations, or userdefined grouping levels.
@@ -29,4 +29,6 @@
 		<member name="LoadGroupFor" type="Array" setter="" getter="get_LoadGroupFor">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

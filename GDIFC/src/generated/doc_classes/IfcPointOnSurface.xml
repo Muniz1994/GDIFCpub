@@ -6,8 +6,8 @@
 		Definition from ISO/CD 10303-42:1992 : A point on surface is a point which lies on a parametric surface. The point is determined by evaluating the surface at a particular pair of parameter values. NOTE: Corresponding ISO 10303 entity: point_on_surface. Please refer to ISO/IS 10303-42:1994, p. 24 for the final definition of the formal standard. HISTORY: New entity in Release IFC2x Edition 2. Inform
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="BasisSurface" type="GDIFCEntityBase" setter="set_BasisSurface" getter="get_BasisSurface">
 			The surface to which the parameter values relate.
@@ -19,4 +19,6 @@
 			The second parameter value of the point location.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

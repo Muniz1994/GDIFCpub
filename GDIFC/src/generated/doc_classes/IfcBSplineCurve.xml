@@ -6,8 +6,8 @@
 		Definition from ISO/CD 10303-42:1992 : A B-spline curve is a piecewise parametric polynomial or rational curve described in terms of control points and basis functions. The B-spline curve has been selected as the most stable format to represent all types of polynomial or rational parametric curves. With appropriate attribute values it is capable of representing single span or spline curves of expl
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Degree" type="int" setter="set_Degree" getter="get_Degree">
 			The algebraic degree of the basis functions.
@@ -25,4 +25,6 @@
 			Indication whether the curve self-intersects or not; it is for information only.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

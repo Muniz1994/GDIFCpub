@@ -6,8 +6,8 @@
 		IfcSurfaceStyleRendering holds the properties for visualization related to a particular surface side style. It allows rendering properties to be defined by: a transparency component ( Transparency attribute) a colour component ( SurfaceColour attribute inherited from IfcSurfaceStyleShading ) a reflectance component, given either by applying reflectance factors to the surface colour: diffuse compon
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="DiffuseColour" type="GDIFCEntityBase" setter="set_DiffuseColour" getter="get_DiffuseColour">
 			Definition from ISO/CD 10303-46: The degree of transparency is indicated by the percentage of light traversing the surface. Definition from VRML97 - ISO/IEC 14772-1:1997: The transparency field specifies how "clear" an object is, with 1.0 being completely transparent, and 0.0 completely opaque. If not given, the value 0.0 (opaque) is assumed.
@@ -31,4 +31,6 @@
 			The exponent or roughness part of the specular reflectance.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

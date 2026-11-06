@@ -6,8 +6,8 @@
 		Definition from ISO/CD 10303-46:1992 : A curve style font and scaling is a curve style font and a scalar factor for that font, so that a given curve style font may be applied at various scales. The IfcCurveStyleFontAndScaling allows for the reuse of the same curve style definition in several sizes. The definition of the CurveFontScale is the scaling of a base curve style pattern to be used as a ne
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Name" type="String" setter="set_Name" getter="get_Name">
 			Name that may be assigned with the scaling of a curve font.
@@ -19,4 +19,6 @@
 			The scale factor.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

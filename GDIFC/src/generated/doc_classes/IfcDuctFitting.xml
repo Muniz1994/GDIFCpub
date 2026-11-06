@@ -6,10 +6,12 @@
 		A duct fitting is a junction or transition in a ducted flow distribution system or used to connect duct segments, resulting changes in flow characteristics to the fluid such as direction and flow rate. HISTORY New entity in IFC2x4 Type Use Definition IfcDuctFitting defines the occurrence of any duct fitting; common information about duct fitting types is handled by IfcDuctFittingType . The IfcDuct
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

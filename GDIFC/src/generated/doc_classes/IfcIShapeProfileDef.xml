@@ -6,8 +6,8 @@
 		IfcIShapeProfileDef defines a section profile that provides the defining parameters of a symmetrical 'I' section to be used by the swept surface geometry or the swept area solid. The I-shape profile has values for its overall depth, width and its web and flange thickness. Additionally a fillet radius may be given. It represents a I-section that is symmetrical about its major and minor axes; and th
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="OverallWidth" type="float" setter="set_OverallWidth" getter="get_OverallWidth">
 			Total extent of the width, defined parallel to the x axis of the position coordinate system.
@@ -29,4 +29,6 @@
 		<member name="FlangeSlope" type="float" setter="set_FlangeSlope" getter="get_FlangeSlope">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

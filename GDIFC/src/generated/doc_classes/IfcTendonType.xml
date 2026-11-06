@@ -6,8 +6,8 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 		</member>
@@ -18,4 +18,6 @@
 		<member name="SheathDiameter" type="float" setter="set_SheathDiameter" getter="get_SheathDiameter">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

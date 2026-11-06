@@ -6,8 +6,8 @@
 		Definition from ISO/CD 10303-41:1992 : The shape aspect is an identifiable element of the shape of a product. IfcShapeAspect allows for grouping of shape representation items that represent aspects (or components) of the shape of a product. Thereby shape representations of components of the product shape represent a distinctive part to a product that can be explicitly addressed. NOTE ÿThe definiti
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="ShapeRepresentations" type="Array" setter="set_ShapeRepresentations" getter="get_ShapeRepresentations">
 			List of shape representations. Each member defines a valid representation of a particular type within a particular representation context as being an aspect (or part) of a product definition. IFC2x Edition 3 CHANGE The data type has been changed from IfcShapeRepresentation to IfcShapeModel with upward compatibility
@@ -27,4 +27,6 @@
 		<member name="HasExternalReferences" type="Array" setter="" getter="get_HasExternalReferences">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

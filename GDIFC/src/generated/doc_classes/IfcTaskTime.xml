@@ -6,8 +6,8 @@
 		IfcTaskTime captures the time-related information about a task including the different types (actual or scheduled) of starting and ending times. HISTORY: New entity in IFC2x4, adapted from IfcScheduleTimeControl . Differently to IfcScheduleTimeControl it is also possible to differentiate duration time measures between the two possible types; (1) work time and (2) elapsed time. Use definitions All 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="DurationType" type="String" setter="set_DurationType" getter="get_DurationType">
 			Enables to specify the type of duration values for ScheduleDuration , ActualDuration and RemainingTime . The duration type is either work time or elapsed time.
@@ -61,4 +61,6 @@
 			The extent of completion expressed as a ratio or percentage. It is a measured value.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

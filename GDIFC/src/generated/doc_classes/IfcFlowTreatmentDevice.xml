@@ -6,8 +6,10 @@
 		The distribution flow element IfcFlowTreatmentDevice defines the occurrence of a device typically used to remove unwanted matter from a fluid, either liquid or gas, and typically participates in a flow distribution system. Its type is defined by IfcFlowTreatmentDeviceType or its subtypes. HISTORY: New entity in IFC R2x. IFC 2x4 NOTE: This entity has been deprecated for instantiation and will becom
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 	</members>
+	<signals/>
+	<constants/>
 </class>

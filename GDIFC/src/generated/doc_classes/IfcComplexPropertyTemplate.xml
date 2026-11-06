@@ -6,8 +6,8 @@
 		The IfcComplexPropertyTemplate defines the template for all complex properties, either the IfcComplexProperty 's, or the IfcPhysicalComplexQuantity 's. The individual complex property templates are interpreted according to their Name attribute and and optional UsageName attribute. HISTORY New entity in IFC2x4.
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="UsageName" type="String" setter="set_UsageName" getter="get_UsageName">
 		</member>
@@ -17,4 +17,6 @@
 			Reference to a set of property templates. It should only be provided, if the PropertyType is set to COMPLEX .
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

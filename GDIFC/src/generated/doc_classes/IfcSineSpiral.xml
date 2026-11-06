@@ -6,8 +6,8 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="SineTerm" type="float" setter="set_SineTerm" getter="get_SineTerm">
 		</member>
@@ -16,4 +16,6 @@
 		<member name="ConstantTerm" type="float" setter="set_ConstantTerm" getter="get_ConstantTerm">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

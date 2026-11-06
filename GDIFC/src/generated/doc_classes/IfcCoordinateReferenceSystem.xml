@@ -6,8 +6,8 @@
 		Definition from OpenGIS® Abstract Specification, Topic 2 : A coordinate reference system is a coordinate system which is related to the real world by a datum. The coordinate system is composed of a set of coordinate axes with specified units of measure. The datum specifies the relationship of a coordinate system to the earth. The resulting combination of coordinate system and datum is a coordinate
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Name" type="String" setter="set_Name" getter="get_Name">
 			Name by which the coordinate reference system is identified. Note The name shall be taken from the list recognized by the European Petroleum Survey Group EPSG.
@@ -23,4 +23,6 @@
 		<member name="WellKnownText" type="Array" setter="" getter="get_WellKnownText">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

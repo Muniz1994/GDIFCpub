@@ -6,8 +6,8 @@
 		Definition from ISO/CD 10303-42:1992 : The trimmed surface is a simple bounded surface in which the boundaries are the constant parametric lines u 1 = u1, u 2 = u2, v 1 = v1 and v 2 = v2. All these values shall be within the parametric range of the referenced surface. Cyclic properties of the parameter range are assumed. NOTE 1 For example, 370 degrees is equivalent to 10 degrees, for those surfac
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="BasisSurface" type="GDIFCEntityBase" setter="set_BasisSurface" getter="get_BasisSurface">
 			Surface being trimmed.
@@ -31,4 +31,6 @@
 			Flag to indicate whether the direction of the second parameter of the trimmed surface agrees with or opposes the sense of v in the basis surface.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

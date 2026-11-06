@@ -6,11 +6,13 @@
 		Definition from IAI : The IfcShadingDeviceType defines a list of commonly shared property set definitions of a shading device element and an optional set of product representations. It is used to define a shading device specification (i.e. the specific product information, that is common to all occurrences of that product type). NOTE: The product representations are defined as representation maps 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 			Identifies the predefined types of a shading device element from which the type required may be set.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

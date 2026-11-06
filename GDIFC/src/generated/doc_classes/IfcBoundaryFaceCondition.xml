@@ -6,8 +6,8 @@
 		Definition from IAI: Describes linearly elastic support conditions or connection conditions. Applicability: Surface supports and connections. HISTORY: New entity in IFC 2x2. IFC 2x4 change: Attributes LinearStiffnessX/Y/Z renamed to TranslationalStiffnessX/Y/Z . IFC 2x4 change: All attribute data types changed from numeric to SELECT between Boolean and numeric. Stiffnesses may now also be negative
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="TranslationalStiffnessByAreaX" type="GDIFCEntityBase" setter="set_TranslationalStiffnessByAreaX" getter="get_TranslationalStiffnessByAreaX">
 			Translational stiffness value in x-direction of the coordinate system defined by the instance which uses this resource object.
@@ -19,4 +19,6 @@
 			Translational stiffness value in z-direction of the coordinate system defined by the instance which uses this resource object.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

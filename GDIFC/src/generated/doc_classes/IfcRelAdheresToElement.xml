@@ -6,12 +6,14 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="RelatingElement" type="GDIFCEntityBase" setter="set_RelatingElement" getter="get_RelatingElement">
 		</member>
 		<member name="RelatedSurfaceFeatures" type="Array" setter="set_RelatedSurfaceFeatures" getter="get_RelatedSurfaceFeatures">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

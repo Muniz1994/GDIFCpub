@@ -6,11 +6,13 @@
 		IfcPresentationStyle is an abstract generalization of style table for presentation information assigned to geometric representation items. It includes styles for curves, areas, surfaces, text and symbols. Style information may include colour, hatching, rendering, and text fonts. Each subtype of IfcPresentationStyle can be assigned to IfcGeometricRepresentationItem 's via the IfcPresentationStyleAs
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Name" type="String" setter="set_Name" getter="get_Name">
 			Name of the presentation style.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

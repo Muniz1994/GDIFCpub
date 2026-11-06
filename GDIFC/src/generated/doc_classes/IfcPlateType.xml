@@ -6,11 +6,13 @@
 		The element type IfcPlateType defines commonly shared information for occurrences of plates. The set of shared information may include: common properties within shared property sets common material information common material layer definitions common shape representations NOTE It is illegal to share shape representations as representation maps for occurrences of IfcPlateStandardCase . It is used t
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 			Identifies the predefined types of a planar member element from which the type required may be set.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

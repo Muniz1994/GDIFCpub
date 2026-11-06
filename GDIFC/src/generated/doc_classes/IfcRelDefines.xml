@@ -6,8 +6,10 @@
 		A generic and abstract relationship which subtypes are used to: assign a object type to an object occurrence assign a property set to an object instance assign a property set template to a property set EXAMPLE ÿSeveral instances of windows within the IFC project model may be of the same (catalogue or manufacturer) type. Thereby they share the same properties. This relationship is established by th
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 	</members>
+	<signals/>
+	<constants/>
 </class>

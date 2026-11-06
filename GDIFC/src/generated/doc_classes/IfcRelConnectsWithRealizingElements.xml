@@ -6,8 +6,8 @@
 		Definition from IAI : IfcRelConnectsWithRealizingElements defines a generic relationship that is made between two elements that require the realization of that relationship by means of further realizing elements. An IfcRelConnectsWithRealizingElements is a specialization of IfcRelConnectsElement where the connecting operation has the additional attribute of (one or many) realizing elements that ma
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="RealizingElements" type="Array" setter="set_RealizingElements" getter="get_RealizingElements">
 			Defines the elements that realize a connection relationship.
@@ -16,4 +16,6 @@
 			The type of the connection given for informal purposes, it may include labels, like 'joint', 'rigid joint', 'flexible joint', etc.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

@@ -6,8 +6,8 @@
 		IfcRecurrencePattern defines repetitive time periods on the basis of regular recurrences such as each Monday in a week, or every third Tuesday in a month. The population of the remaining attributes such as DayComponent , Position , and Interval depend on the specified recurrence type. HISTORY: New entity in IFC2x4. Use definitions IfcRecurrencePattern supports various recurrence patterns that are 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="RecurrenceType" type="String" setter="set_RecurrenceType" getter="get_RecurrenceType">
 			Defines the recurrence type that gives meaning to the used attributes and decides about possible attribute combinations, i.e. what attributes are needed to fully describe the pattern type.
@@ -25,7 +25,7 @@
 			The position of the specified component, e.g. the 3rd (position=3) Tuesday (weekday component) in a month. A negative position value is used to define the last position of the component (-1), the next to last position (-2) etc.
 		</member>
 		<member name="Interval" type="int" setter="set_Interval" getter="get_Interval">
-			An interval can be given according to the pattern type. An interval value of 2 can for instance every two days, weeks, months, years. An empty interval value is regarded as 1. The used interval values should be in a reasonable range, e.g. not 0 or &lt;0.
+			An interval can be given according to the pattern type. An interval value of 2 can for instance every two days, weeks, months, years. An empty interval value is regarded as 1. The used interval values should be in a reasonable range, e.g. not 0 or <0.
 		</member>
 		<member name="Occurrences" type="int" setter="set_Occurrences" getter="get_Occurrences">
 			Defines the number of occurrences of this pattern, e.g. a weekly event might be defined to occur 5 times before it stops.
@@ -34,4 +34,6 @@
 			List of time periods that are defined by a start and end time of the recurring element (day). The order of the list should reflect the sequence of the time periods.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

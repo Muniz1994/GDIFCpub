@@ -6,8 +6,8 @@
 		Definition: An abstract entity type for various kinds of postal and telecom addresses. NOTE Corresponds to the following entity in ISO-10303-41: address. HISTORY New entity in IFC Release 1.5.1.
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Purpose" type="String" setter="set_Purpose" getter="get_Purpose">
 			Identifies the logical location of the address.
@@ -23,4 +23,6 @@
 		<member name="OfOrganization" type="Array" setter="" getter="get_OfOrganization">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

@@ -6,8 +6,8 @@
 		Definition from IAI: An IfcReinforcementDefinitionProperties defines the cross section properties of reinforcement included in reinforced concrete building elements. The property set definition may be used both in conjunction with insitu and precast structures. HISTORY New entity in IFC Release 2x2 IFC 2x4 change: Supertype changed from IfcPropertySetDefinition to IfcPreDefinedPropertySet General 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="DefinitionType" type="String" setter="set_DefinitionType" getter="get_DefinitionType">
 			Descriptive type name applied to reinforcement definition properties.
@@ -16,4 +16,6 @@
 			The list of section reinforcement properties attached to the reinforcement definition properties.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

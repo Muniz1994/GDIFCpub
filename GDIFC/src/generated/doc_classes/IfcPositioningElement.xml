@@ -6,12 +6,14 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="ContainedInStructure" type="Array" setter="" getter="get_ContainedInStructure">
 		</member>
 		<member name="Positions" type="Array" setter="" getter="get_Positions">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

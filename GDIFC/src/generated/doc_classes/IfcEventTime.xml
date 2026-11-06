@@ -6,8 +6,8 @@
 		IfcEventTime captures the time-related information about an event including the different types of event dates (i.e. actual, scheduled, early, and late). HISTORY: New entity in IFC2x4. Use definitions All given values should be provided by the application, i.e. the IFC schema does not deal with dependencies between process time values. At this stage there is also no consistency check through where
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="ActualDate" type="String" setter="set_ActualDate" getter="get_ActualDate">
 			The date on which an event actually occurs. It is a measured value.
@@ -22,4 +22,6 @@
 			The date on which an event is scheduled to occur. The value might be measured or somehow calculated, which is defined by ScheduleDataOrigin .
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

@@ -6,8 +6,8 @@
 		An IfcWorkCalendar defines working and non-working time periods for tasks and resources. It enables to define both specific time periods, such as from 7:00 till 12:00 on 25th August 2009, as well as repetitive time periods based on frequently used recurrence patterns, such as each Monday from 7:00 till 12:00 between 1st March 2009 and 31st December 2009. HISTORY New entity in IFC2x4. A work calend
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="WorkingTimes" type="Array" setter="set_WorkingTimes" getter="get_WorkingTimes">
 			Set of times periods that are regarded as an initial set-up of working times. Exception times can then further restrict these working times.
@@ -19,4 +19,6 @@
 			Identifies the predefined types of a work calendar from which the type required may be set. Added in IFC 2x4
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

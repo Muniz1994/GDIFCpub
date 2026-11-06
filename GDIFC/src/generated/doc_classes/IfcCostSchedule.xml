@@ -6,8 +6,8 @@
 		An IfcCostSchedule brings together instances of IfcCostItem either for the purpose of identifying purely cost information as in an estimate for constructions costs or for including cost information within another presentation form such as a work order. HISTORY New Entity in IFC Release 2.0. Modified in IFC 2x2 IFC2x4 CHANGE Attribute 'ID' changed to Identification and promoted to supertype IfcCont
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="PredefinedType" type="String" setter="set_PredefinedType" getter="get_PredefinedType">
 			Predefined generic type for a cost schedule that is specified in an enumeration. There may be a property set given specifically for the predefined types. IFC2x4 CHANGE The attribute has been made optional.
@@ -22,4 +22,6 @@
 			The date and time that this cost schedule is updated; this allows tracking the schedule history. IFC2x4 CHANGE Type changed from IfcDateTimeSelect.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

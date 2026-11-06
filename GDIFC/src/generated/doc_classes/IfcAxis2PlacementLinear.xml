@@ -6,12 +6,14 @@
 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="Axis" type="GDIFCEntityBase" setter="set_Axis" getter="get_Axis">
 		</member>
 		<member name="RefDirection" type="GDIFCEntityBase" setter="set_RefDirection" getter="get_RefDirection">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

@@ -6,8 +6,8 @@
 		Definition from ISO 10303:42:1994 : This is a B-spline surface in which the knot values are explicitly given. This subtype shall be used to represent non-uniform B-spline surfaces, and may also be used for other knot types. All knot multiplicities except the first and the last shall be in the range 1,...., d ; the first and last may have a maximum value of d + 1. In evaluating the basis functions,
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="UMultiplicities" type="PackedInt64Array" setter="set_UMultiplicities" getter="get_UMultiplicities">
 			The multiplicities of the knots in the u parameter direction.
@@ -25,4 +25,6 @@
 			The description of the knot type.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

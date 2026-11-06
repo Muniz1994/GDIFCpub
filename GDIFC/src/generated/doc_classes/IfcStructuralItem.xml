@@ -6,10 +6,12 @@
 		Definition from IAI: The abstract entity IfcStructuralItem is the generalization of structural members and structural connections, i.e. analysis idealizations of elements in the building model. It defines the relation between structural members and connections with structural activities (actions and reactions). Relationships between elements in the building model and structural items as their idea
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="AssignedStructuralActivity" type="Array" setter="" getter="get_AssignedStructuralActivity">
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

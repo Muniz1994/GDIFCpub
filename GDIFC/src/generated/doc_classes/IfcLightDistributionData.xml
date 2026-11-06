@@ -6,8 +6,8 @@
 		IfcLightDistributionData defines the luminous intensity of a light source given at a particular main plane angle. It is based on some standardized light distribution curves; the MainPlaneAngle is either the A angle; if the IfcLightDistributionCurveEnum is set to TYPE_A B angle; if the IfcLightDistributionCurveEnum is set to TYPE_B C angle; if the IfcLightDistributionCurveEnum is set to TYPE_C For 
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="MainPlaneAngle" type="float" setter="set_MainPlaneAngle" getter="get_MainPlaneAngle">
 			The main plane angle (A, B or C angles, according to the light distribution curve chosen).
@@ -19,4 +19,6 @@
 			The luminous intensity distribution measure for this pair of main and secondary plane angles according to the light distribution curve chosen.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>

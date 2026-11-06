@@ -6,8 +6,8 @@
 		An IfcBlobTexture provides a 2-dimensional distribution of the lighting parameters of a surface onto which it is mapped. The texture itself is given as a single binary blob, representing the content of a pixel format file. The file format of the pixel file is given by the RasterFormat attribute and allowable formats are guided by where rule SupportedRasterFormat . NOTE Toolbox specific implementat
 	</brief_description>
 	<description></description>
-	<tutorials>
-	</tutorials>
+	<tutorials/>
+	<methods/>
 	<members>
 		<member name="RasterFormat" type="String" setter="set_RasterFormat" getter="get_RasterFormat">
 			The format of the RasterCode often using a compression.
@@ -16,4 +16,6 @@
 			Blob, given as a single binary, to capture the texture within one popular file (compression) format. The file format is provided by the RasterFormat attribute.
 		</member>
 	</members>
+	<signals/>
+	<constants/>
 </class>
